@@ -8,9 +8,8 @@ xdescribe('ConfigurationCustomFieldCreationDialogComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ConfigurationCustomFieldCreationDialogComponent ]
-    })
-    .compileComponents();
+      declarations: [ConfigurationCustomFieldCreationDialogComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(ConfigurationCustomFieldCreationDialogComponent);
     component = fixture.componentInstance;

@@ -8,25 +8,14 @@ import { MultiSelectModule } from 'primeng/multiselect';
 import { DialogModule } from 'primeng/dialog';
 import { NetsuiteCustomSegmentDialogComponent } from './netsuite-import-settings/netsuite-custom-segment-dialog/netsuite-custom-segment-dialog.component';
 
-
-
 @NgModule({
   declarations: [
     NetsuiteExportSettingsComponent,
     NetsuiteImportSettingsComponent,
     NetsuiteAdvancedSettingsComponent,
-    NetsuiteCustomSegmentDialogComponent
+    NetsuiteCustomSegmentDialogComponent,
   ],
-  imports: [
-    CommonModule,
-    SharedModule,
-    MultiSelectModule,
-    DialogModule
-  ],
-  exports: [
-    NetsuiteExportSettingsComponent,
-    NetsuiteImportSettingsComponent,
-    NetsuiteAdvancedSettingsComponent
-  ]
+  imports: [CommonModule, SharedModule, MultiSelectModule, DialogModule],
+  exports: [NetsuiteExportSettingsComponent, NetsuiteImportSettingsComponent, NetsuiteAdvancedSettingsComponent],
 })
-export class NetsuiteSharedModule { }
+export class NetsuiteSharedModule {}

@@ -1,17 +1,17 @@
 .clone-setting {
-    &--field-section {
-        @apply tw-px-24-px;
-    }
+  &--field-section {
+    @apply tw-px-24-px;
+  }
 
-    &--field {
-        @apply tw-p-24-px;
-    }
+  &--field {
+    @apply tw-p-24-px;
+  }
 
-    &--export-setting-header {
-        @apply tw-flex tw-justify-between;
-    }
+  &--export-setting-header {
+    @apply tw-flex tw-justify-between;
+  }
 
-    &--dependent-field {
-        @apply tw-pt-24-px;
-    }
+  &--dependent-field {
+    @apply tw-pt-24-px;
+  }
 }

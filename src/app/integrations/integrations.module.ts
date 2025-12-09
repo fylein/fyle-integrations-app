@@ -19,12 +19,8 @@ import { LandingV2Component } from './landing-v2/landing-v2.component';
     Sage300Component,
     XeroComponent,
     TravelperkComponent,
-    LandingV2Component
+    LandingV2Component,
   ],
-  imports: [
-    CommonModule,
-    IntegrationsRoutingModule,
-    SharedModule
-  ]
+  imports: [CommonModule, IntegrationsRoutingModule, SharedModule],
 })
-export class IntegrationsModule { }
+export class IntegrationsModule {}

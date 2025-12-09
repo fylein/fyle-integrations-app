@@ -4,13 +4,12 @@ import { AppName } from 'src/app/core/models/enum/enum.model';
 import { BrandingService } from 'src/app/core/services/common/branding.service';
 
 @Component({
-    selector: 'app-intacct-onboarding-landing',
-    templateUrl: './intacct-onboarding-landing.component.html',
-    styleUrls: ['./intacct-onboarding-landing.component.scss'],
-    standalone: false
+  selector: 'app-intacct-onboarding-landing',
+  templateUrl: './intacct-onboarding-landing.component.html',
+  styleUrls: ['./intacct-onboarding-landing.component.scss'],
+  standalone: false,
 })
 export class IntacctOnboardingLandingComponent implements OnInit {
-
   appName: AppName = AppName.INTACCT;
 
   redirectLink = brandingKbArticles.onboardingArticles.INTACCT.LANDING;
@@ -19,11 +18,7 @@ export class IntacctOnboardingLandingComponent implements OnInit {
 
   readonly brandingConfig = brandingConfig;
 
-  constructor(
-    public brandingService: BrandingService
-  ) { }
+  constructor(public brandingService: BrandingService) {}
 
-  ngOnInit(): void {
-  }
-
+  ngOnInit(): void {}
 }

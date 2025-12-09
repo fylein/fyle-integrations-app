@@ -8,9 +8,8 @@ xdescribe('BusinessCentralMainComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ BusinessCentralMainComponent ]
-    })
-    .compileComponents();
+      declarations: [BusinessCentralMainComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(BusinessCentralMainComponent);
     component = fixture.componentInstance;

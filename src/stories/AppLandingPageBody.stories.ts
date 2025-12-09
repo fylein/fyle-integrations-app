@@ -1,4 +1,3 @@
-
 import { CommonModule } from '@angular/common';
 import type { Meta, StoryObj } from '@storybook/angular';
 import { moduleMetadata } from '@storybook/angular';
@@ -9,17 +8,17 @@ const meta: Meta<AppLandingPageBodyComponent> = {
   component: AppLandingPageBodyComponent,
   tags: ['autodocs'],
   render: (args: AppLandingPageBodyComponent) => ({
-    props: { ...args }
+    props: { ...args },
   }),
   decorators: [
     moduleMetadata({
       declarations: [AppLandingPageBodyComponent],
-      imports: [CommonModule]
-    })
+      imports: [CommonModule],
+    }),
   ],
   argTypes: {
-    ngOnInit: { table: { disable: true } }
-  }
+    ngOnInit: { table: { disable: true } },
+  },
 };
 
 export default meta;
@@ -30,6 +29,6 @@ export const simple: Story = {
     headlineText: 'Guide to setup your Integrations',
     headerText: 'A quick guide to help you set up the integration quick and easy.',
     svgPath: 'assets/flow-charts/fyle-qbo-data-flow.svg',
-    embedVideo: 'https://www.youtube.com/embed/b63lS2DG5j4'
-  }
+    embedVideo: 'https://www.youtube.com/embed/b63lS2DG5j4',
+  },
 };

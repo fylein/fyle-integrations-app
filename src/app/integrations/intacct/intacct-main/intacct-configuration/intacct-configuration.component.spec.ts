@@ -8,9 +8,8 @@ xdescribe('ConfigurationComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ IntacctConfigurationComponent ]
-    })
-    .compileComponents();
+      declarations: [IntacctConfigurationComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(IntacctConfigurationComponent);
     component = fixture.componentInstance;

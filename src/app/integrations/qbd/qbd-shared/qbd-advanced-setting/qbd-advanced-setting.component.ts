@@ -1,8 +1,23 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { ClickEvent, Page, ConfigurationCta, QBDOnboardingState, ProgressPhase, QBDScheduleFrequency, ToastSeverity, UpdateEvent, TrackingApp, AppName } from 'src/app/core/models/enum/enum.model';
-import { QBDAdvancedSettingModel, QBDAdvancedSettingsGet, QBDEmailOptions } from 'src/app/core/models/qbd/qbd-configuration/qbd-advanced-setting.model';
+import {
+  ClickEvent,
+  Page,
+  ConfigurationCta,
+  QBDOnboardingState,
+  ProgressPhase,
+  QBDScheduleFrequency,
+  ToastSeverity,
+  UpdateEvent,
+  TrackingApp,
+  AppName,
+} from 'src/app/core/models/enum/enum.model';
+import {
+  QBDAdvancedSettingModel,
+  QBDAdvancedSettingsGet,
+  QBDEmailOptions,
+} from 'src/app/core/models/qbd/qbd-configuration/qbd-advanced-setting.model';
 import { QBDExportSettingFormOption } from 'src/app/core/models/qbd/qbd-configuration/qbd-export-setting.model';
 import { TrackingService } from 'src/app/core/services/integration/tracking.service';
 import { OrgService } from 'src/app/core/services/org/org.service';
@@ -14,10 +29,10 @@ import { brandingConfig, brandingStyle } from 'src/app/branding/branding-config'
 import { TranslocoService } from '@jsverse/transloco';
 
 @Component({
-    selector: 'app-qbd-advanced-setting',
-    templateUrl: './qbd-advanced-setting.component.html',
-    styleUrls: ['./qbd-advanced-setting.component.scss'],
-    standalone: false
+  selector: 'app-qbd-advanced-setting',
+  templateUrl: './qbd-advanced-setting.component.html',
+  styleUrls: ['./qbd-advanced-setting.component.scss'],
+  standalone: false,
 })
 export class QbdAdvancedSettingComponent implements OnInit {
   isOnboarding: any;
@@ -36,15 +51,23 @@ export class QbdAdvancedSettingComponent implements OnInit {
 
   frequencyOption: QBDExportSettingFormOption[];
 
-  defaultMemoFields: string[] = ['employee_email', 'merchant', 'purpose', 'category', 'spent_on', 'report_number', 'expense_link'];
+  defaultMemoFields: string[] = [
+    'employee_email',
+    'merchant',
+    'purpose',
+    'category',
+    'spent_on',
+    'report_number',
+    'expense_link',
+  ];
 
-  defaultTopMemoOptions: string[] = ["employee_email", "employee_name", "purpose", "merchant"];
+  defaultTopMemoOptions: string[] = ['employee_email', 'employee_name', 'purpose', 'merchant'];
 
   adminEmails: QBDEmailOptions[];
 
   weeklyOptions: string[] = ['SUNDAY', 'MONDAY', 'TUESDAY', 'WEDNESDAY', 'THURSDAY', 'FRIDAY', 'SATURDAY'];
 
-  frequencyIntervals:QBDExportSettingFormOption[];
+  frequencyIntervals: QBDExportSettingFormOption[];
 
   memoPreviewText: string;
 
@@ -66,8 +89,8 @@ export class QbdAdvancedSettingComponent implements OnInit {
     private orgService: OrgService,
     private toastService: IntegrationsToastService,
     private trackingService: TrackingService,
-    private translocoService: TranslocoService
-  ) { }
+    private translocoService: TranslocoService,
+  ) {}
 
   private formatMemoPreview(): void {
     const time = Date.now();
@@ -82,7 +105,7 @@ export class QbdAdvancedSettingComponent implements OnInit {
       merchant: 'Pizza Hut',
       report_number: 'C/2021/12/R/1',
       spent_on: today.toLocaleDateString(),
-      expense_link: `${environment.fyle_app_url}/app/main/#/enterprise/view_expense/`
+      expense_link: `${environment.fyle_app_url}/app/main/#/enterprise/view_expense/`,
     };
     this.memoPreviewText = '';
     const memo: string[] = [];
@@ -115,15 +138,15 @@ export class QbdAdvancedSettingComponent implements OnInit {
   }
 
   private initialTime(): string[] {
-    const inputTime = this.advancedSettings?.time_of_day ? this.advancedSettings.time_of_day: "12:00:00";
+    const inputTime = this.advancedSettings?.time_of_day ? this.advancedSettings.time_of_day : '12:00:00';
     const outputTime = new Date(`01/01/2000 ${inputTime} GMT`).toLocaleString('en-US', {
       hour12: true,
       hour: 'numeric',
       minute: 'numeric',
-      second: 'numeric'
+      second: 'numeric',
     });
-    const time = outputTime.split(" ");
-    const Time = time[0][0] > '1' && time[0][1] === ':' ? '0'+time[0] : time[0];
+    const time = outputTime.split(' ');
+    const Time = time[0][0] > '1' && time[0][1] === ':' ? '0' + time[0] : time[0];
     time[0] = Time.slice(0, -3);
     return time;
   }
@@ -139,7 +162,7 @@ export class QbdAdvancedSettingComponent implements OnInit {
 
   private frequencyWatcher() {
     this.advancedSettingsForm.controls.frequency.valueChanges.subscribe((frequency) => {
-      if (frequency=== this.frequencyOption[1].value) {
+      if (frequency === this.frequencyOption[1].value) {
         this.advancedSettingsForm.controls.dayOfWeek.setValidators(Validators.required);
         this.advancedSettingsForm.controls.dayOfMonth.clearValidators();
       } else if (frequency === this.frequencyOption[2].value) {
@@ -168,27 +191,27 @@ export class QbdAdvancedSettingComponent implements OnInit {
   }
 
   getAdminEmails() {
-    this.isLoading= true;
+    this.isLoading = true;
     this.orgService.getAdditionalEmails().subscribe((emailResponse: QBDEmailOptions[]) => {
       this.adminEmails = emailResponse;
       this.frequencyOption = [
         {
           value: QBDScheduleFrequency.DAILY,
-          label: this.translocoService.translate('qbdAdvancedSetting.daily')
+          label: this.translocoService.translate('qbdAdvancedSetting.daily'),
         },
         {
           value: QBDScheduleFrequency.WEEKLY,
-          label: this.translocoService.translate('qbdAdvancedSetting.weekly')
+          label: this.translocoService.translate('qbdAdvancedSetting.weekly'),
         },
         {
           value: QBDScheduleFrequency.MONTHLY,
-          label: this.translocoService.translate('qbdAdvancedSetting.monthly')
-        }
+          label: this.translocoService.translate('qbdAdvancedSetting.monthly'),
+        },
       ];
-      this.frequencyIntervals = [...Array(30).keys()].map(day => {
+      this.frequencyIntervals = [...Array(30).keys()].map((day) => {
         return {
           label: this.getDayOfMonthLabel(day + 1),
-          value: (day + 1).toString()
+          value: (day + 1).toString(),
         };
       });
       this.getSettingsAndSetupForm();
@@ -197,13 +220,26 @@ export class QbdAdvancedSettingComponent implements OnInit {
 
   private getSettingsAndSetupForm(): void {
     this.isOnboarding = this.router.url.includes('onboarding');
-    this.advancedSettingService.getQbdAdvancedSettings().subscribe((advancedSettingResponse : QBDAdvancedSettingsGet) => {
-      this.advancedSettings = advancedSettingResponse;
-      const resultTime = this.initialTime();
-      this.advancedSettingsForm = this.formBuilder.group({
-        expenseMemoStructure: [this.advancedSettings?.expense_memo_structure && this.advancedSettings?.expense_memo_structure.length > 0 ? this.advancedSettings?.expense_memo_structure : this.defaultMemoFields, Validators.required],
-          topMemoStructure: [this.advancedSettings?.top_memo_structure.length > 0 ? this.advancedSettings?.top_memo_structure[0] : this.defaultTopMemoOptions[0], Validators.required],
-          exportSchedule: [this.advancedSettings?.schedule_is_enabled ? this.advancedSettings?.schedule_is_enabled : false],
+    this.advancedSettingService.getQbdAdvancedSettings().subscribe(
+      (advancedSettingResponse: QBDAdvancedSettingsGet) => {
+        this.advancedSettings = advancedSettingResponse;
+        const resultTime = this.initialTime();
+        this.advancedSettingsForm = this.formBuilder.group({
+          expenseMemoStructure: [
+            this.advancedSettings?.expense_memo_structure && this.advancedSettings?.expense_memo_structure.length > 0
+              ? this.advancedSettings?.expense_memo_structure
+              : this.defaultMemoFields,
+            Validators.required,
+          ],
+          topMemoStructure: [
+            this.advancedSettings?.top_memo_structure.length > 0
+              ? this.advancedSettings?.top_memo_structure[0]
+              : this.defaultTopMemoOptions[0],
+            Validators.required,
+          ],
+          exportSchedule: [
+            this.advancedSettings?.schedule_is_enabled ? this.advancedSettings?.schedule_is_enabled : false,
+          ],
           email: [this.advancedSettings?.emails_selected.length > 0 ? this.advancedSettings?.emails_selected : []],
           frequency: [this.advancedSettings?.frequency ? this.advancedSettings?.frequency : null],
           dayOfMonth: [this.advancedSettings?.day_of_month ? this.advancedSettings?.day_of_month : null],
@@ -211,12 +247,13 @@ export class QbdAdvancedSettingComponent implements OnInit {
           timeOfDay: [resultTime[0]],
           meridiem: [resultTime[1]],
           search: [],
-          searchOption: []
-      });
-      this.isLoading = false;
-      this.setCustomValidator();
-    }, error => {
-      const resultTime = this.initialTime();
+          searchOption: [],
+        });
+        this.isLoading = false;
+        this.setCustomValidator();
+      },
+      (error) => {
+        const resultTime = this.initialTime();
         this.advancedSettingsForm = this.formBuilder.group({
           expenseMemoStructure: [this.defaultMemoFields, Validators.required],
           topMemoStructure: [this.defaultTopMemoOptions[0], Validators.required],
@@ -227,11 +264,11 @@ export class QbdAdvancedSettingComponent implements OnInit {
           dayOfWeek: [null],
           timeOfDay: [resultTime[0]],
           meridiem: [resultTime[1]],
-          search: []
+          search: [],
         });
         this.isLoading = false;
         this.setCustomValidator();
-      }
+      },
     );
   }
 
@@ -248,32 +285,44 @@ export class QbdAdvancedSettingComponent implements OnInit {
   private constructPayloadAndSave(): void {
     this.saveInProgress = true;
     const advancedSettingPayload = QBDAdvancedSettingModel.constructPayload(this.advancedSettingsForm);
-    this.advancedSettingService.postQbdAdvancedSettings(advancedSettingPayload).subscribe((response: QBDAdvancedSettingsGet) => {
-      this.saveInProgress = false;
-      this.toastService.displayToastMessage(ToastSeverity.SUCCESS, this.translocoService.translate('qbdAdvancedSetting.advancedSettingsSavedSuccess'), undefined, this.isOnboarding);
-      this.trackingService.trackTimeSpent(TrackingApp.QBD, Page.ADVANCED_SETTINGS_QBD, this.sessionStartTime);
-      if (this.workspaceService.getOnboardingState() === QBDOnboardingState.ADVANCED_SETTINGS) {
-        this.trackingService.onOnboardingStepCompletion(TrackingApp.QBD, QBDOnboardingState.ADVANCED_SETTINGS, 4, advancedSettingPayload);
-      } else {
-        this.trackingService.onUpdateEvent(
-          TrackingApp.QBD,
-          UpdateEvent.ADVANCED_SETTINGS_QBD,
-          {
+    this.advancedSettingService.postQbdAdvancedSettings(advancedSettingPayload).subscribe(
+      (response: QBDAdvancedSettingsGet) => {
+        this.saveInProgress = false;
+        this.toastService.displayToastMessage(
+          ToastSeverity.SUCCESS,
+          this.translocoService.translate('qbdAdvancedSetting.advancedSettingsSavedSuccess'),
+          undefined,
+          this.isOnboarding,
+        );
+        this.trackingService.trackTimeSpent(TrackingApp.QBD, Page.ADVANCED_SETTINGS_QBD, this.sessionStartTime);
+        if (this.workspaceService.getOnboardingState() === QBDOnboardingState.ADVANCED_SETTINGS) {
+          this.trackingService.onOnboardingStepCompletion(
+            TrackingApp.QBD,
+            QBDOnboardingState.ADVANCED_SETTINGS,
+            4,
+            advancedSettingPayload,
+          );
+        } else {
+          this.trackingService.onUpdateEvent(TrackingApp.QBD, UpdateEvent.ADVANCED_SETTINGS_QBD, {
             phase: this.getPhase(),
             oldState: this.advancedSettings,
-            newState: response
-          }
-        );
-      }
+            newState: response,
+          });
+        }
 
-      if (this.isOnboarding) {
-        this.workspaceService.setOnboardingState(QBDOnboardingState.COMPLETE);
-        this.router.navigate([`/integrations/qbd/onboarding/done`]);
-      }
-    }, () => {
-      this.saveInProgress = false;
-      this.toastService.displayToastMessage(ToastSeverity.ERROR, this.translocoService.translate('qbdAdvancedSetting.advancedSettingsSaveError'));
-      });
+        if (this.isOnboarding) {
+          this.workspaceService.setOnboardingState(QBDOnboardingState.COMPLETE);
+          this.router.navigate([`/integrations/qbd/onboarding/done`]);
+        }
+      },
+      () => {
+        this.saveInProgress = false;
+        this.toastService.displayToastMessage(
+          ToastSeverity.ERROR,
+          this.translocoService.translate('qbdAdvancedSetting.advancedSettingsSaveError'),
+        );
+      },
+    );
   }
 
   save(): void {
@@ -285,5 +334,4 @@ export class QbdAdvancedSettingComponent implements OnInit {
   ngOnInit(): void {
     this.getAdminEmails();
   }
-
 }

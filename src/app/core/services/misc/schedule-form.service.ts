@@ -6,36 +6,33 @@ import { SentenceCasePipe } from 'src/app/shared/pipes/sentence-case.pipe';
 import { SelectFormOption } from '../../models/common/select-form-option.model';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ScheduleFormService {
-
-  constructor(
-    private translocoService: TranslocoService
-  ) { }
+  constructor(private translocoService: TranslocoService) {}
 
   getFrequencyOptions(): FrequencyOption[] {
     return [
       {
         label: 'Daily',
-        value: 'DAILY'
+        value: 'DAILY',
       },
       {
         label: 'Weekly',
-        value: 'WEEKLY'
+        value: 'WEEKLY',
       },
       {
         label: 'Monthly',
-        value: 'MONTHLY'
-      }
+        value: 'MONTHLY',
+      },
     ];
   }
 
   getDayOfWeekOptions(): SelectFormOption[] {
     const weekdayOptionValues = ['SUNDAY', 'MONDAY', 'TUESDAY', 'WEDNESDAY', 'THURSDAY', 'FRIDAY', 'SATURDAY'];
-    return weekdayOptionValues.map(value => ({
+    return weekdayOptionValues.map((value) => ({
       label: new SentenceCasePipe(this.translocoService).transform(value),
-      value: value
+      value: value,
     }));
   }
 
@@ -45,17 +42,16 @@ export class ScheduleFormService {
       const suffix = i === 1 ? 'st' : i === 2 ? 'nd' : i === 3 ? 'rd' : 'th';
       dayOfMonthOptions.push({
         label: `${i}${suffix} of every month`,
-        value: `${i}`
+        value: `${i}`,
       });
     }
     dayOfMonthOptions.push({
       label: 'Last day of every month',
-      value: 'L'
+      value: 'L',
     });
 
     return dayOfMonthOptions;
   }
-
 
   getTimeOptions(): string[] {
     const timeOptions = [];
@@ -76,15 +72,15 @@ export class ScheduleFormService {
     const frequency = form.get('frequency')?.value!;
     const dayOfWeek = new SentenceCasePipe(this.translocoService).transform(form.get('dayOfWeek')?.value!);
     const dayOfMonth = this.getDayOfMonthOptions().find(
-      option => option.value === form.get('dayOfMonth')?.value!
+      (option) => option.value === form.get('dayOfMonth')?.value!,
     )?.label!;
     const timeOfDay = form.get('timeOfDay')?.value!;
     const meridiem = form.get('meridiem')?.value!;
 
     const translationKey = {
-      'DAILY': 'services.scheduleForm.dailySchedulePreview',
-      'WEEKLY': 'services.scheduleForm.weeklySchedulePreview',
-      'MONTHLY': 'services.scheduleForm.monthlySchedulePreview'
+      DAILY: 'services.scheduleForm.dailySchedulePreview',
+      WEEKLY: 'services.scheduleForm.weeklySchedulePreview',
+      MONTHLY: 'services.scheduleForm.monthlySchedulePreview',
     }[frequency];
 
     return this.translocoService.translate(translationKey, { frequency, dayOfWeek, dayOfMonth, timeOfDay, meridiem });
@@ -93,11 +89,11 @@ export class ScheduleFormService {
   /**
    * Converts UTC time of format HH:MM:SS to local timeOfDay (HH:MM) and meridiem
    */
-  getLocalTimeOfDay(UTCTimeOfDay: string | null): { timeOfDay: string | null, meridiem: 'AM' | 'PM' } {
+  getLocalTimeOfDay(UTCTimeOfDay: string | null): { timeOfDay: string | null; meridiem: 'AM' | 'PM' } {
     if (!UTCTimeOfDay) {
       return {
         timeOfDay: null,
-        meridiem: 'AM'
+        meridiem: 'AM',
       };
     }
     const localTimeOfDay = new Date(`01/01/2000 ${UTCTimeOfDay}Z`);
@@ -113,7 +109,7 @@ export class ScheduleFormService {
 
     return {
       timeOfDay: `${hoursString}:${minutesString}`,
-      meridiem: meridiem
+      meridiem: meridiem,
     };
   }
 
@@ -127,13 +123,13 @@ export class ScheduleFormService {
     let timeOfDayUTC = null;
 
     if (timeOfDay && meridiem) {
-        // Local time
-        const date = new Date(`01/01/2000 ${timeOfDay} ${meridiem}`);
+      // Local time
+      const date = new Date(`01/01/2000 ${timeOfDay} ${meridiem}`);
 
-        // Convert to UTC HH:MM:SS format
-        const hours = date.getUTCHours().toString().padStart(2, '0');
-        const minutes = date.getUTCMinutes().toString().padStart(2, '0');
-        timeOfDayUTC = `${hours}:${minutes}:00`;
+      // Convert to UTC HH:MM:SS format
+      const hours = date.getUTCHours().toString().padStart(2, '0');
+      const minutes = date.getUTCMinutes().toString().padStart(2, '0');
+      timeOfDayUTC = `${hours}:${minutes}:00`;
     }
 
     return timeOfDayUTC;

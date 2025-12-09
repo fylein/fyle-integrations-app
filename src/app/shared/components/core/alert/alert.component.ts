@@ -5,10 +5,10 @@ type AlertType = 'info' | 'danger';
 type AlertVariant = 'standard' | 'subtle' | 'subtle-bordered';
 
 @Component({
-    selector: 'app-alert',
-    templateUrl: './alert.component.html',
-    styleUrl: './alert.component.scss',
-    standalone: false
+  selector: 'app-alert',
+  templateUrl: './alert.component.html',
+  styleUrl: './alert.component.scss',
+  standalone: false,
 })
 export class AlertComponent {
   @Input() type: AlertType = 'info';
@@ -20,17 +20,17 @@ export class AlertComponent {
   private readonly iconMap = {
     filled: {
       info: 'assets/icons/info-circle-fill-blue.svg',
-      danger: 'assets/icons/danger-fill.svg'
+      danger: 'assets/icons/danger-fill.svg',
     },
     white: {
       info: 'assets/icons/info-circle-fill-white.svg',
-      danger: 'assets/icons/danger-fill-white.svg'
-    }
+      danger: 'assets/icons/danger-fill-white.svg',
+    },
   } satisfies Record<string, Record<AlertType, string>>;
 
   private readonly iconAltKeyMap = {
     info: 'alert.infoIconAlt',
-    danger: 'alert.dangerIconAlt'
+    danger: 'alert.dangerIconAlt',
   } satisfies Record<AlertType, string>;
 
   get iconSrc(): string {
@@ -44,7 +44,5 @@ export class AlertComponent {
     return this.translocoService.translate(this.iconAltKeyMap[this.type]);
   }
 
-  constructor(
-    private translocoService: TranslocoService
-  ) { }
+  constructor(private translocoService: TranslocoService) {}
 }

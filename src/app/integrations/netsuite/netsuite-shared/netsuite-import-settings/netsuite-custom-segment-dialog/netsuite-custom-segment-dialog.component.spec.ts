@@ -7,9 +7,8 @@ xdescribe('NetsuiteCustomSegmentDialogComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ NetsuiteCustomSegmentDialogComponent ]
-    })
-    .compileComponents();
+      declarations: [NetsuiteCustomSegmentDialogComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(NetsuiteCustomSegmentDialogComponent);
     component = fixture.componentInstance;

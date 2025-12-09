@@ -3,12 +3,12 @@ import { brandingFeatureConfig, brandingStyle } from 'src/app/branding/branding-
 import { ButtonSize, ButtonType } from 'src/app/core/models/enum/enum.model';
 
 @Component({
-    selector: 'app-button',
-    templateUrl: './button.component.html',
-    styleUrl: './button.component.scss',
-    standalone: false
+  selector: 'app-button',
+  templateUrl: './button.component.html',
+  styleUrl: './button.component.scss',
+  standalone: false,
 })
-export class ButtonComponent implements OnInit{
+export class ButtonComponent implements OnInit {
   @Input() buttonText: string = '';
 
   @Input() buttonSize: ButtonSize;
@@ -40,13 +40,12 @@ export class ButtonComponent implements OnInit{
   ButtonSize = ButtonSize;
 
   onClick(): void {
-    if (!this.disabled && !this.isLoading){
-    this.buttonClick.emit();
+    if (!this.disabled && !this.isLoading) {
+      this.buttonClick.emit();
     }
   }
 
   ngOnInit(): void {
     this.iconColor = brandingStyle.buttons[this.buttonType].iconColorActive;
   }
-
 }

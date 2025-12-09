@@ -14,10 +14,9 @@ import { IntegrationsToastService } from '../../common/integrations-toast.servic
 import { TranslocoService } from '@jsverse/transloco';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class QboAuthService implements OnDestroy {
-
   private qboConnectionInProgressSubject = new BehaviorSubject<boolean>(false);
 
   qboConnectionInProgress$ = this.qboConnectionInProgressSubject.asObservable();
@@ -35,7 +34,7 @@ export class QboAuthService implements OnDestroy {
     private workspaceService: WorkspaceService,
     private qboConnectorService: QboConnectorService,
     private toastService: IntegrationsToastService,
-    private translocoService: TranslocoService
+    private translocoService: TranslocoService,
   ) {}
 
   loginWithRefreshToken(refresh_token: string): Observable<Token> {
@@ -48,7 +47,6 @@ export class QboAuthService implements OnDestroy {
   }
 
   connectQbo(): void {
-
     if (this.oauthCallbackSubscription) {
       this.oauthCallbackSubscription.unsubscribe();
     }
@@ -68,23 +66,32 @@ export class QboAuthService implements OnDestroy {
   private postQboCredentials(code: string, realmId: string): void {
     const payload: QBOConnectorPost = QBOConnectorModel.constructPayload(code, realmId);
 
-    this.qboConnectorService.connectQBO(payload).subscribe((qboCredential: QBOCredential) => {
-      this.qboConnectionInProgressSubject.next(false);
-      this.router.navigate([`/integrations/qbo/main/dashboard`]);
-    }, (error) => {
-      this.qboConnectionInProgressSubject.next(false);
-      const errorMessage = 'message' in error.error ? error.error.message : this.translocoService.translate('services.qboAuth.failedToConnect');
-      if (errorMessage === 'Please choose the correct QuickBooks Online account') {
-        this.isIncorrectQBOConnectedDialogVisibleSubject.next(true);
-      } else {
-        this.toastService.displayToastMessage(ToastSeverity.ERROR, this.translocoService.translate('services.qboAuth.somethingWentWrong'));
-        if (this.router.url.includes("/token_expired/")){
-        this.router.navigate([`/integrations/qbo/token_expired/dashboard`]);
+    this.qboConnectorService.connectQBO(payload).subscribe(
+      (qboCredential: QBOCredential) => {
+        this.qboConnectionInProgressSubject.next(false);
+        this.router.navigate([`/integrations/qbo/main/dashboard`]);
+      },
+      (error) => {
+        this.qboConnectionInProgressSubject.next(false);
+        const errorMessage =
+          'message' in error.error
+            ? error.error.message
+            : this.translocoService.translate('services.qboAuth.failedToConnect');
+        if (errorMessage === 'Please choose the correct QuickBooks Online account') {
+          this.isIncorrectQBOConnectedDialogVisibleSubject.next(true);
         } else {
-        this.router.navigate([`/integrations/qbo/onboarding/landing`]);
+          this.toastService.displayToastMessage(
+            ToastSeverity.ERROR,
+            this.translocoService.translate('services.qboAuth.somethingWentWrong'),
+          );
+          if (this.router.url.includes('/token_expired/')) {
+            this.router.navigate([`/integrations/qbo/token_expired/dashboard`]);
+          } else {
+            this.router.navigate([`/integrations/qbo/onboarding/landing`]);
+          }
         }
-      }
-    });
+      },
+    );
   }
 
   private checkProgressAndRedirect(code: string, realmId: string): void {
@@ -92,8 +99,8 @@ export class QboAuthService implements OnDestroy {
     const navigationExtras: NavigationExtras = {
       queryParams: {
         code,
-        realmId
-      }
+        realmId,
+      },
     };
 
     if (onboardingState !== QBOOnboardingState.COMPLETE) {
@@ -109,5 +116,4 @@ export class QboAuthService implements OnDestroy {
       this.oauthCallbackSubscription.unsubscribe();
     }
   }
-
 }

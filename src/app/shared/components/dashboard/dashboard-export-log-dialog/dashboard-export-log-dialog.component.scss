@@ -1,7 +1,7 @@
-:host  ::ng-deep .p-dialog {
+:host ::ng-deep .p-dialog {
   @apply tw-max-h-full tw-m-0 #{!important};
-  }  
+}
 
 .sub-header {
-    @apply tw-text-14-px tw-mt-8-px tw-font-400 tw-text-text-muted tw-w-450-px;
+  @apply tw-text-14-px tw-mt-8-px tw-font-400 tw-text-text-muted tw-w-450-px;
 }

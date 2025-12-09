@@ -11,10 +11,9 @@ xdescribe('ConfigurationSelectFieldComponent', () => {
   let formbuilder: FormBuilder;
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ConfigurationSelectFieldComponent, SnakeCaseToSpaceCasePipe ],
-      providers: [FormBuilder]
-    })
-    .compileComponents();
+      declarations: [ConfigurationSelectFieldComponent, SnakeCaseToSpaceCasePipe],
+      providers: [FormBuilder],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(ConfigurationSelectFieldComponent);
     component = fixture.componentInstance;
@@ -22,19 +21,19 @@ xdescribe('ConfigurationSelectFieldComponent', () => {
     component.options = [
       {
         value: ExpenseState.PAYMENT_PROCESSING,
-        label: 'Payment Processing'
+        label: 'Payment Processing',
       },
       {
         value: ExpenseState.PAID,
-        label: 'Paid'
-      }
+        label: 'Paid',
+      },
     ];
     component.formControllerName = 'dayOfMonth';
     component.form = formbuilder.group({
-        timeOfDay: [null],
-        meridiem: [null],
-        dayOfMonth: ['1'],
-        dayOfWeek: ['SUNDAY']
+      timeOfDay: [null],
+      meridiem: [null],
+      dayOfMonth: ['1'],
+      dayOfWeek: ['SUNDAY'],
     });
     fixture.detectChanges();
   });

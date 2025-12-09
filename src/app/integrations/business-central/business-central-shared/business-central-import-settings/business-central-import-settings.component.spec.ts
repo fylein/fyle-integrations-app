@@ -8,9 +8,8 @@ xdescribe('BusinessCentralImportSettingsComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ BusinessCentralImportSettingsComponent ]
-    })
-    .compileComponents();
+      declarations: [BusinessCentralImportSettingsComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(BusinessCentralImportSettingsComponent);
     component = fixture.componentInstance;

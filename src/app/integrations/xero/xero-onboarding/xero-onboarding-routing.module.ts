@@ -18,42 +18,43 @@ const routes: Routes = [
     children: [
       {
         path: 'landing',
-        component: XeroOnboardingLandingComponent
+        component: XeroOnboardingLandingComponent,
       },
       {
         path: 'connector',
-        component: XeroOnboardingConnectorComponent
+        component: XeroOnboardingConnectorComponent,
       },
-      { path: 'export_settings',
+      {
+        path: 'export_settings',
         component: XeroOnboardingExportSettingsComponent,
-        canActivate: [XeroTokenGuard, TenantGuard]
+        canActivate: [XeroTokenGuard, TenantGuard],
       },
       {
         path: 'import_settings',
         component: XeroOnboardingImportSettingsComponent,
-        canActivate: [XeroTokenGuard]
+        canActivate: [XeroTokenGuard],
       },
       {
         path: 'advanced_settings',
         component: XeroOnboardingAdvancedSettingsComponent,
-        canActivate: [XeroTokenGuard]
+        canActivate: [XeroTokenGuard],
       },
       {
         path: 'done',
         component: XeroOnboardingDoneComponent,
-        canActivate: [XeroTokenGuard]
+        canActivate: [XeroTokenGuard],
       },
       {
         path: 'clone_settings',
         component: XeroCloneSettingsComponent,
-        canActivate: [XeroTokenGuard]
-      }
-    ]
-  }
+        canActivate: [XeroTokenGuard],
+      },
+    ],
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class XeroOnboardingRoutingModule { }
+export class XeroOnboardingRoutingModule {}

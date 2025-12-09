@@ -5,7 +5,13 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 import { of, throwError } from 'rxjs';
-import { QBDCorporateCreditCardExpensesObject, ExpenseState, QBDExportDateType, QBDOnboardingState, QBDReimbursableExpensesObject } from 'src/app/core/models/enum/enum.model';
+import {
+  QBDCorporateCreditCardExpensesObject,
+  ExpenseState,
+  QBDExportDateType,
+  QBDOnboardingState,
+  QBDReimbursableExpensesObject,
+} from 'src/app/core/models/enum/enum.model';
 import { QbdExportSettingsService } from 'src/app/core/services/qbd/qbd-configuration/qbd-export-settings.service';
 import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
 import { QbdWorkspaceService } from 'src/app/core/services/qbd/qbd-core/qbd-workspace.service';
@@ -32,37 +38,36 @@ describe('QbdExportSettingComponent', () => {
   let translocoService: jasmine.SpyObj<TranslocoService>;
 
   beforeEach(async () => {
-
     service1 = {
       getQbdExportSettings: () => of(QBDExportSettingResponse),
-      postQbdExportSettings: () => of(QBDExportSettingResponse)
+      postQbdExportSettings: () => of(QBDExportSettingResponse),
     };
 
     const translocoServiceSpy = jasmine.createSpyObj('TranslocoService', ['translate'], {
       config: {
-        reRenderOnLangChange: true
+        reRenderOnLangChange: true,
       },
       langChanges$: of('en'),
-      _loadDependencies: () => Promise.resolve()
+      _loadDependencies: () => Promise.resolve(),
     });
 
     service2 = {
       getOnboardingState: () => QBDOnboardingState.EXPORT_SETTINGS,
-      setOnboardingState: () => undefined
+      setOnboardingState: () => undefined,
     };
 
     service3 = {
-      displayToastMessage: () => undefined
+      displayToastMessage: () => undefined,
     };
 
     service4 = {
-      refreshMappingPages: () => undefined
+      refreshMappingPages: () => undefined,
     };
 
     await TestBed.configureTestingModule({
-    declarations: [QbdExportSettingComponent],
-    imports: [FormsModule, ReactiveFormsModule, RouterTestingModule, SharedModule, NoopAnimationsModule],
-    providers: [
+      declarations: [QbdExportSettingComponent],
+      imports: [FormsModule, ReactiveFormsModule, RouterTestingModule, SharedModule, NoopAnimationsModule],
+      providers: [
         FormBuilder,
         { provide: TranslocoService, useValue: translocoServiceSpy },
         { provide: Router, useValue: routerSpy },
@@ -70,10 +75,9 @@ describe('QbdExportSettingComponent', () => {
         { provide: QbdWorkspaceService, useValue: service2 },
         { provide: IntegrationsToastService, useValue: service3 },
         { provide: QbdMappingService, useValue: service4 },
-        provideHttpClient(withInterceptorsFromDi())
-    ]
-})
-    .compileComponents();
+        provideHttpClient(withInterceptorsFromDi()),
+      ],
+    }).compileComponents();
 
     translocoService = TestBed.inject(TranslocoService) as jasmine.SpyObj<TranslocoService>;
 
@@ -86,25 +90,61 @@ describe('QbdExportSettingComponent', () => {
     qbdExportSettingService = TestBed.inject(QbdExportSettingsService);
     component.exportSettingsForm = formbuilder.group({
       reimbursableExportType: [component.exportSettings?.reimbursable_expenses_export_type],
-      reimbursableExpense: [component.exportSettings?.reimbursable_expenses_export_type ? true : false, (component as any).exportSelectionValidator()],
-      reimbursableExportGroup: [component.exportSettings?.reimbursable_expense_grouped_by ? component.exportSettings?.reimbursable_expense_grouped_by : null],
+      reimbursableExpense: [
+        component.exportSettings?.reimbursable_expenses_export_type ? true : false,
+        (component as any).exportSelectionValidator(),
+      ],
+      reimbursableExportGroup: [
+        component.exportSettings?.reimbursable_expense_grouped_by
+          ? component.exportSettings?.reimbursable_expense_grouped_by
+          : null,
+      ],
       reimbursableExportDate: [component.exportSettings?.reimbursable_expense_date],
-      creditCardExpense: [component.exportSettings?.credit_card_expense_export_type ? true : false, (component as any).exportSelectionValidator()],
-      cccExportType: [component.exportSettings?.credit_card_expense_export_type ? component.exportSettings?.credit_card_expense_export_type : null],
-      cccExportGroup: [component.exportSettings?.credit_card_expense_grouped_by ? component.exportSettings?.credit_card_expense_grouped_by : null],
-      cccExportDate: [component.exportSettings?.credit_card_expense_date ? component.exportSettings?.credit_card_expense_date : null],
+      creditCardExpense: [
+        component.exportSettings?.credit_card_expense_export_type ? true : false,
+        (component as any).exportSelectionValidator(),
+      ],
+      cccExportType: [
+        component.exportSettings?.credit_card_expense_export_type
+          ? component.exportSettings?.credit_card_expense_export_type
+          : null,
+      ],
+      cccExportGroup: [
+        component.exportSettings?.credit_card_expense_grouped_by
+          ? component.exportSettings?.credit_card_expense_grouped_by
+          : null,
+      ],
+      cccExportDate: [
+        component.exportSettings?.credit_card_expense_date ? component.exportSettings?.credit_card_expense_date : null,
+      ],
       bankAccount: [component.exportSettings?.bank_account_name ? component.exportSettings?.bank_account_name : null],
-      mileageAccountName: [component.exportSettings?.mileage_account_name ? component.exportSettings?.mileage_account_name : null],
-      cccEntityName: [component.exportSettings?.credit_card_entity_name_preference ? component.exportSettings?.credit_card_entity_name_preference : null],
-      cccAccountName: [component.exportSettings?.credit_card_account_name ? component.exportSettings?.credit_card_account_name : null],
-      reimbursableExpenseState: [component.exportSettings?.reimbursable_expense_state ? component.exportSettings?.reimbursable_expense_state : null],
-      cccExpenseState: [component.exportSettings?.credit_card_expense_state ? component.exportSettings?.credit_card_expense_state : null]
+      mileageAccountName: [
+        component.exportSettings?.mileage_account_name ? component.exportSettings?.mileage_account_name : null,
+      ],
+      cccEntityName: [
+        component.exportSettings?.credit_card_entity_name_preference
+          ? component.exportSettings?.credit_card_entity_name_preference
+          : null,
+      ],
+      cccAccountName: [
+        component.exportSettings?.credit_card_account_name ? component.exportSettings?.credit_card_account_name : null,
+      ],
+      reimbursableExpenseState: [
+        component.exportSettings?.reimbursable_expense_state
+          ? component.exportSettings?.reimbursable_expense_state
+          : null,
+      ],
+      cccExpenseState: [
+        component.exportSettings?.credit_card_expense_state
+          ? component.exportSettings?.credit_card_expense_state
+          : null,
+      ],
     });
     translocoService.translate.and.callFake(<T = string>(key: string): T => {
       const translations: Record<string, string> = {
         'qbdExportSetting.creditCardPurchase': 'Credit card purchase',
         'qbdExportSetting.journalEntry': 'Journal entry',
-        'qbdExportSetting.bank': 'bank'
+        'qbdExportSetting.bank': 'bank',
       };
 
       return translations[key] as T;
@@ -119,19 +159,55 @@ describe('QbdExportSettingComponent', () => {
   it('Save function check', () => {
     component.exportSettingsForm = formbuilder.group({
       reimbursableExportType: [component.exportSettings?.reimbursable_expenses_export_type],
-      reimbursableExpense: [component.exportSettings?.reimbursable_expenses_export_type ? true : false, (component as any).exportSelectionValidator()],
-      reimbursableExportGroup: [component.exportSettings?.reimbursable_expense_grouped_by ? component.exportSettings?.reimbursable_expense_grouped_by : null],
+      reimbursableExpense: [
+        component.exportSettings?.reimbursable_expenses_export_type ? true : false,
+        (component as any).exportSelectionValidator(),
+      ],
+      reimbursableExportGroup: [
+        component.exportSettings?.reimbursable_expense_grouped_by
+          ? component.exportSettings?.reimbursable_expense_grouped_by
+          : null,
+      ],
       reimbursableExportDate: ['spent_at'],
-      creditCardExpense: [component.exportSettings?.credit_card_expense_export_type ? true : false, (component as any).exportSelectionValidator()],
-      cccExportType: [component.exportSettings?.credit_card_expense_export_type ? component.exportSettings?.credit_card_expense_export_type : null],
-      cccExportGroup: [component.exportSettings?.credit_card_expense_grouped_by ? component.exportSettings?.credit_card_expense_grouped_by : null],
-      cccExportDate: [component.exportSettings?.credit_card_expense_date ? component.exportSettings?.credit_card_expense_date : null],
+      creditCardExpense: [
+        component.exportSettings?.credit_card_expense_export_type ? true : false,
+        (component as any).exportSelectionValidator(),
+      ],
+      cccExportType: [
+        component.exportSettings?.credit_card_expense_export_type
+          ? component.exportSettings?.credit_card_expense_export_type
+          : null,
+      ],
+      cccExportGroup: [
+        component.exportSettings?.credit_card_expense_grouped_by
+          ? component.exportSettings?.credit_card_expense_grouped_by
+          : null,
+      ],
+      cccExportDate: [
+        component.exportSettings?.credit_card_expense_date ? component.exportSettings?.credit_card_expense_date : null,
+      ],
       bankAccount: [component.exportSettings?.bank_account_name ? component.exportSettings?.bank_account_name : null],
-      mileageAccountName: [component.exportSettings?.mileage_account_name ? component.exportSettings?.mileage_account_name : null],
-      cccEntityName: [component.exportSettings?.credit_card_entity_name_preference ? component.exportSettings?.credit_card_entity_name_preference : null],
-      cccAccountName: [component.exportSettings?.credit_card_account_name ? component.exportSettings?.credit_card_account_name : null],
-      reimbursableExpenseState: [component.exportSettings?.reimbursable_expense_state ? component.exportSettings?.reimbursable_expense_state : null],
-      cccExpenseState: [component.exportSettings?.credit_card_expense_state ? component.exportSettings?.credit_card_expense_state : null]
+      mileageAccountName: [
+        component.exportSettings?.mileage_account_name ? component.exportSettings?.mileage_account_name : null,
+      ],
+      cccEntityName: [
+        component.exportSettings?.credit_card_entity_name_preference
+          ? component.exportSettings?.credit_card_entity_name_preference
+          : null,
+      ],
+      cccAccountName: [
+        component.exportSettings?.credit_card_account_name ? component.exportSettings?.credit_card_account_name : null,
+      ],
+      reimbursableExpenseState: [
+        component.exportSettings?.reimbursable_expense_state
+          ? component.exportSettings?.reimbursable_expense_state
+          : null,
+      ],
+      cccExpenseState: [
+        component.exportSettings?.credit_card_expense_state
+          ? component.exportSettings?.credit_card_expense_state
+          : null,
+      ],
     });
     expect(component.save()).toBeUndefined();
   });
@@ -166,44 +242,98 @@ describe('QbdExportSettingComponent', () => {
   });
 
   it('createCreditCardExpenseWatcher function check', () => {
-    component.exportSettingsForm.controls.creditCardExpense.patchValue(!component.exportSettingsForm.controls.creditCardExpense.value);
+    component.exportSettingsForm.controls.creditCardExpense.patchValue(
+      !component.exportSettingsForm.controls.creditCardExpense.value,
+    );
     expect((component as any).createCreditCardExpenseWatcher()).toBeUndefined();
     fixture.detectChanges();
-    component.exportSettingsForm.controls.creditCardExpense.patchValue(!component.exportSettingsForm.controls.creditCardExpense.value);
+    component.exportSettingsForm.controls.creditCardExpense.patchValue(
+      !component.exportSettingsForm.controls.creditCardExpense.value,
+    );
     expect((component as any).createCreditCardExpenseWatcher()).toBeUndefined();
-    component.exportSettingsForm.controls.creditCardExpense.patchValue(!component.exportSettingsForm.controls.creditCardExpense.value);
+    component.exportSettingsForm.controls.creditCardExpense.patchValue(
+      !component.exportSettingsForm.controls.creditCardExpense.value,
+    );
     expect((component as any).createCreditCardExpenseWatcher()).toBeUndefined();
     component.exportSettings.credit_card_expense_grouped_by = null;
     component.exportSettings.credit_card_expense_date = null;
-    component.exportSettingsForm.controls.creditCardExpense.patchValue(!component.exportSettingsForm.controls.creditCardExpense.value);
+    component.exportSettingsForm.controls.creditCardExpense.patchValue(
+      !component.exportSettingsForm.controls.creditCardExpense.value,
+    );
     expect((component as any).createCreditCardExpenseWatcher()).toBeUndefined();
   });
 
   it('exportSelectionValidator function check', () => {
     component.exportSettingsForm = formbuilder.group({
       reimbursableExportType: [component.exportSettings?.reimbursable_expenses_export_type],
-      reimbursableExpense: [component.exportSettings?.reimbursable_expenses_export_type ? true : false, (component as any).exportSelectionValidator()],
-      reimbursableExportGroup: [component.exportSettings?.reimbursable_expense_grouped_by ? component.exportSettings?.reimbursable_expense_grouped_by : null],
-      reimbursableExportDate: [component.exportSettings?.reimbursable_expense_date ? component.exportSettings?.reimbursable_expense_date : null],
-      creditCardExpense: [component.exportSettings?.credit_card_expense_export_type ? true : false, (component as any).exportSelectionValidator()],
-      cccExportType: [component.exportSettings?.credit_card_expense_export_type ? component.exportSettings?.credit_card_expense_export_type : null],
-      cccExportGroup: [component.exportSettings?.credit_card_expense_grouped_by ? component.exportSettings?.credit_card_expense_grouped_by : null],
-      cccExportDate: [component.exportSettings?.credit_card_expense_date ? component.exportSettings?.credit_card_expense_date : null],
+      reimbursableExpense: [
+        component.exportSettings?.reimbursable_expenses_export_type ? true : false,
+        (component as any).exportSelectionValidator(),
+      ],
+      reimbursableExportGroup: [
+        component.exportSettings?.reimbursable_expense_grouped_by
+          ? component.exportSettings?.reimbursable_expense_grouped_by
+          : null,
+      ],
+      reimbursableExportDate: [
+        component.exportSettings?.reimbursable_expense_date
+          ? component.exportSettings?.reimbursable_expense_date
+          : null,
+      ],
+      creditCardExpense: [
+        component.exportSettings?.credit_card_expense_export_type ? true : false,
+        (component as any).exportSelectionValidator(),
+      ],
+      cccExportType: [
+        component.exportSettings?.credit_card_expense_export_type
+          ? component.exportSettings?.credit_card_expense_export_type
+          : null,
+      ],
+      cccExportGroup: [
+        component.exportSettings?.credit_card_expense_grouped_by
+          ? component.exportSettings?.credit_card_expense_grouped_by
+          : null,
+      ],
+      cccExportDate: [
+        component.exportSettings?.credit_card_expense_date ? component.exportSettings?.credit_card_expense_date : null,
+      ],
       bankAccount: [component.exportSettings?.bank_account_name ? component.exportSettings?.bank_account_name : null],
-      mileageAccountName: [component.exportSettings?.mileage_account_name ? component.exportSettings?.mileage_account_name : null],
-      cccEntityName: [component.exportSettings?.credit_card_entity_name_preference ? component.exportSettings?.credit_card_entity_name_preference : null],
-      cccAccountName: [component.exportSettings?.credit_card_account_name ? component.exportSettings?.credit_card_account_name : null],
-      reimbursableExpenseState: [component.exportSettings?.reimbursable_expense_state ? component.exportSettings?.reimbursable_expense_state : null],
-      cccExpenseState: [component.exportSettings?.credit_card_expense_state ? component.exportSettings?.credit_card_expense_state : null]
+      mileageAccountName: [
+        component.exportSettings?.mileage_account_name ? component.exportSettings?.mileage_account_name : null,
+      ],
+      cccEntityName: [
+        component.exportSettings?.credit_card_entity_name_preference
+          ? component.exportSettings?.credit_card_entity_name_preference
+          : null,
+      ],
+      cccAccountName: [
+        component.exportSettings?.credit_card_account_name ? component.exportSettings?.credit_card_account_name : null,
+      ],
+      reimbursableExpenseState: [
+        component.exportSettings?.reimbursable_expense_state
+          ? component.exportSettings?.reimbursable_expense_state
+          : null,
+      ],
+      cccExpenseState: [
+        component.exportSettings?.credit_card_expense_state
+          ? component.exportSettings?.credit_card_expense_state
+          : null,
+      ],
     });
     fixture.detectChanges();
-    const control = { value: ExpenseState.PAID, parent: formbuilder.group({
-      reimbursableExpense: QBDReimbursableExpensesObject.JOURNAL_ENTRY
-    }) };
+    const control = {
+      value: ExpenseState.PAID,
+      parent: formbuilder.group({
+        reimbursableExpense: QBDReimbursableExpensesObject.JOURNAL_ENTRY,
+      }),
+    };
     expect((component as any).exportSelectionValidator()(control as AbstractControl)).toBeDefined();
-    const control1 = { value: ExpenseState.PAYMENT_PROCESSING, parent: formbuilder.group({
-      creditCardExpense: QBDCorporateCreditCardExpensesObject.JOURNAL_ENTRY
-    }) };
+    const control1 = {
+      value: ExpenseState.PAYMENT_PROCESSING,
+      parent: formbuilder.group({
+        creditCardExpense: QBDCorporateCreditCardExpensesObject.JOURNAL_ENTRY,
+      }),
+    };
     expect((component as any).exportSelectionValidator()(control1 as AbstractControl)).toBeNull();
   });
 
@@ -215,7 +345,9 @@ describe('QbdExportSettingComponent', () => {
   });
 
   it('accountName function check', () => {
-    component.exportSettingsForm.controls.reimbursableExportType.patchValue(QBDReimbursableExpensesObject.JOURNAL_ENTRY);
+    component.exportSettingsForm.controls.reimbursableExportType.patchValue(
+      QBDReimbursableExpensesObject.JOURNAL_ENTRY,
+    );
     fixture.detectChanges();
     expect(component.accountName()).toBe('bank');
     expect(component.namePreference()).toContain('Journal entry');
@@ -236,8 +368,8 @@ describe('QbdExportSettingComponent', () => {
     const reimbursableExpenseGroupingDateOptions: QBDExportSettingFormOption[] = [
       {
         label: 'Date of export',
-        value: QBDExportDateType.LAST_SPENT_AT
-      }
+        value: QBDExportDateType.LAST_SPENT_AT,
+      },
     ];
     expect(component.reimbursableExpenseGroupingDateOptionsFn()).toEqual(reimbursableExpenseGroupingDateOptions);
   });

@@ -4,13 +4,12 @@ import { brandingStyle } from 'src/app/branding/branding-config';
 import { WindowService } from 'src/app/core/services/common/window.service';
 
 @Component({
-    selector: 'app-configuration-step-sub-header',
-    templateUrl: './configuration-step-sub-header.component.html',
-    styleUrls: ['./configuration-step-sub-header.component.scss'],
-    standalone: false
+  selector: 'app-configuration-step-sub-header',
+  templateUrl: './configuration-step-sub-header.component.html',
+  styleUrls: ['./configuration-step-sub-header.component.scss'],
+  standalone: false,
 })
 export class ConfigurationStepSubHeaderComponent implements OnInit {
-
   @Input() label: string;
 
   @Input() subLabel: string | SafeHtml;
@@ -25,9 +24,7 @@ export class ConfigurationStepSubHeaderComponent implements OnInit {
 
   brandingStyle = brandingStyle;
 
-  constructor(
-    private windowService: WindowService
-  ) { }
+  constructor(private windowService: WindowService) {}
 
   previewClick() {
     this.isPreviewClick.emit();
@@ -37,7 +34,5 @@ export class ConfigurationStepSubHeaderComponent implements OnInit {
     this.windowService.openInNewTab(this.readMoreLink);
   }
 
-  ngOnInit(): void {
-  }
-
+  ngOnInit(): void {}
 }

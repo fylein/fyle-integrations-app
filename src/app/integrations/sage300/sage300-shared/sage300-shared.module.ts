@@ -5,23 +5,14 @@ import { SharedModule } from 'src/app/shared/shared.module';
 import { Sage300ImportSettingsComponent } from './sage300-import-settings/sage300-import-settings.component';
 import { Sage300AdvancedSettingsComponent } from './sage300-advanced-settings/sage300-advanced-settings.component';
 
-
-
 @NgModule({
-  declarations: [
-    Sage300ExportSettingsComponent,
-    Sage300ImportSettingsComponent,
-    Sage300AdvancedSettingsComponent
-  ],
-  imports: [
-    CommonModule,
-    SharedModule
-  ],
+  declarations: [Sage300ExportSettingsComponent, Sage300ImportSettingsComponent, Sage300AdvancedSettingsComponent],
+  imports: [CommonModule, SharedModule],
   exports: [
     Sage300ExportSettingsComponent,
     Sage300ImportSettingsComponent,
     Sage300AdvancedSettingsComponent,
-    SharedModule
-  ]
+    SharedModule,
+  ],
 })
-export class Sage300SharedModule { }
+export class Sage300SharedModule {}

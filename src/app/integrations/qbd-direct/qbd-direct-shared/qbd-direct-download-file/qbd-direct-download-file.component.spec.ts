@@ -14,17 +14,16 @@ describe('QbdDirectDownloadFileComponent', () => {
   beforeEach(async () => {
     const translocoServiceSpy = jasmine.createSpyObj('TranslocoService', ['translate'], {
       config: {
-        reRenderOnLangChange: true
+        reRenderOnLangChange: true,
       },
       langChanges$: of('en'),
-      _loadDependencies: () => Promise.resolve()
+      _loadDependencies: () => Promise.resolve(),
     });
 
     await TestBed.configureTestingModule({
       imports: [QbdDirectDownloadFileComponent, HttpClientModule, TranslocoModule],
-      providers: [MessageService, { provide: TranslocoService, useValue: translocoServiceSpy }]
-    })
-    .compileComponents();
+      providers: [MessageService, { provide: TranslocoService, useValue: translocoServiceSpy }],
+    }).compileComponents();
 
     translocoService = TestBed.inject(TranslocoService) as jasmine.SpyObj<TranslocoService>;
 

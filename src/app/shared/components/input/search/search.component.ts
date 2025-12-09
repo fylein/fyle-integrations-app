@@ -4,13 +4,12 @@ import { InputText } from 'primeng/inputtext';
 import { brandingConfig, brandingFeatureConfig, brandingStyle } from 'src/app/branding/branding-config';
 
 @Component({
-    selector: 'app-search',
-    templateUrl: './search.component.html',
-    styleUrls: ['./search.component.scss'],
-    standalone: false
+  selector: 'app-search',
+  templateUrl: './search.component.html',
+  styleUrls: ['./search.component.scss'],
+  standalone: false,
 })
 export class SearchComponent implements OnInit {
-
   @Input() form: FormGroup;
 
   @Input() placeholder: string;
@@ -19,7 +18,7 @@ export class SearchComponent implements OnInit {
 
   @Input() formControllerName: string = 'searchOption';
 
-  @Input() isDropdown:boolean = false;
+  @Input() isDropdown: boolean = false;
 
   @Input() width: string = '';
 
@@ -39,7 +38,7 @@ export class SearchComponent implements OnInit {
 
   @ViewChild('search') search: any;
 
-  constructor() { }
+  constructor() {}
 
   clearSearch(): void {
     this.form.controls.searchOption.setValue('');
@@ -71,5 +70,4 @@ export class SearchComponent implements OnInit {
   ngOnInit(): void {
     this.searchQueryWatcher();
   }
-
 }

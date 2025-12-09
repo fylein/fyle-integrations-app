@@ -1,5 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { Sage50AttributeType, ButtonType, ButtonSize, ToastSeverity, TrackingApp, ClickEvent } from 'src/app/core/models/enum/enum.model';
+import {
+  Sage50AttributeType,
+  ButtonType,
+  ButtonSize,
+  ToastSeverity,
+  TrackingApp,
+  ClickEvent,
+} from 'src/app/core/models/enum/enum.model';
 import { DialogService, DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { FileSelectEvent, FileUploadModule } from 'primeng/fileupload';
 import { sage50AttributeDisplayNames } from 'src/app/core/models/sage50/sage50-configuration/attribute-display-names';
@@ -11,19 +18,22 @@ import { TranslocoService } from '@jsverse/transloco';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { DialogComponent } from '../../core/dialog/dialog.component';
 import { DynamicDialogComponent } from '../../core/dynamic-dialog/dynamic-dialog.component';
-import { CSVImportAttributesInvalidResponse, CSVImportAttributesService, CSVImportAttributesValidResponse } from 'src/app/core/models/db/csv-import-attributes.model';
+import {
+  CSVImportAttributesInvalidResponse,
+  CSVImportAttributesService,
+  CSVImportAttributesValidResponse,
+} from 'src/app/core/models/db/csv-import-attributes.model';
 import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
 import { downloadCSVFile } from 'src/app/core/util/downloadFile';
 import { TrackingService } from 'src/app/core/services/integration/tracking.service';
 
 @Component({
-    selector: 'app-csv-upload-dialog',
-    imports: [SharedModule, FileUploadModule, DialogComponent],
-    templateUrl: './csv-upload-dialog.component.html',
-    styleUrl: './csv-upload-dialog.component.scss'
+  selector: 'app-csv-upload-dialog',
+  imports: [SharedModule, FileUploadModule, DialogComponent],
+  templateUrl: './csv-upload-dialog.component.html',
+  styleUrl: './csv-upload-dialog.component.scss',
 })
 export class CsvUploadDialogComponent implements OnInit {
-
   readonly brandingFeatureConfig = brandingFeatureConfig;
 
   readonly ButtonType = ButtonType;
@@ -31,10 +41,10 @@ export class CsvUploadDialogComponent implements OnInit {
   readonly ButtonSize = ButtonSize;
 
   data!: {
-    attributeType: Sage50AttributeType,
-    articleLink: string,
-    videoURL: string,
-    uploadData: CSVImportAttributesService['importAttributes']
+    attributeType: Sage50AttributeType;
+    articleLink: string;
+    videoURL: string;
+    uploadData: CSVImportAttributesService['importAttributes'];
   };
 
   displayName: string;
@@ -56,8 +66,8 @@ export class CsvUploadDialogComponent implements OnInit {
     private toastService: IntegrationsToastService,
     public dialogService: DialogService,
     public translocoService: TranslocoService,
-    private trackingService: TrackingService
-  ) { }
+    private trackingService: TrackingService,
+  ) {}
 
   closeDialog(): void {
     this.dialogRef.close();
@@ -68,7 +78,7 @@ export class CsvUploadDialogComponent implements OnInit {
       MULTIPLE_FILES_PROVIDED: this.translocoService.translate('csvUploadDialog.onlyOneCsvAllowed'),
       FILE_IS_NOT_CSV: this.translocoService.translate('csvUploadDialog.fileIsNotCsv'),
       ROW_LIMIT_EXCEEDED: this.translocoService.translate('csvUploadDialog.rowLimitExceeded'),
-      FILE_SIZE_EXCEEDED: this.translocoService.translate('csvUploadDialog.fileSizeExceeded')
+      FILE_SIZE_EXCEEDED: this.translocoService.translate('csvUploadDialog.fileSizeExceeded'),
     };
     this.dialogService.open(DynamicDialogComponent, {
       showHeader: false,
@@ -76,8 +86,8 @@ export class CsvUploadDialogComponent implements OnInit {
         type: 'ERROR',
         header: this.translocoService.translate('csvUploadDialog.errorDialogHeader'),
         message: messageMap[error.name],
-        buttonText: this.translocoService.translate('csvUploadDialog.errorDialogButtonText')
-      }
+        buttonText: this.translocoService.translate('csvUploadDialog.errorDialogButtonText'),
+      },
     });
   }
 
@@ -90,13 +100,12 @@ export class CsvUploadDialogComponent implements OnInit {
     }
 
     if (event.files.length > 1) {
-      this.showErrorDialog(new CSVError(
-        'MULTIPLE_FILES_PROVIDED', 'Only one file can be uploaded at a time.'
-      ));
+      this.showErrorDialog(new CSVError('MULTIPLE_FILES_PROVIDED', 'Only one file can be uploaded at a time.'));
       return;
     }
 
-    this.csvJsonTranslator.csvToJson(file, { rowLimit: 20_000 })
+    this.csvJsonTranslator
+      .csvToJson(file, { rowLimit: 20_000 })
       // On CSV parse success, upload data and show loader
       .subscribe({
         next: (jsonData) => {
@@ -107,13 +116,11 @@ export class CsvUploadDialogComponent implements OnInit {
               this.dialogRef.close({
                 name: response.file_name,
                 valueCount: response.data?.length ?? 0,
-                lastUploadedAt: new Date()
+                lastUploadedAt: new Date(),
               });
               this.toastService.displayToastMessage(
                 ToastSeverity.SUCCESS,
-                this.translocoService.translate(
-                  'csvUploadDialog.uploadSuccess', { dimension: this.displayName }
-                )
+                this.translocoService.translate('csvUploadDialog.uploadSuccess', { dimension: this.displayName }),
               );
             },
             error: (httpErrorResponse: { error: CSVImportAttributesInvalidResponse }) => {
@@ -122,7 +129,7 @@ export class CsvUploadDialogComponent implements OnInit {
                 // On validation fail, save csv contents, then show download button
                 this.csv = {
                   name: `UPDATE_${file.name}`,
-                  data: this.csvJsonTranslator.jsonToCsv(response.errors)
+                  data: this.csvJsonTranslator.jsonToCsv(response.errors),
                 };
                 console.error('CSV upload - validation errors:', response.errors);
                 this.state = 'ERROR';
@@ -130,12 +137,12 @@ export class CsvUploadDialogComponent implements OnInit {
                 // On other non-ok responses (such as 5xx), show error toast and close dialog
                 this.toastService.displayToastMessage(
                   ToastSeverity.ERROR,
-                  this.translocoService.translate('csvUploadDialog.uploadError')
+                  this.translocoService.translate('csvUploadDialog.uploadError'),
                 );
                 console.error('CSV upload - unexpected error:', response);
                 this.dialogRef.close();
               }
-            }
+            },
           });
         },
         // On CSV parse fail, show error dialog and stay on the PROMPT state
@@ -144,7 +151,7 @@ export class CsvUploadDialogComponent implements OnInit {
           if (error instanceof CSVError) {
             this.showErrorDialog(error);
           }
-        }
+        },
       });
   }
 

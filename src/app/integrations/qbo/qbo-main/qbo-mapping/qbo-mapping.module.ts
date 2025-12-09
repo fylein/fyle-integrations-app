@@ -3,12 +3,8 @@ import { CommonModule } from '@angular/common';
 
 import { QboMappingRoutingModule } from './qbo-mapping-routing.module';
 
-
 @NgModule({
   declarations: [],
-  imports: [
-    CommonModule,
-    QboMappingRoutingModule
-  ]
+  imports: [CommonModule, QboMappingRoutingModule],
 })
-export class QboMappingModule { }
+export class QboMappingModule {}

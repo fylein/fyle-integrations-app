@@ -3,12 +3,8 @@ import { CommonModule } from '@angular/common';
 
 import { NetsuiteMappingRoutingModule } from './netsuite-mapping-routing.module';
 
-
 @NgModule({
   declarations: [],
-  imports: [
-    CommonModule,
-    NetsuiteMappingRoutingModule
-  ]
+  imports: [CommonModule, NetsuiteMappingRoutingModule],
 })
-export class NetsuiteMappingModule { }
+export class NetsuiteMappingModule {}

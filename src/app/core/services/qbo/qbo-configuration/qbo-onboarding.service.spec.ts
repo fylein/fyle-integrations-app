@@ -8,11 +8,7 @@ describe('UqboUonboardingService', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [
-        UqboUonboardingService,
-        provideHttpClient(withInterceptorsFromDi()),
-        provideHttpClientTesting()
-      ]
+      providers: [UqboUonboardingService, provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting()],
     });
     service = TestBed.inject(UqboUonboardingService);
   });

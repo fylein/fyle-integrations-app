@@ -28,4 +28,4 @@ export type GenericMappingV2Response = {
   next: string;
   previous: string;
   results: ExtendedGenericMappingV2[];
-}
+};

@@ -11,7 +11,6 @@ import { SharedModule } from 'src/app/shared/shared.module';
 import { XeroCompleteExportLogComponent } from './xero-export-log/xero-complete-export-log/xero-complete-export-log.component';
 import { XeroBaseMappingComponent } from './xero-mapping/xero-base-mapping/xero-base-mapping.component';
 
-
 @NgModule({
   declarations: [
     XeroMainComponent,
@@ -19,13 +18,8 @@ import { XeroBaseMappingComponent } from './xero-mapping/xero-base-mapping/xero-
     XeroMappingComponent,
     XeroExportLogComponent,
     XeroCompleteExportLogComponent,
-    XeroBaseMappingComponent
+    XeroBaseMappingComponent,
   ],
-  imports: [
-    CommonModule,
-    XeroSharedModule,
-    SharedModule,
-    XeroMainRoutingModule
-  ]
+  imports: [CommonModule, XeroSharedModule, SharedModule, XeroMainRoutingModule],
 })
-export class XeroMainModule { }
+export class XeroMainModule {}

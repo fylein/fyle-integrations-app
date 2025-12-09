@@ -4,13 +4,12 @@ import { AppName } from 'src/app/core/models/enum/enum.model';
 import { BrandingService } from 'src/app/core/services/common/branding.service';
 
 @Component({
-    selector: 'app-qbd-landing',
-    templateUrl: './qbd-landing.component.html',
-    styleUrls: ['./qbd-landing.component.scss'],
-    standalone: false
+  selector: 'app-qbd-landing',
+  templateUrl: './qbd-landing.component.html',
+  styleUrls: ['./qbd-landing.component.scss'],
+  standalone: false,
 })
 export class QbdLandingComponent implements OnInit {
-
   brandingKbArticles = brandingKbArticles;
 
   isQBDSetupInProgress: boolean = false;
@@ -23,9 +22,7 @@ export class QbdLandingComponent implements OnInit {
 
   readonly brandingConfig = brandingConfig;
 
-  constructor(public brandingService: BrandingService) { }
+  constructor(public brandingService: BrandingService) {}
 
-  ngOnInit(): void {
-  }
-
+  ngOnInit(): void {}
 }

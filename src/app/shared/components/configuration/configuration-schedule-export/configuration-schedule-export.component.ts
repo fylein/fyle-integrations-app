@@ -5,13 +5,12 @@ import { AppName } from 'src/app/core/models/enum/enum.model';
 import { QBDEmailOptions } from 'src/app/core/models/qbd/qbd-configuration/qbd-advanced-setting.model';
 
 @Component({
-    selector: 'app-configuration-schedule-export',
-    templateUrl: './configuration-schedule-export.component.html',
-    styleUrls: ['./configuration-schedule-export.component.scss'],
-    standalone: false
+  selector: 'app-configuration-schedule-export',
+  templateUrl: './configuration-schedule-export.component.html',
+  styleUrls: ['./configuration-schedule-export.component.scss'],
+  standalone: false,
 })
 export class ConfigurationScheduleExportComponent implements OnInit {
-
   @Input() form: FormGroup;
 
   @Input() appName: AppName;
@@ -46,7 +45,7 @@ export class ConfigurationScheduleExportComponent implements OnInit {
 
   readonly AppName = AppName;
 
-  constructor() { }
+  constructor() {}
 
   removeFilter(formField: AbstractControl) {
     (formField as FormGroup).reset();
@@ -57,7 +56,5 @@ export class ConfigurationScheduleExportComponent implements OnInit {
     return element.offsetWidth < element.scrollWidth;
   }
 
-  ngOnInit(): void {
-  }
-
+  ngOnInit(): void {}
 }

@@ -2,7 +2,9 @@
   <p-table [value]="qbdMappings" [tableStyle]="{ 'min-width': '50rem' }" [sortField]="'source_value'" [sortOrder]="1">
     <ng-template pTemplate="header">
       <tr>
-        <th class="tw-flex tw-justify-start tw-items-center">{{ fyleHeaderName | snakeCaseToSpaceCase | sentenceCase }} <i class="tw-ml-6-px pi pi-sort-amount-down"></i></th>
+        <th class="tw-flex tw-justify-start tw-items-center">
+          {{ fyleHeaderName | snakeCaseToSpaceCase | sentenceCase }} <i class="tw-ml-6-px pi pi-sort-amount-down"></i>
+        </th>
         <th>{{ destinationHeaderName }}</th>
         <th>{{ 'qbdMappingTable.status' | transloco }}</th>
       </tr>
@@ -14,18 +16,30 @@
           @if (destinationFieldType === fieldType.TEXT) {
             <span class="p-input-icon-right" (keydown)="isTypingInBox($event, mapping)">
               @if (focussedMappingId === mapping.id) {
-                <i class="pi pi-check tooltip" (click)="postTextFieldValue(mapping)" [pTooltip]="getToolTipText()" [escape]="false"  tooltipPosition="top"></i>
+                <i
+                  class="pi pi-check tooltip"
+                  (click)="postTextFieldValue(mapping)"
+                  [pTooltip]="getToolTipText()"
+                  [escape]="false"
+                  tooltipPosition="top"
+                ></i>
               }
-              <input type="text" pInputText [placeholder]="getPlaceholder()" [value]="mapping.destination_value" (input)="onTextBoxChange($event)">
+              <input
+                type="text"
+                pInputText
+                [placeholder]="getPlaceholder()"
+                [value]="mapping.destination_value"
+                (input)="onTextBoxChange($event)"
+              />
             </span>
           }
         </td>
         <td>
           @if (mapping.destination_value) {
-            <p class="mapped">{{ ('qbdMappingTable.mapped' | transloco)}}</p>
+            <p class="mapped">{{ 'qbdMappingTable.mapped' | transloco }}</p>
           }
           @if (!mapping.destination_value) {
-            <p class="unmapped">{{ ('qbdMappingTable.unmapped' | transloco)}}</p>
+            <p class="unmapped">{{ 'qbdMappingTable.unmapped' | transloco }}</p>
           }
         </td>
       </tr>

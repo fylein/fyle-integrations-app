@@ -8,9 +8,8 @@ xdescribe('Sage300MainComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ Sage300MainComponent ]
-    })
-    .compileComponents();
+      declarations: [Sage300MainComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(Sage300MainComponent);
     component = fixture.componentInstance;

@@ -5,13 +5,12 @@ import { environment } from 'src/environments/environment';
 import { brandingStyle } from 'src/app/branding/branding-config';
 
 @Component({
-    selector: 'app-export-log-child-table-dialog',
-    templateUrl: './export-log-child-table-dialog.component.html',
-    styleUrls: ['./export-log-child-table-dialog.component.scss'],
-    standalone: false
+  selector: 'app-export-log-child-table-dialog',
+  templateUrl: './export-log-child-table-dialog.component.html',
+  styleUrls: ['./export-log-child-table-dialog.component.scss'],
+  standalone: false,
 })
 export class ExportLogChildTableDialogComponent implements OnInit {
-
   @Input() isDialogOpen: boolean;
 
   @Input() expenses: Expense[] = [];
@@ -20,9 +19,7 @@ export class ExportLogChildTableDialogComponent implements OnInit {
 
   readonly brandingStyle = brandingStyle;
 
-  constructor(
-    private windowService: WindowService
-  ) { }
+  constructor(private windowService: WindowService) {}
 
   openExpenseinFyle(expense_id: string, org_id: string) {
     const url = `${environment.fyle_app_url}/app/admin/#/company_expenses?txnId=${expense_id}&org_id=${org_id}`;
@@ -33,7 +30,5 @@ export class ExportLogChildTableDialogComponent implements OnInit {
     this.hideChildTable.emit();
   }
 
-  ngOnInit(): void {
-  }
-
+  ngOnInit(): void {}
 }

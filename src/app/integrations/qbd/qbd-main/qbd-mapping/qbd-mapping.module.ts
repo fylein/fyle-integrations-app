@@ -7,17 +7,8 @@ import { TableModule } from 'primeng/table';
 import { TabsModule } from 'primeng/tabs';
 import { QbdGenericMappingComponent } from './qbd-generic-mapping/qbd-generic-mapping.component';
 
-
 @NgModule({
-  declarations: [
-    QbdGenericMappingComponent
-  ],
-  imports: [
-    CommonModule,
-    TableModule,
-    TabsModule,
-    SharedModule,
-    QbdMappingRoutingModule
-  ]
+  declarations: [QbdGenericMappingComponent],
+  imports: [CommonModule, TableModule, TabsModule, SharedModule, QbdMappingRoutingModule],
 })
-export class QbdMappingModule { }
+export class QbdMappingModule {}

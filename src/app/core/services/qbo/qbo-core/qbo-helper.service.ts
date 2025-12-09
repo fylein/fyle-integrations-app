@@ -5,14 +5,13 @@ import { WorkspaceService } from '../../common/workspace.service';
 import { Cacheable, globalCacheBusterNotifier } from 'ts-cacheable';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class QboHelperService {
-
   constructor(
     private apiService: ApiService,
-    private workspaceService: WorkspaceService
-  ) { }
+    private workspaceService: WorkspaceService,
+  ) {}
 
   @Cacheable()
   syncFyleDimensions() {

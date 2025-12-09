@@ -24,10 +24,10 @@ describe('IntacctOnboardingConnectorComponent', () => {
     const intacctOnboardingServiceSpy = jasmine.createSpyObj('IntacctOnboardingService', ['getOnboardingSteps']);
     const translocoServiceSpy = jasmine.createSpyObj('TranslocoService', ['translate'], {
       config: {
-        reRenderOnLangChange: true
+        reRenderOnLangChange: true,
       },
       langChanges$: of('en'),
-      _loadDependencies: () => Promise.resolve()
+      _loadDependencies: () => Promise.resolve(),
     });
 
     translocoServiceSpy.translate.and.returnValue('Intacct Connection');
@@ -43,10 +43,9 @@ describe('IntacctOnboardingConnectorComponent', () => {
         provideHttpClient(withInterceptorsFromDi()),
         provideHttpClientTesting(),
         MessageService,
-        { provide: TranslocoService, useValue: translocoServiceSpy }
-      ]
-    })
-    .compileComponents();
+        { provide: TranslocoService, useValue: translocoServiceSpy },
+      ],
+    }).compileComponents();
 
     workspaceServiceSpy = TestBed.inject(WorkspaceService) as jasmine.SpyObj<WorkspaceService>;
     intacctConnectorSpy = TestBed.inject(IntacctConnectorService) as jasmine.SpyObj<IntacctConnectorService>;

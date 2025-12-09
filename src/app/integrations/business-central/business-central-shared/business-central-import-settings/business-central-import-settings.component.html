@@ -4,12 +4,21 @@
   </div>
 }
 @if (!isLoading) {
-  <div class="configuration--contents tw-border-separator tw-mt-6" [ngClass]="brandingStyle.common.configurationContents">
+  <div
+    class="configuration--contents tw-border-separator tw-mt-6"
+    [ngClass]="brandingStyle.common.configurationContents"
+  >
     <div>
-      <app-configuration-step-header [headerText]="'businessCentralImportSettings.headerText' | transloco"
-        [contentText]="'businessCentralImportSettings.contentText' | transloco:{ brandName: brandingService.getBrandFullName() }"
-        [redirectLink]="supportArticleLink" [showSyncButton]="isOnboarding" [appName]="appName"
-        (refreshDimension)="refreshDimensions($event)">
+      <app-configuration-step-header
+        [headerText]="'businessCentralImportSettings.headerText' | transloco"
+        [contentText]="
+          'businessCentralImportSettings.contentText' | transloco: { brandName: brandingService.getBrandFullName() }
+        "
+        [redirectLink]="supportArticleLink"
+        [showSyncButton]="isOnboarding"
+        [appName]="appName"
+        (refreshDimension)="refreshDimensions($event)"
+      >
       </app-configuration-step-header>
     </div>
     <div>
@@ -18,33 +27,58 @@
           <div class="tw-rounded-lg tw-border-separator tw-border">
             <app-configuration-toggle-field
               [form]="importSettingForm"
-              [label]="'businessCentralImportSettings.importChartOfAccountsLabel' | transloco:{ brandName: brandingConfig.brandName }"
-              [subLabel]="'businessCentralImportSettings.importChartOfAccountsSubLabel' | transloco:{ brandName: brandingConfig.brandName }"
+              [label]="
+                'businessCentralImportSettings.importChartOfAccountsLabel'
+                  | transloco: { brandName: brandingConfig.brandName }
+              "
+              [subLabel]="
+                'businessCentralImportSettings.importChartOfAccountsSubLabel'
+                  | transloco: { brandName: brandingConfig.brandName }
+              "
               [formControllerName]="'importCategories'"
               [isSectionHeader]="false"
-              [iconPath]="'arrow-tail-down'">
+              [iconPath]="'arrow-tail-down'"
+            >
             </app-configuration-toggle-field>
             @if (importSettingForm.get('importCategories')?.value) {
               <div class="tw-pr-24-px tw-pl-64-px tw-py-0 tw-pb-24-px">
                 <div class="tw-flex tw-justify-between tw-items-center">
                   <h5 class="lg:tw-w-3/5 md:tw-w-1/2 tw-text-slightly-normal-text-color tw-text-14-px !tw-font-500">
-                    {{ 'businessCentralImportSettings.selectAccountsLabel' | transloco:{ appName: appName, brandName: brandingConfig.brandName } }}
+                    {{
+                      'businessCentralImportSettings.selectAccountsLabel'
+                        | transloco: { appName: appName, brandName: brandingConfig.brandName }
+                    }}
                     <p class="tw-text-text-muted" [ngClass]="brandingStyle.common.inputLabelTextStyle">
                       {{ 'businessCentralImportSettings.selectAccountsDescription' | transloco }}
                     </p>
                   </h5>
                   <div class="p-field-checkbox tw-pl-34-px">
-                    <p-multiselect [optionDisabled]="'Expense'" [placeholder]="'businessCentralImportSettings.selectChartOfAccountsPlaceholder' | transloco" [options]="chartOfAccountTypesList" styleClass="tw-z-2 tw-py-8-px tw-px-12-px" [formControlName]="'chartOfAccountTypes'">
+                    <p-multiselect
+                      [optionDisabled]="'Expense'"
+                      [placeholder]="'businessCentralImportSettings.selectChartOfAccountsPlaceholder' | transloco"
+                      [options]="chartOfAccountTypesList"
+                      styleClass="tw-z-2 tw-py-8-px tw-px-12-px"
+                      [formControlName]="'chartOfAccountTypes'"
+                    >
                       <ng-template let-value pTemplate="selectedItems">
                         @for (option of value; track option; let i = $index) {
                           <div class="tw-inline-flex tw-align-items-center">
-                            <div>{{ option | sentenceCase }}@if (i !== value?.length-1) {
-                              <span>,&nbsp;</span>
-                            }</div>
+                            <div>
+                              {{ option | sentenceCase }}
+                              @if (i !== value?.length - 1) {
+                                <span>,&nbsp;</span>
+                              }
+                            </div>
                           </div>
                         }
                         @if (!value || value.length === 0) {
-                          <div>{{helper.sentenseCaseConversion(('businessCentralImportSettings.selectChartOfAccountsPlaceholder' | transloco))}}</div>
+                          <div>
+                            {{
+                              helper.sentenseCaseConversion(
+                                'businessCentralImportSettings.selectChartOfAccountsPlaceholder' | transloco
+                              )
+                            }}
+                          </div>
                         }
                       </ng-template>
                     </p-multiselect>
@@ -56,11 +90,17 @@
           <div class="tw-rounded-lg tw-border-separator tw-border tw-mt-16-px">
             <app-configuration-toggle-field
               [form]="importSettingForm"
-              [label]="'businessCentralImportSettings.importVendorLabel' | transloco:{ brandName: brandingConfig.brandName }"
-              [subLabel]="'businessCentralImportSettings.importVendorSubLabel' | transloco:{ brandName: brandingConfig.brandName }"
+              [label]="
+                'businessCentralImportSettings.importVendorLabel' | transloco: { brandName: brandingConfig.brandName }
+              "
+              [subLabel]="
+                'businessCentralImportSettings.importVendorSubLabel'
+                  | transloco: { brandName: brandingConfig.brandName }
+              "
               [formControllerName]="'importVendorAsMerchant'"
               [isSectionHeader]="false"
-              [iconPath]="'arrow-tail-down'">
+              [iconPath]="'arrow-tail-down'"
+            >
             </app-configuration-toggle-field>
           </div>
           <div>
@@ -69,16 +109,24 @@
               [appName]="appName"
               [accountingFieldOptions]="businessCentralFields"
               [fyleFieldOptions]="fyleFields"
-              [isDestinationFixedImport]="true">
+              [isDestinationFixedImport]="true"
+            >
             </app-configuration-import-field>
           </div>
         </div>
         <app-configuration-step-footer
-          [ctaText] = "!isSaveInProgress ? (isOnboarding ? ConfigurationCtaText.SAVE_AND_CONTINUE : ConfigurationCtaText.SAVE) : ConfigurationCtaText.SAVING"
-          [showBackButton] = "isOnboarding"
+          [ctaText]="
+            !isSaveInProgress
+              ? isOnboarding
+                ? ConfigurationCtaText.SAVE_AND_CONTINUE
+                : ConfigurationCtaText.SAVE
+              : ConfigurationCtaText.SAVING
+          "
+          [showBackButton]="isOnboarding"
           [isButtonDisabled]="!importSettingForm.valid"
           (navigateToPreviousStep)="navigateBack()"
-          (save)="save()">
+          (save)="save()"
+        >
         </app-configuration-step-footer>
       </form>
     </div>
@@ -87,7 +135,8 @@
         [customFieldForm]="customFieldForm"
         [showCustomFieldCreationDialog]="showCustomFieldDialog"
         (saveCustomFieldFn)="saveFyleExpenseField()"
-        (closeModelFn)="closeModel()">
+        (closeModelFn)="closeModel()"
+      >
       </app-configuration-custom-field-creation-dialog>
     </div>
   </div>
@@ -96,8 +145,10 @@
   <div>
     <app-preview-dialog
       [isPreviewDialogVisible]="true"
-      [iconPath]="'assets/illustrations/sageIntacct/IntacctImportSettings.png'" (closeDialog)="closeDialog()"
-      [header]="'businessCentralImportSettings.previewHeader' | transloco">
+      [iconPath]="'assets/illustrations/sageIntacct/IntacctImportSettings.png'"
+      (closeDialog)="closeDialog()"
+      [header]="'businessCentralImportSettings.previewHeader' | transloco"
+    >
     </app-preview-dialog>
   </div>
 }

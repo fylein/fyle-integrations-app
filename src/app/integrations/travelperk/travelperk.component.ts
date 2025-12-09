@@ -8,13 +8,12 @@ import { TravelperkService } from 'src/app/core/services/travelperk/travelperk-c
 import { AuthService } from 'src/app/core/services/common/auth.service';
 
 @Component({
-    selector: 'app-travelperk',
-    templateUrl: './travelperk.component.html',
-    styleUrls: ['./travelperk.component.scss'],
-    standalone: false
+  selector: 'app-travelperk',
+  templateUrl: './travelperk.component.html',
+  styleUrls: ['./travelperk.component.scss'],
+  standalone: false,
 })
 export class TravelperkComponent implements OnInit {
-
   isLoading: boolean;
 
   travelperkData: Travelperk;
@@ -28,7 +27,7 @@ export class TravelperkComponent implements OnInit {
     private storageService: StorageService,
     private windowService: WindowService,
     private router: Router,
-    private authService: AuthService
+    private authService: AuthService,
   ) {
     this.windowReference = this.windowService.nativeWindow;
   }
@@ -38,9 +37,10 @@ export class TravelperkComponent implements OnInit {
     if (pathName === '/integrations/travelperk') {
       const onboardingStateComponentMap = {
         [TravelPerkOnboardingState.CONNECTION]: '/integrations/travelperk/onboarding/landing',
-        [TravelPerkOnboardingState.PAYMENT_PROFILE_SETTINGS]: '/integrations/travelperk/onboarding/payment_profile_settings',
+        [TravelPerkOnboardingState.PAYMENT_PROFILE_SETTINGS]:
+          '/integrations/travelperk/onboarding/payment_profile_settings',
         [TravelPerkOnboardingState.ADVANCED_SETTINGS]: '/integrations/travelperk/onboarding/advanced_settings',
-        [TravelPerkOnboardingState.COMPLETE]: '/integrations/travelperk/main/configuration'
+        [TravelPerkOnboardingState.COMPLETE]: '/integrations/travelperk/main/configuration',
       };
       this.router.navigateByUrl(onboardingStateComponentMap[this.travelperkData.onboarding_state]);
     }
@@ -48,19 +48,22 @@ export class TravelperkComponent implements OnInit {
 
   private setupPage(): void {
     this.isLoading = true;
-    this.travelperkService.getTravelperkData().subscribe((travelperkData : Travelperk) => {
-      this.travelperkData = travelperkData;
-      this.isIntegrationConnected = travelperkData.is_travelperk_connected;
-      this.storageService.set('onboarding-state', this.travelperkData.onboarding_state);
-      this.storageService.set('workspaceId', this.travelperkData.org);
-      this.travelperkService.syncPaymentProfile().subscribe();
-      this.travelperkService.syncCategories().subscribe();
-      this.isLoading = false;
-      this.navigate();
-    }, () => {
-      this.isLoading = false;
-      this.router.navigateByUrl('/integrations/travelperk/onboarding/landing');
-    });
+    this.travelperkService.getTravelperkData().subscribe(
+      (travelperkData: Travelperk) => {
+        this.travelperkData = travelperkData;
+        this.isIntegrationConnected = travelperkData.is_travelperk_connected;
+        this.storageService.set('onboarding-state', this.travelperkData.onboarding_state);
+        this.storageService.set('workspaceId', this.travelperkData.org);
+        this.travelperkService.syncPaymentProfile().subscribe();
+        this.travelperkService.syncCategories().subscribe();
+        this.isLoading = false;
+        this.navigate();
+      },
+      () => {
+        this.isLoading = false;
+        this.router.navigateByUrl('/integrations/travelperk/onboarding/landing');
+      },
+    );
   }
 
   ngOnInit(): void {

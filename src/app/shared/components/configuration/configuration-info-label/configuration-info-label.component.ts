@@ -2,13 +2,12 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { brandingStyle } from 'src/app/branding/branding-config';
 
 @Component({
-    selector: 'app-configuration-info-label',
-    templateUrl: './configuration-info-label.component.html',
-    styleUrls: ['./configuration-info-label.component.scss'],
-    standalone: false
+  selector: 'app-configuration-info-label',
+  templateUrl: './configuration-info-label.component.html',
+  styleUrls: ['./configuration-info-label.component.scss'],
+  standalone: false,
 })
 export class ConfigurationInfoLabelComponent implements OnInit {
-
   @Input() infoText: string;
 
   @Input() showIcon: boolean = true;
@@ -21,13 +20,11 @@ export class ConfigurationInfoLabelComponent implements OnInit {
 
   readonly brandingStyle = brandingStyle;
 
-  constructor() { }
+  constructor() {}
 
   clearSearch() {
     this.closeInfoLabel.emit(true);
   }
 
-  ngOnInit(): void {
-  }
-
+  ngOnInit(): void {}
 }

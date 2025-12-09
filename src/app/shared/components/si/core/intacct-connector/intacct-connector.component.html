@@ -3,13 +3,19 @@
     <app-loader></app-loader>
   </div>
 } @else {
-  <div  class="configuration--contents tw-border-separator tw-mt-6" [ngClass]="brandingStyle.common.configurationContents">
+  <div
+    class="configuration--contents tw-border-separator tw-mt-6"
+    [ngClass]="brandingStyle.common.configurationContents"
+  >
     <div>
       @if (!isLoading) {
         <app-configuration-step-header
           [headerText]="'intacctConnector.headerText' | transloco"
-          [contentText]="'intacct.configuration.connector.subLabel' | transloco: {brandName: brandingConfig.brandName}"
-          [redirectLink]="redirectLink">
+          [contentText]="
+            'intacct.configuration.connector.subLabel' | transloco: { brandName: brandingConfig.brandName }
+          "
+          [redirectLink]="redirectLink"
+        >
         </app-configuration-step-header>
       }
     </div>
@@ -21,7 +27,17 @@
           </div>
         </div>
         @if (!isLoading) {
-          <app-configuration-step-footer [ctaText]="!saveInProgress ? (isOnboarding ? ConfigurationCtaText.SAVE_AND_CONTINUE : ConfigurationCtaText.UPDATE) : ConfigurationCtaText.SAVING" (save)="save()" [isButtonDisabled]="!connectSageIntacctForm.valid"></app-configuration-step-footer>
+          <app-configuration-step-footer
+            [ctaText]="
+              !saveInProgress
+                ? isOnboarding
+                  ? ConfigurationCtaText.SAVE_AND_CONTINUE
+                  : ConfigurationCtaText.UPDATE
+                : ConfigurationCtaText.SAVING
+            "
+            (save)="save()"
+            [isButtonDisabled]="!connectSageIntacctForm.valid"
+          ></app-configuration-step-footer>
         }
       </div>
     }

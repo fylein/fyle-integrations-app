@@ -7,13 +7,12 @@ import { SharedModule } from 'src/app/shared/shared.module';
 import { TranslocoModule, TranslocoService } from '@jsverse/transloco';
 
 @Component({
-    selector: 'app-qbd-direct-configuration',
-    imports: [RouterModule, SharedModule, CommonModule, TranslocoModule],
-    templateUrl: './qbd-direct-configuration.component.html',
-    styleUrl: './qbd-direct-configuration.component.scss'
+  selector: 'app-qbd-direct-configuration',
+  imports: [RouterModule, SharedModule, CommonModule, TranslocoModule],
+  templateUrl: './qbd-direct-configuration.component.html',
+  styleUrl: './qbd-direct-configuration.component.scss',
 })
 export class QbdDirectConfigurationComponent {
-
   modules: TabMenuItem[] = [];
 
   readonly isGradientAllowed: boolean = brandingFeatureConfig.isGradientAllowed;
@@ -24,14 +23,28 @@ export class QbdDirectConfigurationComponent {
 
   readonly brandingFeatureConfig = brandingFeatureConfig;
 
-  constructor(private translocoService: TranslocoService, private router: Router) {
+  constructor(
+    private translocoService: TranslocoService,
+    private router: Router,
+  ) {
     this.modules = [
-      {label: this.translocoService.translate('qbd_direct.configuration.exportSetting.stepName'), routerLink: '/integrations/qbd_direct/main/configuration/export_settings', value: 'export_settings'},
-      {label: this.translocoService.translate('qbd_direct.configuration.importSetting.stepName'), routerLink: '/integrations/qbd_direct/main/configuration/import_settings', value: 'import_settings'},
-      {label: this.translocoService.translate('qbd_direct.configuration.advancedSettings.stepName'), routerLink: '/integrations/qbd_direct/main/configuration/advanced_settings', value: 'advanced_settings'}
+      {
+        label: this.translocoService.translate('qbd_direct.configuration.exportSetting.stepName'),
+        routerLink: '/integrations/qbd_direct/main/configuration/export_settings',
+        value: 'export_settings',
+      },
+      {
+        label: this.translocoService.translate('qbd_direct.configuration.importSetting.stepName'),
+        routerLink: '/integrations/qbd_direct/main/configuration/import_settings',
+        value: 'import_settings',
+      },
+      {
+        label: this.translocoService.translate('qbd_direct.configuration.advancedSettings.stepName'),
+        routerLink: '/integrations/qbd_direct/main/configuration/advanced_settings',
+        value: 'advanced_settings',
+      },
     ];
 
     this.router.navigate([this.modules[0].routerLink]);
   }
-
 }

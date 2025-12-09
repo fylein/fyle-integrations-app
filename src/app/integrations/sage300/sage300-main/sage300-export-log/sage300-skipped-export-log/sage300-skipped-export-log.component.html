@@ -5,18 +5,18 @@
 } @else {
   <div class="tw-rounded-8-px tw-shadow-app-card tw-bg-white tw-border-1-px tw-border-separator">
     <div>
-      @if (totalCount > 0 || (isDateSelected || searchQuery)) {
+      @if (totalCount > 0 || isDateSelected || searchQuery) {
         <app-export-log-filter
           [exportLogForm]="skipExportLogForm"
           [dateOptions]="dateOptions"
           [hideCalendar]="hideCalendar"
-          (handleSimpleSearch)="handleSimpleSearch($event)">
+          (handleSimpleSearch)="handleSimpleSearch($event)"
+        >
         </app-export-log-filter>
       }
 
       @if (!isLoading) {
-        <app-skipped-export-log-table [filteredExpense]="filteredExpenses">
-        </app-skipped-export-log-table>
+        <app-skipped-export-log-table [filteredExpense]="filteredExpenses"> </app-skipped-export-log-table>
       }
 
       @if (totalCount > 0 && !isLoading) {
@@ -26,7 +26,8 @@
             [page]="currentPage"
             [totalCount]="totalCount"
             (pageSizeChangeEvent)="pageSizeChanges($event)"
-            (pageOffsetChangeEvent)="pageChanges($event)">
+            (pageOffsetChangeEvent)="pageChanges($event)"
+          >
           </app-paginator>
         </div>
       }
@@ -34,16 +35,17 @@
       @if ((isDateSelected || searchQuery) && totalCount === 0 && !isLoading) {
         <app-zero-state-with-illustration
           [mainText]="'sage300SkippedExportLog.noResultsFound' | transloco"
-          [subText]="'sage300SkippedExportLog.noResultsSuggestion' | transloco">
+          [subText]="'sage300SkippedExportLog.noResultsSuggestion' | transloco"
+        >
         </app-zero-state-with-illustration>
       }
-
     </div>
 
-    @if (totalCount === 0 && (!isDateSelected && !searchQuery) && !isLoading) {
+    @if (totalCount === 0 && !isDateSelected && !searchQuery && !isLoading) {
       <app-zero-state-with-illustration
         [mainText]="'sage300SkippedExportLog.noRecordsToShow' | transloco"
-        [subText]="'sage300SkippedExportLog.skippedExportsStoredHere' | transloco">
+        [subText]="'sage300SkippedExportLog.skippedExportsStoredHere' | transloco"
+      >
       </app-zero-state-with-illustration>
     }
   </div>

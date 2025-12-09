@@ -9,15 +9,13 @@ import { HelperService } from '../../common/helper.service';
 import { ApiService } from '../../common/api.service';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class SiWorkspaceService {
-
   constructor(
     private storageService: StorageService,
-    private apiService: ApiService
-  ) {
-  }
+    private apiService: ApiService,
+  ) {}
 
   @Cacheable()
   syncFyleDimensions() {
@@ -31,11 +29,11 @@ export class SiWorkspaceService {
 
   @Cacheable()
   getWorkspace(orgId: string): Observable<IntacctWorkspace[]> {
-    return this.apiService.get('/workspaces/', {org_id: orgId, is_polling: false});
+    return this.apiService.get('/workspaces/', { org_id: orgId, is_polling: false });
   }
 
   getWorkspaceWithoutCache(orgId: string, isPolling = false): Observable<IntacctWorkspace[]> {
-    return this.apiService.get('/workspaces/', {org_id: orgId, is_polling: isPolling});
+    return this.apiService.get('/workspaces/', { org_id: orgId, is_polling: isPolling });
   }
 
   postWorkspace(): Observable<IntacctWorkspace> {

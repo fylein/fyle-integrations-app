@@ -5,13 +5,12 @@ import { brandingConfig, brandingFeatureConfig, brandingStyle } from 'src/app/br
 import { TranslocoService } from '@jsverse/transloco';
 
 @Component({
-    selector: 'app-qbo-export-log',
-    templateUrl: './qbo-export-log.component.html',
-    styleUrls: ['./qbo-export-log.component.scss'],
-    standalone: false
+  selector: 'app-qbo-export-log',
+  templateUrl: './qbo-export-log.component.html',
+  styleUrls: ['./qbo-export-log.component.scss'],
+  standalone: false,
 })
 export class QboExportLogComponent implements OnInit {
-
   modules: TabMenuItem[];
 
   activeModule: string;
@@ -26,17 +25,23 @@ export class QboExportLogComponent implements OnInit {
 
   constructor(
     private router: Router,
-    private translocoService: TranslocoService
-  ) { }
-
+    private translocoService: TranslocoService,
+  ) {}
 
   ngOnInit(): void {
     this.modules = [
-      { label: this.translocoService.translate('qboExportLog.completed'), routerLink: '/integrations/qbo/main/export_log/complete', value: 'complete' },
-      { label: this.translocoService.translate('qboExportLog.skipped'), routerLink: '/integrations/qbo/main/export_log/skipped', value: 'skipped' }
+      {
+        label: this.translocoService.translate('qboExportLog.completed'),
+        routerLink: '/integrations/qbo/main/export_log/complete',
+        value: 'complete',
+      },
+      {
+        label: this.translocoService.translate('qboExportLog.skipped'),
+        routerLink: '/integrations/qbo/main/export_log/skipped',
+        value: 'skipped',
+      },
     ];
     this.activeModule = this.modules[0].value;
     this.router.navigateByUrl(this.modules[0].routerLink as string);
   }
-
 }

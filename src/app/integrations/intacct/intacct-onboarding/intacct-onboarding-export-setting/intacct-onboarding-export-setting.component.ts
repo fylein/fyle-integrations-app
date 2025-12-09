@@ -5,23 +5,24 @@ import { IntacctOnboardingService } from 'src/app/core/services/si/si-configurat
 import { TranslocoService } from '@jsverse/transloco';
 
 @Component({
-    selector: 'app-intacct-onboarding-export-setting',
-    templateUrl: './intacct-onboarding-export-setting.component.html',
-    styleUrls: ['./intacct-onboarding-export-setting.component.scss'],
-    standalone: false
+  selector: 'app-intacct-onboarding-export-setting',
+  templateUrl: './intacct-onboarding-export-setting.component.html',
+  styleUrls: ['./intacct-onboarding-export-setting.component.scss'],
+  standalone: false,
 })
 export class IntacctOnboardingExportSettingComponent implements OnInit {
-
   onboardingSteps: OnboardingStepper[] = [];
 
   constructor(
     private workspaceService: WorkspaceService,
     private translocoService: TranslocoService,
-    private intacctOnboardingService: IntacctOnboardingService
-  ) { }
+    private intacctOnboardingService: IntacctOnboardingService,
+  ) {}
 
   ngOnInit(): void {
-    this.onboardingSteps = this.intacctOnboardingService.getOnboardingSteps(this.translocoService.translate('intacct.configuration.exportSetting.stepName'), this.workspaceService.getOnboardingState());
+    this.onboardingSteps = this.intacctOnboardingService.getOnboardingSteps(
+      this.translocoService.translate('intacct.configuration.exportSetting.stepName'),
+      this.workspaceService.getOnboardingState(),
+    );
   }
-
 }

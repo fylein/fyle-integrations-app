@@ -8,9 +8,8 @@ xdescribe('NetsuiteOnboardingComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ NetsuiteOnboardingComponent ]
-    })
-    .compileComponents();
+      declarations: [NetsuiteOnboardingComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(NetsuiteOnboardingComponent);
     component = fixture.componentInstance;

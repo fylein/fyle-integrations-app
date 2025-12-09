@@ -9,13 +9,12 @@ import { SentenceCasePipe } from 'src/app/shared/pipes/sentence-case.pipe';
 import { SnakeCaseToSpaceCasePipe } from 'src/app/shared/pipes/snake-case-to-space-case.pipe';
 
 @Component({
-    selector: 'app-business-central-mapping',
-    templateUrl: './business-central-mapping.component.html',
-    styleUrls: ['./business-central-mapping.component.scss'],
-    standalone: false
+  selector: 'app-business-central-mapping',
+  templateUrl: './business-central-mapping.component.html',
+  styleUrls: ['./business-central-mapping.component.scss'],
+  standalone: false,
 })
 export class BusinessCentralMappingComponent implements OnInit {
-
   isLoading: boolean;
 
   mappingPages: TabMenuItem[];
@@ -33,11 +32,19 @@ export class BusinessCentralMappingComponent implements OnInit {
   constructor(
     private router: Router,
     private mappingService: MappingService,
-    private translocoService: TranslocoService
+    private translocoService: TranslocoService,
   ) {
     this.mappingPages = [
-      {label: this.translocoService.translate('businessCentralMapping.employeeMapping'), routerLink: '/integrations/business_central/main/mapping/employee', value: 'employee'},
-      {label: this.translocoService.translate('businessCentralMapping.categoryMapping'), routerLink: '/integrations/business_central/main/mapping/category', value: 'category'}
+      {
+        label: this.translocoService.translate('businessCentralMapping.employeeMapping'),
+        routerLink: '/integrations/business_central/main/mapping/employee',
+        value: 'employee',
+      },
+      {
+        label: this.translocoService.translate('businessCentralMapping.categoryMapping'),
+        routerLink: '/integrations/business_central/main/mapping/category',
+        value: 'category',
+      },
     ];
   }
 
@@ -46,11 +53,13 @@ export class BusinessCentralMappingComponent implements OnInit {
     this.mappingService.getMappingSettings().subscribe((response) => {
       if (response.results && Array.isArray(response.results)) {
         response.results.forEach((item) => {
-          if (item.source_field!==FyleField.EMPLOYEE && item.source_field!==FyleField.CATEGORY) {
+          if (item.source_field !== FyleField.EMPLOYEE && item.source_field !== FyleField.CATEGORY) {
             this.mappingPages.push({
-              label: new SentenceCasePipe(this.translocoService).transform(new SnakeCaseToSpaceCasePipe().transform(item.source_field)),
+              label: new SentenceCasePipe(this.translocoService).transform(
+                new SnakeCaseToSpaceCasePipe().transform(item.source_field),
+              ),
               routerLink: `/integrations/business_central/main/mapping/${encodeURIComponent(item.source_field.toLowerCase())}`,
-              value: 'mapping_' + item.source_field.toLowerCase()
+              value: 'mapping_' + item.source_field.toLowerCase(),
             });
           }
         });

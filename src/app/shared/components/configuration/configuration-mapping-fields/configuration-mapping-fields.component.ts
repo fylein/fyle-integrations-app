@@ -6,13 +6,12 @@ import { TravelperkPaymentProfileSettingGet } from 'src/app/core/models/travelpe
 import { TravelperkDestinationAttribuite } from 'src/app/core/models/travelperk/travelperk.model';
 
 @Component({
-    selector: 'app-configuration-mapping-fields',
-    templateUrl: './configuration-mapping-fields.component.html',
-    styleUrls: ['./configuration-mapping-fields.component.scss'],
-    standalone: false
+  selector: 'app-configuration-mapping-fields',
+  templateUrl: './configuration-mapping-fields.component.html',
+  styleUrls: ['./configuration-mapping-fields.component.scss'],
+  standalone: false,
 })
 export class ConfigurationMappingFieldsComponent implements OnInit {
-
   @Input() form: FormGroup;
 
   @Input() sourceFieldText: string;
@@ -43,11 +42,11 @@ export class ConfigurationMappingFieldsComponent implements OnInit {
 
   @Input() isMandatory: boolean;
 
-  @Output() loadMoreClick =  new EventEmitter();
+  @Output() loadMoreClick = new EventEmitter();
 
   readonly brandingConfig = brandingConfig;
 
-  constructor() { }
+  constructor() {}
 
   get mappingsFieldsGetter() {
     return this.form.get(this.formControllerName) as FormArray;
@@ -73,7 +72,5 @@ export class ConfigurationMappingFieldsComponent implements OnInit {
     event?.stopPropagation();
   }
 
-  ngOnInit(): void {
-  }
-
+  ngOnInit(): void {}
 }

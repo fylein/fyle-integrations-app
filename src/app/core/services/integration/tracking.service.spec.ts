@@ -13,8 +13,8 @@ describe('TrackingService', () => {
       track: () => undefined,
       identify: () => undefined,
       people: {
-        set: () => undefined
-      }
+        set: () => undefined,
+      },
     };
   });
 
@@ -29,15 +29,15 @@ describe('TrackingService', () => {
   it('should flatten the payload', () => {
     const payload = [
       {
-        duration: 1
+        duration: 1,
       },
       {
-        duration: 2
-      }
+        duration: 2,
+      },
     ];
     expect((service as any).flattenObject(payload)).toEqual({
       '0.duration': 1,
-      '1.duration': 2
+      '1.duration': 2,
     });
   });
 

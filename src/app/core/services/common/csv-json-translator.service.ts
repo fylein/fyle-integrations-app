@@ -4,11 +4,10 @@ import { CSVError } from '../../models/common/csv-error.model';
 import Papa from 'papaparse';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class CsvJsonTranslatorService {
-
-  constructor() { }
+  constructor() {}
 
   /**
    * Validates and converts CSV content to JSON format using Observable pattern
@@ -17,7 +16,7 @@ export class CsvJsonTranslatorService {
    * @param options.rowLimit - The maximum number of rows the CSV file can have
    * @returns Observable<any> - Parsed JSON data
    */
-  csvToJson(file: File, options: {rowLimit?: number} = {}): Observable<any> {
+  csvToJson(file: File, options: { rowLimit?: number } = {}): Observable<any> {
     return new Observable((observer) => {
       if (!file.name.toLowerCase().endsWith('.csv')) {
         throw new CSVError('FILE_IS_NOT_CSV', `File ${file.name} is not a CSV file`);
@@ -34,7 +33,9 @@ export class CsvJsonTranslatorService {
         dynamicTyping: (column) => column === 'Account Type',
         complete: (results) => {
           if (options.rowLimit && results.data.length > options.rowLimit) {
-            observer.error(new CSVError('ROW_LIMIT_EXCEEDED', `Row limit exceeded: ${results.data.length} > ${options.rowLimit}`));
+            observer.error(
+              new CSVError('ROW_LIMIT_EXCEEDED', `Row limit exceeded: ${results.data.length} > ${options.rowLimit}`),
+            );
             return;
           }
           observer.next(results.data);
@@ -42,7 +43,7 @@ export class CsvJsonTranslatorService {
         },
         error: (error) => {
           observer.error(error);
-        }
+        },
       });
     });
   }

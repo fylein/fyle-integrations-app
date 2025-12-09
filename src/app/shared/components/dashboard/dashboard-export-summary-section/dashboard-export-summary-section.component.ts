@@ -11,13 +11,12 @@ import { UserService } from 'src/app/core/services/misc/user.service';
 import { TranslocoService } from '@jsverse/transloco';
 
 @Component({
-    selector: 'app-dashboard-export-summary-section',
-    templateUrl: './dashboard-export-summary-section.component.html',
-    styleUrls: ['./dashboard-export-summary-section.component.scss'],
-    standalone: false
+  selector: 'app-dashboard-export-summary-section',
+  templateUrl: './dashboard-export-summary-section.component.html',
+  styleUrls: ['./dashboard-export-summary-section.component.scss'],
+  standalone: false,
 })
 export class DashboardExportSummarySectionComponent implements OnInit {
-
   @Input() accountingExportSummary: AccountingExportSummary | null;
 
   @Input() appName: AppName;
@@ -56,10 +55,10 @@ export class DashboardExportSummarySectionComponent implements OnInit {
     private accountingExportService: AccountingExportService,
     private exportLogService: ExportLogService,
     private userService: UserService,
-    private translocoService: TranslocoService
-  ) { }
+    private translocoService: TranslocoService,
+  ) {}
 
-  handleDialogClose(){
+  handleDialogClose() {
     this.isExportLogVisible = false;
   }
 
@@ -68,7 +67,13 @@ export class DashboardExportSummarySectionComponent implements OnInit {
     this.accountingExports = [...this.filteredAccountingExports];
   }
 
-  private getExpenseGroups(limit: number, offset: number, status: AccountingExportStatus, lastExportedAt?: string | null, lastUpdatedAt?: string | null): void {
+  private getExpenseGroups(
+    limit: number,
+    offset: number,
+    status: AccountingExportStatus,
+    lastExportedAt?: string | null,
+    lastUpdatedAt?: string | null,
+  ): void {
     let startDate = null;
 
     if (lastExportedAt) {
@@ -81,23 +86,61 @@ export class DashboardExportSummarySectionComponent implements OnInit {
 
     const dateFilter: SelectedDateFilter = {
       startDate: startDate,
-      endDate: new Date()
+      endDate: new Date(),
     };
-    this.exportLogService.getExpenseGroups((status as unknown as TaskLogState), limit, offset, lastExportedAt || lastUpdatedAt ? dateFilter : null, lastExportedAt, '', this.appName).subscribe((accountingExportResponse: ExpenseGroupResponse) => {
-      const accountingExports: AccountingExportList[] = accountingExportResponse.results.map((accountingExport: ExpenseGroup) =>
-        this.accountingExportService.parseExpenseGroupAPIResponseToExportLog(accountingExport, this.org_id, this.appName, this.translocoService)
-      );
-      this.setFormattedAccountingExport(accountingExports);
-    });
+    this.exportLogService
+      .getExpenseGroups(
+        status as unknown as TaskLogState,
+        limit,
+        offset,
+        lastExportedAt || lastUpdatedAt ? dateFilter : null,
+        lastExportedAt,
+        '',
+        this.appName,
+      )
+      .subscribe((accountingExportResponse: ExpenseGroupResponse) => {
+        const accountingExports: AccountingExportList[] = accountingExportResponse.results.map(
+          (accountingExport: ExpenseGroup) =>
+            this.accountingExportService.parseExpenseGroupAPIResponseToExportLog(
+              accountingExport,
+              this.org_id,
+              this.appName,
+              this.translocoService,
+            ),
+        );
+        this.setFormattedAccountingExport(accountingExports);
+      });
   }
 
-  private getAccountingExports(limit: number, offset: number, status: AccountingExportStatus, lastExportedAt?: string | null) {
-    this.accountingExportService.getAccountingExports(this.accountingExportType, [status], null, limit, offset, null, lastExportedAt, null, this.appName).subscribe(accountingExportResponse => {
-      const accountingExports: AccountingExportList[] = accountingExportResponse.results.map((accountingExport: AccountingExport) =>
-        this.accountingExportService.parseAPIResponseToExportLog(accountingExport, this.org_id, this.translocoService)
-      );
-      this.setFormattedAccountingExport(accountingExports);
-    });
+  private getAccountingExports(
+    limit: number,
+    offset: number,
+    status: AccountingExportStatus,
+    lastExportedAt?: string | null,
+  ) {
+    this.accountingExportService
+      .getAccountingExports(
+        this.accountingExportType,
+        [status],
+        null,
+        limit,
+        offset,
+        null,
+        lastExportedAt,
+        null,
+        this.appName,
+      )
+      .subscribe((accountingExportResponse) => {
+        const accountingExports: AccountingExportList[] = accountingExportResponse.results.map(
+          (accountingExport: AccountingExport) =>
+            this.accountingExportService.parseAPIResponseToExportLog(
+              accountingExport,
+              this.org_id,
+              this.translocoService,
+            ),
+        );
+        this.setFormattedAccountingExport(accountingExports);
+      });
   }
 
   private setupAccountingExports(limit: number, offset: number, status: AccountingExportStatus) {
@@ -107,12 +150,22 @@ export class DashboardExportSummarySectionComponent implements OnInit {
 
       if (status === AccountingExportStatus.COMPLETE) {
         // Temporary hack to enable repurposed export summary only for allowed apps - #q2_real_time_exports_integrations
-        if (this.brandingFeatureConfig.featureFlags.dashboard.useRepurposedExportSummary && [AppName.XERO, AppName.QBO, AppName.NETSUITE, AppName.INTACCT, AppName.QBD_DIRECT, AppName.SAGE300].includes(this.appName)) {
+        if (
+          this.brandingFeatureConfig.featureFlags.dashboard.useRepurposedExportSummary &&
+          [AppName.XERO, AppName.QBO, AppName.NETSUITE, AppName.INTACCT, AppName.QBD_DIRECT, AppName.SAGE300].includes(
+            this.appName,
+          )
+        ) {
           lastExportedAt = this.accountingExportSummary.repurposed_last_exported_at;
         } else {
           lastExportedAt = this.accountingExportSummary.last_exported_at;
         }
-      } else if (status === AccountingExportStatus.FAILED && [AppName.XERO, AppName.QBO, AppName.NETSUITE, AppName.INTACCT, AppName.QBD_DIRECT, AppName.SAGE300].includes(this.appName)) {
+      } else if (
+        status === AccountingExportStatus.FAILED &&
+        [AppName.XERO, AppName.QBO, AppName.NETSUITE, AppName.INTACCT, AppName.QBD_DIRECT, AppName.SAGE300].includes(
+          this.appName,
+        )
+      ) {
         // Temporary hack to enable repurposed export summary only for allowed apps - #q2_real_time_exports_integrations
         lastUpdatedAt = this.accountingExportSummary.repurposed_last_exported_at;
       }
@@ -128,13 +181,17 @@ export class DashboardExportSummarySectionComponent implements OnInit {
   showExportLog(status: AccountingExportStatus) {
     this.filteredAccountingExports = [];
     this.isExportLogFetchInProgress = true;
-    this.exportLogHeader = status === AccountingExportStatus.COMPLETE ? 'Successful' : this.translocoService.translate('dashboard.exportLogHeader');
-    this.exportLogSubHeader = status === AccountingExportStatus.COMPLETE ? 'These expenses have been successfully exported to your ' + this.appName +'.' : this.translocoService.translate('dashboard.exportLogSubHeader');
+    this.exportLogHeader =
+      status === AccountingExportStatus.COMPLETE
+        ? 'Successful'
+        : this.translocoService.translate('dashboard.exportLogHeader');
+    this.exportLogSubHeader =
+      status === AccountingExportStatus.COMPLETE
+        ? 'These expenses have been successfully exported to your ' + this.appName + '.'
+        : this.translocoService.translate('dashboard.exportLogSubHeader');
     this.setupAccountingExports(500, 0, status);
     this.isExportLogVisible = true;
   }
 
-  ngOnInit(): void {
-  }
-
+  ngOnInit(): void {}
 }

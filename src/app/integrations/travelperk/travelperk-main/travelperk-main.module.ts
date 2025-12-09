@@ -3,17 +3,10 @@ import { CommonModule } from '@angular/common';
 
 import { TravelperkMainRoutingModule } from './travelperk-main-routing.module';
 import { TravelperkConfigurationComponent } from './travelperk-configuration/travelperk-configuration.component';
-import { SharedModule } from "../../../shared/shared.module";
-
+import { SharedModule } from '../../../shared/shared.module';
 
 @NgModule({
-    declarations: [
-        TravelperkConfigurationComponent
-    ],
-    imports: [
-        CommonModule,
-        TravelperkMainRoutingModule,
-        SharedModule
-    ]
+  declarations: [TravelperkConfigurationComponent],
+  imports: [CommonModule, TravelperkMainRoutingModule, SharedModule],
 })
-export class TravelperkMainModule { }
+export class TravelperkMainModule {}

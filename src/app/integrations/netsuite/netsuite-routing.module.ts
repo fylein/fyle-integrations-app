@@ -10,23 +10,24 @@ const routes: Routes = [
     children: [
       {
         path: 'onboarding',
-        loadChildren: () => import('./netsuite-onboarding/netsuite-onboarding.module').then(m => m.NetsuiteOnboardingModule)
+        loadChildren: () =>
+          import('./netsuite-onboarding/netsuite-onboarding.module').then((m) => m.NetsuiteOnboardingModule),
       },
       {
         path: 'main',
-        loadChildren: () => import('./netsuite-main/netsuite-main.module').then(m => m.NetsuiteMainModule),
-        canActivate: [NetsuiteTokenGuard]
+        loadChildren: () => import('./netsuite-main/netsuite-main.module').then((m) => m.NetsuiteMainModule),
+        canActivate: [NetsuiteTokenGuard],
       },
       {
         path: 'token_expired',
-        loadChildren: () => import('./netsuite-main/netsuite-main.module').then(m => m.NetsuiteMainModule)
-      }
-    ]
-  }
+        loadChildren: () => import('./netsuite-main/netsuite-main.module').then((m) => m.NetsuiteMainModule),
+      },
+    ],
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class NetsuiteRoutingModule { }
+export class NetsuiteRoutingModule {}

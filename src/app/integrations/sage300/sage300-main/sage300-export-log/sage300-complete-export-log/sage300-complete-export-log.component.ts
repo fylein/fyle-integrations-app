@@ -1,6 +1,12 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { AccountingExportStatus, AccountingExportType, AppName, PaginatorPage, TrackingApp } from 'src/app/core/models/enum/enum.model';
+import {
+  AccountingExportStatus,
+  AccountingExportType,
+  AppName,
+  PaginatorPage,
+  TrackingApp,
+} from 'src/app/core/models/enum/enum.model';
 import { DateFilter, SelectedDateFilter } from 'src/app/core/models/qbd/misc/qbd-date-filter.model';
 import { Expense } from 'src/app/core/models/intacct/db/expense.model';
 import { Paginator } from 'src/app/core/models/misc/paginator.model';
@@ -16,13 +22,12 @@ import { Subject } from 'rxjs';
 import { TranslocoService } from '@jsverse/transloco';
 
 @Component({
-    selector: 'app-sage300-complete-export-log',
-    templateUrl: './sage300-complete-export-log.component.html',
-    styleUrls: ['./sage300-complete-export-log.component.scss'],
-    standalone: false
+  selector: 'app-sage300-complete-export-log',
+  templateUrl: './sage300-complete-export-log.component.html',
+  styleUrls: ['./sage300-complete-export-log.component.scss'],
+  standalone: false,
 })
 export class Sage300CompleteExportLogComponent implements OnInit {
-
   isLoading: boolean;
 
   appName: AppName = AppName.SAGE300;
@@ -43,11 +48,11 @@ export class Sage300CompleteExportLogComponent implements OnInit {
 
   isCalendarVisible: boolean;
 
-  accountingExports: AccountingExportList [];
+  accountingExports: AccountingExportList[];
 
-  filteredAccountingExports: AccountingExportList [] = [];
+  filteredAccountingExports: AccountingExportList[] = [];
 
-  expenses: Expense [] = [];
+  expenses: Expense[] = [];
 
   isDateSelected: boolean = false;
 
@@ -66,18 +71,16 @@ export class Sage300CompleteExportLogComponent implements OnInit {
     private windowService: WindowService,
     private paginatorService: PaginatorService,
     private userService: UserService,
-    private translocoService: TranslocoService
+    private translocoService: TranslocoService,
   ) {
     this.dateOptions = this.accountingExportService.getDateOptionsV2();
-    this.searchQuerySubject.pipe(
-    debounceTime(1000)
-  ).subscribe((query: string) => {
-    this.searchQuery = query;
-    this.offset = 0;
-    this.currentPage = Math.ceil(this.offset / this.limit) + 1;
-    this.getAccountingExports(this.limit, this.offset);
-  });
-}
+    this.searchQuerySubject.pipe(debounceTime(1000)).subscribe((query: string) => {
+      this.searchQuery = query;
+      this.offset = 0;
+      this.currentPage = Math.ceil(this.offset / this.limit) + 1;
+      this.getAccountingExports(this.limit, this.offset);
+    });
+  }
 
   openExpenseinFyle(expense_id: string) {
     this.windowService.openInNewTab(AccountingExportService.getFyleExpenseUrl(expense_id));
@@ -101,18 +104,34 @@ export class Sage300CompleteExportLogComponent implements OnInit {
     this.getAccountingExports(this.limit, offset);
   }
 
-  private getAccountingExports(limit: number, offset:number) {
+  private getAccountingExports(limit: number, offset: number) {
     this.isLoading = true;
 
     if (this.limit !== limit) {
       this.paginatorService.storePageSize(PaginatorPage.EXPORT_LOG, limit);
     }
 
-    this.accountingExportService.getAccountingExports([AccountingExportType.DIRECT_COSTS, AccountingExportType.PURCHASE_INVOICE], [AccountingExportStatus.COMPLETE], null, limit, offset, this.selectedDateFilter, null, this.searchQuery).subscribe(accountingExportResponse => {
+    this.accountingExportService
+      .getAccountingExports(
+        [AccountingExportType.DIRECT_COSTS, AccountingExportType.PURCHASE_INVOICE],
+        [AccountingExportStatus.COMPLETE],
+        null,
+        limit,
+        offset,
+        this.selectedDateFilter,
+        null,
+        this.searchQuery,
+      )
+      .subscribe((accountingExportResponse) => {
         this.totalCount = accountingExportResponse.count;
 
-        const accountingExports: AccountingExportList[] = accountingExportResponse.results.map((accountingExport: AccountingExport) =>
-          this.accountingExportService.parseAPIResponseToExportLog(accountingExport, this.org_id, this.translocoService)
+        const accountingExports: AccountingExportList[] = accountingExportResponse.results.map(
+          (accountingExport: AccountingExport) =>
+            this.accountingExportService.parseAPIResponseToExportLog(
+              accountingExport,
+              this.org_id,
+              this.translocoService,
+            ),
         );
         this.filteredAccountingExports = accountingExports;
         this.accountingExports = [...this.filteredAccountingExports];
@@ -125,7 +144,7 @@ export class Sage300CompleteExportLogComponent implements OnInit {
       searchOption: [''],
       dateRange: [null],
       start: [''],
-      end: ['']
+      end: [''],
     });
 
     this.exportLogForm.controls.start.valueChanges.subscribe((dateRange) => {
@@ -139,7 +158,7 @@ export class Sage300CompleteExportLogComponent implements OnInit {
         this.hideCalendar = true;
         this.selectedDateFilter = {
           startDate: dateRange[0],
-          endDate: dateRange[1]
+          endDate: dateRange[1],
         };
 
         this.isDateSelected = true;
@@ -168,7 +187,7 @@ export class Sage300CompleteExportLogComponent implements OnInit {
   private trackDateFilter(filterType: 'existing' | 'custom', selectedDateFilter: SelectedDateFilter): void {
     const trackingProperty = {
       filterType,
-      ...selectedDateFilter
+      ...selectedDateFilter,
     };
     this.trackingService.onDateFilter(TrackingApp.SAGE300, trackingProperty);
   }
@@ -176,5 +195,4 @@ export class Sage300CompleteExportLogComponent implements OnInit {
   ngOnInit(): void {
     this.getAccountingExportsAndSetupPage();
   }
-
 }

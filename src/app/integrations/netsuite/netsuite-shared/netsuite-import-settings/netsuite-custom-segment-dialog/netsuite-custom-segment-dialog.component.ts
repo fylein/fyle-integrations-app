@@ -5,13 +5,12 @@ import { SelectFormOption } from 'src/app/core/models/common/select-form-option.
 import { ButtonSize, ButtonType, NetsuiteCustomSegmentOption } from 'src/app/core/models/enum/enum.model';
 
 @Component({
-    selector: 'app-netsuite-custom-segment-dialog',
-    templateUrl: './netsuite-custom-segment-dialog.component.html',
-    styleUrls: ['./netsuite-custom-segment-dialog.component.scss'],
-    standalone: false
+  selector: 'app-netsuite-custom-segment-dialog',
+  templateUrl: './netsuite-custom-segment-dialog.component.html',
+  styleUrls: ['./netsuite-custom-segment-dialog.component.scss'],
+  standalone: false,
 })
 export class NetsuiteCustomSegmentDialogComponent implements OnInit {
-
   @Input() form: FormGroup;
 
   @Input() isLoading: boolean;
@@ -40,7 +39,7 @@ export class NetsuiteCustomSegmentDialogComponent implements OnInit {
 
   readonly brandingFeatureConfig = brandingFeatureConfig;
 
-  constructor() { }
+  constructor() {}
 
   save() {
     this.saveClick.emit();
@@ -89,7 +88,5 @@ export class NetsuiteCustomSegmentDialogComponent implements OnInit {
     return 'assets/illustrations/netsuite/png/custom-segment.png';
   }
 
-  ngOnInit(): void {
-  }
-
+  ngOnInit(): void {}
 }

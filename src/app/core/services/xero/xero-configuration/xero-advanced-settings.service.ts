@@ -3,7 +3,10 @@ import { ApiService } from '../../common/api.service';
 import { WorkspaceService } from '../../common/workspace.service';
 import { CacheBuster, Cacheable } from 'ts-cacheable';
 import { Observable, Subject } from 'rxjs';
-import { XeroAdvancedSettingGet, XeroAdvancedSettingPost } from 'src/app/core/models/xero/xero-configuration/xero-advanced-settings.model';
+import {
+  XeroAdvancedSettingGet,
+  XeroAdvancedSettingPost,
+} from 'src/app/core/models/xero/xero-configuration/xero-advanced-settings.model';
 import { QBDEmailOptions } from 'src/app/core/models/qbd/qbd-configuration/qbd-advanced-setting.model';
 import { AdvancedSettingsService } from '../../common/advanced-settings.service';
 import { SelectFormOption, EmailOption } from 'src/app/core/models/common/select-form-option.model';
@@ -11,18 +14,16 @@ import { PaymentSyncDirection } from 'src/app/core/models/enum/enum.model';
 import { brandingConfig, brandingFeatureConfig } from 'src/app/branding/branding-config';
 import { AdvancedSettingValidatorRule } from 'src/app/core/models/common/advanced-settings.model';
 import { FormGroup, FormControl } from '@angular/forms';
-import { DefaultDestinationAttribute, DestinationAttribute } from "../../../models/db/destination-attribute.model";
+import { DefaultDestinationAttribute, DestinationAttribute } from '../../../models/db/destination-attribute.model';
 import { HelperUtility } from 'src/app/core/models/common/helper.model';
 import { ExportSettingsService } from '../../common/export-settings.service';
 import { TranslocoService } from '@jsverse/transloco';
 
-
 const advancedSettingsCache$ = new Subject<void>();
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class XeroAdvancedSettingsService extends AdvancedSettingsService {
-
   private apiService = inject(ApiService);
 
   private workspaceService = inject(WorkspaceService);
@@ -34,20 +35,24 @@ export class XeroAdvancedSettingsService extends AdvancedSettingsService {
   getPaymentSyncOptions(): SelectFormOption[] {
     return [
       {
-        label: this.translocoService.translate('services.xeroAdvancedSettings.exportACHPayments', { brandName: brandingConfig.brandName }),
-        value: PaymentSyncDirection.FYLE_TO_XERO
+        label: this.translocoService.translate('services.xeroAdvancedSettings.exportACHPayments', {
+          brandName: brandingConfig.brandName,
+        }),
+        value: PaymentSyncDirection.FYLE_TO_XERO,
       },
       {
-        label: this.translocoService.translate('services.xeroAdvancedSettings.importPayments', { brandName: brandingConfig.brandName }),
-        value: PaymentSyncDirection.XERO_TO_FYLE
-      }
+        label: this.translocoService.translate('services.xeroAdvancedSettings.importPayments', {
+          brandName: brandingConfig.brandName,
+        }),
+        value: PaymentSyncDirection.XERO_TO_FYLE,
+      },
     ];
   }
 
   static getValidators(): AdvancedSettingValidatorRule {
     return {
       paymentSync: 'billPaymentAccount',
-      exportSchedule: 'exportScheduleFrequency'
+      exportSchedule: 'exportScheduleFrequency',
     };
   }
 
@@ -57,7 +62,11 @@ export class XeroAdvancedSettingsService extends AdvancedSettingsService {
 
     Object.values(validatorRule).forEach((value, index) => {
       form.controls[keys[index]].valueChanges.subscribe((selectedValue) => {
-        if (selectedValue && ((keys[index] === 'paymentSync' && selectedValue === PaymentSyncDirection.FYLE_TO_XERO) || (keys[index] !== 'paymentSync'))) {
+        if (
+          selectedValue &&
+          ((keys[index] === 'paymentSync' && selectedValue === PaymentSyncDirection.FYLE_TO_XERO) ||
+            keys[index] !== 'paymentSync')
+        ) {
           HelperUtility.markControllerAsRequired(form, value);
         } else {
           HelperUtility.clearValidatorAndResetValue(form, value);
@@ -66,83 +75,142 @@ export class XeroAdvancedSettingsService extends AdvancedSettingsService {
     });
   }
 
-  mapAPIResponseToFormGroup(advancedSettings: XeroAdvancedSettingGet, adminEmails: EmailOption[], destinationAttribute: DestinationAttribute[], shouldEnableAccountingPeriod: boolean, isOnboarding: boolean): FormGroup {
+  mapAPIResponseToFormGroup(
+    advancedSettings: XeroAdvancedSettingGet,
+    adminEmails: EmailOption[],
+    destinationAttribute: DestinationAttribute[],
+    shouldEnableAccountingPeriod: boolean,
+    isOnboarding: boolean,
+  ): FormGroup {
     let paymentSync = '';
     if (advancedSettings.workspace_general_settings.sync_fyle_to_xero_payments) {
       paymentSync = PaymentSyncDirection.FYLE_TO_XERO;
     } else if (advancedSettings.workspace_general_settings.sync_xero_to_fyle_payments) {
       paymentSync = PaymentSyncDirection.XERO_TO_FYLE;
     }
-    const findObjectByDestinationId = (array: DestinationAttribute[], id: string) => array?.find(item => item.destination_id === id) || null;
+    const findObjectByDestinationId = (array: DestinationAttribute[], id: string) =>
+      array?.find((item) => item.destination_id === id) || null;
 
     return new FormGroup({
       paymentSync: new FormControl(paymentSync),
-      billPaymentAccount: new FormControl(advancedSettings.general_mappings.payment_account.id ? findObjectByDestinationId(destinationAttribute, advancedSettings.general_mappings.payment_account.id) : null),
+      billPaymentAccount: new FormControl(
+        advancedSettings.general_mappings.payment_account.id
+          ? findObjectByDestinationId(destinationAttribute, advancedSettings.general_mappings.payment_account.id)
+          : null,
+      ),
       // If 'change accounting period' is set in the advanced settings, use it.
       // Otherwise (while onboarding), use the value of shouldEnableAccountingPeriod.
-      changeAccountingPeriod: new FormControl(advancedSettings?.workspace_general_settings?.change_accounting_period ?? shouldEnableAccountingPeriod),
+      changeAccountingPeriod: new FormControl(
+        advancedSettings?.workspace_general_settings?.change_accounting_period ?? shouldEnableAccountingPeriod,
+      ),
       autoCreateVendors: new FormControl(advancedSettings.workspace_general_settings.auto_create_destination_entity),
-      exportSchedule: new FormControl(advancedSettings.workspace_schedules?.enabled || (isOnboarding && brandingFeatureConfig.featureFlags.dashboard.useRepurposedExportSummary) ? true : false),
-      exportScheduleFrequency: new FormControl(this.getExportFrequency(advancedSettings.workspace_schedules?.is_real_time_export_enabled, isOnboarding, advancedSettings.workspace_schedules?.enabled, advancedSettings.workspace_schedules?.interval_hours)),
-      autoCreateMerchantDestinationEntity: new FormControl(advancedSettings.workspace_general_settings.auto_create_merchant_destination_entity ? advancedSettings.workspace_general_settings.auto_create_merchant_destination_entity : false),
+      exportSchedule: new FormControl(
+        advancedSettings.workspace_schedules?.enabled ||
+          (isOnboarding && brandingFeatureConfig.featureFlags.dashboard.useRepurposedExportSummary)
+          ? true
+          : false,
+      ),
+      exportScheduleFrequency: new FormControl(
+        this.getExportFrequency(
+          advancedSettings.workspace_schedules?.is_real_time_export_enabled,
+          isOnboarding,
+          advancedSettings.workspace_schedules?.enabled,
+          advancedSettings.workspace_schedules?.interval_hours,
+        ),
+      ),
+      autoCreateMerchantDestinationEntity: new FormControl(
+        advancedSettings.workspace_general_settings.auto_create_merchant_destination_entity
+          ? advancedSettings.workspace_general_settings.auto_create_merchant_destination_entity
+          : false,
+      ),
       memoStructure: new FormControl(advancedSettings.workspace_general_settings.memo_structure),
       search: new FormControl(),
       searchOption: new FormControl(),
-      email: new FormControl(advancedSettings?.workspace_schedules?.emails_selected && advancedSettings?.workspace_schedules?.emails_selected?.length > 0 ? AdvancedSettingsService.filterAdminEmails(advancedSettings?.workspace_schedules?.emails_selected, adminEmails) : []),
-      additionalEmails: new FormControl([])
+      email: new FormControl(
+        advancedSettings?.workspace_schedules?.emails_selected &&
+          advancedSettings?.workspace_schedules?.emails_selected?.length > 0
+          ? AdvancedSettingsService.filterAdminEmails(
+              advancedSettings?.workspace_schedules?.emails_selected,
+              adminEmails,
+            )
+          : [],
+      ),
+      additionalEmails: new FormControl([]),
     });
   }
 
   constructPayload(advancedSettingsForm: FormGroup, isCloneSettings: boolean = false): XeroAdvancedSettingPost {
-    const emptyDestinationAttribute: DefaultDestinationAttribute = {id: null, name: null};
-    let paymentAccount = {...emptyDestinationAttribute};
+    const emptyDestinationAttribute: DefaultDestinationAttribute = { id: null, name: null };
+    let paymentAccount = { ...emptyDestinationAttribute };
     if (advancedSettingsForm.get('billPaymentAccount')?.value) {
       if (isCloneSettings) {
         paymentAccount = advancedSettingsForm.get('billPaymentAccount')?.value;
       } else {
-        paymentAccount = this.exportSettingsService.formatGeneralMappingPayload(advancedSettingsForm.get('billPaymentAccount')?.value);
+        paymentAccount = this.exportSettingsService.formatGeneralMappingPayload(
+          advancedSettingsForm.get('billPaymentAccount')?.value,
+        );
       }
     }
     const advancedSettingPayload: XeroAdvancedSettingPost = {
       workspace_general_settings: {
-        sync_fyle_to_xero_payments: advancedSettingsForm.get('paymentSync')?.value && advancedSettingsForm.get('paymentSync')?.value === PaymentSyncDirection.FYLE_TO_XERO ? true : false,
-        sync_xero_to_fyle_payments: advancedSettingsForm.get('paymentSync')?.value && advancedSettingsForm.get('paymentSync')?.value === PaymentSyncDirection.XERO_TO_FYLE ? true : false,
+        sync_fyle_to_xero_payments:
+          advancedSettingsForm.get('paymentSync')?.value &&
+          advancedSettingsForm.get('paymentSync')?.value === PaymentSyncDirection.FYLE_TO_XERO
+            ? true
+            : false,
+        sync_xero_to_fyle_payments:
+          advancedSettingsForm.get('paymentSync')?.value &&
+          advancedSettingsForm.get('paymentSync')?.value === PaymentSyncDirection.XERO_TO_FYLE
+            ? true
+            : false,
         auto_create_destination_entity: advancedSettingsForm.get('autoCreateVendors')?.value,
         change_accounting_period: advancedSettingsForm.get('changeAccountingPeriod')?.value,
         auto_create_merchant_destination_entity: advancedSettingsForm.get('autoCreateMerchantDestinationEntity')?.value,
-        memo_structure: advancedSettingsForm.get('memoStructure')?.value
+        memo_structure: advancedSettingsForm.get('memoStructure')?.value,
       },
       general_mappings: {
-        payment_account: paymentAccount
+        payment_account: paymentAccount,
       },
       workspace_schedules: {
         enabled: advancedSettingsForm.get('exportSchedule')?.value ? true : false,
-        interval_hours: Number.isInteger(advancedSettingsForm.get('exportScheduleFrequency')?.value) ? advancedSettingsForm.get('exportScheduleFrequency')!.value : null,
-        is_real_time_export_enabled: advancedSettingsForm.get('exportSchedule')?.value && advancedSettingsForm.get('exportScheduleFrequency')?.value === 0 ? true : false,
+        interval_hours: Number.isInteger(advancedSettingsForm.get('exportScheduleFrequency')?.value)
+          ? advancedSettingsForm.get('exportScheduleFrequency')!.value
+          : null,
+        is_real_time_export_enabled:
+          advancedSettingsForm.get('exportSchedule')?.value &&
+          advancedSettingsForm.get('exportScheduleFrequency')?.value === 0
+            ? true
+            : false,
         start_datetime: new Date(),
-        emails_selected: advancedSettingsForm.get('email')?.value ? AdvancedSettingsService.formatSelectedEmails(advancedSettingsForm.get('email')?.value) : [],
-        additional_email_options: advancedSettingsForm.get('additionalEmails')?.value ? advancedSettingsForm.get('additionalEmails')?.value : []
-      }
+        emails_selected: advancedSettingsForm.get('email')?.value
+          ? AdvancedSettingsService.formatSelectedEmails(advancedSettingsForm.get('email')?.value)
+          : [],
+        additional_email_options: advancedSettingsForm.get('additionalEmails')?.value
+          ? advancedSettingsForm.get('additionalEmails')?.value
+          : [],
+      },
     };
     return advancedSettingPayload;
   }
 
   @Cacheable({
-    cacheBusterObserver: advancedSettingsCache$
+    cacheBusterObserver: advancedSettingsCache$,
   })
   getAdvancedSettings(): Observable<XeroAdvancedSettingGet> {
     return this.apiService.get(`/v2/workspaces/${this.workspaceService.getWorkspaceId()}/advanced_settings/`, {});
   }
 
   @CacheBuster({
-    cacheBusterNotifier: advancedSettingsCache$
+    cacheBusterNotifier: advancedSettingsCache$,
   })
   postAdvancedSettings(advancedSettingPayload: XeroAdvancedSettingPost): Observable<XeroAdvancedSettingGet> {
-    return this.apiService.put(`/v2/workspaces/${this.workspaceService.getWorkspaceId()}/advanced_settings/`, advancedSettingPayload);
+    return this.apiService.put(
+      `/v2/workspaces/${this.workspaceService.getWorkspaceId()}/advanced_settings/`,
+      advancedSettingPayload,
+    );
   }
 
   getWorkspaceAdmins(): Observable<[QBDEmailOptions]> {
     return this.apiService.get(`/workspaces/${this.workspaceService.getWorkspaceId()}/admins/`, {});
   }
-
 }

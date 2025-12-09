@@ -10,17 +10,13 @@ import { MultiSelectModule } from 'primeng/multiselect';
   declarations: [
     BusinessCentralExportSettingsComponent,
     BusinessCentralImportSettingsComponent,
-    BusinessCentralAdvancedSettingsComponent
+    BusinessCentralAdvancedSettingsComponent,
   ],
-  imports: [
-    CommonModule,
-    MultiSelectModule,
-    SharedModule
-  ],
+  imports: [CommonModule, MultiSelectModule, SharedModule],
   exports: [
     BusinessCentralExportSettingsComponent,
     BusinessCentralImportSettingsComponent,
-    BusinessCentralAdvancedSettingsComponent
-  ]
+    BusinessCentralAdvancedSettingsComponent,
+  ],
 })
-export class BusinessCentralSharedModule { }
+export class BusinessCentralSharedModule {}

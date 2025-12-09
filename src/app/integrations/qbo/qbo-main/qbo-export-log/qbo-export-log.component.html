@@ -7,12 +7,19 @@
 
 <div class="tw-py-40-px page-layout-container" [ngClass]="brandingStyle.common.mainComponentPadding">
   <div [ngClass]="brandingStyle.dashboard.mapping.background">
-    @if (brandingFeatureConfig.useMainMenuForSubmenu && brandingFeatureConfig.featureFlags.advancedSettings.skipExport) {
-      <app-main-menu [modules]="modules" [styleClasses]="brandingStyle.dashboard.subMenuContainer" [activeItem]="activeModule"></app-main-menu>
+    @if (
+      brandingFeatureConfig.useMainMenuForSubmenu && brandingFeatureConfig.featureFlags.advancedSettings.skipExport
+    ) {
+      <app-main-menu
+        [modules]="modules"
+        [styleClasses]="brandingStyle.dashboard.subMenuContainer"
+        [activeItem]="activeModule"
+      ></app-main-menu>
     } @else if (brandingFeatureConfig.featureFlags.advancedSettings.skipExport) {
       <app-sub-menu [modules]="modules" [activeModule]="activeModule"></app-sub-menu>
     }
     <div class="router-outlet-container">
       <router-outlet></router-outlet>
-    </div></div>
+    </div>
   </div>
+</div>

@@ -8,11 +8,7 @@ describe('UsiUimportUsettingsService', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [
-        UsiUimportUsettingsService,
-        provideHttpClient(withInterceptorsFromDi()),
-        provideHttpClientTesting()
-      ]
+      providers: [UsiUimportUsettingsService, provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting()],
     });
     service = TestBed.inject(UsiUimportUsettingsService);
   });

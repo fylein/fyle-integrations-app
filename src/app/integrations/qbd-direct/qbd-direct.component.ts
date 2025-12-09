@@ -13,13 +13,12 @@ import { AppcuesService } from 'src/app/core/services/integration/appcues.servic
 import { QbdDirectHelperService } from 'src/app/core/services/qbd-direct/qbd-direct-core/qbd-direct-helper.service';
 
 @Component({
-    selector: 'app-qbd-direct',
-    imports: [RouterModule],
-    templateUrl: './qbd-direct.component.html',
-    styleUrl: './qbd-direct.component.scss'
+  selector: 'app-qbd-direct',
+  imports: [RouterModule],
+  templateUrl: './qbd-direct.component.html',
+  styleUrl: './qbd-direct.component.scss',
 })
 export class QbdDirectComponent implements OnInit {
-
   user: MinimalUser = this.userService.getUserProfile();
 
   workspace: QbdDirectWorkspace;
@@ -37,7 +36,7 @@ export class QbdDirectComponent implements OnInit {
     private userService: IntegrationsUserService,
     private workspaceService: WorkspaceService,
     private windowService: WindowService,
-    private authService: AuthService
+    private authService: AuthService,
   ) {
     this.windowReference = this.windowService.nativeWindow;
   }
@@ -57,7 +56,7 @@ export class QbdDirectComponent implements OnInit {
         [QbdDirectOnboardingState.EXPORT_SETTINGS]: '/integrations/qbd_direct/onboarding/export_settings',
         [QbdDirectOnboardingState.IMPORT_SETTINGS]: '/integrations/qbd_direct/onboarding/import_settings',
         [QbdDirectOnboardingState.ADVANCED_SETTINGS]: '/integrations/qbd_direct/onboarding/advanced_settings',
-        [QbdDirectOnboardingState.COMPLETE]: '/integrations/qbd_direct/main'
+        [QbdDirectOnboardingState.COMPLETE]: '/integrations/qbd_direct/main',
       };
       this.router.navigateByUrl(onboardingStateComponentMap[this.workspace.onboarding_state]);
     }
@@ -85,12 +84,10 @@ export class QbdDirectComponent implements OnInit {
           this.storeWorkspaceAndNavigate(workspace);
         });
       }
-    }
-    );
+    });
   }
 
   ngOnInit(): void {
     this.setupWorkspace();
   }
-
 }

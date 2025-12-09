@@ -4,13 +4,19 @@
   </div>
 }
 @if (!isLoading) {
-  <div class="configuration--contents tw-border-separator tw-mt-6" [ngClass]="brandingStyle.common.configurationContents">
+  <div
+    class="configuration--contents tw-border-separator tw-mt-6"
+    [ngClass]="brandingStyle.common.configurationContents"
+  >
     <div>
       <app-configuration-step-header
         [headerText]="'travelperkPaymentProfileSettings.headerText' | transloco"
-        [contentText]="'travelperkPaymentProfileSettings.contentText' | transloco: { brandName: brandingConfig.brandName }"
+        [contentText]="
+          'travelperkPaymentProfileSettings.contentText' | transloco: { brandName: brandingConfig.brandName }
+        "
         [redirectLink]="supportArticleLink"
-        [appName]="appName">
+        [appName]="appName"
+      >
       </app-configuration-step-header>
     </div>
     <div>
@@ -19,14 +25,21 @@
           <div class="tw-pb-24-px">
             <app-configuration-step-sub-header
               [label]="'travelperkPaymentProfileSettings.assignUserRoleLabel' | transloco"
-              [subLabel]="'travelperkPaymentProfileSettings.assignUserRoleSubLabel' | transloco: { brandName: brandingConfig.brandName }"
+              [subLabel]="
+                'travelperkPaymentProfileSettings.assignUserRoleSubLabel'
+                  | transloco: { brandName: brandingConfig.brandName }
+              "
               [showPreview]="true"
-              (isPreviewClick)="showPreviewDialog(true)">
+              (isPreviewClick)="showPreviewDialog(true)"
+            >
             </app-configuration-step-sub-header>
           </div>
           <div>
             <app-configuration-info-label
-              [infoText]="'travelperkPaymentProfileSettings.infoText' | transloco: { brandName: brandingConfig.brandName }">
+              [infoText]="
+                'travelperkPaymentProfileSettings.infoText' | transloco: { brandName: brandingConfig.brandName }
+              "
+            >
             </app-configuration-info-label>
           </div>
         </div>
@@ -45,17 +58,25 @@
             [destinationAttributeNames]="destinationAttributeNames"
             [sourceAttributeNames]="sourceAttributeNames"
             [formControllerName]="'paymentProfileMappings'"
-            (loadMoreClick)="getProfileMappings(paymentProfileSettings.count)">
+            (loadMoreClick)="getProfileMappings(paymentProfileSettings.count)"
+          >
           </app-configuration-mapping-fields>
         </div>
         @if (isOnboarding) {
           <div>
             <app-configuration-step-footer
-              [ctaText] = "!isSaveInProgress ? (isOnboarding ? ConfigurationCtaText.SAVE_AND_CONTINUE : ConfigurationCtaText.SAVE) : ConfigurationCtaText.SAVING"
-              [showBackButton] = "isOnboarding"
+              [ctaText]="
+                !isSaveInProgress
+                  ? isOnboarding
+                    ? ConfigurationCtaText.SAVE_AND_CONTINUE
+                    : ConfigurationCtaText.SAVE
+                  : ConfigurationCtaText.SAVING
+              "
+              [showBackButton]="isOnboarding"
               [isButtonDisabled]="!paymentProfileMappingForm.valid"
               (navigateToPreviousStep)="navigateBack()"
-              (save)="save()">
+              (save)="save()"
+            >
             </app-configuration-step-footer>
           </div>
         }
@@ -65,8 +86,10 @@
       <div>
         <app-preview-dialog
           [isPreviewDialogVisible]="true"
-          [iconPath]="'assets/pngs/preview-screens/travelperk-pps.png'" (closeDialog)="closeDialog()"
-          [header]="'travelperkPaymentProfileSettings.previewHeader' | transloco">
+          [iconPath]="'assets/pngs/preview-screens/travelperk-pps.png'"
+          (closeDialog)="closeDialog()"
+          [header]="'travelperkPaymentProfileSettings.previewHeader' | transloco"
+        >
         </app-preview-dialog>
       </div>
     }
@@ -76,11 +99,18 @@
 @if (!isLoading && !isOnboarding) {
   <div class="tw-sticky tw-top-0 tw-bottom-0 tw-left-0 tw-right-0 tw-bg-white">
     <app-configuration-step-footer
-      [ctaText] = "!isSaveInProgress ? (isOnboarding ? ConfigurationCtaText.SAVE_AND_CONTINUE : ConfigurationCtaText.SAVE) : ConfigurationCtaText.SAVING"
-      [showBackButton] = "isOnboarding"
+      [ctaText]="
+        !isSaveInProgress
+          ? isOnboarding
+            ? ConfigurationCtaText.SAVE_AND_CONTINUE
+            : ConfigurationCtaText.SAVE
+          : ConfigurationCtaText.SAVING
+      "
+      [showBackButton]="isOnboarding"
       [isButtonDisabled]="!paymentProfileMappingForm.valid"
       (navigateToPreviousStep)="navigateBack()"
-      (save)="save()">
+      (save)="save()"
+    >
     </app-configuration-step-footer>
   </div>
 }

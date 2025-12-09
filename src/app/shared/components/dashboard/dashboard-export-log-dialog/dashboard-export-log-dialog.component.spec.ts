@@ -8,9 +8,8 @@ xdescribe('DashboardExportLogDialogComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ DashboardExportLogDialogComponent ]
-    })
-    .compileComponents();
+      declarations: [DashboardExportLogDialogComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(DashboardExportLogDialogComponent);
     component = fixture.componentInstance;

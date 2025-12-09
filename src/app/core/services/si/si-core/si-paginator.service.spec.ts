@@ -8,11 +8,7 @@ describe('UsiUpaginatorService', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [
-        UsiUpaginatorService,
-        provideHttpClient(withInterceptorsFromDi()),
-        provideHttpClientTesting()
-      ]
+      providers: [UsiUpaginatorService, provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting()],
     });
     service = TestBed.inject(UsiUpaginatorService);
   });

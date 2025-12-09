@@ -5,12 +5,12 @@ import { BusinessCentralDashboardComponent } from './business-central-dashboard.
 const routes: Routes = [
   {
     path: '',
-    component: BusinessCentralDashboardComponent
-  }
+    component: BusinessCentralDashboardComponent,
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class BusinessCentralDashboardRoutingModule { }
+export class BusinessCentralDashboardRoutingModule {}

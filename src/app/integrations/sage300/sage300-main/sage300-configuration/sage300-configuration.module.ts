@@ -5,13 +5,7 @@ import { Sage300ConfigurationRoutingModule } from './sage300-configuration-routi
 import { Sage300ConfigurationComponent } from './sage300-configuration.component';
 
 @NgModule({
-  declarations: [
-    Sage300ConfigurationComponent
-  ],
-  imports: [
-    CommonModule,
-    Sage300SharedModule,
-    Sage300ConfigurationRoutingModule
-  ]
+  declarations: [Sage300ConfigurationComponent],
+  imports: [CommonModule, Sage300SharedModule, Sage300ConfigurationRoutingModule],
 })
-export class Sage300ConfigurationModule { }
+export class Sage300ConfigurationModule {}

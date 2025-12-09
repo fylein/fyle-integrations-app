@@ -6,28 +6,27 @@ import { RefinerService } from 'src/app/core/services/integration/refiner.servic
 import { environment } from 'src/environments/environment';
 
 @Component({
-    selector: 'app-intacct-onboarding-done',
-    templateUrl: './intacct-onboarding-done.component.html',
-    styleUrls: ['./intacct-onboarding-done.component.scss'],
-    standalone: false
+  selector: 'app-intacct-onboarding-done',
+  templateUrl: './intacct-onboarding-done.component.html',
+  styleUrls: ['./intacct-onboarding-done.component.scss'],
+  standalone: false,
 })
 export class IntacctOnboardingDoneComponent implements OnInit {
-
   readonly isGradientAllowed: boolean = brandingFeatureConfig.isGradientAllowed;
 
   constructor(
     private refinerService: RefinerService,
-    private router: Router
-  ) { }
+    private router: Router,
+  ) {}
 
   navigateToDashboard(): void {
     this.router.navigate([`/integrations/intacct/main`]);
     this.refinerService.triggerSurvey(
-      AppName.INTACCT, environment.refiner_survey.intacct.onboarding_done_survery_id, RefinerSurveyType.ONBOARDING_DONE
+      AppName.INTACCT,
+      environment.refiner_survey.intacct.onboarding_done_survery_id,
+      RefinerSurveyType.ONBOARDING_DONE,
     );
   }
 
-  ngOnInit(): void {
-  }
-
+  ngOnInit(): void {}
 }

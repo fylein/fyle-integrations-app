@@ -1,6 +1,5 @@
 import { SelectItem, SelectItemGroup } from 'primeng/api';
 
-
 interface MainMenuDropdownOption extends Partial<SelectItem> {
   handler?: () => void;
 }

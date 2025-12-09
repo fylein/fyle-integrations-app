@@ -5,12 +5,12 @@ import { QboDashboardComponent } from './qbo-dashboard.component';
 const routes: Routes = [
   {
     path: '',
-    component: QboDashboardComponent
-  }
+    component: QboDashboardComponent,
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class QboDashboardRoutingModule { }
+export class QboDashboardRoutingModule {}

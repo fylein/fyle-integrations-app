@@ -11,18 +11,18 @@ const routes: Routes = [
     children: [
       {
         path: 'callback',
-        component: LoginComponent
+        component: LoginComponent,
       },
       {
         path: 'redirect',
-        component: RedirectComponent
-      }
-    ]
-  }
+        component: RedirectComponent,
+      },
+    ],
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class AuthRoutingModule { }
+export class AuthRoutingModule {}

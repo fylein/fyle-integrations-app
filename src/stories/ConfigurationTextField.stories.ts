@@ -1,4 +1,3 @@
-
 import { CommonModule } from '@angular/common';
 import type { Meta, StoryObj } from '@storybook/angular';
 import { moduleMetadata } from '@storybook/angular';
@@ -12,22 +11,21 @@ const meta: Meta<ConfigurationTextFieldComponent> = {
   component: ConfigurationTextFieldComponent,
   tags: ['autodocs'],
   render: (args: ConfigurationTextFieldComponent) => ({
-    props: { ...args }
+    props: { ...args },
   }),
   decorators: [
     moduleMetadata({
       declarations: [],
-      imports: [CommonModule, FormsModule, ReactiveFormsModule, SharedModule]
-    })
+      imports: [CommonModule, FormsModule, ReactiveFormsModule, SharedModule],
+    }),
   ],
   argTypes: {
-    ngOnInit: { table: { disable: true } }
-  }
+    ngOnInit: { table: { disable: true } },
+  },
 };
 
 export default meta;
 type Story = StoryObj<ConfigurationTextFieldComponent>;
-
 
 export const simple: Story = {
   args: {
@@ -36,8 +34,8 @@ export const simple: Story = {
     isFieldMandatory: true,
     label: 'HH2 User ID',
     placeholder: 'Enter HH2 User ID',
-    form: setupStoryBookFormGroup(new FormGroup({userID: new FormControl('')}))
-  }
+    form: setupStoryBookFormGroup(new FormGroup({ userID: new FormControl('') })),
+  },
 };
 
 export const password: Story = {
@@ -47,7 +45,7 @@ export const password: Story = {
     isFieldMandatory: true,
     label: 'HH2 Password',
     placeholder: 'Enter HH2 Password',
-    form: setupStoryBookFormGroup(new FormGroup({userID: new FormControl('')})),
-    type: 'password'
-  }
+    form: setupStoryBookFormGroup(new FormGroup({ userID: new FormControl('') })),
+    type: 'password',
+  },
 };

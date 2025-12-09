@@ -7,17 +7,8 @@ import { OauthTravelperkComponent } from './oauth-travelperk/oauth-travelperk.co
 import { SharedModule } from '../shared/shared.module';
 import { OauthDefaultComponent } from './oauth-default/oauth-default.component';
 
-
 @NgModule({
-  declarations: [
-    OauthComponent,
-    OauthTravelperkComponent,
-    OauthDefaultComponent
-  ],
-  imports: [
-    CommonModule,
-    OauthRoutingModule,
-    SharedModule
-  ]
+  declarations: [OauthComponent, OauthTravelperkComponent, OauthDefaultComponent],
+  imports: [CommonModule, OauthRoutingModule, SharedModule],
 })
-export class OauthModule { }
+export class OauthModule {}

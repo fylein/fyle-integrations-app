@@ -18,26 +18,25 @@ xdescribe('LandingComponent', () => {
   const routerSpy = { navigate: jasmine.createSpy('navigate'), url: '/integrations/bamboo_hr' };
 
   const service1 = {
-    postEvent: () => null
+    postEvent: () => null,
   };
 
   const service2 = {
-    getCachedOrg: () => orgMockData
+    getCachedOrg: () => orgMockData,
   };
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-    declarations: [LandingComponent],
-    imports: [],
-    providers: [
+      declarations: [LandingComponent],
+      imports: [],
+      providers: [
         { provide: EventsService, useValue: service1 },
         { provide: OrgService, useValue: service2 },
         { provide: Router, useValue: routerSpy },
         provideHttpClient(withInterceptorsFromDi()),
-        provideHttpClientTesting()
-    ]
-})
-    .compileComponents();
+        provideHttpClientTesting(),
+      ],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(LandingComponent);
     component = fixture.componentInstance;

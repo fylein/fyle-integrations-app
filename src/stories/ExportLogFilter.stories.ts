@@ -1,4 +1,3 @@
-
 import { CommonModule } from '@angular/common';
 import type { Meta, StoryObj } from '@storybook/angular';
 import { moduleMetadata } from '@storybook/angular';
@@ -14,17 +13,17 @@ const meta: Meta<ExportLogFilterComponent> = {
   component: ExportLogFilterComponent,
   tags: ['autodocs'],
   render: (args: ExportLogFilterComponent) => ({
-    props: { ...args }
+    props: { ...args },
   }),
   decorators: [
     moduleMetadata({
       declarations: [],
-      imports: [CommonModule, SharedModule, BrowserAnimationsModule, SelectModule, FormsModule, ReactiveFormsModule ]
-    })
+      imports: [CommonModule, SharedModule, BrowserAnimationsModule, SelectModule, FormsModule, ReactiveFormsModule],
+    }),
   ],
   argTypes: {
-    ngOnInit: { table: { disable: true } }
-  }
+    ngOnInit: { table: { disable: true } },
+  },
 };
 
 export default meta;
@@ -32,6 +31,13 @@ type Story = StoryObj<ExportLogFilterComponent>;
 
 export const simple: Story = {
   args: {
-    exportLogForm: setupStoryBookFormGroup(new FormGroup({searchOption: new FormControl(), dateRange: new FormControl(), start: new FormControl(), end: new FormControl()}))
-  }
+    exportLogForm: setupStoryBookFormGroup(
+      new FormGroup({
+        searchOption: new FormControl(),
+        dateRange: new FormControl(),
+        start: new FormControl(),
+        end: new FormControl(),
+      }),
+    ),
+  },
 };

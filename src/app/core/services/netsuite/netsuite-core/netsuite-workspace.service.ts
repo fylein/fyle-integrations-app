@@ -6,16 +6,14 @@ import { NetsuiteOnboardingState } from 'src/app/core/models/enum/enum.model';
 import { WorkspaceService } from '../../common/workspace.service';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class NetsuiteWorkspaceService {
-
   constructor(
     private storageService: StorageService,
     private apiService: ApiService,
-    private workspaceService: WorkspaceService
-  ) {
-  }
+    private workspaceService: WorkspaceService,
+  ) {}
 
   @Cacheable()
   syncFyleDimensions() {

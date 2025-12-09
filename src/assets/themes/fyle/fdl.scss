@@ -40,7 +40,7 @@
     --bg-brand: #{$utility-major-25};
     --bg-brand-primary: #{$brand-500};
     --bg-brand-disable: #{$brand-300};
-    --bg-brand-muted: #B3D9C8;
+    --bg-brand-muted: #b3d9c8;
 
     //toast bg
     --bg-toast-grey: #{$grey-675};
@@ -222,7 +222,7 @@
     --gradient-cool-md-end: #5b86e5;
 
     --gradient-dark-xs-start: #2c304e;
-    --gradient-dark-xs-end: rgba(44, 48, 78, 0.40);
+    --gradient-dark-xs-end: rgba(44, 48, 78, 0.4);
 
     --gradient-dark-sm-start: #383a51;
     --gradient-dark-sm-end: #2b2e47;
@@ -231,10 +231,10 @@
     --gradient-dark-lg-center: #242c42;
     --gradient-dark-lg-end: #05091c;
 
-    --gradient-white-xs-start: rgba(255, 255, 255, 0.90);
+    --gradient-white-xs-start: rgba(255, 255, 255, 0.9);
     --gradient-white-xs-end: rgba(255, 255, 255, 0.24);
 
-    --gradient-white-fade-xs-start: rgba(255, 255, 255, 0.00);
+    --gradient-white-fade-xs-start: rgba(255, 255, 255, 0);
     --gradient-white-fade-xs-end: #f5f5f5;
 
     /*TODO-clean up once figma tokens are created*/
@@ -292,7 +292,7 @@
 
     --btn-tertiary-hover-bg: #{$white};
 
-    --lv-stats-bg: linear-gradient(112deg, rgba(255, 255, 255, 0.90) 1.65%, rgba(255, 255, 255, 0.24) 100%);
+    --lv-stats-bg: linear-gradient(112deg, rgba(255, 255, 255, 0.9) 1.65%, rgba(255, 255, 255, 0.24) 100%);
 
     --lv-stats-label-text-color: var(--text-tertiary);
 
@@ -332,7 +332,7 @@
 
     --dd-menu-item-hover-bg: var(--bg-tertiary);
 
-    --checkbox-icon-selected-color: var(--bg-brand-primary);;
+    --checkbox-icon-selected-color: var(--bg-brand-primary);
 
     --checkbox-icon-color: var(--icon-disable);
 
@@ -521,6 +521,6 @@
     --loader-action-track: #{$loader-action-track};
 
     // Font family
-    --font-primary: "sage-ui", "Helvetica Neue", Roboto, Segoe UI, Arial;
+    --font-primary: 'sage-ui', 'Helvetica Neue', Roboto, Segoe UI, Arial;
   }
 }

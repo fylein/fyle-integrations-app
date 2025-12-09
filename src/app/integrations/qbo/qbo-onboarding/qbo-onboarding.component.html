@@ -1,3 +1,8 @@
-<div class="tw-h-full" [ngClass]="{'tw-h-100-vh tw-bg-bg-tertiary-lighter tw-overflow-auto': brandingFeatureConfig.isBackgroundColorAllowed}">
-    <router-outlet></router-outlet>
+<div
+  class="tw-h-full"
+  [ngClass]="{
+    'tw-h-100-vh tw-bg-bg-tertiary-lighter tw-overflow-auto': brandingFeatureConfig.isBackgroundColorAllowed,
+  }"
+>
+  <router-outlet></router-outlet>
 </div>

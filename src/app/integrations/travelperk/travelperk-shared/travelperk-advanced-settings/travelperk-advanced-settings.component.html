@@ -10,7 +10,8 @@
         [headerText]="'travelperkAdvancedSettings.headerText' | transloco"
         [contentText]="'travelperkAdvancedSettings.contentText' | transloco: { brandName: brandingConfig.brandName }"
         [redirectLink]="supportArticleLink"
-        [appName]="appName">
+        [appName]="appName"
+      >
       </app-configuration-step-header>
     </div>
     <form [formGroup]="advancedSettingsForm">
@@ -19,7 +20,11 @@
           <div class="tw-mb-16-px">
             <app-configuration-step-sub-header
               [label]="'travelperkAdvancedSettings.categoryMappingLabel' | transloco"
-              [subLabel]="'travelperkAdvancedSettings.categoryMappingSubLabel' | transloco: { brandName: brandingConfig.brandName }">
+              [subLabel]="
+                'travelperkAdvancedSettings.categoryMappingSubLabel'
+                  | transloco: { brandName: brandingConfig.brandName }
+              "
+            >
             </app-configuration-step-sub-header>
           </div>
           <div class="">
@@ -30,15 +35,20 @@
               [sourceFieldOptions]="defaultCategories"
               [destinationFieldOptions]="destinationFieldOptions"
               [form]="advancedSettingsForm"
-              [sourceFieldText]="'travelperkAdvancedSettings.sourceFieldText' | transloco: { brandName: brandingConfig.brandName }"
+              [sourceFieldText]="
+                'travelperkAdvancedSettings.sourceFieldText' | transloco: { brandName: brandingConfig.brandName }
+              "
               [destinationFieldText]="'travelperkAdvancedSettings.destinationFieldText' | transloco"
               [sourceFieldPlaceholderText]="'travelperkAdvancedSettings.sourceFieldPlaceholderText' | transloco"
-              [destinationPlaceholderFieldText]="'travelperkAdvancedSettings.destinationCategoryPlaceholder' | transloco"
+              [destinationPlaceholderFieldText]="
+                'travelperkAdvancedSettings.destinationCategoryPlaceholder' | transloco
+              "
               [totalAvailableRows]="4"
               [destinationAttributeNames]="destinationAttributeNames"
               [sourceAttributeNames]="sourceAttributeNames"
               [formControllerName]="'categoryMappings'"
-              [isMandatory]="true">
+              [isMandatory]="true"
+            >
             </app-configuration-mapping-fields>
           </div>
         </div>
@@ -46,7 +56,8 @@
           <div class="tw-mb-16-px">
             <app-configuration-step-sub-header
               [label]="'travelperkAdvancedSettings.defaultValuesLabel' | transloco"
-              [subLabel]="'travelperkAdvancedSettings.defaultValuesSubLabel' | transloco">
+              [subLabel]="'travelperkAdvancedSettings.defaultValuesSubLabel' | transloco"
+            >
             </app-configuration-step-sub-header>
           </div>
           <div class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
@@ -54,11 +65,15 @@
               [form]="advancedSettingsForm"
               [isFieldMandatory]="false"
               [label]="'travelperkAdvancedSettings.defaultEmployeeLabel' | transloco"
-              [subLabel]="'travelperkAdvancedSettings.defaultEmployeeSubLabel' | transloco: { brandName: brandingConfig.brandName }"
+              [subLabel]="
+                'travelperkAdvancedSettings.defaultEmployeeSubLabel'
+                  | transloco: { brandName: brandingConfig.brandName }
+              "
               [simpleOptions]="[advancedSettingsForm.controls.defaultEmployee.value]"
               [iconPath]="'user-two'"
               [formControllerName]="'defaultEmployee'"
-              [isDisabled]="true">
+              [isDisabled]="true"
+            >
             </app-configuration-select-field>
           </div>
           <div class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
@@ -66,13 +81,17 @@
               [form]="advancedSettingsForm"
               [isFieldMandatory]="true"
               [label]="'travelperkAdvancedSettings.defaultCategoryLabel' | transloco"
-              [subLabel]="'travelperkAdvancedSettings.defaultCategorySubLabel' | transloco: { brandName: brandingConfig.brandName }"
+              [subLabel]="
+                'travelperkAdvancedSettings.defaultCategorySubLabel'
+                  | transloco: { brandName: brandingConfig.brandName }
+              "
               [destinationAttributes]="defaultCategories"
               [iconPath]="'user-two'"
               [formControllerName]="'defaultCategory'"
               [placeholder]="'travelperkAdvancedSettings.defaultCategoryPlaceholder' | transloco"
               [customErrorMessage]="'travelperkAdvancedSettings.categoryErrorMessage' | transloco"
-              [isDisabled]="false">
+              [isDisabled]="false"
+            >
             </app-configuration-select-field>
           </div>
         </div>
@@ -80,7 +99,10 @@
           <div class="tw-mb-16-px">
             <app-configuration-step-sub-header
               [label]="'travelperkAdvancedSettings.customizationLabel' | transloco"
-              [subLabel]="'travelperkAdvancedSettings.customizationSubLabel' | transloco: { brandName: brandingConfig.brandName }">
+              [subLabel]="
+                'travelperkAdvancedSettings.customizationSubLabel' | transloco: { brandName: brandingConfig.brandName }
+              "
+            >
             </app-configuration-step-sub-header>
           </div>
           <div class="tw-my-16-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
@@ -95,7 +117,8 @@
               [placeholder]="'travelperkAdvancedSettings.expenseGroupingPlaceholder' | transloco"
               [appName]="appName"
               [exportConfigurationIconPath]="'assets/pngs/preview-screens/travelperk-expense-grouping-preview.png'"
-              [formControllerName]="'invoiceLineitemStructure'">
+              [formControllerName]="'invoiceLineitemStructure'"
+            >
             </app-configuration-select-field>
           </div>
           <div class="tw-rounded-12-px tw-border-separator tw-border tw-bg-white tw-mb-16-px">
@@ -103,17 +126,24 @@
               [form]="advancedSettingsForm"
               [isFieldMandatory]="false"
               [mandatoryErrorListName]="'travelperkAdvancedSettings.itemLevelDescriptionError' | transloco"
-              [label]="'travelperkAdvancedSettings.customizePurposeFieldLabel' | transloco: { brandName: brandingConfig.brandName } "
-              [subLabel]="'travelperkAdvancedSettings.customizePurposeFieldSubLabel' | transloco: { brandName: brandingConfig.brandName }"
+              [label]="
+                'travelperkAdvancedSettings.customizePurposeFieldLabel'
+                  | transloco: { brandName: brandingConfig.brandName }
+              "
+              [subLabel]="
+                'travelperkAdvancedSettings.customizePurposeFieldSubLabel'
+                  | transloco: { brandName: brandingConfig.brandName }
+              "
               [options]="defaultMemoOptions"
               [iconPath]="'list'"
               [placeholder]="'travelperkAdvancedSettings.setDescriptionPlaceholder' | transloco"
-              [formControllerName]="'descriptionStructure'">
+              [formControllerName]="'descriptionStructure'"
+            >
             </app-configuration-multi-select>
             <div class="preview-text">
               <h4 class="tw-mb-12-px">{{ 'travelperkAdvancedSettings.previewDescriptionField' | transloco }}</h4>
               <div class="preview-box">
-                {{memoPreviewText}}
+                {{ memoPreviewText }}
               </div>
             </div>
           </div>
@@ -122,11 +152,18 @@
       @if (isOnboarding) {
         <div>
           <app-configuration-step-footer
-            [ctaText] = "!isSaveInProgress ? (isOnboarding ? ConfigurationCtaText.SAVE_AND_CONTINUE : ConfigurationCtaText.SAVE) : ConfigurationCtaText.SAVING"
-            [showBackButton] = "isOnboarding"
+            [ctaText]="
+              !isSaveInProgress
+                ? isOnboarding
+                  ? ConfigurationCtaText.SAVE_AND_CONTINUE
+                  : ConfigurationCtaText.SAVE
+                : ConfigurationCtaText.SAVING
+            "
+            [showBackButton]="isOnboarding"
             [isButtonDisabled]="!advancedSettingsForm.valid"
             (navigateToPreviousStep)="navigateBack()"
-            (save)="save()">
+            (save)="save()"
+          >
           </app-configuration-step-footer>
         </div>
       }
@@ -137,11 +174,18 @@
 @if (!isLoading && !isOnboarding) {
   <div class="tw-sticky tw-top-0 tw-bottom-0 tw-left-0 tw-right-0 tw-bg-white">
     <app-configuration-step-footer
-      [ctaText] = "!isSaveInProgress ? (isOnboarding ? ConfigurationCtaText.SAVE_AND_CONTINUE : ConfigurationCtaText.SAVE) : ConfigurationCtaText.SAVING"
-      [showBackButton] = "isOnboarding"
+      [ctaText]="
+        !isSaveInProgress
+          ? isOnboarding
+            ? ConfigurationCtaText.SAVE_AND_CONTINUE
+            : ConfigurationCtaText.SAVE
+          : ConfigurationCtaText.SAVING
+      "
+      [showBackButton]="isOnboarding"
       [isButtonDisabled]="!advancedSettingsForm.valid"
       (navigateToPreviousStep)="navigateBack()"
-      (save)="save()">
+      (save)="save()"
+    >
     </app-configuration-step-footer>
   </div>
 }

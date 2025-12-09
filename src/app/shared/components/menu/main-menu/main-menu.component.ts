@@ -14,13 +14,12 @@ import { TrackingService } from 'src/app/core/services/integration/tracking.serv
 import { IframeOriginStorageService } from 'src/app/core/services/misc/iframe-origin-storage.service';
 
 @Component({
-    selector: 'app-main-menu',
-    templateUrl: './main-menu.component.html',
-    styleUrls: ['./main-menu.component.scss'],
-    standalone: false
+  selector: 'app-main-menu',
+  templateUrl: './main-menu.component.html',
+  styleUrls: ['./main-menu.component.scss'],
+  standalone: false,
 })
 export class MainMenuComponent implements OnInit {
-
   @Input() modules: TabMenuItem[];
 
   @Input() activeItem: string;
@@ -73,20 +72,20 @@ export class MainMenuComponent implements OnInit {
     private eventsService: EventsService,
     private iframeOriginStorageService: IframeOriginStorageService,
     private trackingService: TrackingService,
-    private translocoService: TranslocoService
+    private translocoService: TranslocoService,
   ) {
     this.showMoreDropdown =
       this.brandingFeatureConfig.showMoreDropdownInMainMenu &&
       this.iframeOriginStorageService.get() === IframeOrigin.ADMIN_DASHBOARD;
   }
 
-  onTabChange(value: string | number | undefined){
+  onTabChange(value: string | number | undefined) {
     if (!value) {
       return;
     }
     const stringValue = String(value);
     this.activeItem = stringValue;
-    const selectedModule = this.modules.find(m => m.value === stringValue);
+    const selectedModule = this.modules.find((m) => m.value === stringValue);
     if (selectedModule?.routerLink) {
       this.router.navigate([selectedModule.routerLink]);
     }
@@ -100,10 +99,7 @@ export class MainMenuComponent implements OnInit {
     event.value.handler();
     this.pDropdown()?.clear();
 
-    this.trackingService.onDropDownItemClick(
-      trackingAppMap[this.appName],
-      { option: event.value.label }
-    );
+    this.trackingService.onDropDownItemClick(trackingAppMap[this.appName], { option: event.value.label });
   }
 
   handleDropdownClick() {
@@ -120,14 +116,12 @@ export class MainMenuComponent implements OnInit {
   }
 
   isCurrentIntegration(integrationName: InAppIntegration) {
-    return this.router.url.includes(
-      this.integrationsService.inAppIntegrationUrlMap[integrationName]
-    );
+    return this.router.url.includes(this.integrationsService.inAppIntegrationUrlMap[integrationName]);
   }
 
   getCurrentIntegrationName(): string | undefined {
     const integrations = Object.keys(this.integrationsService.inAppIntegrationUrlMap) as InAppIntegration[];
-    return integrations.find(integration => this.isCurrentIntegration(integration));
+    return integrations.find((integration) => this.isCurrentIntegration(integration));
   }
 
   private addDropdownOptions(integrations: Integration[]) {
@@ -139,10 +133,10 @@ export class MainMenuComponent implements OnInit {
             label: this.translocoService.translate('mainMenu.addMoreIntegrations'),
             handler: () => {
               this.router.navigate(['/integrations/landing_v2']);
-            }
-          }
-        ]
-      }
+            },
+          },
+        ],
+      },
     ];
 
     /**
@@ -152,7 +146,7 @@ export class MainMenuComponent implements OnInit {
     for (let i = integrations.length - 1; i >= 0; i--) {
       const integration = integrations[i];
       const integrationName = this.integrationsService.getIntegrationName(integration.tpa_name);
-      const existingOptions = options[0].items.map(i => i.label);
+      const existingOptions = options[0].items.map((i) => i.label);
       if (integrationName === null || existingOptions.includes(integrationName)) {
         continue;
       }
@@ -163,23 +157,22 @@ export class MainMenuComponent implements OnInit {
           if (!this.isCurrentIntegration(integrationName)) {
             this.integrationsService.navigateToIntegration(integrationName);
           }
-        }
+        },
       });
     }
-
 
     if (this.isDisconnectRequired) {
       options[0].items.push(
         {
           label: '[divider]',
-          disabled: true
+          disabled: true,
         },
         {
           label: this.translocoService.translate('mainMenu.disconnect'),
           handler: () => {
             this.disconnect();
-          }
-        }
+          },
+        },
       );
     }
 
@@ -188,19 +181,22 @@ export class MainMenuComponent implements OnInit {
 
   ngOnInit(): void {
     if (brandingConfig.brandId === 'fyle') {
-      this.integrationsService.getIntegrations().subscribe(integrations => {
+      this.integrationsService.getIntegrations().subscribe((integrations) => {
         this.addDropdownOptions(integrations);
       });
     }
 
     if (!this.toolTipText) {
-      this.toolTipText = this.translocoService.translate('mainMenu.syncTooltip', { appName: this.appName, brandName: brandingConfig.brandName });
+      this.toolTipText = this.translocoService.translate('mainMenu.syncTooltip', {
+        appName: this.appName,
+        brandName: brandingConfig.brandName,
+      });
     }
 
-    const activeModule = this.modules.find(module => this.router.url.includes(module.routerLink || ''));
+    const activeModule = this.modules.find((module) => this.router.url.includes(module.routerLink || ''));
     this.activeItem = activeModule ? activeModule.value : this.modules[0].value;
 
-    if (this.router.url.includes("/token_expired/") || this.router.url.includes("/disconnect/")){
+    if (this.router.url.includes('/token_expired/') || this.router.url.includes('/disconnect/')) {
       this.isMenuDisabled = true;
       this.isDisconnectRequired = false;
     }

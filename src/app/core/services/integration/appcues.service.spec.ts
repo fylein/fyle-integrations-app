@@ -11,17 +11,15 @@ describe('AppcuesService', () => {
 
   beforeEach(() => {
     const service2 = {
-      getUserProfile: () => of(minimalUser)
+      getUserProfile: () => of(minimalUser),
     };
     TestBed.configureTestingModule({
       imports: [HttpClientTestingModule],
-      providers: [AppcuesService,
-        { provide: UserService, useValue: service2 }
-      ]
+      providers: [AppcuesService, { provide: UserService, useValue: service2 }],
     });
     service = TestBed.inject(AppcuesService);
     (window as any).Appcues = {
-      identify: () => undefined
+      identify: () => undefined,
     };
   });
 

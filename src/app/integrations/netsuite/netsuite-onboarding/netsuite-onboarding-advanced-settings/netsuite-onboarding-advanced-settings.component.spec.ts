@@ -8,9 +8,8 @@ xdescribe('NetsuiteOnboardingAdvancedSettingsComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ NetsuiteOnboardingAdvancedSettingsComponent ]
-    })
-    .compileComponents();
+      declarations: [NetsuiteOnboardingAdvancedSettingsComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(NetsuiteOnboardingAdvancedSettingsComponent);
     component = fixture.componentInstance;

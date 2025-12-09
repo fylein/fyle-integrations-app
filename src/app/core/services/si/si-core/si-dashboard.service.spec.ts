@@ -8,11 +8,7 @@ describe('UsiUdashboardService', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [
-        UsiUdashboardService,
-        provideHttpClient(withInterceptorsFromDi()),
-        provideHttpClientTesting()
-      ]
+      providers: [UsiUdashboardService, provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting()],
     });
     service = TestBed.inject(UsiUdashboardService);
   });

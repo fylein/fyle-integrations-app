@@ -1,4 +1,3 @@
-
 import { CommonModule } from '@angular/common';
 import type { Meta, StoryObj } from '@storybook/angular';
 import { moduleMetadata } from '@storybook/angular';
@@ -9,17 +8,17 @@ const meta: Meta<OnboardingDoneComponent> = {
   component: OnboardingDoneComponent,
   tags: ['autodocs'],
   render: (args: OnboardingDoneComponent) => ({
-    props: { ...args }
+    props: { ...args },
   }),
   decorators: [
     moduleMetadata({
       declarations: [OnboardingDoneComponent],
-      imports: [CommonModule]
-    })
+      imports: [CommonModule],
+    }),
   ],
   argTypes: {
-    ngOnInit: { table: { disable: true } }
-  }
+    ngOnInit: { table: { disable: true } },
+  },
 };
 
 export default meta;

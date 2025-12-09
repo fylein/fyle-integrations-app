@@ -9,13 +9,12 @@ import { MappingService } from 'src/app/core/services/common/mapping.service';
 import { TranslocoService } from '@jsverse/transloco';
 
 @Component({
-    selector: 'app-sage300-base-mapping',
-    templateUrl: './sage300-base-mapping.component.html',
-    styleUrls: ['./sage300-base-mapping.component.scss'],
-    standalone: false
+  selector: 'app-sage300-base-mapping',
+  templateUrl: './sage300-base-mapping.component.html',
+  styleUrls: ['./sage300-base-mapping.component.scss'],
+  standalone: false,
 })
 export class Sage300BaseMappingComponent implements OnInit {
-
   sourceField: string;
 
   destinationField: string;
@@ -40,24 +39,33 @@ export class Sage300BaseMappingComponent implements OnInit {
     private route: ActivatedRoute,
     private mappingService: MappingService,
     private toastService: IntegrationsToastService,
-    private translocoService: TranslocoService
-  ) { }
+    private translocoService: TranslocoService,
+  ) {}
 
   triggerAutoMapEmployees() {
     this.isLoading = true;
-    this.mappingService.triggerAutoMapEmployees().subscribe(() => {
-      this.isLoading = false;
-      this.toastService.displayToastMessage(ToastSeverity.INFO, this.translocoService.translate('sage300BaseMapping.autoMappingInfo'));
-    }, () => {
-      this.isLoading = false;
-      this.toastService.displayToastMessage(ToastSeverity.ERROR, this.translocoService.translate('sage300BaseMapping.autoMappingError'));
-    });
+    this.mappingService.triggerAutoMapEmployees().subscribe(
+      () => {
+        this.isLoading = false;
+        this.toastService.displayToastMessage(
+          ToastSeverity.INFO,
+          this.translocoService.translate('sage300BaseMapping.autoMappingInfo'),
+        );
+      },
+      () => {
+        this.isLoading = false;
+        this.toastService.displayToastMessage(
+          ToastSeverity.ERROR,
+          this.translocoService.translate('sage300BaseMapping.autoMappingError'),
+        );
+      },
+    );
   }
 
   getSourceType(results: MappingSetting[]) {
-    if (this.sourceField==='EMPLOYEE') {
+    if (this.sourceField === 'EMPLOYEE') {
       return 'VENDOR';
-    } else if (this.sourceField==='CATEGORY') {
+    } else if (this.sourceField === 'CATEGORY') {
       return 'ACCOUNT';
     }
     const destinationField = results.find((field) => field.source_field === this.sourceField)?.destination_field;
@@ -69,13 +77,15 @@ export class Sage300BaseMappingComponent implements OnInit {
     forkJoin(
       this.mappingService.getExportSettings(),
       this.mappingService.getImportSettings(),
-      this.mappingService.getMappingSettings()
+      this.mappingService.getMappingSettings(),
     ).subscribe(([exportSettingsResponse, importSettingsResponse, mappingSettingsResponse]) => {
       this.reimbursableExpenseObject = exportSettingsResponse.reimbursable_expenses_object;
       this.cccExpenseObject = exportSettingsResponse.corporate_credit_card_expenses_object;
       this.showAutoMapEmployee = exportSettingsResponse.auto_map_employees ? true : false;
       this.destinationField = this.getSourceType(mappingSettingsResponse.results);
-      this.isMultiLineOption = importSettingsResponse.import_settings.import_code_fields?.includes(this.destinationField);
+      this.isMultiLineOption = importSettingsResponse.import_settings.import_code_fields?.includes(
+        this.destinationField,
+      );
       this.mappingService.getPaginatedDestinationAttributes(this.destinationField).subscribe((response: any) => {
         this.destinationOptions = response.results;
         this.isLoading = false;

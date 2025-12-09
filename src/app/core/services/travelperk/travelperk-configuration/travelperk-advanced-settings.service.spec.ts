@@ -11,8 +11,8 @@ describe('TravelperkAdvancedSettingsService', () => {
       providers: [
         TravelperkAdvancedSettingsService,
         provideHttpClient(withInterceptorsFromDi()),
-        provideHttpClientTesting()
-      ]
+        provideHttpClientTesting(),
+      ],
     });
     service = TestBed.inject(TravelperkAdvancedSettingsService);
   });

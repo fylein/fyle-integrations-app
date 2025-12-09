@@ -7,20 +7,19 @@ import { SyncDataType } from 'src/app/core/models/qbd-direct/qbd-direct-configur
 import { SharedModule } from 'src/app/shared/shared.module';
 
 @Component({
-    selector: 'app-qbd-direct-data-sync',
-    imports: [CommonModule, SharedModule, TranslocoModule],
-    templateUrl: './qbd-direct-data-sync.component.html',
-    styleUrl: './qbd-direct-data-sync.component.scss'
+  selector: 'app-qbd-direct-data-sync',
+  imports: [CommonModule, SharedModule, TranslocoModule],
+  templateUrl: './qbd-direct-data-sync.component.html',
+  styleUrl: './qbd-direct-data-sync.component.scss',
 })
 export class QbdDirectDataSyncComponent implements OnInit {
+  @Input({ required: true }) qbdFields: SyncDataType[];
 
-  @Input({required: true}) qbdFields: SyncDataType[];
+  @Input({ required: true }) isLoading: boolean;
 
-  @Input({required: true}) isLoading: boolean;
+  @Input({ required: true }) isCTAEnabled: boolean;
 
-  @Input({required: true}) isCTAEnabled: boolean;
-
-  @Input({required: true}) showSection: boolean;
+  @Input({ required: true }) showSection: boolean;
 
   @Output() continueClick = new EventEmitter();
 
@@ -40,7 +39,5 @@ export class QbdDirectDataSyncComponent implements OnInit {
     this.continueClick.emit();
   }
 
-  ngOnInit() {
-  }
-
+  ngOnInit() {}
 }

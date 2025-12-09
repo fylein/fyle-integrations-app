@@ -4,9 +4,6 @@ import { TravelperkConfigurationRoutingModule } from './travelperk-configuration
 
 @NgModule({
   declarations: [],
-  imports: [
-    CommonModule,
-    TravelperkConfigurationRoutingModule
-  ]
+  imports: [CommonModule, TravelperkConfigurationRoutingModule],
 })
-export class TravelperkConfigurationModule { }
+export class TravelperkConfigurationModule {}

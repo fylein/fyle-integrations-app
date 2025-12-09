@@ -3,24 +3,29 @@ import { WorkspaceService } from './workspace.service';
 import { ApiService } from './api.service';
 import { HelperService } from './helper.service';
 import { Observable } from 'rxjs';
-import { ConditionField, EmailOption, ExpenseFilterResponse, ExpenseFilterPost, ExpenseFilter } from '../../models/common/advanced-settings.model';
+import {
+  ConditionField,
+  EmailOption,
+  ExpenseFilterResponse,
+  ExpenseFilterPost,
+  ExpenseFilter,
+} from '../../models/common/advanced-settings.model';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class SkipExportService {
-
   constructor(
     private workspaceService: WorkspaceService,
     private apiService: ApiService,
-    private helper: HelperService
+    private helper: HelperService,
   ) {
     helper.setBaseApiURL();
   }
 
   getExpenseFields(version?: 'v1'): Observable<ConditionField[]> {
     const endpoint = this.helper.buildEndpointPath(
-      `${this.workspaceService.getWorkspaceId()}/fyle/${version === 'v1' ? 'custom_fields': 'expense_fields'}/`
+      `${this.workspaceService.getWorkspaceId()}/fyle/${version === 'v1' ? 'custom_fields' : 'expense_fields'}/`,
     );
     return this.apiService.get(endpoint, {});
   }
@@ -30,15 +35,23 @@ export class SkipExportService {
   }
 
   getExpenseFilter(): Observable<ExpenseFilterResponse> {
-    return this.apiService.get(this.helper.buildEndpointPath(`${this.workspaceService.getWorkspaceId()}/fyle/expense_filters/`), {});
+    return this.apiService.get(
+      this.helper.buildEndpointPath(`${this.workspaceService.getWorkspaceId()}/fyle/expense_filters/`),
+      {},
+    );
   }
 
   postExpenseFilter(expenseFilter: ExpenseFilterPost): Observable<ExpenseFilter> {
-    return this.apiService.post(this.helper.buildEndpointPath(`${this.workspaceService.getWorkspaceId()}/fyle/expense_filters/`), expenseFilter);
+    return this.apiService.post(
+      this.helper.buildEndpointPath(`${this.workspaceService.getWorkspaceId()}/fyle/expense_filters/`),
+      expenseFilter,
+    );
   }
 
   deleteExpenseFilter(id: number): Observable<{}> {
-    return this.apiService.delete(this.helper.buildEndpointPath(`${this.workspaceService.getWorkspaceId()}/fyle/expense_filters/${id}/`), {});
+    return this.apiService.delete(
+      this.helper.buildEndpointPath(`${this.workspaceService.getWorkspaceId()}/fyle/expense_filters/${id}/`),
+      {},
+    );
   }
-
 }

@@ -14,7 +14,12 @@ import { QbdWorkspaceService } from 'src/app/core/services/qbd/qbd-core/qbd-work
 import { SharedModule } from 'src/app/shared/shared.module';
 
 import { QbdAdvancedSettingComponent } from './qbd-advanced-setting.component';
-import { errorResponse, QBDAdvancedSettingResponse, QBDAdvancedSettingResponse2, QBDEmailOptioResponse } from './qbd-advanced-setting.fixture';
+import {
+  errorResponse,
+  QBDAdvancedSettingResponse,
+  QBDAdvancedSettingResponse2,
+  QBDEmailOptioResponse,
+} from './qbd-advanced-setting.fixture';
 import { TranslocoService } from '@jsverse/transloco';
 
 describe('QbdAdvancedSettingComponent', () => {
@@ -34,34 +39,34 @@ describe('QbdAdvancedSettingComponent', () => {
   beforeEach(async () => {
     service1 = {
       getQbdAdvancedSettings: () => of(QBDAdvancedSettingResponse),
-      postQbdAdvancedSettings: () => of(QBDAdvancedSettingResponse)
+      postQbdAdvancedSettings: () => of(QBDAdvancedSettingResponse),
     };
 
     service2 = {
       getOnboardingState: () => QBDOnboardingState.ADVANCED_SETTINGS,
-      setOnboardingState: () => undefined
+      setOnboardingState: () => undefined,
     };
 
     service3 = {
-      getAdditionalEmails: () => of(QBDEmailOptioResponse)
+      getAdditionalEmails: () => of(QBDEmailOptioResponse),
     };
 
     service4 = {
-      displayToastMessage: () => undefined
+      displayToastMessage: () => undefined,
     };
 
     const translocoServiceSpy = jasmine.createSpyObj('TranslocoService', ['translate'], {
       config: {
-        reRenderOnLangChange: true
+        reRenderOnLangChange: true,
       },
       langChanges$: of('en'),
-      _loadDependencies: () => Promise.resolve()
+      _loadDependencies: () => Promise.resolve(),
     });
 
     await TestBed.configureTestingModule({
-    declarations: [QbdAdvancedSettingComponent],
-    imports: [FormsModule, ReactiveFormsModule, RouterTestingModule, SharedModule, NoopAnimationsModule],
-    providers: [
+      declarations: [QbdAdvancedSettingComponent],
+      imports: [FormsModule, ReactiveFormsModule, RouterTestingModule, SharedModule, NoopAnimationsModule],
+      providers: [
         FormBuilder,
         { provide: Router, useValue: routerSpy },
         { provide: QbdAdvancedSettingsService, useValue: service1 },
@@ -69,10 +74,9 @@ describe('QbdAdvancedSettingComponent', () => {
         { provide: OrgService, useValue: service3 },
         { provide: IntegrationsToastService, useValue: service4 },
         { provide: TranslocoService, useValue: translocoServiceSpy },
-        provideHttpClient(withInterceptorsFromDi())
-    ]
-})
-    .compileComponents();
+        provideHttpClient(withInterceptorsFromDi()),
+      ],
+    }).compileComponents();
 
     translocoService = TestBed.inject(TranslocoService) as jasmine.SpyObj<TranslocoService>;
 
@@ -83,17 +87,33 @@ describe('QbdAdvancedSettingComponent', () => {
     qbdWorkspaceService = TestBed.inject(QbdWorkspaceService);
     qbdAdvancedSettingService = TestBed.inject(QbdAdvancedSettingsService);
     component.advancedSettings = QBDAdvancedSettingResponse;
-    component.memoStructure = ['employee_email', 'merchant', 'purpose', 'category', 'spent_on', 'report_number', 'expense_link'];
+    component.memoStructure = [
+      'employee_email',
+      'merchant',
+      'purpose',
+      'category',
+      'spent_on',
+      'report_number',
+      'expense_link',
+    ];
     component.advancedSettingsForm = formbuilder.group({
-      expenseMemoStructure: [component.advancedSettings?.expense_memo_structure.length>0 ? component.advancedSettings?.expense_memo_structure : null],
-        topMemoStructure: [component.advancedSettings?.top_memo_structure ? component.advancedSettings?.top_memo_structure : null],
-        exportSchedule: [component.advancedSettings?.schedule_is_enabled ? component.advancedSettings?.schedule_is_enabled : null],
-        email: [component.advancedSettings?.emails_selected ? component.advancedSettings?.emails_selected : null],
-        frequency: [component.advancedSettings?.frequency ? component.advancedSettings?.frequency : null],
-        dayOfMonth: [component.advancedSettings?.day_of_month ? component.advancedSettings?.day_of_month : null],
-        dayOfWeek: [component.advancedSettings?.day_of_week ? component.advancedSettings?.day_of_week : null],
-        timeOfDay: [component.advancedSettings?.time_of_day ? component.advancedSettings?.time_of_day : null],
-        meridiem: [null]
+      expenseMemoStructure: [
+        component.advancedSettings?.expense_memo_structure.length > 0
+          ? component.advancedSettings?.expense_memo_structure
+          : null,
+      ],
+      topMemoStructure: [
+        component.advancedSettings?.top_memo_structure ? component.advancedSettings?.top_memo_structure : null,
+      ],
+      exportSchedule: [
+        component.advancedSettings?.schedule_is_enabled ? component.advancedSettings?.schedule_is_enabled : null,
+      ],
+      email: [component.advancedSettings?.emails_selected ? component.advancedSettings?.emails_selected : null],
+      frequency: [component.advancedSettings?.frequency ? component.advancedSettings?.frequency : null],
+      dayOfMonth: [component.advancedSettings?.day_of_month ? component.advancedSettings?.day_of_month : null],
+      dayOfWeek: [component.advancedSettings?.day_of_week ? component.advancedSettings?.day_of_week : null],
+      timeOfDay: [component.advancedSettings?.time_of_day ? component.advancedSettings?.time_of_day : null],
+      meridiem: [null],
     });
     fixture.detectChanges();
   });
@@ -167,18 +187,17 @@ describe('QbdAdvancedSettingComponent', () => {
     spyOn(qbdAdvancedSettingService, 'getQbdAdvancedSettings').and.returnValue(throwError(errorResponse));
     fixture.detectChanges();
     expect((component as any).getSettingsAndSetupForm()).toBeUndefined();
-    component.advancedSettings.time_of_day = "09:00:00";
+    component.advancedSettings.time_of_day = '09:00:00';
     fixture.detectChanges();
     expect((component as any).getSettingsAndSetupForm()).toBeUndefined();
-    component.advancedSettings.time_of_day = "19:00:00";
+    component.advancedSettings.time_of_day = '19:00:00';
     fixture.detectChanges();
     expect((component as any).getSettingsAndSetupForm()).toBeUndefined();
-    component.advancedSettings.time_of_day = "22:00:00";
+    component.advancedSettings.time_of_day = '22:00:00';
     fixture.detectChanges();
     expect((component as any).getSettingsAndSetupForm()).toBeUndefined();
-    component.advancedSettings.time_of_day = "00:00:00";
+    component.advancedSettings.time_of_day = '00:00:00';
     fixture.detectChanges();
     expect((component as any).getSettingsAndSetupForm()).toBeUndefined();
   });
-
 });

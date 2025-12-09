@@ -8,9 +8,8 @@ xdescribe('DashboardMappingResolveComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ DashboardMappingResolveComponent ]
-    })
-    .compileComponents();
+      declarations: [DashboardMappingResolveComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(DashboardMappingResolveComponent);
     component = fixture.componentInstance;

@@ -1,17 +1,23 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { brandingConfig, brandingFeatureConfig, brandingStyle } from 'src/app/branding/branding-config';
 import { AccountingExportSummary } from 'src/app/core/models/db/accounting-export-summary.model';
-import { AppName, ButtonSize, ButtonType, CCCImportState, LoaderType, ReimbursableImportState } from 'src/app/core/models/enum/enum.model';
+import {
+  AppName,
+  ButtonSize,
+  ButtonType,
+  CCCImportState,
+  LoaderType,
+  ReimbursableImportState,
+} from 'src/app/core/models/enum/enum.model';
 import { TranslocoService } from '@jsverse/transloco';
 
 @Component({
-    selector: 'app-dashboard-export-section',
-    templateUrl: './dashboard-export-section.component.html',
-    styleUrls: ['./dashboard-export-section.component.scss'],
-    standalone: false
+  selector: 'app-dashboard-export-section',
+  templateUrl: './dashboard-export-section.component.html',
+  styleUrls: ['./dashboard-export-section.component.scss'],
+  standalone: false,
 })
 export class DashboardExportSectionComponent implements OnInit {
-
   @Input() appName: AppName;
 
   @Input() isImportInProgress: boolean;
@@ -56,7 +62,7 @@ export class DashboardExportSectionComponent implements OnInit {
 
   AppName = AppName;
 
-  constructor(private translocoService: TranslocoService) { }
+  constructor(private translocoService: TranslocoService) {}
 
   triggerExport() {
     this.export.emit(true);
@@ -67,7 +73,7 @@ export class DashboardExportSectionComponent implements OnInit {
     [AppName.QBO, 'assets/logos/email/qbo.png'],
     [AppName.INTACCT, 'assets/logos/intacct-logo.png'],
     [AppName.XERO, 'assets/logos/xero-logo.png'],
-    [AppName.QBD_DIRECT, 'assets/logos/quickbooks-logo.png']
+    [AppName.QBD_DIRECT, 'assets/logos/quickbooks-logo.png'],
   ]);
 
   get logoPath(): string {
@@ -79,7 +85,10 @@ export class DashboardExportSectionComponent implements OnInit {
       this.importStates = ReimbursableImportState.PAID;
     } else {
       if (this.reimbursableImportState && this.cccImportState) {
-        this.importStates = this.reimbursableImportState + this.translocoService.translate('dashboardExportSection.orSeparator') + this.cccImportState;
+        this.importStates =
+          this.reimbursableImportState +
+          this.translocoService.translate('dashboardExportSection.orSeparator') +
+          this.cccImportState;
       } else if (this.reimbursableImportState) {
         this.importStates = this.reimbursableImportState;
       } else if (this.cccImportState) {
@@ -92,5 +101,4 @@ export class DashboardExportSectionComponent implements OnInit {
     this.uiExposedAppName = this.appName === AppName.QBD_DIRECT ? AppName.QBD : this.appName;
     this.constructImportStates();
   }
-
 }

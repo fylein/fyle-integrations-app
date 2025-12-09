@@ -29,23 +29,23 @@ describe('IntacctCompletedExportLogComponent', () => {
     const userServiceSpy = jasmine.createSpyObj('UserService', ['getUserProfile']);
     const translocoServiceSpy = jasmine.createSpyObj('TranslocoService', ['translate'], {
       config: {
-        reRenderOnLangChange: true
+        reRenderOnLangChange: true,
       },
       langChanges$: of('en'),
-      _loadDependencies: () => Promise.resolve()
+      _loadDependencies: () => Promise.resolve(),
     });
 
     await TestBed.configureTestingModule({
-      declarations: [ IntacctCompletedExportLogComponent ],
-      imports: [ ReactiveFormsModule, SharedModule, HttpClientTestingModule ],
+      declarations: [IntacctCompletedExportLogComponent],
+      imports: [ReactiveFormsModule, SharedModule, HttpClientTestingModule],
       providers: [
         FormBuilder,
         { provide: ExportLogService, useValue: exportLogServiceSpy },
         { provide: TrackingService, useValue: trackingServiceSpy },
         { provide: PaginatorService, useValue: paginatorServiceSpy },
         { provide: UserService, useValue: userServiceSpy },
-        { provide: TranslocoService, useValue: translocoServiceSpy }
-      ]
+        { provide: TranslocoService, useValue: translocoServiceSpy },
+      ],
     }).compileComponents();
 
     exportLogService = TestBed.inject(ExportLogService) as jasmine.SpyObj<ExportLogService>;
@@ -61,7 +61,6 @@ describe('IntacctCompletedExportLogComponent', () => {
     fixture = TestBed.createComponent(IntacctCompletedExportLogComponent);
     component = fixture.componentInstance;
   });
-
 
   it('should create', () => {
     expect(component).toBeTruthy();
@@ -119,7 +118,7 @@ describe('IntacctCompletedExportLogComponent', () => {
     tick(10);
     expect(component.selectedDateFilter).toEqual({
       startDate: dateRange[0],
-      endDate: dateRange[1]
+      endDate: dateRange[1],
     });
     expect(component.isDateSelected).toBeTrue();
     expect(exportLogService.getExpenseGroups).toHaveBeenCalled();
@@ -143,13 +142,16 @@ describe('IntacctCompletedExportLogComponent', () => {
       mockPaginator.offset,
       undefined,
       null,
-      undefined
+      undefined,
     );
   });
 
   it('should track date filter', () => {
     const dateFilter = { startDate: new Date('2023-01-01'), endDate: new Date('2023-01-31') };
     (component as any).trackDateFilter('custom', dateFilter);
-    expect(trackingService.onDateFilter).toHaveBeenCalledWith(jasmine.any(String), jasmine.objectContaining(dateFilter));
+    expect(trackingService.onDateFilter).toHaveBeenCalledWith(
+      jasmine.any(String),
+      jasmine.objectContaining(dateFilter),
+    );
   });
 });

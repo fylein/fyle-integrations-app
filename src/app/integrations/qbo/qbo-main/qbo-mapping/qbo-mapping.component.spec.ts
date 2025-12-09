@@ -24,21 +24,17 @@ describe('QboMappingComponent', () => {
     routerSpy = jasmine.createSpyObj('Router', ['navigateByUrl']);
     const translocoServiceSpy = jasmine.createSpyObj('TranslocoService', ['translate'], {
       config: {
-        reRenderOnLangChange: true
+        reRenderOnLangChange: true,
       },
-      langChanges$: of('en')
+      langChanges$: of('en'),
     });
     await TestBed.configureTestingModule({
-      declarations: [
-        QboMappingComponent,
-        SnakeCaseToSpaceCasePipe,
-        SentenceCasePipe
-      ],
+      declarations: [QboMappingComponent, SnakeCaseToSpaceCasePipe, SentenceCasePipe],
       providers: [
         { provide: MappingService, useValue: mappingServiceSpy },
         { provide: Router, useValue: routerSpy },
-        { provide: TranslocoService, useValue: translocoServiceSpy }
-      ]
+        { provide: TranslocoService, useValue: translocoServiceSpy },
+      ],
     }).compileComponents();
 
     fixture = TestBed.createComponent(QboMappingComponent);
@@ -56,8 +52,8 @@ describe('QboMappingComponent', () => {
       results: [
         ...mockMappingSettings.results,
         { source_field: FyleField.CATEGORY },
-        { source_field: FyleField.VENDOR }
-      ]
+        { source_field: FyleField.VENDOR },
+      ],
     };
 
     mappingServiceSpy.getMappingSettings.and.returnValue(of(extendedMockMappingSettings as MappingSettingResponse));
@@ -105,10 +101,7 @@ describe('QboMappingComponent', () => {
 
     const extendedMockMappingSettings = {
       ...mockMappingSettings,
-      results: [
-        ...mockMappingSettings.results,
-        { source_field: FyleField.VENDOR }
-      ]
+      results: [...mockMappingSettings.results, { source_field: FyleField.VENDOR }],
     };
 
     mappingServiceSpy.getMappingSettings.and.returnValue(of(extendedMockMappingSettings as MappingSettingResponse));
@@ -127,10 +120,7 @@ describe('QboMappingComponent', () => {
 
     const extendedMockMappingSettings = {
       ...mockMappingSettings,
-      results: [
-        ...mockMappingSettings.results,
-        { source_field: FyleField.VENDOR }
-      ]
+      results: [...mockMappingSettings.results, { source_field: FyleField.VENDOR }],
     };
 
     mappingServiceSpy.getMappingSettings.and.returnValue(of(extendedMockMappingSettings as MappingSettingResponse));

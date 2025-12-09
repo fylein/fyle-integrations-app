@@ -10,30 +10,31 @@ const routes: Routes = [
       {
         path: '',
         redirectTo: 'dashboard',
-        pathMatch: 'full'
+        pathMatch: 'full',
       },
       {
         path: 'dashboard',
-        loadChildren: () => import('./xero-dashboard/xero-dashboard.module').then(m => m.XeroDashboardModule)
+        loadChildren: () => import('./xero-dashboard/xero-dashboard.module').then((m) => m.XeroDashboardModule),
       },
       {
         path: 'configuration',
-        loadChildren: () => import('./xero-configuration/xero-configuration.module').then(m => m.XeroConfigurationModule)
+        loadChildren: () =>
+          import('./xero-configuration/xero-configuration.module').then((m) => m.XeroConfigurationModule),
       },
       {
         path: 'export_log',
-        loadChildren: () => import('./xero-export-log/xero-export-log.module').then(m => m.XeroExportLogModule)
+        loadChildren: () => import('./xero-export-log/xero-export-log.module').then((m) => m.XeroExportLogModule),
       },
       {
         path: 'mapping',
-        loadChildren: () => import('./xero-mapping/xero-mapping.module').then(m => m.XeroMappingModule)
-      }
-    ]
-  }
+        loadChildren: () => import('./xero-mapping/xero-mapping.module').then((m) => m.XeroMappingModule),
+      },
+    ],
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class XeroMainRoutingModule { }
+export class XeroMainRoutingModule {}

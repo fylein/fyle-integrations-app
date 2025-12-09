@@ -11,8 +11,8 @@ describe('Usage50UimportUsettingsService', () => {
       providers: [
         Usage50UimportUsettingsService,
         provideHttpClient(withInterceptorsFromDi()),
-        provideHttpClientTesting()
-      ]
+        provideHttpClientTesting(),
+      ],
     });
     service = TestBed.inject(Usage50UimportUsettingsService);
   });

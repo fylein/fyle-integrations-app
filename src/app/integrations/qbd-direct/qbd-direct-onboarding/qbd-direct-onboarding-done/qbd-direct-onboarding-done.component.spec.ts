@@ -8,9 +8,8 @@ xdescribe('QbdDirectOnboardingDoneComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [QbdDirectOnboardingDoneComponent]
-    })
-    .compileComponents();
+      imports: [QbdDirectOnboardingDoneComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(QbdDirectOnboardingDoneComponent);
     component = fixture.componentInstance;

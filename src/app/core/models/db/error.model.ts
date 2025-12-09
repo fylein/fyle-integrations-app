@@ -1,8 +1,8 @@
-import { AccountingErrorType } from "../enum/enum.model";
-import { AccountingExport } from "./accounting-export.model";
-import { ExpenseAttribute } from "./expense-attribute.model";
-import { ExtendedGenericMapping } from "./extended-generic-mapping.model";
-import { PaginatedResponse } from "./paginated-response.model";
+import { AccountingErrorType } from '../enum/enum.model';
+import { AccountingExport } from './accounting-export.model';
+import { ExpenseAttribute } from './expense-attribute.model';
+import { ExtendedGenericMapping } from './extended-generic-mapping.model';
+import { PaginatedResponse } from './paginated-response.model';
 
 export interface DestinationAttributeDetail {
   user_id?: string;
@@ -33,46 +33,57 @@ export interface ErrorResponse extends PaginatedResponse {
 }
 
 export type ErrorStat = {
-    resolvedCount: number;
-    totalCount: number;
-  }
+  resolvedCount: number;
+  totalCount: number;
+};
 
 export type AccountingGroupedErrors = {
-    [AccountingErrorType.EMPLOYEE_MAPPING]: Error[];
-    [AccountingErrorType.CATEGORY_MAPPING]: Error[];
-    [AccountingErrorType.ACCOUNTING_ERROR]: Error[];
-  }
+  [AccountingErrorType.EMPLOYEE_MAPPING]: Error[];
+  [AccountingErrorType.CATEGORY_MAPPING]: Error[];
+  [AccountingErrorType.ACCOUNTING_ERROR]: Error[];
+};
 
 export type AccountingGroupedErrorStat = {
-    [AccountingErrorType.EMPLOYEE_MAPPING]: null | ErrorStat;
-    [AccountingErrorType.CATEGORY_MAPPING]: null | ErrorStat;
-  }
+  [AccountingErrorType.EMPLOYEE_MAPPING]: null | ErrorStat;
+  [AccountingErrorType.CATEGORY_MAPPING]: null | ErrorStat;
+};
 
 export class ErrorModel {
   static formatErrors(errors: Error[]): AccountingGroupedErrors {
-    return errors.reduce((groupedErrors: AccountingGroupedErrors, error: Error) => {
-      let errorType;
-      if (error.type === AccountingErrorType.EMPLOYEE_MAPPING || error.type === AccountingErrorType.CATEGORY_MAPPING) {
-        errorType = error.type;
-      } else {
-        errorType = AccountingErrorType.ACCOUNTING_ERROR;
-      }
-      const group: Error[] = groupedErrors[errorType] || [];
-      group.push(error);
-      groupedErrors[error.type] = group;
+    return errors.reduce(
+      (groupedErrors: AccountingGroupedErrors, error: Error) => {
+        let errorType;
+        if (
+          error.type === AccountingErrorType.EMPLOYEE_MAPPING ||
+          error.type === AccountingErrorType.CATEGORY_MAPPING
+        ) {
+          errorType = error.type;
+        } else {
+          errorType = AccountingErrorType.ACCOUNTING_ERROR;
+        }
+        const group: Error[] = groupedErrors[errorType] || [];
+        group.push(error);
+        groupedErrors[error.type] = group;
 
-      return groupedErrors;
-    }, {
-      [AccountingErrorType.EMPLOYEE_MAPPING]: [],
-      [AccountingErrorType.CATEGORY_MAPPING]: [],
-      [AccountingErrorType.ACCOUNTING_ERROR]: []
-    });
+        return groupedErrors;
+      },
+      {
+        [AccountingErrorType.EMPLOYEE_MAPPING]: [],
+        [AccountingErrorType.CATEGORY_MAPPING]: [],
+        [AccountingErrorType.ACCOUNTING_ERROR]: [],
+      },
+    );
   }
 
-  static getErroredMappings(errors: AccountingGroupedErrors, errorType: AccountingErrorType, isCategoryMappingGeneric?: boolean, isEmployeeMappingGeneric?: boolean): ExtendedGenericMapping[] {
+  static getErroredMappings(
+    errors: AccountingGroupedErrors,
+    errorType: AccountingErrorType,
+    isCategoryMappingGeneric?: boolean,
+    isEmployeeMappingGeneric?: boolean,
+  ): ExtendedGenericMapping[] {
     const filteredMappings: ExtendedGenericMapping[] = [];
 
-    errors[errorType].forEach(element => {
+    errors[errorType].forEach((element) => {
       const filteredMapping: ExtendedGenericMapping = element.expense_attribute;
       if (errorType === AccountingErrorType.ACCOUNTING_ERROR || isCategoryMappingGeneric || isEmployeeMappingGeneric) {
         filteredMapping.mapping = [];

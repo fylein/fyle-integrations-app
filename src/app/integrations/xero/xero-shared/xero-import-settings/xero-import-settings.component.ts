@@ -2,7 +2,12 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { AbstractControl, FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { forkJoin } from 'rxjs';
-import { brandingConfig, brandingFeatureConfig, brandingKbArticles, brandingStyle } from 'src/app/branding/branding-config';
+import {
+  brandingConfig,
+  brandingFeatureConfig,
+  brandingKbArticles,
+  brandingStyle,
+} from 'src/app/branding/branding-config';
 import { ExpenseField } from 'src/app/core/models/common/import-settings.model';
 import { DestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
 import { FyleField, IntegrationField } from 'src/app/core/models/db/mapping.model';
@@ -23,13 +28,12 @@ import { ImportSettingsService } from 'src/app/core/services/common/import-setti
 import { BrandingService } from 'src/app/core/services/common/branding.service';
 
 @Component({
-    selector: 'app-xero-import-settings',
-    templateUrl: './xero-import-settings.component.html',
-    styleUrls: ['./xero-import-settings.component.scss'],
-    standalone: false
+  selector: 'app-xero-import-settings',
+  templateUrl: './xero-import-settings.component.html',
+  styleUrls: ['./xero-import-settings.component.scss'],
+  standalone: false,
 })
 export class XeroImportSettingsComponent implements OnInit {
-
   isLoading: boolean = true;
 
   appName: string = AppName.XERO;
@@ -55,7 +59,7 @@ export class XeroImportSettingsComponent implements OnInit {
   customFieldForm: FormGroup = this.formBuilder.group({
     attribute_type: ['', Validators.required],
     display_name: [''],
-    source_placeholder: ['', Validators.required]
+    source_placeholder: ['', Validators.required],
   });
 
   showCustomFieldDialog: boolean;
@@ -99,7 +103,7 @@ export class XeroImportSettingsComponent implements OnInit {
     private toastService: IntegrationsToastService,
     private xeroConnectorService: XeroConnectorService,
     private translocoService: TranslocoService,
-    public brandingService: BrandingService
+    public brandingService: BrandingService,
   ) {
     this.customFieldOption = this.importSettingService.getCustomFieldOption();
   }
@@ -130,7 +134,7 @@ export class XeroImportSettingsComponent implements OnInit {
       attribute_type: this.customFieldForm.get('attribute_type')?.value.split(' ').join('_').toUpperCase(),
       display_name: this.customFieldForm.get('attribute_type')?.value,
       source_placeholder: this.customFieldForm.get('source_placeholder')?.value,
-      is_dependent: false
+      is_dependent: false,
     };
 
     if (this.customFieldControl) {
@@ -142,10 +146,18 @@ export class XeroImportSettingsComponent implements OnInit {
         destination_field: this.customFieldControl.get('destination_field')?.value,
         import_to_fyle: true,
         is_custom: true,
-        source_placeholder: this.customField.source_placeholder
+        source_placeholder: this.customField.source_placeholder,
       };
-      (this.importSettingsForm.get('expenseFields') as FormArray).controls.filter(field => field.get('destination_field')?.value === this.customFieldControl.get('destination_field')?.value)[0].patchValue(expenseField);
-      ((this.importSettingsForm.get('expenseFields') as FormArray).controls.filter(field => field.get('destination_field')?.value === this.customFieldControl.get('destination_field')?.value)[0] as FormGroup).controls.import_to_fyle.disable();
+      (this.importSettingsForm.get('expenseFields') as FormArray).controls
+        .filter(
+          (field) => field.get('destination_field')?.value === this.customFieldControl.get('destination_field')?.value,
+        )[0]
+        .patchValue(expenseField);
+      (
+        (this.importSettingsForm.get('expenseFields') as FormArray).controls.filter(
+          (field) => field.get('destination_field')?.value === this.customFieldControl.get('destination_field')?.value,
+        )[0] as FormGroup
+      ).controls.import_to_fyle.disable();
       this.customFieldForm.reset();
       this.showCustomFieldDialog = false;
     }
@@ -180,8 +192,8 @@ export class XeroImportSettingsComponent implements OnInit {
     this.createImportCustomerWatcher();
     this.createCOAWatcher();
     const expenseFieldArray = this.importSettingsForm.get('expenseFields') as FormArray;
-    expenseFieldArray.controls.forEach((control:any) => {
-      control.valueChanges.subscribe((value: { source_field: string; destination_field: string; }) => {
+    expenseFieldArray.controls.forEach((control: any) => {
+      control.valueChanges.subscribe((value: { source_field: string; destination_field: string }) => {
         if (value.source_field === 'custom_field') {
           this.initializeCustomFieldForm(true);
           this.customFieldType = '';
@@ -191,7 +203,7 @@ export class XeroImportSettingsComponent implements OnInit {
             destination_field: control.get('destination_field')?.value,
             import_to_fyle: control.get('import_to_fyle')?.value,
             is_custom: control.get('is_custom')?.value,
-            source_placeholder: null
+            source_placeholder: null,
           });
         }
       });
@@ -201,18 +213,29 @@ export class XeroImportSettingsComponent implements OnInit {
   private constructPayloadAndSave() {
     this.isSaveInProgress = true;
     const importSettingPayload = this.importSettingService.constructPayload(this.importSettingsForm);
-    this.importSettingService.postImportSettings(importSettingPayload).subscribe(() => {
-      this.isSaveInProgress = false;
-      this.toastService.displayToastMessage(ToastSeverity.SUCCESS, this.translocoService.translate('xeroImportSettings.importSettingsSuccess'), undefined, this.isOnboarding);
+    this.importSettingService.postImportSettings(importSettingPayload).subscribe(
+      () => {
+        this.isSaveInProgress = false;
+        this.toastService.displayToastMessage(
+          ToastSeverity.SUCCESS,
+          this.translocoService.translate('xeroImportSettings.importSettingsSuccess'),
+          undefined,
+          this.isOnboarding,
+        );
 
-      if (this.isOnboarding) {
-        this.workspaceService.setOnboardingState(XeroOnboardingState.ADVANCED_CONFIGURATION);
-        this.router.navigate([`/integrations/xero/onboarding/advanced_settings`]);
-      }
-    }, () => {
-      this.isSaveInProgress = false;
-      this.toastService.displayToastMessage(ToastSeverity.ERROR, this.translocoService.translate('xeroImportSettings.importSettingsError'));
-    });
+        if (this.isOnboarding) {
+          this.workspaceService.setOnboardingState(XeroOnboardingState.ADVANCED_CONFIGURATION);
+          this.router.navigate([`/integrations/xero/onboarding/advanced_settings`]);
+        }
+      },
+      () => {
+        this.isSaveInProgress = false;
+        this.toastService.displayToastMessage(
+          ToastSeverity.ERROR,
+          this.translocoService.translate('xeroImportSettings.importSettingsError'),
+        );
+      },
+    );
   }
 
   save(): void {
@@ -224,19 +247,25 @@ export class XeroImportSettingsComponent implements OnInit {
   private createImportCustomerWatcher(): void {
     if (brandingFeatureConfig.featureFlags.importSettings.disableCustomerSourceField) {
       const formArray = this.importSettingsForm.get('expenseFields') as FormArray;
-      const index = formArray.value.findIndex((data:any) => data.destination_field === XeroFyleField.CUSTOMER);
+      const index = formArray.value.findIndex((data: any) => data.destination_field === XeroFyleField.CUSTOMER);
       formArray.controls[index]?.get('import_to_fyle')?.valueChanges.subscribe((isCustomerImportEnabled) => {
         if (isCustomerImportEnabled) {
           formArray.controls[index]?.get('source_field')?.patchValue(XeroFyleField.PROJECT);
           this.importSettingsForm.controls.importCustomers.patchValue(true);
-          this.fyleExpenseFields = this.fyleExpenseFields.filter((field) => field.attribute_type !== XeroFyleField.PROJECT);
+          this.fyleExpenseFields = this.fyleExpenseFields.filter(
+            (field) => field.attribute_type !== XeroFyleField.PROJECT,
+          );
         } else {
           formArray.controls[index]?.get('source_field')?.patchValue('DISABLED_XERO_SOURCE_FIELD');
           this.importSettingsForm.controls.importCustomers.patchValue(false);
           const fyleField = this.fyleExpenseFields.filter((field) => field.attribute_type === XeroFyleField.PROJECT);
           if (fyleField.length === 0) {
             this.fyleExpenseFields.pop();
-            this.fyleExpenseFields.push({ attribute_type: XeroFyleField.PROJECT, display_name: this.translocoService.translate('xeroImportSettings.project'), is_dependent: false });
+            this.fyleExpenseFields.push({
+              attribute_type: XeroFyleField.PROJECT,
+              display_name: this.translocoService.translate('xeroImportSettings.project'),
+              is_dependent: false,
+            });
             this.fyleExpenseFields.push(this.customFieldOption[0]);
           }
         }
@@ -244,12 +273,18 @@ export class XeroImportSettingsComponent implements OnInit {
     } else {
       this.importSettingsForm.controls.importCustomers.valueChanges.subscribe((isCustomerImportEnabled) => {
         if (isCustomerImportEnabled) {
-          this.fyleExpenseFields = this.fyleExpenseFields.filter((field) => field.attribute_type !== XeroFyleField.PROJECT);
+          this.fyleExpenseFields = this.fyleExpenseFields.filter(
+            (field) => field.attribute_type !== XeroFyleField.PROJECT,
+          );
         } else {
           const fyleField = this.fyleExpenseFields.filter((field) => field.attribute_type === XeroFyleField.PROJECT);
           if (fyleField.length === 0) {
             this.fyleExpenseFields.pop();
-            this.fyleExpenseFields.push({ attribute_type: XeroFyleField.PROJECT, display_name: this.translocoService.translate('xeroImportSettings.project'), is_dependent: false });
+            this.fyleExpenseFields.push({
+              attribute_type: XeroFyleField.PROJECT,
+              display_name: this.translocoService.translate('xeroImportSettings.project'),
+              is_dependent: false,
+            });
             this.fyleExpenseFields.push(this.customFieldOption[0]);
           }
         }
@@ -265,19 +300,28 @@ export class XeroImportSettingsComponent implements OnInit {
       this.importSettingService.getXeroField(),
       this.mappingService.getDestinationAttributes(XeroFyleField.TAX_CODE, 'v1', 'xero'),
       this.workspaceService.getWorkspaceGeneralSettings(),
-      this.xeroConnectorService.getXeroCredentials(this.workspaceService.getWorkspaceId())
-    ]).subscribe(response => {
+      this.xeroConnectorService.getXeroCredentials(this.workspaceService.getWorkspaceId()),
+    ]).subscribe((response) => {
       this.importSettings = response[0];
       this.fyleExpenseFields = response[1];
       this.xeroExpenseFields = response[2];
       this.taxCodes = response[3];
       this.workspaceGeneralSettings = response[4];
 
-      this.isCustomerPresent = this.xeroExpenseFields.findIndex((data:IntegrationField) => data.attribute_type === XeroFyleField.CUSTOMER) !== -1 ? true : false;
+      this.isCustomerPresent =
+        this.xeroExpenseFields.findIndex((data: IntegrationField) => data.attribute_type === XeroFyleField.CUSTOMER) !==
+        -1
+          ? true
+          : false;
 
       this.xeroExpenseFields = this.xeroExpenseFields.filter((data) => data.attribute_type !== XeroFyleField.CUSTOMER);
 
-      this.importSettingsForm = this.importSettingService.mapAPIResponseToFormGroup(this.importSettings, this.xeroExpenseFields, this.isCustomerPresent, this.taxCodes);
+      this.importSettingsForm = this.importSettingService.mapAPIResponseToFormGroup(
+        this.importSettings,
+        this.xeroExpenseFields,
+        this.isCustomerPresent,
+        this.taxCodes,
+      );
 
       if (response[5] && response[5].country !== 'US' && new Date(this.org.created_at) < new Date('2024-08-19')) {
         this.isTaxGroupSyncAllowed = true;
@@ -287,9 +331,18 @@ export class XeroImportSettingsComponent implements OnInit {
         this.xeroExpenseFields = response[2];
       }
 
-      this.isProjectMapped = this.importSettings.mapping_settings.findIndex((data) => data.source_field ===  XeroFyleField.PROJECT && data.destination_field !== XeroFyleField.CUSTOMER) !== -1 ? true : false;
+      this.isProjectMapped =
+        this.importSettings.mapping_settings.findIndex(
+          (data) => data.source_field === XeroFyleField.PROJECT && data.destination_field !== XeroFyleField.CUSTOMER,
+        ) !== -1
+          ? true
+          : false;
 
-      this.fyleExpenseFields.push({ attribute_type: 'custom_field', display_name: this.translocoService.translate('xeroImportSettings.createCustomField'), is_dependent: false });
+      this.fyleExpenseFields.push({
+        attribute_type: 'custom_field',
+        display_name: this.translocoService.translate('xeroImportSettings.createCustomField'),
+        is_dependent: false,
+      });
       this.setupFormWatchers();
       this.initializeCustomFieldForm(false);
 
@@ -304,5 +357,4 @@ export class XeroImportSettingsComponent implements OnInit {
   ngOnInit(): void {
     this.setupPage();
   }
-
 }

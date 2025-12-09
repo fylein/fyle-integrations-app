@@ -1,7 +1,14 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { AccountingExport, AccountingExportList } from 'src/app/core/models/db/accounting-export.model';
-import { AccountingExportStatus, AccountingExportType, AppName, BusinessCentralExportType, PaginatorPage, TrackingApp } from 'src/app/core/models/enum/enum.model';
+import {
+  AccountingExportStatus,
+  AccountingExportType,
+  AppName,
+  BusinessCentralExportType,
+  PaginatorPage,
+  TrackingApp,
+} from 'src/app/core/models/enum/enum.model';
 import { Paginator } from 'src/app/core/models/misc/paginator.model';
 import { DateFilter, SelectedDateFilter } from 'src/app/core/models/qbd/misc/qbd-date-filter.model';
 import { Expense } from 'src/app/core/models/intacct/db/expense.model';
@@ -17,13 +24,12 @@ import { Subject } from 'rxjs';
 import { TranslocoService } from '@jsverse/transloco';
 
 @Component({
-    selector: 'app-business-central-complete-export-log',
-    templateUrl: './business-central-complete-export-log.component.html',
-    styleUrls: ['./business-central-complete-export-log.component.scss'],
-    standalone: false
+  selector: 'app-business-central-complete-export-log',
+  templateUrl: './business-central-complete-export-log.component.html',
+  styleUrls: ['./business-central-complete-export-log.component.scss'],
+  standalone: false,
 })
 export class BusinessCentralCompleteExportLogComponent implements OnInit {
-
   isLoading: boolean;
 
   appName: AppName = AppName.BUSINESS_CENTRAL;
@@ -44,11 +50,11 @@ export class BusinessCentralCompleteExportLogComponent implements OnInit {
 
   hideCalendar: boolean;
 
-  accountingExports: AccountingExportList [];
+  accountingExports: AccountingExportList[];
 
-  filteredAccountingExports: AccountingExportList [];
+  filteredAccountingExports: AccountingExportList[];
 
-  expenses: Expense [] = [];
+  expenses: Expense[] = [];
 
   isDateSelected: boolean = false;
 
@@ -58,7 +64,6 @@ export class BusinessCentralCompleteExportLogComponent implements OnInit {
 
   private searchQuerySubject = new Subject<string>();
 
-
   constructor(
     @Inject(FormBuilder) private formBuilder: FormBuilder,
     private trackingService: TrackingService,
@@ -66,17 +71,15 @@ export class BusinessCentralCompleteExportLogComponent implements OnInit {
     private windowService: WindowService,
     private paginatorService: PaginatorService,
     private userService: UserService,
-    private translocoService: TranslocoService
+    private translocoService: TranslocoService,
   ) {
-    this.searchQuerySubject.pipe(
-    debounceTime(1000)
-  ).subscribe((query: string) => {
-    this.searchQuery = query;
-    this.offset = 0;
-    this.currentPage = Math.ceil(this.offset / this.limit) + 1;
-    this.getAccountingExports(this.limit, this.offset);
-  });
-}
+    this.searchQuerySubject.pipe(debounceTime(1000)).subscribe((query: string) => {
+      this.searchQuery = query;
+      this.offset = 0;
+      this.currentPage = Math.ceil(this.offset / this.limit) + 1;
+      this.getAccountingExports(this.limit, this.offset);
+    });
+  }
 
   openExpenseinFyle(expenseId: string) {
     this.windowService.openInNewTab(AccountingExportService.getFyleExpenseUrl(expenseId));
@@ -100,18 +103,34 @@ export class BusinessCentralCompleteExportLogComponent implements OnInit {
     this.getAccountingExports(this.limit, offset);
   }
 
-  private getAccountingExports(limit: number, offset:number) {
+  private getAccountingExports(limit: number, offset: number) {
     this.isLoading = true;
 
     if (this.limit !== limit) {
       this.paginatorService.storePageSize(PaginatorPage.EXPORT_LOG, limit);
     }
 
-    this.accountingExportService.getAccountingExports([BusinessCentralExportType.PURCHASE_INVOICE, BusinessCentralExportType.JOURNAL_ENTRY], [AccountingExportStatus.COMPLETE], null, limit, offset, this.selectedDateFilter, null, this.searchQuery).subscribe(accountingExportResponse => {
-          this.totalCount = accountingExportResponse.count;
+    this.accountingExportService
+      .getAccountingExports(
+        [BusinessCentralExportType.PURCHASE_INVOICE, BusinessCentralExportType.JOURNAL_ENTRY],
+        [AccountingExportStatus.COMPLETE],
+        null,
+        limit,
+        offset,
+        this.selectedDateFilter,
+        null,
+        this.searchQuery,
+      )
+      .subscribe((accountingExportResponse) => {
+        this.totalCount = accountingExportResponse.count;
 
-        const accountingExports: AccountingExportList[] = accountingExportResponse.results.map((accountingExport: AccountingExport) =>
-          this.accountingExportService.parseAPIResponseToExportLog(accountingExport, this.org_id, this.translocoService)
+        const accountingExports: AccountingExportList[] = accountingExportResponse.results.map(
+          (accountingExport: AccountingExport) =>
+            this.accountingExportService.parseAPIResponseToExportLog(
+              accountingExport,
+              this.org_id,
+              this.translocoService,
+            ),
         );
         this.filteredAccountingExports = accountingExports;
         this.accountingExports = [...this.filteredAccountingExports];
@@ -122,7 +141,7 @@ export class BusinessCentralCompleteExportLogComponent implements OnInit {
   private trackDateFilter(filterType: 'existing' | 'custom', selectedDateFilter: SelectedDateFilter): void {
     const trackingProperty = {
       filterType,
-      ...selectedDateFilter
+      ...selectedDateFilter,
     };
     this.trackingService.onDateFilter(TrackingApp.BUSINESS_CENTRAL, trackingProperty);
   }
@@ -132,7 +151,7 @@ export class BusinessCentralCompleteExportLogComponent implements OnInit {
       searchOption: [''],
       dateRange: [null],
       start: [''],
-      end: ['']
+      end: [''],
     });
 
     this.exportLogForm.controls.start.valueChanges.subscribe((dateRange) => {
@@ -146,7 +165,7 @@ export class BusinessCentralCompleteExportLogComponent implements OnInit {
         this.hideCalendar = true;
         this.selectedDateFilter = {
           startDate: dateRange[0],
-          endDate: dateRange[1]
+          endDate: dateRange[1],
         };
         this.isDateSelected = true;
         this.trackDateFilter('existing', this.selectedDateFilter);
@@ -173,5 +192,4 @@ export class BusinessCentralCompleteExportLogComponent implements OnInit {
     this.dateOptions = this.accountingExportService.getDateOptionsV2();
     this.getAccountingExportsAndSetupPage();
   }
-
 }

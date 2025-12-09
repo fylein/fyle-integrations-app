@@ -9,24 +9,34 @@ import { TooltipModule } from 'primeng/tooltip';
 import { DropdownComponent } from 'src/app/shared/components/input/dropdown/dropdown.component';
 import { setupStoryBookFormGroup } from './utility';
 
-const form = setupStoryBookFormGroup(new FormGroup({
-  emotion: new FormControl('hehe')
-}));
+const form = setupStoryBookFormGroup(
+  new FormGroup({
+    emotion: new FormControl('hehe'),
+  }),
+);
 
 const meta: Meta<DropdownComponent> = {
   title: 'Input/Dropdown',
   component: DropdownComponent,
   tags: ['autodocs'],
   render: (args: DropdownComponent) => ({
-    props: { ...args }
+    props: { ...args },
   }),
   decorators: [
     moduleMetadata({
       declarations: [DropdownComponent],
-      imports: [CommonModule, BrowserAnimationsModule, FormsModule, ReactiveFormsModule, SelectModule, TooltipModule, RippleModule]
-    })
+      imports: [
+        CommonModule,
+        BrowserAnimationsModule,
+        FormsModule,
+        ReactiveFormsModule,
+        SelectModule,
+        TooltipModule,
+        RippleModule,
+      ],
+    }),
   ],
-  argTypes: {}
+  argTypes: {},
 };
 
 export default meta;
@@ -35,22 +45,30 @@ type Story = StoryObj<DropdownComponent>;
 export const preFilled: Story = {
   args: {
     placeholder: 'Select an option',
-    options: [{key: 'hehe', value: 'hehe'}, {'key': 'haha', 'value': 'haha'}],
+    options: [
+      { key: 'hehe', value: 'hehe' },
+      { key: 'haha', value: 'haha' },
+    ],
     form: form,
     formControllerName: 'emotion',
-    displayKey: 'key'
-  }
+    displayKey: 'key',
+  },
 };
 
-const newFieldForm = setupStoryBookFormGroup(new FormGroup({
-  emotion: new FormControl()
-}));
+const newFieldForm = setupStoryBookFormGroup(
+  new FormGroup({
+    emotion: new FormControl(),
+  }),
+);
 export const newField: Story = {
   args: {
     placeholder: 'Select an option',
-    options: [{key: 'hehe', value: 'hehe'}, {'key': 'haha', 'value': 'haha'}],
+    options: [
+      { key: 'hehe', value: 'hehe' },
+      { key: 'haha', value: 'haha' },
+    ],
     form: newFieldForm,
     formControllerName: 'emotion',
-    displayKey: 'key'
-  }
+    displayKey: 'key',
+  },
 };

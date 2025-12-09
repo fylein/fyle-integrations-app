@@ -4,20 +4,23 @@
   </div>
 }
 
-<div class="tw-rounded-8-px tw-bg-white tw-border-1-px tw-border-separator" [ngClass]="brandingStyle.common.mainComponentShadow">
+<div
+  class="tw-rounded-8-px tw-bg-white tw-border-1-px tw-border-separator"
+  [ngClass]="brandingStyle.common.mainComponentShadow"
+>
   <div>
-    @if (totalCount > 0 || (isDateSelected || searchQuery)) {
+    @if (totalCount > 0 || isDateSelected || searchQuery) {
       <app-export-log-filter
         [exportLogForm]="skipExportLogForm"
         [hideCalendar]="hideCalendar"
         [dateOptions]="dateOptions"
-        (handleSimpleSearch)="handleSimpleSearch($event)">
+        (handleSimpleSearch)="handleSimpleSearch($event)"
+      >
       </app-export-log-filter>
     }
 
     @if (!isLoading) {
-      <app-skipped-export-log-table [filteredExpense]="filteredExpenses" >
-      </app-skipped-export-log-table>
+      <app-skipped-export-log-table [filteredExpense]="filteredExpenses"> </app-skipped-export-log-table>
     }
 
     @if (totalCount > 0 && !isLoading) {
@@ -27,7 +30,8 @@
           [page]="currentPage"
           [totalCount]="totalCount"
           (pageSizeChangeEvent)="pageSizeChanges($event)"
-          (pageOffsetChangeEvent)="pageChanges($event)">
+          (pageOffsetChangeEvent)="pageChanges($event)"
+        >
         </app-paginator>
       </div>
     }
@@ -35,16 +39,17 @@
     @if ((isDateSelected || searchQuery) && totalCount === 0 && !isLoading) {
       <app-zero-state-with-illustration
         [mainText]="'exportLog.skipExportLogZeroStateHeaderText' | transloco"
-        [subText]="'exportLog.skipExportLogZeroStateSubHeaderText' | transloco">
+        [subText]="'exportLog.skipExportLogZeroStateSubHeaderText' | transloco"
+      >
       </app-zero-state-with-illustration>
     }
-
   </div>
 
-  @if (totalCount === 0 && (!isDateSelected && !searchQuery) && !isLoading) {
+  @if (totalCount === 0 && !isDateSelected && !searchQuery && !isLoading) {
     <app-zero-state-with-illustration
       [mainText]="'exportLog.skipExportLogCountZeroStateHeaderText' | transloco"
-      [subText]="'exportLog.skipExportLogCountZeroStateSubHeaderText' | transloco">
+      [subText]="'exportLog.skipExportLogCountZeroStateSubHeaderText' | transloco"
+    >
     </app-zero-state-with-illustration>
   }
 </div>

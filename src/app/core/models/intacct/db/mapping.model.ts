@@ -1,10 +1,9 @@
-
-import { DestinationAttribute } from "../../db/destination-attribute.model";
-import { FyleField, MappingState, SageIntacctField } from "../../enum/enum.model";
-import { EmployeeMapping } from "./employee-mapping.model";
-import { Error } from "./error.model";
-import { ExpenseAttribute } from "./expense-attribute.model";
-import { MinimalMappingSetting } from "./mapping-setting.model";
+import { DestinationAttribute } from '../../db/destination-attribute.model';
+import { FyleField, MappingState, SageIntacctField } from '../../enum/enum.model';
+import { EmployeeMapping } from './employee-mapping.model';
+import { Error } from './error.model';
+import { ExpenseAttribute } from './expense-attribute.model';
+import { MinimalMappingSetting } from './mapping-setting.model';
 
 export type MappingPost = {
   source_type: string;
@@ -41,7 +40,7 @@ export type MappingList = {
   };
   preserveDestination?: {
     id: number | string;
-  }
+  };
   autoMapped: boolean;
   state: MappingState;
   index: number;
@@ -66,7 +65,7 @@ export class MappingModel {
       source_value: mappingRow.fyle.value,
       destination_type: mappingSetting.destination_field,
       destination_id: mappingRow.intacct.id.toString(),
-      destination_value: mappingRow.intacct.value
+      destination_value: mappingRow.intacct.value,
     };
   }
 }

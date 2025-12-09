@@ -3,13 +3,21 @@
     <div class="lg:tw-w-3/5 md:tw-w-1/2 tw-flex tw-items-start">
       <div class="tw-pr-20-px tw-mt-8-px">
         @if (iconPath) {
-          <app-svg-icon [svgSource]="iconPath" [width]="'24px'" [height]="'24px'" [styleClasses]="'tw-text-mandatory-field-color'"></app-svg-icon>
+          <app-svg-icon
+            [svgSource]="iconPath"
+            [width]="'24px'"
+            [height]="'24px'"
+            [styleClasses]="'tw-text-mandatory-field-color'"
+          ></app-svg-icon>
         }
       </div>
       <div>
-        <h5 class="!tw-text-14-px" [ngClass]="brandingStyle.configuration.configurationFieldHeaderText">{{ label }}@if (isFieldMandatory) {
-          <app-mandatory-field></app-mandatory-field>
-        }</h5>
+        <h5 class="!tw-text-14-px" [ngClass]="brandingStyle.configuration.configurationFieldHeaderText">
+          {{ label }}
+          @if (isFieldMandatory) {
+            <app-mandatory-field></app-mandatory-field>
+          }
+        </h5>
         <h5 class="!tw-text-text-muted tw-text-14-px tw-pt-8-px !tw-font-400 !tw-leading-4" [innerHTML]="subLabel"></h5>
       </div>
     </div>
@@ -17,16 +25,29 @@
       <div class="tw-flex tw-items-center tw-pl-34-px">
         @for (option of options; track option) {
           <div class="p-field-checkbox lg:tw-mr-20-px md:tw-mr-16-px">
-            <p-radiobutton class="tw-mr-10-px" [value]="option.value" [formControlName]="formControllerName"[inputId]="option.value" ></p-radiobutton>
-            <label class="!tw-text-14-px !tw-text-sub-text-color" [for]="option.value">{{option.label}}</label>
+            <p-radiobutton
+              class="tw-mr-10-px"
+              [value]="option.value"
+              [formControlName]="formControllerName"
+              [inputId]="option.value"
+            ></p-radiobutton>
+            <label class="!tw-text-14-px !tw-text-sub-text-color" [for]="option.value">{{ option.label }}</label>
           </div>
         }
       </div>
     }
   </div>
   <div class="tw-pr-120-px tw-flex tw-justify-end">
-    @if (isFieldMandatory && form.controls[formControllerName].touched && !form.controls[formControllerName].valid && !form.controls[formControllerName].disabled) {
-      <app-mandatory-error-message [listName]="mandatoryErrorListName" [customErrorMessage]="customErrorMessage"></app-mandatory-error-message>
+    @if (
+      isFieldMandatory &&
+      form.controls[formControllerName].touched &&
+      !form.controls[formControllerName].valid &&
+      !form.controls[formControllerName].disabled
+    ) {
+      <app-mandatory-error-message
+        [listName]="mandatoryErrorListName"
+        [customErrorMessage]="customErrorMessage"
+      ></app-mandatory-error-message>
     }
   </div>
 </div>

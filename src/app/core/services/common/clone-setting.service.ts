@@ -7,15 +7,13 @@ import { QBOCloneSetting, QBOCloneSettingPost } from '../../models/qbo/qbo-confi
 import { XeroCloneSetting, XeroCloneSettingPost } from '../../models/xero/xero-configuration/clone-setting.model';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
-
 export class CloneSettingsService {
-
   constructor(
     private apiService: ApiService,
-    private workspaceService: WorkspaceService
-  ) { }
+    private workspaceService: WorkspaceService,
+  ) {}
 
   checkCloneSettingsExists(): Observable<CloneSettingExist> {
     return this.apiService.get(`/user/clone_settings/exists/`, {});
@@ -26,6 +24,9 @@ export class CloneSettingsService {
   }
 
   postCloneSettings(cloneSettingsPayload: QBOCloneSettingPost | XeroCloneSettingPost): Observable<any> {
-    return this.apiService.put(`/v2/workspaces/${this.workspaceService.getWorkspaceId()}/clone_settings/`, cloneSettingsPayload);
+    return this.apiService.put(
+      `/v2/workspaces/${this.workspaceService.getWorkspaceId()}/clone_settings/`,
+      cloneSettingsPayload,
+    );
   }
 }

@@ -1,7 +1,6 @@
-
-import { IntacctErrorType } from "../../enum/enum.model";
-import { ExpenseGroup } from "./expense-group.model";
-import { ExpenseAttribute } from "./expense-attribute.model";
+import { IntacctErrorType } from '../../enum/enum.model';
+import { ExpenseGroup } from './expense-group.model';
+import { ExpenseAttribute } from './expense-attribute.model';
 
 export type Error = {
   id: number;
@@ -21,14 +20,14 @@ export type GroupedErrors = {
   [IntacctErrorType.EMPLOYEE_MAPPING]: Error[];
   [IntacctErrorType.CATEGORY_MAPPING]: Error[];
   [IntacctErrorType.INTACCT_ERROR]: Error[];
-}
+};
 
 export type ErrorStat = {
   resolvedCount: number;
   totalCount: number;
-}
+};
 
 export type GroupedErrorStat = {
   [IntacctErrorType.EMPLOYEE_MAPPING]: null | ErrorStat;
   [IntacctErrorType.CATEGORY_MAPPING]: null | ErrorStat;
-}
+};

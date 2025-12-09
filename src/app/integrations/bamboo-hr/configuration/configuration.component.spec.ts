@@ -1,7 +1,10 @@
 import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormBuilder } from '@angular/forms';
-import { bambooHRMockConfiguration, bambooHRMockConfigurationPayload } from 'src/app/core/services/bamboo-hr/bamboo-hr.fixture';
+import {
+  bambooHRMockConfiguration,
+  bambooHRMockConfigurationPayload,
+} from 'src/app/core/services/bamboo-hr/bamboo-hr.fixture';
 import { orgMockData } from 'src/app/core/services/org/org.fixture';
 import { OrgService } from 'src/app/core/services/org/org.service';
 
@@ -14,20 +17,19 @@ xdescribe('ConfigurationComponent', () => {
   let orgService: OrgService;
 
   const service1 = {
-    getCachedOrg: () => orgMockData
+    getCachedOrg: () => orgMockData,
   };
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-    declarations: [ConfigurationComponent],
-    imports: [],
-    providers: [
+      declarations: [ConfigurationComponent],
+      imports: [],
+      providers: [
         FormBuilder,
         { provide: OrgService, useValue: service1 },
-        provideHttpClient(withInterceptorsFromDi())
-    ]
-})
-    .compileComponents();
+        provideHttpClient(withInterceptorsFromDi()),
+      ],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(ConfigurationComponent);
     formBuilder = TestBed.inject(FormBuilder);
@@ -92,12 +94,12 @@ xdescribe('ConfigurationComponent', () => {
     component.cofigurationForm.controls.emails.patchValue([
       {
         email: 'ashwin.t+huha@fyle.in',
-        name: 'Ashwin'
+        name: 'Ashwin',
       },
       {
         email: 'ashwin.t+heha@fyle.in',
-        name: 'Ashwin 2'
-      }
+        name: 'Ashwin 2',
+      },
     ]);
     component.removeEmail();
 
@@ -111,7 +113,7 @@ xdescribe('ConfigurationComponent', () => {
   it('should clear search', () => {
     const option = {
       filter: (value?: any) => 'asd',
-      reset: () => 'void'
+      reset: () => 'void',
     };
     component.cofigurationForm.controls.search.patchValue('Ashwin');
     component.clearSearch(option);

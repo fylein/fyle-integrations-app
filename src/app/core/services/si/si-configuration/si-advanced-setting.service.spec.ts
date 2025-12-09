@@ -9,9 +9,9 @@ xdescribe('SiAdvancedSettingsService', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-    imports: [],
-    providers: [SiAdvancedSettingsService, provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting()]
-});
+      imports: [],
+      providers: [SiAdvancedSettingsService, provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting()],
+    });
     service = TestBed.inject(SiAdvancedSettingsService);
   });
 

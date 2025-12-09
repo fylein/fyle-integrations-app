@@ -5,20 +5,19 @@ import { WindowService } from 'src/app/core/services/common/window.service';
 import { TranslocoService } from '@jsverse/transloco';
 
 @Component({
-    selector: 'app-error',
-    templateUrl: './error.component.html',
-    styleUrls: ['./error.component.scss'],
-    standalone: false
+  selector: 'app-error',
+  templateUrl: './error.component.html',
+  styleUrls: ['./error.component.scss'],
+  standalone: false,
 })
 export class ErrorComponent implements OnInit {
-
   readonly brandingConfig = brandingConfig;
 
   constructor(
     private messageService: MessageService,
     private windowService: WindowService,
-    private translocoService: TranslocoService
-  ) { }
+    private translocoService: TranslocoService,
+  ) {}
 
   emailSupport(): void {
     this.windowService.redirect(`mailto:${brandingConfig.supportEmail}`);
@@ -34,14 +33,12 @@ export class ErrorComponent implements OnInit {
 
     this.messageService.add({
       severity: 'success',
-      summary: this.translocoService.translate('error.clipboardSuccessMessage')
+      summary: this.translocoService.translate('error.clipboardSuccessMessage'),
     });
 
     document.body.removeChild(selBox);
     event?.stopPropagation();
   }
 
-  ngOnInit(): void {
-  }
-
+  ngOnInit(): void {}
 }

@@ -8,9 +8,8 @@ xdescribe('QbdDirectMappingComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [QbdDirectMappingComponent]
-    })
-    .compileComponents();
+      imports: [QbdDirectMappingComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(QbdDirectMappingComponent);
     component = fixture.componentInstance;

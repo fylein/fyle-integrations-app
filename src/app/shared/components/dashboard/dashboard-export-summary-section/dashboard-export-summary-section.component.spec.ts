@@ -8,9 +8,8 @@ xdescribe('DashboardExportSummarySectionComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ DashboardExportSummarySectionComponent ]
-    })
-    .compileComponents();
+      declarations: [DashboardExportSummarySectionComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(DashboardExportSummarySectionComponent);
     component = fixture.componentInstance;

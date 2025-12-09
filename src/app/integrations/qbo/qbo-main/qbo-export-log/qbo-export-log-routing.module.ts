@@ -11,18 +11,18 @@ const routes: Routes = [
     children: [
       {
         path: 'complete',
-        component: QboCompleteExportLogComponent
+        component: QboCompleteExportLogComponent,
       },
       {
         path: 'skipped',
-        component: SkippedExportLogComponent
-      }
-    ]
-  }
+        component: SkippedExportLogComponent,
+      },
+    ],
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class QboExportLogRoutingModule { }
+export class QboExportLogRoutingModule {}

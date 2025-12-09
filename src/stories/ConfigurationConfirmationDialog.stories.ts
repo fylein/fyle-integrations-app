@@ -1,4 +1,3 @@
-
 import { CommonModule } from '@angular/common';
 import type { Meta, StoryObj } from '@storybook/angular';
 import { moduleMetadata } from '@storybook/angular';
@@ -11,17 +10,17 @@ const meta: Meta<ConfigurationConfirmationDialogComponent> = {
   component: ConfigurationConfirmationDialogComponent,
   tags: ['autodocs'],
   render: (args: ConfigurationConfirmationDialogComponent) => ({
-    props: { ...args }
+    props: { ...args },
   }),
   decorators: [
     moduleMetadata({
       declarations: [ConfigurationConfirmationDialogComponent],
-      imports: [CommonModule, ButtonModule]
-    })
+      imports: [CommonModule, ButtonModule],
+    }),
   ],
   argTypes: {
-    ngOnInit: { table: { disable: true } }
-  }
+    ngOnInit: { table: { disable: true } },
+  },
 };
 
 export default meta;
@@ -36,6 +35,6 @@ export const simple: Story = {
     <br><br>You can change the settings or reset the configuration to restart the process from the beginning<br>`,
     iconPath: 'assets/icons/alert_dialog.svg',
     confirmBtnText: 'Continue',
-    showSecondaryCTA: false
-  }
+    showSecondaryCTA: false,
+  },
 };

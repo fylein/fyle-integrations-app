@@ -5,13 +5,12 @@ import { brandingConfig } from 'src/app/branding/branding-config';
 import { DateFilter } from 'src/app/core/models/qbd/misc/qbd-date-filter.model';
 
 @Component({
-    selector: 'app-export-log-filter',
-    templateUrl: './export-log-filter.component.html',
-    styleUrls: ['./export-log-filter.component.scss'],
-    standalone: false
+  selector: 'app-export-log-filter',
+  templateUrl: './export-log-filter.component.html',
+  styleUrls: ['./export-log-filter.component.scss'],
+  standalone: false,
 })
 export class ExportLogFilterComponent implements OnInit, OnDestroy {
-
   @Input() exportLogForm: FormGroup;
 
   @Input() dateOptions: DateFilter[];
@@ -38,14 +37,13 @@ export class ExportLogFilterComponent implements OnInit, OnDestroy {
 
   @ViewChild('calendar') calendar: DatePicker;
 
-
   @ViewChild('calendarContainer', { static: true }) calendarContainer: any;
 
   private observer: MutationObserver | undefined;
 
   readonly brandingConfig = brandingConfig;
 
-  constructor(private renderer: Renderer2) { }
+  constructor(private renderer: Renderer2) {}
 
   clearDateFilter(): void {
     this.exportLogForm.controls.start.patchValue('');
@@ -92,7 +90,10 @@ export class ExportLogFilterComponent implements OnInit, OnDestroy {
   }
 
   selectPreFilledDate(selectedOption: number): void {
-    this.exportLogForm.controls.start.patchValue([this.dateOptions[selectedOption].startDate, this.dateOptions[selectedOption].endDate]);
+    this.exportLogForm.controls.start.patchValue([
+      this.dateOptions[selectedOption].startDate,
+      this.dateOptions[selectedOption].endDate,
+    ]);
   }
 
   handleClickOutside(event: Event) {
@@ -110,5 +111,4 @@ export class ExportLogFilterComponent implements OnInit, OnDestroy {
     this.setupSearchWatcher();
     document.addEventListener('click', this.handleClickOutside.bind(this));
   }
-
 }

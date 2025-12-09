@@ -8,9 +8,8 @@ xdescribe('ConfigurationStepFooterComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ConfigurationStepFooterComponent ]
-    })
-    .compileComponents();
+      declarations: [ConfigurationStepFooterComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(ConfigurationStepFooterComponent);
     component = fixture.componentInstance;

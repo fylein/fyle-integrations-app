@@ -1,4 +1,3 @@
-
 import { CommonModule } from '@angular/common';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import type { Meta, StoryObj } from '@storybook/angular';
@@ -12,17 +11,17 @@ const meta: Meta<PaginatorComponent> = {
   component: PaginatorComponent,
   tags: ['autodocs'],
   render: (args: PaginatorComponent) => ({
-    props: { ...args }
+    props: { ...args },
   }),
   decorators: [
     moduleMetadata({
       declarations: [],
-      imports: [CommonModule, SelectModule, BrowserAnimationsModule, SharedModule]
-    })
+      imports: [CommonModule, SelectModule, BrowserAnimationsModule, SharedModule],
+    }),
   ],
   argTypes: {
-    ngOnInit: { table: { disable: true } }
-  }
+    ngOnInit: { table: { disable: true } },
+  },
 };
 
 export default meta;
@@ -32,6 +31,6 @@ export const simple: Story = {
   args: {
     dropDownValue: 10,
     page: 1,
-    totalCount: 100
-  }
+    totalCount: 100,
+  },
 };

@@ -7,7 +7,15 @@ import { ExpenseField } from 'src/app/core/models/common/import-settings.model';
 import { SelectFormOption } from 'src/app/core/models/common/select-form-option.model';
 import { DefaultDestinationAttribute, DestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
 import { FyleField, IntegrationField } from 'src/app/core/models/db/mapping.model';
-import { AppName, ConfigurationCta, ConfigurationWarningEvent, InputType, ToastSeverity, XeroCorporateCreditCardExpensesObject, XeroFyleField } from 'src/app/core/models/enum/enum.model';
+import {
+  AppName,
+  ConfigurationCta,
+  ConfigurationWarningEvent,
+  InputType,
+  ToastSeverity,
+  XeroCorporateCreditCardExpensesObject,
+  XeroFyleField,
+} from 'src/app/core/models/enum/enum.model';
 import { ConfigurationWarningOut } from 'src/app/core/models/misc/configuration-warning.model';
 import { OnboardingStepper } from 'src/app/core/models/misc/onboarding-stepper.model';
 import { Org } from 'src/app/core/models/org/org.model';
@@ -32,13 +40,12 @@ import { XeroOnboardingService } from 'src/app/core/services/xero/xero-configura
 import { XeroCloneSettingsService } from 'src/app/core/services/xero/xero-configuration/xero-clone-settings.service';
 
 @Component({
-    selector: 'app-xero-clone-settings',
-    templateUrl: './xero-clone-settings.component.html',
-    styleUrls: ['./xero-clone-settings.component.scss'],
-    standalone: false
+  selector: 'app-xero-clone-settings',
+  templateUrl: './xero-clone-settings.component.html',
+  styleUrls: ['./xero-clone-settings.component.scss'],
+  standalone: false,
 })
 export class XeroCloneSettingsComponent implements OnInit {
-
   isLoading: boolean = true;
 
   onboardingSteps: OnboardingStepper[] = [];
@@ -83,7 +90,9 @@ export class XeroCloneSettingsComponent implements OnInit {
 
   customFieldOption: ExpenseField[];
 
-  chartOfAccountTypesList: string[] = XeroImportSettingsService.getChartOfAccountTypesList().map((name: string) => name[0]+name.substr(1).toLowerCase());
+  chartOfAccountTypesList: string[] = XeroImportSettingsService.getChartOfAccountTypesList().map(
+    (name: string) => name[0] + name.substr(1).toLowerCase(),
+  );
 
   isTaxGroupSyncAllowed: boolean;
 
@@ -124,14 +133,14 @@ export class XeroCloneSettingsComponent implements OnInit {
   customFieldForm: FormGroup = this.formBuilder.group({
     attribute_type: ['', Validators.required],
     display_name: [''],
-    source_placeholder: ['', Validators.required]
+    source_placeholder: ['', Validators.required],
   });
 
   showCustomFieldDialog: boolean;
 
   isPreviewDialogVisible: boolean;
 
-  customField: { attribute_type: any; display_name: any; source_placeholder: any; is_dependent: boolean; };
+  customField: { attribute_type: any; display_name: any; source_placeholder: any; is_dependent: boolean };
 
   customFieldControl: any;
 
@@ -159,13 +168,14 @@ export class XeroCloneSettingsComponent implements OnInit {
     private xeroExportSettingsService: XeroExportSettingsService,
     private xeroCloneSettingsService: XeroCloneSettingsService,
     private xeroAdvancedSettingsService: XeroAdvancedSettingsService,
-    private exportSettingsService: ExportSettingsService
+    private exportSettingsService: ExportSettingsService,
   ) {
-    this.reimbursableExpenseGroupingDateOptions = this.xeroExportSettingsService.getReimbursableExpenseGroupingDateOptions();
+    this.reimbursableExpenseGroupingDateOptions =
+      this.xeroExportSettingsService.getReimbursableExpenseGroupingDateOptions();
     this.reimbursableExportTypes = this.xeroExportSettingsService.getReimbursableExportTypes();
-    this.creditCardExportTypes =  this.xeroExportSettingsService.getCreditCardExportTypes();
-    this.reimbursableExpenseGroupByOptions =  this.xeroExportSettingsService.getReimbursableExpenseGroupingOptions();
-    this.cccExpenseGroupByOptions =  this.xeroExportSettingsService.getCCCExpenseGroupingOptions();
+    this.creditCardExportTypes = this.xeroExportSettingsService.getCreditCardExportTypes();
+    this.reimbursableExpenseGroupByOptions = this.xeroExportSettingsService.getReimbursableExpenseGroupingOptions();
+    this.cccExpenseGroupByOptions = this.xeroExportSettingsService.getCCCExpenseGroupingOptions();
     this.cccExpenseGroupingDateOptions = this.xeroExportSettingsService.getCCCExpenseGroupingDateOptions();
     this.autoMapEmployeeTypes = this.xeroExportSettingsService.getAutoMapEmployeeOptions();
     this.expenseStateOptions = this.xeroExportSettingsService.getReimbursableExpenseStateOptions();
@@ -213,7 +223,7 @@ export class XeroCloneSettingsComponent implements OnInit {
       attribute_type: this.customFieldForm.get('attribute_type')?.value.split(' ').join('_').toUpperCase(),
       display_name: this.customFieldForm.get('attribute_type')?.value,
       source_placeholder: this.customFieldForm.get('source_placeholder')?.value,
-      is_dependent: false
+      is_dependent: false,
     };
 
     if (this.customFieldControl) {
@@ -225,10 +235,18 @@ export class XeroCloneSettingsComponent implements OnInit {
         destination_field: this.customFieldControl.get('destination_field')?.value,
         import_to_fyle: true,
         is_custom: true,
-        source_placeholder: this.customField.source_placeholder
+        source_placeholder: this.customField.source_placeholder,
       };
-      (this.importSettingForm.get('expenseFields') as FormArray).controls.filter(field => field.get('destination_field')?.value === this.customFieldControl.get('destination_field')?.value)[0].patchValue(expenseField);
-      ((this.importSettingForm.get('expenseFields') as FormArray).controls.filter(field => field.get('destination_field')?.value === this.customFieldControl.get('destination_field')?.value)[0] as FormGroup).controls.import_to_fyle.disable();
+      (this.importSettingForm.get('expenseFields') as FormArray).controls
+        .filter(
+          (field) => field.get('destination_field')?.value === this.customFieldControl.get('destination_field')?.value,
+        )[0]
+        .patchValue(expenseField);
+      (
+        (this.importSettingForm.get('expenseFields') as FormArray).controls.filter(
+          (field) => field.get('destination_field')?.value === this.customFieldControl.get('destination_field')?.value,
+        )[0] as FormGroup
+      ).controls.import_to_fyle.disable();
       this.customFieldForm.reset();
       this.showCustomFieldDialog = false;
     }
@@ -236,21 +254,37 @@ export class XeroCloneSettingsComponent implements OnInit {
 
   save(): void {
     this.isSaveInProgress = true;
-    const cloneSettingPayload = this.xeroCloneSettingsService.constructPayload(this.exportSettingForm, this.importSettingForm, this.advancedSettingForm, this.isTaxGroupSyncAllowed);
+    const cloneSettingPayload = this.xeroCloneSettingsService.constructPayload(
+      this.exportSettingForm,
+      this.importSettingForm,
+      this.advancedSettingForm,
+      this.isTaxGroupSyncAllowed,
+    );
 
-    this.cloneSettingService.postCloneSettings(cloneSettingPayload).subscribe((response) => {
-      this.isSaveInProgress = false;
-      this.toastService.displayToastMessage(ToastSeverity.SUCCESS, this.translocoService.translate('xeroCloneSettings.clonedSettingsSuccess'));
-      this.router.navigate([`/integrations/xero/onboarding/done`]);
-    }, () => {
-      this.isSaveInProgress = false;
-      this.toastService.displayToastMessage(ToastSeverity.ERROR, this.translocoService.translate('xeroCloneSettings.clonedSettingsError'));
-    });
-
+    this.cloneSettingService.postCloneSettings(cloneSettingPayload).subscribe(
+      (response) => {
+        this.isSaveInProgress = false;
+        this.toastService.displayToastMessage(
+          ToastSeverity.SUCCESS,
+          this.translocoService.translate('xeroCloneSettings.clonedSettingsSuccess'),
+        );
+        this.router.navigate([`/integrations/xero/onboarding/done`]);
+      },
+      () => {
+        this.isSaveInProgress = false;
+        this.toastService.displayToastMessage(
+          ToastSeverity.ERROR,
+          this.translocoService.translate('xeroCloneSettings.clonedSettingsError'),
+        );
+      },
+    );
   }
 
   private setupOnboardingSteps(): void {
-    const onboardingSteps = this.xeroOnboardingService.getOnboardingSteps('Clone settings', this.workspaceService.getOnboardingState());
+    const onboardingSteps = this.xeroOnboardingService.getOnboardingSteps(
+      'Clone settings',
+      this.workspaceService.getOnboardingState(),
+    );
     this.onboardingSteps.push(onboardingSteps[0]);
     this.onboardingSteps.push({
       active: false,
@@ -258,7 +292,7 @@ export class XeroCloneSettingsComponent implements OnInit {
       step: this.translocoService.translate('xeroCloneSettings.cloneSettingsStep'),
       icon: 'gear-medium',
       route: '/integrations/xero/onboarding/clone_settings',
-      styleClasses: ['step-name-export--text']
+      styleClasses: ['step-name-export--text'],
     });
   }
 
@@ -306,8 +340,8 @@ export class XeroCloneSettingsComponent implements OnInit {
     this.createCOAWatcher();
     this.createImportCustomerWatcher();
     const expenseFieldArray = this.importSettingForm.get('expenseFields') as FormArray;
-    expenseFieldArray.controls.forEach((control:any) => {
-      control.valueChanges.subscribe((value: { source_field: string; destination_field: string; }) => {
+    expenseFieldArray.controls.forEach((control: any) => {
+      control.valueChanges.subscribe((value: { source_field: string; destination_field: string }) => {
         if (value.source_field === 'custom_field') {
           this.initializeCustomFieldForm(true);
           this.customFieldType = '';
@@ -317,7 +351,7 @@ export class XeroCloneSettingsComponent implements OnInit {
             destination_field: control.get('destination_field')?.value,
             import_to_fyle: control.get('import_to_fyle')?.value,
             is_custom: control.get('is_custom')?.value,
-            source_placeholder: null
+            source_placeholder: null,
           });
         }
       });
@@ -334,9 +368,7 @@ export class XeroCloneSettingsComponent implements OnInit {
 
   private setupPage(): void {
     this.setupOnboardingSteps();
-    const destinationAttributes = [
-      XeroFyleField.TAX_CODE, XeroFyleField.BANK_ACCOUNT
-    ];
+    const destinationAttributes = [XeroFyleField.TAX_CODE, XeroFyleField.BANK_ACCOUNT];
 
     forkJoin([
       this.cloneSettingService.getCloneSettings(),
@@ -344,75 +376,121 @@ export class XeroCloneSettingsComponent implements OnInit {
       this.mappingService.getFyleFields('v1'),
       this.xeroConnectorService.getXeroCredentials(this.workspaceService.getWorkspaceId()),
       this.configurationService.getAdditionalEmails(),
-      this.xeroImportSettingsService.getXeroField()
-    ]).subscribe(([cloneSetting, destinationAttributes, fyleFieldsResponse, xeroCredentials, adminEmails, xeroFields]) => {
-      this.cloneSetting = cloneSetting;
+      this.xeroImportSettingsService.getXeroField(),
+    ]).subscribe(
+      ([cloneSetting, destinationAttributes, fyleFieldsResponse, xeroCredentials, adminEmails, xeroFields]) => {
+        this.cloneSetting = cloneSetting;
 
-      // Export Settings
-      this.bankAccounts = destinationAttributes.BANK_ACCOUNT.map((option: DestinationAttribute) => this.exportSettingsService.formatGeneralMappingPayload(option));
-
-      this.reimbursableExportTypes = this.xeroExportSettingsService.getReimbursableExportTypes();
-      this.exportSettingForm = this.xeroExportSettingsService.mapAPIResponseToFormGroup(cloneSetting.export_settings, destinationAttributes.BANK_ACCOUNT);
-
-      this.helperService.addExportSettingFormValidator(this.exportSettingForm);
-      const [exportSettingValidatorRule, exportModuleRule] = XeroExportSettingsService.getValidators();
-
-      this.helperService.setConfigurationSettingValidatorsAndWatchers(exportSettingValidatorRule, this.exportSettingForm);
-
-      this.helperService.setExportTypeValidatorsAndWatchers(exportModuleRule, this.exportSettingForm);
-
-      // Import Settings
-      this.xeroFields = xeroFields;
-      this.taxCodes = destinationAttributes.TAX_CODE.map((option: DestinationAttribute) => this.exportSettingsService.formatGeneralMappingPayload(option));
-
-      if (xeroCredentials && xeroCredentials.country !== 'US') {
-        this.isTaxGroupSyncAllowed = true;
-      }
-
-      this.isCustomerPresent = this.xeroFields.findIndex((data:IntegrationField) => data.attribute_type === XeroFyleField.CUSTOMER) !== -1 ? true : false;
-
-      this.xeroFields = this.xeroFields.filter((data) => data.attribute_type !== XeroFyleField.CUSTOMER);
-
-      cloneSetting.import_settings.workspace_general_settings.charts_of_accounts = cloneSetting.import_settings.workspace_general_settings.charts_of_accounts.map((name: string) => name[0]+name.substr(1).toLowerCase());
-
-      this.isProjectMapped = cloneSetting.import_settings.mapping_settings.findIndex((data: { source_field: XeroFyleField; destination_field: XeroFyleField; }) => data.source_field ===  XeroFyleField.PROJECT && data.destination_field !== XeroFyleField.CUSTOMER) !== -1 ? true : false;
-
-      this.importSettingForm = this.xeroImportSettingsService.mapAPIResponseToFormGroup(cloneSetting.import_settings, this.xeroFields, this.isCustomerPresent, destinationAttributes.TAX_CODE);
-      this.fyleFields = fyleFieldsResponse;
-      this.fyleFields.push({ attribute_type: 'custom_field', display_name: this.translocoService.translate('xeroCloneSettings.createCustomField'), is_dependent: false });
-      this.setupImportSettingFormWatcher();
-      this.initializeCustomFieldForm(false);
-
-      // Advanced Settings
-      this.adminEmails = adminEmails;
-      if (this.cloneSetting.advanced_settings.workspace_schedules?.additional_email_options && this.cloneSetting.advanced_settings.workspace_schedules?.additional_email_options.length > 0) {
-        this.adminEmails = this.adminEmails.concat(this.cloneSetting.advanced_settings.workspace_schedules?.additional_email_options).flat();
-      }
-
-      this.billPaymentAccounts = destinationAttributes.BANK_ACCOUNT.map((option: DestinationAttribute) => this.exportSettingsService.formatGeneralMappingPayload(option));
-      this.advancedSettingForm = this.xeroAdvancedSettingsService.mapAPIResponseToFormGroup(this.cloneSetting.advanced_settings, this.adminEmails, destinationAttributes.BANK_ACCOUNT, this.helperService.shouldAutoEnableAccountingPeriod(this.org.created_at), true);
-      this.setupAdvancedSettingFormWatcher();
-
-      // Convert field values from destination attributes to *default* destination attributes
-      const controls = [
-        this.exportSettingForm.get('bankAccount'),
-        this.importSettingForm.get('defaultTaxCode'),
-        this.advancedSettingForm.get('billPaymentAccount')
-      ];
-
-      for (const control of controls) {
-        const fullDestinationAttribute: DestinationAttribute | null = control?.value;
-        control?.setValue(
-          fullDestinationAttribute && this.exportSettingsService.formatGeneralMappingPayload(fullDestinationAttribute)
+        // Export Settings
+        this.bankAccounts = destinationAttributes.BANK_ACCOUNT.map((option: DestinationAttribute) =>
+          this.exportSettingsService.formatGeneralMappingPayload(option),
         );
-      }
 
-      this.isLoading = false;
-    });
+        this.reimbursableExportTypes = this.xeroExportSettingsService.getReimbursableExportTypes();
+        this.exportSettingForm = this.xeroExportSettingsService.mapAPIResponseToFormGroup(
+          cloneSetting.export_settings,
+          destinationAttributes.BANK_ACCOUNT,
+        );
+
+        this.helperService.addExportSettingFormValidator(this.exportSettingForm);
+        const [exportSettingValidatorRule, exportModuleRule] = XeroExportSettingsService.getValidators();
+
+        this.helperService.setConfigurationSettingValidatorsAndWatchers(
+          exportSettingValidatorRule,
+          this.exportSettingForm,
+        );
+
+        this.helperService.setExportTypeValidatorsAndWatchers(exportModuleRule, this.exportSettingForm);
+
+        // Import Settings
+        this.xeroFields = xeroFields;
+        this.taxCodes = destinationAttributes.TAX_CODE.map((option: DestinationAttribute) =>
+          this.exportSettingsService.formatGeneralMappingPayload(option),
+        );
+
+        if (xeroCredentials && xeroCredentials.country !== 'US') {
+          this.isTaxGroupSyncAllowed = true;
+        }
+
+        this.isCustomerPresent =
+          this.xeroFields.findIndex((data: IntegrationField) => data.attribute_type === XeroFyleField.CUSTOMER) !== -1
+            ? true
+            : false;
+
+        this.xeroFields = this.xeroFields.filter((data) => data.attribute_type !== XeroFyleField.CUSTOMER);
+
+        cloneSetting.import_settings.workspace_general_settings.charts_of_accounts =
+          cloneSetting.import_settings.workspace_general_settings.charts_of_accounts.map(
+            (name: string) => name[0] + name.substr(1).toLowerCase(),
+          );
+
+        this.isProjectMapped =
+          cloneSetting.import_settings.mapping_settings.findIndex(
+            (data: { source_field: XeroFyleField; destination_field: XeroFyleField }) =>
+              data.source_field === XeroFyleField.PROJECT && data.destination_field !== XeroFyleField.CUSTOMER,
+          ) !== -1
+            ? true
+            : false;
+
+        this.importSettingForm = this.xeroImportSettingsService.mapAPIResponseToFormGroup(
+          cloneSetting.import_settings,
+          this.xeroFields,
+          this.isCustomerPresent,
+          destinationAttributes.TAX_CODE,
+        );
+        this.fyleFields = fyleFieldsResponse;
+        this.fyleFields.push({
+          attribute_type: 'custom_field',
+          display_name: this.translocoService.translate('xeroCloneSettings.createCustomField'),
+          is_dependent: false,
+        });
+        this.setupImportSettingFormWatcher();
+        this.initializeCustomFieldForm(false);
+
+        // Advanced Settings
+        this.adminEmails = adminEmails;
+        if (
+          this.cloneSetting.advanced_settings.workspace_schedules?.additional_email_options &&
+          this.cloneSetting.advanced_settings.workspace_schedules?.additional_email_options.length > 0
+        ) {
+          this.adminEmails = this.adminEmails
+            .concat(this.cloneSetting.advanced_settings.workspace_schedules?.additional_email_options)
+            .flat();
+        }
+
+        this.billPaymentAccounts = destinationAttributes.BANK_ACCOUNT.map((option: DestinationAttribute) =>
+          this.exportSettingsService.formatGeneralMappingPayload(option),
+        );
+        this.advancedSettingForm = this.xeroAdvancedSettingsService.mapAPIResponseToFormGroup(
+          this.cloneSetting.advanced_settings,
+          this.adminEmails,
+          destinationAttributes.BANK_ACCOUNT,
+          this.helperService.shouldAutoEnableAccountingPeriod(this.org.created_at),
+          true,
+        );
+        this.setupAdvancedSettingFormWatcher();
+
+        // Convert field values from destination attributes to *default* destination attributes
+        const controls = [
+          this.exportSettingForm.get('bankAccount'),
+          this.importSettingForm.get('defaultTaxCode'),
+          this.advancedSettingForm.get('billPaymentAccount'),
+        ];
+
+        for (const control of controls) {
+          const fullDestinationAttribute: DestinationAttribute | null = control?.value;
+          control?.setValue(
+            fullDestinationAttribute &&
+              this.exportSettingsService.formatGeneralMappingPayload(fullDestinationAttribute),
+          );
+        }
+
+        this.isLoading = false;
+      },
+    );
   }
 
   ngOnInit(): void {
     this.setupPage();
   }
-
 }

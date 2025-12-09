@@ -1,11 +1,37 @@
 <form [formGroup]="connectNetsuiteForm">
-    <div [ngClass]="isReconnecting ? '' : 'tw-mb-16-px'">
-        <app-configuration-text-field [styleClasses]="isReconnecting ? 'tw-min-w-full' : undefined" [customErrorMessage]="helper.sentenseCaseConversion('netsuiteConnectionForm.invalidAccountIdError' | transloco)" [form]="connectNetsuiteForm" [formControllerName]="'accountId'" [isFieldMandatory]="true" [label]="'netsuiteConnectionForm.accountIdLabel' | transloco" [placeholder]="'netsuiteConnectionForm.accountIdPlaceholder' | transloco"></app-configuration-text-field>
-    </div>
-    <div [ngClass]="isReconnecting ? '' : 'tw-mb-16-px'">
-        <app-configuration-text-field [styleClasses]="isReconnecting ? 'tw-min-w-full' : undefined" [customErrorMessage]="helper.sentenseCaseConversion('netsuiteConnectionForm.invalidTokenIdError' | transloco)" [form]="connectNetsuiteForm" [formControllerName]="'tokenId'" [isFieldMandatory]="true" [label]="'netsuiteConnectionForm.tokenIdLabel' | transloco" [placeholder]="'netsuiteConnectionForm.tokenIdPlaceholder' | transloco"></app-configuration-text-field>
-    </div>
-    <div>
-        <app-configuration-text-field [styleClasses]="isReconnecting ? 'tw-min-w-full' : undefined" [customErrorMessage]="helper.sentenseCaseConversion('netsuiteConnectionForm.incorrectTokenSecretError' | transloco)" [form]="connectNetsuiteForm" [formControllerName]="'tokenSecret'" [isFieldMandatory]="true" [label]="'netsuiteConnectionForm.tokenSecretLabel' | transloco" [placeholder]="'netsuiteConnectionForm.tokenSecretPlaceholder' | transloco"></app-configuration-text-field>
-    </div>
+  <div [ngClass]="isReconnecting ? '' : 'tw-mb-16-px'">
+    <app-configuration-text-field
+      [styleClasses]="isReconnecting ? 'tw-min-w-full' : undefined"
+      [customErrorMessage]="helper.sentenseCaseConversion('netsuiteConnectionForm.invalidAccountIdError' | transloco)"
+      [form]="connectNetsuiteForm"
+      [formControllerName]="'accountId'"
+      [isFieldMandatory]="true"
+      [label]="'netsuiteConnectionForm.accountIdLabel' | transloco"
+      [placeholder]="'netsuiteConnectionForm.accountIdPlaceholder' | transloco"
+    ></app-configuration-text-field>
+  </div>
+  <div [ngClass]="isReconnecting ? '' : 'tw-mb-16-px'">
+    <app-configuration-text-field
+      [styleClasses]="isReconnecting ? 'tw-min-w-full' : undefined"
+      [customErrorMessage]="helper.sentenseCaseConversion('netsuiteConnectionForm.invalidTokenIdError' | transloco)"
+      [form]="connectNetsuiteForm"
+      [formControllerName]="'tokenId'"
+      [isFieldMandatory]="true"
+      [label]="'netsuiteConnectionForm.tokenIdLabel' | transloco"
+      [placeholder]="'netsuiteConnectionForm.tokenIdPlaceholder' | transloco"
+    ></app-configuration-text-field>
+  </div>
+  <div>
+    <app-configuration-text-field
+      [styleClasses]="isReconnecting ? 'tw-min-w-full' : undefined"
+      [customErrorMessage]="
+        helper.sentenseCaseConversion('netsuiteConnectionForm.incorrectTokenSecretError' | transloco)
+      "
+      [form]="connectNetsuiteForm"
+      [formControllerName]="'tokenSecret'"
+      [isFieldMandatory]="true"
+      [label]="'netsuiteConnectionForm.tokenSecretLabel' | transloco"
+      [placeholder]="'netsuiteConnectionForm.tokenSecretPlaceholder' | transloco"
+    ></app-configuration-text-field>
+  </div>
 </form>

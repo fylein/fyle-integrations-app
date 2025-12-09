@@ -10,18 +10,21 @@ const routes: Routes = [
       {
         path: '',
         redirectTo: 'configuration',
-        pathMatch: 'full'
+        pathMatch: 'full',
       },
       {
         path: 'configuration',
-        loadChildren: () => import('./travelperk-configuration/travelperk-configuration.module').then(m => m.TravelperkConfigurationModule)
-      }
-    ]
-  }
+        loadChildren: () =>
+          import('./travelperk-configuration/travelperk-configuration.module').then(
+            (m) => m.TravelperkConfigurationModule,
+          ),
+      },
+    ],
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class TravelperkMainRoutingModule { }
+export class TravelperkMainRoutingModule {}

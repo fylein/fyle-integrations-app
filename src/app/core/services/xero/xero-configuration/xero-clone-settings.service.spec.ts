@@ -8,11 +8,7 @@ describe('UxeroUcloneUsettingsService', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [
-        UxeroUcloneUsettingsService,
-        provideHttpClient(withInterceptorsFromDi()),
-        provideHttpClientTesting()
-      ]
+      providers: [UxeroUcloneUsettingsService, provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting()],
     });
     service = TestBed.inject(UxeroUcloneUsettingsService);
   });

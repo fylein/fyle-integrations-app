@@ -1,4 +1,3 @@
-
 import { CommonModule } from '@angular/common';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -14,16 +13,22 @@ const meta: Meta<ToggleComponent> = {
   component: ToggleComponent,
   tags: ['autodocs'],
   render: (args: ToggleComponent) => ({
-    props: { ...args }
+    props: { ...args },
   }),
   decorators: [
     moduleMetadata({
       declarations: [ToggleComponent],
-      imports: [CommonModule, BrowserAnimationsModule, ToggleSwitchModule, FormsModule, ReactiveFormsModule, RippleModule]
-    })
+      imports: [
+        CommonModule,
+        BrowserAnimationsModule,
+        ToggleSwitchModule,
+        FormsModule,
+        ReactiveFormsModule,
+        RippleModule,
+      ],
+    }),
   ],
-  argTypes: {
-  }
+  argTypes: {},
 };
 
 export default meta;
@@ -31,7 +36,7 @@ type Story = StoryObj<ToggleComponent>;
 
 export const simple: Story = {
   args: {
-    form: setupStoryBookFormGroup(new FormGroup({field: new FormControl(true)})),
-    formControllerName: 'field'
-  }
+    form: setupStoryBookFormGroup(new FormGroup({ field: new FormControl(true) })),
+    formControllerName: 'field',
+  },
 };

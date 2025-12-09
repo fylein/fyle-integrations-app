@@ -1,23 +1,25 @@
 <div class="tw-inline-flex tw-space-x-4">
-    <div class="tw-rounded-10-px tw-bg-white tw-border-1-px tw-border-border-tertiary tw-pt-16-px tw-pr-56-px tw-pb-10-px tw-pl-16-px tw-w-200-px tw-h-84-px">
-        <div class="tw-w-34-px tw-h-6-px tw-rounded-12-px tw-border tw-border-white tw-bg-pink-box-border">
-        </div>
-        <div class="tw-whitespace-nowrap tw-pt-8-px tw-text-text-muted tw-text-12-px tw-text-400">
-            <p>{{ 'qbdMappingHeaderSection.total' | transloco }}{{sourceType | lowercase | snakeCaseToSpaceCase}}</p>
-        </div>
-        <div class="tw-text-20-px tw-text-500 tw-text-slightly-normal-text-color">
-            <p>{{mappingStats.all_attributes_count}}</p>
-        </div>
+  <div
+    class="tw-rounded-10-px tw-bg-white tw-border-1-px tw-border-border-tertiary tw-pt-16-px tw-pr-56-px tw-pb-10-px tw-pl-16-px tw-w-200-px tw-h-84-px"
+  >
+    <div class="tw-w-34-px tw-h-6-px tw-rounded-12-px tw-border tw-border-white tw-bg-pink-box-border"></div>
+    <div class="tw-whitespace-nowrap tw-pt-8-px tw-text-text-muted tw-text-12-px tw-text-400">
+      <p>{{ 'qbdMappingHeaderSection.total' | transloco }}{{ sourceType | lowercase | snakeCaseToSpaceCase }}</p>
     </div>
+    <div class="tw-text-20-px tw-text-500 tw-text-slightly-normal-text-color">
+      <p>{{ mappingStats.all_attributes_count }}</p>
+    </div>
+  </div>
 
-    <div class="tw-rounded-12-px tw-bg-white tw-border-1-px tw-border-border-tertiary tw-pt-16-px tw-pr-56-px tw-pb-10-px tw-pl-16-px tw-w-200-px tw-h-84-px">
-        <div class="tw-w-34-px tw-h-6-px tw-rounded-12-px tw-border tw-border-white tw-bg-pink-box-border">
-        </div>
-        <div class="tw-whitespace-nowrap tw-pt-8-px tw-text-text-muted tw-text-12-px tw-text-400">
-            <p>{{ 'qbdMappingHeaderSection.unmapped' | transloco }}{{sourceType | lowercase | snakeCaseToSpaceCase}}</p>
-        </div>
-        <div class="tw-text-20-px tw-text-500 tw-text-slightly-normal-text-color">
-            <p>{{mappingStats.unmapped_attributes_count}}</p>
-        </div>
+  <div
+    class="tw-rounded-12-px tw-bg-white tw-border-1-px tw-border-border-tertiary tw-pt-16-px tw-pr-56-px tw-pb-10-px tw-pl-16-px tw-w-200-px tw-h-84-px"
+  >
+    <div class="tw-w-34-px tw-h-6-px tw-rounded-12-px tw-border tw-border-white tw-bg-pink-box-border"></div>
+    <div class="tw-whitespace-nowrap tw-pt-8-px tw-text-text-muted tw-text-12-px tw-text-400">
+      <p>{{ 'qbdMappingHeaderSection.unmapped' | transloco }}{{ sourceType | lowercase | snakeCaseToSpaceCase }}</p>
     </div>
+    <div class="tw-text-20-px tw-text-500 tw-text-slightly-normal-text-color">
+      <p>{{ mappingStats.unmapped_attributes_count }}</p>
+    </div>
+  </div>
 </div>

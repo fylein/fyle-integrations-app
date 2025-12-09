@@ -14,7 +14,7 @@ import { FundSource } from 'src/app/core/models/enum/enum.model';
 import { SnakeCaseToSpaceCasePipe } from 'src/app/shared/pipes/snake-case-to-space-case.pipe';
 import { SentenceCasePipe } from 'src/app/shared/pipes/sentence-case.pipe';
 import { AccountingExport } from 'src/app/core/models/db/accounting-export.model';
-import { Expense } from "../../models/intacct/db/expense.model";
+import { Expense } from '../../models/intacct/db/expense.model';
 import { TranslocoService } from '@jsverse/transloco';
 import { environment } from 'src/environments/environment';
 import { AccountingExportList } from '../../models/db/accounting-export.model';
@@ -22,15 +22,14 @@ import { ExpenseGroup, ExpenseGroupDescription } from '../../models/db/expense-g
 import { convertDateRangeToAPIFormat } from '../../util/dateRangeConverter';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AccountingExportService {
-
   constructor(
     private apiService: ApiService,
     private workspaceService: WorkspaceService,
     private translocoService: TranslocoService,
-    private helper: HelperService
+    private helper: HelperService,
   ) {
     helper.setBaseApiURL();
   }
@@ -42,24 +41,36 @@ export class AccountingExportService {
     const dateOptions: DateFilter[] = [
       {
         dateRange: this.translocoService.translate('services.accountingExport.thisWeek'),
-        startDate: new Date(currentDateTime.getFullYear(), currentDateTime.getMonth(), currentDateTime.getDate() - currentDateTime.getDay()),
-        endDate: currentDateTime
+        startDate: new Date(
+          currentDateTime.getFullYear(),
+          currentDateTime.getMonth(),
+          currentDateTime.getDate() - currentDateTime.getDay(),
+        ),
+        endDate: currentDateTime,
       },
       {
         dateRange: this.translocoService.translate('services.accountingExport.lastWeek'),
-        startDate: new Date(currentDateTime.getFullYear(), currentDateTime.getMonth(), currentDateTime.getDate() - currentDateTime.getDay() - 7),
-        endDate: new Date(currentDateTime.getFullYear(), currentDateTime.getMonth(), currentDateTime.getDate() - currentDateTime.getDay() - 1)
+        startDate: new Date(
+          currentDateTime.getFullYear(),
+          currentDateTime.getMonth(),
+          currentDateTime.getDate() - currentDateTime.getDay() - 7,
+        ),
+        endDate: new Date(
+          currentDateTime.getFullYear(),
+          currentDateTime.getMonth(),
+          currentDateTime.getDate() - currentDateTime.getDay() - 1,
+        ),
       },
       {
         dateRange: this.translocoService.translate('services.accountingExport.thisMonth'),
         startDate: new Date(currentDateTime.getFullYear(), currentDateTime.getMonth(), 1),
-        endDate: currentDateTime
+        endDate: currentDateTime,
       },
       {
         dateRange: this.translocoService.translate('services.accountingExport.lastMonth'),
         startDate: new Date(currentDateTime.getFullYear(), currentDateTime.getMonth() - 1, 1),
-        endDate: new Date(currentDateTime.getFullYear(), currentDateTime.getMonth(), 0)
-      }
+        endDate: new Date(currentDateTime.getFullYear(), currentDateTime.getMonth(), 0),
+      },
     ];
 
     return dateOptions;
@@ -118,7 +129,7 @@ export class AccountingExportService {
     return expense.claim_number;
   }
 
-  generateFyleUrl(expense: Expense, referenceType: FyleReferenceType, org_id: string) : string {
+  generateFyleUrl(expense: Expense, referenceType: FyleReferenceType, org_id: string): string {
     let url = `${environment.fyle_app_url}/app/`;
     if (referenceType === FyleReferenceType.EXPENSE) {
       url += `admin/#/company_expenses?txnId=${expense.expense_id}`;
@@ -133,18 +144,23 @@ export class AccountingExportService {
     return `${url}?org_id=${org_id}`;
   }
 
-  parseAPIResponseToExportLog(accountingExport: AccountingExport, org_id: string, translocoService: TranslocoService): AccountingExportList {
+  parseAPIResponseToExportLog(
+    accountingExport: AccountingExport,
+    org_id: string,
+    translocoService: TranslocoService,
+  ): AccountingExportList {
     const referenceType = this.getReferenceType(accountingExport.description);
     const referenceNumber = this.getFyleReferenceNumber(referenceType, accountingExport.expenses[0]);
     return {
       exportedAt: accountingExport.exported_at,
       employee: [accountingExport.expenses[0].employee_name, accountingExport.description.employee_email],
-      expenseType: accountingExport.fund_source === FundSource.CCC ? FundSource.CORPORATE_CARD : FundSource.REIMBURSABLE,
+      expenseType:
+        accountingExport.fund_source === FundSource.CCC ? FundSource.CORPORATE_CARD : FundSource.REIMBURSABLE,
       referenceNumber: referenceNumber,
       exportedAs: this.formatExportType(accountingExport.type, translocoService),
       fyleUrl: this.generateFyleUrl(accountingExport.expenses[0], referenceType, org_id),
       integrationUrl: accountingExport.export_url,
-      expenses: accountingExport.expenses
+      expenses: accountingExport.expenses,
     };
   }
 
@@ -171,9 +187,17 @@ export class AccountingExportService {
         exportType = exportRedirection;
       } else {
         exportRedirection = 'expense';
-        if (expenseGroup.fund_source === 'CCC' && expenseGroup.response_logs.Purchase.PaymentType === 'CreditCard' && !expenseGroup.response_logs.Purchase.Credit) {
+        if (
+          expenseGroup.fund_source === 'CCC' &&
+          expenseGroup.response_logs.Purchase.PaymentType === 'CreditCard' &&
+          !expenseGroup.response_logs.Purchase.Credit
+        ) {
           exportType = this.translocoService.translate('services.accountingExport.creditCardPurchase');
-        } else if (expenseGroup.fund_source === 'CCC' && expenseGroup.response_logs.Purchase.PaymentType === 'CreditCard' && expenseGroup.response_logs.Purchase.Credit) {
+        } else if (
+          expenseGroup.fund_source === 'CCC' &&
+          expenseGroup.response_logs.Purchase.PaymentType === 'CreditCard' &&
+          expenseGroup.response_logs.Purchase.Credit
+        ) {
           exportType = this.translocoService.translate('services.accountingExport.creditCardCredit');
           exportRedirection = 'creditcardcredit';
         } else if (expenseGroup.fund_source === 'CCC' && expenseGroup.response_logs.Purchase.PaymentType === 'Cash') {
@@ -194,7 +218,10 @@ export class AccountingExportService {
   }
 
   constructIntacctExportUrlAndType(expenseGroup: ExpenseGroup): [string, string] {
-    return [`https://www.intacct.com/ia/acct/ur.phtml?.r=${expenseGroup.response_logs?.url_id}`, expenseGroup.export_type];
+    return [
+      `https://www.intacct.com/ia/acct/ur.phtml?.r=${expenseGroup.response_logs?.url_id}`,
+      expenseGroup.export_type,
+    ];
   }
 
   constructXeroExportUrlAndType(expenseGroup: ExpenseGroup): [string, string] {
@@ -234,7 +261,11 @@ export class AccountingExportService {
     return [expenseGroup.export_url, exportType];
   }
 
-  constructExportUrlAndType(appName: AppName, expenseGroup: ExpenseGroup, translocoService: TranslocoService): [string, string] {
+  constructExportUrlAndType(
+    appName: AppName,
+    expenseGroup: ExpenseGroup,
+    translocoService: TranslocoService,
+  ): [string, string] {
     if (appName === AppName.QBO) {
       return this.constructQBOExportUrlAndType(expenseGroup);
     } else if (appName === AppName.INTACCT) {
@@ -248,60 +279,97 @@ export class AccountingExportService {
     return ['', ''];
   }
 
-  parseExpenseGroupAPIResponseToExportLog(expenseGroup: ExpenseGroup, org_id: string, appName: AppName, translocoService: TranslocoService): AccountingExportList {
-      const referenceType = this.getReferenceType(expenseGroup.description);
-      const referenceNumber = this.getFyleReferenceNumber(referenceType, expenseGroup.expenses[0]);
+  parseExpenseGroupAPIResponseToExportLog(
+    expenseGroup: ExpenseGroup,
+    org_id: string,
+    appName: AppName,
+    translocoService: TranslocoService,
+  ): AccountingExportList {
+    const referenceType = this.getReferenceType(expenseGroup.description);
+    const referenceNumber = this.getFyleReferenceNumber(referenceType, expenseGroup.expenses[0]);
 
-      const [url, exportType] = this.constructExportUrlAndType(appName, expenseGroup, translocoService);
-      return {
-        exportedAt: expenseGroup.exported_at,
-        employee: [expenseGroup.expenses[0].employee_name, expenseGroup.description.employee_email],
-        expenseType: expenseGroup.fund_source === FundSource.CCC ? FundSource.CORPORATE_CARD : FundSource.REIMBURSABLE,
-        referenceNumber: referenceNumber,
-        exportedAs: exportType,
-        fyleUrl: this.generateFyleUrl(expenseGroup.expenses[0], referenceType, org_id),
-        integrationUrl: url,
-        expenses: expenseGroup.expenses
-      };
+    const [url, exportType] = this.constructExportUrlAndType(appName, expenseGroup, translocoService);
+    return {
+      exportedAt: expenseGroup.exported_at,
+      employee: [expenseGroup.expenses[0].employee_name, expenseGroup.description.employee_email],
+      expenseType: expenseGroup.fund_source === FundSource.CCC ? FundSource.CORPORATE_CARD : FundSource.REIMBURSABLE,
+      referenceNumber: referenceNumber,
+      exportedAs: exportType,
+      fyleUrl: this.generateFyleUrl(expenseGroup.expenses[0], referenceType, org_id),
+      integrationUrl: url,
+      expenses: expenseGroup.expenses,
+    };
   }
 
-  assignXeroShortCode(xeroShortCode: string){
+  assignXeroShortCode(xeroShortCode: string) {
     this.xeroShortCode = xeroShortCode;
   }
 
-  getAccountingExportSummary(version?: string | 'v1', useRepurposedExportSummary?: boolean, appName?: AppName): Observable<AccountingExportSummary> {
+  getAccountingExportSummary(
+    version?: string | 'v1',
+    useRepurposedExportSummary?: boolean,
+    appName?: AppName,
+  ): Observable<AccountingExportSummary> {
     const apiParams: { start_date?: string } = {};
-    if (useRepurposedExportSummary && appName && [AppName.XERO, AppName.QBO, AppName.NETSUITE, AppName.INTACCT, AppName.QBD_DIRECT, AppName.SAGE300].includes(appName)) {
+    if (
+      useRepurposedExportSummary &&
+      appName &&
+      [AppName.XERO, AppName.QBO, AppName.NETSUITE, AppName.INTACCT, AppName.QBD_DIRECT, AppName.SAGE300].includes(
+        appName,
+      )
+    ) {
       const today = new Date();
       today.setHours(0, 0, 0, 0);
       apiParams.start_date = today.toISOString();
     }
     if (version === 'v1') {
       // Temporary hack to enable repurposed export summary only for allowed apps - #q2_real_time_exports_integrations
-      return this.apiService.get(this.helper.buildEndpointPath(`${this.workspaceService.getWorkspaceId()}/export_detail/`), apiParams);
+      return this.apiService.get(
+        this.helper.buildEndpointPath(`${this.workspaceService.getWorkspaceId()}/export_detail/`),
+        apiParams,
+      );
     } else if (version === AppName.QBD_DIRECT) {
-      return this.apiService.get(this.helper.buildEndpointPath(`${this.workspaceService.getWorkspaceId()}/export_logs/summary/`), apiParams);
+      return this.apiService.get(
+        this.helper.buildEndpointPath(`${this.workspaceService.getWorkspaceId()}/export_logs/summary/`),
+        apiParams,
+      );
     }
 
-    return this.apiService.get(this.helper.buildEndpointPath(`${this.workspaceService.getWorkspaceId()}/accounting_exports/summary/`), apiParams);
+    return this.apiService.get(
+      this.helper.buildEndpointPath(`${this.workspaceService.getWorkspaceId()}/accounting_exports/summary/`),
+      apiParams,
+    );
   }
 
   getExportableAccountingExportCount(): Observable<AccountingExportCount> {
     const apiParams = {
-      status__in: [AccountingExportStatus.READY, AccountingExportStatus.FAILED, AccountingExportStatus.FATAL]
+      status__in: [AccountingExportStatus.READY, AccountingExportStatus.FAILED, AccountingExportStatus.FATAL],
     };
-    return this.apiService.get(this.helper.buildEndpointPath(`${this.workspaceService.getWorkspaceId()}/accounting_exports/count/`), apiParams);
+    return this.apiService.get(
+      this.helper.buildEndpointPath(`${this.workspaceService.getWorkspaceId()}/accounting_exports/count/`),
+      apiParams,
+    );
   }
 
-  getAccountingExports(type: string[], status: string[], exportableAccountingExportIds: number[] | null, limit: number, offset: number, selectedDateFilter? : SelectedDateFilter | null, exportedAt?: string | null, searchQuery?: string | null, appName?: string): Observable<any> {
+  getAccountingExports(
+    type: string[],
+    status: string[],
+    exportableAccountingExportIds: number[] | null,
+    limit: number,
+    offset: number,
+    selectedDateFilter?: SelectedDateFilter | null,
+    exportedAt?: string | null,
+    searchQuery?: string | null,
+    appName?: string,
+  ): Observable<any> {
     const apiParams: AccountingExportGetParam = {
       type__in: type,
       status__in: status,
       limit: limit,
-      offset: offset
+      offset: offset,
     };
 
-    if (searchQuery){
+    if (searchQuery) {
       apiParams.expenses__claim_number = searchQuery;
       apiParams.expenses__employee_email = searchQuery;
       apiParams.expenses__employee_name = searchQuery;
@@ -328,19 +396,35 @@ export class AccountingExportService {
         apiParams.status__in = [AccountingExportStatus.ERROR, AccountingExportStatus.FATAL];
       }
       delete apiParams.type__in;
-      return this.apiService.get(this.helper.buildEndpointPath(`${this.workspaceService.getWorkspaceId()}/export_logs/`), apiParams);
+      return this.apiService.get(
+        this.helper.buildEndpointPath(`${this.workspaceService.getWorkspaceId()}/export_logs/`),
+        apiParams,
+      );
     }
 
-    return this.apiService.get(this.helper.buildEndpointPath(`${this.workspaceService.getWorkspaceId()}/accounting_exports/`), apiParams);
+    return this.apiService.get(
+      this.helper.buildEndpointPath(`${this.workspaceService.getWorkspaceId()}/accounting_exports/`),
+      apiParams,
+    );
   }
 
   @Cacheable()
   importExpensesFromFyle(version?: 'v1' | 'v2' | 'v3'): Observable<{}> {
     // Dedicated to qbd direct
     if (version === 'v2' || version === 'v3') {
-      return this.apiService.post(this.helper.buildEndpointPath(`${this.workspaceService.getWorkspaceId()}/${(version === 'v3' ? 'fyle/sync_expenses/' : 'export_logs/sync/')}`), {});
+      return this.apiService.post(
+        this.helper.buildEndpointPath(
+          `${this.workspaceService.getWorkspaceId()}/${version === 'v3' ? 'fyle/sync_expenses/' : 'export_logs/sync/'}`,
+        ),
+        {},
+      );
     }
-    return this.apiService.post(this.helper.buildEndpointPath(`${this.workspaceService.getWorkspaceId()}/fyle/${version === 'v1' ? 'expense_groups' : 'accounting_exports'}/sync/`), {});
+    return this.apiService.post(
+      this.helper.buildEndpointPath(
+        `${this.workspaceService.getWorkspaceId()}/fyle/${version === 'v1' ? 'expense_groups' : 'accounting_exports'}/sync/`,
+      ),
+      {},
+    );
   }
 
   getExportLogs(status: TaskLogState[]): Observable<any> {
@@ -348,6 +432,9 @@ export class AccountingExportService {
     if (status && status.length > 0) {
       apiParams.status__in = status;
     }
-    return this.apiService.get(this.helper.buildEndpointPath(`${this.workspaceService.getWorkspaceId()}/export_logs/`), apiParams);
+    return this.apiService.get(
+      this.helper.buildEndpointPath(`${this.workspaceService.getWorkspaceId()}/export_logs/`),
+      apiParams,
+    );
   }
 }

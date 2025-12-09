@@ -3,8 +3,6 @@ import { CommonModule } from '@angular/common';
 import { QbdDirectComponent } from './qbd-direct.component';
 import { RouterModule, Routes } from '@angular/router';
 
-
-
 const routes: Routes = [
   {
     path: '',
@@ -12,18 +10,19 @@ const routes: Routes = [
     children: [
       {
         path: 'onboarding',
-        loadChildren: () => import('./qbd-direct-onboarding/qbd-direct-onboarding.module').then(m => m.QbdDirectOnboardingModule)
+        loadChildren: () =>
+          import('./qbd-direct-onboarding/qbd-direct-onboarding.module').then((m) => m.QbdDirectOnboardingModule),
       },
       {
         path: 'main',
-        loadChildren: () => import('./qbd-direct-main/qbd-direct-main.module').then(m => m.QbdDirectMainModule)
-      }
-    ]
-  }
+        loadChildren: () => import('./qbd-direct-main/qbd-direct-main.module').then((m) => m.QbdDirectMainModule),
+      },
+    ],
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class QbdDirectRoutingModule { }
+export class QbdDirectRoutingModule {}

@@ -1,4 +1,3 @@
-
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { NetsuiteOnboardingComponent } from './netsuite-onboarding.component';
@@ -16,34 +15,34 @@ const routes: Routes = [
     children: [
       {
         path: 'landing',
-        component: NetsuiteOnboardingLandingComponent
+        component: NetsuiteOnboardingLandingComponent,
       },
       {
         path: 'connector',
-        component: NetsuiteOnboardingConnectorComponent
+        component: NetsuiteOnboardingConnectorComponent,
       },
       {
         path: 'export_settings',
-        component: NetsuiteOnboardingExportSettingsComponent
+        component: NetsuiteOnboardingExportSettingsComponent,
       },
       {
         path: 'import_settings',
-        component: NetsuiteOnboardingImportSettingsComponent
+        component: NetsuiteOnboardingImportSettingsComponent,
       },
       {
         path: 'advanced_settings',
-        component: NetsuiteOnboardingAdvancedSettingsComponent
+        component: NetsuiteOnboardingAdvancedSettingsComponent,
       },
       {
         path: 'done',
-        component: NetsuiteOnboardingDoneComponent
-      }
-    ]
-  }
+        component: NetsuiteOnboardingDoneComponent,
+      },
+    ],
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class NetsuiteOnboardingRoutingModule { }
+export class NetsuiteOnboardingRoutingModule {}

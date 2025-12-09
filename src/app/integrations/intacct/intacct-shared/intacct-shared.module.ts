@@ -21,7 +21,7 @@ import { IntacctC1ImportSettingsComponent } from './intacct-c1-import-settings/i
     IntacctExportSettingsComponent,
     IntacctImportSettingsComponent,
     IntacctAdvancedSettingsComponent,
-    IntacctC1ImportSettingsComponent
+    IntacctC1ImportSettingsComponent,
   ],
   imports: [
     CommonModule,
@@ -31,13 +31,13 @@ import { IntacctC1ImportSettingsComponent } from './intacct-c1-import-settings/i
     MultiSelectModule,
     TooltipModule,
     DialogModule,
-    ToggleSwitchModule
+    ToggleSwitchModule,
   ],
   exports: [
     IntacctExportSettingsComponent,
     IntacctImportSettingsComponent,
     IntacctAdvancedSettingsComponent,
-    IntacctC1ImportSettingsComponent
-  ]
+    IntacctC1ImportSettingsComponent,
+  ],
 })
-export class IntacctSharedModule { }
+export class IntacctSharedModule {}

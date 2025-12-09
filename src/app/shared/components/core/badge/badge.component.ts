@@ -1,12 +1,11 @@
 import { Component, Input } from '@angular/core';
 import { SizeOption, ThemeOption } from 'src/app/core/models/enum/enum.model';
 
-
 @Component({
-    selector: 'app-badge',
-    templateUrl: './badge.component.html',
-    styleUrl: './badge.component.scss',
-    standalone: false
+  selector: 'app-badge',
+  templateUrl: './badge.component.html',
+  styleUrl: './badge.component.scss',
+  standalone: false,
 })
 export class BadgeComponent {
   @Input() size: SizeOption = SizeOption.DEFAULT;

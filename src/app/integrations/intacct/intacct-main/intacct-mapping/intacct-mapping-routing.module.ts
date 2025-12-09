@@ -10,14 +10,14 @@ const routes: Routes = [
     children: [
       {
         path: ':source_field',
-        component: IntacctBaseMappingComponent
-      }
-    ]
-  }
+        component: IntacctBaseMappingComponent,
+      },
+    ],
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class IntacctMappingRoutingModule { }
+export class IntacctMappingRoutingModule {}

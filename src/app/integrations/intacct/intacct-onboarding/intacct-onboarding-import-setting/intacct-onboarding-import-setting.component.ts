@@ -6,13 +6,12 @@ import { IntacctOnboardingService } from 'src/app/core/services/si/si-configurat
 import { TranslocoService } from '@jsverse/transloco';
 
 @Component({
-    selector: 'app-intacct-onboarding-import-setting',
-    templateUrl: './intacct-onboarding-import-setting.component.html',
-    styleUrls: ['./intacct-onboarding-import-setting.component.scss'],
-    standalone: false
+  selector: 'app-intacct-onboarding-import-setting',
+  templateUrl: './intacct-onboarding-import-setting.component.html',
+  styleUrls: ['./intacct-onboarding-import-setting.component.scss'],
+  standalone: false,
 })
 export class IntacctOnboardingImportSettingComponent implements OnInit {
-
   onboardingSteps: OnboardingStepper[] = [];
 
   readonly brandingConfig = brandingConfig;
@@ -20,11 +19,13 @@ export class IntacctOnboardingImportSettingComponent implements OnInit {
   constructor(
     private workspaceService: WorkspaceService,
     private translocoService: TranslocoService,
-    private intacctOnboardingService: IntacctOnboardingService
-  ) { }
+    private intacctOnboardingService: IntacctOnboardingService,
+  ) {}
 
   ngOnInit(): void {
-    this.onboardingSteps = this.intacctOnboardingService.getOnboardingSteps(this.translocoService.translate('configuration.importSetting.stepName'), this.workspaceService.getOnboardingState());
+    this.onboardingSteps = this.intacctOnboardingService.getOnboardingSteps(
+      this.translocoService.translate('configuration.importSetting.stepName'),
+      this.workspaceService.getOnboardingState(),
+    );
   }
-
 }

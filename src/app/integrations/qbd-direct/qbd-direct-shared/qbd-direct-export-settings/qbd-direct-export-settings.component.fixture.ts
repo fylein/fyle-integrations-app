@@ -3,7 +3,6 @@ import { PaginatedDestinationAttribute } from 'src/app/core/models/db/destinatio
 import { QbdDirectDestinationAttribute } from 'src/app/core/models/qbd-direct/db/qbd-direct-destination-attribuite.model';
 
 export class QbdDirectExportSettingsComponentFixture {
-
   /**
    * Creates fixture data for paginated destination attributes
    */
@@ -12,7 +11,7 @@ export class QbdDirectExportSettingsComponentFixture {
       count: 15,
       next: null,
       previous: null,
-      results: this.createQbdDirectDestinationAttributes()
+      results: this.createQbdDirectDestinationAttributes(),
     };
   }
 
@@ -34,8 +33,8 @@ export class QbdDirectExportSettingsComponentFixture {
         workspace: 1,
         detail: {
           account_type: 'BANK',
-          account_number: 1000
-        }
+          account_number: 1000,
+        },
       },
       {
         id: 2,
@@ -50,8 +49,8 @@ export class QbdDirectExportSettingsComponentFixture {
         workspace: 1,
         detail: {
           account_type: 'ACCOUNTS_PAYABLE',
-          account_number: 2000
-        }
+          account_number: 2000,
+        },
       },
       {
         id: 3,
@@ -66,8 +65,8 @@ export class QbdDirectExportSettingsComponentFixture {
         workspace: 1,
         detail: {
           account_type: 'ACCOUNTS_PAYABLE',
-          account_number: 2100
-        }
+          account_number: 2100,
+        },
       },
       {
         id: 4,
@@ -82,8 +81,8 @@ export class QbdDirectExportSettingsComponentFixture {
         workspace: 1,
         detail: {
           account_type: 'EXPENSE',
-          account_number: 6000
-        }
+          account_number: 6000,
+        },
       },
       {
         id: 5,
@@ -98,8 +97,8 @@ export class QbdDirectExportSettingsComponentFixture {
         workspace: 1,
         detail: {
           account_type: 'EXPENSE',
-          account_number: 6100
-        }
+          account_number: 6100,
+        },
       },
       {
         id: 6,
@@ -114,8 +113,8 @@ export class QbdDirectExportSettingsComponentFixture {
         workspace: 1,
         detail: {
           account_type: 'EXPENSE',
-          account_number: 6200
-        }
+          account_number: 6200,
+        },
       },
       {
         id: 7,
@@ -130,8 +129,8 @@ export class QbdDirectExportSettingsComponentFixture {
         workspace: 1,
         detail: {
           account_type: 'EXPENSE',
-          account_number: 6300
-        }
+          account_number: 6300,
+        },
       },
       {
         id: 8,
@@ -146,8 +145,8 @@ export class QbdDirectExportSettingsComponentFixture {
         workspace: 1,
         detail: {
           account_type: 'EXPENSE',
-          account_number: 6400
-        }
+          account_number: 6400,
+        },
       },
       {
         id: 9,
@@ -162,8 +161,8 @@ export class QbdDirectExportSettingsComponentFixture {
         workspace: 1,
         detail: {
           account_type: 'EXPENSE',
-          account_number: 6500
-        }
+          account_number: 6500,
+        },
       },
       {
         id: 10,
@@ -178,8 +177,8 @@ export class QbdDirectExportSettingsComponentFixture {
         workspace: 1,
         detail: {
           account_type: 'EXPENSE',
-          account_number: 6600
-        }
+          account_number: 6600,
+        },
       },
       {
         id: 11,
@@ -194,8 +193,8 @@ export class QbdDirectExportSettingsComponentFixture {
         workspace: 1,
         detail: {
           account_type: 'EXPENSE',
-          account_number: 6700
-        }
+          account_number: 6700,
+        },
       },
       {
         id: 12,
@@ -210,8 +209,8 @@ export class QbdDirectExportSettingsComponentFixture {
         workspace: 1,
         detail: {
           account_type: 'EXPENSE',
-          account_number: 6800
-        }
+          account_number: 6800,
+        },
       },
       {
         id: 13,
@@ -226,8 +225,8 @@ export class QbdDirectExportSettingsComponentFixture {
         workspace: 1,
         detail: {
           account_type: 'EXPENSE',
-          account_number: 6900
-        }
+          account_number: 6900,
+        },
       },
       {
         id: 14,
@@ -242,8 +241,8 @@ export class QbdDirectExportSettingsComponentFixture {
         workspace: 1,
         detail: {
           account_type: 'EXPENSE',
-          account_number: 7000
-        }
+          account_number: 7000,
+        },
       },
       {
         id: 15,
@@ -258,9 +257,9 @@ export class QbdDirectExportSettingsComponentFixture {
         workspace: 1,
         detail: {
           account_type: 'EXPENSE',
-          account_number: 7100
-        }
-      }
+          account_number: 7100,
+        },
+      },
     ];
   }
 
@@ -269,7 +268,7 @@ export class QbdDirectExportSettingsComponentFixture {
    */
   static createAccountTypeSpecificFixture(accountType: string): PaginatedDestinationAttribute {
     const allAccounts = this.createQbdDirectDestinationAttributes();
-    const filteredAccounts = allAccounts.filter(account => {
+    const filteredAccounts = allAccounts.filter((account) => {
       switch (accountType) {
         case 'BANK':
           return account.detail.account_type === 'BANK';
@@ -286,7 +285,7 @@ export class QbdDirectExportSettingsComponentFixture {
       count: filteredAccounts.length,
       next: null,
       previous: null,
-      results: filteredAccounts
+      results: filteredAccounts,
     };
   }
 
@@ -295,16 +294,17 @@ export class QbdDirectExportSettingsComponentFixture {
    */
   static createSearchResultsFixture(searchTerm: string): PaginatedDestinationAttribute {
     const allAccounts = this.createQbdDirectDestinationAttributes();
-    const filteredAccounts = allAccounts.filter(account =>
-      account.value.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      account.display_name.toLowerCase().includes(searchTerm.toLowerCase())
+    const filteredAccounts = allAccounts.filter(
+      (account) =>
+        account.value.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        account.display_name.toLowerCase().includes(searchTerm.toLowerCase()),
     );
 
     return {
       count: filteredAccounts.length,
       next: null,
       previous: null,
-      results: filteredAccounts
+      results: filteredAccounts,
     };
   }
 
@@ -313,15 +313,13 @@ export class QbdDirectExportSettingsComponentFixture {
    */
   static createSpecificDestinationIdsFixture(destinationIds: string[]): PaginatedDestinationAttribute {
     const allAccounts = this.createQbdDirectDestinationAttributes();
-    const filteredAccounts = allAccounts.filter(account =>
-      destinationIds.includes(account.destination_id)
-    );
+    const filteredAccounts = allAccounts.filter((account) => destinationIds.includes(account.destination_id));
 
     return {
       count: filteredAccounts.length,
       next: null,
       previous: null,
-      results: filteredAccounts
+      results: filteredAccounts,
     };
   }
 
@@ -333,7 +331,7 @@ export class QbdDirectExportSettingsComponentFixture {
       count: 0,
       next: null,
       previous: null,
-      results: []
+      results: [],
     };
   }
 }

@@ -25,7 +25,7 @@ import { QboCloneSettingsComponent } from './qbo-clone-settings/qbo-clone-settin
     QboOnboardingImportSettingsComponent,
     QboOnboardingAdvancedSettingsComponent,
     QboOnboardingDoneComponent,
-    QboCloneSettingsComponent
+    QboCloneSettingsComponent,
   ],
   imports: [
     CommonModule,
@@ -35,7 +35,7 @@ import { QboCloneSettingsComponent } from './qbo-clone-settings/qbo-clone-settin
     FormsModule,
     ReactiveFormsModule,
     ToggleSwitchModule,
-    TooltipModule
-  ]
+    TooltipModule,
+  ],
 })
-export class QboOnboardingModule { }
+export class QboOnboardingModule {}

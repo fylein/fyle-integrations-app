@@ -4,7 +4,11 @@ import { Subject, debounceTime } from 'rxjs';
 import { brandingConfig, brandingStyle } from 'src/app/branding/branding-config';
 import { SkippedAccountingExportModel } from 'src/app/core/models/db/accounting-export.model';
 import { AppName, PaginatorPage } from 'src/app/core/models/enum/enum.model';
-import { SkipExportList, SkipExportLogResponse, SkipExportLog } from 'src/app/core/models/intacct/db/expense-group.model';
+import {
+  SkipExportList,
+  SkipExportLogResponse,
+  SkipExportLog,
+} from 'src/app/core/models/intacct/db/expense-group.model';
 import { Paginator } from 'src/app/core/models/misc/paginator.model';
 import { DateFilter, SelectedDateFilter } from 'src/app/core/models/qbd/misc/qbd-date-filter.model';
 import { AccountingExportService } from 'src/app/core/services/common/accounting-export.service';
@@ -13,13 +17,12 @@ import { PaginatorService } from 'src/app/core/services/common/paginator.service
 import { UserService } from 'src/app/core/services/misc/user.service';
 
 @Component({
-    selector: 'app-netsuite-skipped-export-log',
-    templateUrl: './netsuite-skipped-export-log.component.html',
-    styleUrls: ['./netsuite-skipped-export-log.component.scss'],
-    standalone: false
+  selector: 'app-netsuite-skipped-export-log',
+  templateUrl: './netsuite-skipped-export-log.component.html',
+  styleUrls: ['./netsuite-skipped-export-log.component.scss'],
+  standalone: false,
 })
 export class NetsuiteSkippedExportLogComponent implements OnInit {
-
   isLoading: boolean = true;
 
   totalCount: number = 0;
@@ -57,12 +60,10 @@ export class NetsuiteSkippedExportLogComponent implements OnInit {
     private userService: UserService,
     private exportLogService: ExportLogService,
     private paginatorService: PaginatorService,
-    private accountingExportService: AccountingExportService
+    private accountingExportService: AccountingExportService,
   ) {
     this.dateOptions = this.accountingExportService.getDateOptionsV2();
-    this.searchQuerySubject.pipe(
-      debounceTime(1000)
-    ).subscribe((query: string) => {
+    this.searchQuerySubject.pipe(debounceTime(1000)).subscribe((query: string) => {
       this.searchQuery = query;
       this.offset = 0;
       this.currentPage = Math.ceil(this.offset / this.limit) + 1;
@@ -82,17 +83,21 @@ export class NetsuiteSkippedExportLogComponent implements OnInit {
       this.paginatorService.storePageSize(PaginatorPage.EXPORT_LOG, limit);
     }
 
-    return this.exportLogService.getSkippedExpenses(limit, offset, this.selectedDateFilter, this.searchQuery, AppName.NETSUITE).subscribe((skippedExpenses: SkipExportLogResponse) => {
-      this.totalCount = skippedExpenses.count;
-      const orgId = this.userService.getUserProfile().org_id;
-      skippedExpenses.results.forEach((skippedExpense: SkipExportLog) => {
-        skippedExpenseGroup.push(SkippedAccountingExportModel.parseAPIResponseToSkipExportList(skippedExpense, orgId));
-      });
+    return this.exportLogService
+      .getSkippedExpenses(limit, offset, this.selectedDateFilter, this.searchQuery, AppName.NETSUITE)
+      .subscribe((skippedExpenses: SkipExportLogResponse) => {
+        this.totalCount = skippedExpenses.count;
+        const orgId = this.userService.getUserProfile().org_id;
+        skippedExpenses.results.forEach((skippedExpense: SkipExportLog) => {
+          skippedExpenseGroup.push(
+            SkippedAccountingExportModel.parseAPIResponseToSkipExportList(skippedExpense, orgId),
+          );
+        });
 
-      this.filteredExpenses = skippedExpenseGroup;
-      this.expenses = [...this.filteredExpenses];
-      this.isLoading = false;
-    });
+        this.filteredExpenses = skippedExpenseGroup;
+        this.expenses = [...this.filteredExpenses];
+        this.isLoading = false;
+      });
   }
 
   pageSizeChanges(limit: number): void {
@@ -114,7 +119,7 @@ export class NetsuiteSkippedExportLogComponent implements OnInit {
       searchOption: [''],
       dateRange: [null],
       start: [''],
-      end: ['']
+      end: [''],
     });
 
     this.skipExportLogForm.controls.start.valueChanges.subscribe((dateRange) => {
@@ -128,7 +133,7 @@ export class NetsuiteSkippedExportLogComponent implements OnInit {
         this.hideCalendar = true;
         this.selectedDateFilter = {
           startDate: dateRange[0],
-          endDate: dateRange[1]
+          endDate: dateRange[1],
         };
 
         this.isDateSelected = true;
@@ -155,5 +160,4 @@ export class NetsuiteSkippedExportLogComponent implements OnInit {
   ngOnInit(): void {
     this.getSkippedExpensesAndSetupPage();
   }
-
 }

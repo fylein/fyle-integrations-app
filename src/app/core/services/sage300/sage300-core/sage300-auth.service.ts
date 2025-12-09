@@ -6,13 +6,12 @@ import { Token } from 'src/app/core/models/misc/token.model';
 import { AppUrl } from 'src/app/core/models/enum/enum.model';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class Sage300AuthService {
-
   constructor(
     private apiService: ApiService,
-    helper: HelperService
+    helper: HelperService,
   ) {
     helper.setBaseApiURL(AppUrl.SAGE300);
   }

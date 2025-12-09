@@ -7,18 +7,17 @@ import { StorageService } from '../../common/storage.service';
 import { ApiService } from '../../common/api.service';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class QbdWorkspaceService {
-
   constructor(
     private apiService: ApiService,
-    private storageService: StorageService
-  ) { }
+    private storageService: StorageService,
+  ) {}
 
   @Cacheable()
   getQBDWorkspace(orgId: string): Observable<QBDWorkspace> {
-    return this.apiService.get('/workspaces/', {org_id: orgId});
+    return this.apiService.get('/workspaces/', { org_id: orgId });
   }
 
   postQBDWorkspace(): Observable<QBDWorkspace> {

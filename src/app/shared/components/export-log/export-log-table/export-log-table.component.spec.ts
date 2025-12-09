@@ -8,9 +8,8 @@ xdescribe('ExportLogTableComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ExportLogTableComponent ]
-    })
-    .compileComponents();
+      declarations: [ExportLogTableComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(ExportLogTableComponent);
     component = fixture.componentInstance;

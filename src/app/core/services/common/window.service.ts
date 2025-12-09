@@ -2,11 +2,10 @@ import { Injectable } from '@angular/core';
 import { OperatingSystem } from '../../models/enum/enum.model';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class WindowService {
-
-  constructor() { }
+  constructor() {}
 
   get nativeWindow(): Window {
     return window;
@@ -28,8 +27,6 @@ export class WindowService {
     } else if (userAgent.includes(OperatingSystem.MAC)) {
       return OperatingSystem.MAC;
     }
-      return '';
-
+    return '';
   }
-
 }

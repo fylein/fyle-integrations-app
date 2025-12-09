@@ -8,11 +8,7 @@ describe('Sage50MappingService', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [
-        Sage50MappingService,
-        provideHttpClient(withInterceptorsFromDi()),
-        provideHttpClientTesting()
-      ]
+      providers: [Sage50MappingService, provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting()],
     });
     service = TestBed.inject(Sage50MappingService);
   });

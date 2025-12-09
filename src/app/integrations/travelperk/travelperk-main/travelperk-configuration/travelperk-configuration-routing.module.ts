@@ -11,19 +11,18 @@ const routes: Routes = [
     children: [
       {
         path: 'payment_profile_settings',
-        component: TravelperkPaymentProfileSettingsComponent
+        component: TravelperkPaymentProfileSettingsComponent,
       },
       {
         path: 'advanced_settings',
-        component: TravelperkAdvancedSettingsComponent
-      }
-    ]
-  }
+        component: TravelperkAdvancedSettingsComponent,
+      },
+    ],
+  },
 ];
-
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class TravelperkConfigurationRoutingModule { }
+export class TravelperkConfigurationRoutingModule {}

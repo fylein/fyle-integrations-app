@@ -18,8 +18,8 @@ xdescribe('SiMappingsService', () => {
       providers: [
         SiMappingsService,
         { provide: ApiService, useValue: apiSpy },
-        { provide: SiWorkspaceService, useValue: workspaceSpy }
-      ]
+        { provide: SiWorkspaceService, useValue: workspaceSpy },
+      ],
     });
 
     service = TestBed.inject(SiMappingsService);
@@ -39,7 +39,7 @@ xdescribe('SiMappingsService', () => {
     service.refreshSageIntacctDimensions(dimensionsToSync);
 
     expect(mockApiService.post).toHaveBeenCalledWith(`/workspaces/${workspaceId}/sage_intacct/refresh_dimensions/`, {
-      dimensions_to_sync: dimensionsToSync
+      dimensions_to_sync: dimensionsToSync,
     });
   });
 
@@ -54,7 +54,7 @@ xdescribe('SiMappingsService', () => {
     expect(mockApiService.get).toHaveBeenCalledWith(`/workspaces/${workspaceId}/sage_intacct/destination_attributes/`, {
       attribute_types: attributeTypes,
       account_type: 'accountType',
-      active: true
+      active: true,
     });
   });
 });

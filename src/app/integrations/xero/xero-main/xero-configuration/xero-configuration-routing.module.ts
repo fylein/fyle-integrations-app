@@ -12,22 +12,22 @@ const routes: Routes = [
     children: [
       {
         path: 'export_settings',
-        component: XeroExportSettingsComponent
+        component: XeroExportSettingsComponent,
       },
       {
         path: 'import_settings',
-        component: XeroImportSettingsComponent
+        component: XeroImportSettingsComponent,
       },
       {
         path: 'advanced_settings',
-        component: XeroAdvancedSettingsComponent
-      }
-    ]
-  }
+        component: XeroAdvancedSettingsComponent,
+      },
+    ],
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class XeroConfigurationRoutingModule { }
+export class XeroConfigurationRoutingModule {}

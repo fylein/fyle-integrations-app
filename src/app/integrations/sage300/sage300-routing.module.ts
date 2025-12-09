@@ -10,23 +10,24 @@ const routes: Routes = [
     children: [
       {
         path: 'onboarding',
-        loadChildren: () => import('./sage300-onboarding/sage300-onboarding.module').then(m => m.Sage300OnboardingModule)
+        loadChildren: () =>
+          import('./sage300-onboarding/sage300-onboarding.module').then((m) => m.Sage300OnboardingModule),
       },
       {
         path: 'main',
-        loadChildren: () => import('./sage300-main/sage300-main.module').then(m => m.Sage300MainModule),
-        canActivate: [Sage300TokenGuard]
+        loadChildren: () => import('./sage300-main/sage300-main.module').then((m) => m.Sage300MainModule),
+        canActivate: [Sage300TokenGuard],
       },
       {
         path: 'token_expired',
-        loadChildren: () => import('./sage300-main/sage300-main.module').then(m => m.Sage300MainModule)
-      }
-    ]
-  }
+        loadChildren: () => import('./sage300-main/sage300-main.module').then((m) => m.Sage300MainModule),
+      },
+    ],
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class Sage300RoutingModule { }
+export class Sage300RoutingModule {}

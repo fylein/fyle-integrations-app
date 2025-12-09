@@ -1,16 +1,40 @@
 <div [formGroup]="form">
   <div class="tw-px-24-px tw-pb-24-px tw-flex tw-flex-row tw-justify-between tw-items-center">
-    <div class="lg:tw-w-3/5 md:tw-w-1/2 tw-flex tw-items-start" [ngClass]="isConfigToggleLeftAligned ? 'tw-ml-10-px' : ''">
-      <div [ngClass]="[iconPath || formControllerName === 'dayOfMonth' || formControllerName === 'dayOfWeek' || formControllerName === 'timeOfDay' ? 'tw-pr-16-px tw-mt-4-px' : 'tw-pr-40-px']">
+    <div
+      class="lg:tw-w-3/5 md:tw-w-1/2 tw-flex tw-items-start"
+      [ngClass]="isConfigToggleLeftAligned ? 'tw-ml-10-px' : ''"
+    >
+      <div
+        [ngClass]="[
+          iconPath ||
+          formControllerName === 'dayOfMonth' ||
+          formControllerName === 'dayOfWeek' ||
+          formControllerName === 'timeOfDay'
+            ? 'tw-pr-16-px tw-mt-4-px'
+            : 'tw-pr-40-px',
+        ]"
+      >
         @if (iconPath) {
-          <app-svg-icon [svgSource]="iconPath" [width]="'24px'" [height]="'24px'" [styleClasses]="'tw-text-mandatory-field-color'"></app-svg-icon>
+          <app-svg-icon
+            [svgSource]="iconPath"
+            [width]="'24px'"
+            [height]="'24px'"
+            [styleClasses]="'tw-text-mandatory-field-color'"
+          ></app-svg-icon>
         }
       </div>
       <div>
-        <h5 [ngClass]="brandingStyle.qbd_direct.onboarding.configurationToggleHeaderText">{{ label | snakeCaseToSpaceCase}}@if (isFieldMandatory) {
-          <app-mandatory-field></app-mandatory-field>
-        }</h5>
-        <h5 class="tw-pt-8-px !tw-leading-4" [ngClass]="brandingStyle.qbd_direct.onboarding.configurationToggleDescriptionText" [innerHTML]="subLabel"></h5>
+        <h5 [ngClass]="brandingStyle.qbd_direct.onboarding.configurationToggleHeaderText">
+          {{ label | snakeCaseToSpaceCase }}
+          @if (isFieldMandatory) {
+            <app-mandatory-field></app-mandatory-field>
+          }
+        </h5>
+        <h5
+          class="tw-pt-8-px !tw-leading-4"
+          [ngClass]="brandingStyle.qbd_direct.onboarding.configurationToggleDescriptionText"
+          [innerHTML]="subLabel"
+        ></h5>
       </div>
     </div>
     <div>
@@ -22,17 +46,33 @@
             [options]="options"
             [formControlName]="formControllerName"
             [placeholder]="placeholder"
-                        [ngClass]="{
-                            'error-box': form.controls[formControllerName].invalid && isFieldMandatory && form.controls[formControllerName].touched,
-                            'normal-box': !(form.controls[formControllerName].invalid && isFieldMandatory && form.controls[formControllerName].touched),
-                            'selectedItem': form.controls[formControllerName].value,
-                            'filterDropdown': !form.controls[formControllerName].value
-                        }">
+            [ngClass]="{
+              'error-box':
+                form.controls[formControllerName].invalid &&
+                isFieldMandatory &&
+                form.controls[formControllerName].touched,
+              'normal-box': !(
+                form.controls[formControllerName].invalid &&
+                isFieldMandatory &&
+                form.controls[formControllerName].touched
+              ),
+              selectedItem: form.controls[formControllerName].value,
+              filterDropdown: !form.controls[formControllerName].value,
+            }"
+          >
             <ng-template let-option pTemplate="item">
-              <div #textElement
-                [ngStyle]="{'white-space': 'nowrap', 'overflow': 'hidden', 'text-overflow': 'ellipsis', 'max-width': '16rem'}"
-                [pTooltip]="isOverflowing(textElement) ? option.label : null" tooltipPosition="top">
-                {{option.label}}
+              <div
+                #textElement
+                [ngStyle]="{
+                  'white-space': 'nowrap',
+                  overflow: 'hidden',
+                  'text-overflow': 'ellipsis',
+                  'max-width': '16rem',
+                }"
+                [pTooltip]="isOverflowing(textElement) ? option.label : null"
+                tooltipPosition="top"
+              >
+                {{ option.label }}
               </div>
             </ng-template>
             <ng-template pTemplate="selectedItem" let-item>
@@ -45,16 +85,44 @@
             </ng-template>
           </p-select>
           <!-- Temporary hack to enable real-time export only for allowed apps - #q2_real_time_exports_integrations -->
-          @if (![AppName.XERO, AppName.QBO, AppName.NETSUITE, AppName.INTACCT, AppName.QBD_DIRECT, AppName.SAGE300].includes(appName)) {
+          @if (
+            ![
+              AppName.XERO,
+              AppName.QBO,
+              AppName.NETSUITE,
+              AppName.INTACCT,
+              AppName.QBD_DIRECT,
+              AppName.SAGE300,
+            ].includes(appName)
+          ) {
             <div class="tw-ml-16-px tw-border tw-border-input-read-only-border tw-rounded-4-px">
-              <input type="text" class="tw-border-none !tw-w-100-px !tw-h-40-px !tw-bg-input-read-only-bg tw-text-input-read-only-text" pInputText disabled [value]="form.get(formControllerName)?.value > 1 ? 'Hours' : 'Hour'">
+              <input
+                type="text"
+                class="tw-border-none !tw-w-100-px !tw-h-40-px !tw-bg-input-read-only-bg tw-text-input-read-only-text"
+                pInputText
+                disabled
+                [value]="form.get(formControllerName)?.value > 1 ? 'Hours' : 'Hour'"
+              />
             </div>
           }
         </div>
       </div>
-      <div [ngClass]="[formControllerName !== 'dayOfMonth' ? 'tw-pl-34-px' : 'tw-pl-70-px', formControllerName === 'dayOfWeek' ? 'tw-pl-30-px' : 'tw-pl-34-px']">
-        @if (isFieldMandatory && form.controls[formControllerName].touched && !form.controls[formControllerName].valid && !form.controls[formControllerName].disabled) {
-          <app-mandatory-error-message [listName]="mandatoryErrorListName" [customErrorMessage]="customErrorMessage"></app-mandatory-error-message>
+      <div
+        [ngClass]="[
+          formControllerName !== 'dayOfMonth' ? 'tw-pl-34-px' : 'tw-pl-70-px',
+          formControllerName === 'dayOfWeek' ? 'tw-pl-30-px' : 'tw-pl-34-px',
+        ]"
+      >
+        @if (
+          isFieldMandatory &&
+          form.controls[formControllerName].touched &&
+          !form.controls[formControllerName].valid &&
+          !form.controls[formControllerName].disabled
+        ) {
+          <app-mandatory-error-message
+            [listName]="mandatoryErrorListName"
+            [customErrorMessage]="customErrorMessage"
+          ></app-mandatory-error-message>
         }
       </div>
     </div>
@@ -71,7 +139,8 @@
         [options]="adminEmails"
         [iconPath]="'list'"
         [placeholder]="'Select email address'"
-        [formControllerName]="'email'">
+        [formControllerName]="'email'"
+      >
       </app-email-multi-select-field>
     </div>
   }

@@ -14,17 +14,8 @@ import { TravelperkOnboardingAdvancedSettingsComponent } from './travelperk-onbo
 import { TravelperkConfigurationComponent } from './travelperk-main/travelperk-configuration/travelperk-configuration.component';
 import { TravelperkSharedModule } from './travelperk-shared/travelperk-shared.module';
 
-
 @NgModule({
-  declarations: [
-    TravelperkMainComponent,
-    TravelperkOnboardingComponent
-  ],
-  imports: [
-    CommonModule,
-    SharedModule,
-    TravelperkSharedModule,
-    TravelperkRoutingModule
-  ]
+  declarations: [TravelperkMainComponent, TravelperkOnboardingComponent],
+  imports: [CommonModule, SharedModule, TravelperkSharedModule, TravelperkRoutingModule],
 })
-export class TravelperkModule { }
+export class TravelperkModule {}

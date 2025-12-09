@@ -11,10 +11,10 @@ import { HelperService } from 'src/app/core/services/common/helper.service';
 import { AuthService } from 'src/app/core/services/common/auth.service';
 
 @Component({
-    selector: 'app-qbd',
-    templateUrl: './qbd.component.html',
-    styleUrls: ['./qbd.component.scss'],
-    standalone: false
+  selector: 'app-qbd',
+  templateUrl: './qbd.component.html',
+  styleUrls: ['./qbd.component.scss'],
+  standalone: false,
 })
 export class QbdComponent implements OnInit {
   user: MinimalUser = this.userService.getUserProfile();
@@ -32,7 +32,7 @@ export class QbdComponent implements OnInit {
     private userService: IntegrationsUserService,
     private workspaceService: QbdWorkspaceService,
     private windowService: WindowService,
-    private authService: AuthService
+    private authService: AuthService,
   ) {
     this.windowReference = this.windowService.nativeWindow;
   }
@@ -45,7 +45,7 @@ export class QbdComponent implements OnInit {
         [QBDOnboardingState.EXPORT_SETTINGS]: '/integrations/qbd/onboarding/landing',
         [QBDOnboardingState.FIELD_MAPPINGS]: '/integrations/qbd/onboarding/field_mappings',
         [QBDOnboardingState.ADVANCED_SETTINGS]: '/integrations/qbd/onboarding/advanced_settings',
-        [QBDOnboardingState.COMPLETE]: '/integrations/qbd/main'
+        [QBDOnboardingState.COMPLETE]: '/integrations/qbd/main',
       };
       this.router.navigateByUrl(onboardingStateComponentMap[this.workspace.onboarding_state]);
     }
@@ -54,19 +54,21 @@ export class QbdComponent implements OnInit {
   private setupWorkspace(): void {
     this.helperService.setBaseApiURL(AppUrl.QBD);
     this.authService.updateUserTokens('QBD');
-    this.workspaceService.getQBDWorkspace(this.user.org_id).subscribe((workspaces) => {
-      if (workspaces?.id) {
-        this.workspaceSetting(workspaces);
-      }
-    }, (error) => {
-      this.workspaceService.postQBDWorkspace().subscribe((workspaces: any) => {
-        this.workspaceSetting(workspaces);
-      });
-    }
+    this.workspaceService.getQBDWorkspace(this.user.org_id).subscribe(
+      (workspaces) => {
+        if (workspaces?.id) {
+          this.workspaceSetting(workspaces);
+        }
+      },
+      (error) => {
+        this.workspaceService.postQBDWorkspace().subscribe((workspaces: any) => {
+          this.workspaceSetting(workspaces);
+        });
+      },
     );
   }
 
-  workspaceSetting(workspace:QBDWorkspace) {
+  workspaceSetting(workspace: QBDWorkspace) {
     this.workspace = workspace;
     this.storageService.set('workspaceId', this.workspace.id);
     this.storageService.set('QBDOnboardingState', this.workspace.onboarding_state);
@@ -79,5 +81,4 @@ export class QbdComponent implements OnInit {
   ngOnInit(): void {
     this.setupWorkspace();
   }
-
 }

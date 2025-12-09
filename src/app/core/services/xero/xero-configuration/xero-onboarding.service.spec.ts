@@ -8,11 +8,7 @@ describe('UxeroUonboardingService', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [
-        UxeroUonboardingService,
-        provideHttpClient(withInterceptorsFromDi()),
-        provideHttpClientTesting()
-      ]
+      providers: [UxeroUonboardingService, provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting()],
     });
     service = TestBed.inject(UxeroUonboardingService);
   });

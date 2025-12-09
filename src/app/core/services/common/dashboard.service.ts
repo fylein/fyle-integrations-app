@@ -7,14 +7,13 @@ import { AppName, TaskLogState } from '../../models/enum/enum.model';
 import { TaskLogGetParams, TaskResponse } from '../../models/db/task-log.model';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class DashboardService {
-
   constructor(
     private apiService: ApiService,
     private workspaceService: WorkspaceService,
-    private helperService: HelperService
+    private helperService: HelperService,
   ) {
     helperService.setBaseApiURL();
   }
@@ -22,31 +21,57 @@ export class DashboardService {
   getExportableAccountingExportIds(version?: 'v1' | 'v2' | 'v3'): Observable<any> {
     // Dedicated to qbd direct
     if (version === 'v2' || version === 'v3') {
-      return this.apiService.get(this.helperService.buildEndpointPath(`${this.workspaceService.getWorkspaceId()}/export_logs/${(version === 'v3' ? 'ready_to_export_count' : 'ready_to_export')}/`), {});
+      return this.apiService.get(
+        this.helperService.buildEndpointPath(
+          `${this.workspaceService.getWorkspaceId()}/export_logs/${version === 'v3' ? 'ready_to_export_count' : 'ready_to_export'}/`,
+        ),
+        {},
+      );
     }
-    return this.apiService.get(`/workspaces/${this.workspaceService.getWorkspaceId()}/fyle/${version === 'v1' ? 'exportable_expense_groups' : 'exportable_accounting_exports'}/`, {});
+    return this.apiService.get(
+      `/workspaces/${this.workspaceService.getWorkspaceId()}/fyle/${version === 'v1' ? 'exportable_expense_groups' : 'exportable_accounting_exports'}/`,
+      {},
+    );
   }
 
   triggerAccountingExport(version?: 'v1' | 'v2'): Observable<{}> {
-    const url = version === 'v1' ? `/workspaces/${this.workspaceService.getWorkspaceId()}/qbd/export/` : (version === 'v2' ? `/${this.workspaceService.getWorkspaceId()}/export_logs/export/` : `/workspaces/${this.workspaceService.getWorkspaceId()}/exports/trigger/`);
+    const url =
+      version === 'v1'
+        ? `/workspaces/${this.workspaceService.getWorkspaceId()}/qbd/export/`
+        : version === 'v2'
+          ? `/${this.workspaceService.getWorkspaceId()}/export_logs/export/`
+          : `/workspaces/${this.workspaceService.getWorkspaceId()}/exports/trigger/`;
     return this.apiService.post(url, {});
   }
 
   getExportErrors(version?: string | 'v1'): Observable<any> {
     if (version === 'v1') {
-      return this.apiService.get(`/v2/workspaces/${this.workspaceService.getWorkspaceId()}/errors/`, {is_resolved: false});
-    } else if (version ===  AppName.QBD_DIRECT) {
-      return this.apiService.get(`/workspaces/${this.workspaceService.getWorkspaceId()}/export_logs/errors/`, {is_resolved: false});
+      return this.apiService.get(`/v2/workspaces/${this.workspaceService.getWorkspaceId()}/errors/`, {
+        is_resolved: false,
+      });
+    } else if (version === AppName.QBD_DIRECT) {
+      return this.apiService.get(`/workspaces/${this.workspaceService.getWorkspaceId()}/export_logs/errors/`, {
+        is_resolved: false,
+      });
     }
 
-    return this.apiService.get(`/workspaces/${this.workspaceService.getWorkspaceId()}/accounting_exports/errors/`, {is_resolved: false});
+    return this.apiService.get(`/workspaces/${this.workspaceService.getWorkspaceId()}/accounting_exports/errors/`, {
+      is_resolved: false,
+    });
   }
 
-  private getTasks(limit: number, status: string[], expenseGroupIds: number[], taskType: string[], next: string | null, appName?: AppName): Observable<any> {
+  private getTasks(
+    limit: number,
+    status: string[],
+    expenseGroupIds: number[],
+    taskType: string[],
+    next: string | null,
+    appName?: AppName,
+  ): Observable<any> {
     const offset = 0;
     const apiParams: TaskLogGetParams = {
       limit: limit,
-      offset: offset
+      offset: offset,
     };
     if (status.length) {
       const statusKey = 'status__in';
@@ -80,34 +105,48 @@ export class DashboardService {
     return this.apiService.get(url, apiParams);
   }
 
-  private getAllTasksInternal(limit: number, status: string[], expenseGroupIds: number[], taskType: string[], allTasks: TaskResponse, appName?: AppName): Promise<TaskResponse> {
+  private getAllTasksInternal(
+    limit: number,
+    status: string[],
+    expenseGroupIds: number[],
+    taskType: string[],
+    allTasks: TaskResponse,
+    appName?: AppName,
+  ): Promise<TaskResponse> {
     const that = this;
-    return that.getTasks(limit, status, expenseGroupIds, taskType, allTasks.next, appName).toPromise().then((taskResponse) => {
+    return that
+      .getTasks(limit, status, expenseGroupIds, taskType, allTasks.next, appName)
+      .toPromise()
+      .then((taskResponse) => {
+        if (allTasks.count === 0) {
+          allTasks = taskResponse;
+        } else {
+          allTasks.count = taskResponse.count;
+          allTasks.next = taskResponse.next;
+          allTasks.previous = taskResponse.previous;
+          allTasks.results = allTasks.results.concat(taskResponse.results);
+        }
 
-      if (allTasks.count === 0) {
-        allTasks = taskResponse;
-      } else {
-        allTasks.count = taskResponse.count;
-        allTasks.next = taskResponse.next;
-        allTasks.previous = taskResponse.previous;
-        allTasks.results = allTasks.results.concat(taskResponse.results);
-      }
+        if (taskResponse.next) {
+          return that.getAllTasksInternal(limit, status, expenseGroupIds, taskType, allTasks);
+        }
 
-      if (taskResponse.next) {
-        return that.getAllTasksInternal(limit, status, expenseGroupIds, taskType, allTasks);
-      }
-
-      return allTasks;
-    });
+        return allTasks;
+      });
   }
 
-  getAllTasks(status: TaskLogState[], expenseGroupIds: number[] = [], taskType: string[] = [], appName: AppName|undefined = undefined): Observable<any> {
+  getAllTasks(
+    status: TaskLogState[],
+    expenseGroupIds: number[] = [],
+    taskType: string[] = [],
+    appName: AppName | undefined = undefined,
+  ): Observable<any> {
     const limit = 500;
     const allTasks = {
       count: 0,
       next: null,
       previous: null,
-      results: []
+      results: [],
     };
 
     return from(this.getAllTasksInternal(limit, status, expenseGroupIds, taskType, allTasks, appName));

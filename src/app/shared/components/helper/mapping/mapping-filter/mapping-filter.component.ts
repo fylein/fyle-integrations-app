@@ -8,13 +8,12 @@ import { TrackingService } from 'src/app/core/services/integration/tracking.serv
 import { TranslocoService } from '@jsverse/transloco';
 
 @Component({
-    selector: 'app-mapping-filter',
-    templateUrl: './mapping-filter.component.html',
-    styleUrls: ['./mapping-filter.component.scss'],
-    standalone: false
+  selector: 'app-mapping-filter',
+  templateUrl: './mapping-filter.component.html',
+  styleUrls: ['./mapping-filter.component.scss'],
+  standalone: false,
 })
 export class MappingFilterComponent implements OnInit {
-
   @Input() appName: AppName;
 
   @Input() mappingFilter: MappingState;
@@ -27,7 +26,34 @@ export class MappingFilterComponent implements OnInit {
 
   @Input() page: string;
 
-  filterOptions: string[] = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'];
+  filterOptions: string[] = [
+    'A',
+    'B',
+    'C',
+    'D',
+    'E',
+    'F',
+    'G',
+    'H',
+    'I',
+    'J',
+    'K',
+    'L',
+    'M',
+    'N',
+    'O',
+    'P',
+    'Q',
+    'R',
+    'S',
+    'T',
+    'U',
+    'V',
+    'W',
+    'X',
+    'Y',
+    'Z',
+  ];
 
   mappingsFilter: SelectFormOption[] = [];
 
@@ -42,8 +68,8 @@ export class MappingFilterComponent implements OnInit {
   constructor(
     @Inject(FormBuilder) private formBuilder: UntypedFormBuilder,
     private trackingService: TrackingService,
-    private translocoService: TranslocoService
-  ) { }
+    private translocoService: TranslocoService,
+  ) {}
 
   getSelectedFilter(item: string): string {
     if (item === MappingState.MAPPED) {
@@ -79,7 +105,7 @@ export class MappingFilterComponent implements OnInit {
     const properties: MappingAlphabeticalFilterAdditionalProperty = {
       alphabetList: allSelected ? [] : this.form.get('filterOption')?.value,
       allSelected: allSelected,
-      page: this.page
+      page: this.page,
     };
     this.trackingService.onMappingsAlphabeticalFilter(trackingAppMap[this.appName], properties);
   }
@@ -93,7 +119,7 @@ export class MappingFilterComponent implements OnInit {
   private setupFilter(): void {
     this.form = this.formBuilder.group({
       searchOption: [],
-      filterOption: []
+      filterOption: [],
     });
     if (this.mappingFilter !== MappingState.ALL) {
       const filter = this.mappingsFilter.filter((filter: SelectFormOption) => filter.value === this.mappingFilter);
@@ -105,14 +131,16 @@ export class MappingFilterComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.mappingsFilter = [{
-      label: this.translocoService.translate('mapping.mappedHeader'),
-      value: MappingState.MAPPED
-    }, {
-      label: this.translocoService.translate('mapping.unMappedHeader'),
-      value: MappingState.UNMAPPED
-    }];
+    this.mappingsFilter = [
+      {
+        label: this.translocoService.translate('mapping.mappedHeader'),
+        value: MappingState.MAPPED,
+      },
+      {
+        label: this.translocoService.translate('mapping.unMappedHeader'),
+        value: MappingState.UNMAPPED,
+      },
+    ];
     this.setupFilter();
   }
-
 }

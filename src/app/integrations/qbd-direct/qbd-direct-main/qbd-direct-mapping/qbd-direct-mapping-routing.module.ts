@@ -10,14 +10,14 @@ const routes: Routes = [
     children: [
       {
         path: ':source_field',
-        component: QbdDirectBaseMappingComponent
-      }
-    ]
-  }
+        component: QbdDirectBaseMappingComponent,
+      },
+    ],
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class QbdDirectMappingRoutingModule { }
+export class QbdDirectMappingRoutingModule {}

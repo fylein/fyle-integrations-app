@@ -1,71 +1,73 @@
 :host ::ng-deep .p-multiselect.p-multiselect-chip .p-multiselect-token {
-    @apply tw-px-3 tw-py-1 tw-text-slightly-normal-text-color tw-bg-disabled-bg-color tw-rounded-xl #{!important};
+  @apply tw-px-3 tw-py-1 tw-text-slightly-normal-text-color tw-bg-disabled-bg-color tw-rounded-xl #{!important};
 }
 
 :host ::ng-deep .p-multiselect {
-    @apply tw-w-300-px #{!important};
+  @apply tw-w-300-px #{!important};
 }
 
 :host ::ng-deep .p-multiselect .p-multiselect-list {
-    @apply tw-py-0 #{!important};
+  @apply tw-py-0 #{!important};
 }
 
 :host ::ng-deep .p-multiselect-label {
-    @apply tw-z-1 tw-w-256-px tw-flex #{!important};
+  @apply tw-z-1 tw-w-256-px tw-flex #{!important};
 }
 
-:host ::ng-deep .error-box .p-multiselect, :host ::ng-deep .error-box {
-    @apply tw-border-border-danger-dark #{!important};
+:host ::ng-deep .error-box .p-multiselect,
+:host ::ng-deep .error-box {
+  @apply tw-border-border-danger-dark #{!important};
 }
 
-:host ::ng-deep .p-dialog .p-inputtext{
-    @apply tw-border tw-p-12-px #{!important};
+:host ::ng-deep .p-dialog .p-inputtext {
+  @apply tw-border tw-p-12-px #{!important};
 }
 
 :host ::ng-deep .normal-box .p-multiselect.p-focus {
-    @apply tw-border-slightly-normal-text-color tw-border #{!important};
+  @apply tw-border-slightly-normal-text-color tw-border #{!important};
 }
 
 .cancel-btn {
-    @apply tw-px-24-px tw-py-12-px tw-mr-10-px tw-border tw-border-box-color tw-bg-white tw-rounded-4-px #{!important};
+  @apply tw-px-24-px tw-py-12-px tw-mr-10-px tw-border tw-border-box-color tw-bg-white tw-rounded-4-px #{!important};
 }
 
 .save-btn {
-    @apply tw-text-white tw-px-24-px tw-py-12-px tw-bg-mandatory-field-color tw-rounded-4-px #{!important};
+  @apply tw-text-white tw-px-24-px tw-py-12-px tw-bg-mandatory-field-color tw-rounded-4-px #{!important};
 }
 
 :host ::ng-deep .p-button {
-    @apply tw-w-fit #{!important};
+  @apply tw-w-fit #{!important};
 }
 
-:host ::ng-deep .normal-box, :host ::ng-deep .error-box{
-    @apply tw-w-full #{!important};
+:host ::ng-deep .normal-box,
+:host ::ng-deep .error-box {
+  @apply tw-w-full #{!important};
 }
 
 :host ::ng-deep .p-inputtext {
-    @apply tw-border #{!important};
+  @apply tw-border #{!important};
 }
 
 :host ::ng-deep .p-multiselect-overlay .p-multiselect-list .p-multiselect-option {
-    @apply tw-px-12-px tw-py-8-px #{!important};
+  @apply tw-px-12-px tw-py-8-px #{!important};
 }
 
 :host ::ng-deep .p-multiselect-overlay .p-multiselect-list .p-multiselect-option .p-checkbox {
-    @apply tw-mr-8-px #{!important};
+  @apply tw-mr-8-px #{!important};
 }
 
 :host ::ng-deep .p-multiselect-overlay .p-multiselect-header {
-    pointer-events: auto !important;
-    z-index: 1000 !important;
+  pointer-events: auto !important;
+  z-index: 1000 !important;
 }
 
 :host ::ng-deep .p-multiselect-overlay .p-multiselect-header .p-iconfield .p-inputicon {
-    @apply tw-absolute tw-left-12-px #{!important};
-    pointer-events: none !important;
-    z-index: 1 !important;
+  @apply tw-absolute tw-left-12-px #{!important};
+  pointer-events: none !important;
+  z-index: 1 !important;
 }
 
 // Ensure the iconfield wrapper doesn't block input
 :host ::ng-deep .p-multiselect-overlay .p-multiselect-header .p-iconfield > span {
-    pointer-events: none !important;
+  pointer-events: none !important;
 }

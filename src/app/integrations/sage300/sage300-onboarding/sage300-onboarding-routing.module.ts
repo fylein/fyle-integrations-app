@@ -8,7 +8,6 @@ import { Sage300OnboardingDoneComponent } from './sage300-onboarding-done/sage30
 import { Sage300OnboardingImportSettingsComponent } from './sage300-onboarding-import-settings/sage300-onboarding-import-settings.component';
 import { Sage300OnboardingAdvancedSettingsComponent } from './sage300-onboarding-advanced-settings/sage300-onboarding-advanced-settings.component';
 
-
 const routes: Routes = [
   {
     path: '',
@@ -16,33 +15,31 @@ const routes: Routes = [
     children: [
       {
         path: 'landing',
-        component: Sage300OnboardingLandingComponent
+        component: Sage300OnboardingLandingComponent,
       },
       {
         path: 'connector',
-        component: Sage300OnboardingConnectorComponent
+        component: Sage300OnboardingConnectorComponent,
       },
-      { path: 'export_settings',
-        component: Sage300OnboardingExportSettingsComponent
-      },
+      { path: 'export_settings', component: Sage300OnboardingExportSettingsComponent },
       {
         path: 'import_settings',
-        component: Sage300OnboardingImportSettingsComponent
+        component: Sage300OnboardingImportSettingsComponent,
       },
       {
         path: 'advanced_settings',
-        component: Sage300OnboardingAdvancedSettingsComponent
+        component: Sage300OnboardingAdvancedSettingsComponent,
       },
       {
         path: 'done',
-        component: Sage300OnboardingDoneComponent
-      }
-    ]
-  }
+        component: Sage300OnboardingDoneComponent,
+      },
+    ],
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class Sage300OnboardingRoutingModule { }
+export class Sage300OnboardingRoutingModule {}

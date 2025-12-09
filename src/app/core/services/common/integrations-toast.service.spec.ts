@@ -8,7 +8,7 @@ xdescribe('IntegrationsToastService', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [ MessageService ]
+      providers: [MessageService],
     });
     service = TestBed.inject(IntegrationsToastService);
   });

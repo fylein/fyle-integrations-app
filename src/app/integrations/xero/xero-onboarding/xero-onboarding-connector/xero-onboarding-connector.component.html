@@ -7,12 +7,19 @@
       </div>
     }
     @if (!isLoading) {
-      <div class="configuration--contents tw-border-border-tertiary tw-mt-24-px" [ngClass]="brandingStyle.common.configurationContents">
+      <div
+        class="configuration--contents tw-border-border-tertiary tw-mt-24-px"
+        [ngClass]="brandingStyle.common.configurationContents"
+      >
         <div>
           <app-configuration-step-header
             [headerText]="'xero.configuration.connector.configurationHeaderText' | transloco"
-            [contentText]="'xero.configuration.connector.configurationSubHeaderText' | transloco: {brandName: brandingConfig.brandName}"
-            [redirectLink]="redirectLink">
+            [contentText]="
+              'xero.configuration.connector.configurationSubHeaderText'
+                | transloco: { brandName: brandingConfig.brandName }
+            "
+            [redirectLink]="redirectLink"
+          >
           </app-configuration-step-header>
         </div>
         <div class="tw-px-24-px">
@@ -31,7 +38,8 @@
             [isDisconnectClicked]="isDisconnectClicked"
             [appName]="appName"
             (switchCompany)="disconnectXero()"
-            (connectCompany)="connectXero($event)">
+            (connectCompany)="connectXero($event)"
+          >
           </app-configuration-connector>
           <app-configuration-confirmation-dialog
             (warningAccepted)="acceptWarning($event)"
@@ -40,10 +48,15 @@
             [headerText]="warningHeaderText"
             [contextText]="warningContextText"
             [confirmBtnText]="primaryButtonText"
-            [showSecondaryCTA]="false">
+            [showSecondaryCTA]="false"
+          >
           </app-configuration-confirmation-dialog>
         </div>
-        <app-configuration-step-footer [ctaText]="!saveInProgress ? ConfigurationCtaText.SAVE_AND_CONTINUE : ConfigurationCtaText.SAVING" [isButtonDisabled]="isContinueDisabled" (save)="save()"></app-configuration-step-footer>
+        <app-configuration-step-footer
+          [ctaText]="!saveInProgress ? ConfigurationCtaText.SAVE_AND_CONTINUE : ConfigurationCtaText.SAVING"
+          [isButtonDisabled]="isContinueDisabled"
+          (save)="save()"
+        ></app-configuration-step-footer>
       </div>
     }
   </div>

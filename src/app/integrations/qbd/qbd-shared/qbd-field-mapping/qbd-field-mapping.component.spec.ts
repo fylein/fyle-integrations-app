@@ -27,42 +27,41 @@ describe('QbdFieldMappingComponent', () => {
   const routerSpy = { navigate: jasmine.createSpy('navigate'), url: '/path' };
   let router: Router;
   beforeEach(async () => {
-
     service1 = {
       getQbdFieldMapping: () => of(QBDFieldMappingResponse),
-      postQbdFieldMapping: () => of(QBDFieldMappingResponse)
+      postQbdFieldMapping: () => of(QBDFieldMappingResponse),
     };
 
     service2 = {
       getOnboardingState: () => QBDOnboardingState.FIELD_MAPPINGS,
-      setOnboardingState: () => undefined
+      setOnboardingState: () => undefined,
     };
 
     service3 = {
-      displayToastMessage: () => undefined
+      displayToastMessage: () => undefined,
     };
 
     const translocoServiceSpy = jasmine.createSpyObj('TranslocoService', ['translate'], {
       config: {
-        reRenderOnLangChange: true
+        reRenderOnLangChange: true,
       },
       langChanges$: of('en'),
-      _loadDependencies: () => Promise.resolve()
+      _loadDependencies: () => Promise.resolve(),
     });
 
     await TestBed.configureTestingModule({
-    declarations: [QbdFieldMappingComponent],
-    imports: [FormsModule, ReactiveFormsModule, RouterTestingModule, SharedModule, NoopAnimationsModule],
-    providers: [FormBuilder,
+      declarations: [QbdFieldMappingComponent],
+      imports: [FormsModule, ReactiveFormsModule, RouterTestingModule, SharedModule, NoopAnimationsModule],
+      providers: [
+        FormBuilder,
         { provide: Router, useValue: routerSpy },
         { provide: QbdFieldMappingService, useValue: service1 },
         { provide: QbdWorkspaceService, useValue: service2 },
         { provide: IntegrationsToastService, useValue: service3 },
         { provide: TranslocoService, useValue: translocoServiceSpy },
-        provideHttpClient(withInterceptorsFromDi())
-    ]
-})
-    .compileComponents();
+        provideHttpClient(withInterceptorsFromDi()),
+      ],
+    }).compileComponents();
 
     translocoService = TestBed.inject(TranslocoService) as jasmine.SpyObj<TranslocoService>;
     fixture = TestBed.createComponent(QbdFieldMappingComponent);
@@ -73,7 +72,7 @@ describe('QbdFieldMappingComponent', () => {
     qbdFieldMappingService = TestBed.inject(QbdFieldMappingService);
     component.fieldMappingForm = formbuilder.group({
       classType: ['CLASS'],
-      customerType: ['PROJECT']
+      customerType: ['PROJECT'],
     });
     fixture.detectChanges();
   });
@@ -112,5 +111,4 @@ describe('QbdFieldMappingComponent', () => {
     spyOn(qbdFieldMappingService, 'getQbdFieldMapping').and.returnValue(throwError(errorResponse));
     expect((component as any).getSettingsAndSetupForm()).toBeUndefined();
   });
-
 });

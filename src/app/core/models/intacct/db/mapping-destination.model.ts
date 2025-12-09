@@ -1,4 +1,4 @@
-import { DestinationAttributeDetail } from "./destination-attribute-detail.model";
+import { DestinationAttributeDetail } from './destination-attribute-detail.model';
 
 export type MappingDestination = {
   id?: number | null;

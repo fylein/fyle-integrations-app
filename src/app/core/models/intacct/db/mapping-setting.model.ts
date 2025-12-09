@@ -1,4 +1,4 @@
-import { MappingDestinationField, MappingSourceField, SageIntacctField } from "../../enum/enum.model";
+import { MappingDestinationField, MappingSourceField, SageIntacctField } from '../../enum/enum.model';
 
 export type MappingSetting = {
   id: number;
@@ -9,16 +9,16 @@ export type MappingSetting = {
   destination_field: MappingDestinationField | string;
   import_to_fyle: boolean;
   is_custom: boolean;
-  source_placeholder: string | null
-}
+  source_placeholder: string | null;
+};
 
 export type MappingSettingPost = {
   source_field: MappingSourceField | string;
   destination_field: MappingDestinationField | string;
   import_to_fyle: boolean;
   is_custom: boolean;
-  source_placeholder: string | null
-}
+  source_placeholder: string | null;
+};
 
 export type MinimalMappingSetting = {
   source_field: MappingSourceField | string;
@@ -34,9 +34,9 @@ export type MappingSettingResponse = {
 
 export type MappingSettingList = {
   id?: number;
-  intacctField: MappingDestinationField | string,
-  fyleField: MappingSourceField | string,
-  index: number,
-  existingMapping: boolean,
-  isDeleteButtonAllowed: boolean
+  intacctField: MappingDestinationField | string;
+  fyleField: MappingSourceField | string;
+  index: number;
+  existingMapping: boolean;
+  isDeleteButtonAllowed: boolean;
 };

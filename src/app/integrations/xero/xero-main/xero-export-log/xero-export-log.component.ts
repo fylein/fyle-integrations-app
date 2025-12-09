@@ -5,13 +5,12 @@ import { brandingConfig, brandingFeatureConfig, brandingStyle } from 'src/app/br
 import { TranslocoService } from '@jsverse/transloco';
 
 @Component({
-    selector: 'app-xero-export-log',
-    templateUrl: './xero-export-log.component.html',
-    styleUrls: ['./xero-export-log.component.scss'],
-    standalone: false
+  selector: 'app-xero-export-log',
+  templateUrl: './xero-export-log.component.html',
+  styleUrls: ['./xero-export-log.component.scss'],
+  standalone: false,
 })
 export class XeroExportLogComponent implements OnInit {
-
   modules: TabMenuItem[];
 
   activeModule: string;
@@ -26,15 +25,18 @@ export class XeroExportLogComponent implements OnInit {
 
   constructor(
     private router: Router,
-    private translocoService: TranslocoService
-  ) { }
+    private translocoService: TranslocoService,
+  ) {}
 
   ngOnInit(): void {
     this.modules = [
-      {label: this.translocoService.translate('xeroExportLog.completedTab'), routerLink: '/integrations/xero/main/export_log/complete', value: 'complete'}
+      {
+        label: this.translocoService.translate('xeroExportLog.completedTab'),
+        routerLink: '/integrations/xero/main/export_log/complete',
+        value: 'complete',
+      },
     ];
     this.activeModule = this.modules[0].value;
     this.router.navigateByUrl(this.modules[0].routerLink!);
   }
-
 }

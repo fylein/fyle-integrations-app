@@ -16,12 +16,9 @@ describe('QbdMappingTableComponent', () => {
 
     await TestBed.configureTestingModule({
       imports: [RouterModule.forRoot([])],
-      declarations: [ QbdMappingTableComponent ],
-      providers: [
-        { provide: TranslocoService, useValue: translocoService }
-      ]
-    })
-    .compileComponents();
+      declarations: [QbdMappingTableComponent],
+      providers: [{ provide: TranslocoService, useValue: translocoService }],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(QbdMappingTableComponent);
     component = fixture.componentInstance;
@@ -35,8 +32,8 @@ describe('QbdMappingTableComponent', () => {
   it('onTextBoxChange function check', () => {
     const event = {
       target: {
-        value: 'fyle'
-      }
+        value: 'fyle',
+      },
     };
     expect(component.onTextBoxChange(event)).toBeUndefined();
     expect(component.destinationValue).toEqual(event.target.value);
@@ -44,7 +41,7 @@ describe('QbdMappingTableComponent', () => {
 
   it('isTypingInBox function check', () => {
     const event = {
-      keyCode: 13
+      keyCode: 13,
     };
     component.destinationValue = '';
     expect(component.isTypingInBox(event, postMappingResponse)).toBeUndefined();
@@ -57,7 +54,7 @@ describe('QbdMappingTableComponent', () => {
     expect(postMappingResponse.destination_value).toEqual(component.destinationValue);
 
     const event1 = {
-      keyCode: 1
+      keyCode: 1,
     };
     expect(component.isTypingInBox(event1, postMappingResponse)).toBeUndefined();
     expect(component.focussedMappingId).toEqual(postMappingResponse.id);
@@ -67,7 +64,7 @@ describe('QbdMappingTableComponent', () => {
     translocoService.translate.and.callFake(<T = string>(key: string): T => {
       const translations: Record<string, string> = {
         'qbdMappingTable.save': 'Save',
-        'qbdMappingTable.returnKey': 'return'
+        'qbdMappingTable.returnKey': 'return',
       };
       return translations[key] as T;
     });

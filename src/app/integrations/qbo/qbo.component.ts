@@ -13,13 +13,12 @@ import { QboAuthService } from 'src/app/core/services/qbo/qbo-core/qbo-auth.serv
 import { AuthService } from 'src/app/core/services/common/auth.service';
 
 @Component({
-    selector: 'app-qbo',
-    templateUrl: './qbo.component.html',
-    styleUrls: ['./qbo.component.scss'],
-    standalone: false
+  selector: 'app-qbo',
+  templateUrl: './qbo.component.html',
+  styleUrls: ['./qbo.component.scss'],
+  standalone: false,
 })
 export class QboComponent implements OnInit {
-
   user: MinimalUser = this.userService.getUserProfile();
 
   workspace: QBOWorkspace;
@@ -38,7 +37,7 @@ export class QboComponent implements OnInit {
     private userService: IntegrationsUserService,
     private workspaceService: WorkspaceService,
     private windowService: WindowService,
-    private authService: AuthService
+    private authService: AuthService,
   ) {
     this.windowReference = this.windowService.nativeWindow;
   }
@@ -52,7 +51,7 @@ export class QboComponent implements OnInit {
         [QBOOnboardingState.IMPORT_SETTINGS]: '/integrations/qbo/onboarding/import_settings',
         [QBOOnboardingState.ADVANCED_CONFIGURATION]: '/integrations/qbo/onboarding/advanced_settings',
         [QBOOnboardingState.CLONE_SETTINGS]: '/integrations/qbo/onboarding/clone_settings',
-        [QBOOnboardingState.COMPLETE]: '/integrations/qbo/main'
+        [QBOOnboardingState.COMPLETE]: '/integrations/qbo/main',
       };
       this.router.navigateByUrl(onboardingStateComponentMap[this.workspace.onboarding_state]);
     }
@@ -78,18 +77,15 @@ export class QboComponent implements OnInit {
           this.storeWorkspaceAndNavigate(workspace);
         });
       }
-    }
-    );
+    });
   }
 
   private handleAuthParameters(): void {
-    this.route.queryParams.subscribe(params => {
+    this.route.queryParams.subscribe((params) => {
       const authCode = params.code;
 
       if (authCode) {
-        this.qboAuthService.loginWithAuthCode(authCode).subscribe(
-          () => this.setupWorkspace()
-        );
+        this.qboAuthService.loginWithAuthCode(authCode).subscribe(() => this.setupWorkspace());
       } else {
         this.authService.updateUserTokens('QBO');
         this.setupWorkspace();
@@ -100,5 +96,4 @@ export class QboComponent implements OnInit {
   ngOnInit(): void {
     this.handleAuthParameters();
   }
-
 }

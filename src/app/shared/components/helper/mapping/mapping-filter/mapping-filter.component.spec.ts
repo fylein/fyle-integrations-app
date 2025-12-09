@@ -11,17 +11,16 @@ xdescribe('MappingFilterComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ MappingFilterComponent ],
-      providers: [ UntypedFormBuilder ]
-    })
-    .compileComponents();
+      declarations: [MappingFilterComponent],
+      providers: [UntypedFormBuilder],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(MappingFilterComponent);
     component = fixture.componentInstance;
     formbuilder = TestBed.inject(UntypedFormBuilder);
     component.form = formbuilder.group({
       searchOption: ['efe'],
-      filterOption: ['jkjk']
+      filterOption: ['jkjk'],
     });
     fixture.detectChanges();
   });
@@ -39,8 +38,8 @@ xdescribe('MappingFilterComponent', () => {
   it('onFocusOut function check', () => {
     const event = {
       target: {
-        value: 'Fyle'
-      }
+        value: 'Fyle',
+      },
     };
   });
 

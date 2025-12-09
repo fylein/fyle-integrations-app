@@ -13,14 +13,26 @@
 ></app-landing-page-header>
 
 @if (!isLoading && !isBambooConnected && !showErrorScreen) {
-  <app-landing-page-body  [headerText]="'bambooHr.appDescription' | transloco: { brandName: brandingConfig.brandName }" [svgPath]="'assets/flow-charts/'+ brandingService.getAssetsBrandId() +'-bamboo-hr-flow-chart.svg'" [redirectLink]="brandingKbArticles.topLevelArticles.BAMBOO_HR" [appName]="appName"></app-landing-page-body>
+  <app-landing-page-body
+    [headerText]="'bambooHr.appDescription' | transloco: { brandName: brandingConfig.brandName }"
+    [svgPath]="'assets/flow-charts/' + brandingService.getAssetsBrandId() + '-bamboo-hr-flow-chart.svg'"
+    [redirectLink]="brandingKbArticles.topLevelArticles.BAMBOO_HR"
+    [appName]="appName"
+  ></app-landing-page-body>
 }
 
 @if (showErrorScreen) {
   <app-error></app-error>
 }
 
-<p-dialog [dismissableMask]="true" [showHeader]="false" [modal]="true" [(visible)]="showDialog" [draggable]="false" [style]="{width: '468px'}">
+<p-dialog
+  [dismissableMask]="true"
+  [showHeader]="false"
+  [modal]="true"
+  [(visible)]="showDialog"
+  [draggable]="false"
+  [style]="{ width: '468px' }"
+>
   @if (isBambooConnectionInProgress) {
     <div class="tw-flex tw-flex-col tw-justify-center tw-items-center tw-h-465-px">
       <app-loader></app-loader>
@@ -32,27 +44,52 @@
         <img src="assets/logos/bamboo-hr-logo.svg" width="120px" height="40px" />
       </div>
       <div class="tw-pt-34-px tw-px-40-px" [formGroup]="bambooConnectionForm">
-        <p class="tw-text-slightly-normal-text-color tw-text-24-px tw-font-500">{{ 'bambooHr.dialogHeader' | transloco }}</p>
+        <p class="tw-text-slightly-normal-text-color tw-text-24-px tw-font-500">
+          {{ 'bambooHr.dialogHeader' | transloco }}
+        </p>
         <p class="tw-pt-10-px tw-text-text-muted tw-text-12-px">{{ 'bambooHr.dialogSubHeader' | transloco }}</p>
         <div class="tw-pt-32-px">
           <p class="tw-text-sub-text-color tw-text-14-px tw-pb-8-px">
             {{ 'bambooHr.apiTokenLabel' | transloco }} <span class="tw-text-mandatory-field-color">*</span>
           </p>
-          <p-password formControlName="apiToken" inputStyleClass="tw-w-388-px tw-h-48-px" [feedback]="false" [toggleMask]="true" [placeholder]="'bambooHr.apiTokenPlaceholder' | transloco"></p-password>
+          <p-password
+            formControlName="apiToken"
+            inputStyleClass="tw-w-388-px tw-h-48-px"
+            [feedback]="false"
+            [toggleMask]="true"
+            [placeholder]="'bambooHr.apiTokenPlaceholder' | transloco"
+          ></p-password>
           <p class="tw-pt-16-px tw-pb-8-px tw-text-sub-text-color tw-text-14-px">
             {{ 'bambooHr.subDomainLabel' | transloco }} <span class="tw-text-mandatory-field-color">*</span>
           </p>
           <div class="tw-flex">
-            <div class="tw-flex tw-justify-center tw-items-center tw-text-14-px tw-bg-disabled-bg-color tw-h-input-height tw-w-68-px tw-border-box-color tw-border-1-px tw-border-r-0 tw-text-slightly-normal-text-color">
+            <div
+              class="tw-flex tw-justify-center tw-items-center tw-text-14-px tw-bg-disabled-bg-color tw-h-input-height tw-w-68-px tw-border-box-color tw-border-1-px tw-border-r-0 tw-text-slightly-normal-text-color"
+            >
               {{ 'bambooHr.subDomainPrefix' | transloco }}
             </div>
-            <input formControlName="subDomain" type="text" inputStyleClass="!tw-rounded-0" class="!tw-rounded-0 tw-z-50" pInputText [placeholder]="'bambooHr.subDomainPlaceholder' | transloco" />
-            <div class="tw-flex tw-justify-center tw-items-center tw-text-14-px tw-bg-disabled-bg-color tw-h-input-height tw-w-118-px tw-border-box-color tw-border-1-px tw-border-l-0 tw-text-slightly-normal-text-color">
+            <input
+              formControlName="subDomain"
+              type="text"
+              inputStyleClass="!tw-rounded-0"
+              class="!tw-rounded-0 tw-z-50"
+              pInputText
+              [placeholder]="'bambooHr.subDomainPlaceholder' | transloco"
+            />
+            <div
+              class="tw-flex tw-justify-center tw-items-center tw-text-14-px tw-bg-disabled-bg-color tw-h-input-height tw-w-118-px tw-border-box-color tw-border-1-px tw-border-l-0 tw-text-slightly-normal-text-color"
+            >
               {{ 'bambooHr.subDomainSuffix' | transloco }}
             </div>
           </div>
           <div class="tw-flex tw-items-center tw-pt-24-px tw-pb-40-px">
-            <app-button [buttonSize]="ButtonSize.SMALL" [buttonType]="ButtonType.PRIMARY" [disabled]="!bambooConnectionForm.valid" (buttonClick)="connectBambooHR()" [buttonText]="'bambooHr.connectButtonText' | transloco"></app-button>
+            <app-button
+              [buttonSize]="ButtonSize.SMALL"
+              [buttonType]="ButtonType.PRIMARY"
+              [disabled]="!bambooConnectionForm.valid"
+              (buttonClick)="connectBambooHR()"
+              [buttonText]="'bambooHr.connectButtonText' | transloco"
+            ></app-button>
           </div>
         </div>
       </div>
@@ -61,12 +98,17 @@
 </p-dialog>
 
 @if (!isLoading && isBambooConnected) {
-  <app-configuration [isConfigurationSaveInProgress]="isConfigurationSaveInProgress" [bambooHrConfiguration]="bambooHrConfiguration" [additionalEmails]="additionalEmails" (updateConfiguration)="configurationUpdatesHandler($event)"></app-configuration>
+  <app-configuration
+    [isConfigurationSaveInProgress]="isConfigurationSaveInProgress"
+    [bambooHrConfiguration]="bambooHrConfiguration"
+    [additionalEmails]="additionalEmails"
+    (updateConfiguration)="configurationUpdatesHandler($event)"
+  ></app-configuration>
 }
 
 @if (isLoading) {
   <div class="tw-flex tw-flex-col tw-justify-center tw-items-center tw-pt-70-px">
-    @for (_ of [0,1,2,3,4,5,6]; track _) {
+    @for (_ of [0, 1, 2, 3, 4, 5, 6]; track _) {
       <div class="tw-w-75-vw tw-h-78-px tw-border-separator tw-border-1-px tw-rounded-8-px tw-mb-18-px">
         <div class="tw-w-14-vw tw-h-18-px tw-pl-24-px tw-pt-16-px tw-pb-10-px">
           <p-skeleton shape="rectangle"></p-skeleton>

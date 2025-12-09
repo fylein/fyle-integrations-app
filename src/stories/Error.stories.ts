@@ -1,4 +1,3 @@
-
 import { CommonModule } from '@angular/common';
 import type { Meta, StoryObj } from '@storybook/angular';
 import { moduleMetadata } from '@storybook/angular';
@@ -11,18 +10,18 @@ const meta: Meta<ErrorComponent> = {
   component: ErrorComponent,
   tags: ['autodocs'],
   render: (args: ErrorComponent) => ({
-    props: { ...args }
+    props: { ...args },
   }),
   decorators: [
     moduleMetadata({
       declarations: [],
-      imports: [CommonModule ],
-      providers: [MessageService, IntegrationsToastService]
-    })
+      imports: [CommonModule],
+      providers: [MessageService, IntegrationsToastService],
+    }),
   ],
   argTypes: {
-    ngOnInit: { table: { disable: true } }
-  }
+    ngOnInit: { table: { disable: true } },
+  },
 };
 
 export default meta;

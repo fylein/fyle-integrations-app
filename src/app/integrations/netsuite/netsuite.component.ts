@@ -14,13 +14,12 @@ import { HelperService } from 'src/app/core/services/common/helper.service';
 import { NetsuiteConnectorService } from 'src/app/core/services/netsuite/netsuite-core/netsuite-connector.service';
 
 @Component({
-    selector: 'app-netsuite',
-    templateUrl: './netsuite.component.html',
-    styleUrls: ['./netsuite.component.scss'],
-    standalone: false
+  selector: 'app-netsuite',
+  templateUrl: './netsuite.component.html',
+  styleUrls: ['./netsuite.component.scss'],
+  standalone: false,
 })
 export class NetsuiteComponent implements OnInit {
-
   user: MinimalUser = this.userService.getUserProfile();
 
   workspace: NetsuiteWorkspace;
@@ -28,7 +27,6 @@ export class NetsuiteComponent implements OnInit {
   isLoading: boolean = true;
 
   windowReference: Window;
-
 
   constructor(
     private netsuiteHelperService: NetsuiteHelperService,
@@ -41,7 +39,7 @@ export class NetsuiteComponent implements OnInit {
     private nsAuthService: NetsuiteAuthService,
     private authService: AuthService,
     private helperService: HelperService,
-    private netsuiteConnector: NetsuiteConnectorService
+    private netsuiteConnector: NetsuiteConnectorService,
   ) {
     this.windowReference = this.windowService.nativeWindow;
   }
@@ -55,16 +53,22 @@ export class NetsuiteComponent implements OnInit {
         [NetsuiteOnboardingState.EXPORT_SETTINGS]: '/integrations/netsuite/onboarding/export_settings',
         [NetsuiteOnboardingState.IMPORT_SETTINGS]: '/integrations/netsuite/onboarding/import_settings',
         [NetsuiteOnboardingState.ADVANCED_CONFIGURATION]: '/integrations/netsuite/onboarding/advanced_settings',
-        [NetsuiteOnboardingState.COMPLETE]: '/integrations/netsuite/main'
+        [NetsuiteOnboardingState.COMPLETE]: '/integrations/netsuite/main',
       };
 
-      this.router.navigateByUrl(isNetSuiteTokenValid === false && ![NetsuiteOnboardingState.CONNECTION, NetsuiteOnboardingState.COMPLETE].includes(this.workspace.onboarding_state) ?  onboardingStateComponentMap[NetsuiteOnboardingState.SUBSIDIARY] : onboardingStateComponentMap[this.workspace.onboarding_state]);
+      this.router.navigateByUrl(
+        isNetSuiteTokenValid === false &&
+          ![NetsuiteOnboardingState.CONNECTION, NetsuiteOnboardingState.COMPLETE].includes(
+            this.workspace.onboarding_state,
+          )
+          ? onboardingStateComponentMap[NetsuiteOnboardingState.SUBSIDIARY]
+          : onboardingStateComponentMap[this.workspace.onboarding_state],
+      );
     }
   }
 
   private routeBasedOnTokenStatus(): void {
-    this.netsuiteConnector.getNetsuiteTokenHealthStatus()
-    .subscribe(isNetsuiteCredentialsValid => {
+    this.netsuiteConnector.getNetsuiteTokenHealthStatus().subscribe((isNetsuiteCredentialsValid) => {
       this.navigate(isNetsuiteCredentialsValid);
     });
   }
@@ -79,7 +83,6 @@ export class NetsuiteComponent implements OnInit {
     this.routeBasedOnTokenStatus();
   }
 
-
   private setupWorkspace(): void {
     this.helperService.setBaseApiURL(AppUrl.NETSUITE);
     this.workspaceService.getWorkspace(this.user.org_id).subscribe((workspaces: NetsuiteWorkspace[]) => {
@@ -90,18 +93,15 @@ export class NetsuiteComponent implements OnInit {
           this.storeWorkspaceAndNavigate(workspace);
         });
       }
-    }
-    );
+    });
   }
 
   private handleAuthParameters(): void {
-    this.route.queryParams.subscribe(params => {
+    this.route.queryParams.subscribe((params) => {
       const authCode = params.code;
 
       if (authCode) {
-        this.nsAuthService.loginWithAuthCode(authCode).subscribe(
-          () => this.setupWorkspace()
-        );
+        this.nsAuthService.loginWithAuthCode(authCode).subscribe(() => this.setupWorkspace());
       } else {
         this.authService.updateUserTokens('NETSUITE');
         this.setupWorkspace();

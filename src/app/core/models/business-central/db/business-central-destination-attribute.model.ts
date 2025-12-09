@@ -1,15 +1,15 @@
-import { DestinationAttribute, GroupedDestinationAttribute } from "../../db/destination-attribute.model";
+import { DestinationAttribute, GroupedDestinationAttribute } from '../../db/destination-attribute.model';
 
 type EmployeeMappingDetail = {
-    email: string | null;
-}
+  email: string | null;
+};
 
 type TaxMappingDetails = {
-    customer_id: string | null,
-    customer_name: string | null
-}
+  customer_id: string | null;
+  customer_name: string | null;
+};
 
 export interface BusinessCentralDestinationAttributes extends DestinationAttribute {
-    auto_created: boolean;
-    detail: EmployeeMappingDetail | TaxMappingDetails | null;
+  auto_created: boolean;
+  detail: EmployeeMappingDetail | TaxMappingDetails | null;
 }

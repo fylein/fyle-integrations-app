@@ -1,12 +1,25 @@
 <div [formGroup]="form">
   @if (!isDestinationFixedImport && !isCloneSettingView) {
     <div class="fields-header" fxLayout="row" fxLayoutAlign="start center">
-      <div class="fields-header-text tw-pl-48-px tw-w-450-px">{{ 'configurationImportField.dimensionsHeader' | transloco: { appName: uiExposedAppName } }}</div>
-      <div class="fields-header-text tw-w-30-vw">{{ 'configurationImportField.brandNameFieldsHeader' | transloco: { brandName: brandingConfig.brandName } }}</div>
+      <div class="fields-header-text tw-pl-48-px tw-w-450-px">
+        {{ 'configurationImportField.dimensionsHeader' | transloco: { appName: uiExposedAppName } }}
+      </div>
+      <div class="fields-header-text tw-w-30-vw">
+        {{ 'configurationImportField.brandNameFieldsHeader' | transloco: { brandName: brandingConfig.brandName } }}
+      </div>
       <div class="fields-header-text tw-flex tw-w-[10vw] tw-whitespace-nowrap">
         {{ 'configurationImportField.importToBrandNameHeader' | transloco: { brandName: brandingConfig.brandName } }}
-        <app-svg-icon [svgSource]="'info-circle-fill'" [width]="'16px'" [height]="'16px'" [styleClasses]="'tw-text-text-muted tw-pl-6-px'" [tooltipPosition]="'top'"
-          [tooltipText]="'configurationImportField.importDimensionTooltip' | transloco: { appName: uiExposedAppName, brandName: brandingConfig.brandName }">
+        <app-svg-icon
+          [svgSource]="'info-circle-fill'"
+          [width]="'16px'"
+          [height]="'16px'"
+          [styleClasses]="'tw-text-text-muted tw-pl-6-px'"
+          [tooltipPosition]="'top'"
+          [tooltipText]="
+            'configurationImportField.importDimensionTooltip'
+              | transloco: { appName: uiExposedAppName, brandName: brandingConfig.brandName }
+          "
+        >
         </app-svg-icon>
       </div>
     </div>
@@ -16,16 +29,35 @@
       <div>
         <div class="tw-flex tw-pt-18-px">
           <div>
-            <input type="text" class="tw-text-14-px tw-text-text-secondary !tw-font-500 tw-w-300-px !tw-px-14-px !tw-py-10-px tw-border tw-border-solid !tw-border-border-tertiary tw-rounded-4-px" value="{{ defaultField.destination_field | snakeCaseToSpaceCase | sentenceCase }}" disabled>
+            <input
+              type="text"
+              class="tw-text-14-px tw-text-text-secondary !tw-font-500 tw-w-300-px !tw-px-14-px !tw-py-10-px tw-border tw-border-solid !tw-border-border-tertiary tw-rounded-4-px"
+              value="{{ defaultField.destination_field | snakeCaseToSpaceCase | sentenceCase }}"
+              disabled
+            />
           </div>
           <div [ngClass]="brandingStyle.configuration.importSvgPadding">
-            <app-svg-icon [isTextColorAllowed]="true" [svgSource]="'arrow-line'" [height]="'30px'" [width]="'100px'" [styleClasses]="'!tw-ml-0 tw-self-center tw-text-border-secondary'"></app-svg-icon>
+            <app-svg-icon
+              [isTextColorAllowed]="true"
+              [svgSource]="'arrow-line'"
+              [height]="'30px'"
+              [width]="'100px'"
+              [styleClasses]="'!tw-ml-0 tw-self-center tw-text-border-secondary'"
+            ></app-svg-icon>
           </div>
           <div class="tw-w-30-vw">
-            <input type="text" class="tw-text-14-px tw-text-text-secondary !tw-font-500 tw-w-300-px !tw-px-14-px !tw-py-10-px tw-border tw-border-solid !tw-border-border-tertiary tw-rounded-4-px" value="{{ defaultField.source_field | snakeCaseToSpaceCase | sentenceCase }}" disabled>
+            <input
+              type="text"
+              class="tw-text-14-px tw-text-text-secondary !tw-font-500 tw-w-300-px !tw-px-14-px !tw-py-10-px tw-border tw-border-solid !tw-border-border-tertiary tw-rounded-4-px"
+              value="{{ defaultField.source_field | snakeCaseToSpaceCase | sentenceCase }}"
+              disabled
+            />
           </div>
           <div class="input-toggle-section tw-w-10-vw tw-pt-10-px">
-            <p-toggleswitch [formControlName]="defaultField.formController" (onChange)="onImportToFyleToggleChange($event, defaultField.destination_field)"></p-toggleswitch>
+            <p-toggleswitch
+              [formControlName]="defaultField.formController"
+              (onChange)="onImportToFyleToggleChange($event, defaultField.destination_field)"
+            ></p-toggleswitch>
           </div>
         </div>
       </div>
@@ -33,50 +65,165 @@
   </div>
   <div formArrayName="expenseFields" [ngClass]="[isDestinationFixedImport ? '' : 'tw-pl-24-px tw-mt-18px']">
     @for (expenseField of expenseFieldsGetter.controls; track expenseField; let i = $index) {
-      <div [formGroupName]="i" [ngClass]="[isDestinationFixedImport ? 'tw-mt-24-px tw-pb-24-px' : '', (isDestinationFixedImport && !isCloneSettingView) ? brandingStyle.configuration.configurationImportCard : '',isCloneSettingView ? 'tw-pr-24-px' : '']">
-        <div class="tw-mt-18-px" [ngClass]="{'tw-bg-bg-tertiary-lighter tw-rounded-8-px tw-py-16-px tw-w-fit tw-pr-24-px': expenseField.get('source_field')?.value === 'PROJECT' && expenseField.get('import_to_fyle')?.value && expenseField.get('destination_field')?.value === dependentDestinationValue && brandingConfig.brandId !== 'co' , 'tw-pl-24-px': !isDestinationFixedImport}">
+      <div
+        [formGroupName]="i"
+        [ngClass]="[
+          isDestinationFixedImport ? 'tw-mt-24-px tw-pb-24-px' : '',
+          isDestinationFixedImport && !isCloneSettingView ? brandingStyle.configuration.configurationImportCard : '',
+          isCloneSettingView ? 'tw-pr-24-px' : '',
+        ]"
+      >
+        <div
+          class="tw-mt-18-px"
+          [ngClass]="{
+            'tw-bg-bg-tertiary-lighter tw-rounded-8-px tw-py-16-px tw-w-fit tw-pr-24-px':
+              expenseField.get('source_field')?.value === 'PROJECT' &&
+              expenseField.get('import_to_fyle')?.value &&
+              expenseField.get('destination_field')?.value === dependentDestinationValue &&
+              brandingConfig.brandId !== 'co',
+            'tw-pl-24-px': !isDestinationFixedImport,
+          }"
+        >
           @if (isDestinationFixedImport) {
             <div>
-              <div [ngClass]="!isCloneSettingView ? 'tw-p-24-px': 'tw-pl-24-px'" class="tw-flex tw-justify-between">
+              <div [ngClass]="!isCloneSettingView ? 'tw-p-24-px' : 'tw-pl-24-px'" class="tw-flex tw-justify-between">
                 <div class="tw-w-3/4 tw-flex tw-items-start">
                   @if (isConfigToggleLeftAligned) {
                     <div class="configuration--input-toggle-section">
-                      <p-toggleswitch formControlName="import_to_fyle" [tooltipPosition]="'top'" [pTooltip]="expenseField.get('destination_field')?.value === 'CUSTOMER' && uiExposedAppName === AppName.XERO && isXeroProjectMapped ? ('xero.configuration.importSetting.toggleToastMessage' | transloco: {brandName: brandingConfig.brandName}) : ''" (onChange)="onShowWarningForDependentFields($event, expenseField)" [disabled]="expenseField.get('destination_field')?.value === 'CUSTOMER' && uiExposedAppName === AppName.XERO && isXeroProjectMapped"></p-toggleswitch>
+                      <p-toggleswitch
+                        formControlName="import_to_fyle"
+                        [tooltipPosition]="'top'"
+                        [pTooltip]="
+                          expenseField.get('destination_field')?.value === 'CUSTOMER' &&
+                          uiExposedAppName === AppName.XERO &&
+                          isXeroProjectMapped
+                            ? ('xero.configuration.importSetting.toggleToastMessage'
+                              | transloco: { brandName: brandingConfig.brandName })
+                            : ''
+                        "
+                        (onChange)="onShowWarningForDependentFields($event, expenseField)"
+                        [disabled]="
+                          expenseField.get('destination_field')?.value === 'CUSTOMER' &&
+                          uiExposedAppName === AppName.XERO &&
+                          isXeroProjectMapped
+                        "
+                      ></p-toggleswitch>
                     </div>
                   } @else {
                     <div class="tw-pr-16-px">
-                      <app-svg-icon [svgSource]="'arrow-tail-down'" [width]="'24px'" [height]="'24px'" [styleClasses]="isCloneSettingView ? 'tw-text-menu-inactive-text-color tw-block tw-ml-0' : 'tw-text-icon-primary tw-block tw-ml-0'"></app-svg-icon>
+                      <app-svg-icon
+                        [svgSource]="'arrow-tail-down'"
+                        [width]="'24px'"
+                        [height]="'24px'"
+                        [styleClasses]="
+                          isCloneSettingView
+                            ? 'tw-text-menu-inactive-text-color tw-block tw-ml-0'
+                            : 'tw-text-icon-primary tw-block tw-ml-0'
+                        "
+                      ></app-svg-icon>
                     </div>
                   }
                   <div>
-                    <h4 class="{{brandingStyle.qbd_direct.onboarding.configurationToggleHeaderText}}" [ngClass]="isCloneSettingView ? 'tw-py-2-px' : ''">
-                      {{ (brandingConfig.brandId === 'co' && appName === AppName.QBD_DIRECT ? 'qbd_direct.configuration.importSetting.importDestinationFieldFromApp' : 'configurationImportField.importDestinationFieldFromApp') | transloco: { destinationField: (getDestinationField(expenseField.get('destination_field')?.value | snakeCaseToSpaceCase) | lowercase ), appName: uiExposedAppName } }}
+                    <h4
+                      class="{{ brandingStyle.qbd_direct.onboarding.configurationToggleHeaderText }}"
+                      [ngClass]="isCloneSettingView ? 'tw-py-2-px' : ''"
+                    >
+                      {{
+                        (brandingConfig.brandId === 'co' && appName === AppName.QBD_DIRECT
+                          ? 'qbd_direct.configuration.importSetting.importDestinationFieldFromApp'
+                          : 'configurationImportField.importDestinationFieldFromApp'
+                        )
+                          | transloco
+                            : {
+                                destinationField:
+                                  (getDestinationField(
+                                    expenseField.get('destination_field')?.value | snakeCaseToSpaceCase
+                                  ) | lowercase),
+                                appName: uiExposedAppName,
+                              }
+                      }}
                       @if (!isAsterikAllowed && !(brandingConfig.brandId === 'co' && appName === AppName.QBD_DIRECT)) {
                         <app-optional-field></app-optional-field>
                       }
                     </h4>
                     @if (!isCloneSettingView) {
-                      <h5 class="!tw-font-400 !tw-leading-4" [ngClass]="[brandingStyle.common.inputLabelTextStyle, brandingStyle.qbd_direct.onboarding.configurationToggleDescriptionText]">
-                        {{ (brandingConfig.brandId === 'co' && appName === AppName.QBD_DIRECT ? 'qbd_direct.configuration.importSetting.importedDestinationFieldInfo' : 'configurationImportField.importedDestinationFieldInfo') | transloco: { destinationField: (brandingConfig.brandId !== 'co' && appName !== AppName.QBD_DIRECT ? (getDestinationField(expenseField.get('destination_field')?.value | snakeCaseToSpaceCase) | lowercase) : (getDestinationField(expenseField.get('destination_field')?.value | snakeCaseToSpaceCase) | sentenceCase)) } }}
+                      <h5
+                        class="!tw-font-400 !tw-leading-4"
+                        [ngClass]="[
+                          brandingStyle.common.inputLabelTextStyle,
+                          brandingStyle.qbd_direct.onboarding.configurationToggleDescriptionText,
+                        ]"
+                      >
+                        {{
+                          (brandingConfig.brandId === 'co' && appName === AppName.QBD_DIRECT
+                            ? 'qbd_direct.configuration.importSetting.importedDestinationFieldInfo'
+                            : 'configurationImportField.importedDestinationFieldInfo'
+                          )
+                            | transloco
+                              : {
+                                  destinationField:
+                                    brandingConfig.brandId !== 'co' && appName !== AppName.QBD_DIRECT
+                                      ? (getDestinationField(
+                                          expenseField.get('destination_field')?.value | snakeCaseToSpaceCase
+                                        ) | lowercase)
+                                      : (getDestinationField(
+                                          expenseField.get('destination_field')?.value | snakeCaseToSpaceCase
+                                        ) | sentenceCase),
+                                }
+                        }}
                       </h5>
                     }
                   </div>
                 </div>
                 @if (!isConfigToggleLeftAligned) {
                   <div class="configuration--input-toggle-section">
-                    <p-toggleswitch formControlName="import_to_fyle" [tooltipPosition]="'top'" [pTooltip]="expenseField.get('destination_field')?.value === 'CUSTOMER' && uiExposedAppName === AppName.XERO && isXeroProjectMapped ? ('xero.configuration.importSetting.toggleToastMessage' | transloco: {brandName: brandingConfig.brandName}) : ''" (onChange)="onShowWarningForDependentFields($event, expenseField)" [disabled]="expenseField.get('destination_field')?.value === 'CUSTOMER' && uiExposedAppName === AppName.XERO && isXeroProjectMapped"></p-toggleswitch>
+                    <p-toggleswitch
+                      formControlName="import_to_fyle"
+                      [tooltipPosition]="'top'"
+                      [pTooltip]="
+                        expenseField.get('destination_field')?.value === 'CUSTOMER' &&
+                        uiExposedAppName === AppName.XERO &&
+                        isXeroProjectMapped
+                          ? ('xero.configuration.importSetting.toggleToastMessage'
+                            | transloco: { brandName: brandingConfig.brandName })
+                          : ''
+                      "
+                      (onChange)="onShowWarningForDependentFields($event, expenseField)"
+                      [disabled]="
+                        expenseField.get('destination_field')?.value === 'CUSTOMER' &&
+                        uiExposedAppName === AppName.XERO &&
+                        isXeroProjectMapped
+                      "
+                    ></p-toggleswitch>
                   </div>
                 }
               </div>
             </div>
           }
-          <div class="tw-flex" [ngClass]="{'tw-pl-60-px': isDestinationFixedImport, 'tw-mt-24-px': isCloneSettingView, 'tw-pl-70-px': isConfigToggleLeftAligned}">
+          <div
+            class="tw-flex"
+            [ngClass]="{
+              'tw-pl-60-px': isDestinationFixedImport,
+              'tw-mt-24-px': isCloneSettingView,
+              'tw-pl-70-px': isConfigToggleLeftAligned,
+            }"
+          >
             <div>
-              <p-select appendTo="body" [options]="accountingFieldOptions" [placeholder]="'configurationImportField.chooseAppFieldPlaceholder' | transloco: { appName: uiExposedAppName }" formControlName="destination_field" [dropdownIcon]="'pi pi-chevron-down ' + brandingConfig.brandId"
-                optionLabel="display_name" optionValue="attribute_type" [ngClass]="{'selectedAccItem !tw-text-text-secondary': isDestinationFixedImport}">
+              <p-select
+                appendTo="body"
+                [options]="accountingFieldOptions"
+                [placeholder]="
+                  'configurationImportField.chooseAppFieldPlaceholder' | transloco: { appName: uiExposedAppName }
+                "
+                formControlName="destination_field"
+                [dropdownIcon]="'pi pi-chevron-down ' + brandingConfig.brandId"
+                optionLabel="display_name"
+                optionValue="attribute_type"
+                [ngClass]="{ 'selectedAccItem !tw-text-text-secondary': isDestinationFixedImport }"
+              >
                 <ng-template let-option pTemplate="item">
                   <div>
-                    {{ (option.display_name | snakeCaseToSpaceCase | sentenceCase) }}
+                    {{ option.display_name | snakeCaseToSpaceCase | sentenceCase }}
                   </div>
                 </ng-template>
                 <ng-template pTemplate="selectedItem" let-item>
@@ -87,67 +234,158 @@
                   </div>
                 </ng-template>
               </p-select>
-              @if (expenseField.value.destination_field && !expenseField.valid && !hasDuplicateOption(expenseField, i, 'destination_field')) {
+              @if (
+                expenseField.value.destination_field &&
+                !expenseField.valid &&
+                !hasDuplicateOption(expenseField, i, 'destination_field')
+              ) {
                 <p class="tw-text-alert-toast tw-text-12-px tw-pt-4-px">
                   {{ 'configurationImportField.uniqueAppFieldsError' | transloco: { appName: uiExposedAppName } }}
                 </p>
               }
             </div>
             <div [ngClass]="brandingStyle.configuration.importSvgPadding">
-              <app-svg-icon [isTextColorAllowed]="true" [svgSource]="'arrow-line'" [height]="'10px'" [width]="'100px'" [styleClasses]="'tw-self-center tw-text-border-secondary'"></app-svg-icon>
+              <app-svg-icon
+                [isTextColorAllowed]="true"
+                [svgSource]="'arrow-line'"
+                [height]="'10px'"
+                [width]="'100px'"
+                [styleClasses]="'tw-self-center tw-text-border-secondary'"
+              ></app-svg-icon>
             </div>
             <div class="xl:tw-w-30-vw sm:tw-w-28-vw">
-              <p-select (onChange)="onDropdownChange($event, i)" appendTo="body" [options]="getOptions(expenseField) | excludeSelectedOptions:expenseFieldsGetter:i:'source_field'" [placeholder]="'configurationImportField.chooseExpenseFieldPlaceholder' | transloco: { brandName: brandingConfig.brandName }" formControlName="source_field"
-                optionLabel="display_name" optionValue="attribute_type" [ngClass]="{'selectedItem': expenseField.get('source_field')?.value, 'selectedAccItem !tw-text-text-secondary': (expenseField.get('source_field')?.value === 'CATEGORY') || (expenseField.get('destination_field')?.value === 'CUSTOMER' && this.uiExposedAppName === AppName.XERO), 'filterDropdown': !expenseField.get('source_field')?.value}" [dropdownIcon]="'pi pi-chevron-down ' + brandingConfig.brandId">
+              <p-select
+                (onChange)="onDropdownChange($event, i)"
+                appendTo="body"
+                [options]="getOptions(expenseField) | excludeSelectedOptions: expenseFieldsGetter : i : 'source_field'"
+                [placeholder]="
+                  'configurationImportField.chooseExpenseFieldPlaceholder'
+                    | transloco: { brandName: brandingConfig.brandName }
+                "
+                formControlName="source_field"
+                optionLabel="display_name"
+                optionValue="attribute_type"
+                [ngClass]="{
+                  selectedItem: expenseField.get('source_field')?.value,
+                  'selectedAccItem !tw-text-text-secondary':
+                    expenseField.get('source_field')?.value === 'CATEGORY' ||
+                    (expenseField.get('destination_field')?.value === 'CUSTOMER' &&
+                      this.uiExposedAppName === AppName.XERO),
+                  filterDropdown: !expenseField.get('source_field')?.value,
+                }"
+                [dropdownIcon]="'pi pi-chevron-down ' + brandingConfig.brandId"
+              >
                 <ng-template let-option pTemplate="item">
-                  <div [ngClass]="{'custom-option': option.attribute_type === 'custom_field'}" class="tw-align-middle">
+                  <div
+                    [ngClass]="{ 'custom-option': option.attribute_type === 'custom_field' }"
+                    class="tw-align-middle"
+                  >
                     @if (brandingFeatureConfig.isIconsInsideButtonAllowed && option.attribute_type === 'custom_field') {
-                      <div class="tw-ml-0 tw-mr-6-px ">
-                        <app-svg-icon [svgSource]="'plus-square-medium'" [width]="'18px'" [height]="'18px'" ></app-svg-icon>
+                      <div class="tw-ml-0 tw-mr-6-px">
+                        <app-svg-icon
+                          [svgSource]="'plus-square-medium'"
+                          [width]="'18px'"
+                          [height]="'18px'"
+                        ></app-svg-icon>
                       </div>
                     }
-                    {{ (option.display_name | sentenceCase) }}
+                    {{ option.display_name | sentenceCase }}
                   </div>
                 </ng-template>
                 <ng-template pTemplate="selectedItem" let-item>
                   <div class="selected-item-container">
                     <span class="selected-item-text">
-                      {{ (item.display_name | sentenceCase) }}
+                      {{ item.display_name | sentenceCase }}
                     </span>
-                    @if ((expenseField.get('source_field')?.value !== 'CATEGORY') && (uiExposedAppName === AppName.XERO ? expenseField.get('destination_field')?.value !== 'CUSTOMER' : true )) {
-                      <app-svg-icon [svgSource]="'cross-medium'" [c1SvgSource]="'grv-cross-filled-medium'" (click)="removeFilter(expenseField)" [height]="'18px'" [width]="'18px'" [styleClasses]="'tw-flex-shrink-0'"></app-svg-icon>
+                    @if (
+                      expenseField.get('source_field')?.value !== 'CATEGORY' &&
+                      (uiExposedAppName === AppName.XERO
+                        ? expenseField.get('destination_field')?.value !== 'CUSTOMER'
+                        : true)
+                    ) {
+                      <app-svg-icon
+                        [svgSource]="'cross-medium'"
+                        [c1SvgSource]="'grv-cross-filled-medium'"
+                        (click)="removeFilter(expenseField)"
+                        [height]="'18px'"
+                        [width]="'18px'"
+                        [styleClasses]="'tw-flex-shrink-0'"
+                      ></app-svg-icon>
                     }
                   </div>
                 </ng-template>
               </p-select>
-              @if ((expenseField.get('source_field')?.value && !expenseField.valid && !hasDuplicateOption(expenseField, i, 'source_field'))) {
+              @if (
+                expenseField.get('source_field')?.value &&
+                !expenseField.valid &&
+                !hasDuplicateOption(expenseField, i, 'source_field')
+              ) {
                 <p class="tw-text-alert-toast tw-text-12-px tw-pt-4-px">
-                  {{ 'configurationImportField.uniqueBrandNameFieldsError' | transloco: { brandName: brandingConfig.brandName } }}
+                  {{
+                    'configurationImportField.uniqueBrandNameFieldsError'
+                      | transloco: { brandName: brandingConfig.brandName }
+                  }}
                 </p>
               }
             </div>
             @if (!isDestinationFixedImport) {
-              <p-toggleswitch (onChange)="onSwitchChanged($event, expenseField)" [pTooltip]="isExpenseFieldDependent(expenseField.value) ? ('configurationImportField.dependentFieldsWarning' | transloco) : '' " (click)="updateDependentField(expenseField.get('source_field')?.value,expenseField.get('import_to_fyle')?.value)" formControlName="import_to_fyle" class="input-toggle-section tw-pl-4-px tw-pt-10-px"></p-toggleswitch>
+              <p-toggleswitch
+                (onChange)="onSwitchChanged($event, expenseField)"
+                [pTooltip]="
+                  isExpenseFieldDependent(expenseField.value)
+                    ? ('configurationImportField.dependentFieldsWarning' | transloco)
+                    : ''
+                "
+                (click)="
+                  updateDependentField(
+                    expenseField.get('source_field')?.value,
+                    expenseField.get('import_to_fyle')?.value
+                  )
+                "
+                formControlName="import_to_fyle"
+                class="input-toggle-section tw-pl-4-px tw-pt-10-px"
+              ></p-toggleswitch>
             }
           </div>
-          @if (brandingFeatureConfig.featureFlags.importSettings.dependentField && expenseField.get('source_field')?.value==='PROJECT' && expenseField.get('import_to_fyle')?.value && expenseField.get('destination_field')?.value === dependentDestinationValue) {
-            <div class="tw-pt-26-px" [ngClass]="brandingStyle.configuration.importFieldDependentField" [formGroup]="form">
+          @if (
+            brandingFeatureConfig.featureFlags.importSettings.dependentField &&
+            expenseField.get('source_field')?.value === 'PROJECT' &&
+            expenseField.get('import_to_fyle')?.value &&
+            expenseField.get('destination_field')?.value === dependentDestinationValue
+          ) {
+            <div
+              class="tw-pt-26-px"
+              [ngClass]="brandingStyle.configuration.importFieldDependentField"
+              [formGroup]="form"
+            >
               <div class="tw-flex" [ngClass]="brandingStyle.common.configurationBrandingClass">
                 <label class="container tw-pl-24-px tw-text-14-px tw-text-form-label-text-color">
-                  <input type="checkbox" formControlName="isDependentImportEnabled" (click)="uiExposedAppName === AppName.SAGE300 ? false : undefined">
+                  <input
+                    type="checkbox"
+                    formControlName="isDependentImportEnabled"
+                    (click)="(uiExposedAppName === AppName.SAGE300 ? false : undefined)"
+                  />
                   <span class="checkmark"></span>
                   @if (uiExposedAppName === AppName.INTACCT) {
-                    {{ 'configurationImportField.importCostCodeAndTypeIntacct' | transloco: { appName: uiExposedAppName } }}
+                    {{
+                      'configurationImportField.importCostCodeAndTypeIntacct' | transloco: { appName: uiExposedAppName }
+                    }}
                   } @else {
                     {{ 'configurationImportField.importCostCodeAndType' | transloco: { appName: uiExposedAppName } }}
                   }
                   @if (uiExposedAppName === AppName.SAGE300) {
-                    <a class="link tw-w-fit tw-inline-flex tw-items-center"
-                      (click)="windowService.openInNewTab(dependantFieldSupportArticleLink)">
+                    <a
+                      class="link tw-w-fit tw-inline-flex tw-items-center"
+                      (click)="windowService.openInNewTab(dependantFieldSupportArticleLink)"
+                    >
                       {{ 'configurationImportField.readMore' | transloco }}
                       @if (brandingFeatureConfig.isIconsInsideButtonAllowed) {
-                        <app-svg-icon [svgSource]="'open-in-new-tab'" [width]="'16px'" [height]="'16px'"
-                          class="tw-text-link-primary tw-pl-2-px tw-w-fit">
+                        <app-svg-icon
+                          [svgSource]="'open-in-new-tab'"
+                          [width]="'16px'"
+                          [height]="'16px'"
+                          class="tw-text-link-primary tw-pl-2-px tw-w-fit"
+                        >
                         </app-svg-icon>
                       }
                     </a>
@@ -157,26 +395,77 @@
               @if (form.get('isDependentImportEnabled')?.value && dependentImportFields) {
                 <div>
                   @for (dependentField of dependentImportFields; track dependentField; let i = $index) {
-                    <div class="tw-flex tw-items-center tw-justify-between tw-pt-24-px" [ngClass]="[i ? 'tw-pl-20-px' : 'tw-pl-0-px']">
+                    <div
+                      class="tw-flex tw-items-center tw-justify-between tw-pt-24-px"
+                      [ngClass]="[i ? 'tw-pl-20-px' : 'tw-pl-0-px']"
+                    >
                       <div class="tw-flex">
                         <div>
-                          <app-svg-icon [isTextColorAllowed]="true" [svgSource]="'Line'" [width]="'21px'" [height]="'49px'" [styleClasses]="'tw-text-border-secondary'"></app-svg-icon>
+                          <app-svg-icon
+                            [isTextColorAllowed]="true"
+                            [svgSource]="'Line'"
+                            [width]="'21px'"
+                            [height]="'49px'"
+                            [styleClasses]="'tw-text-border-secondary'"
+                          ></app-svg-icon>
                         </div>
                         <div class="tw-pl-20-px">
-                          <p class="tw-mb-8-px tw-text-form-label-text-color" [ngClass]="brandingStyle.configuration.importFieldDropDownText">{{ 'configurationImportField.dependentFieldLabel' | transloco }}<app-mandatory-field></app-mandatory-field> </p>
-                          <input type="text" [ngClass]="[i ? 'tw-w-240-px' : 'tw-w-260-px']" class="tw-text-14-px tw-text-input-read-only-text !tw-font-500 !tw-h-38-px !tw-px-14-px !tw-py-10-px tw-border tw-border-solid !tw-border-input-read-only-border tw-rounded-4-px" value="{{helper.sentenseCaseConversion(dependentField.source_field)}}" disabled>
+                          <p
+                            class="tw-mb-8-px tw-text-form-label-text-color"
+                            [ngClass]="brandingStyle.configuration.importFieldDropDownText"
+                          >
+                            {{ 'configurationImportField.dependentFieldLabel' | transloco
+                            }}<app-mandatory-field></app-mandatory-field>
+                          </p>
+                          <input
+                            type="text"
+                            [ngClass]="[i ? 'tw-w-240-px' : 'tw-w-260-px']"
+                            class="tw-text-14-px tw-text-input-read-only-text !tw-font-500 !tw-h-38-px !tw-px-14-px !tw-py-10-px tw-border tw-border-solid !tw-border-input-read-only-border tw-rounded-4-px"
+                            value="{{ helper.sentenseCaseConversion(dependentField.source_field) }}"
+                            disabled
+                          />
                         </div>
                         <div [ngClass]="brandingStyle.configuration.importFieldDependentFieldSvg">
-                          <app-svg-icon [isTextColorAllowed]="true" [svgSource]="'arrow-line'" [height]="'10px'" [width]="'100px'" [styleClasses]="'tw-text-border-secondary'"></app-svg-icon>
+                          <app-svg-icon
+                            [isTextColorAllowed]="true"
+                            [svgSource]="'arrow-line'"
+                            [height]="'10px'"
+                            [width]="'100px'"
+                            [styleClasses]="'tw-text-border-secondary'"
+                          ></app-svg-icon>
                         </div>
                         <div>
-                          <p class="tw-mb-8-px tw-text-form-label-text-color" [ngClass]="brandingStyle.configuration.importFieldDropDownText">{{ 'configurationImportField.brandNameFieldLabel' | transloco: { brandName: brandingConfig.brandName } }} <app-mandatory-field></app-mandatory-field> </p>
-                          <p-select appendTo="body" class="tw-w-28-vw" [formControlName]="dependentField.formController" [options]="dependentField.options" optionLabel="attribute_type" [placeholder]="'configurationImportField.selectExpenseFieldPlaceholder' | transloco" [dropdownIcon]="'pi pi-chevron-down ' + brandingConfig.brandId">
+                          <p
+                            class="tw-mb-8-px tw-text-form-label-text-color"
+                            [ngClass]="brandingStyle.configuration.importFieldDropDownText"
+                          >
+                            {{
+                              'configurationImportField.brandNameFieldLabel'
+                                | transloco: { brandName: brandingConfig.brandName }
+                            }}
+                            <app-mandatory-field></app-mandatory-field>
+                          </p>
+                          <p-select
+                            appendTo="body"
+                            class="tw-w-28-vw"
+                            [formControlName]="dependentField.formController"
+                            [options]="dependentField.options"
+                            optionLabel="attribute_type"
+                            [placeholder]="'configurationImportField.selectExpenseFieldPlaceholder' | transloco"
+                            [dropdownIcon]="'pi pi-chevron-down ' + brandingConfig.brandId"
+                          >
                             <ng-template let-option pTemplate="item">
-                              <div [ngClass]="{'custom-option': option.attribute_type === 'custom_field'}" class="tw-align-middle">
-                                <div class="tw-ml-0 tw-mr-6-px ">
+                              <div
+                                [ngClass]="{ 'custom-option': option.attribute_type === 'custom_field' }"
+                                class="tw-align-middle"
+                              >
+                                <div class="tw-ml-0 tw-mr-6-px">
                                   @if (option.attribute_type === 'custom_field') {
-                                    <app-svg-icon [svgSource]="'plus-square-medium'" [width]="'18px'" [height]="'18px'" ></app-svg-icon>
+                                    <app-svg-icon
+                                      [svgSource]="'plus-square-medium'"
+                                      [width]="'18px'"
+                                      [height]="'18px'"
+                                    ></app-svg-icon>
                                   }
                                 </div>
                                 {{ helper.sentenseCaseConversion(option.display_name) }}
@@ -186,24 +475,36 @@
                         </div>
                       </div>
                       @if (uiExposedAppName === AppName.INTACCT) {
-                        <p-toggleswitch class="input-toggle-section" [formControlName]="dependentField.formController + 'ImportToggle'"></p-toggleswitch>
+                        <p-toggleswitch
+                          class="input-toggle-section"
+                          [formControlName]="dependentField.formController + 'ImportToggle'"
+                        ></p-toggleswitch>
                       } @else {
-                        <p-toggleswitch class="input-toggle-section" formControlName="dependentFieldImportToggle"></p-toggleswitch>
+                        <p-toggleswitch
+                          class="input-toggle-section"
+                          formControlName="dependentFieldImportToggle"
+                        ></p-toggleswitch>
                       }
                     </div>
                   }
                   @if (uiExposedAppName === AppName.SAGE300) {
                     <div class="tw-flex tw-mt-24-px" [ngClass]="brandingStyle.common.configurationBrandingClass">
                       <label class="container tw-pl-24-px tw-text-14-px tw-text-form-label-text-color">
-                        <input type="checkbox" formControlName="addCommitmentDetails">
+                        <input type="checkbox" formControlName="addCommitmentDetails" />
                         <span class="checkmark"></span>
                         {{ 'configurationImportField.autoExportCommitmentInfo' | transloco }}
-                        <a class="link tw-w-fit tw-inline-flex tw-items-center"
-                          (click)="windowService.openInNewTab(commitmentFieldSupportArticleLink)">
+                        <a
+                          class="link tw-w-fit tw-inline-flex tw-items-center"
+                          (click)="windowService.openInNewTab(commitmentFieldSupportArticleLink)"
+                        >
                           {{ 'configurationImportField.readMore' | transloco }}
                           @if (brandingFeatureConfig.isIconsInsideButtonAllowed) {
-                            <app-svg-icon [svgSource]="'open-in-new-tab'" [width]="'16px'" [height]="'16px'"
-                              class="tw-text-link-primary tw-pl-2-px tw-w-fit">
+                            <app-svg-icon
+                              [svgSource]="'open-in-new-tab'"
+                              [width]="'16px'"
+                              [height]="'16px'"
+                              class="tw-text-link-primary tw-pl-2-px tw-w-fit"
+                            >
                             </app-svg-icon>
                           }
                         </a>
@@ -214,9 +515,15 @@
               }
             </div>
           }
-          @if (form.get('expenseFields')?.hasError('duplicatefyleFieldOptions') || form.get('expenseFields')?.hasError('duplicateaccountingFieldOptions')) {
+          @if (
+            form.get('expenseFields')?.hasError('duplicatefyleFieldOptions') ||
+            form.get('expenseFields')?.hasError('duplicateaccountingFieldOptions')
+          ) {
             <div class="tw-text-alert-toast tw-pt-4 tw-pl-1">
-              {{ 'configurationImportField.uniqueFieldsError' | transloco: { brandName: brandingConfig.brandName, appName: uiExposedAppName } }}
+              {{
+                'configurationImportField.uniqueFieldsError'
+                  | transloco: { brandName: brandingConfig.brandName, appName: uiExposedAppName }
+              }}
             </div>
           }
         </div>
@@ -225,7 +532,13 @@
   </div>
   @if (showOrHideAddButton() && !isDestinationFixedImport) {
     <div class="add-button-container">
-      <app-svg-icon [svgSource]="'plus-square-medium'" [width]="'18px'" [height]="'18px'" [styleClasses]="'tw-cursor-pointer tw-text-mandatory-field-color'" (iconClick)="addExpenseField()"></app-svg-icon>
+      <app-svg-icon
+        [svgSource]="'plus-square-medium'"
+        [width]="'18px'"
+        [height]="'18px'"
+        [styleClasses]="'tw-cursor-pointer tw-text-mandatory-field-color'"
+        (iconClick)="addExpenseField()"
+      ></app-svg-icon>
       <a class="add-row-text tw-pl-2" (click)="addExpenseField()">
         {{ 'configurationImportField.addMoreFields' | transloco }}
       </a>
@@ -245,7 +558,10 @@
           </div>
           <div class="tw-pt-16-px">
             <app-configuration-info-label
-              [infoText]="'configurationImportField.oneTimeSetupInfo' | transloco: { brandName: brandingConfig.brandName }">
+              [infoText]="
+                'configurationImportField.oneTimeSetupInfo' | transloco: { brandName: brandingConfig.brandName }
+              "
+            >
             </app-configuration-info-label>
           </div>
         </div>
@@ -254,22 +570,60 @@
         <div>
           @for (defaultField of defaultImportFields; track defaultField) {
             <div>
-              @if (defaultField.import_code !== undefined && this.form.controls[defaultField.formController].value && importCodeFieldConfig[defaultField.destination_field]) {
+              @if (
+                defaultField.import_code !== undefined &&
+                this.form.controls[defaultField.formController].value &&
+                importCodeFieldConfig[defaultField.destination_field]
+              ) {
                 <div>
                   <app-configuration-select-field
                     [appName]="uiExposedAppName"
                     [form]="form"
                     [isDisableTextRequired]="false"
                     [options]="getImportCodeSelectorOptions(defaultField.destination_field)"
-                    [placeholder]="'configurationImportField.selectImportMethodPlaceholder' | transloco: { destinationField: (helper.sentenseCaseConversion(defaultField.destination_field).toLowerCase()) }"
-                    [label]="'configurationImportField.howToImportLabel' | transloco: { destinationFields: (helper.sentenseCaseConversion(getDestinationField(defaultField.destination_field)).toLowerCase()), appName: uiExposedAppName }"
-                    [subLabel]="'configurationImportField.howToImportSubLabel' | transloco: { destinationFields: (helper.sentenseCaseConversion(getDestinationField(defaultField.destination_field)).toLowerCase()) }"
+                    [placeholder]="
+                      'configurationImportField.selectImportMethodPlaceholder'
+                        | transloco
+                          : {
+                              destinationField: helper
+                                .sentenseCaseConversion(defaultField.destination_field)
+                                .toLowerCase(),
+                            }
+                    "
+                    [label]="
+                      'configurationImportField.howToImportLabel'
+                        | transloco
+                          : {
+                              destinationFields: helper
+                                .sentenseCaseConversion(getDestinationField(defaultField.destination_field))
+                                .toLowerCase(),
+                              appName: uiExposedAppName,
+                            }
+                    "
+                    [subLabel]="
+                      'configurationImportField.howToImportSubLabel'
+                        | transloco
+                          : {
+                              destinationFields: helper
+                                .sentenseCaseConversion(getDestinationField(defaultField.destination_field))
+                                .toLowerCase(),
+                            }
+                    "
                     [isMultiLineOption]="true"
                     [isFieldMandatory]="true"
                     [isimportSettings]="true"
-                    [customErrorMessage]="'configurationImportField.importMethodErrorMessage' | transloco: { destinationField: (helper.sentenseCaseConversion(defaultField.destination_field).toLowerCase()) }"
+                    [customErrorMessage]="
+                      'configurationImportField.importMethodErrorMessage'
+                        | transloco
+                          : {
+                              destinationField: helper
+                                .sentenseCaseConversion(defaultField.destination_field)
+                                .toLowerCase(),
+                            }
+                    "
                     [isDisabled]="!importCodeFieldConfig[defaultField.destination_field]"
-                    [formControllerName]="defaultField.import_code">
+                    [formControllerName]="defaultField.import_code"
+                  >
                   </app-configuration-select-field>
                 </div>
               }
@@ -285,15 +639,41 @@
                       [isDisableTextRequired]="false"
                       [form]="getFormGroup(expenseField)"
                       [options]="getImportCodeSelectorOptions(expenseField.value.destination_field)"
-                      [placeholder]="'configurationImportField.selectImportMethodPlaceholder' | transloco: { destinationField: (helper.sentenseCaseConversion(expenseField.value.destination_field).toLowerCase()) }"
-                      [label]="'configurationImportField.howToImportLabel' | transloco: { destinationFields: (helper.sentenseCaseConversion(getDestinationField(expenseField.value.destination_field)).toLowerCase()), appName: uiExposedAppName }"
+                      [placeholder]="
+                        'configurationImportField.selectImportMethodPlaceholder'
+                          | transloco
+                            : {
+                                destinationField: helper
+                                  .sentenseCaseConversion(expenseField.value.destination_field)
+                                  .toLowerCase(),
+                              }
+                      "
+                      [label]="
+                        'configurationImportField.howToImportLabel'
+                          | transloco
+                            : {
+                                destinationFields: helper
+                                  .sentenseCaseConversion(getDestinationField(expenseField.value.destination_field))
+                                  .toLowerCase(),
+                                appName: uiExposedAppName,
+                              }
+                      "
                       [subLabel]="getImportSubLabel(expenseField.value.destination_field)"
                       [isMultiLineOption]="true"
                       [isimportSettings]="true"
                       [isFieldMandatory]="true"
-                      [customErrorMessage]="'configurationImportField.importMethodErrorMessage' | transloco: { destinationField: (helper.sentenseCaseConversion(expenseField.value.destination_field).toLowerCase()) }"
+                      [customErrorMessage]="
+                        'configurationImportField.importMethodErrorMessage'
+                          | transloco
+                            : {
+                                destinationField: helper
+                                  .sentenseCaseConversion(expenseField.value.destination_field)
+                                  .toLowerCase(),
+                              }
+                      "
                       [isDisabled]="!importCodeFieldConfig[expenseField.value.destination_field]"
-                      [formControllerName]="'import_code'">
+                      [formControllerName]="'import_code'"
+                    >
                     </app-configuration-select-field>
                   </div>
                 }

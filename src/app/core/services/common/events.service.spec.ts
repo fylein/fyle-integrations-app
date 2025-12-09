@@ -16,11 +16,11 @@ describe('EventsService', () => {
 
   it('should listen for events', () => {
     expect(service.receiveEvent()).toBeUndefined();
-    window.postMessage(JSON.stringify({redirectUri: 'https://lolo.fyle.tech'}));
+    window.postMessage(JSON.stringify({ redirectUri: 'https://lolo.fyle.tech' }));
   });
 
   it('should listen for events from workato', () => {
     expect(service.receiveEvent()).toBeUndefined();
-    window.postMessage(JSON.stringify({type: 'connectionStatusChange'}));
+    window.postMessage(JSON.stringify({ type: 'connectionStatusChange' }));
   });
 });

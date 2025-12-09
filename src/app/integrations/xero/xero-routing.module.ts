@@ -10,27 +10,27 @@ const routes: Routes = [
     children: [
       {
         path: 'onboarding',
-        loadChildren: () => import('./xero-onboarding/xero-onboarding.module').then(m => m.XeroOnboardingModule)
+        loadChildren: () => import('./xero-onboarding/xero-onboarding.module').then((m) => m.XeroOnboardingModule),
       },
       {
         path: 'main',
-        loadChildren: () => import('./xero-main/xero-main.module').then(m => m.XeroMainModule),
-        canActivate: [XeroTokenGuard]
+        loadChildren: () => import('./xero-main/xero-main.module').then((m) => m.XeroMainModule),
+        canActivate: [XeroTokenGuard],
       },
       {
         path: 'token_expired',
-        loadChildren: () => import('./xero-main/xero-main.module').then(m => m.XeroMainModule)
+        loadChildren: () => import('./xero-main/xero-main.module').then((m) => m.XeroMainModule),
       },
       {
         path: 'disconnect',
-        loadChildren: () => import('./xero-main/xero-main.module').then(m => m.XeroMainModule)
-      }
-    ]
-  }
+        loadChildren: () => import('./xero-main/xero-main.module').then((m) => m.XeroMainModule),
+      },
+    ],
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class XeroRoutingModule { }
+export class XeroRoutingModule {}

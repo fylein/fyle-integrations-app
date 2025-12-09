@@ -8,9 +8,8 @@ xdescribe('AppLandingPageBodyComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ AppLandingPageBodyComponent ]
-    })
-    .compileComponents();
+      declarations: [AppLandingPageBodyComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(AppLandingPageBodyComponent);
     component = fixture.componentInstance;

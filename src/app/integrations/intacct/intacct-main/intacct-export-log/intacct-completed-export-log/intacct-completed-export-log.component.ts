@@ -18,22 +18,21 @@ import { TranslocoService } from '@jsverse/transloco';
 import { AccountingExportService } from 'src/app/core/services/common/accounting-export.service';
 
 @Component({
-    selector: 'app-intacct-completed-export-log',
-    templateUrl: './intacct-completed-export-log.component.html',
-    styleUrls: ['./intacct-completed-export-log.component.scss'],
-    standalone: false
+  selector: 'app-intacct-completed-export-log',
+  templateUrl: './intacct-completed-export-log.component.html',
+  styleUrls: ['./intacct-completed-export-log.component.scss'],
+  standalone: false,
 })
 export class IntacctCompletedExportLogComponent implements OnInit {
-
   isLoading: boolean = false;
 
   hideCalendar: boolean;
 
   appName: AppName = AppName.INTACCT;
 
-  accountingExports: AccountingExportList [];
+  accountingExports: AccountingExportList[];
 
-  filteredAccountingExports: AccountingExportList [];
+  filteredAccountingExports: AccountingExportList[];
 
   totalCount: number;
 
@@ -49,7 +48,7 @@ export class IntacctCompletedExportLogComponent implements OnInit {
 
   exportLogForm: FormGroup;
 
-  expenses: Expense [] = [];
+  expenses: Expense[] = [];
 
   isDateSelected: boolean = false;
 
@@ -73,7 +72,6 @@ export class IntacctCompletedExportLogComponent implements OnInit {
 
   readonly brandingStyle = brandingStyle;
 
-
   constructor(
     @Inject(FormBuilder) private formBuilder: FormBuilder,
     private trackingService: TrackingService,
@@ -81,12 +79,10 @@ export class IntacctCompletedExportLogComponent implements OnInit {
     private paginatorService: PaginatorService,
     private userService: UserService,
     private translocoService: TranslocoService,
-    private accountingExportService: AccountingExportService
+    private accountingExportService: AccountingExportService,
   ) {
     this.dateOptions = this.accountingExportService.getDateOptionsV2();
-    this.searchQuerySubject.pipe(
-      debounceTime(1000)
-    ).subscribe((query: string) => {
+    this.searchQuerySubject.pipe(debounceTime(1000)).subscribe((query: string) => {
       this.searchQuery = query;
       this.offset = 0;
       this.currentPage = Math.ceil(this.offset / this.limit) + 1;
@@ -119,26 +115,32 @@ export class IntacctCompletedExportLogComponent implements OnInit {
     this.getAccountingExports(this.limit, offset);
   }
 
-
-  private getAccountingExports(limit: number, offset:number) {
+  private getAccountingExports(limit: number, offset: number) {
     this.isLoading = true;
 
     if (this.limit !== limit) {
       this.paginatorService.storePageSize(PaginatorPage.EXPORT_LOG, limit);
     }
 
-    this.exportLogService.getExpenseGroups(TaskLogState.COMPLETE, limit, offset, this.selectedDateFilter, null, this.searchQuery).subscribe((accountingExportResponse: ExpenseGroupResponse) => {
+    this.exportLogService
+      .getExpenseGroups(TaskLogState.COMPLETE, limit, offset, this.selectedDateFilter, null, this.searchQuery)
+      .subscribe((accountingExportResponse: ExpenseGroupResponse) => {
+        this.totalCount = accountingExportResponse.count;
 
-      this.totalCount = accountingExportResponse.count;
+        const accountingExports: AccountingExportList[] = accountingExportResponse.results.map(
+          (accountingExport: ExpenseGroup) =>
+            this.accountingExportService.parseExpenseGroupAPIResponseToExportLog(
+              accountingExport,
+              this.org_id,
+              this.appName,
+              this.translocoService,
+            ),
+        );
+        this.filteredAccountingExports = accountingExports;
+        this.accountingExports = [...this.filteredAccountingExports];
 
-      const accountingExports: AccountingExportList[] = accountingExportResponse.results.map((accountingExport: ExpenseGroup) =>
-        this.accountingExportService.parseExpenseGroupAPIResponseToExportLog(accountingExport, this.org_id, this.appName, this.translocoService)
-      );
-      this.filteredAccountingExports = accountingExports;
-      this.accountingExports = [...this.filteredAccountingExports];
-
-      this.isLoading = false;
-    });
+        this.isLoading = false;
+      });
   }
 
   private setupForm(): void {
@@ -146,7 +148,7 @@ export class IntacctCompletedExportLogComponent implements OnInit {
       searchOption: [''],
       dateRange: [null],
       start: [''],
-      end: ['']
+      end: [''],
     });
 
     this.exportLogForm.controls.start.valueChanges.subscribe((dateRange) => {
@@ -156,20 +158,20 @@ export class IntacctCompletedExportLogComponent implements OnInit {
         this.selectedDateFilter = null;
         this.isDateSelected = false;
         this.getAccountingExports(paginator.limit, paginator.offset);
-        } else if (dateRange.length && dateRange[1]) {
-          this.hideCalendar = true;
-          this.selectedDateFilter = {
-            startDate: dateRange[0],
-            endDate: dateRange[1]
-          };
-          this.isDateSelected = true;
+      } else if (dateRange.length && dateRange[1]) {
+        this.hideCalendar = true;
+        this.selectedDateFilter = {
+          startDate: dateRange[0],
+          endDate: dateRange[1],
+        };
+        this.isDateSelected = true;
 
-          setTimeout(() => {
-            this.hideCalendar = false;
-          }, 10);
+        setTimeout(() => {
+          this.hideCalendar = false;
+        }, 10);
 
-          this.trackDateFilter('existing', this.selectedDateFilter);
-          this.getAccountingExports(paginator.limit, paginator.offset);
+        this.trackDateFilter('existing', this.selectedDateFilter);
+        this.getAccountingExports(paginator.limit, paginator.offset);
       }
     });
   }
@@ -187,7 +189,7 @@ export class IntacctCompletedExportLogComponent implements OnInit {
   private trackDateFilter(filterType: 'existing' | 'custom', selectedDateFilter: SelectedDateFilter): void {
     const trackingProperty = {
       filterType,
-      ...selectedDateFilter
+      ...selectedDateFilter,
     };
     this.trackingService.onDateFilter(TrackingApp.INTACCT, trackingProperty);
   }
@@ -195,5 +197,4 @@ export class IntacctCompletedExportLogComponent implements OnInit {
   ngOnInit(): void {
     this.getAccountingExportsAndSetupPage();
   }
-
 }

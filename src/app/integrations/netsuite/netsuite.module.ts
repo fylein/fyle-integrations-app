@@ -5,15 +5,8 @@ import { NetsuiteRoutingModule } from './netsuite-routing.module';
 import { NetsuiteComponent } from './netsuite.component';
 import { SharedModule } from 'src/app/shared/shared.module';
 
-
 @NgModule({
-  declarations: [
-    NetsuiteComponent
-  ],
-  imports: [
-    CommonModule,
-    NetsuiteRoutingModule,
-    SharedModule
-  ]
+  declarations: [NetsuiteComponent],
+  imports: [CommonModule, NetsuiteRoutingModule, SharedModule],
 })
-export class NetsuiteModule { }
+export class NetsuiteModule {}

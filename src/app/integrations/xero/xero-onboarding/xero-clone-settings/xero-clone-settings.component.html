@@ -5,10 +5,18 @@
   </div>
 }
 
-<div class=" tw-pb-48-px">
+<div class="tw-pb-48-px">
   @if (!isLoading) {
-    <div class="clone-setting configuration--contents tw-border-1-px tw-border-box-color tw-mt-24-px" [ngClass]="brandingStyle.common.configurationContents">
-      <app-clone-setting-header [headerText]="'xeroCloneSettings.exportSettings' | transloco" [subHeaderText]="'xeroCloneSettings.exportSettingsDescription' | transloco: { brandName: brandingConfig.brandName }"></app-clone-setting-header>
+    <div
+      class="clone-setting configuration--contents tw-border-1-px tw-border-box-color tw-mt-24-px"
+      [ngClass]="brandingStyle.common.configurationContents"
+    >
+      <app-clone-setting-header
+        [headerText]="'xeroCloneSettings.exportSettings' | transloco"
+        [subHeaderText]="
+          'xeroCloneSettings.exportSettingsDescription' | transloco: { brandName: brandingConfig.brandName }
+        "
+      ></app-clone-setting-header>
       <div [formGroup]="exportSettingForm" class="clone-setting--field-section">
         <div class="clone-setting--field">
           <div class="reimbursableExpense">
@@ -18,7 +26,11 @@
               [form]="exportSettingForm"
               [formControllerName]="'reimbursableExpense'"
               [inputType]="InputType.TOGGLE"
-              [tooltipText]="'xeroCloneSettings.exportReimbursableExpensesTooltip' | transloco: { brandName: brandingConfig.brandName }">
+              [tooltipText]="
+                'xeroCloneSettings.exportReimbursableExpensesTooltip'
+                  | transloco: { brandName: brandingConfig.brandName }
+              "
+            >
             </app-clone-setting-field>
           </div>
         </div>
@@ -28,13 +40,19 @@
               [iconSource]="'list'"
               [label]="'xeroCloneSettings.howExpensesExportedLabel' | transloco"
               [options]="reimbursableExportTypes"
-              [placeholder]="'xeroCloneSettings.chooseTransactionTypePlaceholder' | transloco: { brandName: brandingConfig.brandName }"
+              [placeholder]="
+                'xeroCloneSettings.chooseTransactionTypePlaceholder'
+                  | transloco: { brandName: brandingConfig.brandName }
+              "
               [form]="exportSettingForm"
               [isFieldMandatory]="false"
               [isDisabled]="true"
               [formControllerName]="'reimbursableExportType'"
               [dropdownDisplayKey]="'label'"
-              [tooltipText]="'xeroCloneSettings.chooseTransactionTypeTooltip' | transloco: { brandName: brandingConfig.brandName }">
+              [tooltipText]="
+                'xeroCloneSettings.chooseTransactionTypeTooltip' | transloco: { brandName: brandingConfig.brandName }
+              "
+            >
             </app-clone-setting-field>
           </div>
         }
@@ -48,7 +66,10 @@
             [isFieldMandatory]="false"
             [formControllerName]="'autoMapEmployees'"
             [dropdownDisplayKey]="'label'"
-            [tooltipText]="'xeroCloneSettings.employeeMatchingTooltip' | transloco: { brandName: brandingConfig.brandName }">
+            [tooltipText]="
+              'xeroCloneSettings.employeeMatchingTooltip' | transloco: { brandName: brandingConfig.brandName }
+            "
+          >
           </app-clone-setting-field>
         </div>
         @if (exportSettingForm.controls.reimbursableExportType.value) {
@@ -62,7 +83,8 @@
               [isFieldMandatory]="true"
               [formControllerName]="'expenseState'"
               [dropdownDisplayKey]="'label'"
-              [tooltipText]="'xeroCloneSettings.expenseExportStateTooltip' | transloco">
+              [tooltipText]="'xeroCloneSettings.expenseExportStateTooltip' | transloco"
+            >
             </app-clone-setting-field>
           </div>
         }
@@ -78,7 +100,8 @@
               [formControllerName]="'reimbursableExportGroup'"
               [isDisabled]="true"
               [dropdownDisplayKey]="'label'"
-              [tooltipText]="'xeroCloneSettings.expenseGroupingTooltip' | transloco">
+              [tooltipText]="'xeroCloneSettings.expenseGroupingTooltip' | transloco"
+            >
             </app-clone-setting-field>
           </div>
         }
@@ -86,14 +109,22 @@
           <div class="clone-setting--field">
             <app-clone-setting-field
               [iconSource]="'calendar'"
-              [label]="'xeroCloneSettings.setExportDateLabel' | transloco: { exportType: (exportSettingForm.controls.reimbursableExportType.value | snakeCaseToSpaceCase | lowercase) }"
+              [label]="
+                'xeroCloneSettings.setExportDateLabel'
+                  | transloco
+                    : {
+                        exportType:
+                          (exportSettingForm.controls.reimbursableExportType.value | snakeCaseToSpaceCase | lowercase),
+                      }
+              "
               [options]="reimbursableExpenseGroupingDateOptions"
               [placeholder]="'xeroCloneSettings.selectExportDatePlaceholder' | transloco"
               [form]="exportSettingForm"
               [isFieldMandatory]="true"
               [formControllerName]="'reimbursableExportDate'"
               [dropdownDisplayKey]="'label'"
-              [tooltipText]="'xeroCloneSettings.exportDateTooltip' | transloco: { brandName: brandingConfig.brandName }">
+              [tooltipText]="'xeroCloneSettings.exportDateTooltip' | transloco: { brandName: brandingConfig.brandName }"
+            >
             </app-clone-setting-field>
           </div>
         }
@@ -106,7 +137,10 @@
               [form]="exportSettingForm"
               [formControllerName]="'creditCardExpense'"
               [inputType]="InputType.TOGGLE"
-              [tooltipText]="'xeroCloneSettings.exportCccExpensesTooltip' | transloco: { brandName: brandingConfig.brandName }">
+              [tooltipText]="
+                'xeroCloneSettings.exportCccExpensesTooltip' | transloco: { brandName: brandingConfig.brandName }
+              "
+            >
             </app-clone-setting-field>
           </div>
         </div>
@@ -117,25 +151,39 @@
                 [iconSource]="'list'"
                 [label]="'xeroCloneSettings.howExpensesExportedLabel' | transloco"
                 [options]="creditCardExportTypes"
-                [placeholder]="'xeroCloneSettings.chooseTransactionTypePlaceholder' | transloco: { brandName: brandingConfig.brandName }"
+                [placeholder]="
+                  'xeroCloneSettings.chooseTransactionTypePlaceholder'
+                    | transloco: { brandName: brandingConfig.brandName }
+                "
                 [form]="exportSettingForm"
                 [isFieldMandatory]="false"
                 [isDisabled]="true"
                 [formControllerName]="'creditCardExportType'"
                 [dropdownDisplayKey]="'label'"
-                [tooltipText]="'xeroCloneSettings.selectExpenseExportTypeTooltip' | transloco">
+                [tooltipText]="'xeroCloneSettings.selectExpenseExportTypeTooltip' | transloco"
+              >
               </app-clone-setting-field>
               @if (exportSettingForm.controls.creditCardExportType.value) {
                 <div class="clone-setting--dependent-field">
                   <app-clone-setting-field
-                    [label]="'xeroCloneSettings.postToBankAccountLabel' | transloco: { exportType: (exportSettingForm.controls.reimbursableExportType.value | snakeCaseToSpaceCase | lowercase) }"
+                    [label]="
+                      'xeroCloneSettings.postToBankAccountLabel'
+                        | transloco
+                          : {
+                              exportType:
+                                (exportSettingForm.controls.reimbursableExportType.value
+                                | snakeCaseToSpaceCase
+                                | lowercase),
+                            }
+                    "
                     [options]="bankAccounts"
                     [placeholder]="'xeroCloneSettings.selectBankAccountPlaceholder' | transloco"
                     [form]="exportSettingForm"
                     [isFieldMandatory]="true"
                     [formControllerName]="'bankAccount'"
                     [dropdownDisplayKey]="'name'"
-                    [tooltipText]="'xeroCloneSettings.postToBankAccountTooltip' | transloco">
+                    [tooltipText]="'xeroCloneSettings.postToBankAccountTooltip' | transloco"
+                  >
                   </app-clone-setting-field>
                 </div>
               }
@@ -144,14 +192,17 @@
               <div class="clone-setting--field">
                 <app-clone-setting-field
                   [iconSource]="'question-square-outline'"
-                  [label]="'xeroCloneSettings.expenseExportStateLabel' | transloco: { brandName: brandingConfig.brandName }"
+                  [label]="
+                    'xeroCloneSettings.expenseExportStateLabel' | transloco: { brandName: brandingConfig.brandName }
+                  "
                   [options]="cccExpenseStateOptions"
                   [placeholder]="'xeroCloneSettings.selectCccExpenseStatePlaceholder' | transloco"
                   [form]="exportSettingForm"
                   [isFieldMandatory]="true"
                   [formControllerName]="'cccExpenseState'"
                   [dropdownDisplayKey]="'label'"
-                  [tooltipText]="'xeroCloneSettings.cccExpenseStateTooltip' | transloco">
+                  [tooltipText]="'xeroCloneSettings.cccExpenseStateTooltip' | transloco"
+                >
                 </app-clone-setting-field>
               </div>
             }
@@ -167,7 +218,8 @@
                   [isDisabled]="true"
                   [formControllerName]="'creditCardExportGroup'"
                   [dropdownDisplayKey]="'label'"
-                  [tooltipText]="'xeroCloneSettings.expenseGroupingTooltip' | transloco">
+                  [tooltipText]="'xeroCloneSettings.expenseGroupingTooltip' | transloco"
+                >
                 </app-clone-setting-field>
               </div>
             }
@@ -175,19 +227,32 @@
               <div class="clone-setting--field">
                 <app-clone-setting-field
                   [iconSource]="'calendar'"
-                  [label]="'xeroCloneSettings.setExportDateLabel' | transloco: { exportType: (exportSettingForm.controls.creditCardExportType.value | snakeCaseToSpaceCase | lowercase) }"
+                  [label]="
+                    'xeroCloneSettings.setExportDateLabel'
+                      | transloco
+                        : {
+                            exportType:
+                              (exportSettingForm.controls.creditCardExportType.value
+                              | snakeCaseToSpaceCase
+                              | lowercase),
+                          }
+                  "
                   [options]="cccExpenseGroupingDateOptions"
                   [placeholder]="'xeroCloneSettings.selectExportDatePlaceholder' | transloco"
                   [form]="exportSettingForm"
                   [isFieldMandatory]="true"
                   [formControllerName]="'creditCardExportDate'"
                   [dropdownDisplayKey]="'label'"
-                  [tooltipText]="'xeroCloneSettings.cccExportDateTooltip' | transloco">
+                  [tooltipText]="'xeroCloneSettings.cccExportDateTooltip' | transloco"
+                >
                 </app-clone-setting-field>
               </div>
             }
-            @if (brandingFeatureConfig.featureFlags.exportSettings.splitExpenseGrouping &&
-              exportSettingForm.controls.creditCardExportType.value === XeroCorporateCreditCardExpensesObject.BANK_TRANSACTION) {
+            @if (
+              brandingFeatureConfig.featureFlags.exportSettings.splitExpenseGrouping &&
+              exportSettingForm.controls.creditCardExportType.value ===
+                XeroCorporateCreditCardExpensesObject.BANK_TRANSACTION
+            ) {
               <div class="clone-setting--field">
                 <app-clone-setting-field
                   [iconSource]="'question-square-outline'"
@@ -198,14 +263,20 @@
                   [isFieldMandatory]="true"
                   [formControllerName]="'splitExpenseGrouping'"
                   [dropdownDisplayKey]="'label'"
-                  [tooltipText]="'xeroCloneSettings.splitExpenseGroupingTooltip' | transloco">
+                  [tooltipText]="'xeroCloneSettings.splitExpenseGroupingTooltip' | transloco"
+                >
                 </app-clone-setting-field>
               </div>
             }
           </div>
         }
       </div>
-      <app-clone-setting-header [headerText]="'xeroCloneSettings.importSettings' | transloco" [subHeaderText]="'xeroCloneSettings.importSettingsDescription' | transloco: { brandName: brandingConfig.brandName }"></app-clone-setting-header>
+      <app-clone-setting-header
+        [headerText]="'xeroCloneSettings.importSettings' | transloco"
+        [subHeaderText]="
+          'xeroCloneSettings.importSettingsDescription' | transloco: { brandName: brandingConfig.brandName }
+        "
+      ></app-clone-setting-header>
       <div class="clone-setting--field-section">
         <div class="clone-setting--field">
           <app-clone-setting-field
@@ -214,7 +285,8 @@
             [form]="importSettingForm"
             [formControllerName]="'importCategories'"
             [inputType]="InputType.TOGGLE"
-            [tooltipText]="'xeroCloneSettings.importCoaTooltip' | transloco: { brandName: brandingConfig.brandName }">
+            [tooltipText]="'xeroCloneSettings.importCoaTooltip' | transloco: { brandName: brandingConfig.brandName }"
+          >
           </app-clone-setting-field>
           @if (importSettingForm.get('importCategories')?.value) {
             <div class="clone-setting--dependent-field">
@@ -227,7 +299,8 @@
                 [formControllerName]="'chartOfAccountTypes'"
                 [disabledOption]="'xeroCloneSettings.expenseOption' | transloco"
                 [inputType]="InputType.MULTI_SELECT"
-                [tooltipText]="'xeroCloneSettings.selectAccountsToImportTooltip' | transloco">
+                [tooltipText]="'xeroCloneSettings.selectAccountsToImportTooltip' | transloco"
+              >
               </app-clone-setting-field>
             </div>
           }
@@ -241,7 +314,11 @@
               [formControllerName]="'importCustomers'"
               [inputType]="InputType.TOGGLE"
               [isDisabled]="isProjectMapped"
-              [tooltipText]="'xero.configuration.importSetting.importCustomersSubLabel' | transloco: {brandName: brandingConfig.brandName}">
+              [tooltipText]="
+                'xero.configuration.importSetting.importCustomersSubLabel'
+                  | transloco: { brandName: brandingConfig.brandName }
+              "
+            >
             </app-clone-setting-field>
           </div>
         }
@@ -253,7 +330,8 @@
               [form]="importSettingForm"
               [formControllerName]="'importSuppliersAsMerchants'"
               [inputType]="InputType.TOGGLE"
-              [tooltipText]="'xero.configuration.importSetting.importSuppliersAsMerchantsLabel' | transloco">
+              [tooltipText]="'xero.configuration.importSetting.importSuppliersAsMerchantsLabel' | transloco"
+            >
             </app-clone-setting-field>
           </div>
         }
@@ -265,7 +343,8 @@
               [form]="importSettingForm"
               [formControllerName]="'taxCode'"
               [inputType]="InputType.TOGGLE"
-              [tooltipText]="'xeroCloneSettings.importTaxTooltip' | transloco: { brandName: brandingConfig.brandName }">
+              [tooltipText]="'xeroCloneSettings.importTaxTooltip' | transloco: { brandName: brandingConfig.brandName }"
+            >
             </app-clone-setting-field>
             @if (importSettingForm.get('taxCode')?.value) {
               <div class="clone-setting--dependent-field">
@@ -278,7 +357,10 @@
                     [isFieldMandatory]="true"
                     [formControllerName]="'defaultTaxCode'"
                     [dropdownDisplayKey]="'name'"
-                    [tooltipText]="'xeroCloneSettings.defaultTaxCodeTooltip' | transloco: { brandName: brandingConfig.brandName }">
+                    [tooltipText]="
+                      'xeroCloneSettings.defaultTaxCodeTooltip' | transloco: { brandName: brandingConfig.brandName }
+                    "
+                  >
                   </app-clone-setting-field>
                 }
               </div>
@@ -292,10 +374,14 @@
           [fyleFieldOptions]="fyleFields"
           [isDestinationFixedImport]="true"
           [isCloneSettingView]="true"
-          (xeroProjectMapping)="updateCustomerImportAvailability($event)">
+          (xeroProjectMapping)="updateCustomerImportAvailability($event)"
+        >
         </app-configuration-import-field>
       </div>
-      <app-clone-setting-header [headerText]="'xeroCloneSettings.advancedSettings' | transloco" [subHeaderText]="'xeroCloneSettings.advancedSettingsDescription' | transloco"></app-clone-setting-header>
+      <app-clone-setting-header
+        [headerText]="'xeroCloneSettings.advancedSettings' | transloco"
+        [subHeaderText]="'xeroCloneSettings.advancedSettingsDescription' | transloco"
+      ></app-clone-setting-header>
       <div class="clone-setting--field-section">
         <div class="clone-setting--field">
           <app-clone-setting-field
@@ -304,11 +390,15 @@
             [form]="advancedSettingForm"
             [formControllerName]="'exportSchedule'"
             [inputType]="InputType.TOGGLE"
-            [tooltipText]="'xeroCloneSettings.scheduleAutomaticExportTooltip' | transloco: { brandName: brandingConfig.brandName }">
+            [tooltipText]="
+              'xeroCloneSettings.scheduleAutomaticExportTooltip' | transloco: { brandName: brandingConfig.brandName }
+            "
+          >
           </app-clone-setting-field>
           @if (advancedSettingForm.get('exportSchedule')?.value) {
             <div class="clone-setting--dependent-field tw-flex">
-              <app-clone-setting-field class="tw-flex-auto"
+              <app-clone-setting-field
+                class="tw-flex-auto"
                 [label]="'xeroCloneSettings.setupExportFrequencyLabel' | transloco"
                 [isFieldMandatory]="true"
                 [options]="scheduleIntervalHours"
@@ -317,18 +407,41 @@
                 [formControllerName]="'exportScheduleFrequency'"
                 [dropdownDisplayKey]="'label'"
                 [additionalClasses]="'dropdown-size-schedule'"
-                [tooltipText]="'xeroCloneSettings.setupExportFrequencyTooltip' | transloco: { brandName: brandingConfig.brandName }">
+                [tooltipText]="
+                  'xeroCloneSettings.setupExportFrequencyTooltip' | transloco: { brandName: brandingConfig.brandName }
+                "
+              >
               </app-clone-setting-field>
               <div class="tw-ml-16-px">
-                <input type="text" class="tw-border-input-read-only-border tw-border !tw-p-12-px !tw-w-100-px !tw-h-40-px !tw-bg-input-read-only-bg tw-text-slightly-normal-text-color" pInputText disabled [value]="(advancedSettingForm.get('exportScheduleFrequency')?.value > 1 ? 'xeroCloneSettings.hours' : 'xeroCloneSettings.hour') | transloco">
+                <input
+                  type="text"
+                  class="tw-border-input-read-only-border tw-border !tw-p-12-px !tw-w-100-px !tw-h-40-px !tw-bg-input-read-only-bg tw-text-slightly-normal-text-color"
+                  pInputText
+                  disabled
+                  [value]="
+                    (advancedSettingForm.get('exportScheduleFrequency')?.value > 1
+                      ? 'xeroCloneSettings.hours'
+                      : 'xeroCloneSettings.hour'
+                    ) | transloco
+                  "
+                />
               </div>
             </div>
           }
           @if (advancedSettingForm.get('exportSchedule')?.value) {
             <div class="clone-setting--dependent-field tw-flex tw-justify-between">
-              <p class="tw-pl-16-px tw-py-2-px tw-text-slightly-normal-text-color tw-text-14-px tw-flex tw-items-center">
+              <p
+                class="tw-pl-16-px tw-py-2-px tw-text-slightly-normal-text-color tw-text-14-px tw-flex tw-items-center"
+              >
                 {{ 'xeroCloneSettings.sendErrorNotificationTo' | transloco }}
-                <app-svg-icon [width]="'16px'" [height]="'16px'" [svgSource]="'info-circle-fill'" [styleClasses]="'tw-text-placeholder tw-ml-8-px'" [tooltipText]="'xeroCloneSettings.errorNotificationTooltip' | transloco" [tooltipPosition]="'top'"></app-svg-icon>
+                <app-svg-icon
+                  [width]="'16px'"
+                  [height]="'16px'"
+                  [svgSource]="'info-circle-fill'"
+                  [styleClasses]="'tw-text-placeholder tw-ml-8-px'"
+                  [tooltipText]="'xeroCloneSettings.errorNotificationTooltip' | transloco"
+                  [tooltipPosition]="'top'"
+                ></app-svg-icon>
               </p>
               <app-email-multi-select-field
                 [form]="advancedSettingForm"
@@ -341,7 +454,8 @@
                 [iconPath]="'list'"
                 [placeholder]="'xeroCloneSettings.selectEmailAddressPlaceholder' | transloco"
                 [formControllerName]="'email'"
-                [isCloneSettingView]="true">
+                [isCloneSettingView]="true"
+              >
               </app-email-multi-select-field>
             </div>
           }
@@ -353,7 +467,8 @@
             [form]="advancedSettingForm"
             [formControllerName]="'changeAccountingPeriod'"
             [inputType]="InputType.TOGGLE"
-            [tooltipText]="'xeroCloneSettings.postEntriesCurrentPeriodTooltip' | transloco">
+            [tooltipText]="'xeroCloneSettings.postEntriesCurrentPeriodTooltip' | transloco"
+          >
           </app-clone-setting-field>
         </div>
         @if (cloneSetting.export_settings.workspace_general_settings.reimbursable_expenses_object) {
@@ -364,7 +479,10 @@
               [form]="advancedSettingForm"
               [formControllerName]="'autoCreateVendors'"
               [inputType]="InputType.TOGGLE"
-              [tooltipText]="'xeroCloneSettings.autoCreateContactsTooltip' | transloco: { brandName: brandingConfig.brandName }">
+              [tooltipText]="
+                'xeroCloneSettings.autoCreateContactsTooltip' | transloco: { brandName: brandingConfig.brandName }
+              "
+            >
             </app-clone-setting-field>
           </div>
         }
@@ -378,9 +496,15 @@
               [options]="paymentSyncOptions"
               [placeholder]="'xeroCloneSettings.selectPaymentSyncPlaceholder' | transloco"
               [dropdownDisplayKey]="'label'"
-              [tooltipText]="'xeroCloneSettings.autoSyncPaymentStatusTooltip' | transloco: { brandName: brandingConfig.brandName }">
+              [tooltipText]="
+                'xeroCloneSettings.autoSyncPaymentStatusTooltip' | transloco: { brandName: brandingConfig.brandName }
+              "
+            >
             </app-clone-setting-field>
-            @if (advancedSettingForm.get('paymentSync')?.value && advancedSettingForm.get('paymentSync')?.value === 'fyle_to_xero') {
+            @if (
+              advancedSettingForm.get('paymentSync')?.value &&
+              advancedSettingForm.get('paymentSync')?.value === 'fyle_to_xero'
+            ) {
               <div class="clone-setting--dependent-field">
                 <app-clone-setting-field
                   [label]="'xeroCloneSettings.postPaymentEntriesToAccountLabel' | transloco"
@@ -390,7 +514,11 @@
                   [isFieldMandatory]="true"
                   [formControllerName]="'billPaymentAccount'"
                   [dropdownDisplayKey]="'name'"
-                  [tooltipText]="'xeroCloneSettings.postPaymentEntriesToAccountTooltip' | transloco: { brandName: brandingConfig.brandName }">
+                  [tooltipText]="
+                    'xeroCloneSettings.postPaymentEntriesToAccountTooltip'
+                      | transloco: { brandName: brandingConfig.brandName }
+                  "
+                >
                 </app-clone-setting-field>
               </div>
             }
@@ -400,16 +528,34 @@
           <div class="clone-setting--field">
             <app-clone-setting-field
               [iconSource]="'user-plus'"
-              [label]="'xero.configuration.advancedSettings.autoCreateMerchantsAsVendorsLabel' | transloco: {brandName: brandingConfig.brandName}"
+              [label]="
+                'xero.configuration.advancedSettings.autoCreateMerchantsAsVendorsLabel'
+                  | transloco: { brandName: brandingConfig.brandName }
+              "
               [form]="advancedSettingForm"
               [formControllerName]="'autoCreateMerchantDestinationEntity'"
               [inputType]="InputType.TOGGLE"
-              [tooltipText]="'xeroCloneSettings.autoCreateMerchantsTooltip' | transloco: { brandName: brandingConfig.brandName }">
+              [tooltipText]="
+                'xeroCloneSettings.autoCreateMerchantsTooltip' | transloco: { brandName: brandingConfig.brandName }
+              "
+            >
             </app-clone-setting-field>
           </div>
         }
       </div>
-      <app-configuration-step-footer [showResetButton]="true" [showBackButton]="true" [ctaText] = "!isSaveInProgress ? ('xeroCloneSettings.saveAndContinue' | transloco) : ('xeroCloneSettings.saving' | transloco)" (save)="save()" (resetCloneSetting)="resetCloneSetting()" (navigateToPreviousStep)="navigateToPreviousStep()" [isButtonDisabled]="!exportSettingForm.valid || !importSettingForm.valid || !advancedSettingForm.valid"></app-configuration-step-footer>
+      <app-configuration-step-footer
+        [showResetButton]="true"
+        [showBackButton]="true"
+        [ctaText]="
+          !isSaveInProgress
+            ? ('xeroCloneSettings.saveAndContinue' | transloco)
+            : ('xeroCloneSettings.saving' | transloco)
+        "
+        (save)="save()"
+        (resetCloneSetting)="resetCloneSetting()"
+        (navigateToPreviousStep)="navigateToPreviousStep()"
+        [isButtonDisabled]="!exportSettingForm.valid || !importSettingForm.valid || !advancedSettingForm.valid"
+      ></app-configuration-step-footer>
       <app-configuration-confirmation-dialog
         (warningAccepted)="acceptWarning($event)"
         [isWarningVisible]="isWarningDialogVisible"
@@ -417,19 +563,23 @@
         [headerText]="warningHeaderText"
         [contextText]="warningContextText"
         [confirmBtnText]="primaryButtonText"
-        [showSecondaryCTA]="true">
+        [showSecondaryCTA]="true"
+      >
       </app-configuration-confirmation-dialog>
       <app-configuration-custom-field-creation-dialog
         [customFieldForm]="customFieldForm"
         [showCustomFieldCreationDialog]="showCustomFieldDialog"
         (saveCustomFieldFn)="saveFyleExpenseField()"
-        (closeModelFn)="closeModel()">
+        (closeModelFn)="closeModel()"
+      >
       </app-configuration-custom-field-creation-dialog>
       @if (isPreviewDialogVisible) {
         <app-preview-dialog
           [isPreviewDialogVisible]="true"
-          [iconPath]="'assets/illustrations/sageIntacct/IntacctImportSettings.png'" (closeDialog)="closeDialog()"
-          [header]="'xeroCloneSettings.previewHeader' | transloco">
+          [iconPath]="'assets/illustrations/sageIntacct/IntacctImportSettings.png'"
+          (closeDialog)="closeDialog()"
+          [header]="'xeroCloneSettings.previewHeader' | transloco"
+        >
         </app-preview-dialog>
       }
     </div>

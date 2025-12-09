@@ -1,25 +1,26 @@
 .clone-setting {
-    &--field-section {
-        @apply tw-px-24-px;
-    }
+  &--field-section {
+    @apply tw-px-24-px;
+  }
 
-    &--field {
-        @apply tw-p-24-px;
-    }
+  &--field {
+    @apply tw-p-24-px;
+  }
 
-    &--export-setting-header {
-        @apply tw-flex tw-justify-between;
-    }
+  &--export-setting-header {
+    @apply tw-flex tw-justify-between;
+  }
 
-    &--dependent-field {
-        @apply tw-pt-24-px;
-    }
+  &--dependent-field {
+    @apply tw-pt-24-px;
+  }
 }
 
-:host ::ng-deep .reimbursableExpense .clone-setting-field--label-text, :host ::ng-deep .creditCardExpense .clone-setting-field--label-text {
-    @apply tw-text-16-px tw-text-text-primary tw-pl-0 #{!important};
+:host ::ng-deep .reimbursableExpense .clone-setting-field--label-text,
+:host ::ng-deep .creditCardExpense .clone-setting-field--label-text {
+  @apply tw-text-16-px tw-text-text-primary tw-pl-0 #{!important};
 }
 
 :host ::ng-deep p-select .p-disabled {
-    @apply tw-text-input-read-only-text tw-bg-select-disabled-bg tw-border-select-disabled-border tw-border-solid tw-opacity-100 #{!important};
+  @apply tw-text-input-read-only-text tw-bg-select-disabled-bg tw-border-select-disabled-border tw-border-solid tw-opacity-100 #{!important};
 }

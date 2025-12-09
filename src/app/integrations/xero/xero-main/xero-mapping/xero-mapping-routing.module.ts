@@ -11,14 +11,14 @@ const routes: Routes = [
     children: [
       {
         path: ':source_field',
-        component: XeroBaseMappingComponent
-      }
-    ]
-  }
+        component: XeroBaseMappingComponent,
+      },
+    ],
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class XeroMappingRoutingModule { }
+export class XeroMappingRoutingModule {}

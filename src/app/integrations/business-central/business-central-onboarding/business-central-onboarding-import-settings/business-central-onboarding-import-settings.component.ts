@@ -4,20 +4,17 @@ import { OnboardingStepper } from 'src/app/core/models/misc/onboarding-stepper.m
 import { BusinessCentralOnboardingService } from 'src/app/core/services/business-central/business-central-configuration/business-central-onboarding.service';
 
 @Component({
-    selector: 'app-business-central-onboarding-import-settings',
-    templateUrl: './business-central-onboarding-import-settings.component.html',
-    styleUrls: ['./business-central-onboarding-import-settings.component.scss'],
-    standalone: false
+  selector: 'app-business-central-onboarding-import-settings',
+  templateUrl: './business-central-onboarding-import-settings.component.html',
+  styleUrls: ['./business-central-onboarding-import-settings.component.scss'],
+  standalone: false,
 })
 export class BusinessCentralOnboardingImportSettingsComponent implements OnInit {
+  onboardingSteps: OnboardingStepper[] = this.onboardingService.getOnboardingSteps(
+    BusinessCentralOnboardingState.IMPORT_SETTINGS.replace('_', ' '),
+  );
 
-  onboardingSteps: OnboardingStepper[] = this.onboardingService.getOnboardingSteps(BusinessCentralOnboardingState.IMPORT_SETTINGS.replace('_', ' '));
+  constructor(private onboardingService: BusinessCentralOnboardingService) {}
 
-  constructor(
-    private onboardingService: BusinessCentralOnboardingService
-  ) { }
-
-  ngOnInit(): void {
-  }
-
+  ngOnInit(): void {}
 }

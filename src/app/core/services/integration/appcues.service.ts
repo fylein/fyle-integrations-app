@@ -4,15 +4,12 @@ import { AppName } from '../../models/enum/enum.model';
 import { MinimalUser } from '../../models/db/user.model';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AppcuesService {
-
   user: MinimalUser = this.userService.getUserProfile();
 
-  constructor(
-    private userService: UserService
-  ) { }
+  constructor(private userService: UserService) {}
 
   get appcues() {
     return (window as any).Appcues;
@@ -23,10 +20,10 @@ export class AppcuesService {
     if (this.appcues) {
       const user = this.userService.getUserProfile();
       this.appcues.identify(user.user_id, {
-        'org_id': user.org_id,
-        'user_id': user.user_id,
+        org_id: user.org_id,
+        user_id: user.user_id,
         source: 'Fyle Integrations App',
-        'app_name': appName
+        app_name: appName,
       });
     }
   }

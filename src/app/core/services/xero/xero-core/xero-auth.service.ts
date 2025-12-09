@@ -13,10 +13,9 @@ import { XeroCredentials } from 'src/app/core/models/xero/db/xero-credential.mod
 import { TranslocoService } from '@jsverse/transloco';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class XeroAuthService implements OnDestroy {
-
   private xeroConnectionInProgressSubject = new BehaviorSubject<boolean>(false);
 
   xeroConnectionInProgress$ = this.xeroConnectionInProgressSubject.asObservable();
@@ -38,8 +37,8 @@ export class XeroAuthService implements OnDestroy {
     private xeroConnectorService: XeroConnectorService,
     private toastService: IntegrationsToastService,
     private router: Router,
-    private translocoService: TranslocoService
-  ) { }
+    private translocoService: TranslocoService,
+  ) {}
 
   loginWithRefreshToken(refreshToken: string): Observable<Token> {
     return this.apiService.post('/auth/login_with_refresh_token/', { refresh_token: refreshToken });
@@ -51,25 +50,31 @@ export class XeroAuthService implements OnDestroy {
   }
 
   private postXeroCredentials(code: string): void {
-    this.xeroConnectorService.connectXero(this.workspaceService.getWorkspaceId(), code).subscribe((xeroCredentials: XeroCredentials) => {
-      this.isIntegrationConnectedSubject.next(true);
-      this.xeroConnectionInProgressSubject.next(false);
-      this.checkProgressAndRedirect();
-    }, (error) => {
-      const errorMessage = 'message' in error.error ? error.error.message : this.translocoService.translate('services.xeroAuth.failedToConnectTenant');
-      if (errorMessage === this.translocoService.translate('services.xeroAuth.chooseCorrectAccount')) {
-        this.isIntegrationConnectedSubject.next(false);
+    this.xeroConnectorService.connectXero(this.workspaceService.getWorkspaceId(), code).subscribe(
+      (xeroCredentials: XeroCredentials) => {
+        this.isIntegrationConnectedSubject.next(true);
         this.xeroConnectionInProgressSubject.next(false);
-        this.isIncorrectXeroConnectedDialogVisibleSubject.next(true);
-      } else {
-        this.toastService.displayToastMessage(ToastSeverity.ERROR, errorMessage);
-        if (this.router.url.includes("/token_expired/")){
-        this.router.navigate([`/integrations/xero/token_expired/dashboard`]);
+        this.checkProgressAndRedirect();
+      },
+      (error) => {
+        const errorMessage =
+          'message' in error.error
+            ? error.error.message
+            : this.translocoService.translate('services.xeroAuth.failedToConnectTenant');
+        if (errorMessage === this.translocoService.translate('services.xeroAuth.chooseCorrectAccount')) {
+          this.isIntegrationConnectedSubject.next(false);
+          this.xeroConnectionInProgressSubject.next(false);
+          this.isIncorrectXeroConnectedDialogVisibleSubject.next(true);
         } else {
-        this.router.navigate([`/integrations/xero/onboarding/landing`]);
+          this.toastService.displayToastMessage(ToastSeverity.ERROR, errorMessage);
+          if (this.router.url.includes('/token_expired/')) {
+            this.router.navigate([`/integrations/xero/token_expired/dashboard`]);
+          } else {
+            this.router.navigate([`/integrations/xero/onboarding/landing`]);
+          }
         }
-      }
-    });
+      },
+    );
   }
 
   private checkProgressAndRedirect(): void {
@@ -103,5 +108,4 @@ export class XeroAuthService implements OnDestroy {
       this.oauthCallbackSubscription.unsubscribe();
     }
   }
-
 }

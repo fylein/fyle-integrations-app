@@ -1,12 +1,13 @@
 <div [class]="styleClasses">
-    <svg
-        (click)="iconClickEvent()"
-        [attr.width]="width"
-        [attr.height]="height"
-        [attr.viewBox]="viewBox"
-        [pTooltip]="tooltipText"
-        [tooltipPosition]="tooltipPosition"
-        class="svg-icon">
-        <use [attr.href]="spriteUrl"></use>
-    </svg>
+  <svg
+    (click)="iconClickEvent()"
+    [attr.width]="width"
+    [attr.height]="height"
+    [attr.viewBox]="viewBox"
+    [pTooltip]="tooltipText"
+    [tooltipPosition]="tooltipPosition"
+    class="svg-icon"
+  >
+    <use [attr.href]="spriteUrl"></use>
+  </svg>
 </div>

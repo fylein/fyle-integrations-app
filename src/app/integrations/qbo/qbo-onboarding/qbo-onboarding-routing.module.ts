@@ -17,43 +17,43 @@ const routes: Routes = [
     children: [
       {
         path: 'landing',
-        component: QboOnboardingLandingComponent
+        component: QboOnboardingLandingComponent,
       },
       {
         path: 'connector',
-        component: QboOnboardingConnectorComponent
+        component: QboOnboardingConnectorComponent,
       },
       {
         path: 'export_settings',
         component: QboOnboardingExportSettingsComponent,
-        canActivate: [QboTokenGuard]
+        canActivate: [QboTokenGuard],
       },
       {
         path: 'import_settings',
         component: QboOnboardingImportSettingsComponent,
-        canActivate: [QboTokenGuard]
+        canActivate: [QboTokenGuard],
       },
       {
         path: 'advanced_settings',
         component: QboOnboardingAdvancedSettingsComponent,
-        canActivate: [QboTokenGuard]
+        canActivate: [QboTokenGuard],
       },
       {
         path: 'done',
         component: QboOnboardingDoneComponent,
-        canActivate: [QboTokenGuard]
+        canActivate: [QboTokenGuard],
       },
       {
         path: 'clone_settings',
         component: QboCloneSettingsComponent,
-        canActivate: [QboTokenGuard]
-      }
-    ]
-  }
+        canActivate: [QboTokenGuard],
+      },
+    ],
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class QboOnboardingRoutingModule { }
+export class QboOnboardingRoutingModule {}

@@ -1,4 +1,3 @@
-
 import { CommonModule } from '@angular/common';
 import type { Meta, StoryObj } from '@storybook/angular';
 import { moduleMetadata } from '@storybook/angular';
@@ -11,17 +10,17 @@ const meta: Meta<ConfigurationLabelComponent> = {
   component: ConfigurationLabelComponent,
   tags: ['autodocs'],
   render: (args: ConfigurationLabelComponent) => ({
-    props: { ...args }
+    props: { ...args },
   }),
   decorators: [
     moduleMetadata({
       declarations: [ConfigurationLabelComponent, MandatoryFieldComponent],
-      imports: [CommonModule ]
-    })
+      imports: [CommonModule],
+    }),
   ],
   argTypes: {
-    ngOnInit: { table: { disable: true } }
-  }
+    ngOnInit: { table: { disable: true } },
+  },
 };
 
 export default meta;
@@ -33,8 +32,8 @@ export const simple: Story = {
     subLabel: 'Grouping reflects how the expense entries are posted in QuickBooks Desktop.',
     labelValue: {
       label: 'Expense',
-      value: QBDExpenseGroupedBy.EXPENSE
+      value: QBDExpenseGroupedBy.EXPENSE,
     },
-    iconPath: 'tabs'
-  }
+    iconPath: 'tabs',
+  },
 };

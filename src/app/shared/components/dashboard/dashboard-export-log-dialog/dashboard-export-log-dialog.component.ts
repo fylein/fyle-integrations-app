@@ -5,13 +5,12 @@ import { AppName } from 'src/app/core/models/enum/enum.model';
 import { WindowService } from 'src/app/core/services/common/window.service';
 
 @Component({
-    selector: 'app-dashboard-export-log-dialog',
-    templateUrl: './dashboard-export-log-dialog.component.html',
-    styleUrls: ['./dashboard-export-log-dialog.component.scss'],
-    standalone: false
+  selector: 'app-dashboard-export-log-dialog',
+  templateUrl: './dashboard-export-log-dialog.component.html',
+  styleUrls: ['./dashboard-export-log-dialog.component.scss'],
+  standalone: false,
 })
 export class DashboardExportLogDialogComponent implements OnInit {
-
   @Input() exportLogHeader: string;
 
   @Input() exportLogSubHeader: string;
@@ -28,9 +27,7 @@ export class DashboardExportLogDialogComponent implements OnInit {
 
   readonly brandingStyle = brandingStyle;
 
-  constructor(
-    private windowService: WindowService
-  ) { }
+  constructor(private windowService: WindowService) {}
 
   openUrl(event: any, url: string) {
     this.windowService.openInNewTab(url);
@@ -41,7 +38,5 @@ export class DashboardExportLogDialogComponent implements OnInit {
     this.hideExportLogDialog.emit();
   }
 
-  ngOnInit(): void {
-  }
-
+  ngOnInit(): void {}
 }

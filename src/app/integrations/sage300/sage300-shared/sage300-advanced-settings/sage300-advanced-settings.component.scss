@@ -1,11 +1,11 @@
 .preview-box {
-    @apply tw-p-10-px tw-bg-disabled-bg-color tw-rounded-8-px #{!important} ;
+  @apply tw-p-10-px tw-bg-disabled-bg-color tw-rounded-8-px #{!important};
 }
 
 :host ::ng-deep .p-multiselect {
-    @apply tw-pr-18-px #{!important};
+  @apply tw-pr-18-px #{!important};
 }
 
 :host ::ng-deep .pi-chevron-down.fyle {
-    @apply tw-pl-14-px #{!important};
+  @apply tw-pl-14-px #{!important};
 }

@@ -8,9 +8,8 @@ xdescribe('BusinessCentralExportLogComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ BusinessCentralExportLogComponent ]
-    })
-    .compileComponents();
+      declarations: [BusinessCentralExportLogComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(BusinessCentralExportLogComponent);
     component = fixture.componentInstance;

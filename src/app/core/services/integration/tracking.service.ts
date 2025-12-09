@@ -1,6 +1,29 @@
 import { Injectable } from '@angular/core';
-import { BusinessCentralOnboardingState, NetsuiteOnboardingState, BusinessCentralUpdateEvent, ClickEvent, IntacctOnboardingState, IntacctUpdateEvent, Page, QBDOnboardingState, Sage300OnboardingState, Sage300UpdateEvent, TrackingApp, TravelPerkOnboardingState, TravelperkUpdateEvent, UpdateEvent, QbdDirectOnboardingState, QbdDirectUpdateEvent, Sage50OnboardingState } from '../../models/enum/enum.model';
-import { MappingAlphabeticalFilterAdditionalProperty, ResolveMappingErrorProperty, UpdateEventAdditionalProperty, UpdateIntacctEventAdditionalProperty } from '../../models/misc/tracking.model';
+import {
+  BusinessCentralOnboardingState,
+  NetsuiteOnboardingState,
+  BusinessCentralUpdateEvent,
+  ClickEvent,
+  IntacctOnboardingState,
+  IntacctUpdateEvent,
+  Page,
+  QBDOnboardingState,
+  Sage300OnboardingState,
+  Sage300UpdateEvent,
+  TrackingApp,
+  TravelPerkOnboardingState,
+  TravelperkUpdateEvent,
+  UpdateEvent,
+  QbdDirectOnboardingState,
+  QbdDirectUpdateEvent,
+  Sage50OnboardingState,
+} from '../../models/enum/enum.model';
+import {
+  MappingAlphabeticalFilterAdditionalProperty,
+  ResolveMappingErrorProperty,
+  UpdateEventAdditionalProperty,
+  UpdateIntacctEventAdditionalProperty,
+} from '../../models/misc/tracking.model';
 import { QBDAdvancedSettingsPost } from '../../models/qbd/qbd-configuration/qbd-advanced-setting.model';
 import { QBDExportSettingPost } from '../../models/qbd/qbd-configuration/qbd-export-setting.model';
 import { QBDFieldMappingPost } from '../../models/qbd/qbd-configuration/qbd-field-mapping.model';
@@ -22,37 +45,36 @@ import { QbdDirectExportSettingsPost } from '../../models/qbd-direct/qbd-direct-
 import { QbdDirectImportSettingPost } from '../../models/qbd-direct/qbd-direct-configuration/qbd-direct-import-settings.model';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class TrackingService {
-
   private identityEmail: string | undefined;
 
-  constructor() { }
+  constructor() {}
 
   private flattenObject(ob: any): any {
     const toReturn: any = {};
 
     for (const i in ob) {
-        if (!ob.hasOwnProperty(i)) {
-          continue;
-        }
+      if (!ob.hasOwnProperty(i)) {
+        continue;
+      }
 
-        if ((typeof ob[i]) === 'object' && ob[i] !== null) {
-          const flatObject = this.flattenObject(ob[i]);
-            for (const x in flatObject) {
-                if (!flatObject.hasOwnProperty(x)) {
-                  continue;
-                }
+      if (typeof ob[i] === 'object' && ob[i] !== null) {
+        const flatObject = this.flattenObject(ob[i]);
+        for (const x in flatObject) {
+          if (!flatObject.hasOwnProperty(x)) {
+            continue;
+          }
 
-                toReturn[i + '.' + x] = flatObject[x];
-            }
-        } else {
-            toReturn[i] = ob[i];
+          toReturn[i + '.' + x] = flatObject[x];
         }
+      } else {
+        toReturn[i] = ob[i];
+      }
     }
     return toReturn;
-}
+  }
 
   get tracking() {
     return (window as any).mixpanel;
@@ -62,7 +84,7 @@ export class TrackingService {
     const flattenedObject = this.flattenObject(properties);
     properties = {
       ...flattenedObject,
-      Asset: 'Integration Settings Web'
+      Asset: 'Integration Settings Web',
     };
     try {
       if (this.tracking) {
@@ -78,7 +100,7 @@ export class TrackingService {
       if (this.tracking) {
         this.tracking.identify(userId);
         this.tracking.people.set({
-          fyleOrgId
+          fyleOrgId,
         });
         this.identityEmail = userId;
       }
@@ -102,30 +124,85 @@ export class TrackingService {
 
   trackTimeSpent(trackingApp: TrackingApp, page: Page, sessionStartTime: Date): void {
     const differenceInMs = new Date().getTime() - sessionStartTime.getTime();
-    this.eventTrack(`Time Spent on ${page} page`, trackingApp, {durationInSeconds: differenceInMs / 1000});
+    this.eventTrack(`Time Spent on ${page} page`, trackingApp, { durationInSeconds: differenceInMs / 1000 });
   }
 
-  onOnboardingStepCompletion(trackingApp: TrackingApp, eventName: QBDOnboardingState | Sage300OnboardingState | BusinessCentralOnboardingState | TravelPerkOnboardingState | Sage50OnboardingState, stepNumber: number, additionalProperties: QBDExportSettingPost | QBDFieldMappingPost | QBDAdvancedSettingsPost | void | Sage300ExportSettingPost | Sage300ImportSettingPost | Sage300AdvancedSettingPost | BusinessCentralExportSettingPost | BusinessCentralImportSettingsPost | BusinessCentralAdvancedSettingsPost | TravelperkPaymentProfileSettingPost[] | TravelperkAdvancedSettingPost | any): void {
+  onOnboardingStepCompletion(
+    trackingApp: TrackingApp,
+    eventName:
+      | QBDOnboardingState
+      | Sage300OnboardingState
+      | BusinessCentralOnboardingState
+      | TravelPerkOnboardingState
+      | Sage50OnboardingState,
+    stepNumber: number,
+    additionalProperties:
+      | QBDExportSettingPost
+      | QBDFieldMappingPost
+      | QBDAdvancedSettingsPost
+      | void
+      | Sage300ExportSettingPost
+      | Sage300ImportSettingPost
+      | Sage300AdvancedSettingPost
+      | BusinessCentralExportSettingPost
+      | BusinessCentralImportSettingsPost
+      | BusinessCentralAdvancedSettingsPost
+      | TravelperkPaymentProfileSettingPost[]
+      | TravelperkAdvancedSettingPost
+      | any,
+  ): void {
     this.eventTrack(`Step ${stepNumber} completed: ${eventName}`, trackingApp, additionalProperties);
   }
 
-  integrationsOnboardingCompletion(trackingApp: TrackingApp, eventName: IntacctOnboardingState | NetsuiteOnboardingState | QbdDirectOnboardingState, stepNumber: number, additionalProperties: LocationEntityPost | ExportSettingPost | ImportSettingPost | AdvancedSettingsPost | NetsuiteSubsidiaryMappingPost | QbdDirectExportSettingsPost | QbdDirectImportSettingPost | QbdDirectAdvancedSettingsPost | void): void {
+  integrationsOnboardingCompletion(
+    trackingApp: TrackingApp,
+    eventName: IntacctOnboardingState | NetsuiteOnboardingState | QbdDirectOnboardingState,
+    stepNumber: number,
+    additionalProperties:
+      | LocationEntityPost
+      | ExportSettingPost
+      | ImportSettingPost
+      | AdvancedSettingsPost
+      | NetsuiteSubsidiaryMappingPost
+      | QbdDirectExportSettingsPost
+      | QbdDirectImportSettingPost
+      | QbdDirectAdvancedSettingsPost
+      | void,
+  ): void {
     this.eventTrack(`Step ${stepNumber} completed: ${eventName}`, trackingApp, additionalProperties);
   }
 
-  onUpdateEvent(trackingApp: TrackingApp, eventName: UpdateEvent | Sage300UpdateEvent | BusinessCentralUpdateEvent | TravelperkUpdateEvent | QbdDirectUpdateEvent, additionalProperties: Partial<UpdateEventAdditionalProperty> | void): void {
+  onUpdateEvent(
+    trackingApp: TrackingApp,
+    eventName:
+      | UpdateEvent
+      | Sage300UpdateEvent
+      | BusinessCentralUpdateEvent
+      | TravelperkUpdateEvent
+      | QbdDirectUpdateEvent,
+    additionalProperties: Partial<UpdateEventAdditionalProperty> | void,
+  ): void {
     this.eventTrack(`Update event: ${eventName}`, trackingApp, additionalProperties);
   }
 
-  intacctUpdateEvent (eventName: IntacctUpdateEvent, additionalProperties: Partial<UpdateIntacctEventAdditionalProperty> | void): void {
+  intacctUpdateEvent(
+    eventName: IntacctUpdateEvent,
+    additionalProperties: Partial<UpdateIntacctEventAdditionalProperty> | void,
+  ): void {
     this.eventTrack(`Update event: ${eventName}`, TrackingApp.INTACCT, additionalProperties);
   }
 
-  onDateFilter(trackingApp: TrackingApp, properties: {filterType: 'existing' | 'custom', startDate: Date, endDate: Date}): void {
+  onDateFilter(
+    trackingApp: TrackingApp,
+    properties: { filterType: 'existing' | 'custom'; startDate: Date; endDate: Date },
+  ): void {
     this.eventTrack('Date filter', trackingApp, properties);
   }
 
-  onMappingsAlphabeticalFilter(trackingApp: TrackingApp, properties: MappingAlphabeticalFilterAdditionalProperty): void {
+  onMappingsAlphabeticalFilter(
+    trackingApp: TrackingApp,
+    properties: MappingAlphabeticalFilterAdditionalProperty,
+  ): void {
     this.eventTrack('Mappings Alphabetical Filter', trackingApp, properties);
   }
 

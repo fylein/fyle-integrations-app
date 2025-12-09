@@ -7,14 +7,13 @@ import { Expense } from 'src/app/core/models/intacct/db/expense.model';
 import { WindowService } from 'src/app/core/services/common/window.service';
 
 @Component({
-    selector: 'app-export-log-table',
-    templateUrl: './export-log-table.component.html',
-    styleUrls: ['./export-log-table.component.scss'],
-    standalone: false
+  selector: 'app-export-log-table',
+  templateUrl: './export-log-table.component.html',
+  styleUrls: ['./export-log-table.component.scss'],
+  standalone: false,
 })
 export class ExportLogTableComponent implements OnInit {
-
-  @Input() filteredExpenseGroups: AccountingExportList [];
+  @Input() filteredExpenseGroups: AccountingExportList[];
 
   @Input() appName: AppName;
 
@@ -22,7 +21,7 @@ export class ExportLogTableComponent implements OnInit {
 
   @Input() isDashboardFailed: boolean;
 
-  expenses: Expense [] = [];
+  expenses: Expense[] = [];
 
   brandingConfig: BrandingConfiguration = brandingConfig;
 
@@ -32,11 +31,9 @@ export class ExportLogTableComponent implements OnInit {
 
   readonly brandingFeatureConfig = brandingFeatureConfig;
 
-  constructor(
-    private windowService: WindowService
-  ) { }
+  constructor(private windowService: WindowService) {}
 
-  handleDialogClose(){
+  handleDialogClose() {
     this.isChildTableVisible = false;
   }
 
@@ -52,7 +49,5 @@ export class ExportLogTableComponent implements OnInit {
     event?.stopPropagation();
   }
 
-  ngOnInit(): void {
-  }
-
+  ngOnInit(): void {}
 }

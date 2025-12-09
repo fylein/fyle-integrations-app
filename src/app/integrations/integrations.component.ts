@@ -13,13 +13,12 @@ import { BrandingService } from '../core/services/common/branding.service';
 import { TranslocoService } from '@jsverse/transloco';
 
 @Component({
-    selector: 'app-integrations',
-    templateUrl: './integrations.component.html',
-    styleUrls: ['./integrations.component.scss'],
-    standalone: false
+  selector: 'app-integrations',
+  templateUrl: './integrations.component.html',
+  styleUrls: ['./integrations.component.scss'],
+  standalone: false,
 })
 export class IntegrationsComponent implements OnInit {
-
   windowReference: Window;
 
   user: MinimalUser | null;
@@ -37,7 +36,7 @@ export class IntegrationsComponent implements OnInit {
     private userService: UserService,
     private windowService: WindowService,
     private translocoService: TranslocoService,
-    private brandingService: BrandingService
+    private brandingService: BrandingService,
   ) {
     this.windowReference = this.windowService.nativeWindow;
   }
@@ -55,23 +54,30 @@ export class IntegrationsComponent implements OnInit {
   }
 
   private getOrCreateOrg(): Promise<Org | undefined> {
-    return this.orgService.getOrgs(this.user?.org_id).toPromise().then(orgs => {
-      if (orgs) {
-        return orgs;
-      }
+    return this.orgService
+      .getOrgs(this.user?.org_id)
+      .toPromise()
+      .then((orgs) => {
+        if (orgs) {
+          return orgs;
+        }
 
-      return undefined;
-    }).catch(() => {
-      return this.orgService.createOrg().toPromise().then(org => {
-        return org;
+        return undefined;
+      })
+      .catch(() => {
+        return this.orgService
+          .createOrg()
+          .toPromise()
+          .then((org) => {
+            return org;
+          });
       });
-    });
   }
 
   private setupOrg(): void {
     this.eventsService.setupRouteWatcher();
     this.user = this.userService.getUserProfile();
-    if (this.storageService.get('is_org_rebranded')){
+    if (this.storageService.get('is_org_rebranded')) {
       this.setOrgRebranded();
     }
     this.getOrCreateOrg().then((org: Org | undefined) => {
@@ -80,10 +86,14 @@ export class IntegrationsComponent implements OnInit {
         this.org = org;
         this.storageService.set('orgId', this.org.id);
         this.storageService.set('org', this.org);
-        if (this.org.is_org_rebranded && !this.storageService.get('is_org_rebranded') && this.brandingService.brandingConfig.brandId === 'fyle') {
+        if (
+          this.org.is_org_rebranded &&
+          !this.storageService.get('is_org_rebranded') &&
+          this.brandingService.brandingConfig.brandId === 'fyle'
+        ) {
           this.storageService.set('is_org_rebranded', true);
           this.setOrgRebranded();
-        } else if (!this.org.is_org_rebranded){
+        } else if (!this.org.is_org_rebranded) {
           this.storageService.remove('is_org_rebranded');
         }
       }
@@ -92,12 +102,13 @@ export class IntegrationsComponent implements OnInit {
   }
 
   private setOrgRebranded(): void {
-    this.brandingService.updateBrandingConfig({ brandName: this.translocoService.translate('integrations.reBrandedShortName') });
+    this.brandingService.updateBrandingConfig({
+      brandName: this.translocoService.translate('integrations.reBrandedShortName'),
+    });
     this.brandingService.setOrgRebranded(true);
   }
 
   ngOnInit(): void {
     this.setupOrg();
   }
-
 }

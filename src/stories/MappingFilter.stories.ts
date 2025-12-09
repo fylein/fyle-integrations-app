@@ -1,4 +1,3 @@
-
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -14,33 +13,32 @@ const meta: Meta<MappingFilterComponent> = {
   component: MappingFilterComponent,
   tags: ['autodocs'],
   render: (args: MappingFilterComponent) => ({
-    props: { ...args }
+    props: { ...args },
   }),
   decorators: [
     moduleMetadata({
       declarations: [],
-      imports: [CommonModule, FormsModule, ReactiveFormsModule, BrowserAnimationsModule, SelectModule, InputTextModule]
-    })
+      imports: [CommonModule, FormsModule, ReactiveFormsModule, BrowserAnimationsModule, SelectModule, InputTextModule],
+    }),
   ],
   argTypes: {
-    ngOnInit: { table: { disable: true } }
-  }
+    ngOnInit: { table: { disable: true } },
+  },
 };
 
 export default meta;
 type Story = StoryObj<MappingFilterComponent>;
 
-
 export const simple: Story = {
   args: {
     selectedAlphabeticalFilter: 'All',
-    mappingFilter: MappingState.ALL
-  }
+    mappingFilter: MappingState.ALL,
+  },
 };
 
 export const alphabetFilter: Story = {
   args: {
     selectedAlphabeticalFilter: 'C',
-    mappingFilter: MappingState.MAPPED
-  }
+    mappingFilter: MappingState.MAPPED,
+  },
 };

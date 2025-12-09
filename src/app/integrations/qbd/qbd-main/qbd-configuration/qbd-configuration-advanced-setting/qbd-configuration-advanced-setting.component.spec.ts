@@ -8,9 +8,8 @@ describe('QbdConfigurationAdvancedSettingComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ QbdConfigurationAdvancedSettingComponent ]
-    })
-    .compileComponents();
+      declarations: [QbdConfigurationAdvancedSettingComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(QbdConfigurationAdvancedSettingComponent);
     component = fixture.componentInstance;

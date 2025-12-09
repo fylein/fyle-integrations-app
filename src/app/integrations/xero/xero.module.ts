@@ -7,11 +7,6 @@ import { SharedModule } from 'src/app/shared/shared.module';
 
 @NgModule({
   declarations: [],
-  imports: [
-    CommonModule,
-    XeroRoutingModule,
-    XeroSharedModule,
-    SharedModule
-  ]
+  imports: [CommonModule, XeroRoutingModule, XeroSharedModule, SharedModule],
 })
-export class XeroModule { }
+export class XeroModule {}

@@ -1,4 +1,3 @@
-
 import { CommonModule } from '@angular/common';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ActivatedRoute } from '@angular/router';
@@ -18,52 +17,52 @@ const meta: Meta<GenericMappingV2Component> = {
   component: GenericMappingV2Component,
   tags: ['autodocs'],
   render: (args: GenericMappingV2Component) => ({
-    props: { ...args }
+    props: { ...args },
   }),
   decorators: [
     moduleMetadata({
       declarations: [],
       imports: [CommonModule, SharedModule, BrowserAnimationsModule],
       providers: [
-        IntegrationsToastService, MessageService,
+        IntegrationsToastService,
+        MessageService,
         {
           provide: MappingService,
           useValue: {
-            getGenericMappingsV2: () => of(
-              {
+            getGenericMappingsV2: () =>
+              of({
                 count: 0,
                 next: null,
                 previous: null,
-                results: []
-              }
-            ),
-            getMappingStats: () => of({
-              all_attributes_count: 10,
-              unmapped_attributes_count: 10
-            })
-          }
+                results: [],
+              }),
+            getMappingStats: () =>
+              of({
+                all_attributes_count: 10,
+                unmapped_attributes_count: 10,
+              }),
+          },
         },
         {
           provide: WorkspaceService,
-          useValue: {
-          }
+          useValue: {},
         },
         {
           provide: ActivatedRoute,
           useValue: {
             snapshot: {
               params: {
-                source_field: 'employee'
-              }
-            }
-          }
-        }
-      ]
-    })
+                source_field: 'employee',
+              },
+            },
+          },
+        },
+      ],
+    }),
   ],
   argTypes: {
-    ngOnInit: { table: { disable: true } }
-  }
+    ngOnInit: { table: { disable: true } },
+  },
 };
 
 export default meta;
@@ -82,7 +81,7 @@ export const simple: Story = {
         active: true,
         created_at: new Date(),
         updated_at: new Date(),
-        workspace: 1
+        workspace: 1,
       },
       {
         id: 2,
@@ -93,14 +92,14 @@ export const simple: Story = {
         active: true,
         created_at: new Date(),
         updated_at: new Date(),
-        workspace: 1
-      }
+        workspace: 1,
+      },
     ],
     employeeFieldMapping: FyleField.EMPLOYEE,
     sourceField: 'employee',
     destinationField: 'employee',
     showAutoMapEmployee: true,
     appName: AppName.QBO,
-    isCategoryMappingGeneric: true
-  }
+    isCategoryMappingGeneric: true,
+  },
 };

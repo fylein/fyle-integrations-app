@@ -6,13 +6,12 @@ import { IntacctConnectorService } from 'src/app/core/services/si/si-core/si-con
 import { IntacctOnboardingService } from 'src/app/core/services/si/si-configuration/si-onboarding.service';
 
 @Component({
-    selector: 'app-onboarding-intacct-connector',
-    templateUrl: './intacct-onboarding-connector.component.html',
-    styleUrls: ['./intacct-onboarding-connector.component.scss'],
-    standalone: false
+  selector: 'app-onboarding-intacct-connector',
+  templateUrl: './intacct-onboarding-connector.component.html',
+  styleUrls: ['./intacct-onboarding-connector.component.scss'],
+  standalone: false,
 })
 export class IntacctOnboardingConnectorComponent implements OnInit {
-
   isLoading: boolean;
 
   isIntacctCredentialsValid: boolean = false;
@@ -23,21 +22,22 @@ export class IntacctOnboardingConnectorComponent implements OnInit {
     private workspaceService: WorkspaceService,
     private intacctConnector: IntacctConnectorService,
     private translocoService: TranslocoService,
-    private intacctOnboardingService: IntacctOnboardingService
-  ) { }
+    private intacctOnboardingService: IntacctOnboardingService,
+  ) {}
 
   setupConnectionStatus(eventData: boolean) {
-    this.intacctConnector.getIntacctTokenHealthStatus()
-    .subscribe(isIntacctCredentialsValid => {
+    this.intacctConnector.getIntacctTokenHealthStatus().subscribe((isIntacctCredentialsValid) => {
       this.isIntacctCredentialsValid = isIntacctCredentialsValid && eventData ? eventData : false;
     });
   }
 
   ngOnInit(): void {
-    this.intacctConnector.getIntacctTokenHealthStatus(true)
-    .subscribe(isIntacctCredentialsValid => {
+    this.intacctConnector.getIntacctTokenHealthStatus(true).subscribe((isIntacctCredentialsValid) => {
       this.isIntacctCredentialsValid = isIntacctCredentialsValid;
     });
-    this.onboardingSteps = this.intacctOnboardingService.getOnboardingSteps(this.translocoService.translate('intacct.configuration.connector.stepName'), this.workspaceService.getOnboardingState());
+    this.onboardingSteps = this.intacctOnboardingService.getOnboardingSteps(
+      this.translocoService.translate('intacct.configuration.connector.stepName'),
+      this.workspaceService.getOnboardingState(),
+    );
   }
 }

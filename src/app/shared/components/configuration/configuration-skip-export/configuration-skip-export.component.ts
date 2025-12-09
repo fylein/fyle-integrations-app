@@ -8,13 +8,12 @@ import { HelperService } from 'src/app/core/services/common/helper.service';
 import { TranslocoService } from '@jsverse/transloco';
 
 @Component({
-    selector: 'app-configuration-skip-export',
-    templateUrl: './configuration-skip-export.component.html',
-    styleUrls: ['./configuration-skip-export.component.scss'],
-    standalone: false
+  selector: 'app-configuration-skip-export',
+  templateUrl: './configuration-skip-export.component.html',
+  styleUrls: ['./configuration-skip-export.component.scss'],
+  standalone: false,
 })
 export class ConfigurationSkipExportComponent implements OnInit {
-
   @Input() enableSkipExport: boolean;
 
   @Input() skipExportForm: FormGroup;
@@ -45,13 +44,13 @@ export class ConfigurationSkipExportComponent implements OnInit {
 
   operatorFieldOptions2: { label: string; value: string }[];
 
-  joinByOptions: {label: string; value: JoinOption}[];
+  joinByOptions: { label: string; value: JoinOption }[];
 
-  customOperatorOptions: {label: string; value: CustomOperatorOption}[];
+  customOperatorOptions: { label: string; value: CustomOperatorOption }[];
 
-  customSelectOperatorOptions: {label: string; value: string}[];
+  customSelectOperatorOptions: { label: string; value: string }[];
 
-  customCheckBoxValueOptions: { label: string; value: string; }[];
+  customCheckBoxValueOptions: { label: string; value: string }[];
 
   readonly brandingFeatureConfig = brandingFeatureConfig;
 
@@ -59,13 +58,15 @@ export class ConfigurationSkipExportComponent implements OnInit {
 
   constructor(
     private helper: HelperService,
-    private translocoService: TranslocoService
-  ) { }
+    private translocoService: TranslocoService,
+  ) {}
 
   private setConditionFields(response: ExpenseFilterResponse, conditionArray: ConditionField[]) {
     response.results.forEach((element) => {
-      const type = this.conditionFieldOptions.filter( (fieldOption) => fieldOption.field_name.toLowerCase() === element.condition.toLowerCase());
-      const selectedConditionOption : ConditionField = type[0];
+      const type = this.conditionFieldOptions.filter(
+        (fieldOption) => fieldOption.field_name.toLowerCase() === element.condition.toLowerCase(),
+      );
+      const selectedConditionOption: ConditionField = type[0];
       conditionArray.push(selectedConditionOption);
     });
   }
@@ -102,27 +103,23 @@ export class ConfigurationSkipExportComponent implements OnInit {
   }
 
   conditionFieldWatcher() {
-    this.skipExportForm.controls.condition1.valueChanges.subscribe(
-      (conditionSelected) => {
-        this.resetFields(
-          this.skipExportForm.controls.operator1,
-          this.skipExportForm.controls.value1,
-          conditionSelected,
-          1
-        );
-      }
-    );
+    this.skipExportForm.controls.condition1.valueChanges.subscribe((conditionSelected) => {
+      this.resetFields(
+        this.skipExportForm.controls.operator1,
+        this.skipExportForm.controls.value1,
+        conditionSelected,
+        1,
+      );
+    });
 
-    this.skipExportForm.controls.condition2.valueChanges.subscribe(
-      (conditionSelected) => {
-        this.resetFields(
-          this.skipExportForm.controls.operator2,
-          this.skipExportForm.controls.value2,
-          conditionSelected,
-          2
-        );
-      }
-    );
+    this.skipExportForm.controls.condition2.valueChanges.subscribe((conditionSelected) => {
+      this.resetFields(
+        this.skipExportForm.controls.operator2,
+        this.skipExportForm.controls.value2,
+        conditionSelected,
+        2,
+      );
+    });
   }
 
   resetAdditionalFilter() {
@@ -143,13 +140,9 @@ export class ConfigurationSkipExportComponent implements OnInit {
         this.setCustomOperatorOptions(rank, conditionSelected.type);
       } else if (!conditionSelected.is_custom) {
         if (rank === 1) {
-          this.operatorFieldOptions1 = this.setDefaultOperatorOptions(
-            conditionSelected.field_name
-          );
+          this.operatorFieldOptions1 = this.setDefaultOperatorOptions(conditionSelected.field_name);
         } else if (rank === 2) {
-          this.operatorFieldOptions2 = this.setDefaultOperatorOptions(
-            conditionSelected.field_name
-          );
+          this.operatorFieldOptions2 = this.setDefaultOperatorOptions(conditionSelected.field_name);
         }
       }
     }
@@ -161,7 +154,7 @@ export class ConfigurationSkipExportComponent implements OnInit {
     if (this.showAdditionalCondition) {
       const fields = ['join_by', 'condition2', 'operator2'];
       this.helper.handleSkipExportFormUpdates(this.skipExportForm, fields, true);
-      if (this.skipExportForm.controls.value2.value?.length===0) {
+      if (this.skipExportForm.controls.value2.value?.length === 0) {
         this.helper.markControllerAsRequired(this.skipExportForm, 'value2');
       }
     }
@@ -171,7 +164,8 @@ export class ConfigurationSkipExportComponent implements OnInit {
     this.showAdditionalCondition = false;
     this.showAddButton = true;
     this.resetAdditionalFilter();
-    const isDelete = this.expenseFilter.results.length > 1 ? this.deleteSkipExportForm.emit(this.expenseFilter.results[1].id) : '';
+    const isDelete =
+      this.expenseFilter.results.length > 1 ? this.deleteSkipExportForm.emit(this.expenseFilter.results[1].id) : '';
     const fields = ['join_by', 'condition2', 'operator2', 'value2'];
     this.helper.handleSkipExportFormUpdates(this.skipExportForm, fields, false);
   }
@@ -193,28 +187,56 @@ export class ConfigurationSkipExportComponent implements OnInit {
 
   // For conditionally adding and removing Value fields from layout
   showValueHeader(rank: number): boolean {
-    return rank === 1 ? (this.skipExportForm.get('operator1')?.value !== 'is_empty') && (this.skipExportForm.get('operator1')?.value !== 'is_not_empty')
-      : (this.skipExportForm.get('operator2')?.value !== 'is_empty') && (this.skipExportForm.get('operator2')?.value !== 'is_not_empty');
+    return rank === 1
+      ? this.skipExportForm.get('operator1')?.value !== 'is_empty' &&
+          this.skipExportForm.get('operator1')?.value !== 'is_not_empty'
+      : this.skipExportForm.get('operator2')?.value !== 'is_empty' &&
+          this.skipExportForm.get('operator2')?.value !== 'is_not_empty';
   }
 
   showInputField(rank: number) {
-    return rank === 1 ? this.skipExportForm.get('condition1')?.value?.field_name === 'report_title' && (this.skipExportForm.get('operator1')?.value !== 'is_empty' || this.skipExportForm.get('operator1')?.value !== 'is_not_empty')
-      : this.skipExportForm.get('condition2')?.value?.field_name && this.skipExportForm.get('condition2')?.value?.field_name === 'report_title'  && (this.skipExportForm.get('operator2')?.value !== 'is_empty' || this.skipExportForm.get('operator2')?.value !== 'is_not_empty');
+    return rank === 1
+      ? this.skipExportForm.get('condition1')?.value?.field_name === 'report_title' &&
+          (this.skipExportForm.get('operator1')?.value !== 'is_empty' ||
+            this.skipExportForm.get('operator1')?.value !== 'is_not_empty')
+      : this.skipExportForm.get('condition2')?.value?.field_name &&
+          this.skipExportForm.get('condition2')?.value?.field_name === 'report_title' &&
+          (this.skipExportForm.get('operator2')?.value !== 'is_empty' ||
+            this.skipExportForm.get('operator2')?.value !== 'is_not_empty');
   }
 
   showDateField(rank: number) {
-    return rank === 1 ? this.skipExportForm.get('condition1')?.value?.type==='DATE' && (this.skipExportForm.get('operator1')?.value !== 'is_empty' || this.skipExportForm.get('operator1')?.value !== 'is_not_empty')
-      : this.skipExportForm.get('condition2')?.value?.type==='DATE' && (this.skipExportForm.get('operator2')?.value !== 'is_empty' || this.skipExportForm.get('operator2')?.value !== 'is_not_empty');
+    return rank === 1
+      ? this.skipExportForm.get('condition1')?.value?.type === 'DATE' &&
+          (this.skipExportForm.get('operator1')?.value !== 'is_empty' ||
+            this.skipExportForm.get('operator1')?.value !== 'is_not_empty')
+      : this.skipExportForm.get('condition2')?.value?.type === 'DATE' &&
+          (this.skipExportForm.get('operator2')?.value !== 'is_empty' ||
+            this.skipExportForm.get('operator2')?.value !== 'is_not_empty');
   }
 
-  showChipField(rank: number):boolean {
-    return rank === 1 ?
-      (this.skipExportForm.get('condition1')?.value?.field_name !== 'report_title') && (!this.skipExportForm.get('condition1')?.value || this.skipExportForm.get('condition1')?.value.type==='SELECT' || this.skipExportForm.get('condition1')?.value?.type==='TEXT' || this.skipExportForm.get('condition1')?.value?.type==='NUMBER') && (this.skipExportForm.get('operator1')?.value !== 'is_empty')  && (this.skipExportForm.get('operator1')?.value !== 'is_not_empty')
-      :(this.skipExportForm.get('condition2')?.value?.field_name !== 'report_title') && (!this.skipExportForm.get('condition2')?.value || this.skipExportForm.get('condition2')?.value?.type==='SELECT' || this.skipExportForm.get('condition2')?.value?.type==='TEXT' || this.skipExportForm.get('condition2')?.value?.type==='NUMBER') && (this.skipExportForm.get('operator2')?.value !== 'is_empty')  && (this.skipExportForm.get('operator2')?.value !== 'is_not_empty');
+  showChipField(rank: number): boolean {
+    return rank === 1
+      ? this.skipExportForm.get('condition1')?.value?.field_name !== 'report_title' &&
+          (!this.skipExportForm.get('condition1')?.value ||
+            this.skipExportForm.get('condition1')?.value.type === 'SELECT' ||
+            this.skipExportForm.get('condition1')?.value?.type === 'TEXT' ||
+            this.skipExportForm.get('condition1')?.value?.type === 'NUMBER') &&
+          this.skipExportForm.get('operator1')?.value !== 'is_empty' &&
+          this.skipExportForm.get('operator1')?.value !== 'is_not_empty'
+      : this.skipExportForm.get('condition2')?.value?.field_name !== 'report_title' &&
+          (!this.skipExportForm.get('condition2')?.value ||
+            this.skipExportForm.get('condition2')?.value?.type === 'SELECT' ||
+            this.skipExportForm.get('condition2')?.value?.type === 'TEXT' ||
+            this.skipExportForm.get('condition2')?.value?.type === 'NUMBER') &&
+          this.skipExportForm.get('operator2')?.value !== 'is_empty' &&
+          this.skipExportForm.get('operator2')?.value !== 'is_not_empty';
   }
 
   showBooleanField(rank: number) {
-    return rank === 1 ? this.skipExportForm.get('condition1')?.value?.type==='BOOLEAN' : this.skipExportForm.get('condition2')?.value?.type==='BOOLEAN';
+    return rank === 1
+      ? this.skipExportForm.get('condition1')?.value?.type === 'BOOLEAN'
+      : this.skipExportForm.get('condition2')?.value?.type === 'BOOLEAN';
   }
 
   setDefaultOperatorOptions(conditionField: string) {
@@ -228,27 +250,27 @@ export class ConfigurationSkipExportComponent implements OnInit {
     ) {
       operatorList.push({
         value: 'iexact',
-        label: this.translocoService.translate('configurationSkipExport.operatorIexact')
+        label: this.translocoService.translate('configurationSkipExport.operatorIexact'),
       });
     } else if (conditionField === 'spent_at') {
       operatorList.push({
         value: 'lt',
-        label: this.translocoService.translate('configurationSkipExport.operatorIsBefore')
+        label: this.translocoService.translate('configurationSkipExport.operatorIsBefore'),
       });
       operatorList.push({
         value: 'lte',
-        label: this.translocoService.translate('configurationSkipExport.operatorIsOnOrBefore')
+        label: this.translocoService.translate('configurationSkipExport.operatorIsOnOrBefore'),
       });
     }
     if (conditionField === 'report_title') {
       operatorList.push({
         value: 'icontains',
-        label: this.translocoService.translate('configurationSkipExport.operatorContains')
+        label: this.translocoService.translate('configurationSkipExport.operatorContains'),
       });
     } else if (conditionField === 'category') {
       operatorList.push({
         value: 'not_in',
-        label: this.translocoService.translate('configurationSkipExport.operatorNotIn')
+        label: this.translocoService.translate('configurationSkipExport.operatorNotIn'),
       });
     }
     return operatorList;
@@ -256,11 +278,11 @@ export class ConfigurationSkipExportComponent implements OnInit {
 
   setCustomOperatorOptions(rank: number, type: string | null) {
     if (type === 'BOOLEAN') {
-      const customCheckBoxOperatorOptions: { label: string; value: string; }[] = [
+      const customCheckBoxOperatorOptions: { label: string; value: string }[] = [
         {
           label: this.translocoService.translate('configurationSkipExport.operatorIs'),
-          value: 'iexact'
-        }
+          value: 'iexact',
+        },
       ];
       if (rank === 1) {
         this.operatorFieldOptions1 = customCheckBoxOperatorOptions;
@@ -283,43 +305,46 @@ export class ConfigurationSkipExportComponent implements OnInit {
   }
 
   private setupComponentOptions(): void {
-    this.joinByOptions = [{label: this.translocoService.translate('configurationSkipExport.joinByAnd'), value: JoinOption.AND}, {label: this.translocoService.translate('configurationSkipExport.joinByOr'), value: JoinOption.OR}];
+    this.joinByOptions = [
+      { label: this.translocoService.translate('configurationSkipExport.joinByAnd'), value: JoinOption.AND },
+      { label: this.translocoService.translate('configurationSkipExport.joinByOr'), value: JoinOption.OR },
+    ];
 
     this.customOperatorOptions = [
       {
         label: this.translocoService.translate('configurationSkipExport.operatorIs'),
-        value: CustomOperatorOption.Is
+        value: CustomOperatorOption.Is,
       },
       {
         label: this.translocoService.translate('configurationSkipExport.operatorIsEmpty'),
-        value: CustomOperatorOption.IsEmpty
+        value: CustomOperatorOption.IsEmpty,
       },
       {
         label: this.translocoService.translate('configurationSkipExport.operatorIsNotEmpty'),
-        value: CustomOperatorOption.IsNotEmpty
-      }
+        value: CustomOperatorOption.IsNotEmpty,
+      },
     ];
 
     this.customSelectOperatorOptions = [
       {
         label: this.translocoService.translate('configurationSkipExport.operatorIexact'),
-        value: 'iexact'
+        value: 'iexact',
       },
       {
         label: this.translocoService.translate('configurationSkipExport.operatorNotIn'),
-        value: 'not_in'
-      }
+        value: 'not_in',
+      },
     ];
 
     this.customCheckBoxValueOptions = [
       {
         label: this.translocoService.translate('configurationSkipExport.optionYes'),
-        value: 'true'
+        value: 'true',
       },
       {
         label: this.translocoService.translate('configurationSkipExport.optionNo'),
-        value: 'false'
-      }
+        value: 'false',
+      },
     ];
   }
 
@@ -371,7 +396,7 @@ export class ConfigurationSkipExportComponent implements OnInit {
   }
 
   private normalizeChipFieldValues(): void {
-    ['value1', 'value2'].forEach(controlName => {
+    ['value1', 'value2'].forEach((controlName) => {
       const control = this.skipExportForm.get(controlName);
       if (control) {
         const currentValue = control.value;

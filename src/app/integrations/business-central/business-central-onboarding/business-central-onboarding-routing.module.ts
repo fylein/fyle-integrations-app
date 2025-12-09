@@ -16,38 +16,38 @@ const routes: Routes = [
     children: [
       {
         path: 'landing',
-        component: BusinessCentralOnboardingLandingComponent
+        component: BusinessCentralOnboardingLandingComponent,
       },
       {
         path: 'connector',
-        component: BusinessCentralOnboardingConnectorComponent
+        component: BusinessCentralOnboardingConnectorComponent,
       },
       {
         path: 'export_settings',
         component: BusinessCentralOnboardingExportSettingsComponent,
-        canActivate: [BusinessCentralTokenGuard]
+        canActivate: [BusinessCentralTokenGuard],
       },
       {
         path: 'import_settings',
         component: BusinessCentralOnboardingImportSettingsComponent,
-        canActivate: [BusinessCentralTokenGuard]
+        canActivate: [BusinessCentralTokenGuard],
       },
       {
         path: 'advanced_settings',
         component: BusinessCentralOnboardingAdvancedSettingsComponent,
-        canActivate: [BusinessCentralTokenGuard]
+        canActivate: [BusinessCentralTokenGuard],
       },
       {
         path: 'done',
         component: BusinessCentralOnboardingDoneComponent,
-        canActivate: [BusinessCentralTokenGuard]
-      }
-    ]
-  }
+        canActivate: [BusinessCentralTokenGuard],
+      },
+    ],
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class BusinessCentralOnboardingRoutingModule { }
+export class BusinessCentralOnboardingRoutingModule {}

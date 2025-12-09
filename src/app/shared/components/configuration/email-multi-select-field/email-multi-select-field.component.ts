@@ -12,13 +12,12 @@ import { brandingConfig, brandingFeatureConfig, brandingStyle } from 'src/app/br
 import { TranslocoService } from '@jsverse/transloco';
 
 @Component({
-    selector: 'app-email-multi-select-field',
-    templateUrl: './email-multi-select-field.component.html',
-    styleUrls: ['./email-multi-select-field.component.scss'],
-    standalone: false
+  selector: 'app-email-multi-select-field',
+  templateUrl: './email-multi-select-field.component.html',
+  styleUrls: ['./email-multi-select-field.component.scss'],
+  standalone: false,
 })
 export class EmailMultiSelectFieldComponent implements OnInit {
-
   selectedEmail: string | null;
 
   @Input() options: QBDEmailOptions[];
@@ -51,7 +50,7 @@ export class EmailMultiSelectFieldComponent implements OnInit {
 
   addEmailForm: FormGroup = this.formBuilder.group({
     email: [null, Validators.compose([Validators.email, Validators.required])],
-    name: [null, Validators.required]
+    name: [null, Validators.required],
   });
 
   @Output() updateConfiguration = new EventEmitter<BambooHRConfigurationPost>();
@@ -70,8 +69,8 @@ export class EmailMultiSelectFieldComponent implements OnInit {
     @Inject(FormBuilder) private formBuilder: FormBuilder,
     private trackingService: TrackingService,
     private toastService: IntegrationsToastService,
-    private translocoService: TranslocoService
-  ) { }
+    private translocoService: TranslocoService,
+  ) {}
 
   isOverflowing(element: any): boolean {
     return element.offsetWidth < element.scrollWidth;
@@ -106,7 +105,10 @@ export class EmailMultiSelectFieldComponent implements OnInit {
     }
     this.addEmailForm.reset();
     this.showDialog = false;
-    this.toastService.displayToastMessage(ToastSeverity.SUCCESS, this.translocoService.translate('emailMultiSelectField.emailSavedSuccess'));
+    this.toastService.displayToastMessage(
+      ToastSeverity.SUCCESS,
+      this.translocoService.translate('emailMultiSelectField.emailSavedSuccess'),
+    );
   }
 
   private assignSelectedEmail(emails: QBDEmailOptions[]): void {
@@ -125,11 +127,16 @@ export class EmailMultiSelectFieldComponent implements OnInit {
   }
 
   private getEmailOptions(additionalEmails: QBDEmailOptions[], adminEmails: QBDEmailOptions[]): QBDEmailOptions[] {
-    return additionalEmails.concat(adminEmails).filter((email: QBDEmailOptions, index: number, self: QBDEmailOptions[]) => {
-      return index === self.findIndex((e: QBDEmailOptions) => {
-        return e.email === email.email;
+    return additionalEmails
+      .concat(adminEmails)
+      .filter((email: QBDEmailOptions, index: number, self: QBDEmailOptions[]) => {
+        return (
+          index ===
+          self.findIndex((e: QBDEmailOptions) => {
+            return e.email === email.email;
+          })
+        );
       });
-    });
   }
 
   private setupPage(): void {
@@ -150,5 +157,4 @@ export class EmailMultiSelectFieldComponent implements OnInit {
   ngOnInit(): void {
     this.setupPage();
   }
-
 }

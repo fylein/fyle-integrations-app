@@ -9,7 +9,12 @@ import { IntegrationsToastService } from 'src/app/core/services/common/integrati
 import { WorkspaceService } from 'src/app/core/services/common/workspace.service';
 import { QboImportSettingsService } from 'src/app/core/services/qbo/qbo-configuration/qbo-import-settings.service';
 import { AccountingDisplayName, AccountingField, FyleField, ToastSeverity } from 'src/app/core/models/enum/enum.model';
-import { mockCreditCardAccounts, mockGeneralSettings, mockImportSettings, mockMappingSetting } from '../../../qbo.fixture';
+import {
+  mockCreditCardAccounts,
+  mockGeneralSettings,
+  mockImportSettings,
+  mockMappingSetting,
+} from '../../../qbo.fixture';
 import { QBOWorkspaceGeneralSetting } from 'src/app/core/models/qbo/db/workspace-general-setting.model';
 import { MappingSetting } from 'src/app/core/models/db/mapping-setting.model';
 import { QBOImportSettingGet } from 'src/app/core/models/qbo/qbo-configuration/qbo-import-setting.model';
@@ -29,26 +34,30 @@ describe('QboBaseMappingComponent', () => {
     mockActivatedRoute = {
       params: of({ source_field: 'EMPLOYEE' }),
       snapshot: {
-        params: { source_field: 'EMPLOYEE' }
-      }
+        params: { source_field: 'EMPLOYEE' },
+      },
     };
     const translocoServiceSpy = jasmine.createSpyObj('TranslocoService', ['translate']);
 
-    mockMappingService = jasmine.createSpyObj('MappingService', ['triggerAutoMapEmployees', 'getMappingSettings', 'getPaginatedDestinationAttributes']);
+    mockMappingService = jasmine.createSpyObj('MappingService', [
+      'triggerAutoMapEmployees',
+      'getMappingSettings',
+      'getPaginatedDestinationAttributes',
+    ]);
     mockToastService = jasmine.createSpyObj('IntegrationsToastService', ['displayToastMessage']);
     mockWorkspaceService = jasmine.createSpyObj('WorkspaceService', ['getWorkspaceGeneralSettings']);
     mockImportSettingsService = jasmine.createSpyObj('QboImportSettingsService', ['getImportSettings']);
 
     await TestBed.configureTestingModule({
-      declarations: [ QboBaseMappingComponent ],
+      declarations: [QboBaseMappingComponent],
       providers: [
         { provide: ActivatedRoute, useValue: mockActivatedRoute },
         { provide: MappingService, useValue: mockMappingService },
         { provide: IntegrationsToastService, useValue: mockToastService },
         { provide: WorkspaceService, useValue: mockWorkspaceService },
         { provide: QboImportSettingsService, useValue: mockImportSettingsService },
-        { provide: TranslocoService, useValue: translocoServiceSpy }
-      ]
+        { provide: TranslocoService, useValue: translocoServiceSpy },
+      ],
     }).compileComponents();
 
     fixture = TestBed.createComponent(QboBaseMappingComponent);
@@ -66,7 +75,10 @@ describe('QboBaseMappingComponent', () => {
     component.triggerAutoMapEmployees();
 
     expect(component.isLoading).toBeFalse();
-    expect(mockToastService.displayToastMessage).toHaveBeenCalledWith(ToastSeverity.INFO, 'Auto mapping of employees may take few minutes');
+    expect(mockToastService.displayToastMessage).toHaveBeenCalledWith(
+      ToastSeverity.INFO,
+      'Auto mapping of employees may take few minutes',
+    );
   });
 
   it('should handle error when triggering auto map employees', () => {
@@ -75,12 +87,17 @@ describe('QboBaseMappingComponent', () => {
     component.triggerAutoMapEmployees();
 
     expect(component.isLoading).toBeFalse();
-    expect(mockToastService.displayToastMessage).toHaveBeenCalledWith(ToastSeverity.ERROR, 'Something went wrong, please try again');
+    expect(mockToastService.displayToastMessage).toHaveBeenCalledWith(
+      ToastSeverity.ERROR,
+      'Something went wrong, please try again',
+    );
   });
 
   it('should handle route parameter changes', () => {
     mockWorkspaceService.getWorkspaceGeneralSettings.and.returnValue(of(mockGeneralSettings));
-    mockMappingService.getMappingSettings.and.returnValue(of({ count: 1, next: null, previous: null, results: mockImportSettings.mapping_settings }));
+    mockMappingService.getMappingSettings.and.returnValue(
+      of({ count: 1, next: null, previous: null, results: mockImportSettings.mapping_settings }),
+    );
     mockImportSettingsService.getImportSettings.and.returnValue(of(mockImportSettings));
     mockMappingService.getPaginatedDestinationAttributes.and.returnValue(of(mockCreditCardAccounts));
 
@@ -122,8 +139,8 @@ describe('QboBaseMappingComponent', () => {
         workspace: 0,
         import_to_fyle: false,
         is_custom: false,
-        source_placeholder: null
-      }
+        source_placeholder: null,
+      },
     ];
 
     const result = (component as any).getDestinationField(workspaceGeneralSetting, mappingSettings);

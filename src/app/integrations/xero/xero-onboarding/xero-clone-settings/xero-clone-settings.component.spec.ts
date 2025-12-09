@@ -8,9 +8,8 @@ xdescribe('XeroCloneSettingsComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ XeroCloneSettingsComponent ]
-    })
-    .compileComponents();
+      declarations: [XeroCloneSettingsComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(XeroCloneSettingsComponent);
     component = fixture.componentInstance;

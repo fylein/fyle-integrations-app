@@ -1,4 +1,3 @@
-
 import { CommonModule } from '@angular/common';
 import type { Meta, StoryObj } from '@storybook/angular';
 import { moduleMetadata } from '@storybook/angular';
@@ -12,17 +11,17 @@ const meta: Meta<ConfigurationRadioFieldComponent> = {
   component: ConfigurationRadioFieldComponent,
   tags: ['autodocs'],
   render: (args: ConfigurationRadioFieldComponent) => ({
-    props: { ...args }
+    props: { ...args },
   }),
   decorators: [
     moduleMetadata({
       declarations: [ConfigurationRadioFieldComponent],
-      imports: [CommonModule, RadioButtonModule, FormsModule, ReactiveFormsModule]
-    })
+      imports: [CommonModule, RadioButtonModule, FormsModule, ReactiveFormsModule],
+    }),
   ],
   argTypes: {
-    ngOnInit: { table: { disable: true } }
-  }
+    ngOnInit: { table: { disable: true } },
+  },
 };
 
 export default meta;
@@ -30,7 +29,7 @@ type Story = StoryObj<ConfigurationRadioFieldComponent>;
 
 export const simple: Story = {
   args: {
-    form: setupStoryBookFormGroup(new FormGroup({reimbursableExportType: new FormControl()})),
+    form: setupStoryBookFormGroup(new FormGroup({ reimbursableExportType: new FormControl() })),
     isFieldMandatory: true,
     mandatoryErrorListName: 'how expenses to be exported',
     label: 'How should the expenses be exported?',
@@ -38,18 +37,18 @@ export const simple: Story = {
     options: [
       {
         label: 'Bill',
-        value: 'BILL'
+        value: 'BILL',
       },
       {
         label: 'Check',
-        value: 'CHECK'
+        value: 'CHECK',
       },
       {
         label: 'Expense',
-        value: 'EXPENSE'
-      }
+        value: 'EXPENSE',
+      },
     ],
     iconPath: 'expense',
-    formControllerName: 'reimbursableExportType'
-  }
+    formControllerName: 'reimbursableExportType',
+  },
 };

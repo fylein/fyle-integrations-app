@@ -1,4 +1,3 @@
-
 import { CommonModule } from '@angular/common';
 import type { Meta, StoryObj } from '@storybook/angular';
 import { moduleMetadata } from '@storybook/angular';
@@ -9,17 +8,17 @@ const meta: Meta<ConfigurationSkipExportComponent> = {
   component: ConfigurationSkipExportComponent,
   tags: ['autodocs'],
   render: (args: ConfigurationSkipExportComponent) => ({
-    props: { ...args }
+    props: { ...args },
   }),
   decorators: [
     moduleMetadata({
       declarations: [ConfigurationSkipExportComponent],
-      imports: [CommonModule]
-    })
+      imports: [CommonModule],
+    }),
   ],
   argTypes: {
-    ngOnInit: { table: { disable: true } }
-  }
+    ngOnInit: { table: { disable: true } },
+  },
 };
 
 export default meta;

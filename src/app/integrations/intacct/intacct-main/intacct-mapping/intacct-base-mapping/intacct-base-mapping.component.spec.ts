@@ -6,14 +6,26 @@ import { IntacctBaseMappingComponent } from './intacct-base-mapping.component';
 import { MappingService } from 'src/app/core/services/common/mapping.service';
 import { WorkspaceService } from 'src/app/core/services/common/workspace.service';
 import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
-import { FyleField, IntacctCategoryDestination, IntacctCorporateCreditCardExpensesObject, IntacctReimbursableExpensesObject, ToastSeverity } from 'src/app/core/models/enum/enum.model';
-import { mockConfigurationResponse, mockMappingSettingsResponse, mockDestinationAttributesResponse } from '../../../intacct.fixture';
+import {
+  FyleField,
+  IntacctCategoryDestination,
+  IntacctCorporateCreditCardExpensesObject,
+  IntacctReimbursableExpensesObject,
+  ToastSeverity,
+} from 'src/app/core/models/enum/enum.model';
+import {
+  mockConfigurationResponse,
+  mockMappingSettingsResponse,
+  mockDestinationAttributesResponse,
+} from '../../../intacct.fixture';
 import { MappingSettingResponse } from 'src/app/core/models/intacct/db/mapping-setting.model';
-import { DestinationAttribute, PaginatedDestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
+import {
+  DestinationAttribute,
+  PaginatedDestinationAttribute,
+} from 'src/app/core/models/db/destination-attribute.model';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { CommonResourcesService } from 'src/app/core/services/common/common-resources.service';
 import { TranslocoService } from '@jsverse/transloco';
-
 
 describe('IntacctBaseMappingComponent', () => {
   let component: IntacctBaseMappingComponent;
@@ -28,9 +40,13 @@ describe('IntacctBaseMappingComponent', () => {
   beforeEach(async () => {
     routeSpy = jasmine.createSpyObj('ActivatedRoute', [], {
       params: of({ source_field: 'employee' }),
-      snapshot: { params: { source_field: 'employee' } }
+      snapshot: { params: { source_field: 'employee' } },
     });
-    mappingServiceSpy = jasmine.createSpyObj('MappingService', ['getMappingSettings', 'getPaginatedDestinationAttributes', 'triggerAutoMapEmployees']);
+    mappingServiceSpy = jasmine.createSpyObj('MappingService', [
+      'getMappingSettings',
+      'getPaginatedDestinationAttributes',
+      'triggerAutoMapEmployees',
+    ]);
     workspaceServiceSpy = jasmine.createSpyObj('WorkspaceService', ['getConfiguration']);
     toastServiceSpy = jasmine.createSpyObj('IntegrationsToastService', ['displayToastMessage']);
     commonResourcesServiceSpy = jasmine.createSpyObj('CommonResourcesService', ['getCachedDisplayName']);
@@ -44,8 +60,8 @@ describe('IntacctBaseMappingComponent', () => {
         { provide: WorkspaceService, useValue: workspaceServiceSpy },
         { provide: IntegrationsToastService, useValue: toastServiceSpy },
         { provide: CommonResourcesService, useValue: commonResourcesServiceSpy },
-        { provide: TranslocoService, useValue: translocoServiceSpy }
-      ]
+        { provide: TranslocoService, useValue: translocoServiceSpy },
+      ],
     }).compileComponents();
 
     fixture = TestBed.createComponent(IntacctBaseMappingComponent);
@@ -60,7 +76,9 @@ describe('IntacctBaseMappingComponent', () => {
   it('should initialize correctly', fakeAsync(() => {
     workspaceServiceSpy.getConfiguration.and.returnValue(of(mockConfigurationResponse));
     mappingServiceSpy.getMappingSettings.and.returnValue(of(mockMappingSettingsResponse as MappingSettingResponse));
-    mappingServiceSpy.getPaginatedDestinationAttributes.and.returnValue(of(mockDestinationAttributesResponse as PaginatedDestinationAttribute));
+    mappingServiceSpy.getPaginatedDestinationAttributes.and.returnValue(
+      of(mockDestinationAttributesResponse as PaginatedDestinationAttribute),
+    );
     commonResourcesServiceSpy.getCachedDisplayName.and.returnValues(undefined, 'Employee');
 
     fixture.detectChanges();
@@ -81,7 +99,9 @@ describe('IntacctBaseMappingComponent', () => {
 
     workspaceServiceSpy.getConfiguration.and.returnValue(of(mockConfigurationResponse));
     mappingServiceSpy.getMappingSettings.and.returnValue(of(mockMappingSettingsResponse as MappingSettingResponse));
-    mappingServiceSpy.getPaginatedDestinationAttributes.and.returnValue(of(mockDestinationAttributesResponse as PaginatedDestinationAttribute));
+    mappingServiceSpy.getPaginatedDestinationAttributes.and.returnValue(
+      of(mockDestinationAttributesResponse as PaginatedDestinationAttribute),
+    );
 
     fixture.detectChanges();
     tick();
@@ -96,7 +116,10 @@ describe('IntacctBaseMappingComponent', () => {
     component.triggerAutoMapEmployees();
 
     expect(component.isLoading).toBeFalse();
-    expect(toastServiceSpy.displayToastMessage).toHaveBeenCalledWith(ToastSeverity.INFO, 'Auto mapping of employees may take few minutes');
+    expect(toastServiceSpy.displayToastMessage).toHaveBeenCalledWith(
+      ToastSeverity.INFO,
+      'Auto mapping of employees may take few minutes',
+    );
   });
 
   it('should handle error when triggering auto map employees', () => {
@@ -106,7 +129,10 @@ describe('IntacctBaseMappingComponent', () => {
     component.triggerAutoMapEmployees();
 
     expect(component.isLoading).toBeFalse();
-    expect(toastServiceSpy.displayToastMessage).toHaveBeenCalledWith(ToastSeverity.ERROR, 'Something went wrong, please try again');
+    expect(toastServiceSpy.displayToastMessage).toHaveBeenCalledWith(
+      ToastSeverity.ERROR,
+      'Something went wrong, please try again',
+    );
   });
 
   describe('getDestinationField', () => {
@@ -121,7 +147,9 @@ describe('IntacctBaseMappingComponent', () => {
 
     it('should return EXPENSE_TYPE when source field is CATEGORY and reimbursable_expenses_object is EXPENSE_REPORT', () => {
       component.sourceField = FyleField.CATEGORY;
-      const intacctConfiguration = { reimbursable_expenses_object: IntacctReimbursableExpensesObject.EXPENSE_REPORT } as any;
+      const intacctConfiguration = {
+        reimbursable_expenses_object: IntacctReimbursableExpensesObject.EXPENSE_REPORT,
+      } as any;
       const mappingSettings = [] as any;
 
       const result = component['getDestinationField'](intacctConfiguration, mappingSettings);
@@ -130,7 +158,9 @@ describe('IntacctBaseMappingComponent', () => {
 
     it('should return EXPENSE_TYPE when source field is CATEGORY and corporate_credit_card_expenses_object is EXPENSE_REPORT', () => {
       component.sourceField = FyleField.CATEGORY;
-      const intacctConfiguration = { corporate_credit_card_expenses_object: IntacctCorporateCreditCardExpensesObject.EXPENSE_REPORT } as any;
+      const intacctConfiguration = {
+        corporate_credit_card_expenses_object: IntacctCorporateCreditCardExpensesObject.EXPENSE_REPORT,
+      } as any;
       const mappingSettings = [] as any;
 
       const result = component['getDestinationField'](intacctConfiguration, mappingSettings);
@@ -139,7 +169,10 @@ describe('IntacctBaseMappingComponent', () => {
 
     it('should return ACCOUNT when source field is CATEGORY and neither expenses_object is EXPENSE_REPORT', () => {
       component.sourceField = FyleField.CATEGORY;
-      const intacctConfiguration = { reimbursable_expenses_object: 'OTHER', corporate_credit_card_expenses_object: 'OTHER' } as any;
+      const intacctConfiguration = {
+        reimbursable_expenses_object: 'OTHER',
+        corporate_credit_card_expenses_object: 'OTHER',
+      } as any;
       const mappingSettings = [] as any;
 
       const result = component['getDestinationField'](intacctConfiguration, mappingSettings);

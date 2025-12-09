@@ -6,11 +6,30 @@ import { TranslocoService } from '@jsverse/transloco';
 import { DialogService } from 'primeng/dynamicdialog';
 import { forkJoin, pairwise, startWith } from 'rxjs';
 import { brandingConfig, brandingKbArticles, brandingStyle } from 'src/app/branding/branding-config';
-import { ConditionField, ExpenseFilterPayload, ExpenseFilterResponse, SkipExportModel } from 'src/app/core/models/common/advanced-settings.model';
-import { AppName, ConfigurationCta, ProgressPhase, Sage50OnboardingState, ToastSeverity, TrackingApp, UpdateEvent } from 'src/app/core/models/enum/enum.model';
+import {
+  ConditionField,
+  ExpenseFilterPayload,
+  ExpenseFilterResponse,
+  SkipExportModel,
+} from 'src/app/core/models/common/advanced-settings.model';
+import {
+  AppName,
+  ConfigurationCta,
+  ProgressPhase,
+  Sage50OnboardingState,
+  ToastSeverity,
+  TrackingApp,
+  UpdateEvent,
+} from 'src/app/core/models/enum/enum.model';
 import { ScheduleDialogData, ScheduleForm } from 'src/app/core/models/misc/schedule-dialog.model';
-import { Sage50AdvancedSettings, Sage50AdvancedSettingsForm } from 'src/app/core/models/sage50/sage50-configuration/sage50-advanced-settings.model';
-import { Sage50CCCExportType, Sage50ExportSettingsGet } from 'src/app/core/models/sage50/sage50-configuration/sage50-export-settings.model';
+import {
+  Sage50AdvancedSettings,
+  Sage50AdvancedSettingsForm,
+} from 'src/app/core/models/sage50/sage50-configuration/sage50-advanced-settings.model';
+import {
+  Sage50CCCExportType,
+  Sage50ExportSettingsGet,
+} from 'src/app/core/models/sage50/sage50-configuration/sage50-export-settings.model';
 import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
 import { SkipExportService } from 'src/app/core/services/common/skip-export.service';
 import { WorkspaceService } from 'src/app/core/services/common/workspace.service';
@@ -23,14 +42,13 @@ import { SentenceCasePipe } from 'src/app/shared/pipes/sentence-case.pipe';
 import { SharedModule } from 'src/app/shared/shared.module';
 
 @Component({
-    selector: 'app-sage50-advanced-settings',
-    imports: [SharedModule, CommonModule],
-    templateUrl: './sage50-advanced-settings.component.html',
-    styleUrl: './sage50-advanced-settings.component.scss',
-    providers: [DialogService, SentenceCasePipe]
+  selector: 'app-sage50-advanced-settings',
+  imports: [SharedModule, CommonModule],
+  templateUrl: './sage50-advanced-settings.component.html',
+  styleUrl: './sage50-advanced-settings.component.scss',
+  providers: [DialogService, SentenceCasePipe],
 })
 export class Sage50AdvancedSettingsComponent implements OnInit {
-
   // Constants
   readonly appName = AppName.SAGE50;
 
@@ -100,22 +118,24 @@ export class Sage50AdvancedSettingsComponent implements OnInit {
     private translocoService: TranslocoService,
     private toastService: IntegrationsToastService,
     private workspaceService: WorkspaceService,
-    private trackingService: TrackingService
-  ) { }
+    private trackingService: TrackingService,
+  ) {}
 
   editSchedule() {
     const data: ScheduleDialogData = {
-      form: this.advancedSettingsForm.get('schedule') as FormGroup<ScheduleForm>
+      form: this.advancedSettingsForm.get('schedule') as FormGroup<ScheduleForm>,
     };
     const ref = this.dialogService.open(ScheduleDialogComponent, {
-      showHeader: false, data, focusOnShow: false
+      showHeader: false,
+      data,
+      focusOnShow: false,
     });
 
-    ref?.onClose.subscribe((result: {saved?: boolean}) => {
+    ref?.onClose.subscribe((result: { saved?: boolean }) => {
       if (result?.saved) {
         // Update the schedule preview
         this.schedulePreview = this.scheduleFormService.getSchedulePreview(
-          this.advancedSettingsForm.get('schedule') as FormGroup<ScheduleForm>
+          this.advancedSettingsForm.get('schedule') as FormGroup<ScheduleForm>,
         );
 
         // Update the advanced settings in-memory
@@ -123,13 +143,14 @@ export class Sage50AdvancedSettingsComponent implements OnInit {
         this.advancedSettings = {
           ...this.advancedSettings!,
           ...this.advancedSettingsService.constructSchedulePayload(
-            this.advancedSettingsForm.get('schedule') as FormGroup<ScheduleForm>
-          )
+            this.advancedSettingsForm.get('schedule') as FormGroup<ScheduleForm>,
+          ),
         };
       } else {
         // Reset the schedule form to the last saved value if the dialog is closed without saving
-        this.advancedSettingsForm.setControl('schedule',
-          this.advancedSettingsService.mapAPIResponseToScheduleFormGroup(this.advancedSettings)
+        this.advancedSettingsForm.setControl(
+          'schedule',
+          this.advancedSettingsService.mapAPIResponseToScheduleFormGroup(this.advancedSettings),
         );
 
         // If schedule dialog was closed with no previously saved schedule, disable the toggle
@@ -171,7 +192,7 @@ export class Sage50AdvancedSettingsComponent implements OnInit {
   }
 
   private saveSkipExport(): void {
-    if (!this.isSkipExportEnabled && this.expenseFilters.results.length > 0){
+    if (!this.isSkipExportEnabled && this.expenseFilters.results.length > 0) {
       this.expenseFilters.results.forEach((value) => {
         this.deleteExpenseFilter(value.id);
       });
@@ -187,59 +208,72 @@ export class Sage50AdvancedSettingsComponent implements OnInit {
     this.advancedSettingsService.constructPayloadAndSave(this.advancedSettingsForm).subscribe({
       next: (response: Sage50AdvancedSettings) => {
         this.isSaveInProgress = false;
-        this.toastService.displayToastMessage(ToastSeverity.SUCCESS, this.translocoService.translate('sage50AdvancedSettings.advancedSettingsSavedSuccess'));
+        this.toastService.displayToastMessage(
+          ToastSeverity.SUCCESS,
+          this.translocoService.translate('sage50AdvancedSettings.advancedSettingsSavedSuccess'),
+        );
         if (this.isOnboarding) {
-          this.trackingService.onOnboardingStepCompletion(TrackingApp.SAGE50, Sage50OnboardingState.ADVANCED_SETTINGS, 4, response);
+          this.trackingService.onOnboardingStepCompletion(
+            TrackingApp.SAGE50,
+            Sage50OnboardingState.ADVANCED_SETTINGS,
+            4,
+            response,
+          );
           this.workspaceService.setOnboardingState(Sage50OnboardingState.COMPLETE);
           this.router.navigate(['/integrations/sage50/onboarding/done']);
         } else {
           this.trackingService.onUpdateEvent(TrackingApp.SAGE50, UpdateEvent.ADVANCED_SETTINGS, {
             phase: ProgressPhase.POST_ONBOARDING,
             oldState: this.advancedSettingsForm.value,
-            newState: response
+            newState: response,
           });
         }
       },
       error: () => {
         this.isSaveInProgress = false;
-        this.toastService.displayToastMessage(ToastSeverity.ERROR, this.translocoService.translate('sage50AdvancedSettings.advancedSettingsSaveError'));
-      }
+        this.toastService.displayToastMessage(
+          ToastSeverity.ERROR,
+          this.translocoService.translate('sage50AdvancedSettings.advancedSettingsSaveError'),
+        );
+      },
     });
   }
 
   private setupFormWatchers() {
-    this.advancedSettingsForm.get('isScheduleEnabled')?.valueChanges
-    .pipe(
-      startWith(this.advancedSettingsForm.get('isScheduleEnabled')?.value),
-      pairwise()
-    )
-    .subscribe(([previousValue, currentValue]) => {
-      // Show dialog only when switched on, not on form init
-      if (previousValue === false && currentValue) {
-        this.advancedSettingsForm.get('schedule')?.enable();
-        this.editSchedule();
-      } else if (!currentValue) {
-        this.advancedSettingsForm.get('schedule')?.disable();
-      }
-    });
-
-    this.advancedSettingsForm.get('topLevelMemoStructure')?.valueChanges
-      .pipe(
-        startWith(this.advancedSettingsForm.get('topLevelMemoStructure')?.value)
-      )
-      .subscribe(value => {
-        if (value) {
-          this.topLevelMemoPreviewText = Sage50AdvancedSettingsService.formatMemoPreview(value, this.topLevelMemoOptions)[0];
+    this.advancedSettingsForm
+      .get('isScheduleEnabled')
+      ?.valueChanges.pipe(startWith(this.advancedSettingsForm.get('isScheduleEnabled')?.value), pairwise())
+      .subscribe(([previousValue, currentValue]) => {
+        // Show dialog only when switched on, not on form init
+        if (previousValue === false && currentValue) {
+          this.advancedSettingsForm.get('schedule')?.enable();
+          this.editSchedule();
+        } else if (!currentValue) {
+          this.advancedSettingsForm.get('schedule')?.disable();
         }
       });
 
-    this.advancedSettingsForm.get('lineLevelMemoStructure')?.valueChanges
-      .pipe(
-        startWith(this.advancedSettingsForm.get('lineLevelMemoStructure')?.value)
-      )
-      .subscribe(value => {
+    this.advancedSettingsForm
+      .get('topLevelMemoStructure')
+      ?.valueChanges.pipe(startWith(this.advancedSettingsForm.get('topLevelMemoStructure')?.value))
+      .subscribe((value) => {
         if (value) {
-          this.lineLevelMemoPreviewText = Sage50AdvancedSettingsService.formatMemoPreview(value, this.lineLevelMemoOptions)[0];
+          this.topLevelMemoPreviewText = Sage50AdvancedSettingsService.formatMemoPreview(
+            value,
+            this.topLevelMemoOptions,
+          )[0];
+        }
+      });
+
+    this.advancedSettingsForm
+      .get('lineLevelMemoStructure')
+      ?.valueChanges.pipe(startWith(this.advancedSettingsForm.get('lineLevelMemoStructure')?.value))
+      .subscribe((value) => {
+        if (value) {
+          this.lineLevelMemoPreviewText = Sage50AdvancedSettingsService.formatMemoPreview(
+            value,
+            this.lineLevelMemoOptions,
+          )[0];
         }
       });
   }
@@ -252,25 +286,28 @@ export class Sage50AdvancedSettingsComponent implements OnInit {
       this.advancedSettingsService.getSage50AdvancedSettings(),
       this.exportSettingService.getExportSettings(),
       this.skipExportService.getExpenseFilter(),
-      this.skipExportService.getExpenseFields()
+      this.skipExportService.getExpenseFields(),
     ]).subscribe(([advancedSettings, exportSettings, expenseFilters, expenseFields]) => {
       this.advancedSettings = advancedSettings;
       this.exportSettings = exportSettings;
       this.expenseFilters = expenseFilters;
       this.conditionFieldOptions = expenseFields;
 
-      this.isTopLevelMemoVisible = exportSettings?.credit_card_expense_export_type === Sage50CCCExportType.PAYMENTS_JOURNAL;
+      this.isTopLevelMemoVisible =
+        exportSettings?.credit_card_expense_export_type === Sage50CCCExportType.PAYMENTS_JOURNAL;
 
       // Build both forms
       const isSkipExportEnabled = expenseFilters.count > 0;
       this.advancedSettingsForm = this.advancedSettingsService.mapAPIResponseToFormGroup(
-        advancedSettings, this.isTopLevelMemoVisible, isSkipExportEnabled
+        advancedSettings,
+        this.isTopLevelMemoVisible,
+        isSkipExportEnabled,
       );
       this.skipExportForm = SkipExportModel.setupSkipExportForm(this.expenseFilters, [], this.conditionFieldOptions);
 
       // Set schedule preview from the schedule form value
       this.schedulePreview = this.scheduleFormService.getSchedulePreview(
-        this.advancedSettingsForm.get('schedule') as FormGroup<ScheduleForm>
+        this.advancedSettingsForm.get('schedule') as FormGroup<ScheduleForm>,
       );
 
       this.setupFormWatchers();

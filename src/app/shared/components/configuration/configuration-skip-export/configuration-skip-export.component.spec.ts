@@ -8,9 +8,8 @@ xdescribe('ConfigurationSkipExportComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ConfigurationSkipExportComponent ]
-    })
-    .compileComponents();
+      declarations: [ConfigurationSkipExportComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(ConfigurationSkipExportComponent);
     component = fixture.componentInstance;

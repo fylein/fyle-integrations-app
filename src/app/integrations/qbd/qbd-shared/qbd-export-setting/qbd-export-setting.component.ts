@@ -1,8 +1,28 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, ValidatorFn, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { QBDCorporateCreditCardExpensesObject, ConfigurationCta, QBDExpenseGroupedBy, ExpenseState, QBDExportDateType, QBDReimbursableExpensesObject, QBDOnboardingState, QBDEntity, ToastSeverity, ClickEvent, Page, ProgressPhase, UpdateEvent, CCCExpenseState, TrackingApp } from 'src/app/core/models/enum/enum.model';
-import { QBDExportSettingModel, QBDExportSettingFormOption, QBDExportSettingGet } from 'src/app/core/models/qbd/qbd-configuration/qbd-export-setting.model';
+import {
+  QBDCorporateCreditCardExpensesObject,
+  ConfigurationCta,
+  QBDExpenseGroupedBy,
+  ExpenseState,
+  QBDExportDateType,
+  QBDReimbursableExpensesObject,
+  QBDOnboardingState,
+  QBDEntity,
+  ToastSeverity,
+  ClickEvent,
+  Page,
+  ProgressPhase,
+  UpdateEvent,
+  CCCExpenseState,
+  TrackingApp,
+} from 'src/app/core/models/enum/enum.model';
+import {
+  QBDExportSettingModel,
+  QBDExportSettingFormOption,
+  QBDExportSettingGet,
+} from 'src/app/core/models/qbd/qbd-configuration/qbd-export-setting.model';
 import { TrackingService } from 'src/app/core/services/integration/tracking.service';
 import { QbdExportSettingsService } from 'src/app/core/services/qbd/qbd-configuration/qbd-export-settings.service';
 import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
@@ -12,13 +32,12 @@ import { brandingConfig, brandingKbArticles, brandingStyle } from 'src/app/brand
 import { TranslocoService } from '@jsverse/transloco';
 
 @Component({
-    selector: 'app-qbd-export-setting',
-    templateUrl: './qbd-export-setting.component.html',
-    styleUrls: ['./qbd-export-setting.component.scss'],
-    standalone: false
+  selector: 'app-qbd-export-setting',
+  templateUrl: './qbd-export-setting.component.html',
+  styleUrls: ['./qbd-export-setting.component.scss'],
+  standalone: false,
 })
 export class QbdExportSettingComponent implements OnInit {
-
   isLoading: boolean = true;
 
   saveInProgress: boolean = false;
@@ -29,7 +48,7 @@ export class QbdExportSettingComponent implements OnInit {
 
   ConfigurationCtaText = ConfigurationCta;
 
-  QBDReimbursableExpensesObject= QBDReimbursableExpensesObject;
+  QBDReimbursableExpensesObject = QBDReimbursableExpensesObject;
 
   expenseStateOptions: QBDExportSettingFormOption[];
 
@@ -67,8 +86,8 @@ export class QbdExportSettingComponent implements OnInit {
     private toastService: IntegrationsToastService,
     private trackingService: TrackingService,
     private mappingService: QbdMappingService,
-    private translocoService: TranslocoService
-  ) { }
+    private translocoService: TranslocoService,
+  ) {}
 
   navigateToMapping() {
     this.router.navigate([`/integrations/qbd/main/mapping`]);
@@ -81,51 +100,70 @@ export class QbdExportSettingComponent implements OnInit {
   }
 
   private CCCExportTypeWatcher(): void {
-    this.exportSettingsForm.controls.cccExportType.valueChanges.subscribe((cccExportType: QBDCorporateCreditCardExpensesObject) => {
-      this.setCreditCardExpenseGroupingDateOptions(cccExportType, this.exportSettingsForm.controls.cccExportGroup.value);
-    });
+    this.exportSettingsForm.controls.cccExportType.valueChanges.subscribe(
+      (cccExportType: QBDCorporateCreditCardExpensesObject) => {
+        this.setCreditCardExpenseGroupingDateOptions(
+          cccExportType,
+          this.exportSettingsForm.controls.cccExportGroup.value,
+        );
+      },
+    );
   }
 
   private CCCExportGroupWatcher(): void {
     this.exportSettingsForm.controls.cccExportGroup.valueChanges.subscribe((cccExportGroup: QBDExpenseGroupedBy) => {
-      this.setCreditCardExpenseGroupingDateOptions(this.exportSettingsForm.controls.cccExportType.value, cccExportGroup);
+      this.setCreditCardExpenseGroupingDateOptions(
+        this.exportSettingsForm.controls.cccExportType.value,
+        cccExportGroup,
+      );
     });
   }
 
-  private setCreditCardExpenseGroupingDateOptions(cccExportType: QBDCorporateCreditCardExpensesObject, cccExportGroup: QBDExpenseGroupedBy) : void {
-    if (cccExportType === QBDCorporateCreditCardExpensesObject.CREDIT_CARD_PURCHASE){
+  private setCreditCardExpenseGroupingDateOptions(
+    cccExportType: QBDCorporateCreditCardExpensesObject,
+    cccExportGroup: QBDExpenseGroupedBy,
+  ): void {
+    if (cccExportType === QBDCorporateCreditCardExpensesObject.CREDIT_CARD_PURCHASE) {
       this.cccExpenseGroupingDateOptions = [
         {
           label: this.translocoService.translate('qbdExportSetting.cardTransactionPostDate'),
-          value: QBDExportDateType.POSTED_AT
+          value: QBDExportDateType.POSTED_AT,
         },
         {
           label: this.translocoService.translate('qbdExportSetting.spendDate'),
-          value: QBDExportDateType.SPENT_AT
-        }
+          value: QBDExportDateType.SPENT_AT,
+        },
       ];
-    } else if (cccExportType === QBDCorporateCreditCardExpensesObject.JOURNAL_ENTRY && cccExportGroup === QBDExpenseGroupedBy.EXPENSE) {
-      this.cccExpenseGroupingDateOptions = this.reimbursableExpenseGroupingDateOptions.concat([{
-        label: this.translocoService.translate('qbdExportSetting.cardTransactionPostDate'),
-        value: QBDExportDateType.POSTED_AT
-      }]);
+    } else if (
+      cccExportType === QBDCorporateCreditCardExpensesObject.JOURNAL_ENTRY &&
+      cccExportGroup === QBDExpenseGroupedBy.EXPENSE
+    ) {
+      this.cccExpenseGroupingDateOptions = this.reimbursableExpenseGroupingDateOptions.concat([
+        {
+          label: this.translocoService.translate('qbdExportSetting.cardTransactionPostDate'),
+          value: QBDExportDateType.POSTED_AT,
+        },
+      ]);
     } else {
       this.cccExpenseGroupingDateOptions = [this.reimbursableExpenseGroupingDateOptions[1]];
     }
   }
 
   namePreference(): string {
-    return `Grouping reflects how the expense entries of a ${this.exportType(this.exportSettingsForm.get('cccExportType')?.value, this.creditCardExportTypes) } are posted in QuickBooks Desktop.`;
+    return `Grouping reflects how the expense entries of a ${this.exportType(this.exportSettingsForm.get('cccExportType')?.value, this.creditCardExportTypes)} are posted in QuickBooks Desktop.`;
   }
 
   accountName(): string {
-    const nameKey = this.exportSettingsForm.get('reimbursableExportType')?.value === QBDReimbursableExpensesObject.BILL ? 'qbdExportSetting.accountsPayable' : 'qbdExportSetting.bank';
+    const nameKey =
+      this.exportSettingsForm.get('reimbursableExportType')?.value === QBDReimbursableExpensesObject.BILL
+        ? 'qbdExportSetting.accountsPayable'
+        : 'qbdExportSetting.bank';
     const name = this.translocoService.translate(nameKey);
     this.customMessage = this.translocoService.translate('qbdExportSetting.enterNameError', { name: name });
     return name;
   }
 
-  exportType(exportTypeValue:string, exportTypeOptions: QBDExportSettingFormOption[]) {
+  exportType(exportTypeValue: string, exportTypeOptions: QBDExportSettingFormOption[]) {
     return exportTypeValue === exportTypeOptions[0].value ? exportTypeOptions[0].label : exportTypeOptions[1].label;
   }
 
@@ -157,9 +195,17 @@ export class QbdExportSettingComponent implements OnInit {
       if (isCreditCardExpenseSelected) {
         this.exportSettingsForm.controls.cccExportType.setValidators(Validators.required);
         this.exportSettingsForm.controls.cccExportGroup.setValidators(Validators.required);
-        this.exportSettingsForm.controls.cccExportGroup.patchValue(this.exportSettings?.credit_card_expense_grouped_by ? this.exportSettings?.credit_card_expense_grouped_by : this.expenseGroupingFieldOptions[1].value);
+        this.exportSettingsForm.controls.cccExportGroup.patchValue(
+          this.exportSettings?.credit_card_expense_grouped_by
+            ? this.exportSettings?.credit_card_expense_grouped_by
+            : this.expenseGroupingFieldOptions[1].value,
+        );
         this.exportSettingsForm.controls.cccExportDate.setValidators(Validators.required);
-        this.exportSettingsForm.controls.cccExportDate.patchValue(this.exportSettings?.credit_card_expense_date ? this.exportSettings?.credit_card_expense_date : this.cccExpenseGroupingDateOptions[0].value);
+        this.exportSettingsForm.controls.cccExportDate.patchValue(
+          this.exportSettings?.credit_card_expense_date
+            ? this.exportSettings?.credit_card_expense_date
+            : this.cccExpenseGroupingDateOptions[0].value,
+        );
         this.exportSettingsForm.controls.cccEntityName.setValidators(Validators.required);
         this.exportSettingsForm.controls.cccExpenseState.setValidators(Validators.required);
         this.exportSettingsForm.controls.cccAccountName.setValidators(Validators.required);
@@ -181,7 +227,6 @@ export class QbdExportSettingComponent implements OnInit {
   }
 
   private setExportSettingValidatorsAndWatchers(): void {
-
     // Toggles
     this.createReimbursableExpenseWatcher();
     this.createCreditCardExpenseWatcher();
@@ -192,9 +237,9 @@ export class QbdExportSettingComponent implements OnInit {
   }
 
   private exportSelectionValidator(): ValidatorFn {
-    return (control: AbstractControl): {[key: string]: object} | null => {
+    return (control: AbstractControl): { [key: string]: object } | null => {
       let forbidden = true;
-      if (this.exportSettingsForm ) {
+      if (this.exportSettingsForm) {
         if (typeof control.value === 'boolean') {
           if (control.value) {
             forbidden = false;
@@ -203,7 +248,10 @@ export class QbdExportSettingComponent implements OnInit {
               forbidden = false;
             }
           }
-        } else if ((control.value === ExpenseState.PAID || control.value === ExpenseState.PAYMENT_PROCESSING) && (control.parent?.get('reimbursableExpense')?.value || control.parent?.get('creditCardExpense')?.value)) {
+        } else if (
+          (control.value === ExpenseState.PAID || control.value === ExpenseState.PAYMENT_PROCESSING) &&
+          (control.parent?.get('reimbursableExpense')?.value || control.parent?.get('creditCardExpense')?.value)
+        ) {
           forbidden = false;
         }
         if (!forbidden) {
@@ -214,8 +262,8 @@ export class QbdExportSettingComponent implements OnInit {
       }
       return {
         forbiddenOption: {
-          value: control.value
-        }
+          value: control.value,
+        },
       };
     };
   }
@@ -224,63 +272,109 @@ export class QbdExportSettingComponent implements OnInit {
     this.cccExpenseStateOptions = [
       {
         label: this.translocoService.translate('qbdExportSetting.approved'),
-        value: CCCExpenseState.APPROVED
+        value: CCCExpenseState.APPROVED,
       },
       {
         label: this.translocoService.translate('qbdExportSetting.closed'),
-        value: CCCExpenseState.PAID
-      }
+        value: CCCExpenseState.PAID,
+      },
     ];
 
     this.expenseStateOptions = [
       {
         label: this.translocoService.translate('qbdExportSetting.processing'),
-        value: ExpenseState.PAYMENT_PROCESSING
+        value: ExpenseState.PAYMENT_PROCESSING,
       },
       {
         label: this.translocoService.translate('qbdExportSetting.closed'),
-        value: ExpenseState.PAID
-      }
+        value: ExpenseState.PAID,
+      },
     ];
   }
 
   private setupCCCExpenseGroupingDateOptions(): void {
     if (this.exportSettings?.credit_card_expense_export_type) {
-      const creditCardExpenseExportGroup = this.exportSettings?.credit_card_expense_grouped_by ? this.exportSettings?.credit_card_expense_grouped_by : QBDExpenseGroupedBy.EXPENSE;
-      this.setCreditCardExpenseGroupingDateOptions(this.exportSettings?.credit_card_expense_export_type, creditCardExpenseExportGroup);
+      const creditCardExpenseExportGroup = this.exportSettings?.credit_card_expense_grouped_by
+        ? this.exportSettings?.credit_card_expense_grouped_by
+        : QBDExpenseGroupedBy.EXPENSE;
+      this.setCreditCardExpenseGroupingDateOptions(
+        this.exportSettings?.credit_card_expense_export_type,
+        creditCardExpenseExportGroup,
+      );
     } else {
-      this.setCreditCardExpenseGroupingDateOptions(QBDCorporateCreditCardExpensesObject.CREDIT_CARD_PURCHASE, QBDExpenseGroupedBy.EXPENSE);
+      this.setCreditCardExpenseGroupingDateOptions(
+        QBDCorporateCreditCardExpensesObject.CREDIT_CARD_PURCHASE,
+        QBDExpenseGroupedBy.EXPENSE,
+      );
     }
   }
 
   private getSettingsAndSetupForm(): void {
     this.isLoading = true;
     this.isOnboarding = this.router.url.includes('onboarding');
-    this.exportSettingService.getQbdExportSettings().subscribe((exportSettingResponse : QBDExportSettingGet) => {
-      this.exportSettings = exportSettingResponse;
-      this.setUpExpenseStates();
-      this.setupCCCExpenseGroupingDateOptions();
+    this.exportSettingService.getQbdExportSettings().subscribe(
+      (exportSettingResponse: QBDExportSettingGet) => {
+        this.exportSettings = exportSettingResponse;
+        this.setUpExpenseStates();
+        this.setupCCCExpenseGroupingDateOptions();
 
-      this.exportSettingsForm = this.formBuilder.group({
-        reimbursableExportType: [this.exportSettings?.reimbursable_expenses_export_type],
-        reimbursableExpense: [this.exportSettings?.reimbursable_expenses_export_type ? true : false, this.exportSelectionValidator()],
-        reimbursableExportGroup: [this.exportSettings?.reimbursable_expense_grouped_by ? this.exportSettings?.reimbursable_expense_grouped_by : null],
-        reimbursableExportDate: [this.exportSettings?.reimbursable_expense_date ? this.exportSettings?.reimbursable_expense_date : null],
-        creditCardExpense: [this.exportSettings?.credit_card_expense_export_type ? true : false, this.exportSelectionValidator()],
-        cccExportType: [this.exportSettings?.credit_card_expense_export_type ? this.exportSettings?.credit_card_expense_export_type : null],
-        cccExportGroup: [this.exportSettings?.credit_card_expense_grouped_by ? this.exportSettings?.credit_card_expense_grouped_by : this.expenseGroupingFieldOptions[1].value],
-        cccExportDate: [this.exportSettings?.credit_card_expense_date ? this.exportSettings?.credit_card_expense_date : this.cccExpenseGroupingDateOptions[0].value],
-        bankAccount: [this.exportSettings?.bank_account_name ? this.exportSettings?.bank_account_name : null],
-        mileageAccountName: [this.exportSettings?.mileage_account_name ? this.exportSettings?.mileage_account_name : null],
-        cccEntityName: [this.exportSettings?.credit_card_entity_name_preference ? this.exportSettings?.credit_card_entity_name_preference : null],
-        cccAccountName: [this.exportSettings?.credit_card_account_name ? this.exportSettings?.credit_card_account_name : null],
-        reimbursableExpenseState: [this.exportSettings?.reimbursable_expense_state ? this.exportSettings?.reimbursable_expense_state : null],
-        cccExpenseState: [this.exportSettings?.credit_card_expense_state ? this.exportSettings?.credit_card_expense_state : null],
-        searchOption: []
-      });
-      this.setExportSettingValidatorsAndWatchers();
-      this.isLoading = false;
-    }, () => {
+        this.exportSettingsForm = this.formBuilder.group({
+          reimbursableExportType: [this.exportSettings?.reimbursable_expenses_export_type],
+          reimbursableExpense: [
+            this.exportSettings?.reimbursable_expenses_export_type ? true : false,
+            this.exportSelectionValidator(),
+          ],
+          reimbursableExportGroup: [
+            this.exportSettings?.reimbursable_expense_grouped_by
+              ? this.exportSettings?.reimbursable_expense_grouped_by
+              : null,
+          ],
+          reimbursableExportDate: [
+            this.exportSettings?.reimbursable_expense_date ? this.exportSettings?.reimbursable_expense_date : null,
+          ],
+          creditCardExpense: [
+            this.exportSettings?.credit_card_expense_export_type ? true : false,
+            this.exportSelectionValidator(),
+          ],
+          cccExportType: [
+            this.exportSettings?.credit_card_expense_export_type
+              ? this.exportSettings?.credit_card_expense_export_type
+              : null,
+          ],
+          cccExportGroup: [
+            this.exportSettings?.credit_card_expense_grouped_by
+              ? this.exportSettings?.credit_card_expense_grouped_by
+              : this.expenseGroupingFieldOptions[1].value,
+          ],
+          cccExportDate: [
+            this.exportSettings?.credit_card_expense_date
+              ? this.exportSettings?.credit_card_expense_date
+              : this.cccExpenseGroupingDateOptions[0].value,
+          ],
+          bankAccount: [this.exportSettings?.bank_account_name ? this.exportSettings?.bank_account_name : null],
+          mileageAccountName: [
+            this.exportSettings?.mileage_account_name ? this.exportSettings?.mileage_account_name : null,
+          ],
+          cccEntityName: [
+            this.exportSettings?.credit_card_entity_name_preference
+              ? this.exportSettings?.credit_card_entity_name_preference
+              : null,
+          ],
+          cccAccountName: [
+            this.exportSettings?.credit_card_account_name ? this.exportSettings?.credit_card_account_name : null,
+          ],
+          reimbursableExpenseState: [
+            this.exportSettings?.reimbursable_expense_state ? this.exportSettings?.reimbursable_expense_state : null,
+          ],
+          cccExpenseState: [
+            this.exportSettings?.credit_card_expense_state ? this.exportSettings?.credit_card_expense_state : null,
+          ],
+          searchOption: [],
+        });
+        this.setExportSettingValidatorsAndWatchers();
+        this.isLoading = false;
+      },
+      () => {
         this.setUpExpenseStates();
         this.setupCCCExpenseGroupingDateOptions();
         this.exportSettingsForm = this.formBuilder.group({
@@ -297,11 +391,11 @@ export class QbdExportSettingComponent implements OnInit {
           cccEntityName: [null],
           cccAccountName: [null],
           reimbursableExpenseState: [null],
-          cccExpenseState: [null]
+          cccExpenseState: [null],
         });
         this.setExportSettingValidatorsAndWatchers();
         this.isLoading = false;
-      }
+      },
     );
   }
 
@@ -312,37 +406,46 @@ export class QbdExportSettingComponent implements OnInit {
   private constructPayloadAndSave(): void {
     this.saveInProgress = true;
     const exportSettingPayload = QBDExportSettingModel.constructPayload(this.exportSettingsForm);
-    this.exportSettingService.postQbdExportSettings(exportSettingPayload).subscribe((response: QBDExportSettingGet) => {
-      this.saveInProgress = false;
-      this.toastService.displayToastMessage(ToastSeverity.SUCCESS, this.translocoService.translate('qbdExportSetting.exportSettingsSuccess'), undefined, this.isOnboarding);
-      this.mappingService.refreshMappingPages();
-      this.trackingService.trackTimeSpent(TrackingApp.QBD, Page.EXPORT_SETTING_QBD, this.sessionStartTime);
-      if (this.workspaceService.getOnboardingState() === QBDOnboardingState.EXPORT_SETTINGS) {
-        this.trackingService.onOnboardingStepCompletion(TrackingApp.QBD, QBDOnboardingState.EXPORT_SETTINGS, 2, exportSettingPayload);
-      } else {
-        this.trackingService.onUpdateEvent(
-          TrackingApp.QBD,
-          UpdateEvent.ADVANCED_SETTINGS_QBD,
-          {
+    this.exportSettingService.postQbdExportSettings(exportSettingPayload).subscribe(
+      (response: QBDExportSettingGet) => {
+        this.saveInProgress = false;
+        this.toastService.displayToastMessage(
+          ToastSeverity.SUCCESS,
+          this.translocoService.translate('qbdExportSetting.exportSettingsSuccess'),
+          undefined,
+          this.isOnboarding,
+        );
+        this.mappingService.refreshMappingPages();
+        this.trackingService.trackTimeSpent(TrackingApp.QBD, Page.EXPORT_SETTING_QBD, this.sessionStartTime);
+        if (this.workspaceService.getOnboardingState() === QBDOnboardingState.EXPORT_SETTINGS) {
+          this.trackingService.onOnboardingStepCompletion(
+            TrackingApp.QBD,
+            QBDOnboardingState.EXPORT_SETTINGS,
+            2,
+            exportSettingPayload,
+          );
+        } else {
+          this.trackingService.onUpdateEvent(TrackingApp.QBD, UpdateEvent.ADVANCED_SETTINGS_QBD, {
             phase: this.getPhase(),
             oldState: this.exportSettings,
-            newState: response
-          }
+            newState: response,
+          });
+        }
+
+        if (this.isOnboarding) {
+          this.workspaceService.setOnboardingState(QBDOnboardingState.FIELD_MAPPINGS);
+          this.router.navigate([`/integrations/qbd/onboarding/field_mappings`]);
+        }
+      },
+      () => {
+        this.saveInProgress = false;
+        this.toastService.displayToastMessage(
+          ToastSeverity.ERROR,
+          this.translocoService.translate('qbdExportSetting.exportSettingsError'),
         );
-      }
-
-      if (this.isOnboarding) {
-        this.workspaceService.setOnboardingState(QBDOnboardingState.FIELD_MAPPINGS);
-        this.router.navigate([`/integrations/qbd/onboarding/field_mappings`]);
-      }
-
-
-    }, () => {
-      this.saveInProgress = false;
-      this.toastService.displayToastMessage(ToastSeverity.ERROR, this.translocoService.translate('qbdExportSetting.exportSettingsError'));
-      });
+      },
+    );
   }
-
 
   save(): void {
     if (this.exportSettingsForm.valid) {
@@ -354,59 +457,58 @@ export class QbdExportSettingComponent implements OnInit {
     this.expenseGroupingFieldOptions = [
       {
         label: this.translocoService.translate('qbdExportSetting.report'),
-        value: QBDExpenseGroupedBy.REPORT
+        value: QBDExpenseGroupedBy.REPORT,
       },
       {
         label: this.translocoService.translate('qbdExportSetting.expense'),
-        value: QBDExpenseGroupedBy.EXPENSE
-      }
+        value: QBDExpenseGroupedBy.EXPENSE,
+      },
     ];
 
     this.reimbursableExpenseGroupingDateOptions = [
       {
         label: this.translocoService.translate('qbdExportSetting.spendDate'),
-        value: QBDExportDateType.SPENT_AT
+        value: QBDExportDateType.SPENT_AT,
       },
       {
         label: this.translocoService.translate('qbdExportSetting.dateOfExport'),
-        value: QBDExportDateType.LAST_SPENT_AT
-      }
+        value: QBDExportDateType.LAST_SPENT_AT,
+      },
     ];
 
     this.creditCardExportTypes = [
       {
         label: this.translocoService.translate('qbdExportSetting.creditCardPurchase'),
-        value: QBDCorporateCreditCardExpensesObject.CREDIT_CARD_PURCHASE
+        value: QBDCorporateCreditCardExpensesObject.CREDIT_CARD_PURCHASE,
       },
       {
         label: this.translocoService.translate('qbdExportSetting.journalEntry'),
-        value: QBDCorporateCreditCardExpensesObject.JOURNAL_ENTRY
-      }
+        value: QBDCorporateCreditCardExpensesObject.JOURNAL_ENTRY,
+      },
     ];
 
     this.reimbursableExportTypes = [
       {
         label: this.translocoService.translate('qbdExportSetting.bill'),
-        value: QBDReimbursableExpensesObject.BILL
+        value: QBDReimbursableExpensesObject.BILL,
       },
       {
         label: this.translocoService.translate('qbdExportSetting.journalEntry'),
-        value: QBDReimbursableExpensesObject.JOURNAL_ENTRY
-      }
+        value: QBDReimbursableExpensesObject.JOURNAL_ENTRY,
+      },
     ];
 
     this.cccEntityNameOptions = [
       {
         label: this.translocoService.translate('qbdExportSetting.employee'),
-        value: QBDEntity.EMPLOYEE
+        value: QBDEntity.EMPLOYEE,
       },
       {
         label: this.translocoService.translate('qbdExportSetting.vendor'),
-        value: QBDEntity.VENDOR
-      }
+        value: QBDEntity.VENDOR,
+      },
     ];
 
     this.getSettingsAndSetupForm();
   }
-
 }

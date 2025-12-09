@@ -15,44 +15,44 @@ const ICON_MAPPING = {
   'arrow-tail-up-down': 'grv-sort',
   'arrow-tail-up-medium': 'grv-arrow-up-medium',
   'arrow-tail-up': 'grv-arrow-up',
-  'bin': 'grv-trash',
-  'calendar': 'grv-calendar',
+  bin: 'grv-trash',
+  calendar: 'grv-calendar',
   'calendar-medium': 'grv-calendar-medium',
   'check-circle-outline-small': 'grv-checkmark-encircled-small',
   'check-circle-outline': 'grv-checkmark-encircled',
   'check-circle-outline-medium': 'grv-checkmark-encircled-medium',
   'check-circle-outline-extra-large': 'grv-checkmark-encircled-extra-large',
   'check-medium': 'grv-checkmark-medium',
-  'check': 'grv-checkmark',
+  check: 'grv-checkmark',
   'check-small': 'grv-checkmark-medium',
   'check-large': 'grv-checkmark-large',
   'cross-xs-small': 'grv-close-xs-small',
   'cross-medium': 'grv-close-medium',
   'cross-small': 'grv-close-small',
-  'cross': 'grv-close',
+  cross: 'grv-close',
   'danger-fill': 'grv-caution-triangle-critical',
   'danger-outline': 'grv-caution-triangle',
-  'download': 'grv-download',
-  'duplicate': 'grv-copy',
-  'envelope': 'grv-envelope',
+  download: 'grv-download',
+  duplicate: 'grv-copy',
+  envelope: 'grv-envelope',
   'eye-slash': 'grv-show-hide',
-  'eye': 'grv-show',
+  eye: 'grv-show',
   'flash-on': 'grv-flash-on',
-  'headset': 'grv-agent',
+  headset: 'grv-agent',
   'gear-medium': 'grv-settings-medium',
-  'gear': 'grv-settings',
+  gear: 'grv-settings',
   'info-circle-fill-medium': 'c1-info-medium',
   'info-circle-fill': 'c1-info-small',
   'info-circle-fill-small': 'grv-caution-triangle-critical-small',
-  'line': 'grv-line',
+  line: 'grv-line',
   'link-vertical-medium': 'grv-link-medium',
-  'list': 'grv-notes',
+  list: 'grv-notes',
   'mapping-medium': 'grv-transfer-medium',
   'open-in-new-tab-standard': 'grv-external-standard',
   'open-in-new-tab': 'grv-external',
   'plus-square-medium': 'grv-plus-encircled',
   'question-square-outline': 'grv-info',
-  'tabs': 'grv-budle',
+  tabs: 'grv-budle',
   'user-plus': 'grv-person',
   'user-two': 'grv-persons',
   'warning-outline': 'grv-caution-triangle-small',
@@ -62,27 +62,26 @@ const ICON_MAPPING = {
   'arrow-right-medium': 'grv-chevron-right-medium',
   'arrow-bar-left-medium': 'grv-chevron-first-medium',
   'arrow-bar-right-medium': 'grv-chevron-last-medium',
-  'upload': 'grv-upload',
-  'lock': 'grv-lock',
+  upload: 'grv-upload',
+  lock: 'grv-lock',
   'eye-slash-medium': 'grv-show-hide-medium',
   'eye-medium': 'grv-show-medium',
   'user-one': 'grv-person',
   'download-medium': 'grv-download-medium',
-  'expand': 'grv-folder',
-  'folder': 'grv-folder',
+  expand: 'grv-folder',
+  folder: 'grv-folder',
   'toast-success': 'toast-success',
   'toast-info': 'toast-info',
-  'toast-cross': 'toast-cross'
+  'toast-cross': 'toast-cross',
 };
 
 @Component({
-    selector: 'app-svg-icon',
-    templateUrl: './svg-icon.component.html',
-    styleUrls: ['./svg-icon.component.scss'],
-    standalone: false
+  selector: 'app-svg-icon',
+  templateUrl: './svg-icon.component.html',
+  styleUrls: ['./svg-icon.component.scss'],
+  standalone: false,
 })
 export class SvgIconComponent implements OnInit {
-
   @Input() svgSource: string;
 
   @Input() c1SvgSource: string;
@@ -109,7 +108,7 @@ export class SvgIconComponent implements OnInit {
   // Computed sprite URL with icon reference
   spriteUrl: string = '';
 
-  constructor() { }
+  constructor() {}
 
   iconClickEvent() {
     this.iconClick.emit();
@@ -126,7 +125,10 @@ export class SvgIconComponent implements OnInit {
 
       if (!this.isTextColorAllowed) {
         // Remove all text classes and add default text color
-        this.styleClasses = this.styleClasses.split(' ').filter((styleClass: string) => (!styleClass.startsWith('tw-text-') ? styleClass: '')).join(' ');
+        this.styleClasses = this.styleClasses
+          .split(' ')
+          .filter((styleClass: string) => (!styleClass.startsWith('tw-text-') ? styleClass : ''))
+          .join(' ');
 
         this.styleClasses += ' tw-text-icon-primary';
       }
@@ -139,5 +141,4 @@ export class SvgIconComponent implements OnInit {
   ngOnInit(): void {
     this.setupProperties();
   }
-
 }

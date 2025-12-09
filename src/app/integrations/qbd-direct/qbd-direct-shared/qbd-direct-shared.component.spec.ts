@@ -8,9 +8,8 @@ xdescribe('QbdDirectSharedComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [QbdDirectSharedComponent]
-    })
-    .compileComponents();
+      imports: [QbdDirectSharedComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(QbdDirectSharedComponent);
     component = fixture.componentInstance;

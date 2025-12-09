@@ -1,7 +1,6 @@
-import { ExpenseAttributeDetail } from "./expense-attribute-detail.model";
-import { MappingDestination } from "./mapping-destination.model";
-import { MappingSource } from "./mapping-source.model";
-
+import { ExpenseAttributeDetail } from './expense-attribute-detail.model';
+import { MappingDestination } from './mapping-destination.model';
+import { MappingSource } from './mapping-source.model';
 
 export type CategoryMappingPost = {
   source_category: MappingSource;
@@ -10,7 +9,7 @@ export type CategoryMappingPost = {
   created_at?: Date;
   updated_at?: Date;
   workspace: number;
-}
+};
 
 export interface CategoryMapping extends CategoryMappingPost {
   id: number;

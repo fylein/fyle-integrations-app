@@ -2,13 +2,12 @@ import { Component, Input } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 
 @Component({
-    selector: 'app-select',
-    templateUrl: './dropdown.component.html',
-    styleUrls: ['./dropdown.component.scss'],
-    standalone: false
+  selector: 'app-select',
+  templateUrl: './dropdown.component.html',
+  styleUrls: ['./dropdown.component.scss'],
+  standalone: false,
 })
 export class DropdownComponent {
-
   /**
    * The options that the dropdown will display. Each option should
    * contain an object with keys corresponding to `displayKey`.
@@ -23,7 +22,7 @@ export class DropdownComponent {
   /**
    * The form group that this dropdown is a part of.
    */
-  @Input() form: FormGroup = new FormGroup({number: new FormControl(3)});
+  @Input() form: FormGroup = new FormGroup({ number: new FormControl(3) });
 
   /**
    * The name of the form control within the FormGroup that this
@@ -43,6 +42,5 @@ export class DropdownComponent {
 
   @Input() isMultiLineOption: boolean;
 
-  constructor() { }
-
+  constructor() {}
 }

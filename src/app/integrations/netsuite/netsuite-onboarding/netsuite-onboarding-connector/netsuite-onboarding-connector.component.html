@@ -1,4 +1,7 @@
-<app-onboarding-steppers [onboardingSteps]="onboardingSteps" [disableConfigurationStepsIfTokenInvalid]="!isNetsuiteCredentialsValid"></app-onboarding-steppers>
+<app-onboarding-steppers
+  [onboardingSteps]="onboardingSteps"
+  [disableConfigurationStepsIfTokenInvalid]="!isNetsuiteCredentialsValid"
+></app-onboarding-steppers>
 @if (!isNetsuiteCredentialsValid) {
   <app-netsuite-connector (setupConnectionStatus)="setupConnectionStatus($event)"></app-netsuite-connector>
 }

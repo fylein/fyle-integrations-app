@@ -5,12 +5,12 @@ import { BambooHrComponent } from './bamboo-hr.component';
 const routes: Routes = [
   {
     path: '',
-    component: BambooHrComponent
-  }
+    component: BambooHrComponent,
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class BambooHrRoutingModule { }
+export class BambooHrRoutingModule {}

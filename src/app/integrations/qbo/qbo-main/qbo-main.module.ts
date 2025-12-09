@@ -11,7 +11,6 @@ import { QboBaseMappingComponent } from './qbo-mapping/qbo-base-mapping/qbo-base
 import { QboConfigurationComponent } from './qbo-configuration/qbo-configuration.component';
 import { SharedModule } from 'src/app/shared/shared.module';
 
-
 @NgModule({
   declarations: [
     QboMainComponent,
@@ -20,12 +19,8 @@ import { SharedModule } from 'src/app/shared/shared.module';
     QboCompleteExportLogComponent,
     QboMappingComponent,
     QboBaseMappingComponent,
-    QboConfigurationComponent
+    QboConfigurationComponent,
   ],
-  imports: [
-    CommonModule,
-    QboMainRoutingModule,
-    SharedModule
-  ]
+  imports: [CommonModule, QboMainRoutingModule, SharedModule],
 })
-export class QboMainModule { }
+export class QboMainModule {}

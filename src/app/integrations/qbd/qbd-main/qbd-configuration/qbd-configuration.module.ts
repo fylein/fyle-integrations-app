@@ -7,18 +7,12 @@ import { QbdConfigurationFieldSettingComponent } from './qbd-configuration-field
 import { QbdConfigurationExportSettingComponent } from './qbd-configuration-export-setting/qbd-configuration-export-setting.component';
 import { QbdSharedModule } from '../../qbd-shared/qbd-shared.module';
 
-
 @NgModule({
   declarations: [
     QbdConfigurationAdvancedSettingComponent,
     QbdConfigurationFieldSettingComponent,
-    QbdConfigurationExportSettingComponent
+    QbdConfigurationExportSettingComponent,
   ],
-  imports: [
-    CommonModule,
-    ConfigurationRoutingModule,
-    SharedModule,
-    QbdSharedModule
-  ]
+  imports: [CommonModule, ConfigurationRoutingModule, SharedModule, QbdSharedModule],
 })
-export class QbdConfigurationModule { }
+export class QbdConfigurationModule {}

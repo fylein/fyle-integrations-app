@@ -5,13 +5,12 @@ import { brandingConfig, brandingFeatureConfig, brandingStyle } from 'src/app/br
 import { TranslocoService } from '@jsverse/transloco';
 
 @Component({
-    selector: 'app-business-central-export-log',
-    templateUrl: './business-central-export-log.component.html',
-    styleUrls: ['./business-central-export-log.component.scss'],
-    standalone: false
+  selector: 'app-business-central-export-log',
+  templateUrl: './business-central-export-log.component.html',
+  styleUrls: ['./business-central-export-log.component.scss'],
+  standalone: false,
 })
 export class BusinessCentralExportLogComponent implements OnInit {
-
   isLoading: boolean = false;
 
   modules: TabMenuItem[];
@@ -26,17 +25,23 @@ export class BusinessCentralExportLogComponent implements OnInit {
 
   constructor(
     private router: Router,
-    private translocoService: TranslocoService
-  ) { }
-
+    private translocoService: TranslocoService,
+  ) {}
 
   ngOnInit(): void {
     this.modules = [
-      { label: this.translocoService.translate('businessCentralExportLog.completed'), routerLink: '/integrations/business_central/main/export_log/complete_export_log', value: 'complete_export_log' },
-      { label: this.translocoService.translate('businessCentralExportLog.skipped'), routerLink: '/integrations/business_central/main/export_log/skip_export_log', value: 'skip_export_log' }
+      {
+        label: this.translocoService.translate('businessCentralExportLog.completed'),
+        routerLink: '/integrations/business_central/main/export_log/complete_export_log',
+        value: 'complete_export_log',
+      },
+      {
+        label: this.translocoService.translate('businessCentralExportLog.skipped'),
+        routerLink: '/integrations/business_central/main/export_log/skip_export_log',
+        value: 'skip_export_log',
+      },
     ];
     this.activeModule = this.modules[0].value;
     this.router.navigateByUrl(this.modules[0].routerLink!);
   }
-
 }

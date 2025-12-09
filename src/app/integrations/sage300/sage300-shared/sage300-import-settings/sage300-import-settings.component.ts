@@ -1,9 +1,29 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { AbstractControl, FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { AppName, AppNameInService, ConfigurationCta, DefaultImportFields, MappingSourceField, Page, Sage300OnboardingState, Sage300UpdateEvent, ToastSeverity, TrackingApp } from 'src/app/core/models/enum/enum.model';
-import { Sage300ImportSettingGet, Sage300DefaultFields, Sage300DependentImportFields, Sage300ImportSettingsDependentFieldSetting } from 'src/app/core/models/sage300/sage300-configuration/sage300-import-settings.model';
-import { ExpenseField, ImportCodeFieldConfigType, ImportSettingMappingRow } from 'src/app/core/models/common/import-settings.model';
+import {
+  AppName,
+  AppNameInService,
+  ConfigurationCta,
+  DefaultImportFields,
+  MappingSourceField,
+  Page,
+  Sage300OnboardingState,
+  Sage300UpdateEvent,
+  ToastSeverity,
+  TrackingApp,
+} from 'src/app/core/models/enum/enum.model';
+import {
+  Sage300ImportSettingGet,
+  Sage300DefaultFields,
+  Sage300DependentImportFields,
+  Sage300ImportSettingsDependentFieldSetting,
+} from 'src/app/core/models/sage300/sage300-configuration/sage300-import-settings.model';
+import {
+  ExpenseField,
+  ImportCodeFieldConfigType,
+  ImportSettingMappingRow,
+} from 'src/app/core/models/common/import-settings.model';
 import { IntegrationField, FyleField } from 'src/app/core/models/db/mapping.model';
 import { HelperService } from 'src/app/core/services/common/helper.service';
 import { MappingService } from 'src/app/core/services/common/mapping.service';
@@ -21,13 +41,12 @@ import { ImportSettingsService } from 'src/app/core/services/common/import-setti
 import { BrandingService } from 'src/app/core/services/common/branding.service';
 
 @Component({
-    selector: 'app-sage300-import-settings',
-    templateUrl: './sage300-import-settings.component.html',
-    styleUrls: ['./sage300-import-settings.component.scss'],
-    standalone: false
+  selector: 'app-sage300-import-settings',
+  templateUrl: './sage300-import-settings.component.html',
+  styleUrls: ['./sage300-import-settings.component.scss'],
+  standalone: false,
 })
 export class Sage300ImportSettingsComponent implements OnInit {
-
   isOnboarding: boolean;
 
   importSettings: Sage300ImportSettingGet | null | any;
@@ -56,7 +75,7 @@ export class Sage300ImportSettingsComponent implements OnInit {
 
   costCodeFieldOption: ExpenseField[];
 
-  costCategoryOption:ExpenseField[];
+  costCategoryOption: ExpenseField[];
 
   customFieldOption: ExpenseField[];
 
@@ -71,14 +90,14 @@ export class Sage300ImportSettingsComponent implements OnInit {
       source_field: DefaultImportFields.CATEGORY,
       destination_field: DefaultImportFields.ACCOUNT,
       formController: 'importCategories',
-      import_code: 'importCategoryCode'
+      import_code: 'importCategoryCode',
     },
     {
       source_field: DefaultImportFields.MERCHANT,
       destination_field: DefaultImportFields.VENDOR,
       formController: 'importVendorAsMerchant',
-      import_code: 'importVendorCode'
-    }
+      import_code: 'importVendorCode',
+    },
   ];
 
   readonly dependentImportFields: Sage300DependentImportFields[];
@@ -112,27 +131,48 @@ export class Sage300ImportSettingsComponent implements OnInit {
     private trackingService: TrackingService,
     private workspaceService: WorkspaceService,
     private translocoService: TranslocoService,
-    public brandingService: BrandingService
+    public brandingService: BrandingService,
   ) {
-    this.costCodeFieldOption = [{ attribute_type: 'custom_field', display_name: this.translocoService.translate('sage300ImportSettings.createCustomField'), source_placeholder: null, is_dependent: true }];
-    this.costCategoryOption = [{ attribute_type: 'custom_field', display_name: this.translocoService.translate('sage300ImportSettings.createCustomField'), source_placeholder: null, is_dependent: true }];
-    this.customFieldOption = [{ attribute_type: 'custom_field', display_name: this.translocoService.translate('sage300ImportSettings.createCustomField'), source_placeholder: null, is_dependent: false }];
+    this.costCodeFieldOption = [
+      {
+        attribute_type: 'custom_field',
+        display_name: this.translocoService.translate('sage300ImportSettings.createCustomField'),
+        source_placeholder: null,
+        is_dependent: true,
+      },
+    ];
+    this.costCategoryOption = [
+      {
+        attribute_type: 'custom_field',
+        display_name: this.translocoService.translate('sage300ImportSettings.createCustomField'),
+        source_placeholder: null,
+        is_dependent: true,
+      },
+    ];
+    this.customFieldOption = [
+      {
+        attribute_type: 'custom_field',
+        display_name: this.translocoService.translate('sage300ImportSettings.createCustomField'),
+        source_placeholder: null,
+        is_dependent: false,
+      },
+    ];
 
     this.dependentImportFields = [
       {
         source_field: this.translocoService.translate('sage300ImportSettings.costCodes'),
         options: this.costCodeFieldOption,
         formController: 'costCodes',
-        isDisabled: false
+        isDisabled: false,
       },
       {
         source_field: this.translocoService.translate('sage300ImportSettings.costCategory'),
         options: this.costCategoryOption,
         formController: 'costCategory',
-        isDisabled: false
-      }
+        isDisabled: false,
+      },
     ];
-   }
+  }
 
   get expenseFieldsGetter() {
     return this.importSettingForm.get('expenseFields') as FormArray;
@@ -140,7 +180,7 @@ export class Sage300ImportSettingsComponent implements OnInit {
 
   closeModel() {
     this.customFieldControl.patchValue({
-      source_field: null
+      source_field: null,
     });
     this.customFieldForm.reset();
     this.showCustomFieldDialog = false;
@@ -156,7 +196,7 @@ export class Sage300ImportSettingsComponent implements OnInit {
             destination_field: control.get('destination_field')?.value,
             import_to_fyle: true,
             is_custom: control.get('is_custom')?.value,
-            source_placeholder: control.value.source_placeholder
+            source_placeholder: control.value.source_placeholder,
           });
           this.importSettingForm.controls.isDependentImportEnabled.setValue(true);
         }
@@ -174,7 +214,7 @@ export class Sage300ImportSettingsComponent implements OnInit {
       display_name: this.customFieldForm.get('attribute_type')?.value,
       source_placeholder: this.customFieldForm.get('source_placeholder')?.value,
       is_dependent: true,
-      is_custom: true
+      is_custom: true,
     };
     if (this.customFieldControl) {
       if (this.customFieldType === 'costCodes') {
@@ -188,7 +228,7 @@ export class Sage300ImportSettingsComponent implements OnInit {
       }
       this.importSettingForm.controls[formControllerName].patchValue(this.customField);
 
-      this.fyleFields = this.fyleFields.filter(field => !field.is_dependent);
+      this.fyleFields = this.fyleFields.filter((field) => !field.is_dependent);
       this.customFieldForm.reset();
       this.showCustomFieldDialog = false;
     }
@@ -201,7 +241,7 @@ export class Sage300ImportSettingsComponent implements OnInit {
       attribute_type: this.customFieldForm.get('attribute_type')?.value.split(' ').join('_').toUpperCase(),
       display_name: this.customFieldForm.get('attribute_type')?.value,
       source_placeholder: this.customFieldForm.get('source_placeholder')?.value,
-      is_dependent: false
+      is_dependent: false,
     };
 
     if (this.customFieldControl) {
@@ -213,9 +253,13 @@ export class Sage300ImportSettingsComponent implements OnInit {
         destination_field: this.customFieldControl.get('destination_field')?.value,
         import_to_fyle: true,
         is_custom: true,
-        source_placeholder: this.customField.source_placeholder
+        source_placeholder: this.customField.source_placeholder,
       };
-      (this.importSettingForm.get('expenseFields') as FormArray).controls.filter(field => field.get('destination_field')?.value === this.customFieldControl.get('destination_field')?.value)[0].patchValue(expenseField);
+      (this.importSettingForm.get('expenseFields') as FormArray).controls
+        .filter(
+          (field) => field.get('destination_field')?.value === this.customFieldControl.get('destination_field')?.value,
+        )[0]
+        .patchValue(expenseField);
       this.customFieldForm.reset();
       this.showCustomFieldDialog = false;
     }
@@ -237,7 +281,7 @@ export class Sage300ImportSettingsComponent implements OnInit {
         this.customFieldControl = this.importSettingForm.controls[formControllerName];
         if (value.source_field === 'custom_field') {
           this.importSettingForm.controls[formControllerName].patchValue({
-            source_field: null
+            source_field: null,
           });
         }
       } else if (value) {
@@ -282,7 +326,7 @@ export class Sage300ImportSettingsComponent implements OnInit {
     this.customFieldForm = this.formBuilder.group({
       attribute_type: ['', Validators.required],
       display_name: [''],
-      source_placeholder: ['', Validators.required]
+      source_placeholder: ['', Validators.required],
     });
     this.showCustomFieldDialog = shouldShowDialog;
   }
@@ -299,8 +343,8 @@ export class Sage300ImportSettingsComponent implements OnInit {
 
   private importSettingWatcher(): void {
     const expenseFieldArray = this.importSettingForm.get('expenseFields') as FormArray;
-    expenseFieldArray.controls.forEach((control:any) => {
-      control.valueChanges.subscribe((value: { source_field: string; destination_field: string; }) => {
+    expenseFieldArray.controls.forEach((control: any) => {
+      control.valueChanges.subscribe((value: { source_field: string; destination_field: string }) => {
         if (value.source_field === 'custom_field') {
           this.initializeCustomFieldForm(true);
           this.customFieldType = '';
@@ -310,15 +354,15 @@ export class Sage300ImportSettingsComponent implements OnInit {
             destination_field: control.get('destination_field')?.value,
             import_to_fyle: control.get('import_to_fyle')?.value,
             is_custom: control.get('is_custom')?.value,
-            source_placeholder: null
+            source_placeholder: null,
           });
         } else if (value.source_field === 'PROJECT' && value.destination_field === 'PROJECT') {
           this.isDependentFieldAllowed = true;
-        } else if (control.value.import_code &&  control.value.import_to_fyle) {
+        } else if (control.value.import_code && control.value.import_to_fyle) {
           this.updateImportCodeFields(true, value.destination_field);
         } else if (!control.value.import_code || !control.value.import_to_fyle) {
           const onboardingState = this.workspaceService.getOnboardingState();
-	        if (onboardingState === Sage300OnboardingState.IMPORT_SETTINGS) {
+          if (onboardingState === Sage300OnboardingState.IMPORT_SETTINGS) {
             this.updateImportCodeFields(false, value.destination_field);
           }
         }
@@ -339,11 +383,11 @@ export class Sage300ImportSettingsComponent implements OnInit {
   }
 
   isExpenseFieldDependent(expenseField: ImportSettingMappingRow): boolean {
-    const isDependent = this.fyleFields.find(field => field.attribute_type === expenseField.source_field);
+    const isDependent = this.fyleFields.find((field) => field.attribute_type === expenseField.source_field);
     return isDependent ? true : false;
   }
 
-  dependentFieldFormCreation(){
+  dependentFieldFormCreation() {
     const mappingSettings = this.importSettings?.mapping_settings;
 
     if (mappingSettings) {
@@ -355,14 +399,14 @@ export class Sage300ImportSettingsComponent implements OnInit {
               attribute_type: this.importSettings.dependent_field_settings.cost_code_field_name,
               display_name: this.importSettings.dependent_field_settings.cost_code_field_name,
               source_placeholder: this.importSettings.dependent_field_settings.cost_code_placeholder,
-              is_dependent: true
+              is_dependent: true,
             };
             this.costCodeFieldOption.push(this.customField);
             this.customField = {
               attribute_type: this.importSettings.dependent_field_settings.cost_category_field_name,
               display_name: this.importSettings.dependent_field_settings.cost_category_field_name,
               source_placeholder: this.importSettings.dependent_field_settings.cost_category_placeholder,
-              is_dependent: true
+              is_dependent: true,
             };
             this.costCategoryOption.push(this.customField);
             this.dependentImportFields[0].isDisabled = true;
@@ -373,7 +417,6 @@ export class Sage300ImportSettingsComponent implements OnInit {
       }
     }
   }
-
 
   private defaultFieldCodeImportFieldWatcher() {
     this.importSettingForm.controls.importCategoryCode.valueChanges.subscribe((importCode) => {
@@ -399,7 +442,13 @@ export class Sage300ImportSettingsComponent implements OnInit {
         this.helper.markControllerAsRequired(this.importSettingForm, 'importCategoryCode');
       } else {
         this.importSettingForm.controls.importCategoryCode.clearValidators();
-        this.importSettingForm.controls.importCategoryCode.setValue(this.importSettingService.getImportCodeField(this.importSettings.import_settings.import_code_fields, DefaultImportFields.ACCOUNT, this.sage300ImportCodeFieldCodeConfig));
+        this.importSettingForm.controls.importCategoryCode.setValue(
+          this.importSettingService.getImportCodeField(
+            this.importSettings.import_settings.import_code_fields,
+            DefaultImportFields.ACCOUNT,
+            this.sage300ImportCodeFieldCodeConfig,
+          ),
+        );
       }
     });
 
@@ -408,7 +457,13 @@ export class Sage300ImportSettingsComponent implements OnInit {
         this.helper.markControllerAsRequired(this.importSettingForm, 'importVendorCode');
       } else {
         this.importSettingForm.controls.importVendorCode.clearValidators();
-        this.importSettingForm.controls.importVendorCode.setValue(this.importSettingService.getImportCodeField(this.importSettings.import_settings.import_code_fields, DefaultImportFields.VENDOR, this.sage300ImportCodeFieldCodeConfig));
+        this.importSettingForm.controls.importVendorCode.setValue(
+          this.importSettingService.getImportCodeField(
+            this.importSettings.import_settings.import_code_fields,
+            DefaultImportFields.VENDOR,
+            this.sage300ImportCodeFieldCodeConfig,
+          ),
+        );
       }
     });
   }
@@ -420,15 +475,21 @@ export class Sage300ImportSettingsComponent implements OnInit {
     this.defaultFieldCodeImportFieldWatcher();
   }
 
-updateImportCodeFieldConfig() {
-    if (this.importSettingForm.controls.importCategories.value && this.sage300ImportCodeFieldCodeConfig[DefaultImportFields.ACCOUNT]) {
+  updateImportCodeFieldConfig() {
+    if (
+      this.importSettingForm.controls.importCategories.value &&
+      this.sage300ImportCodeFieldCodeConfig[DefaultImportFields.ACCOUNT]
+    ) {
       this.sage300ImportCodeFieldCodeConfig[DefaultImportFields.ACCOUNT] = false;
     }
-    if (this.importSettingForm.controls.importVendorAsMerchant.value && this.sage300ImportCodeFieldCodeConfig[DefaultImportFields.VENDOR]) {
+    if (
+      this.importSettingForm.controls.importVendorAsMerchant.value &&
+      this.sage300ImportCodeFieldCodeConfig[DefaultImportFields.VENDOR]
+    ) {
       this.sage300ImportCodeFieldCodeConfig[DefaultImportFields.VENDOR] = false;
     }
 
-    this.expenseFieldsGetter.controls.forEach(element => {
+    this.expenseFieldsGetter.controls.forEach((element) => {
       if (element.value.import_to_fyle && this.sage300ImportCodeFieldCodeConfig[element.value.destination_field]) {
         this.sage300ImportCodeFieldCodeConfig[element.value.destination_field] = false;
       }
@@ -437,36 +498,49 @@ updateImportCodeFieldConfig() {
 
   constructPayloadAndSave() {
     this.isSaveInProgress = true;
-    const importSettingPayload = this.importSettingService.createImportSettingPayload(this.importSettingForm, this.importSettings);
-    this.importSettingService.postImportSettings(importSettingPayload).subscribe((importSettingsResponse: Sage300ImportSettingGet) => {
-      this.isSaveInProgress = false;
-      this.updateImportCodeFieldConfig();
-      this.toastService.displayToastMessage(ToastSeverity.SUCCESS, this.translocoService.translate('sage300ImportSettings.importSettingsSuccess'), undefined, this.isOnboarding);
-      this.trackingService.trackTimeSpent(TrackingApp.SAGE300, Page.IMPORT_SETTINGS_SAGE300, this.sessionStartTime);
-      if (this.workspaceService.getOnboardingState() === Sage300OnboardingState.IMPORT_SETTINGS) {
-        this.trackingService.onOnboardingStepCompletion(TrackingApp.SAGE300, Sage300OnboardingState.IMPORT_SETTINGS, 3, importSettingPayload);
-      } else {
-        this.trackingService.onUpdateEvent(
-          TrackingApp.SAGE300,
-          Sage300UpdateEvent.ADVANCED_SETTINGS_SAGE300,
-          {
+    const importSettingPayload = this.importSettingService.createImportSettingPayload(
+      this.importSettingForm,
+      this.importSettings,
+    );
+    this.importSettingService.postImportSettings(importSettingPayload).subscribe(
+      (importSettingsResponse: Sage300ImportSettingGet) => {
+        this.isSaveInProgress = false;
+        this.updateImportCodeFieldConfig();
+        this.toastService.displayToastMessage(
+          ToastSeverity.SUCCESS,
+          this.translocoService.translate('sage300ImportSettings.importSettingsSuccess'),
+          undefined,
+          this.isOnboarding,
+        );
+        this.trackingService.trackTimeSpent(TrackingApp.SAGE300, Page.IMPORT_SETTINGS_SAGE300, this.sessionStartTime);
+        if (this.workspaceService.getOnboardingState() === Sage300OnboardingState.IMPORT_SETTINGS) {
+          this.trackingService.onOnboardingStepCompletion(
+            TrackingApp.SAGE300,
+            Sage300OnboardingState.IMPORT_SETTINGS,
+            3,
+            importSettingPayload,
+          );
+        } else {
+          this.trackingService.onUpdateEvent(TrackingApp.SAGE300, Sage300UpdateEvent.ADVANCED_SETTINGS_SAGE300, {
             phase: this.helper.getPhase(this.isOnboarding),
             oldState: this.importSettings,
-            newState: importSettingsResponse
-          }
+            newState: importSettingsResponse,
+          });
+        }
+
+        if (this.isOnboarding) {
+          this.workspaceService.setOnboardingState(Sage300OnboardingState.ADVANCED_SETTINGS);
+          this.router.navigate([`/integrations/sage300/onboarding/advanced_settings`]);
+        }
+      },
+      () => {
+        this.isSaveInProgress = false;
+        this.toastService.displayToastMessage(
+          ToastSeverity.ERROR,
+          this.translocoService.translate('sage300ImportSettings.importSettingsError'),
         );
-      }
-
-      if (this.isOnboarding) {
-        this.workspaceService.setOnboardingState(Sage300OnboardingState.ADVANCED_SETTINGS);
-        this.router.navigate([`/integrations/sage300/onboarding/advanced_settings`]);
-      }
-
-
-    }, () => {
-      this.isSaveInProgress = false;
-      this.toastService.displayToastMessage(ToastSeverity.ERROR, this.translocoService.translate('sage300ImportSettings.importSettingsError'));
-      });
+      },
+    );
   }
 
   save(): void {
@@ -481,14 +555,22 @@ updateImportCodeFieldConfig() {
       this.importSettingService.getSage300ImportSettings().pipe(catchError(() => of(null))),
       this.mappingService.getFyleFields(),
       this.mappingService.getIntegrationsFields(AppNameInService.SAGE300),
-      this.importSettingService.getImportCodeFieldConfig()
+      this.importSettingService.getImportCodeFieldConfig(),
     ]).subscribe(([importSettingsResponse, fyleFieldsResponse, sage300FieldsResponse, importCodeFieldConfig]) => {
       this.importSettings = importSettingsResponse;
-      this.importSettingForm = this.importSettingService.mapAPIResponseToFormGroup(this.importSettings, sage300FieldsResponse, importCodeFieldConfig);
+      this.importSettingForm = this.importSettingService.mapAPIResponseToFormGroup(
+        this.importSettings,
+        sage300FieldsResponse,
+        importCodeFieldConfig,
+      );
       this.fyleFields = fyleFieldsResponse;
       this.sage300Fields = sage300FieldsResponse;
       this.sage300ImportCodeFieldCodeConfig = importCodeFieldConfig;
-      this.fyleFields.push({ attribute_type: 'custom_field', display_name: this.translocoService.translate('sage300ImportSettings.createCustomField'), is_dependent: false });
+      this.fyleFields.push({
+        attribute_type: 'custom_field',
+        display_name: this.translocoService.translate('sage300ImportSettings.createCustomField'),
+        is_dependent: false,
+      });
       this.setupFormWatchers();
       this.updateImportCodeFieldConfig();
       this.dependentFieldFormCreation();
@@ -504,5 +586,4 @@ updateImportCodeFieldConfig() {
   navigateBack(): void {
     this.router.navigate([`/integrations/sage300/onboarding/export_settings`]);
   }
-
 }

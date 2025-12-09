@@ -1,7 +1,7 @@
 :host ::ng-deep .autoCreateVendor app-configuration-toggle-field div:nth-child(1) {
-    @apply tw-py-0 #{!important};
+  @apply tw-py-0 #{!important};
 }
 
 .preview-text {
-    @apply tw-text-14-px tw-font-400 tw-text-text-muted tw-pb-24-px tw-pl-62-px tw-pr-24-px tw-pt-0 #{!important} ;
+  @apply tw-text-14-px tw-font-400 tw-text-text-muted tw-pb-24-px tw-pl-62-px tw-pr-24-px tw-pt-0 #{!important};
 }

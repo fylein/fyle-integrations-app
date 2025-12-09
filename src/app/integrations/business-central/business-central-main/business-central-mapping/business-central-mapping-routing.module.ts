@@ -10,14 +10,14 @@ const routes: Routes = [
     children: [
       {
         path: ':source_field',
-        component: BusinessCentralBaseMappingComponent
-      }
-    ]
-  }
+        component: BusinessCentralBaseMappingComponent,
+      },
+    ],
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class BusinessCentralMappingRoutingModule { }
+export class BusinessCentralMappingRoutingModule {}

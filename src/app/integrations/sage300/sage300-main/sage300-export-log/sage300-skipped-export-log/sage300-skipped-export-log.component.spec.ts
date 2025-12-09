@@ -8,9 +8,8 @@ xdescribe('Sage300SkippedExportLogComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ Sage300SkippedExportLogComponent ]
-    })
-    .compileComponents();
+      declarations: [Sage300SkippedExportLogComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(Sage300SkippedExportLogComponent);
     component = fixture.componentInstance;

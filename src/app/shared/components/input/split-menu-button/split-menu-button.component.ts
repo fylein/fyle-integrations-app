@@ -3,13 +3,12 @@ import { ButtonSize, ButtonType } from 'src/app/core/models/enum/enum.model';
 import { MainMenuDropdownGroup } from 'src/app/core/models/misc/main-menu-dropdown-options';
 
 @Component({
-    selector: 'app-split-menu-button',
-    templateUrl: './split-menu-button.component.html',
-    styleUrl: './split-menu-button.component.scss',
-    standalone: false
+  selector: 'app-split-menu-button',
+  templateUrl: './split-menu-button.component.html',
+  styleUrl: './split-menu-button.component.scss',
+  standalone: false,
 })
 export class SplitMenuButtonComponent {
-
   @Input() buttonText: string = '';
 
   @Input() dropdownOptions: MainMenuDropdownGroup[];
@@ -33,8 +32,7 @@ export class SplitMenuButtonComponent {
 
   @HostListener('document:click', ['$event'])
   onDocumentClick(event: MouseEvent): void {
-    if (this.isDropdownVisible && this.dropdownElement &&
-        !this.dropdownElement.nativeElement.contains(event.target)) {
+    if (this.isDropdownVisible && this.dropdownElement && !this.dropdownElement.nativeElement.contains(event.target)) {
       this.isDropdownVisible = false;
     }
   }
@@ -52,9 +50,9 @@ export class SplitMenuButtonComponent {
   }
 
   isCurrentIntegrationItem(optionLabel?: string): boolean {
-    return this.currentIntegration !== undefined &&
-           optionLabel !== undefined &&
-           optionLabel === this.currentIntegration;
+    return (
+      this.currentIntegration !== undefined && optionLabel !== undefined && optionLabel === this.currentIntegration
+    );
   }
 
   setItemClasses(isFirst: boolean, isLast: boolean): string {
@@ -68,5 +66,4 @@ export class SplitMenuButtonComponent {
 
     return baseClasses.join(' ');
   }
-
 }

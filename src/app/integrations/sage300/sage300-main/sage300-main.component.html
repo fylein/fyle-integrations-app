@@ -1,6 +1,13 @@
 <div class="page-layout-container">
-    <app-main-menu [modules]="modules" [activeItem]="modules[0].value" [appName]="appName" [isDropdrownRequired]="false" (refreshDimensionClick)="refreshDimensions($event)" [isSyncVisible]="true"></app-main-menu>
-    <div class="router-outlet-container">
-        <router-outlet></router-outlet>
-    </div>
+  <app-main-menu
+    [modules]="modules"
+    [activeItem]="modules[0].value"
+    [appName]="appName"
+    [isDropdrownRequired]="false"
+    (refreshDimensionClick)="refreshDimensions($event)"
+    [isSyncVisible]="true"
+  ></app-main-menu>
+  <div class="router-outlet-container">
+    <router-outlet></router-outlet>
+  </div>
 </div>

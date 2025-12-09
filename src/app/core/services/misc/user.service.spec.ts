@@ -10,9 +10,9 @@ xdescribe('UserService', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-    imports: [],
-    providers: [UserService, provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting()]
-});
+      imports: [],
+      providers: [UserService, provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting()],
+    });
 
     injector = getTestBed();
     service = injector.inject(UserService);

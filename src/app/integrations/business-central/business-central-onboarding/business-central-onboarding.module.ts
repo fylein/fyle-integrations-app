@@ -12,7 +12,6 @@ import { SharedModule } from 'src/app/shared/shared.module';
 import { BusinessCentralSharedModule } from '../business-central-shared/business-central-shared.module';
 import { BusinessCentralOnboardingDoneComponent } from './business-central-onboarding-done/business-central-onboarding-done.component';
 
-
 @NgModule({
   declarations: [
     BusinessCentralOnboardingLandingComponent,
@@ -21,13 +20,8 @@ import { BusinessCentralOnboardingDoneComponent } from './business-central-onboa
     BusinessCentralOnboardingImportSettingsComponent,
     BusinessCentralOnboardingAdvancedSettingsComponent,
     BusinessCentralOnboardingDoneComponent,
-    BusinessCentralOnboardingComponent
+    BusinessCentralOnboardingComponent,
   ],
-  imports: [
-    CommonModule,
-    BusinessCentralOnboardingRoutingModule,
-    SharedModule,
-    BusinessCentralSharedModule
-  ]
+  imports: [CommonModule, BusinessCentralOnboardingRoutingModule, SharedModule, BusinessCentralSharedModule],
 })
-export class BusinessCentralOnboardingModule { }
+export class BusinessCentralOnboardingModule {}

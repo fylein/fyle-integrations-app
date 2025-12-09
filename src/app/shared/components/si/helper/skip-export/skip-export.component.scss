@@ -30,11 +30,11 @@
 }
 
 :host ::ng-deep .p-autocomplete-input-multiple-token {
-  height: 24px;  /* Reduced height */
-  align-items: center;  /* Center content */
-  background-color: white !important;  /* Change background color to white */
-  border: 1px solid #ccc;  /* Optional: Add a border to make it visible against the white background */
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);  /* Add shadow */
+  height: 24px; /* Reduced height */
+  align-items: center; /* Center content */
+  background-color: white !important; /* Change background color to white */
+  border: 1px solid #ccc; /* Optional: Add a border to make it visible against the white background */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Add shadow */
 }
 
 /* To remove blue hover and other styles */
@@ -51,8 +51,8 @@
   width: 360px !important;
   height: auto !important;
   min-height: 38px !important;
-  padding-top: 2px!important;
-  padding-bottom: 2px!important;
+  padding-top: 2px !important;
+  padding-bottom: 2px !important;
 }
 
 /* Change text color to black */
@@ -60,16 +60,15 @@
   @apply tw-text-slightly-normal-text-color #{!important};
 }
 
-
 :host ::ng-deep .p-autocomplete-input-multiple-token-icon {
   @apply tw-text-slightly-normal-text-color #{!important};
 }
 
 :host ::ng-deep .p-autocomplete-input-multiple-multiple-container::-webkit-scrollbar {
-  background: transparent;  /* For WebKit browsers like Chrome and Safari */
+  background: transparent; /* For WebKit browsers like Chrome and Safari */
 }
 
-:host ::ng-deep .p-select-panel .p-select-items .p-select-item:not(.p-highlight):hover .p-datepicker .p-inputtext{
+:host ::ng-deep .p-select-panel .p-select-items .p-select-item:not(.p-highlight):hover .p-datepicker .p-inputtext {
   @apply tw-bg-input-read-only-bg #{!important};
 }
 

@@ -8,15 +8,14 @@ import { Cacheable } from 'ts-cacheable';
 import { Router } from '@angular/router';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class IntegrationsService {
   constructor(
     private apiService: ApiService,
     private helper: HelperService,
-    private router: Router
-  ) {
-  }
+    private router: Router,
+  ) {}
 
   readonly tpaNameToIntegrationKeyMap = {
     'Fyle Netsuite Integration': 'NETSUITE',
@@ -29,7 +28,7 @@ export class IntegrationsService {
     'Fyle Business Central Integration': 'BUSINESS_CENTRAL',
     'Fyle TravelPerk Integration': 'TRAVELPERK',
     'Fyle BambooHR Integration': 'BAMBOO_HR',
-    'Sage File Export Integration': 'SAGE50'
+    'Sage File Export Integration': 'SAGE50',
   } satisfies Record<string, IntegrationAppKey>;
 
   readonly inAppIntegrationUrlMap: InAppIntegrationUrlMap = {
@@ -43,7 +42,7 @@ export class IntegrationsService {
     [InAppIntegration.NETSUITE]: '/integrations/netsuite',
     [InAppIntegration.XERO]: '/integrations/xero',
     [InAppIntegration.QBD_DIRECT]: '/integrations/qbd_direct',
-    [InAppIntegration.SAGE50]: '/integrations/sage50'
+    [InAppIntegration.SAGE50]: '/integrations/sage50',
   };
 
   getIntegrationKey(tpaName: string): IntegrationAppKey | null {

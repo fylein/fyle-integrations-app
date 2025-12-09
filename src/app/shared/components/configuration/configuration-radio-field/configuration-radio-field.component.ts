@@ -4,16 +4,15 @@ import { brandingStyle } from 'src/app/branding/branding-config';
 import { QBDExportSettingFormOption } from 'src/app/core/models/qbd/qbd-configuration/qbd-export-setting.model';
 
 @Component({
-    selector: 'app-configuration-radio-field',
-    templateUrl: './configuration-radio-field.component.html',
-    styleUrls: ['./configuration-radio-field.component.scss'],
-    standalone: false
+  selector: 'app-configuration-radio-field',
+  templateUrl: './configuration-radio-field.component.html',
+  styleUrls: ['./configuration-radio-field.component.scss'],
+  standalone: false,
 })
 export class ConfigurationRadioFieldComponent implements OnInit {
-
   readonly brandingStyle = brandingStyle;
 
-  constructor() { }
+  constructor() {}
 
   @Input() options: QBDExportSettingFormOption[];
 
@@ -35,7 +34,5 @@ export class ConfigurationRadioFieldComponent implements OnInit {
 
   @Input() customErrorMessage: string;
 
-  ngOnInit(): void {
-  }
-
+  ngOnInit(): void {}
 }

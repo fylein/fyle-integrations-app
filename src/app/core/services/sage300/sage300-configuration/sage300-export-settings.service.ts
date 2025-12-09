@@ -3,61 +3,75 @@ import { ApiService } from '../../common/api.service';
 import { HelperService } from '../../common/helper.service';
 import { WorkspaceService } from '../../common/workspace.service';
 import { Observable } from 'rxjs/internal/Observable';
-import { Sage300ExportSettingFormOption, Sage300ExportSettingGet, Sage300ExportSettingPost } from 'src/app/core/models/sage300/sage300-configuration/sage300-export-setting.model';
+import {
+  Sage300ExportSettingFormOption,
+  Sage300ExportSettingGet,
+  Sage300ExportSettingPost,
+} from 'src/app/core/models/sage300/sage300-configuration/sage300-export-setting.model';
 import { Subject } from 'rxjs';
 import { CacheBuster, Cacheable } from 'ts-cacheable';
-import { CCCExpenseState, ExpenseGroupingFieldOption, ExpenseState, Sage300ExpenseDate, Sage300ExportType } from 'src/app/core/models/enum/enum.model';
+import {
+  CCCExpenseState,
+  ExpenseGroupingFieldOption,
+  ExpenseState,
+  Sage300ExpenseDate,
+  Sage300ExportType,
+} from 'src/app/core/models/enum/enum.model';
 import { Sage300DestinationAttributes } from 'src/app/core/models/sage300/db/sage300-destination-attribuite.model';
 import { TranslocoService } from '@jsverse/transloco';
 
 const sage300ExportSettingGetCache = new Subject<void>();
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class Sage300ExportSettingsService {
-
   constructor(
     private apiService: ApiService,
     private workspaceService: WorkspaceService,
     private translocoService: TranslocoService,
-    helper: HelperService
+    helper: HelperService,
   ) {
     helper.setBaseApiURL();
   }
 
   @Cacheable({
-    cacheBusterObserver: sage300ExportSettingGetCache
+    cacheBusterObserver: sage300ExportSettingGetCache,
   })
   getSage300ExportSettings(): Observable<Sage300ExportSettingGet> {
     return this.apiService.get(`/workspaces/${this.workspaceService.getWorkspaceId()}/export_settings/`, {});
   }
 
-
   @CacheBuster({
-    cacheBusterNotifier: sage300ExportSettingGetCache
+    cacheBusterNotifier: sage300ExportSettingGetCache,
   })
   postExportSettings(exportSettingsPayload: Sage300ExportSettingPost): Observable<Sage300ExportSettingGet> {
-    return this.apiService.post(`/workspaces/${this.workspaceService.getWorkspaceId()}/export_settings/`, exportSettingsPayload);
+    return this.apiService.post(
+      `/workspaces/${this.workspaceService.getWorkspaceId()}/export_settings/`,
+      exportSettingsPayload,
+    );
   }
 
   getDestinationAttributes(attributeType: string[] | string): Observable<Sage300DestinationAttributes[]> {
     const params = {
-      attribute_type__in: attributeType
+      attribute_type__in: attributeType,
     };
-    return this.apiService.get(`workspaces/${this.workspaceService.getWorkspaceId()}/mappings/destination_attributes/`, params);
+    return this.apiService.get(
+      `workspaces/${this.workspaceService.getWorkspaceId()}/mappings/destination_attributes/`,
+      params,
+    );
   }
 
   getExpenseGroupByOptions(): Sage300ExportSettingFormOption[] {
     return [
       {
         label: this.translocoService.translate('services.sage300ExportSettings.expense'),
-        value: ExpenseGroupingFieldOption.EXPENSE
+        value: ExpenseGroupingFieldOption.EXPENSE,
       },
       {
         label: this.translocoService.translate('services.sage300ExportSettings.expenseReport'),
-        value: ExpenseGroupingFieldOption.REPORT
-      }
+        value: ExpenseGroupingFieldOption.REPORT,
+      },
     ];
   }
 
@@ -65,12 +79,12 @@ export class Sage300ExportSettingsService {
     return [
       {
         label: this.translocoService.translate('services.sage300ExportSettings.cardTransactionPostDate'),
-        value: Sage300ExpenseDate.POSTED_AT
+        value: Sage300ExpenseDate.POSTED_AT,
       },
       {
         label: this.translocoService.translate('services.sage300ExportSettings.lastSpentDate'),
-        value: Sage300ExpenseDate.LAST_SPENT_AT
-      }
+        value: Sage300ExpenseDate.LAST_SPENT_AT,
+      },
     ];
   }
 
@@ -78,16 +92,16 @@ export class Sage300ExportSettingsService {
     return [
       {
         label: this.translocoService.translate('common.currentDate'),
-        value: Sage300ExpenseDate.CURRENT_DATE
+        value: Sage300ExpenseDate.CURRENT_DATE,
       },
       {
         label: this.translocoService.translate('services.sage300ExportSettings.spentDate'),
-        value: Sage300ExpenseDate.SPENT_AT
+        value: Sage300ExpenseDate.SPENT_AT,
       },
       {
         label: this.translocoService.translate('services.sage300ExportSettings.lastSpentDate'),
-        value: Sage300ExpenseDate.LAST_SPENT_AT
-      }
+        value: Sage300ExpenseDate.LAST_SPENT_AT,
+      },
     ];
   }
 
@@ -95,12 +109,12 @@ export class Sage300ExportSettingsService {
     return [
       {
         label: this.translocoService.translate('services.sage300ExportSettings.accountsPayableInvoice'),
-        value: Sage300ExportType.PURCHASE_INVOICE
+        value: Sage300ExportType.PURCHASE_INVOICE,
       },
       {
         label: this.translocoService.translate('services.sage300ExportSettings.directCost'),
-        value: Sage300ExportType.DIRECT_COST
-      }
+        value: Sage300ExportType.DIRECT_COST,
+      },
     ];
   }
 
@@ -108,12 +122,12 @@ export class Sage300ExportSettingsService {
     return [
       {
         label: this.translocoService.translate('services.sage300ExportSettings.processing'),
-        value: ExpenseState.PAYMENT_PROCESSING
+        value: ExpenseState.PAYMENT_PROCESSING,
       },
       {
         label: this.translocoService.translate('services.sage300ExportSettings.closed'),
-        value: ExpenseState.PAID
-      }
+        value: ExpenseState.PAID,
+      },
     ];
   }
 
@@ -121,12 +135,12 @@ export class Sage300ExportSettingsService {
     return [
       {
         label: this.translocoService.translate('services.sage300ExportSettings.approved'),
-        value: CCCExpenseState.APPROVED
+        value: CCCExpenseState.APPROVED,
       },
       {
         label: this.translocoService.translate('services.sage300ExportSettings.closed'),
-        value: CCCExpenseState.PAID
-      }
+        value: CCCExpenseState.PAID,
+      },
     ];
   }
 }

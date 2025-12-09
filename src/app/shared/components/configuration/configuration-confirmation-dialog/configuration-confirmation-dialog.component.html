@@ -1,41 +1,75 @@
 <div>
-  <p-dialog [showHeader]="false" [modal]="true" [(visible)]="isWarningVisible" [draggable]="false" [style]="{width: dialogWidth}">
+  <p-dialog
+    [showHeader]="false"
+    [modal]="true"
+    [(visible)]="isWarningVisible"
+    [draggable]="false"
+    [style]="{ width: dialogWidth }"
+  >
     <div class="tw-px-24-px tw-py-22-px tw-border-b-1-px tw-border-b-box-color">
       <div class="tw-flex tw-justify-between tw-items-center">
         <div class="tw-flex tw-items-center">
-          @if (appName!==AppName.QBD_DIRECT) {
+          @if (appName !== AppName.QBD_DIRECT) {
             <div class="tw-p-8-px tw-bg-bg-warning-lighter tw-mr-10-px">
-              <app-svg-icon [svgSource]="'warning-outline'" [width]="'16px'" [height]="'16px'" [styleClasses]="'tw-text-icon-warning'"></app-svg-icon>
+              <app-svg-icon
+                [svgSource]="'warning-outline'"
+                [width]="'16px'"
+                [height]="'16px'"
+                [styleClasses]="'tw-text-icon-warning'"
+              ></app-svg-icon>
             </div>
           }
-          @if (appName===AppName.QBD_DIRECT) {
+          @if (appName === AppName.QBD_DIRECT) {
             <div class="tw-p-8-px tw-bg-bg-danger-lighter tw-rounded-border-radius-2xs tw-mr-10-px">
-              <app-svg-icon [svgSource]="'danger-outline'" [width]="'18px'" [height]="'18px'" [styleClasses]="'tw-text-alert-toast'"></app-svg-icon>
+              <app-svg-icon
+                [svgSource]="'danger-outline'"
+                [width]="'18px'"
+                [height]="'18px'"
+                [styleClasses]="'tw-text-alert-toast'"
+              ></app-svg-icon>
             </div>
           }
-          <p class="tw-text-20-px tw-font-500 tw-text-text-primary">{{headerText}}</p>
+          <p class="tw-text-20-px tw-font-500 tw-text-text-primary">{{ headerText }}</p>
         </div>
-        <i [ngClass]="[appName!==AppName.QBD_DIRECT ? brandingStyle.common.configurationBrandingClass : brandingStyle.common.configurationBrandingClass + ' qbd']" class="tw-cursor-pointer pi pi-times" style="font-size: 12px" (click)="acceptWarning(false)"></i>
+        <i
+          [ngClass]="[
+            appName !== AppName.QBD_DIRECT
+              ? brandingStyle.common.configurationBrandingClass
+              : brandingStyle.common.configurationBrandingClass + ' qbd',
+          ]"
+          class="tw-cursor-pointer pi pi-times"
+          style="font-size: 12px"
+          (click)="acceptWarning(false)"
+        ></i>
       </div>
     </div>
     <div class="tw-pl-24-px tw-pr-24-px tw-pt-16-px tw-pb-24-px">
-      <div class="tw-text-14-px tw-font-400 tw-pb-14-px tw-text-text-secondary" [innerHTML]="contextText">
-      </div>
-      @if (appName!==AppName.QBD_DIRECT && !(appName === AppName.QBO && headerText === ('dashboardTokenExpired.incorrectAccountSelectedHeader' | transloco))) {
+      <div class="tw-text-14-px tw-font-400 tw-pb-14-px tw-text-text-secondary" [innerHTML]="contextText"></div>
+      @if (
+        appName !== AppName.QBD_DIRECT &&
+        !(
+          appName === AppName.QBO && headerText === ('dashboardTokenExpired.incorrectAccountSelectedHeader' | transloco)
+        )
+      ) {
         <div class="tw-pt-26-px tw-text-14-px tw-font-400 tw-text-text-secondary">
           {{ confirmationPromptText }}
         </div>
       }
-      @if (appName===AppName.QBD_DIRECT) {
-        <div class="tw-border tw-border-border-tertiary tw-rounded-border-radius-sm tw-bg-white tw-p-12-px tw-cursor-pointer" (click)="redirect()">
-          <p class="tw-text-12-px tw-font-500 tw-text-text-primary">{{ 'configurationConfirmationDialog.qbdErrorsAndSolutions' | transloco }}</p>
+      @if (appName === AppName.QBD_DIRECT) {
+        <div
+          class="tw-border tw-border-border-tertiary tw-rounded-border-radius-sm tw-bg-white tw-p-12-px tw-cursor-pointer"
+          (click)="redirect()"
+        >
+          <p class="tw-text-12-px tw-font-500 tw-text-text-primary">
+            {{ 'configurationConfirmationDialog.qbdErrorsAndSolutions' | transloco }}
+          </p>
           <div class="tw-flex tw-items-center tw-justify-start">
             <div class="tw-pr-10-px">
-              <img [src]="brandIcon" width="12px" height="12px">
+              <img [src]="brandIcon" width="12px" height="12px" />
             </div>
             <div>
               <p class="tw-text-size-10 tw-text-text-disable tw-font-400 tw-max-w-[400px] tw-truncate">
-                {{brandingKbArticles.onboardingArticles.QBD_DIRECT.HELPER_ARTICLE}}
+                {{ brandingKbArticles.onboardingArticles.QBD_DIRECT.HELPER_ARTICLE }}
               </p>
             </div>
           </div>
@@ -45,10 +79,21 @@
     <div class="tw-flex tw-justify-end tw-text-14-px tw-border-t-1-px tw-px-24-px tw-py-16-px">
       <div class="tw-mr-16-px">
         @if (showSecondaryCTA) {
-          <app-button [buttonSize]="ButtonSize.SMALL" [buttonType]="ButtonType.SECONDARY" [styleClasses]="brandingStyle.buttons.dialog.cancel" [buttonText]="'configurationConfirmationDialog.cancel' | transloco" (buttonClick)="acceptWarning(false)"></app-button>
+          <app-button
+            [buttonSize]="ButtonSize.SMALL"
+            [buttonType]="ButtonType.SECONDARY"
+            [styleClasses]="brandingStyle.buttons.dialog.cancel"
+            [buttonText]="'configurationConfirmationDialog.cancel' | transloco"
+            (buttonClick)="acceptWarning(false)"
+          ></app-button>
         }
       </div>
-      <app-button [buttonSize]="ButtonSize.SMALL" [buttonType]="ButtonType.PRIMARY" [buttonText]="confirmBtnText" (buttonClick)="acceptWarning(true)"></app-button>
+      <app-button
+        [buttonSize]="ButtonSize.SMALL"
+        [buttonType]="ButtonType.PRIMARY"
+        [buttonText]="confirmBtnText"
+        (buttonClick)="acceptWarning(true)"
+      ></app-button>
     </div>
   </p-dialog>
 </div>

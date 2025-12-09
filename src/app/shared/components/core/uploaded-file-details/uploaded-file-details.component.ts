@@ -6,13 +6,12 @@ import { TranslocoService } from '@jsverse/transloco';
 import { SentenceCasePipe } from 'src/app/shared/pipes/sentence-case.pipe';
 
 @Component({
-    selector: 'app-uploaded-file-details',
-    templateUrl: './uploaded-file-details.component.html',
-    styleUrl: './uploaded-file-details.component.scss',
-    standalone: false
+  selector: 'app-uploaded-file-details',
+  templateUrl: './uploaded-file-details.component.html',
+  styleUrl: './uploaded-file-details.component.scss',
+  standalone: false,
 })
 export class UploadedFileDetailsComponent implements OnInit {
-
   @Input({ required: true }) file: UploadedCSVFile;
 
   @Input({ required: true }) dimension: string;
@@ -27,14 +26,12 @@ export class UploadedFileDetailsComponent implements OnInit {
 
   public tooltipText?: string;
 
-  constructor(
-    public translocoService: TranslocoService
-  ) { }
+  constructor(public translocoService: TranslocoService) {}
 
   ngOnInit(): void {
     if (this.isOnboarding) {
       this.tooltipText = this.translocoService.translate('uploadedFileDetails.reuploadTooltip', {
-        dimension: new SentenceCasePipe(this.translocoService).transform(this.dimension)
+        dimension: new SentenceCasePipe(this.translocoService).transform(this.dimension),
       });
     }
   }

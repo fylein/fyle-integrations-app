@@ -1,8 +1,24 @@
 import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { forkJoin, from, interval, Subject, switchMap, takeUntil, takeWhile } from 'rxjs';
-import { ButtonSize, ButtonType, ClickEvent, Page, PaginatorPage, QBDAccountingExportsState, QBDAccountingExportsType, QBDScheduleFrequency, ToastSeverity, TrackingApp } from 'src/app/core/models/enum/enum.model';
-import { QBDAccountingExportsResult, QbdExportTriggerResponse, QbdAccountingExportDownload, QbdExportTriggerGet } from 'src/app/core/models/qbd/db/qbd-iif-logs.model';
+import {
+  ButtonSize,
+  ButtonType,
+  ClickEvent,
+  Page,
+  PaginatorPage,
+  QBDAccountingExportsState,
+  QBDAccountingExportsType,
+  QBDScheduleFrequency,
+  ToastSeverity,
+  TrackingApp,
+} from 'src/app/core/models/enum/enum.model';
+import {
+  QBDAccountingExportsResult,
+  QbdExportTriggerResponse,
+  QbdAccountingExportDownload,
+  QbdExportTriggerGet,
+} from 'src/app/core/models/qbd/db/qbd-iif-logs.model';
 import { DateFilter, SelectedDateFilter } from 'src/app/core/models/qbd/misc/qbd-date-filter.model';
 import { QbdAdvancedSettingsService } from 'src/app/core/services/qbd/qbd-configuration/qbd-advanced-settings.service';
 import { QbdIifLogsService } from 'src/app/core/services/qbd/qbd-core/qbd-iif-logs.service';
@@ -15,13 +31,12 @@ import { TranslocoService } from '@jsverse/transloco';
 import { AccountingExportService } from 'src/app/core/services/common/accounting-export.service';
 
 @Component({
-    selector: 'app-qbd-dashboard',
-    templateUrl: './qbd-dashboard.component.html',
-    styleUrls: ['./qbd-dashboard.component.scss'],
-    standalone: false
+  selector: 'app-qbd-dashboard',
+  templateUrl: './qbd-dashboard.component.html',
+  styleUrls: ['./qbd-dashboard.component.scss'],
+  standalone: false,
 })
 export class QbdDashboardComponent implements OnInit, OnDestroy {
-
   isLoading: boolean = false;
 
   accountingExports: QbdExportTriggerResponse;
@@ -90,8 +105,8 @@ export class QbdDashboardComponent implements OnInit, OnDestroy {
     private trackingService: TrackingService,
     private storageService: StorageService,
     private translocoService: TranslocoService,
-    private accountingExportService: AccountingExportService
-  ) { }
+    private accountingExportService: AccountingExportService,
+  ) {}
 
   showCalendar(event: Event) {
     event.stopPropagation();
@@ -100,11 +115,11 @@ export class QbdDashboardComponent implements OnInit, OnDestroy {
 
   getExpenseType(type: string) {
     const expenseType = type === 'CCC' ? QBDAccountingExportsType.CREDIT_CARD : QBDAccountingExportsType.REIMBURSABLE;
-    return expenseType.split("_").join(' ');
+    return expenseType.split('_').join(' ');
   }
 
   getTypeString(type: string): string {
-    return type.split("_").slice(1).join(' ').split(",").join('');
+    return type.split('_').slice(1).join(' ').split(',').join('');
   }
 
   dateFilter(): void {
@@ -112,11 +127,17 @@ export class QbdDashboardComponent implements OnInit, OnDestroy {
     setTimeout(() => {
       this.hideCalendar = false;
     }, 10);
-    this.iifLogsService.getQbdAccountingExports(QBDAccountingExportsState.COMPLETE, this.limit, this.pageNo, this.selectedDateFilter, [QBDAccountingExportsType.EXPORT_BILLS, QBDAccountingExportsType.EXPORT_CREDIT_CARD_PURCHASES, QBDAccountingExportsType.EXPORT_JOURNALS]).subscribe((accountingExportsResult: QbdExportTriggerResponse) => {
-      this.accountingExports = accountingExportsResult;
-      this.totalCount = this.accountingExports.count;
-      this.isLoading = false;
-    });
+    this.iifLogsService
+      .getQbdAccountingExports(QBDAccountingExportsState.COMPLETE, this.limit, this.pageNo, this.selectedDateFilter, [
+        QBDAccountingExportsType.EXPORT_BILLS,
+        QBDAccountingExportsType.EXPORT_CREDIT_CARD_PURCHASES,
+        QBDAccountingExportsType.EXPORT_JOURNALS,
+      ])
+      .subscribe((accountingExportsResult: QbdExportTriggerResponse) => {
+        this.accountingExports = accountingExportsResult;
+        this.totalCount = this.accountingExports.count;
+        this.isLoading = false;
+      });
   }
 
   pageSizeChanges(limit: number): void {
@@ -125,42 +146,97 @@ export class QbdDashboardComponent implements OnInit, OnDestroy {
     this.pageNo = 0;
     this.currentPage = 1;
     this.selectedDateFilter = this.selectedDateFilter ? this.selectedDateFilter : null;
-    this.iifLogsService.getQbdAccountingExports(QBDAccountingExportsState.COMPLETE, this.limit, this.pageNo, this.selectedDateFilter, [QBDAccountingExportsType.EXPORT_BILLS, QBDAccountingExportsType.EXPORT_CREDIT_CARD_PURCHASES, QBDAccountingExportsType.EXPORT_JOURNALS]).subscribe((accountingExportsResult: QbdExportTriggerResponse) => {
-      this.accountingExports = accountingExportsResult;
-      this.totalCount = this.accountingExports.count;
-      this.isLoading = false;
-    });
+    this.iifLogsService
+      .getQbdAccountingExports(QBDAccountingExportsState.COMPLETE, this.limit, this.pageNo, this.selectedDateFilter, [
+        QBDAccountingExportsType.EXPORT_BILLS,
+        QBDAccountingExportsType.EXPORT_CREDIT_CARD_PURCHASES,
+        QBDAccountingExportsType.EXPORT_JOURNALS,
+      ])
+      .subscribe((accountingExportsResult: QbdExportTriggerResponse) => {
+        this.accountingExports = accountingExportsResult;
+        this.totalCount = this.accountingExports.count;
+        this.isLoading = false;
+      });
   }
 
   pageOffsetChanges(pageNo: number): void {
     this.isLoading = true;
     this.pageNo = pageNo;
-    this.currentPage = Math.ceil(this.pageNo / this.limit)+1;
+    this.currentPage = Math.ceil(this.pageNo / this.limit) + 1;
     this.selectedDateFilter = this.selectedDateFilter ? this.selectedDateFilter : null;
-    this.iifLogsService.getQbdAccountingExports(QBDAccountingExportsState.COMPLETE, this.limit, this.pageNo, this.selectedDateFilter, [QBDAccountingExportsType.EXPORT_BILLS, QBDAccountingExportsType.EXPORT_CREDIT_CARD_PURCHASES, QBDAccountingExportsType.EXPORT_JOURNALS]).subscribe((accountingExportsResult: QbdExportTriggerResponse) => {
-      this.accountingExports = accountingExportsResult;
-      this.totalCount = this.accountingExports.count;
-      this.isLoading = false;
-    });
+    this.iifLogsService
+      .getQbdAccountingExports(QBDAccountingExportsState.COMPLETE, this.limit, this.pageNo, this.selectedDateFilter, [
+        QBDAccountingExportsType.EXPORT_BILLS,
+        QBDAccountingExportsType.EXPORT_CREDIT_CARD_PURCHASES,
+        QBDAccountingExportsType.EXPORT_JOURNALS,
+      ])
+      .subscribe((accountingExportsResult: QbdExportTriggerResponse) => {
+        this.accountingExports = accountingExportsResult;
+        this.totalCount = this.accountingExports.count;
+        this.isLoading = false;
+      });
   }
 
   exportPolling(length: number, isImportPresent: boolean): void {
     this.exportProgressPercentage = 25;
-    interval(3000).pipe(
-      switchMap(() => from(this.iifLogsService.getQbdAccountingExports([QBDAccountingExportsState.ENQUEUED, QBDAccountingExportsState.IN_PROGRESS, QBDAccountingExportsState.COMPLETE], this.limit, this.pageNo, null, [QBDAccountingExportsType.EXPORT_BILLS, QBDAccountingExportsType.EXPORT_CREDIT_CARD_PURCHASES, QBDAccountingExportsType.EXPORT_JOURNALS]))),
-      takeUntil(this.destroy$),
-      takeWhile((response) => response.results.filter(task => (task.status === QBDAccountingExportsState.IN_PROGRESS || task.status === QBDAccountingExportsState.ENQUEUED)).length > 0, true)
-    ).subscribe((res) => {
-      this.processedCount = res.results.filter(task => (task.status !== QBDAccountingExportsState.IN_PROGRESS && task.status !== QBDAccountingExportsState.ENQUEUED)).length;
-      this.exportProgressPercentage = Math.round((this.processedCount / length) * 100);
-      if (res.results.filter(task => (task.status === QBDAccountingExportsState.IN_PROGRESS || task.status === QBDAccountingExportsState.ENQUEUED)).length === 0) {
-        this.iifLogsService.getQbdAccountingExports(QBDAccountingExportsState.COMPLETE, this.limit, this.pageNo, null, [QBDAccountingExportsType.EXPORT_BILLS, QBDAccountingExportsType.EXPORT_CREDIT_CARD_PURCHASES, QBDAccountingExportsType.EXPORT_JOURNALS]).subscribe((accountingExportsResult: QbdExportTriggerResponse) => {
-          this.accountingExports = accountingExportsResult;
-          this.exportPresent = isImportPresent;
-          this.exportInProgress = false;
-        });
-      }
-    });
+    interval(3000)
+      .pipe(
+        switchMap(() =>
+          from(
+            this.iifLogsService.getQbdAccountingExports(
+              [
+                QBDAccountingExportsState.ENQUEUED,
+                QBDAccountingExportsState.IN_PROGRESS,
+                QBDAccountingExportsState.COMPLETE,
+              ],
+              this.limit,
+              this.pageNo,
+              null,
+              [
+                QBDAccountingExportsType.EXPORT_BILLS,
+                QBDAccountingExportsType.EXPORT_CREDIT_CARD_PURCHASES,
+                QBDAccountingExportsType.EXPORT_JOURNALS,
+              ],
+            ),
+          ),
+        ),
+        takeUntil(this.destroy$),
+        takeWhile(
+          (response) =>
+            response.results.filter(
+              (task) =>
+                task.status === QBDAccountingExportsState.IN_PROGRESS ||
+                task.status === QBDAccountingExportsState.ENQUEUED,
+            ).length > 0,
+          true,
+        ),
+      )
+      .subscribe((res) => {
+        this.processedCount = res.results.filter(
+          (task) =>
+            task.status !== QBDAccountingExportsState.IN_PROGRESS && task.status !== QBDAccountingExportsState.ENQUEUED,
+        ).length;
+        this.exportProgressPercentage = Math.round((this.processedCount / length) * 100);
+        if (
+          res.results.filter(
+            (task) =>
+              task.status === QBDAccountingExportsState.IN_PROGRESS ||
+              task.status === QBDAccountingExportsState.ENQUEUED,
+          ).length === 0
+        ) {
+          this.iifLogsService
+            .getQbdAccountingExports(QBDAccountingExportsState.COMPLETE, this.limit, this.pageNo, null, [
+              QBDAccountingExportsType.EXPORT_BILLS,
+              QBDAccountingExportsType.EXPORT_CREDIT_CARD_PURCHASES,
+              QBDAccountingExportsType.EXPORT_JOURNALS,
+            ])
+            .subscribe((accountingExportsResult: QbdExportTriggerResponse) => {
+              this.accountingExports = accountingExportsResult;
+              this.exportPresent = isImportPresent;
+              this.exportInProgress = false;
+            });
+        }
+      });
   }
 
   triggerExports(): void {
@@ -169,36 +245,52 @@ export class QbdDashboardComponent implements OnInit, OnDestroy {
     setTimeout(() => {
       this.exportProgressPercentage = 15;
     }, 500);
-    this.iifLogsService.triggerQBDExport().subscribe((triggerResponse: QbdExportTriggerGet) => {
-      if (triggerResponse.new_expenses_imported) {
-        this.iifLogsService.getQbdAccountingExports([QBDAccountingExportsState.ENQUEUED, QBDAccountingExportsState.IN_PROGRESS], this.limit, this.pageNo, null, null).subscribe((accountingExportsResponse: QbdExportTriggerResponse) => {
-          const accountingResponseLength = accountingExportsResponse.count;
-          this.exportPolling(accountingResponseLength, triggerResponse.new_expenses_imported);
-        });
-      } else {
+    this.iifLogsService.triggerQBDExport().subscribe(
+      (triggerResponse: QbdExportTriggerGet) => {
+        if (triggerResponse.new_expenses_imported) {
+          this.iifLogsService
+            .getQbdAccountingExports(
+              [QBDAccountingExportsState.ENQUEUED, QBDAccountingExportsState.IN_PROGRESS],
+              this.limit,
+              this.pageNo,
+              null,
+              null,
+            )
+            .subscribe((accountingExportsResponse: QbdExportTriggerResponse) => {
+              const accountingResponseLength = accountingExportsResponse.count;
+              this.exportPolling(accountingResponseLength, triggerResponse.new_expenses_imported);
+            });
+        } else {
+          this.exportInProgress = false;
+          this.exportPresent = triggerResponse.new_expenses_imported;
+        }
+      },
+      () => {
         this.exportInProgress = false;
-        this.exportPresent = triggerResponse.new_expenses_imported;
-      }
-
-    }, () => {
-      this.exportInProgress = false;
-      this.toastService.displayToastMessage(ToastSeverity.ERROR, this.translocoService.translate('qbdDashboard.exportFailedMessage'));
-    });
+        this.toastService.displayToastMessage(
+          ToastSeverity.ERROR,
+          this.translocoService.translate('qbdDashboard.exportFailedMessage'),
+        );
+      },
+    );
   }
 
   getDownloadLink(exportData: QBDAccountingExportsResult, index: number): void {
     this.downloadingExportId[index] = true;
-    this.iifLogsService.postQbdAccountingExports(exportData.id).subscribe((postQbdAccountingExports: QbdAccountingExportDownload) => {
-      const link = document.createElement('a');
-      link.setAttribute('href', postQbdAccountingExports.download_url);
-      link.setAttribute('download', `${postQbdAccountingExports.file_id}.iif`);
-      document.body.appendChild(link);
-      link.click();
-      link.remove();
-      this.downloadingExportId[index] = false;
-    }, () => {
-      this.downloadingExportId[index] = false;
-    });
+    this.iifLogsService.postQbdAccountingExports(exportData.id).subscribe(
+      (postQbdAccountingExports: QbdAccountingExportDownload) => {
+        const link = document.createElement('a');
+        link.setAttribute('href', postQbdAccountingExports.download_url);
+        link.setAttribute('download', `${postQbdAccountingExports.file_id}.iif`);
+        document.body.appendChild(link);
+        link.click();
+        link.remove();
+        this.downloadingExportId[index] = false;
+      },
+      () => {
+        this.downloadingExportId[index] = false;
+      },
+    );
   }
 
   getNextExportDate(advancedSettings: QBDAdvancedSettingsGet): void {
@@ -207,19 +299,19 @@ export class QbdDashboardComponent implements OnInit, OnDestroy {
       if (advancedSettings.frequency === QBDScheduleFrequency.MONTHLY) {
         let current;
         if (date.getMonth() === 11 && advancedSettings?.day_of_month) {
-            current = new Date(date.getFullYear() + 1, 0, +advancedSettings?.day_of_month);
+          current = new Date(date.getFullYear() + 1, 0, +advancedSettings?.day_of_month);
         } else if (advancedSettings?.day_of_month) {
-            current = new Date(date.getFullYear(), date.getMonth() + 1, +advancedSettings?.day_of_month);
+          current = new Date(date.getFullYear(), date.getMonth() + 1, +advancedSettings?.day_of_month);
         }
         this.nextExportDate = current;
       } else if (advancedSettings.frequency === QBDScheduleFrequency.WEEKLY && advancedSettings.day_of_week) {
-        const weekday = ["sunday", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday"];
+        const weekday = ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'];
         const week = weekday.indexOf(advancedSettings.day_of_week.toLowerCase());
         const resultDate = new Date(new Date().getTime());
         resultDate.setDate(date.getDate() + ((7 + week - date.getDay()) % 7));
         this.nextExportDate = resultDate;
       } else {
-        this.nextExportDate = new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate()+1);
+        this.nextExportDate = new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate() + 1);
       }
     }
   }
@@ -233,7 +325,7 @@ export class QbdDashboardComponent implements OnInit, OnDestroy {
         this.hideCalendar = true;
         this.selectedDateFilter = {
           startDate: dateRange[0],
-          endDate: dateRange[1]
+          endDate: dateRange[1],
         };
 
         this.dateFilter();
@@ -248,17 +340,21 @@ export class QbdDashboardComponent implements OnInit, OnDestroy {
       searchOption: [''],
       dateRange: [null],
       start: [''],
-      end: ['']
+      end: [''],
     });
     this.setupDateFilterWatcher();
 
     forkJoin([
-      this.iifLogsService.getQbdAccountingExports(QBDAccountingExportsState.COMPLETE, this.limit, this.pageNo, null, [QBDAccountingExportsType.EXPORT_BILLS, QBDAccountingExportsType.EXPORT_CREDIT_CARD_PURCHASES, QBDAccountingExportsType.EXPORT_JOURNALS]),
-      this.advancedSettingService.getQbdAdvancedSettings()
+      this.iifLogsService.getQbdAccountingExports(QBDAccountingExportsState.COMPLETE, this.limit, this.pageNo, null, [
+        QBDAccountingExportsType.EXPORT_BILLS,
+        QBDAccountingExportsType.EXPORT_CREDIT_CARD_PURCHASES,
+        QBDAccountingExportsType.EXPORT_JOURNALS,
+      ]),
+      this.advancedSettingService.getQbdAdvancedSettings(),
     ]).subscribe((response) => {
       this.accountingExports = response[0];
       const advancedSettings = response[1];
-      this.downloadingExportId =  [...Array(this.accountingExports.count).keys()].map(() => {
+      this.downloadingExportId = [...Array(this.accountingExports.count).keys()].map(() => {
         return false;
       });
       this.getNextExportDate(advancedSettings);
@@ -276,5 +372,4 @@ export class QbdDashboardComponent implements OnInit, OnDestroy {
     this.destroy$.next();
     this.destroy$.complete();
   }
-
 }

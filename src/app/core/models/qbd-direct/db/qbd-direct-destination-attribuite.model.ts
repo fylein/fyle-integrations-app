@@ -1,10 +1,10 @@
-import { DestinationAttribute } from "../../db/destination-attribute.model";
+import { DestinationAttribute } from '../../db/destination-attribute.model';
 
 type QbdDirectDestinationAttributeDetail = {
-    account_type: string,
-    account_number: number
-}
+  account_type: string;
+  account_number: number;
+};
 
-  export interface QbdDirectDestinationAttribute extends DestinationAttribute {
-    detail: QbdDirectDestinationAttributeDetail;
-  }
+export interface QbdDirectDestinationAttribute extends DestinationAttribute {
+  detail: QbdDirectDestinationAttributeDetail;
+}

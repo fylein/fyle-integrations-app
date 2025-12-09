@@ -1,10 +1,17 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { AbstractControl, FormArray, FormGroup, Validators } from '@angular/forms';
 import { brandingConfig, brandingFeatureConfig, brandingStyle } from 'src/app/branding/branding-config';
-import { ImportDefaultField, ImportSettingMappingRow, ImportSettingsCustomFieldRow } from 'src/app/core/models/common/import-settings.model';
+import {
+  ImportDefaultField,
+  ImportSettingMappingRow,
+  ImportSettingsCustomFieldRow,
+} from 'src/app/core/models/common/import-settings.model';
 import { FyleField, IntegrationField } from 'src/app/core/models/db/mapping.model';
 import { AppName, MappingSourceField, Sage300Field, XeroFyleField } from 'src/app/core/models/enum/enum.model';
-import { Sage300DefaultFields, Sage300DependentImportFields } from 'src/app/core/models/sage300/sage300-configuration/sage300-import-settings.model';
+import {
+  Sage300DefaultFields,
+  Sage300DependentImportFields,
+} from 'src/app/core/models/sage300/sage300-configuration/sage300-import-settings.model';
 import { MappingSetting } from 'src/app/core/models/intacct/intacct-configuration/import-settings.model';
 import { HelperService } from 'src/app/core/services/common/helper.service';
 import { WindowService } from 'src/app/core/services/common/window.service';
@@ -15,13 +22,12 @@ import { TranslocoService } from '@jsverse/transloco';
 import { ImportSettingsService } from 'src/app/core/services/common/import-settings.service';
 
 @Component({
-    selector: 'app-configuration-import-field',
-    templateUrl: './configuration-import-field.component.html',
-    styleUrls: ['./configuration-import-field.component.scss'],
-    standalone: false
+  selector: 'app-configuration-import-field',
+  templateUrl: './configuration-import-field.component.html',
+  styleUrls: ['./configuration-import-field.component.scss'],
+  standalone: false,
 })
 export class ConfigurationImportFieldComponent implements OnInit {
-
   @Input() appName: string;
 
   @Input() form: FormGroup;
@@ -66,10 +72,10 @@ export class ConfigurationImportFieldComponent implements OnInit {
 
   uiExposedAppName: string;
 
-  importCodeSelectorOptions: Record<string, { label: string; value: boolean; subLabel: string; }[]> = {
-    "ACCOUNT": [],
-    "VENDOR": [],
-    "JOB": []
+  importCodeSelectorOptions: Record<string, { label: string; value: boolean; subLabel: string }[]> = {
+    ACCOUNT: [],
+    VENDOR: [],
+    JOB: [],
   };
 
   isImportCodeEnabledCounter: boolean[] = [];
@@ -82,7 +88,7 @@ export class ConfigurationImportFieldComponent implements OnInit {
 
   readonly brandingStyle = brandingStyle;
 
-  @Output() xeroProjectMapping:EventEmitter<boolean> = new EventEmitter();
+  @Output() xeroProjectMapping: EventEmitter<boolean> = new EventEmitter();
 
   constructor(
     public windowService: WindowService,
@@ -90,39 +96,47 @@ export class ConfigurationImportFieldComponent implements OnInit {
     public router: Router,
     private workspace: WorkspaceService,
     private translocoService: TranslocoService,
-    private importSettingsService: ImportSettingsService
-  ) { }
+    private importSettingsService: ImportSettingsService,
+  ) {}
 
   get expenseFieldsGetter() {
     return this.form.get('expenseFields') as FormArray;
   }
 
   getContentForJob(destinationField: string): string {
-    return destinationField === this.dependentDestinationValue ? this.translocoService.translate('configurationImportField.jobContentInfo', {destinationField: this.helper.sentenseCaseConversion(this.getDestinationField(destinationField)).toLowerCase()}) : '';
+    return destinationField === this.dependentDestinationValue
+      ? this.translocoService.translate('configurationImportField.jobContentInfo', {
+          destinationField: this.helper
+            .sentenseCaseConversion(this.getDestinationField(destinationField))
+            .toLowerCase(),
+        })
+      : '';
   }
 
   showImportCodeSection(expenseField: AbstractControl<any, any>): any {
-    return expenseField.value.import_to_fyle && expenseField.value.source_field && this.importCodeFieldConfig[expenseField.value.destination_field];
+    return (
+      expenseField.value.import_to_fyle &&
+      expenseField.value.source_field &&
+      this.importCodeFieldConfig[expenseField.value.destination_field]
+    );
   }
 
   getImportCodeSelectorOptions(destinationField: string): SelectFormOption[] {
     return this.importCodeSelectorOptions[destinationField];
   }
 
-
   getFormGroup(control: AbstractControl): FormGroup {
     return control as FormGroup;
   }
-
 
   getDestinationField(destinationField: string): string {
     const lastChar = destinationField.slice(-1).toLowerCase();
     const lastTwoChars = destinationField.slice(-2).toLowerCase();
 
     if (lastChar === 'y') {
-        return destinationField.slice(0, -1) + 'ies';
+      return destinationField.slice(0, -1) + 'ies';
     } else if (['s', 'x', 'z'].includes(lastChar) || ['sh', 'ch'].includes(lastTwoChars)) {
-        return destinationField + 'es';
+      return destinationField + 'es';
     }
     return destinationField + 's';
   }
@@ -141,7 +155,7 @@ export class ConfigurationImportFieldComponent implements OnInit {
       destination_field: '',
       import_to_fyle: true,
       is_custom: false,
-      source_placeholder: null
+      source_placeholder: null,
     };
     expenseFields.push(this.importSettingsService.createFormGroup(defaultFieldData));
     this.showAddButton = this.showOrHideAddButton();
@@ -156,7 +170,7 @@ export class ConfigurationImportFieldComponent implements OnInit {
     const selectedValue = event.value;
 
     // Find the selected field in 'fyleFields' based on the selected value
-    const selectedField = this.fyleFieldOptions.find(field => field.attribute_type === selectedValue);
+    const selectedField = this.fyleFieldOptions.find((field) => field.attribute_type === selectedValue);
 
     // Check if the selected field is dependent (assuming 'is_dependent' is a property in 'selectedField')
     if (selectedField?.is_dependent) {
@@ -167,7 +181,10 @@ export class ConfigurationImportFieldComponent implements OnInit {
       (this.form.get('expenseFields') as FormArray).at(index)?.get('import_to_fyle')?.disable();
     } else {
       (this.form.get('expenseFields') as FormArray).at(index)?.get('import_to_fyle')?.setValue(true);
-      this.onImportToFyleToggleChange({checked: true}, (this.form.get('expenseFields') as FormArray).at(index)?.get('destination_field')?.value);
+      this.onImportToFyleToggleChange(
+        { checked: true },
+        (this.form.get('expenseFields') as FormArray).at(index)?.get('destination_field')?.value,
+      );
       if (this.appName === AppName.SAGE300) {
         (this.form.get('expenseFields') as FormArray).at(index)?.get('import_code')?.addValidators(Validators.required);
       }
@@ -177,11 +194,19 @@ export class ConfigurationImportFieldComponent implements OnInit {
       (this.form.get('expenseFields') as FormArray).at(index)?.get('source_field')?.setValue(null);
     }
 
-    if ( selectedValue === MappingSourceField.PROJECT && (this.form.get('expenseFields') as FormArray).at(index)?.get('destination_field')?.value === Sage300Field.JOB && this.appName === AppName.SAGE300) {
+    if (
+      selectedValue === MappingSourceField.PROJECT &&
+      (this.form.get('expenseFields') as FormArray).at(index)?.get('destination_field')?.value === Sage300Field.JOB &&
+      this.appName === AppName.SAGE300
+    ) {
       this.form.controls.isDependentImportEnabled.setValue(true);
     }
 
-    if (selectedValue === MappingSourceField.PROJECT && (this.form.get('expenseFields') as FormArray).at(index)?.get('source_field')?.value !== XeroFyleField.CUSTOMER && this.appName === AppName.XERO) {
+    if (
+      selectedValue === MappingSourceField.PROJECT &&
+      (this.form.get('expenseFields') as FormArray).at(index)?.get('source_field')?.value !== XeroFyleField.CUSTOMER &&
+      this.appName === AppName.XERO
+    ) {
       this.isXeroProjectMapped = true;
       this.xeroProjectMapping.emit(this.isXeroProjectMapped);
     } else {
@@ -192,17 +217,23 @@ export class ConfigurationImportFieldComponent implements OnInit {
 
   getOptions(expenseField: AbstractControl): FyleField[] {
     if (expenseField.get('destination_field')?.value === 'CUSTOMER' && this.appName === AppName.XERO) {
-      return [{ attribute_type: 'DISABLED_XERO_SOURCE_FIELD', display_name: this.translocoService.translate('configurationImportField.disabledXeroSourceFieldProject'), is_dependent: false }];
+      return [
+        {
+          attribute_type: 'DISABLED_XERO_SOURCE_FIELD',
+          display_name: this.translocoService.translate('configurationImportField.disabledXeroSourceFieldProject'),
+          is_dependent: false,
+        },
+      ];
     } else if (expenseField.get('source_field')?.value === 'CATEGORY') {
-      return this.fyleFieldOptions.filter(option => option.attribute_type === 'CATEGORY');
+      return this.fyleFieldOptions.filter((option) => option.attribute_type === 'CATEGORY');
     }
 
-    return this.fyleFieldOptions.filter(option => option.attribute_type !== 'CATEGORY');
+    return this.fyleFieldOptions.filter((option) => option.attribute_type !== 'CATEGORY');
   }
 
   removeFilter(expenseField: AbstractControl) {
     if ((expenseField as FormGroup).controls.import_to_fyle.value) {
-      this.onImportToFyleToggleChange({checked: false}, (expenseField as FormGroup).controls.destination_field.value);
+      this.onImportToFyleToggleChange({ checked: false }, (expenseField as FormGroup).controls.destination_field.value);
     }
     (expenseField as FormGroup).controls.source_field.patchValue('');
     (expenseField as FormGroup).controls.import_to_fyle.patchValue(false);
@@ -233,19 +264,26 @@ export class ConfigurationImportFieldComponent implements OnInit {
 
   onShowWarningForDependentFields(event: any, formGroup: AbstractControl): void {
     if (this.costCodeFieldOption?.length && this.costCodeFieldOption?.length) {
-      if (!event.checked && formGroup.value.source_field === MappingSourceField.PROJECT && this.costCodeFieldOption[0]?.attribute_type !== 'custom_field' && this.costCodeFieldOption[0]?.attribute_type !== 'custom_field') {
+      if (
+        !event.checked &&
+        formGroup.value.source_field === MappingSourceField.PROJECT &&
+        this.costCodeFieldOption[0]?.attribute_type !== 'custom_field' &&
+        this.costCodeFieldOption[0]?.attribute_type !== 'custom_field'
+      ) {
         this.showWarningForDependentFields.emit();
       }
     }
   }
 
   isExpenseFieldDependent(expenseField: MappingSetting): boolean {
-    const isDependent = this.fyleFieldOptions.find(field => field.attribute_type === expenseField.source_field)?.is_dependent;
+    const isDependent = this.fyleFieldOptions.find(
+      (field) => field.attribute_type === expenseField.source_field,
+    )?.is_dependent;
     return isDependent ? true : false;
   }
 
   updateDependentField(sourceField: string, importToFyle: boolean) {
-    if (!(sourceField==='PROJECT' && importToFyle)) {
+    if (!(sourceField === 'PROJECT' && importToFyle)) {
       this.form.controls.isDependentImportEnabled.setValue(false);
     }
   }
@@ -253,38 +291,44 @@ export class ConfigurationImportFieldComponent implements OnInit {
   disableDestinationFields() {
     this.expenseFieldsGetter.controls.forEach((expenseField) => {
       expenseField.get('destination_field')?.disable();
-      if ((expenseField.get('source_field')?.value === 'CATEGORY') || (expenseField.get('destination_field')?.value === 'CUSTOMER' && this.appName === AppName.XERO)) {
+      if (
+        expenseField.get('source_field')?.value === 'CATEGORY' ||
+        (expenseField.get('destination_field')?.value === 'CUSTOMER' && this.appName === AppName.XERO)
+      ) {
         expenseField.get('source_field')?.disable();
       }
     });
   }
 
   setupImportCodeCounter() {
-    Object.keys(this.form.controls).forEach(key => {
+    Object.keys(this.form.controls).forEach((key) => {
       const destinationValue = key === 'importCategories' ? 'ACCOUNT' : 'VENDOR';
       if (['importCategories', 'importVendorAsMerchant'].includes(key) && this.form.get(key)?.value) {
         if (this.importCodeFieldConfig[destinationValue]) {
-        this.isImportCodeEnabledCounter.push(true);
+          this.isImportCodeEnabledCounter.push(true);
         } else {
-        this.isImportCodeEnabledCounter.pop();
+          this.isImportCodeEnabledCounter.pop();
         }
       }
     });
-    Object.keys(this.expenseFieldsGetter.controls).forEach(key => {
+    Object.keys(this.expenseFieldsGetter.controls).forEach((key) => {
       const importCode = this.expenseFieldsGetter.controls[key as unknown as number].get('import_to_fyle');
-      const destinationValue = this.expenseFieldsGetter.controls[key as unknown as number].get('destination_field')?.value;
-      if (importCode?.value === true ) {
+      const destinationValue =
+        this.expenseFieldsGetter.controls[key as unknown as number].get('destination_field')?.value;
+      if (importCode?.value === true) {
         if (this.importCodeFieldConfig[destinationValue]) {
-        this.isImportCodeEnabledCounter.push(true);
+          this.isImportCodeEnabledCounter.push(true);
         } else {
-        this.isImportCodeEnabledCounter.pop();
+          this.isImportCodeEnabledCounter.pop();
         }
       }
     });
   }
 
   getImportSubLabel(destinationField: string): string {
-    const subLabelPart1 = this.translocoService.translate('configurationImportField.howToImportSubLabel', { destinationFields: this.helper.sentenseCaseConversion(this.getDestinationField(destinationField)).toLowerCase() });
+    const subLabelPart1 = this.translocoService.translate('configurationImportField.howToImportSubLabel', {
+      destinationFields: this.helper.sentenseCaseConversion(this.getDestinationField(destinationField)).toLowerCase(),
+    });
     const jobContent = this.getContentForJob(destinationField);
     return `${subLabelPart1}${jobContent ? ' ' + jobContent : ''}`;
   }
@@ -292,45 +336,45 @@ export class ConfigurationImportFieldComponent implements OnInit {
   private setupImportCodeSelectorOptions(): void {
     const commonLabels = {
       importCodesAndNames: this.translocoService.translate('configurationImportField.labelImportCodesAndNames'),
-      importNamesOnly: this.translocoService.translate('configurationImportField.labelImportNamesOnly')
+      importNamesOnly: this.translocoService.translate('configurationImportField.labelImportNamesOnly'),
     };
     this.importCodeSelectorOptions = {
-      "ACCOUNT": [
+      ACCOUNT: [
         {
           label: commonLabels.importCodesAndNames,
           value: true,
-          subLabel: this.translocoService.translate('configurationImportField.exampleAccount')
+          subLabel: this.translocoService.translate('configurationImportField.exampleAccount'),
         },
         {
           label: commonLabels.importNamesOnly,
           value: false,
-          subLabel: this.translocoService.translate('configurationImportField.exampleAccountNameOnly')
-        }
+          subLabel: this.translocoService.translate('configurationImportField.exampleAccountNameOnly'),
+        },
       ],
-      "VENDOR": [
+      VENDOR: [
         {
           label: commonLabels.importCodesAndNames,
           value: true,
-          subLabel: this.translocoService.translate('configurationImportField.exampleVendor')
+          subLabel: this.translocoService.translate('configurationImportField.exampleVendor'),
         },
         {
           label: commonLabels.importNamesOnly,
           value: false,
-          subLabel: this.translocoService.translate('configurationImportField.exampleVendorNameOnly')
-        }
+          subLabel: this.translocoService.translate('configurationImportField.exampleVendorNameOnly'),
+        },
       ],
-      "JOB": [
+      JOB: [
         {
           label: commonLabels.importCodesAndNames,
           value: true,
-          subLabel: this.translocoService.translate('configurationImportField.exampleJob')
+          subLabel: this.translocoService.translate('configurationImportField.exampleJob'),
         },
         {
           label: commonLabels.importNamesOnly,
           value: false,
-          subLabel: this.translocoService.translate('configurationImportField.exampleJobNameOnly')
-        }
-      ]
+          subLabel: this.translocoService.translate('configurationImportField.exampleJobNameOnly'),
+        },
+      ],
     };
   }
 
@@ -346,5 +390,4 @@ export class ConfigurationImportFieldComponent implements OnInit {
       this.setupImportCodeCounter();
     }
   }
-
 }

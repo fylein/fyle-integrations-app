@@ -8,9 +8,8 @@ xdescribe('OauthComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ OauthComponent ]
-    })
-    .compileComponents();
+      declarations: [OauthComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(OauthComponent);
     component = fixture.componentInstance;

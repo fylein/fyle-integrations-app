@@ -14,30 +14,29 @@ const routes: Routes = [
     children: [
       {
         path: 'landing',
-        component: TravelperkOnboardingLandingComponent
+        component: TravelperkOnboardingLandingComponent,
       },
       {
         path: 'payment_profile_settings',
         component: TravelperkOnboardingPaymentProfileSettingsComponent,
-        canActivate: [TravelperkTokenGuard]
+        canActivate: [TravelperkTokenGuard],
       },
       {
         path: 'advanced_settings',
         component: TravelperkOnboardingAdvancedSettingsComponent,
-        canActivate: [TravelperkTokenGuard]
+        canActivate: [TravelperkTokenGuard],
       },
       {
         path: 'done',
         component: TravelperkOnboardingDoneComponent,
-        canActivate: [TravelperkTokenGuard]
-      }
-    ]
-  }
+        canActivate: [TravelperkTokenGuard],
+      },
+    ],
+  },
 ];
-
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class TravelperkOnboardingRoutingModule { }
+export class TravelperkOnboardingRoutingModule {}

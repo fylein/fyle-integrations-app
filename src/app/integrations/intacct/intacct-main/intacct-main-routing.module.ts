@@ -11,34 +11,34 @@ const routes: Routes = [
       {
         path: '',
         redirectTo: 'dashboard',
-        pathMatch: 'full'
+        pathMatch: 'full',
       },
       {
         path: 'dashboard',
-        loadChildren: () => import('./intacct-dashboard/intacct-dashboard.module').then(m => m.IntacctDashboardModule)
+        loadChildren: () =>
+          import('./intacct-dashboard/intacct-dashboard.module').then((m) => m.IntacctDashboardModule),
       },
       {
         path: 'export_log',
-        loadChildren: () => import('./intacct-export-log/intacct-export-log.module').then(m => m.IntacctExportLogModule)
+        loadChildren: () =>
+          import('./intacct-export-log/intacct-export-log.module').then((m) => m.IntacctExportLogModule),
       },
       {
         path: 'mapping',
-        loadChildren: () => import('./intacct-mapping/intacct-mapping.module').then(m => m.IntacctMappingModule)
+        loadChildren: () => import('./intacct-mapping/intacct-mapping.module').then((m) => m.IntacctMappingModule),
       },
       {
         path: 'configuration',
-        loadChildren: () => import('./intacct-configuration/intacct-configuration.module').then(m => m.IntacctConfigurationModule)
-      }
-    ]
-  }
+        loadChildren: () =>
+          import('./intacct-configuration/intacct-configuration.module').then((m) => m.IntacctConfigurationModule),
+      },
+    ],
+  },
 ];
 
 @NgModule({
   declarations: [],
-  imports: [
-    CommonModule,
-    RouterModule.forChild(routes)
-  ],
-  exports: [RouterModule]
+  imports: [CommonModule, RouterModule.forChild(routes)],
+  exports: [RouterModule],
 })
-export class MainRoutingModule { }
+export class MainRoutingModule {}

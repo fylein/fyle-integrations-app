@@ -9,12 +9,9 @@ xdescribe('ErrorComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ErrorComponent ],
-      providers: [
-        MessageService
-      ]
-    })
-    .compileComponents();
+      declarations: [ErrorComponent],
+      providers: [MessageService],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(ErrorComponent);
     component = fixture.componentInstance;

@@ -1,25 +1,45 @@
 <div class="tw-flex tw-justify-between" [ngClass]="brandingStyle.dashboard.mapping.countCardsContainer">
-    <div class="tw-flex">
-        <div class="tw-rounded-10-px tw-bg-lv-stats-bg tw-pt-16-px tw-pr-56-px tw-pb-10-px tw-pl-16-px tw-h-84-px" [ngClass]="brandingStyle.dashboard.mapping.headerCard" [attr.aria-label]="('mappingCardHeader.total' | transloco) + ' ' + getPluralOfSourceField(sourceField)">
-            <div class="tw-w-34-px tw-h-6-px tw-rounded-12-px tw-bg-bg-brand-muted">
-            </div>
-            <div class="tw-pt-8-px tw-text-lv-stats-label-text-color tw-text-12-px">
-                <p>{{'mappingCardHeader.total' | transloco}} {{mappingStats.all_attributes_count !== 1 ? getPluralOfSourceField(sourceField) : getSingularOfSourceField(sourceField)}}</p>
-            </div>
-            <div class="tw-text-600 tw-text-text-primary" [ngClass]="brandingStyle.dashboard.mapping.countText">
-                <p>{{mappingStats.all_attributes_count}}</p>
-            </div>
-        </div>
-        <span class="tw-pl-16-px"></span>
-        <div class="tw-rounded-10-px tw-bg-white tw-pt-16-px tw-pr-56-px tw-pb-10-px tw-pl-16-px tw-h-84-px" [ngClass]="brandingStyle.dashboard.mapping.headerCard" [attr.aria-label]="('mappingCardHeader.unmapped' | transloco) + ' ' + getPluralOfSourceField(sourceField)">
-            <div class="tw-w-34-px tw-h-6-px tw-rounded-12-px tw-bg-bg-brand-muted">
-            </div>
-            <div class="tw-pt-8-px tw-text-lv-stats-label-text-color tw-text-12-px">
-                <p>{{'mappingCardHeader.unmapped' | transloco}} {{mappingStats.unmapped_attributes_count !== 1 ? getPluralOfSourceField(sourceField) : getSingularOfSourceField(sourceField)}}</p>
-            </div>
-            <div class="tw-text-600 tw-text-text-primary" [ngClass]="brandingStyle.dashboard.mapping.countText">
-                <p>{{mappingStats.unmapped_attributes_count}}</p>
-            </div>
-        </div>
+  <div class="tw-flex">
+    <div
+      class="tw-rounded-10-px tw-bg-lv-stats-bg tw-pt-16-px tw-pr-56-px tw-pb-10-px tw-pl-16-px tw-h-84-px"
+      [ngClass]="brandingStyle.dashboard.mapping.headerCard"
+      [attr.aria-label]="('mappingCardHeader.total' | transloco) + ' ' + getPluralOfSourceField(sourceField)"
+    >
+      <div class="tw-w-34-px tw-h-6-px tw-rounded-12-px tw-bg-bg-brand-muted"></div>
+      <div class="tw-pt-8-px tw-text-lv-stats-label-text-color tw-text-12-px">
+        <p>
+          {{ 'mappingCardHeader.total' | transloco }}
+          {{
+            mappingStats.all_attributes_count !== 1
+              ? getPluralOfSourceField(sourceField)
+              : getSingularOfSourceField(sourceField)
+          }}
+        </p>
+      </div>
+      <div class="tw-text-600 tw-text-text-primary" [ngClass]="brandingStyle.dashboard.mapping.countText">
+        <p>{{ mappingStats.all_attributes_count }}</p>
+      </div>
     </div>
+    <span class="tw-pl-16-px"></span>
+    <div
+      class="tw-rounded-10-px tw-bg-white tw-pt-16-px tw-pr-56-px tw-pb-10-px tw-pl-16-px tw-h-84-px"
+      [ngClass]="brandingStyle.dashboard.mapping.headerCard"
+      [attr.aria-label]="('mappingCardHeader.unmapped' | transloco) + ' ' + getPluralOfSourceField(sourceField)"
+    >
+      <div class="tw-w-34-px tw-h-6-px tw-rounded-12-px tw-bg-bg-brand-muted"></div>
+      <div class="tw-pt-8-px tw-text-lv-stats-label-text-color tw-text-12-px">
+        <p>
+          {{ 'mappingCardHeader.unmapped' | transloco }}
+          {{
+            mappingStats.unmapped_attributes_count !== 1
+              ? getPluralOfSourceField(sourceField)
+              : getSingularOfSourceField(sourceField)
+          }}
+        </p>
+      </div>
+      <div class="tw-text-600 tw-text-text-primary" [ngClass]="brandingStyle.dashboard.mapping.countText">
+        <p>{{ mappingStats.unmapped_attributes_count }}</p>
+      </div>
+    </div>
+  </div>
 </div>

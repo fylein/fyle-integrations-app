@@ -3,12 +3,8 @@ import { CommonModule } from '@angular/common';
 
 import { BusinessCentralConfigurationRoutingModule } from './business-central-configuration-routing.module';
 
-
 @NgModule({
   declarations: [],
-  imports: [
-    CommonModule,
-    BusinessCentralConfigurationRoutingModule
-  ]
+  imports: [CommonModule, BusinessCentralConfigurationRoutingModule],
 })
-export class BusinessCentralConfigurationModule { }
+export class BusinessCentralConfigurationModule {}

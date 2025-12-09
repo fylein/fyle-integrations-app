@@ -8,9 +8,8 @@ xdescribe('SkippedExportLogTableComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ SkippedExportLogTableComponent ]
-    })
-    .compileComponents();
+      declarations: [SkippedExportLogTableComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(SkippedExportLogTableComponent);
     component = fixture.componentInstance;

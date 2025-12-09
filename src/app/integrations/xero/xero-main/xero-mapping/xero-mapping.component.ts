@@ -9,13 +9,12 @@ import { SnakeCaseToSpaceCasePipe } from 'src/app/shared/pipes/snake-case-to-spa
 import { TranslocoService } from '@jsverse/transloco';
 
 @Component({
-    selector: 'app-xero-mapping',
-    templateUrl: './xero-mapping.component.html',
-    styleUrls: ['./xero-mapping.component.scss'],
-    standalone: false
+  selector: 'app-xero-mapping',
+  templateUrl: './xero-mapping.component.html',
+  styleUrls: ['./xero-mapping.component.scss'],
+  standalone: false,
 })
 export class XeroMappingComponent implements OnInit {
-
   isLoading: boolean = true;
 
   mappingPages: TabMenuItem[];
@@ -33,8 +32,8 @@ export class XeroMappingComponent implements OnInit {
   constructor(
     private mappingService: MappingService,
     private router: Router,
-    private translocoService: TranslocoService
-  ) { }
+    private translocoService: TranslocoService,
+  ) {}
 
   private setupPage(): void {
     this.mappingService.getMappingSettings().subscribe((response) => {
@@ -45,7 +44,7 @@ export class XeroMappingComponent implements OnInit {
             this.mappingPages.push({
               label: new SentenceCasePipe(this.translocoService).transform(mappingPage),
               routerLink: `/integrations/xero/main/mapping/${encodeURIComponent(item.source_field.toLowerCase())}`,
-              value: 'mapping_' + item.source_field.toLowerCase()
+              value: 'mapping_' + item.source_field.toLowerCase(),
             });
           }
         });
@@ -60,8 +59,16 @@ export class XeroMappingComponent implements OnInit {
 
   ngOnInit(): void {
     this.mappingPages = [
-      {label: this.translocoService.translate('xeroMapping.employee'), routerLink: '/integrations/xero/main/mapping/employee', value: 'employee'},
-      {label: this.translocoService.translate('xeroMapping.category'), routerLink: '/integrations/xero/main/mapping/category', value: 'category'}
+      {
+        label: this.translocoService.translate('xeroMapping.employee'),
+        routerLink: '/integrations/xero/main/mapping/employee',
+        value: 'employee',
+      },
+      {
+        label: this.translocoService.translate('xeroMapping.category'),
+        routerLink: '/integrations/xero/main/mapping/category',
+        value: 'category',
+      },
     ];
     this.setupPage();
   }

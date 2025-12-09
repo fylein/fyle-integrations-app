@@ -2,9 +2,18 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { brandingConfig, brandingKbArticles, brandingStyle } from 'src/app/branding/branding-config';
-import { AppName, ConfigurationCta, NetsuiteOnboardingState, ToastSeverity, TrackingApp } from 'src/app/core/models/enum/enum.model';
+import {
+  AppName,
+  ConfigurationCta,
+  NetsuiteOnboardingState,
+  ToastSeverity,
+  TrackingApp,
+} from 'src/app/core/models/enum/enum.model';
 import { NetsuiteDestinationAttribute } from 'src/app/core/models/netsuite/db/destination-attribute.model';
-import { NetsuiteSubsidiaryMappingModel, SubsidiaryMapping } from 'src/app/core/models/netsuite/db/subsidiary-mapping.model';
+import {
+  NetsuiteSubsidiaryMappingModel,
+  SubsidiaryMapping,
+} from 'src/app/core/models/netsuite/db/subsidiary-mapping.model';
 import { NetsuiteSubsidiaryMappingPost } from 'src/app/core/models/netsuite/netsuite-configuration/netsuite-connector.model';
 import { HelperService } from 'src/app/core/services/common/helper.service';
 import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
@@ -18,15 +27,12 @@ import { NetsuiteMappingsService } from 'src/app/core/services/netsuite/netsuite
 import { TranslocoService } from '@jsverse/transloco';
 
 @Component({
-    selector: 'app-netsuite-subsidiary-mapping',
-    templateUrl: './netsuite-subsidiary-mapping.component.html',
-    styleUrls: ['./netsuite-subsidiary-mapping.component.scss'],
-    standalone: false
+  selector: 'app-netsuite-subsidiary-mapping',
+  templateUrl: './netsuite-subsidiary-mapping.component.html',
+  styleUrls: ['./netsuite-subsidiary-mapping.component.scss'],
+  standalone: false,
 })
-
-
 export class NetsuiteSubsidiaryMappingComponent implements OnInit {
-
   isContinueDisabled: boolean = true;
 
   netsuiteSubsidiaryOptions: NetsuiteDestinationAttribute[];
@@ -73,9 +79,8 @@ export class NetsuiteSubsidiaryMappingComponent implements OnInit {
     private toastService: IntegrationsToastService,
     private trackingService: TrackingService,
     private helperService: HelperService,
-    private translocoService: TranslocoService
-  ) { }
-
+    private translocoService: TranslocoService,
+  ) {}
 
   connectNetsuiteSubsdiary(companyDetails: NetsuiteDestinationAttribute): void {
     this.netsuiteSubsdiarySelected = companyDetails;
@@ -86,7 +91,12 @@ export class NetsuiteSubsidiaryMappingComponent implements OnInit {
     this.saveInProgress = true;
     this.netsuiteSubsdiaryName = this.netsuiteSubsdiarySelected.value;
     const netsuiteSubsidiaryId = this.netsuiteSubsdiarySelected.destination_id;
-    const netsuiteSubsidiaryMappingPayload: NetsuiteSubsidiaryMappingPost = NetsuiteSubsidiaryMappingModel.constructPayload(netsuiteSubsidiaryId, this.netsuiteSubsidiaryOptions, this.workspaceId);
+    const netsuiteSubsidiaryMappingPayload: NetsuiteSubsidiaryMappingPost =
+      NetsuiteSubsidiaryMappingModel.constructPayload(
+        netsuiteSubsidiaryId,
+        this.netsuiteSubsidiaryOptions,
+        this.workspaceId,
+      );
 
     this.connectorService.postSubsdiaryMapping(netsuiteSubsidiaryMappingPayload).subscribe(
       (netsuiteSubsidiary) => {
@@ -97,7 +107,7 @@ export class NetsuiteSubsidiaryMappingComponent implements OnInit {
       () => {
         this.isLoading = false;
         this.saveInProgress = false;
-      }
+      },
     );
   }
 
@@ -107,7 +117,12 @@ export class NetsuiteSubsidiaryMappingComponent implements OnInit {
 
   private setOnboardingStateAndRedirect(netsuiteSubsidiaryMappingPayload: NetsuiteSubsidiaryMappingPost): void {
     if (this.workspaceService.getOnboardingState() === NetsuiteOnboardingState.CONNECTION) {
-      this.trackingService.integrationsOnboardingCompletion(TrackingApp.NETSUITE, NetsuiteOnboardingState.CONNECTION, 2, netsuiteSubsidiaryMappingPayload);
+      this.trackingService.integrationsOnboardingCompletion(
+        TrackingApp.NETSUITE,
+        NetsuiteOnboardingState.CONNECTION,
+        2,
+        netsuiteSubsidiaryMappingPayload,
+      );
     }
 
     if (this.isOnboarding) {
@@ -116,7 +131,12 @@ export class NetsuiteSubsidiaryMappingComponent implements OnInit {
     }
     this.isLoading = false;
     this.saveInProgress = false;
-    this.toastService.displayToastMessage(ToastSeverity.SUCCESS, this.translocoService.translate('netsuiteSubsidiaryMapping.subsidiarySelectedSuccess'), undefined, this.isOnboarding);
+    this.toastService.displayToastMessage(
+      ToastSeverity.SUCCESS,
+      this.translocoService.translate('netsuiteSubsidiaryMapping.subsidiarySelectedSuccess'),
+      undefined,
+      this.isOnboarding,
+    );
   }
 
   private handleSuccess(netsuiteSubsidiaryMappingPayload: NetsuiteSubsidiaryMappingPost): void {
@@ -129,7 +149,7 @@ export class NetsuiteSubsidiaryMappingComponent implements OnInit {
       onPollingComplete: () => {
         this.setOnboardingStateAndRedirect(netsuiteSubsidiaryMappingPayload);
       },
-      getWorkspacesObserver: () => this.workspaceService.getWorkspace(fyleOrgId)
+      getWorkspacesObserver: () => this.workspaceService.getWorkspace(fyleOrgId),
     });
   }
 
@@ -143,14 +163,17 @@ export class NetsuiteSubsidiaryMappingComponent implements OnInit {
   }
 
   private setupSubsidiaryMapping() {
-    this.connectorService.getSubsidiaryMapping().subscribe(netsuiteSubsidiaryMappings => {
-      this.netsuiteSubsidiary = netsuiteSubsidiaryMappings;
-      this.netsuiteSubsdiaryName = netsuiteSubsidiaryMappings.subsidiary_name;
-      this.isContinueDisabled = false;
-      this.isLoading = false;
-    }, () => {
-      this.isLoading = false;
-    });
+    this.connectorService.getSubsidiaryMapping().subscribe(
+      (netsuiteSubsidiaryMappings) => {
+        this.netsuiteSubsidiary = netsuiteSubsidiaryMappings;
+        this.netsuiteSubsdiaryName = netsuiteSubsidiaryMappings.subsidiary_name;
+        this.isContinueDisabled = false;
+        this.isLoading = false;
+      },
+      () => {
+        this.isLoading = false;
+      },
+    );
   }
 
   ngOnInit() {

@@ -9,19 +9,8 @@ import { SelectModule } from 'primeng/select';
 import { TableModule } from 'primeng/table';
 import { QbdSharedModule } from './qbd-shared/qbd-shared.module';
 
-
 @NgModule({
-  declarations: [
-    QbdMainComponent,
-    QbdOnboardingComponent
-  ],
-  imports: [
-    CommonModule,
-    QbdRoutingModule,
-    SharedModule,
-    SelectModule,
-    TableModule,
-    QbdSharedModule
-  ]
+  declarations: [QbdMainComponent, QbdOnboardingComponent],
+  imports: [CommonModule, QbdRoutingModule, SharedModule, SelectModule, TableModule, QbdSharedModule],
 })
-export class QbdModule { }
+export class QbdModule {}

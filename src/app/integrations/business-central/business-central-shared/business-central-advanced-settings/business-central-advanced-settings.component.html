@@ -4,7 +4,10 @@
   </div>
 }
 @if (!isLoading) {
-  <div class="configuration--contents tw-border-separator tw-mt-6" [ngClass]="brandingStyle.common.configurationContents">
+  <div
+    class="configuration--contents tw-border-separator tw-mt-6"
+    [ngClass]="brandingStyle.common.configurationContents"
+  >
     <div>
       <app-configuration-step-header
         [headerText]="'businessCentralAdvancedSettings.headerText' | transloco"
@@ -12,7 +15,8 @@
         [redirectLink]="supportArticleLink"
         [showSyncButton]="isOnboarding"
         [appName]="appName"
-        (refreshDimension)="refreshDimensions($event)">
+        (refreshDimension)="refreshDimensions($event)"
+      >
       </app-configuration-step-header>
     </div>
     <div>
@@ -21,7 +25,8 @@
           <div class="tw-mb-16-px">
             <app-configuration-step-sub-header
               [label]="'businessCentralAdvancedSettings.automationLabel' | transloco"
-              [subLabel]="'businessCentralAdvancedSettings.automationSubLabel' | transloco">
+              [subLabel]="'businessCentralAdvancedSettings.automationSubLabel' | transloco"
+            >
             </app-configuration-step-sub-header>
           </div>
           <div class="tw-mb-16-px">
@@ -29,9 +34,13 @@
               <app-configuration-toggle-field
                 [form]="advancedSettingForm"
                 [label]="'businessCentralAdvancedSettings.scheduleExportLabel' | transloco"
-                [subLabel]="'businessCentralAdvancedSettings.scheduleExportSubLabel' | transloco:{ brandName: brandingConfig.brandName }"
+                [subLabel]="
+                  'businessCentralAdvancedSettings.scheduleExportSubLabel'
+                    | transloco: { brandName: brandingConfig.brandName }
+                "
                 [formControllerName]="'scheduleEnabled'"
-                [iconPath]="'calendar'">
+                [iconPath]="'calendar'"
+              >
               </app-configuration-toggle-field>
               @if (advancedSettingForm.get('scheduleEnabled')?.value) {
                 <div>
@@ -41,10 +50,14 @@
                     [isFieldMandatory]="false"
                     [mandatoryErrorListName]="'businessCentralAdvancedSettings.automaticExportMethod' | transloco"
                     [label]="'businessCentralAdvancedSettings.exportFrequencyLabel' | transloco"
-                    [subLabel]="'businessCentralAdvancedSettings.exportFrequencySubLabel' | transloco:{ brandName: brandingConfig.brandName }"
+                    [subLabel]="
+                      'businessCentralAdvancedSettings.exportFrequencySubLabel'
+                        | transloco: { brandName: brandingConfig.brandName }
+                    "
                     [options]="hours"
                     [placeholder]="'businessCentralAdvancedSettings.setSchedulePlaceholder' | transloco"
-                    [formControllerName]="'scheduleAutoExportFrequency'">
+                    [formControllerName]="'scheduleAutoExportFrequency'"
+                  >
                   </app-configuration-schedule-export>
                 </div>
               }
@@ -53,7 +66,11 @@
           <div class="tw-mb-16-px">
             <app-configuration-step-sub-header
               [label]="'businessCentralAdvancedSettings.customizationLabel' | transloco"
-              [subLabel]="'businessCentralAdvancedSettings.customizationSubLabel' | transloco:{ brandName: brandingConfig.brandName }">
+              [subLabel]="
+                'businessCentralAdvancedSettings.customizationSubLabel'
+                  | transloco: { brandName: brandingConfig.brandName }
+              "
+            >
             </app-configuration-step-sub-header>
           </div>
           <div class="tw-rounded-12-px tw-border-separator tw-border tw-bg-white tw-mb-16-px">
@@ -67,23 +84,32 @@
               [iconPath]="'list'"
               [placeholder]="'businessCentralAdvancedSettings.setDescriptionPlaceholder' | transloco"
               [formControllerName]="'memoStructure'"
-              (changeInMultiSelect)="onMultiSelectChange()">
+              (changeInMultiSelect)="onMultiSelectChange()"
+            >
             </app-configuration-multi-select>
             <div class="preview-text">
-              <h4 class="tw-text-form-label-text-color tw-mb-12-px">{{ 'businessCentralAdvancedSettings.descriptionPreviewHeader' | transloco }}</h4>
+              <h4 class="tw-text-form-label-text-color tw-mb-12-px">
+                {{ 'businessCentralAdvancedSettings.descriptionPreviewHeader' | transloco }}
+              </h4>
               <div class="preview-box">
-                {{memoPreviewText}}
+                {{ memoPreviewText }}
               </div>
             </div>
           </div>
           <div class="tw-rounded-12-px tw-border-separator tw-border tw-bg-white tw-mb-16-px">
             <app-configuration-toggle-field
               [form]="advancedSettingForm"
-              [label]="'businessCentralAdvancedSettings.skipExportLabel' | transloco:{ brandName: brandingConfig.brandName }"
-              [subLabel]="'businessCentralAdvancedSettings.skipExportSubLabel' | transloco:{ brandName: brandingConfig.brandName }"
+              [label]="
+                'businessCentralAdvancedSettings.skipExportLabel' | transloco: { brandName: brandingConfig.brandName }
+              "
+              [subLabel]="
+                'businessCentralAdvancedSettings.skipExportSubLabel'
+                  | transloco: { brandName: brandingConfig.brandName }
+              "
               [formControllerName]="'skipExport'"
               [iconPath]="'list'"
-              [redirectLink]="skipExportRedirectLink">
+              [redirectLink]="skipExportRedirectLink"
+            >
             </app-configuration-toggle-field>
             @if (advancedSettingForm.get('skipExport')?.value) {
               <div>
@@ -93,18 +119,28 @@
                   [expenseFilter]="expenseFilters"
                   [conditionFieldOptions]="conditionFieldOptions"
                   (deleteSkipExportForm)="deleteExpenseFilter($event)"
-                  (invalidSkipExportForm)="invalidSkipExportForm($event)">
+                  (invalidSkipExportForm)="invalidSkipExportForm($event)"
+                >
                 </app-configuration-skip-export>
               </div>
             }
           </div>
         </div>
         <app-configuration-step-footer
-          [ctaText] = "!isSaveInProgress ? (isOnboarding ? ConfigurationCtaText.SAVE_AND_CONTINUE : ConfigurationCtaText.SAVE) : ConfigurationCtaText.SAVING"
-          [showBackButton] = "isOnboarding"
-          [isButtonDisabled]="!advancedSettingForm.valid || !skipExportForm.valid || !getSkipExportValue() || isSkipExportFormInvalid"
+          [ctaText]="
+            !isSaveInProgress
+              ? isOnboarding
+                ? ConfigurationCtaText.SAVE_AND_CONTINUE
+                : ConfigurationCtaText.SAVE
+              : ConfigurationCtaText.SAVING
+          "
+          [showBackButton]="isOnboarding"
+          [isButtonDisabled]="
+            !advancedSettingForm.valid || !skipExportForm.valid || !getSkipExportValue() || isSkipExportFormInvalid
+          "
           (save)="save()"
-          (navigateToPreviousStep)="navigateBack()">
+          (navigateToPreviousStep)="navigateBack()"
+        >
         </app-configuration-step-footer>
       </form>
     </div>

@@ -10,13 +10,12 @@ import { MappingService } from 'src/app/core/services/common/mapping.service';
 import { TranslocoService } from '@jsverse/transloco';
 
 @Component({
-    selector: 'app-business-central-base-mapping',
-    templateUrl: './business-central-base-mapping.component.html',
-    styleUrls: ['./business-central-base-mapping.component.scss'],
-    standalone: false
+  selector: 'app-business-central-base-mapping',
+  templateUrl: './business-central-base-mapping.component.html',
+  styleUrls: ['./business-central-base-mapping.component.scss'],
+  standalone: false,
 })
 export class BusinessCentralBaseMappingComponent implements OnInit {
-
   sourceField: string;
 
   destinationField: string;
@@ -39,21 +38,33 @@ export class BusinessCentralBaseMappingComponent implements OnInit {
     private route: ActivatedRoute,
     private mappingService: MappingService,
     private toastService: IntegrationsToastService,
-    private translocoService: TranslocoService
-  ) { }
+    private translocoService: TranslocoService,
+  ) {}
 
   triggerAutoMapEmployees() {
     this.isLoading = true;
-    this.mappingService.triggerAutoMapEmployees().subscribe(() => {
-      this.isLoading = false;
-      this.toastService.displayToastMessage(ToastSeverity.INFO, this.translocoService.translate('businessCentralBaseMapping.autoMappingInProgress'));
-    }, () => {
-      this.isLoading = false;
-      this.toastService.displayToastMessage(ToastSeverity.ERROR, this.translocoService.translate('businessCentralBaseMapping.autoMappingError'));
-    });
+    this.mappingService.triggerAutoMapEmployees().subscribe(
+      () => {
+        this.isLoading = false;
+        this.toastService.displayToastMessage(
+          ToastSeverity.INFO,
+          this.translocoService.translate('businessCentralBaseMapping.autoMappingInProgress'),
+        );
+      },
+      () => {
+        this.isLoading = false;
+        this.toastService.displayToastMessage(
+          ToastSeverity.ERROR,
+          this.translocoService.translate('businessCentralBaseMapping.autoMappingError'),
+        );
+      },
+    );
   }
 
-  private getDestinationField(exportSetting: BusinessCentralExportSettingGet, mappingSettings: MappingSetting[]): string {
+  private getDestinationField(
+    exportSetting: BusinessCentralExportSettingGet,
+    mappingSettings: MappingSetting[],
+  ): string {
     if (this.sourceField === FyleField.EMPLOYEE) {
       return exportSetting.employee_field_mapping;
     } else if (this.sourceField === FyleField.CATEGORY) {
@@ -66,23 +77,23 @@ export class BusinessCentralBaseMappingComponent implements OnInit {
   setupPage(): void {
     this.sourceField = decodeURIComponent(this.route.snapshot.params.source_field.toUpperCase());
 
-    forkJoin([
-      this.mappingService.getMappingSettings(),
-      this.mappingService.getExportSettings()
-    ]).subscribe(([mappingSettingsResponse, exportSettingsResponse]) => {
-      this.destinationField = this.getDestinationField(exportSettingsResponse, mappingSettingsResponse.results);
-      this.employeeFieldMapping = (exportSettingsResponse.employee_field_mapping as unknown as FyleField);
-      this.reimbursableExpenseObject = exportSettingsResponse.reimbursable_expenses_object;
-      this.cccExpenseObject = exportSettingsResponse.corporate_credit_card_expenses_object;
-      this.showAutoMapEmployee = exportSettingsResponse.auto_map_employees ? true : false;
+    forkJoin([this.mappingService.getMappingSettings(), this.mappingService.getExportSettings()]).subscribe(
+      ([mappingSettingsResponse, exportSettingsResponse]) => {
+        this.destinationField = this.getDestinationField(exportSettingsResponse, mappingSettingsResponse.results);
+        this.employeeFieldMapping = exportSettingsResponse.employee_field_mapping as unknown as FyleField;
+        this.reimbursableExpenseObject = exportSettingsResponse.reimbursable_expenses_object;
+        this.cccExpenseObject = exportSettingsResponse.corporate_credit_card_expenses_object;
+        this.showAutoMapEmployee = exportSettingsResponse.auto_map_employees ? true : false;
 
-      this.mappingService.getPaginatedDestinationAttributes(this.destinationField).subscribe((destinationAttributesResponse: any) => {
-          this.destinationOptions = destinationAttributesResponse.results;
-          this.isLoading = false;
-        });
-    });
+        this.mappingService
+          .getPaginatedDestinationAttributes(this.destinationField)
+          .subscribe((destinationAttributesResponse: any) => {
+            this.destinationOptions = destinationAttributesResponse.results;
+            this.isLoading = false;
+          });
+      },
+    );
   }
-
 
   ngOnInit(): void {
     this.route.params.subscribe(() => {
@@ -90,5 +101,4 @@ export class BusinessCentralBaseMappingComponent implements OnInit {
       this.setupPage();
     });
   }
-
 }

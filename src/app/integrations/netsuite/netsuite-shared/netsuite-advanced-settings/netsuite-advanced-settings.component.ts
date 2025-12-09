@@ -2,11 +2,34 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { forkJoin } from 'rxjs';
-import { brandingConfig, brandingFeatureConfig, brandingKbArticles, brandingStyle } from 'src/app/branding/branding-config';
-import { ConditionField, EmailOption, ExpenseFilterPayload, ExpenseFilterResponse, SkipExportModel, SkipExportValidatorRule, skipExportValidator } from 'src/app/core/models/common/advanced-settings.model';
+import {
+  brandingConfig,
+  brandingFeatureConfig,
+  brandingKbArticles,
+  brandingStyle,
+} from 'src/app/branding/branding-config';
+import {
+  ConditionField,
+  EmailOption,
+  ExpenseFilterPayload,
+  ExpenseFilterResponse,
+  SkipExportModel,
+  SkipExportValidatorRule,
+  skipExportValidator,
+} from 'src/app/core/models/common/advanced-settings.model';
 import { SelectFormOption } from 'src/app/core/models/common/select-form-option.model';
 import { DefaultDestinationAttribute, DestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
-import { AppName, AutoMapEmployeeOptions, ConfigurationCta, EmployeeFieldMapping, NameInJournalEntry, NetSuiteCorporateCreditCardExpensesObject, NetsuiteOnboardingState, NetsuiteReimbursableExpensesObject, ToastSeverity } from 'src/app/core/models/enum/enum.model';
+import {
+  AppName,
+  AutoMapEmployeeOptions,
+  ConfigurationCta,
+  EmployeeFieldMapping,
+  NameInJournalEntry,
+  NetSuiteCorporateCreditCardExpensesObject,
+  NetsuiteOnboardingState,
+  NetsuiteReimbursableExpensesObject,
+  ToastSeverity,
+} from 'src/app/core/models/enum/enum.model';
 import { NetsuiteConfiguration } from 'src/app/core/models/netsuite/db/netsuite-workspace-general-settings.model';
 import { NetsuiteAdvancedSettingGet } from 'src/app/core/models/netsuite/netsuite-configuration/netsuite-advanced-settings.model';
 import { NetSuiteExportSettingGet } from 'src/app/core/models/netsuite/netsuite-configuration/netsuite-export-setting.model';
@@ -26,14 +49,12 @@ import { TranslocoService } from '@jsverse/transloco';
 import { AdvancedSettingsService } from 'src/app/core/services/common/advanced-settings.service';
 
 @Component({
-    selector: 'app-netsuite-advanced-settings',
-    templateUrl: './netsuite-advanced-settings.component.html',
-    styleUrls: ['./netsuite-advanced-settings.component.scss'],
-    standalone: false
+  selector: 'app-netsuite-advanced-settings',
+  templateUrl: './netsuite-advanced-settings.component.html',
+  styleUrls: ['./netsuite-advanced-settings.component.scss'],
+  standalone: false,
 })
 export class NetsuiteAdvancedSettingsComponent implements OnInit {
-
-
   isLoading: boolean = true;
 
   isSaveInProgress: boolean;
@@ -46,7 +67,7 @@ export class NetsuiteAdvancedSettingsComponent implements OnInit {
 
   appName: AppName = AppName.NETSUITE;
 
-  hours: SelectFormOption[] = AdvancedSettingsService .getHoursOptions();
+  hours: SelectFormOption[] = AdvancedSettingsService.getHoursOptions();
 
   advancedSetting: NetsuiteAdvancedSettingGet;
 
@@ -80,11 +101,11 @@ export class NetsuiteAdvancedSettingsComponent implements OnInit {
 
   paymentSyncOptions: SelectFormOption[] = [];
 
-  netsuiteLocationLevels:  DefaultDestinationAttribute[]  = [];
+  netsuiteLocationLevels: DefaultDestinationAttribute[] = [];
 
-  netsuiteDepartmentLevels:  DefaultDestinationAttribute[]  = [];
+  netsuiteDepartmentLevels: DefaultDestinationAttribute[] = [];
 
-  netsuiteClassLevels:  DefaultDestinationAttribute[]  = [];
+  netsuiteClassLevels: DefaultDestinationAttribute[] = [];
 
   paymentAccounts: DefaultDestinationAttribute[];
 
@@ -115,9 +136,8 @@ export class NetsuiteAdvancedSettingsComponent implements OnInit {
     private workspaceService: WorkspaceService,
     private orgService: OrgService,
     private exportSettingsService: NetsuiteExportSettingsService,
-    private translocoService: TranslocoService
+    private translocoService: TranslocoService,
   ) {
-
     this.paymentSyncOptions = this.advancedSettingsService.getPaymentSyncOptions();
     this.netsuiteLocationLevels = this.advancedSettingsService.getDefaultLevelOptions();
     this.netsuiteDepartmentLevels = this.advancedSettingsService.getDefaultLevelOptions();
@@ -125,7 +145,9 @@ export class NetsuiteAdvancedSettingsComponent implements OnInit {
   }
 
   isOptional(): string {
-    return brandingFeatureConfig.featureFlags.showOptionalTextInsteadOfAsterisk ? this.translocoService.translate('netsuiteAdvancedSettings.optional') : '';
+    return brandingFeatureConfig.featureFlags.showOptionalTextInsteadOfAsterisk
+      ? this.translocoService.translate('netsuiteAdvancedSettings.optional')
+      : '';
   }
 
   invalidSkipExportForm($event: boolean) {
@@ -158,19 +180,25 @@ export class NetsuiteAdvancedSettingsComponent implements OnInit {
     valueField = SkipExportModel.constructSkipExportValue(valueField);
     valueField.rank = 1;
     const skipExportRank1: ExpenseFilterPayload = SkipExportModel.constructExportFilterPayload(valueField);
-    const payload1 = SkipExportModel.constructSkipExportPayload(skipExportRank1, this.skipExportForm.get('value1')?.value);
+    const payload1 = SkipExportModel.constructSkipExportPayload(
+      skipExportRank1,
+      this.skipExportForm.get('value1')?.value,
+    );
     this.skipExportService.postExpenseFilter(payload1).subscribe(() => {
       if (valueField.condition2 && valueField.operator2) {
         valueField.rank = 2;
         const skipExportRank2: ExpenseFilterPayload = SkipExportModel.constructExportFilterPayload(valueField);
-        const payload2 = SkipExportModel.constructSkipExportPayload(skipExportRank2, this.skipExportForm.get('value2')?.value);
+        const payload2 = SkipExportModel.constructSkipExportPayload(
+          skipExportRank2,
+          this.skipExportForm.get('value2')?.value,
+        );
         this.skipExportService.postExpenseFilter(payload2).subscribe(() => {});
       }
     });
   }
 
   private saveSkipExport(): void {
-    if (!this.advancedSettingForm.get('skipExport')?.value && this.expenseFilters.results.length > 0){
+    if (!this.advancedSettingForm.get('skipExport')?.value && this.expenseFilters.results.length > 0) {
       this.expenseFilters.results.forEach((value: any) => {
         this.deleteExpenseFilter(value.id);
       });
@@ -185,18 +213,29 @@ export class NetsuiteAdvancedSettingsComponent implements OnInit {
     const advancedSettingPayload = NetsuiteAdvancedSettingsService.constructPayload(this.advancedSettingForm);
     this.isSaveInProgress = true;
 
-    this.advancedSettingsService.postAdvancedSettings(advancedSettingPayload).subscribe(() => {
-      this.isSaveInProgress = false;
-      this.toastService.displayToastMessage(ToastSeverity.SUCCESS, this.translocoService.translate('netsuiteAdvancedSettings.saveSuccess'), undefined, this.isOnboarding);
+    this.advancedSettingsService.postAdvancedSettings(advancedSettingPayload).subscribe(
+      () => {
+        this.isSaveInProgress = false;
+        this.toastService.displayToastMessage(
+          ToastSeverity.SUCCESS,
+          this.translocoService.translate('netsuiteAdvancedSettings.saveSuccess'),
+          undefined,
+          this.isOnboarding,
+        );
 
-      if (this.isOnboarding) {
-        this.workspaceService.setOnboardingState(NetsuiteOnboardingState.COMPLETE);
-        this.router.navigate([`/integrations/netsuite/onboarding/done`]);
-      }
-    }, () => {
-      this.isSaveInProgress = false;
-      this.toastService.displayToastMessage(ToastSeverity.ERROR, this.translocoService.translate('netsuiteAdvancedSettings.saveError'));
-    });
+        if (this.isOnboarding) {
+          this.workspaceService.setOnboardingState(NetsuiteOnboardingState.COMPLETE);
+          this.router.navigate([`/integrations/netsuite/onboarding/done`]);
+        }
+      },
+      () => {
+        this.isSaveInProgress = false;
+        this.toastService.displayToastMessage(
+          ToastSeverity.ERROR,
+          this.translocoService.translate('netsuiteAdvancedSettings.saveError'),
+        );
+      },
+    );
   }
 
   refreshDimensions() {
@@ -208,19 +247,33 @@ export class NetsuiteAdvancedSettingsComponent implements OnInit {
   }
 
   isAutoCreateVendorsFieldVisible(): boolean {
-    return this.workspaceGeneralSettings.auto_map_employees !== null && this.workspaceGeneralSettings.auto_map_employees !== AutoMapEmployeeOptions.EMPLOYEE_CODE;
+    return (
+      this.workspaceGeneralSettings.auto_map_employees !== null &&
+      this.workspaceGeneralSettings.auto_map_employees !== AutoMapEmployeeOptions.EMPLOYEE_CODE
+    );
   }
 
   isAutoCreateMerchantsFieldVisible(): boolean {
-    return this.workspaceGeneralSettings.corporate_credit_card_expenses_object === NetSuiteCorporateCreditCardExpensesObject.CREDIT_CARD_CHARGE && !this.workspaceGeneralSettings.import_vendors_as_merchants ? true : false;
+    return this.workspaceGeneralSettings.corporate_credit_card_expenses_object ===
+      NetSuiteCorporateCreditCardExpensesObject.CREDIT_CARD_CHARGE &&
+      !this.workspaceGeneralSettings.import_vendors_as_merchants
+      ? true
+      : false;
   }
 
   isPaymentSyncFieldVisible(): boolean | null {
-    return this.workspaceGeneralSettings.reimbursable_expenses_object && this.workspaceGeneralSettings.reimbursable_expenses_object !== NetsuiteReimbursableExpensesObject.JOURNAL_ENTRY;
+    return (
+      this.workspaceGeneralSettings.reimbursable_expenses_object &&
+      this.workspaceGeneralSettings.reimbursable_expenses_object !== NetsuiteReimbursableExpensesObject.JOURNAL_ENTRY
+    );
   }
 
   isSingleCreditLineJEFieldVisible(): boolean {
-    return this.workspaceGeneralSettings.reimbursable_expenses_object === NetsuiteReimbursableExpensesObject.JOURNAL_ENTRY || this.workspaceGeneralSettings.corporate_credit_card_expenses_object === NetSuiteCorporateCreditCardExpensesObject.JOURNAL_ENTRY;
+    return (
+      this.workspaceGeneralSettings.reimbursable_expenses_object === NetsuiteReimbursableExpensesObject.JOURNAL_ENTRY ||
+      this.workspaceGeneralSettings.corporate_credit_card_expenses_object ===
+        NetSuiteCorporateCreditCardExpensesObject.JOURNAL_ENTRY
+    );
   }
 
   onMultiSelectChange() {
@@ -231,7 +284,10 @@ export class NetsuiteAdvancedSettingsComponent implements OnInit {
 
   private createMemoStructureWatcher(): void {
     this.memoStructure = this.advancedSetting.configuration.memo_structure;
-    const memo: [string, string[]] = AdvancedSettingsService.formatMemoPreview(this.memoStructure, this.defaultMemoOptions);
+    const memo: [string, string[]] = AdvancedSettingsService.formatMemoPreview(
+      this.memoStructure,
+      this.defaultMemoOptions,
+    );
     this.memoPreviewText = memo[0];
     this.advancedSettingForm.controls.memoStructure.patchValue(memo[1]);
     this.advancedSettingForm.controls.memoStructure.valueChanges.subscribe((memoChanges) => {
@@ -244,15 +300,19 @@ export class NetsuiteAdvancedSettingsComponent implements OnInit {
       condition1: ['operator1', 'value1'],
       condition2: ['operator2', 'value2'],
       operator1: ['value1'],
-      operator2: ['value2']
+      operator2: ['value2'],
     };
     this.helper.setConfigurationSettingValidatorsAndWatchers(skipExportFormWatcherFields, this.skipExportForm);
 
     const formWatcher: skipExportValidator = {
-      'isChanged': ['condition1', 'operator1', 'value1'],
-      'isNotChanged': ['condition1', 'operator1', 'value1', 'condition2', 'operator2', 'value2', 'join_by']
+      isChanged: ['condition1', 'operator1', 'value1'],
+      isNotChanged: ['condition1', 'operator1', 'value1', 'condition2', 'operator2', 'value2', 'join_by'],
     };
-    this.helper.handleSkipExportFormInAdvancedSettingsUpdates(this.skipExportForm, formWatcher, this.advancedSettingForm);
+    this.helper.handleSkipExportFormInAdvancedSettingsUpdates(
+      this.skipExportForm,
+      formWatcher,
+      this.advancedSettingForm,
+    );
   }
 
   private setupFormWatchers() {
@@ -268,44 +328,78 @@ export class NetsuiteAdvancedSettingsComponent implements OnInit {
       this.advancedSettingsService.getAdvancedSettings(),
       this.skipExportService.getExpenseFilter(),
       this.skipExportService.getExpenseFields('v1'),
-      this.mappingService.getGroupedDestinationAttributes(['LOCATION', 'DEPARTMENT', 'CLASS', 'VENDOR_PAYMENT_ACCOUNT'], 'v2', 'netsuite'),
+      this.mappingService.getGroupedDestinationAttributes(
+        ['LOCATION', 'DEPARTMENT', 'CLASS', 'VENDOR_PAYMENT_ACCOUNT'],
+        'v2',
+        'netsuite',
+      ),
       this.configurationService.getAdditionalEmails(),
       this.workspaceService.getConfiguration(),
       this.netsuiteConnectorService.getSubsidiaryMapping(),
-      this.exportSettingsService.getExportSettings()
-    ]).subscribe(([netsuiteAdvancedSetting, expenseFiltersGet, expenseFilterCondition, netsuiteAttributes, adminEmails, workspaceGeneralSettings, subsidiaryMapping, exportSettings]) => {
-      this.advancedSetting = netsuiteAdvancedSetting;
-      this.expenseFilters = expenseFiltersGet;
-      this.conditionFieldOptions = expenseFilterCondition;
-      this.exportSettings = exportSettings;
-      this.defaultMemoOptions = NetsuiteAdvancedSettingsService.getMemoOptions(this.exportSettings, this.appName);
-      this.adminEmails = adminEmails;
-      if (this.advancedSetting.workspace_schedules?.additional_email_options && this.advancedSetting.workspace_schedules?.additional_email_options.length > 0) {
-        this.adminEmails = this.adminEmails.concat(this.advancedSetting.workspace_schedules?.additional_email_options);
-      }
+      this.exportSettingsService.getExportSettings(),
+    ]).subscribe(
+      ([
+        netsuiteAdvancedSetting,
+        expenseFiltersGet,
+        expenseFilterCondition,
+        netsuiteAttributes,
+        adminEmails,
+        workspaceGeneralSettings,
+        subsidiaryMapping,
+        exportSettings,
+      ]) => {
+        this.advancedSetting = netsuiteAdvancedSetting;
+        this.expenseFilters = expenseFiltersGet;
+        this.conditionFieldOptions = expenseFilterCondition;
+        this.exportSettings = exportSettings;
+        this.defaultMemoOptions = NetsuiteAdvancedSettingsService.getMemoOptions(this.exportSettings, this.appName);
+        this.adminEmails = adminEmails;
+        if (
+          this.advancedSetting.workspace_schedules?.additional_email_options &&
+          this.advancedSetting.workspace_schedules?.additional_email_options.length > 0
+        ) {
+          this.adminEmails = this.adminEmails.concat(
+            this.advancedSetting.workspace_schedules?.additional_email_options,
+          );
+        }
 
-      if (subsidiaryMapping && subsidiaryMapping.country_name !== '_unitedStates') {
-        this.isTaxGroupSyncAllowed = true;
-      }
+        if (subsidiaryMapping && subsidiaryMapping.country_name !== '_unitedStates') {
+          this.isTaxGroupSyncAllowed = true;
+        }
 
-      this.workspaceGeneralSettings = workspaceGeneralSettings;
+        this.workspaceGeneralSettings = workspaceGeneralSettings;
 
-      this.paymentAccounts = netsuiteAttributes.VENDOR_PAYMENT_ACCOUNT.map((option: DestinationAttribute) => this.exportSettingsService.formatGeneralMappingPayload(option));
+        this.paymentAccounts = netsuiteAttributes.VENDOR_PAYMENT_ACCOUNT.map((option: DestinationAttribute) =>
+          this.exportSettingsService.formatGeneralMappingPayload(option),
+        );
 
-      this.netsuiteLocations = netsuiteAttributes.LOCATION.map((option: DestinationAttribute) => this.exportSettingsService.formatGeneralMappingPayload(option));
+        this.netsuiteLocations = netsuiteAttributes.LOCATION.map((option: DestinationAttribute) =>
+          this.exportSettingsService.formatGeneralMappingPayload(option),
+        );
 
-      this.netsuiteDepartments = netsuiteAttributes.DEPARTMENT.map((option: DestinationAttribute) => this.exportSettingsService.formatGeneralMappingPayload(option));
+        this.netsuiteDepartments = netsuiteAttributes.DEPARTMENT.map((option: DestinationAttribute) =>
+          this.exportSettingsService.formatGeneralMappingPayload(option),
+        );
 
-      this.netsuiteClasses = netsuiteAttributes.CLASS.map((option: DestinationAttribute) => this.exportSettingsService.formatGeneralMappingPayload(option));
+        this.netsuiteClasses = netsuiteAttributes.CLASS.map((option: DestinationAttribute) =>
+          this.exportSettingsService.formatGeneralMappingPayload(option),
+        );
 
-      const isSkipExportEnabled = expenseFiltersGet.count > 0;
+        const isSkipExportEnabled = expenseFiltersGet.count > 0;
 
-      this.advancedSettingForm = this.advancedSettingsService.mapAPIResponseToFormGroup(this.advancedSetting, isSkipExportEnabled, this.adminEmails, this.helper.shouldAutoEnableAccountingPeriod(this.org.created_at), this.isOnboarding);
-      this.skipExportForm = SkipExportModel.setupSkipExportForm(this.expenseFilters, [], this.conditionFieldOptions);
-      this.isLoading = false;
-      this.setupFormWatchers();
-      this.isLoading = false;
-    });
+        this.advancedSettingForm = this.advancedSettingsService.mapAPIResponseToFormGroup(
+          this.advancedSetting,
+          isSkipExportEnabled,
+          this.adminEmails,
+          this.helper.shouldAutoEnableAccountingPeriod(this.org.created_at),
+          this.isOnboarding,
+        );
+        this.skipExportForm = SkipExportModel.setupSkipExportForm(this.expenseFilters, [], this.conditionFieldOptions);
+        this.isLoading = false;
+        this.setupFormWatchers();
+        this.isLoading = false;
+      },
+    );
   }
 
   ngOnInit(): void {

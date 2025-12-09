@@ -8,9 +8,8 @@ xdescribe('ConfigurationScheduleExportComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ConfigurationScheduleExportComponent ]
-    })
-    .compileComponents();
+      declarations: [ConfigurationScheduleExportComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(ConfigurationScheduleExportComponent);
     component = fixture.componentInstance;

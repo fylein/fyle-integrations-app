@@ -1,35 +1,74 @@
-<div [formGroup]="form" [ngClass]="!isCloneSettingView ? 'tw-p-24-px': ''" class="tw-flex tw-flex-row tw-justify-between">
+<div
+  [formGroup]="form"
+  [ngClass]="!isCloneSettingView ? 'tw-p-24-px' : ''"
+  class="tw-flex tw-flex-row tw-justify-between"
+>
   @if (!isCloneSettingView) {
     <div class="tw-w-3/5 tw-flex tw-items-start">
       <div [ngClass]="[iconPath ? 'tw-pr-16-px tw-mt-4-px' : 'tw-pr-40-px']">
         @if (iconPath) {
-          <app-svg-icon [svgSource]="iconPath" [width]="'24px'" [height]="'24px'" [styleClasses]="'tw-text-icon-primary'"></app-svg-icon>
+          <app-svg-icon
+            [svgSource]="iconPath"
+            [width]="'24px'"
+            [height]="'24px'"
+            [styleClasses]="'tw-text-icon-primary'"
+          ></app-svg-icon>
         }
       </div>
       <div>
-        <h5 class="tw-text-14-px" [ngClass]="brandingStyle.configuration.configurationFieldHeaderText">{{ label }}@if (isFieldMandatory) {
-          <app-mandatory-field></app-mandatory-field>
-        }</h5>
+        <h5 class="tw-text-14-px" [ngClass]="brandingStyle.configuration.configurationFieldHeaderText">
+          {{ label }}
+          @if (isFieldMandatory) {
+            <app-mandatory-field></app-mandatory-field>
+          }
+        </h5>
         <h5 class="!tw-text-text-muted tw-text-14-px tw-pt-8-px !tw-font-400 !tw-leading-4" [innerHTML]="subLabel"></h5>
       </div>
     </div>
   }
   <div class="tw-pl-34-px">
-    <p-multiselect [options]="emails" styleClass="tw-z-1 tw-py-8-px tw-px-12-px" [formControlName]="formControllerName" [placeholder]="placeholder" optionLabel="email" class="tw-text-sub-text-color"
-      display="chip" [filter]="true" [filterBy]="'email,name'" [ngClass]="[form.controls[formControllerName].invalid && form.controls[formControllerName].touched ? 'error-box' : 'normal-box']" [dropdownIcon]="'pi pi-chevron-down ' + brandingConfig.brandId" >
+    <p-multiselect
+      [options]="emails"
+      styleClass="tw-z-1 tw-py-8-px tw-px-12-px"
+      [formControlName]="formControllerName"
+      [placeholder]="placeholder"
+      optionLabel="email"
+      class="tw-text-sub-text-color"
+      display="chip"
+      [filter]="true"
+      [filterBy]="'email,name'"
+      [ngClass]="[
+        form.controls[formControllerName].invalid && form.controls[formControllerName].touched
+          ? 'error-box'
+          : 'normal-box',
+      ]"
+      [dropdownIcon]="'pi pi-chevron-down ' + brandingConfig.brandId"
+    >
       <ng-template let-value pTemplate="selectedItems">
         @if (selectedEmail) {
           <div
-            class="tw-flex tw-text-12-px tw-h-22-px tw-rounded-12-px tw-text-slightly-normal-text-color tw-border-1-px tw-border-box-color tw-bg-white">
-            <p class="tw-pt-2-px tw-pl-12-px tw-pr-6-px tw-max-w-[150px] tw-overflow-hidden tw-whitespace-nowrap tw-text-ellipsis">{{ selectedEmail }}</p>
+            class="tw-flex tw-text-12-px tw-h-22-px tw-rounded-12-px tw-text-slightly-normal-text-color tw-border-1-px tw-border-box-color tw-bg-white"
+          >
+            <p
+              class="tw-pt-2-px tw-pl-12-px tw-pr-6-px tw-max-w-[150px] tw-overflow-hidden tw-whitespace-nowrap tw-text-ellipsis"
+            >
+              {{ selectedEmail }}
+            </p>
             <p class="tw-w-1-px tw-mr-8-px tw-bg-separator"></p>
-            <app-svg-icon (iconClick)="removeEmail()" [svgSource]="'cross-small'" [width]="'12px'" [height]="'12px'"
-            [styleClasses]="'tw-pr-10-px tw-pt-6-px tw-text-slightly-normal-text-color'"></app-svg-icon>
+            <app-svg-icon
+              (iconClick)="removeEmail()"
+              [svgSource]="'cross-small'"
+              [width]="'12px'"
+              [height]="'12px'"
+              [styleClasses]="'tw-pr-10-px tw-pt-6-px tw-text-slightly-normal-text-color'"
+            ></app-svg-icon>
           </div>
         }
         @if (selectedEmail && form.get('email')?.value.length > 1) {
           <div class="tw-pl-8-px">
-            <p class="tw-flex tw-justify-center tw-items-center tw-p-5-px tw-h-24-px tw-w-24-px tw-bg-input-read-only-bg tw-text-12-px tw-text-text-muted tw-rounded-12-px">
+            <p
+              class="tw-flex tw-justify-center tw-items-center tw-p-5-px tw-h-24-px tw-w-24-px tw-bg-input-read-only-bg tw-text-12-px tw-text-text-muted tw-rounded-12-px"
+            >
               +{{ form.get('email')?.value.length - 1 }}
             </p>
           </div>
@@ -45,9 +84,26 @@
           <div class="tw-p-6-px">
             <p-iconfield iconPosition="left">
               <p-inputicon class="!tw-flex !tw-items-center">
-                <app-svg-icon [svgSource]="'search-medium'" [width]="'18px'" [height]="'18px'" [styleClasses]="brandingStyle.configuration.searchIconFocus" [isTextColorAllowed]="true"></app-svg-icon>
+                <app-svg-icon
+                  [svgSource]="'search-medium'"
+                  [width]="'18px'"
+                  [height]="'18px'"
+                  [styleClasses]="brandingStyle.configuration.searchIconFocus"
+                  [isTextColorAllowed]="true"
+                ></app-svg-icon>
               </p-inputicon>
-              <input #filterInput type="text" class="!tw-h-32-px !tw-w-288-px !tw-rounded-4-px !tw-pr-12-px !tw-py-12-px !tw-border !tw-border-select-default-border" style="padding-left: 40px !important; box-shadow: none !important;"  (keyup)="options.filter($event)" (click)="filterInput.focus(); $event.stopPropagation()" (mousedown)="$event.stopPropagation()" pInputText [placeholder]="'emailMultiSelectField.searchByNameOrEmailPlaceholder' | transloco" formControlName="search"/>
+              <input
+                #filterInput
+                type="text"
+                class="!tw-h-32-px !tw-w-288-px !tw-rounded-4-px !tw-pr-12-px !tw-py-12-px !tw-border !tw-border-select-default-border"
+                style="padding-left: 40px !important; box-shadow: none !important"
+                (keyup)="options.filter($event)"
+                (click)="filterInput.focus(); $event.stopPropagation()"
+                (mousedown)="$event.stopPropagation()"
+                pInputText
+                [placeholder]="'emailMultiSelectField.searchByNameOrEmailPlaceholder' | transloco"
+                formControlName="search"
+              />
             </p-iconfield>
           </div>
         }
@@ -55,9 +111,17 @@
       <ng-template let-user pTemplate="item">
         <div>
           <span class="tw-text-sub-text-color tw-text-14-px">
-            <span #textElement
-              [ngStyle]="{'white-space': 'nowrap', 'overflow': 'hidden', 'text-overflow': 'ellipsis', 'max-width': '16rem'}"
-              [pTooltip]="isOverflowing(textElement) ? user.name : null" tooltipPosition="top">
+            <span
+              #textElement
+              [ngStyle]="{
+                'white-space': 'nowrap',
+                overflow: 'hidden',
+                'text-overflow': 'ellipsis',
+                'max-width': '16rem',
+              }"
+              [pTooltip]="isOverflowing(textElement) ? user.name : null"
+              tooltipPosition="top"
+            >
               {{ user.name }}
             </span>
           </span>
@@ -66,62 +130,147 @@
       </ng-template>
     </p-multiselect>
     <div>
-      @if (isFieldMandatory && form.controls[formControllerName].touched && !form.controls[formControllerName].valid && !form.controls[formControllerName].disabled) {
-        <app-mandatory-error-message [listName]="mandatoryErrorListName" [customErrorMessage]="customErrorMessage"></app-mandatory-error-message>
+      @if (
+        isFieldMandatory &&
+        form.controls[formControllerName].touched &&
+        !form.controls[formControllerName].valid &&
+        !form.controls[formControllerName].disabled
+      ) {
+        <app-mandatory-error-message
+          [listName]="mandatoryErrorListName"
+          [customErrorMessage]="customErrorMessage"
+        ></app-mandatory-error-message>
       }
     </div>
     <div>
       <div class="tw-flex tw-pt-18-px">
-        <p class="tw-text-slightly-normal-text-color tw-text-14-px tw-pr-12-px">{{ 'emailMultiSelectField.or' | transloco }}</p>
+        <p class="tw-text-slightly-normal-text-color tw-text-14-px tw-pr-12-px">
+          {{ 'emailMultiSelectField.or' | transloco }}
+        </p>
         <div class="tw-flex tw-cursor-pointer" (click)="openDialog()">
-          <app-svg-icon [svgSource]="'plus-square-medium'" [width]="'18px'" [height]="'18px'"
-            [styleClasses]="'tw-text-mandatory-field-color'">
+          <app-svg-icon
+            [svgSource]="'plus-square-medium'"
+            [width]="'18px'"
+            [height]="'18px'"
+            [styleClasses]="'tw-text-mandatory-field-color'"
+          >
           </app-svg-icon>
-          <p class="tw-pl-6-px tw-text-slightly-normal-text-color tw-text-14-px">{{ 'emailMultiSelectField.addNewEmailAddressLink' | transloco }}</p>
+          <p class="tw-pl-6-px tw-text-slightly-normal-text-color tw-text-14-px">
+            {{ 'emailMultiSelectField.addNewEmailAddressLink' | transloco }}
+          </p>
         </div>
       </div>
     </div>
   </div>
 </div>
 
-<p-dialog [dismissableMask]="true" [showHeader]="false" [modal]="true" [(visible)]="showDialog" [draggable]="false" [style]="{width: '468px'}">
+<p-dialog
+  [dismissableMask]="true"
+  [showHeader]="false"
+  [modal]="true"
+  [(visible)]="showDialog"
+  [draggable]="false"
+  [style]="{ width: '468px' }"
+>
   <div [formGroup]="addEmailForm">
     <div class="tw-p-24-px tw-border-b-1-px tw-border-b-box-color">
       <div class="tw-flex tw-justify-between tw-items-center">
-        <p class="tw-text-slightly-normal-text-color tw-text-20-px tw-font-500">{{ 'emailMultiSelectField.addNewEmailAddressTitle' | transloco }}</p>
-        <app-svg-icon [svgSource]="'cross-medium'" class="tw-cursor-pointer" style="font-size: 12px" (click)="closeModel()" [height]="'16px'" [width]="'16px'"></app-svg-icon>
+        <p class="tw-text-slightly-normal-text-color tw-text-20-px tw-font-500">
+          {{ 'emailMultiSelectField.addNewEmailAddressTitle' | transloco }}
+        </p>
+        <app-svg-icon
+          [svgSource]="'cross-medium'"
+          class="tw-cursor-pointer"
+          style="font-size: 12px"
+          (click)="closeModel()"
+          [height]="'16px'"
+          [width]="'16px'"
+        ></app-svg-icon>
       </div>
     </div>
     <div class="tw-p-24-px">
       <p class="tw-text-sub-text-color tw-text-14-px tw-pb-8-px">
         {{ 'emailMultiSelectField.nameLabel' | transloco }} <span class="tw-text-text-danger-dark">*</span>
       </p>
-      <input formControlName="name" type="text" class="tw-w-388-px tw-h-48-px" pInputText [placeholder]="'emailMultiSelectField.enterNamePlaceholder' | transloco" [ngClass]="[addEmailForm.controls['name'].touched && !addEmailForm.controls['name'].valid && !addEmailForm.controls['name'].disabled ? 'error-box' : 'normal-box']" required/>
-      @if (addEmailForm.controls['name'].touched && !addEmailForm.controls['name'].valid && !addEmailForm.controls['name'].disabled) {
-        <app-mandatory-error-message [customErrorMessage]="'emailMultiSelectField.validNameError' | transloco"></app-mandatory-error-message>
+      <input
+        formControlName="name"
+        type="text"
+        class="tw-w-388-px tw-h-48-px"
+        pInputText
+        [placeholder]="'emailMultiSelectField.enterNamePlaceholder' | transloco"
+        [ngClass]="[
+          addEmailForm.controls['name'].touched &&
+          !addEmailForm.controls['name'].valid &&
+          !addEmailForm.controls['name'].disabled
+            ? 'error-box'
+            : 'normal-box',
+        ]"
+        required
+      />
+      @if (
+        addEmailForm.controls['name'].touched &&
+        !addEmailForm.controls['name'].valid &&
+        !addEmailForm.controls['name'].disabled
+      ) {
+        <app-mandatory-error-message
+          [customErrorMessage]="'emailMultiSelectField.validNameError' | transloco"
+        ></app-mandatory-error-message>
       }
       <p class="tw-pt-16-px tw-pb-8-px tw-text-sub-text-color tw-text-14-px">
         {{ 'emailMultiSelectField.emailAddressLabel' | transloco }} <span class="tw-text-text-danger-dark">*</span>
       </p>
 
       <div>
-        <input formControlName="email" type="text" class="tw-w-388-px tw-h-48-px" pInputText [placeholder]="'emailMultiSelectField.enterEmailPlaceholder' | transloco" [ngClass]="[addEmailForm.controls['email'].touched && !addEmailForm.controls['email'].valid && !addEmailForm.controls['email'].disabled ? 'error-box' : 'normal-box']" required />
-        @if (addEmailForm.controls['email'].touched && !addEmailForm.controls['email'].valid && !addEmailForm.controls['email'].disabled) {
-          <app-mandatory-error-message [customErrorMessage]="'emailMultiSelectField.validEmailError' | transloco"></app-mandatory-error-message>
+        <input
+          formControlName="email"
+          type="text"
+          class="tw-w-388-px tw-h-48-px"
+          pInputText
+          [placeholder]="'emailMultiSelectField.enterEmailPlaceholder' | transloco"
+          [ngClass]="[
+            addEmailForm.controls['email'].touched &&
+            !addEmailForm.controls['email'].valid &&
+            !addEmailForm.controls['email'].disabled
+              ? 'error-box'
+              : 'normal-box',
+          ]"
+          required
+        />
+        @if (
+          addEmailForm.controls['email'].touched &&
+          !addEmailForm.controls['email'].valid &&
+          !addEmailForm.controls['email'].disabled
+        ) {
+          <app-mandatory-error-message
+            [customErrorMessage]="'emailMultiSelectField.validEmailError' | transloco"
+          ></app-mandatory-error-message>
         }
       </div>
 
       <div class="tw-flex tw-items-center tw-justify-end tw-pt-24-px tw-gap-8-px">
-
-        @if(brandingFeatureConfig.isDashboardButtonOutlined){
-          <app-button [buttonSize]="ButtonSize.SMALL" [buttonType]="ButtonType.SECONDARY" (buttonClick)="closeModel()" [styleClasses]="'tw-text-14-px'" [buttonText]="'emailMultiSelectField.cancelButton' | transloco"></app-button>
+        @if (brandingFeatureConfig.isDashboardButtonOutlined) {
+          <app-button
+            [buttonSize]="ButtonSize.SMALL"
+            [buttonType]="ButtonType.SECONDARY"
+            (buttonClick)="closeModel()"
+            [styleClasses]="'tw-text-14-px'"
+            [buttonText]="'emailMultiSelectField.cancelButton' | transloco"
+          ></app-button>
         } @else {
           <button type="button" class="cancel-btn" (click)="closeModel()">
             {{ 'emailMultiSelectField.cancelButton' | transloco }}
-          </button> }
+          </button>
+        }
 
-          <app-button  [buttonSize]="ButtonSize.SMALL" [buttonType]="ButtonType.PRIMARY" [styleClasses]="'tw-ml-4'" [disabled]="!addEmailForm.valid" (buttonClick)="addEmail()" [buttonText]="'emailMultiSelectField.addAndSaveButton' | transloco"></app-button>
-        </div>
+        <app-button
+          [buttonSize]="ButtonSize.SMALL"
+          [buttonType]="ButtonType.PRIMARY"
+          [styleClasses]="'tw-ml-4'"
+          [disabled]="!addEmailForm.valid"
+          (buttonClick)="addEmail()"
+          [buttonText]="'emailMultiSelectField.addAndSaveButton' | transloco"
+        ></app-button>
       </div>
     </div>
-  </p-dialog>
+  </div>
+</p-dialog>

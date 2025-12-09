@@ -1,5 +1,5 @@
 export interface TabMenuItem {
-    label: string;
-    value: string;
-    routerLink?: string;
+  label: string;
+  value: string;
+  routerLink?: string;
 }

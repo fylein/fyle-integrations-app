@@ -4,12 +4,16 @@
   </div>
 }
 @if (!isLoading) {
-  <div class="configuration--contents tw-border-separator tw-mt-6" [ngClass]="brandingStyle.common.configurationContents">
+  <div
+    class="configuration--contents tw-border-separator tw-mt-6"
+    [ngClass]="brandingStyle.common.configurationContents"
+  >
     <div>
       <app-configuration-step-header
         [headerText]="'qbdExportSetting.headerText' | transloco"
-        [contentText]="'qbdExportSetting.contentText' | transloco:{ brandName: brandingConfig.brandName }"
-      [redirectLink]="redirectLink"></app-configuration-step-header>
+        [contentText]="'qbdExportSetting.contentText' | transloco: { brandName: brandingConfig.brandName }"
+        [redirectLink]="redirectLink"
+      ></app-configuration-step-header>
     </div>
     <div>
       <form [formGroup]="exportSettingsForm">
@@ -19,9 +23,13 @@
               <app-configuration-toggle-field
                 [form]="exportSettingsForm"
                 [label]="'qbdExportSetting.exportReimbursableExpensesLabel' | transloco"
-                [subLabel]="'qbdExportSetting.exportReimbursableExpensesSubLabel' | transloco:{ brandName: brandingConfig.brandName }"
+                [subLabel]="
+                  'qbdExportSetting.exportReimbursableExpensesSubLabel'
+                    | transloco: { brandName: brandingConfig.brandName }
+                "
                 [formControllerName]="'reimbursableExpense'"
-              [isSectionHeader]="true"></app-configuration-toggle-field>
+                [isSectionHeader]="true"
+              ></app-configuration-toggle-field>
             </div>
             @if (exportSettingsForm.get('reimbursableExpense')?.value) {
               <div>
@@ -31,21 +39,70 @@
                     [isFieldMandatory]="true"
                     [mandatoryErrorListName]="'qbdExportSetting.mandatoryErrorListNameExport' | transloco"
                     [label]="'qbdExportSetting.howExpensesExportedLabel' | transloco"
-                    [subLabel]="'qbdExportSetting.howExpensesExportedSubLabel' | transloco:{ brandName: brandingConfig.brandName }"
+                    [subLabel]="
+                      'qbdExportSetting.howExpensesExportedSubLabel'
+                        | transloco: { brandName: brandingConfig.brandName }
+                    "
                     [options]="reimbursableExportTypes"
                     [iconPath]="'list'"
-                  [formControllerName]="'reimbursableExportType'"></app-configuration-radio-field>
+                    [formControllerName]="'reimbursableExportType'"
+                  ></app-configuration-radio-field>
                   @if (exportSettingsForm.get('reimbursableExportType')?.value) {
                     <div>
-                      <div class="tw-pl-16 tw-pt-16-px tw-pr-24-px tw-pb-24-px tw-flex tw-flex-row tw-justify-between tw-items-start">
+                      <div
+                        class="tw-pl-16 tw-pt-16-px tw-pr-24-px tw-pb-24-px tw-flex tw-flex-row tw-justify-between tw-items-start"
+                      >
                         <div class="lg:tw-w-3/5 md:tw-w-1/2">
-                          <h4 class="!tw-text-14-px !tw-font-500">{{ 'qbdExportSetting.accountPostingQuestion' | transloco: { accountName: accountName(), exportType: exportType(exportSettingsForm.get('reimbursableExportType')?.value, reimbursableExportTypes) } }}<app-mandatory-field></app-mandatory-field></h4>
-                          <h5 class="!tw-text-text-muted !tw-font-400 !tw-text-14-px tw-pt-6-px !tw-leading-4">{{ 'qbdExportSetting.accountNameHelpText' | transloco: { accountName: accountName(), brandName: brandingConfig.brandName } }}</h5>
+                          <h4 class="!tw-text-14-px !tw-font-500">
+                            {{
+                              'qbdExportSetting.accountPostingQuestion'
+                                | transloco
+                                  : {
+                                      accountName: accountName(),
+                                      exportType: exportType(
+                                        exportSettingsForm.get('reimbursableExportType')?.value,
+                                        reimbursableExportTypes
+                                      ),
+                                    }
+                            }}<app-mandatory-field></app-mandatory-field>
+                          </h4>
+                          <h5 class="!tw-text-text-muted !tw-font-400 !tw-text-14-px tw-pt-6-px !tw-leading-4">
+                            {{
+                              'qbdExportSetting.accountNameHelpText'
+                                | transloco: { accountName: accountName(), brandName: brandingConfig.brandName }
+                            }}
+                          </h5>
                         </div>
                         <div class="tw-pl-18-px tw-flex-shrink-0">
-                          <input type="text" class="tw-w-300-px !tw-px-10-px !tw-py-8-px tw-border tw-border-solid !tw-border-separator tw-rounded-4-px"[ngClass]="[exportSettingsForm.controls.bankAccount.invalid && exportSettingsForm.controls.bankAccount.touched ? 'error-box' : 'normal-box']"  pInputText formControlName="bankAccount" [placeholder]="(exportSettingsForm.get('reimbursableExportType')?.value === QBDReimbursableExpensesObject.BILL ? 'qbdExportSetting.enterAccountsPayableName' : 'qbdExportSetting.enterBankName') | transloco" [required]="exportSettingsForm.get('reimbursableExpense')?.value">
-                          @if (true && exportSettingsForm.controls.bankAccount.touched && !exportSettingsForm.controls.bankAccount.valid && !exportSettingsForm.controls.bankAccount.disabled) {
-                            <app-mandatory-error-message [customErrorMessage]="customMessage"></app-mandatory-error-message>
+                          <input
+                            type="text"
+                            class="tw-w-300-px !tw-px-10-px !tw-py-8-px tw-border tw-border-solid !tw-border-separator tw-rounded-4-px"
+                            [ngClass]="[
+                              exportSettingsForm.controls.bankAccount.invalid &&
+                              exportSettingsForm.controls.bankAccount.touched
+                                ? 'error-box'
+                                : 'normal-box',
+                            ]"
+                            pInputText
+                            formControlName="bankAccount"
+                            [placeholder]="
+                              (exportSettingsForm.get('reimbursableExportType')?.value ===
+                              QBDReimbursableExpensesObject.BILL
+                                ? 'qbdExportSetting.enterAccountsPayableName'
+                                : 'qbdExportSetting.enterBankName'
+                              ) | transloco
+                            "
+                            [required]="exportSettingsForm.get('reimbursableExpense')?.value"
+                          />
+                          @if (
+                            true &&
+                            exportSettingsForm.controls.bankAccount.touched &&
+                            !exportSettingsForm.controls.bankAccount.valid &&
+                            !exportSettingsForm.controls.bankAccount.disabled
+                          ) {
+                            <app-mandatory-error-message
+                              [customErrorMessage]="customMessage"
+                            ></app-mandatory-error-message>
                           }
                         </div>
                       </div>
@@ -53,13 +110,28 @@
                   }
                   @if (exportSettingsForm.get('reimbursableExportType')?.value) {
                     <div>
-                      <div class="tw-pl-16 tw-pt-16-px tw-pr-24-px tw-pb-24-px tw-flex tw-flex-row tw-justify-between tw-items-start">
+                      <div
+                        class="tw-pl-16 tw-pt-16-px tw-pr-24-px tw-pb-24-px tw-flex tw-flex-row tw-justify-between tw-items-start"
+                      >
                         <div class="lg:tw-w-3/5 md:tw-w-1/2">
-                          <h4 class="!tw-text-14-px !tw-font-500">{{ 'qbdExportSetting.mileageExpensePostingQuestion' | transloco }}</h4>
-                          <h5 class="!tw-text-text-muted !tw-font-400 !tw-text-14-px tw-pt-6-px !tw-leading-4">{{ 'qbdExportSetting.mileageAccountHelpText' | transloco: { brandName: brandingConfig.brandName } }}</h5>
+                          <h4 class="!tw-text-14-px !tw-font-500">
+                            {{ 'qbdExportSetting.mileageExpensePostingQuestion' | transloco }}
+                          </h4>
+                          <h5 class="!tw-text-text-muted !tw-font-400 !tw-text-14-px tw-pt-6-px !tw-leading-4">
+                            {{
+                              'qbdExportSetting.mileageAccountHelpText'
+                                | transloco: { brandName: brandingConfig.brandName }
+                            }}
+                          </h5>
                         </div>
                         <div class="tw-pl-18-px tw-flex-shrink-0">
-                          <input type="text" class="tw-w-300-px !tw-px-10-px !tw-py-8-px tw-border tw-border-solid !tw-border-separator tw-rounded-4-px"  pInputText formControlName="mileageAccountName" [placeholder]="'qbdExportSetting.mileageAccountPlaceholder' | transloco">
+                          <input
+                            type="text"
+                            class="tw-w-300-px !tw-px-10-px !tw-py-8-px tw-border tw-border-solid !tw-border-separator tw-rounded-4-px"
+                            pInputText
+                            formControlName="mileageAccountName"
+                            [placeholder]="'qbdExportSetting.mileageAccountPlaceholder' | transloco"
+                          />
                         </div>
                       </div>
                     </div>
@@ -74,10 +146,13 @@
                     [subLabel]="'qbdExportSetting.groupExpensesSubLabel' | transloco"
                     [options]="expenseGroupingFieldOptions"
                     [iconPath]="'tabs'"
-                  [formControllerName]="'reimbursableExportGroup'"></app-configuration-radio-field>
+                    [formControllerName]="'reimbursableExportGroup'"
+                  ></app-configuration-radio-field>
                 </div>
                 <div class="tw-mt-12-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
-                  @if (exportSettingsForm.controls.reimbursableExportGroup.value === expenseGroupingFieldOptions[0].value) {
+                  @if (
+                    exportSettingsForm.controls.reimbursableExportGroup.value === expenseGroupingFieldOptions[0].value
+                  ) {
                     <div>
                       <app-configuration-select-field
                         [form]="exportSettingsForm"
@@ -88,10 +163,13 @@
                         [options]="reimbursableExpenseGroupingDateOptionsFn()"
                         [iconPath]="'calendar'"
                         [placeholder]="'qbdExportSetting.selectDateTypePlaceholder' | transloco"
-                      [formControllerName]="'reimbursableExportDate'"></app-configuration-select-field>
+                        [formControllerName]="'reimbursableExportDate'"
+                      ></app-configuration-select-field>
                     </div>
                   }
-                  @if (exportSettingsForm.controls.reimbursableExportGroup.value === expenseGroupingFieldOptions[1].value) {
+                  @if (
+                    exportSettingsForm.controls.reimbursableExportGroup.value === expenseGroupingFieldOptions[1].value
+                  ) {
                     <div>
                       <app-configuration-select-field
                         [form]="exportSettingsForm"
@@ -102,7 +180,8 @@
                         [options]="reimbursableExpenseGroupingDateOptions"
                         [iconPath]="'calendar'"
                         [placeholder]="'qbdExportSetting.selectDateTypePlaceholder' | transloco"
-                      [formControllerName]="'reimbursableExportDate'"></app-configuration-select-field>
+                        [formControllerName]="'reimbursableExportDate'"
+                      ></app-configuration-select-field>
                     </div>
                   }
                 </div>
@@ -111,12 +190,15 @@
                     [form]="exportSettingsForm"
                     [isFieldMandatory]="true"
                     [mandatoryErrorListName]="'qbdExportSetting.mandatoryErrorListNameExportState' | transloco"
-                    [label]="'qbdExportSetting.expenseExportStateLabel' | transloco:{ brandName: brandingConfig.brandName }"
+                    [label]="
+                      'qbdExportSetting.expenseExportStateLabel' | transloco: { brandName: brandingConfig.brandName }
+                    "
                     [subLabel]="'qbdExportSetting.expenseExportStateSubLabel' | transloco"
                     [options]="expenseStateOptions"
                     [iconPath]="'question-square-outline'"
                     [placeholder]="'qbdExportSetting.selectExpenseStatePlaceholder' | transloco"
-                  [formControllerName]="'reimbursableExpenseState'"></app-configuration-select-field>
+                    [formControllerName]="'reimbursableExpenseState'"
+                  ></app-configuration-select-field>
                 </div>
               </div>
             }
@@ -126,9 +208,12 @@
               <app-configuration-toggle-field
                 [form]="exportSettingsForm"
                 [label]="'qbdExportSetting.exportCCCExpensesLabel' | transloco"
-                [subLabel]="'qbdExportSetting.exportCCCExpensesSubLabel' | transloco:{ brandName: brandingConfig.brandName }"
+                [subLabel]="
+                  'qbdExportSetting.exportCCCExpensesSubLabel' | transloco: { brandName: brandingConfig.brandName }
+                "
                 [formControllerName]="'creditCardExpense'"
-              [isSectionHeader]="true"></app-configuration-toggle-field>
+                [isSectionHeader]="true"
+              ></app-configuration-toggle-field>
             </div>
             @if (exportSettingsForm.get('creditCardExpense')?.value) {
               <div>
@@ -138,37 +223,82 @@
                     [isFieldMandatory]="true"
                     [mandatoryErrorListName]="'qbdExportSetting.mandatoryErrorListNameExport' | transloco"
                     [label]="'qbdExportSetting.howExpensesExportedLabel' | transloco"
-                    [subLabel]="'qbdExportSetting.howExpensesExportedSubLabel' | transloco:{ brandName: brandingConfig.brandName }"
+                    [subLabel]="
+                      'qbdExportSetting.howExpensesExportedSubLabel'
+                        | transloco: { brandName: brandingConfig.brandName }
+                    "
                     [options]="creditCardExportTypes"
                     [iconPath]="'list'"
-                  [formControllerName]="'cccExportType'"></app-configuration-radio-field>
+                    [formControllerName]="'cccExportType'"
+                  ></app-configuration-radio-field>
                   @if (exportSettingsForm.get('cccExportType')?.value) {
                     <div>
-                      <div class="tw-pl-16 tw-pt-16-px tw-pr-24-px tw-pb-24-px tw-flex tw-flex-row tw-justify-between tw-items-start">
+                      <div
+                        class="tw-pl-16 tw-pt-16-px tw-pr-24-px tw-pb-24-px tw-flex tw-flex-row tw-justify-between tw-items-start"
+                      >
                         <div class="lg:tw-w-3/5 md:tw-w-1/2">
-                          <h4 class="!tw-text-14-px !tw-font-500">{{ 'qbdExportSetting.enterCCCAccountNameLabel' | transloco }}<app-mandatory-field></app-mandatory-field></h4>
-                          <h5 class="!tw-text-text-muted !tw-font-400 !tw-text-14-px tw-pt-6-px !tw-leading-4">{{ 'qbdExportSetting.cccAccountHelpText' | transloco: { brandName: brandingConfig.brandName } }}</h5>
+                          <h4 class="!tw-text-14-px !tw-font-500">
+                            {{ 'qbdExportSetting.enterCCCAccountNameLabel' | transloco
+                            }}<app-mandatory-field></app-mandatory-field>
+                          </h4>
+                          <h5 class="!tw-text-text-muted !tw-font-400 !tw-text-14-px tw-pt-6-px !tw-leading-4">
+                            {{
+                              'qbdExportSetting.cccAccountHelpText' | transloco: { brandName: brandingConfig.brandName }
+                            }}
+                          </h5>
                         </div>
                         <div class="tw-pl-18-px tw-flex-shrink-0">
-                          <input type="text" class="tw-w-300-px !tw-px-10-px !tw-py-8-px tw-border tw-border-solid !tw-border-separator tw-rounded-4-px" [ngClass]="[exportSettingsForm.controls.cccAccountName.invalid && exportSettingsForm.controls.cccAccountName.touched ? 'error-box' : 'normal-box']" pInputText formControlName="cccAccountName" [placeholder]="'qbdExportSetting.cccAccountPlaceholder' | transloco" [required]="exportSettingsForm.get('creditCardExpense')?.value">
-                          @if (true && exportSettingsForm.controls.cccAccountName.touched && !exportSettingsForm.controls.cccAccountName.valid && !exportSettingsForm.controls.cccAccountName.disabled) {
-                            <app-mandatory-error-message [customErrorMessage]="'qbdExportSetting.cccAccountNameError' | transloco"></app-mandatory-error-message>
+                          <input
+                            type="text"
+                            class="tw-w-300-px !tw-px-10-px !tw-py-8-px tw-border tw-border-solid !tw-border-separator tw-rounded-4-px"
+                            [ngClass]="[
+                              exportSettingsForm.controls.cccAccountName.invalid &&
+                              exportSettingsForm.controls.cccAccountName.touched
+                                ? 'error-box'
+                                : 'normal-box',
+                            ]"
+                            pInputText
+                            formControlName="cccAccountName"
+                            [placeholder]="'qbdExportSetting.cccAccountPlaceholder' | transloco"
+                            [required]="exportSettingsForm.get('creditCardExpense')?.value"
+                          />
+                          @if (
+                            true &&
+                            exportSettingsForm.controls.cccAccountName.touched &&
+                            !exportSettingsForm.controls.cccAccountName.valid &&
+                            !exportSettingsForm.controls.cccAccountName.disabled
+                          ) {
+                            <app-mandatory-error-message
+                              [customErrorMessage]="'qbdExportSetting.cccAccountNameError' | transloco"
+                            ></app-mandatory-error-message>
                           }
                         </div>
                       </div>
                       <div class="tw-pl-16 tw-pr-24-px">
-                        <div class="tw-p-12-px tw-bg-bg-tertiary-lighter tw-rounded-4-px tw-flex tw-flex-row tw-items-start">
+                        <div
+                          class="tw-p-12-px tw-bg-bg-tertiary-lighter tw-rounded-4-px tw-flex tw-flex-row tw-items-start"
+                        >
                           <div class="tw-mr-6-px tw-mt-2-px">
-                            <div class="tw-w-4 tw-h-4 tw-rounded-full tw-bg-info tw-flex tw-items-center tw-justify-center">
+                            <div
+                              class="tw-w-4 tw-h-4 tw-rounded-full tw-bg-info tw-flex tw-items-center tw-justify-center"
+                            >
                               <strong class="tw-text-white tw-text-12-px tw-font-bold">i</strong>
                             </div>
                           </div>
                           <div class="tw-text-14-px tw-text-400 tw-text-text-muted">
                             @if (isOnboarding) {
-                              <span class="tw-max-w-sm tw-break-words">{{ 'qbdExportSetting.cccMappingInfoOnboarding' | transloco }}</span>
+                              <span class="tw-max-w-sm tw-break-words">{{
+                                'qbdExportSetting.cccMappingInfoOnboarding' | transloco
+                              }}</span>
                             }
                             @if (!isOnboarding) {
-                              <span class="tw-max-w-sm tw-break-words">{{ 'qbdExportSetting.cccMappingInfoPostOnboardingPart1' | transloco }}<a class="link" (click)="navigateToMapping()">{{ 'qbdExportSetting.mappingSectionLink' | transloco }}</a>.</span>
+                              <span class="tw-max-w-sm tw-break-words"
+                                >{{ 'qbdExportSetting.cccMappingInfoPostOnboardingPart1' | transloco
+                                }}<a class="link" (click)="navigateToMapping()">{{
+                                  'qbdExportSetting.mappingSectionLink' | transloco
+                                }}</a
+                                >.</span
+                              >
                             }
                           </div>
                         </div>
@@ -182,7 +312,8 @@
                           [subLabel]="'qbdExportSetting.setPurchasedFromSubLabel' | transloco"
                           [options]="cccEntityNameOptions"
                           [placeholder]="'qbdExportSetting.selectCCCEntityPlaceholder' | transloco"
-                        [formControllerName]="'cccEntityName'"></app-configuration-select-field>
+                          [formControllerName]="'cccEntityName'"
+                        ></app-configuration-select-field>
                       </div>
                     </div>
                   }
@@ -194,7 +325,8 @@
                         [label]="'qbdExportSetting.groupExpensesLabel' | transloco"
                         [subLabel]="'qbdExportSetting.groupExpensesSubLabel' | transloco"
                         [labelValue]="expenseGroupingFieldOptions[1]"
-                      [iconPath]="'tabs'"></app-configuration-label>
+                        [iconPath]="'tabs'"
+                      ></app-configuration-label>
                     </div>
                   }
                   @if (exportSettingsForm.get('cccExportType')?.value !== creditCardExportTypes[0].value) {
@@ -207,7 +339,8 @@
                         [subLabel]="'qbdExportSetting.groupExpensesSubLabel' | transloco"
                         [options]="expenseGroupingFieldOptions"
                         [iconPath]="'tabs'"
-                      [formControllerName]="'cccExportGroup'"></app-configuration-radio-field>
+                        [formControllerName]="'cccExportGroup'"
+                      ></app-configuration-radio-field>
                     </div>
                   }
                 </div>
@@ -221,7 +354,8 @@
                     [options]="cccExpenseGroupingDateOptions"
                     [iconPath]="'calendar'"
                     [placeholder]="'qbdExportSetting.selectDateTypePlaceholder' | transloco"
-                    [formControllerName]="'cccExportDate'">
+                    [formControllerName]="'cccExportDate'"
+                  >
                   </app-configuration-select-field>
                 </div>
                 <div class="tw-mt-12-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
@@ -229,19 +363,32 @@
                     [form]="exportSettingsForm"
                     [isFieldMandatory]="true"
                     [mandatoryErrorListName]="'qbdExportSetting.mandatoryErrorListNameExportState' | transloco"
-                    [label]="'qbdExportSetting.expenseExportStateLabel' | transloco:{ brandName: brandingConfig.brandName }"
+                    [label]="
+                      'qbdExportSetting.expenseExportStateLabel' | transloco: { brandName: brandingConfig.brandName }
+                    "
                     [subLabel]="'qbdExportSetting.expenseExportStateSubLabel' | transloco"
                     [options]="cccExpenseStateOptions"
                     [iconPath]="'question-square-outline'"
                     [placeholder]="'qbdExportSetting.selectExpenseStatePlaceholder' | transloco"
-                  [formControllerName]="'cccExpenseState'"></app-configuration-select-field>
+                    [formControllerName]="'cccExpenseState'"
+                  ></app-configuration-select-field>
                 </div>
               </div>
             }
           </div>
         </div>
         @if (isOnboarding) {
-          <app-configuration-step-footer [ctaText]="!saveInProgress ? (isOnboarding ? ConfigurationCtaText.SAVE_AND_CONTINUE : ConfigurationCtaText.SAVE) : ConfigurationCtaText.SAVING" [isButtonDisabled]="!exportSettingsForm.valid || saveInProgress" (save)="save()"></app-configuration-step-footer>
+          <app-configuration-step-footer
+            [ctaText]="
+              !saveInProgress
+                ? isOnboarding
+                  ? ConfigurationCtaText.SAVE_AND_CONTINUE
+                  : ConfigurationCtaText.SAVE
+                : ConfigurationCtaText.SAVING
+            "
+            [isButtonDisabled]="!exportSettingsForm.valid || saveInProgress"
+            (save)="save()"
+          ></app-configuration-step-footer>
         }
       </form>
     </div>
@@ -250,6 +397,16 @@
 
 @if (!isLoading && !isOnboarding) {
   <div class="tw-sticky tw-top-0 tw-bottom-0 tw-left-0 tw-right-0 tw-bg-white">
-    <app-configuration-step-footer [ctaText]="!saveInProgress ? (isOnboarding ? ConfigurationCtaText.SAVE_AND_CONTINUE : ConfigurationCtaText.SAVE) : ConfigurationCtaText.SAVING" [isButtonDisabled]="!exportSettingsForm.valid || saveInProgress" (save)="save()"></app-configuration-step-footer>
+    <app-configuration-step-footer
+      [ctaText]="
+        !saveInProgress
+          ? isOnboarding
+            ? ConfigurationCtaText.SAVE_AND_CONTINUE
+            : ConfigurationCtaText.SAVE
+          : ConfigurationCtaText.SAVING
+      "
+      [isButtonDisabled]="!exportSettingsForm.valid || saveInProgress"
+      (save)="save()"
+    ></app-configuration-step-footer>
   </div>
 }

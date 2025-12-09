@@ -37,13 +37,13 @@ export type EmployeeMappingsResponse = {
 
 export type EmployeeMappingPost = {
   source_employee: MappingSource;
-  destination_employee?: MappingDestination | {id: null};
-  destination_vendor?: MappingDestination | {id: null};
-  destination_card_account?: MappingDestination | {id: null};
+  destination_employee?: MappingDestination | { id: null };
+  destination_vendor?: MappingDestination | { id: null };
+  destination_card_account?: MappingDestination | { id: null };
   workspace: number;
 };
 
 export type DropdownOptionSearch = {
-  searchTerm: string,
-  employeeMapping: EmployeeMapping,
+  searchTerm: string;
+  employeeMapping: EmployeeMapping;
 };

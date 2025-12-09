@@ -1,8 +1,14 @@
 <div class="page-layout-container">
-    <div class="main-tab">
-        <app-main-menu [modules]="modules" [activeItem]="modules[0].value" [appName]="appName" [isDropdrownRequired]="false" [isSyncVisible]="false"></app-main-menu>
-    </div>
-    <div class="router-outlet-container">
-        <router-outlet></router-outlet>
-    </div>
+  <div class="main-tab">
+    <app-main-menu
+      [modules]="modules"
+      [activeItem]="modules[0].value"
+      [appName]="appName"
+      [isDropdrownRequired]="false"
+      [isSyncVisible]="false"
+    ></app-main-menu>
+  </div>
+  <div class="router-outlet-container">
+    <router-outlet></router-outlet>
+  </div>
 </div>

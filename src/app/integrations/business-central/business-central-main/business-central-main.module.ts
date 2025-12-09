@@ -12,7 +12,6 @@ import { BusinessCentralCompleteExportLogComponent } from './business-central-ex
 import { BusinessCentralSkippedExportLogComponent } from './business-central-export-log/business-central-skipped-export-log/business-central-skipped-export-log.component';
 import { SharedModule } from 'src/app/shared/shared.module';
 
-
 @NgModule({
   declarations: [
     BusinessCentralConfigurationComponent,
@@ -22,12 +21,8 @@ import { SharedModule } from 'src/app/shared/shared.module';
     BusinessCentralBaseMappingComponent,
     BusinessCentralCompleteExportLogComponent,
     BusinessCentralSkippedExportLogComponent,
-    BusinessCentralMainComponent
+    BusinessCentralMainComponent,
   ],
-  imports: [
-    CommonModule,
-    SharedModule,
-    BusinessCentralMainRoutingModule
-  ]
+  imports: [CommonModule, SharedModule, BusinessCentralMainRoutingModule],
 })
-export class BusinessCentralMainModule { }
+export class BusinessCentralMainModule {}

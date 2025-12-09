@@ -10,30 +10,31 @@ const routes: Routes = [
       {
         path: '',
         redirectTo: 'dashboard',
-        pathMatch: 'full'
+        pathMatch: 'full',
       },
       {
         path: 'dashboard',
-        loadChildren: () => import('./qbo-dashboard/qbo-dashboard.module').then(m => m.QboDashboardModule)
+        loadChildren: () => import('./qbo-dashboard/qbo-dashboard.module').then((m) => m.QboDashboardModule),
       },
       {
         path: 'export_log',
-        loadChildren: () => import('./qbo-export-log/qbo-export-log.module').then(m => m.QboExportLogModule)
+        loadChildren: () => import('./qbo-export-log/qbo-export-log.module').then((m) => m.QboExportLogModule),
       },
       {
         path: 'mapping',
-        loadChildren: () => import('./qbo-mapping/qbo-mapping.module').then(m => m.QboMappingModule)
+        loadChildren: () => import('./qbo-mapping/qbo-mapping.module').then((m) => m.QboMappingModule),
       },
       {
         path: 'configuration',
-        loadChildren: () => import('./qbo-configuration/qbo-configuration.module').then(m => m.QboConfigurationModule)
-      }
-    ]
-  }
+        loadChildren: () =>
+          import('./qbo-configuration/qbo-configuration.module').then((m) => m.QboConfigurationModule),
+      },
+    ],
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class QboMainRoutingModule { }
+export class QboMainRoutingModule {}

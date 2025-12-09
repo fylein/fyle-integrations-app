@@ -1,4 +1,3 @@
-
 import { CommonModule } from '@angular/common';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import type { Meta, StoryObj } from '@storybook/angular';
@@ -12,17 +11,17 @@ const meta: Meta<ExportLogChildTableDialogComponent> = {
   component: ExportLogChildTableDialogComponent,
   tags: ['autodocs'],
   render: (args: ExportLogChildTableDialogComponent) => ({
-    props: { ...args }
+    props: { ...args },
   }),
   decorators: [
     moduleMetadata({
       declarations: [ExportLogChildTableDialogComponent],
-      imports: [CommonModule, DialogModule, BrowserAnimationsModule, TableModule]
-    })
+      imports: [CommonModule, DialogModule, BrowserAnimationsModule, TableModule],
+    }),
   ],
   argTypes: {
-    ngOnInit: { table: { disable: true } }
-  }
+    ngOnInit: { table: { disable: true } },
+  },
 };
 
 export default meta;
@@ -72,8 +71,8 @@ export const simple: Story = {
         payment_number: '1',
         corporate_card_id: '1',
         is_skipped: false,
-        report_title: 'Fyle'
-      }
-    ]
-  }
+        report_title: 'Fyle',
+      },
+    ],
+  },
 };

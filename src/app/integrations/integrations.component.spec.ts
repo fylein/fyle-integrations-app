@@ -16,21 +16,20 @@ xdescribe('IntegrationsComponent', () => {
 
   const service1 = {
     getOrgs: () => of(orgMockData),
-    createOrg: () => of(orgMockData)
+    createOrg: () => of(orgMockData),
   };
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-    declarations: [IntegrationsComponent],
-    imports: [],
-    providers: [
+      declarations: [IntegrationsComponent],
+      imports: [],
+      providers: [
         { provide: OrgService, useValue: service1 },
         { provide: Router, useValue: routerSpy },
         provideHttpClient(withInterceptorsFromDi()),
-        provideHttpClientTesting()
-    ]
-})
-    .compileComponents();
+        provideHttpClientTesting(),
+      ],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(IntegrationsComponent);
     component = fixture.componentInstance;
@@ -55,7 +54,7 @@ xdescribe('IntegrationsComponent', () => {
 
   it('should navigate to integrations landing page', () => {
     // @ts-ignore
-    component.windowReference = { location: {pathname: '/integrations'}};
+    component.windowReference = { location: { pathname: '/integrations' } };
 
     expect((component as any).navigate()).toBeUndefined();
     expect(routerSpy.navigate).toHaveBeenCalledWith(['/integrations/landing']);

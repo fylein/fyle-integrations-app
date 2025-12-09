@@ -1,4 +1,3 @@
-
 import { CommonModule } from '@angular/common';
 import type { Meta, StoryObj } from '@storybook/angular';
 import { moduleMetadata } from '@storybook/angular';
@@ -10,17 +9,17 @@ const meta: Meta<ConfigurationStepFooterComponent> = {
   component: ConfigurationStepFooterComponent,
   tags: ['autodocs'],
   render: (args: ConfigurationStepFooterComponent) => ({
-    props: { ...args }
+    props: { ...args },
   }),
   decorators: [
     moduleMetadata({
       declarations: [ConfigurationStepFooterComponent],
-      imports: [CommonModule, ButtonModule]
-    })
+      imports: [CommonModule, ButtonModule],
+    }),
   ],
   argTypes: {
-    ngOnInit: { table: { disable: true } }
-  }
+    ngOnInit: { table: { disable: true } },
+  },
 };
 
 export default meta;
@@ -31,21 +30,20 @@ export const enabledButton: Story = {
     ctaText: 'Save and Continue',
     isButtonDisabled: false,
     showBackButton: true,
-    showResetButton: true
-  }
+    showResetButton: true,
+  },
 };
-
 
 export const disabledButton: Story = {
   args: {
     ctaText: 'Save and Continue',
-    isButtonDisabled: true
-  }
+    isButtonDisabled: true,
+  },
 };
 
 export const loaderButton: Story = {
   args: {
     ctaText: 'Saving',
-    isButtonDisabled: true
-  }
+    isButtonDisabled: true,
+  },
 };

@@ -8,11 +8,7 @@ describe('UcsvUjsonUtranslatorService', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [
-        UcsvUjsonUtranslatorService,
-        provideHttpClient(withInterceptorsFromDi()),
-        provideHttpClientTesting()
-      ]
+      providers: [UcsvUjsonUtranslatorService, provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting()],
     });
     service = TestBed.inject(UcsvUjsonUtranslatorService);
   });

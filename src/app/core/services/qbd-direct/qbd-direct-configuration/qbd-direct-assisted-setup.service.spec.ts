@@ -11,8 +11,8 @@ describe('UqbdUdirectUassistedUsetupService', () => {
       providers: [
         UqbdUdirectUassistedUsetupService,
         provideHttpClient(withInterceptorsFromDi()),
-        provideHttpClientTesting()
-      ]
+        provideHttpClientTesting(),
+      ],
     });
     service = TestBed.inject(UqbdUdirectUassistedUsetupService);
   });

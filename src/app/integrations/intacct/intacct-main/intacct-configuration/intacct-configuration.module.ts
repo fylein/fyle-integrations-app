@@ -5,15 +5,8 @@ import { IntacctConfigurationRoutingModule } from './intacct-configuration-routi
 import { IntacctConfigurationComponent } from './intacct-configuration.component';
 import { SharedModule } from 'src/app/shared/shared.module';
 
-
 @NgModule({
-  declarations: [
-    IntacctConfigurationComponent
-  ],
-  imports: [
-    CommonModule,
-    SharedModule,
-    IntacctConfigurationRoutingModule
-  ]
+  declarations: [IntacctConfigurationComponent],
+  imports: [CommonModule, SharedModule, IntacctConfigurationRoutingModule],
 })
-export class IntacctConfigurationModule { }
+export class IntacctConfigurationModule {}

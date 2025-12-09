@@ -14,13 +14,12 @@ import { AuthService } from 'src/app/core/services/common/auth.service';
 import { IntacctConnectorService } from 'src/app/core/services/si/si-core/si-connector.service';
 
 @Component({
-    selector: 'app-intacct',
-    templateUrl: './intacct.component.html',
-    styleUrls: ['./intacct.component.scss'],
-    standalone: false
+  selector: 'app-intacct',
+  templateUrl: './intacct.component.html',
+  styleUrls: ['./intacct.component.scss'],
+  standalone: false,
 })
 export class IntacctComponent implements OnInit {
-
   user: MinimalUser = this.userService.getUserProfile();
 
   workspace: IntacctWorkspace;
@@ -39,7 +38,7 @@ export class IntacctComponent implements OnInit {
     private workspaceService: SiWorkspaceService,
     private siAuthService: SiAuthService,
     private authService: AuthService,
-    private intacctConnector: IntacctConnectorService
+    private intacctConnector: IntacctConnectorService,
   ) {
     this.windowReference = this.windowService.nativeWindow;
   }
@@ -53,21 +52,27 @@ export class IntacctComponent implements OnInit {
         [IntacctOnboardingState.EXPORT_SETTINGS]: '/integrations/intacct/onboarding/export_settings',
         [IntacctOnboardingState.IMPORT_SETTINGS]: '/integrations/intacct/onboarding/import_settings',
         [IntacctOnboardingState.ADVANCED_CONFIGURATION]: '/integrations/intacct/onboarding/advanced_settings',
-        [IntacctOnboardingState.COMPLETE]: '/integrations/intacct/main/dashboard'
+        [IntacctOnboardingState.COMPLETE]: '/integrations/intacct/main/dashboard',
       };
 
-      this.router.navigateByUrl(isIntacctTokenValid === false && ![IntacctOnboardingState.CONNECTION, IntacctOnboardingState.COMPLETE].includes(this.workspace.onboarding_state) ?  onboardingStateComponentMap[IntacctOnboardingState.LOCATION_ENTITY] : onboardingStateComponentMap[this.workspace.onboarding_state]);
+      this.router.navigateByUrl(
+        isIntacctTokenValid === false &&
+          ![IntacctOnboardingState.CONNECTION, IntacctOnboardingState.COMPLETE].includes(
+            this.workspace.onboarding_state,
+          )
+          ? onboardingStateComponentMap[IntacctOnboardingState.LOCATION_ENTITY]
+          : onboardingStateComponentMap[this.workspace.onboarding_state],
+      );
     }
   }
 
   private routeBasedOnTokenStatus(): void {
-    this.intacctConnector.getIntacctTokenHealthStatus()
-    .subscribe(isIntacctCredentialsValid => {
+    this.intacctConnector.getIntacctTokenHealthStatus().subscribe((isIntacctCredentialsValid) => {
       this.navigate(isIntacctCredentialsValid);
     });
   }
 
-  setupWorkspace(workspace:IntacctWorkspace) {
+  setupWorkspace(workspace: IntacctWorkspace) {
     this.workspace = workspace;
     this.storageService.set('workspaceId', this.workspace.id);
     this.storageService.set('onboarding-state', this.workspace.onboarding_state);
@@ -87,17 +92,14 @@ export class IntacctComponent implements OnInit {
           this.setupWorkspace(workspaces);
         });
       }
-    }
-    );
+    });
   }
 
   private handleAuthParameters(): void {
-    this.route.queryParams.subscribe(params => {
+    this.route.queryParams.subscribe((params) => {
       const authCode = params.code;
       if (authCode) {
-        this.siAuthService.loginWithAuthCode(authCode).subscribe(
-          () => this.getOrCreateWorkspace()
-        );
+        this.siAuthService.loginWithAuthCode(authCode).subscribe(() => this.getOrCreateWorkspace());
       } else {
         this.authService.updateUserTokens('INTACCT');
         this.getOrCreateWorkspace();
@@ -108,5 +110,4 @@ export class IntacctComponent implements OnInit {
   ngOnInit(): void {
     this.handleAuthParameters();
   }
-
 }

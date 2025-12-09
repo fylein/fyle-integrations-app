@@ -8,11 +8,7 @@ describe('UsiUexportUsettingsService', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [
-        UsiUexportUsettingsService,
-        provideHttpClient(withInterceptorsFromDi()),
-        provideHttpClientTesting()
-      ]
+      providers: [UsiUexportUsettingsService, provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting()],
     });
     service = TestBed.inject(UsiUexportUsettingsService);
   });

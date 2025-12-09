@@ -5,12 +5,8 @@ import { BusinessCentralExportLogRoutingModule } from './business-central-export
 import { BusinessCentralCompleteExportLogComponent } from './business-central-complete-export-log/business-central-complete-export-log.component';
 import { BusinessCentralSkippedExportLogComponent } from './business-central-skipped-export-log/business-central-skipped-export-log.component';
 
-
 @NgModule({
   declarations: [],
-  imports: [
-    CommonModule,
-    BusinessCentralExportLogRoutingModule
-  ]
+  imports: [CommonModule, BusinessCentralExportLogRoutingModule],
 })
-export class BusinessCentralExportLogModule { }
+export class BusinessCentralExportLogModule {}

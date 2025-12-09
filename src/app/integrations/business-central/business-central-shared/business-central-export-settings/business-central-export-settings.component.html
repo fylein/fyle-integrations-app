@@ -4,15 +4,21 @@
   </div>
 }
 @if (!isLoading) {
-  <div class="configuration--contents tw-border-separator tw-mt-6" [ngClass]="brandingStyle.common.configurationContents">
+  <div
+    class="configuration--contents tw-border-separator tw-mt-6"
+    [ngClass]="brandingStyle.common.configurationContents"
+  >
     <div>
       <app-configuration-step-header
         [headerText]="'businessCentralExportSettings.headerText' | transloco"
-        [contentText]="'businessCentralExportSettings.contentText' | transloco: { brandName: brandingService.getBrandFullName() }"
+        [contentText]="
+          'businessCentralExportSettings.contentText' | transloco: { brandName: brandingService.getBrandFullName() }
+        "
         [redirectLink]="redirectLink"
         [showSyncButton]="isOnboarding"
         [appName]="appName"
-        (refreshDimension)="refreshDimensions($event)">
+        (refreshDimension)="refreshDimensions($event)"
+      >
       </app-configuration-step-header>
     </div>
     <form [formGroup]="exportSettingForm">
@@ -22,9 +28,13 @@
             <app-configuration-toggle-field
               [form]="exportSettingForm"
               [label]="'businessCentralExportSettings.reimbursableExpenseLabel' | transloco"
-              [subLabel]="'businessCentralExportSettings.reimbursableExpenseSubLabel' | transloco: { brandName: brandingConfig.brandName }"
+              [subLabel]="
+                'businessCentralExportSettings.reimbursableExpenseSubLabel'
+                  | transloco: { brandName: brandingConfig.brandName }
+              "
               [formControllerName]="'reimbursableExpense'"
-              [isSectionHeader]="true">
+              [isSectionHeader]="true"
+            >
             </app-configuration-toggle-field>
           </div>
           @if (exportSettingForm.get('reimbursableExpense')?.value) {
@@ -42,39 +52,51 @@
                   [appName]="appName"
                   [exportTypeIconPathArray]="previewImagePaths"
                   [showExportPreview]="true"
-                  [isDisabled]="false">
+                  [isDisabled]="false"
+                >
                 </app-configuration-select-field>
               </div>
               @if (exportSettingForm.get('reimbursableExportType')?.value) {
                 <div class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
-                  @if (exportSettingForm.get('reimbursableExportType')?.value === BusinessCentralExportType.PURCHASE_INVOICE) {
+                  @if (
+                    exportSettingForm.get('reimbursableExportType')?.value ===
+                    BusinessCentralExportType.PURCHASE_INVOICE
+                  ) {
                     <div>
                       <app-configuration-select-field
                         [form]="exportSettingForm"
                         [isFieldMandatory]="true"
-                        [mandatoryErrorListName]="'businessCentralExportSettings.employeeRepresentationError' | transloco"
+                        [mandatoryErrorListName]="
+                          'businessCentralExportSettings.employeeRepresentationError' | transloco
+                        "
                         [label]="'businessCentralExportSettings.employeeRepresentationLabel' | transloco"
                         [subLabel]="'businessCentralExportSettings.employeeRepresentationSubLabel' | transloco"
                         [options]="employeeFieldMappingOptions"
                         [placeholder]="'businessCentralExportSettings.employeeRepresentationPlaceholder' | transloco"
                         [iconPath]="'user-two'"
                         [formControllerName]="'reimbursableEmployeeMapping'"
-                        [isDisabled]="true">
+                        [isDisabled]="true"
+                      >
                       </app-configuration-select-field>
                     </div>
                   }
-                  @if (exportSettingForm.get('reimbursableExportType')?.value === BusinessCentralExportType.JOURNAL_ENTRY) {
+                  @if (
+                    exportSettingForm.get('reimbursableExportType')?.value === BusinessCentralExportType.JOURNAL_ENTRY
+                  ) {
                     <div>
                       <app-configuration-select-field
                         [form]="exportSettingForm"
                         [isFieldMandatory]="true"
-                        [mandatoryErrorListName]="'businessCentralExportSettings.employeeRepresentationError' | transloco"
+                        [mandatoryErrorListName]="
+                          'businessCentralExportSettings.employeeRepresentationError' | transloco
+                        "
                         [label]="'businessCentralExportSettings.employeeRepresentationLabel' | transloco"
                         [subLabel]="'businessCentralExportSettings.employeeRepresentationSubLabel' | transloco"
                         [options]="employeeFieldMappingOptions"
                         [placeholder]="'businessCentralExportSettings.employeeRepresentationPlaceholder' | transloco"
                         [iconPath]="'user-two'"
-                        [formControllerName]="'reimbursableEmployeeMapping'">
+                        [formControllerName]="'reimbursableEmployeeMapping'"
+                      >
                       </app-configuration-select-field>
                     </div>
                   }
@@ -82,20 +104,29 @@
                     <app-configuration-select-field
                       [form]="exportSettingForm"
                       [isFieldMandatory]="false"
-                      [label]="'businessCentralExportSettings.employeeMappingLabel' | transloco: { brandName: brandingConfig.brandName }"
-                      [subLabel]="'businessCentralExportSettings.employeeMappingSubLabel' | transloco: { brandName: brandingConfig.brandName }"
+                      [label]="
+                        'businessCentralExportSettings.employeeMappingLabel'
+                          | transloco: { brandName: brandingConfig.brandName }
+                      "
+                      [subLabel]="
+                        'businessCentralExportSettings.employeeMappingSubLabel'
+                          | transloco: { brandName: brandingConfig.brandName }
+                      "
                       [placeholder]="'businessCentralExportSettings.employeeRepresentationPlaceholder' | transloco"
                       [options]="employeeMapOptions"
                       [iconPath]="'question-square-outline'"
                       [formControllerName]="'autoMapEmployee'"
-                      [showClearIcon]="true">
+                      [showClearIcon]="true"
+                    >
                     </app-configuration-select-field>
                   </div>
                 </div>
               }
               @if (exportSettingForm.value.reimbursableExportType) {
                 <div>
-                  @if (exportSettingForm.get('reimbursableExportType')?.value === BusinessCentralExportType.JOURNAL_ENTRY) {
+                  @if (
+                    exportSettingForm.get('reimbursableExportType')?.value === BusinessCentralExportType.JOURNAL_ENTRY
+                  ) {
                     <div class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
                       <app-configuration-select-field
                         [form]="exportSettingForm"
@@ -110,7 +141,8 @@
                         (searchOptionsDropdown)="searchOptionsDropdown($event)"
                         [iconPath]="'list'"
                         [placeholder]="'businessCentralExportSettings.defaultBankAccountPlaceholder' | transloco"
-                        [formControllerName]="'defaultBankName'">
+                        [formControllerName]="'defaultBankName'"
+                      >
                       </app-configuration-select-field>
                     </div>
                   }
@@ -129,7 +161,10 @@
                     [placeholder]="'businessCentralExportSettings.expenseGroupingPlaceholder' | transloco"
                     [formControllerName]="'reimbursableExportGroup'"
                     [appName]="appName"
-                    [isDisabled]="exportSettingForm.get('reimbursableExportType')?.value === BusinessCentralExportType.JOURNAL_ENTRY">
+                    [isDisabled]="
+                      exportSettingForm.get('reimbursableExportType')?.value === BusinessCentralExportType.JOURNAL_ENTRY
+                    "
+                  >
                   </app-configuration-select-field>
                 </div>
               }
@@ -139,12 +174,16 @@
                     [form]="exportSettingForm"
                     [isFieldMandatory]="true"
                     [mandatoryErrorListName]="'businessCentralExportSettings.expenseStateError' | transloco"
-                    [label]="'businessCentralExportSettings.expenseStateLabel' | transloco: { brandName: brandingConfig.brandName }"
+                    [label]="
+                      'businessCentralExportSettings.expenseStateLabel'
+                        | transloco: { brandName: brandingConfig.brandName }
+                    "
                     [subLabel]="'businessCentralExportSettings.reimbursableExpenseStateSubLabel' | transloco"
                     [options]="reimbursableExpenseState"
                     [iconPath]="'list'"
                     [placeholder]="'businessCentralExportSettings.exportStatePlaceholder' | transloco"
-                    [formControllerName]="'reimbursableExpenseState'">
+                    [formControllerName]="'reimbursableExpenseState'"
+                  >
                   </app-configuration-select-field>
                 </div>
               }
@@ -155,11 +194,15 @@
                     [isFieldMandatory]="true"
                     [mandatoryErrorListName]="'businessCentralExportSettings.exportDateError' | transloco"
                     [label]="'businessCentralExportSettings.exportDateLabel' | transloco"
-                    [subLabel]="'businessCentralExportSettings.reimbursableExportDateSubLabel' | transloco: { brandName: brandingConfig.brandName }"
+                    [subLabel]="
+                      'businessCentralExportSettings.reimbursableExportDateSubLabel'
+                        | transloco: { brandName: brandingConfig.brandName }
+                    "
                     [placeholder]="'businessCentralExportSettings.exportDatePlaceholder' | transloco"
                     [options]="reimbursableExpenseGroupingDateOptions"
                     [iconPath]="'calendar'"
-                    [formControllerName]="'reimbursableExportDate'">
+                    [formControllerName]="'reimbursableExportDate'"
+                  >
                   </app-configuration-select-field>
                 </div>
               }
@@ -171,9 +214,13 @@
             <app-configuration-toggle-field
               [form]="exportSettingForm"
               [label]="'businessCentralExportSettings.creditCardExpenseLabel' | transloco"
-              [subLabel]="'businessCentralExportSettings.creditCardExpenseSubLabel' | transloco: { brandName: brandingConfig.brandName }"
+              [subLabel]="
+                'businessCentralExportSettings.creditCardExpenseSubLabel'
+                  | transloco: { brandName: brandingConfig.brandName }
+              "
               [formControllerName]="'creditCardExpense'"
-              [isSectionHeader]="true">
+              [isSectionHeader]="true"
+            >
             </app-configuration-toggle-field>
           </div>
           @if (exportSettingForm.get('creditCardExpense')?.value) {
@@ -191,7 +238,8 @@
                   [appName]="appName"
                   [exportConfigurationIconPath]="'assets/flow-charts/intacct-export-module.svg'"
                   [showExportPreview]="true"
-                  [exportTypeIconPathArray]="previewImagePaths">
+                  [exportTypeIconPathArray]="previewImagePaths"
+                >
                 </app-configuration-select-field>
               </div>
               @if (exportSettingForm.get('cccExportType')?.value === BusinessCentralExportType.JOURNAL_ENTRY) {
@@ -209,7 +257,8 @@
                     (searchOptionsDropdown)="searchOptionsDropdown($event)"
                     [iconPath]="'list'"
                     [placeholder]="'businessCentralExportSettings.defaultBankAccountPlaceholder' | transloco"
-                    [formControllerName]="'cccDefaultBankName'">
+                    [formControllerName]="'cccDefaultBankName'"
+                  >
                   </app-configuration-select-field>
                 </div>
               }
@@ -228,7 +277,8 @@
                     (searchOptionsDropdown)="searchOptionsDropdown($event)"
                     [iconPath]="'list'"
                     [placeholder]="'businessCentralExportSettings.defaultVendorPlaceholder' | transloco"
-                    [formControllerName]="'defaultVendorName'">
+                    [formControllerName]="'defaultVendorName'"
+                  >
                   </app-configuration-select-field>
                 </div>
               }
@@ -245,7 +295,10 @@
                     [placeholder]="'businessCentralExportSettings.expenseGroupingPlaceholder' | transloco"
                     [formControllerName]="'cccExportGroup'"
                     [appName]="appName"
-                    [isDisabled]="exportSettingForm.get('cccExportType')?.value === BusinessCentralExportType.JOURNAL_ENTRY">
+                    [isDisabled]="
+                      exportSettingForm.get('cccExportType')?.value === BusinessCentralExportType.JOURNAL_ENTRY
+                    "
+                  >
                   </app-configuration-select-field>
                 </div>
               }
@@ -260,7 +313,8 @@
                     [options]="employeeFieldMappingOptions"
                     [placeholder]="'businessCentralExportSettings.employeeRepresentationPlaceholder' | transloco"
                     [iconPath]="'user-two'"
-                    [formControllerName]="'reimbursableEmployeeMapping'">
+                    [formControllerName]="'reimbursableEmployeeMapping'"
+                  >
                   </app-configuration-select-field>
                 </div>
               }
@@ -275,7 +329,8 @@
                     [options]="nameReferenceInCCC"
                     [placeholder]="'businessCentralExportSettings.employeeRepresentationPlaceholder' | transloco"
                     [iconPath]="'user-two'"
-                    [formControllerName]="'journalEntryNamePreference'">
+                    [formControllerName]="'journalEntryNamePreference'"
+                  >
                   </app-configuration-select-field>
                 </div>
               }
@@ -285,12 +340,16 @@
                     [form]="exportSettingForm"
                     [isFieldMandatory]="true"
                     [mandatoryErrorListName]="'businessCentralExportSettings.expenseStateError' | transloco"
-                    [label]="'businessCentralExportSettings.expenseStateLabel' | transloco: { brandName: brandingConfig.brandName }"
+                    [label]="
+                      'businessCentralExportSettings.expenseStateLabel'
+                        | transloco: { brandName: brandingConfig.brandName }
+                    "
                     [subLabel]="'businessCentralExportSettings.cccExpenseStateSubLabel' | transloco"
                     [options]="cccExpenseState"
                     [iconPath]="'list'"
                     [placeholder]="'businessCentralExportSettings.exportStatePlaceholder' | transloco"
-                    [formControllerName]="'cccExpenseState'">
+                    [formControllerName]="'cccExpenseState'"
+                  >
                   </app-configuration-select-field>
                 </div>
               }
@@ -301,11 +360,15 @@
                     [isFieldMandatory]="true"
                     [mandatoryErrorListName]="'businessCentralExportSettings.exportDateError' | transloco"
                     [label]="'businessCentralExportSettings.exportDateLabel' | transloco"
-                    [subLabel]="'businessCentralExportSettings.cccExportDateSubLabel' | transloco: { brandName: brandingConfig.brandName }"
+                    [subLabel]="
+                      'businessCentralExportSettings.cccExportDateSubLabel'
+                        | transloco: { brandName: brandingConfig.brandName }
+                    "
                     [options]="cccExpenseGroupingDateOptions"
                     [iconPath]="'calendar'"
                     [placeholder]="'businessCentralExportSettings.cccExportDatePlaceholder' | transloco"
-                    [formControllerName]="'cccExportDate'">
+                    [formControllerName]="'cccExportDate'"
+                  >
                   </app-configuration-select-field>
                 </div>
               }
@@ -314,11 +377,18 @@
         </div>
       </div>
       <app-configuration-step-footer
-        [ctaText] = "!isSaveInProgress ? (isOnboarding ? ConfigurationCtaText.SAVE_AND_CONTINUE : ConfigurationCtaText.SAVE) : ConfigurationCtaText.SAVING"
-        [showBackButton] = "isOnboarding"
+        [ctaText]="
+          !isSaveInProgress
+            ? isOnboarding
+              ? ConfigurationCtaText.SAVE_AND_CONTINUE
+              : ConfigurationCtaText.SAVE
+            : ConfigurationCtaText.SAVING
+        "
+        [showBackButton]="isOnboarding"
         [isButtonDisabled]="!exportSettingForm.valid"
         (navigateToPreviousStep)="navigateBack()"
-        (save)="save()">
+        (save)="save()"
+      >
       </app-configuration-step-footer>
     </form>
   </div>

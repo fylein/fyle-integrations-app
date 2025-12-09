@@ -14,9 +14,9 @@ xdescribe('SiWorkspaceService', () => {
   beforeEach(() => {
     localStorage.setItem('si.workspaceId', '1');
     TestBed.configureTestingModule({
-    imports: [],
-    providers: [SiWorkspaceService, provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting()]
-});
+      imports: [],
+      providers: [SiWorkspaceService, provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting()],
+    });
     injector = getTestBed();
     service = TestBed.inject(SiWorkspaceService);
     httpMock = injector.inject(HttpTestingController);
@@ -28,15 +28,15 @@ xdescribe('SiWorkspaceService', () => {
 
   it('postSiWorkspace service check', () => {
     const workspaceResponse = {
-      "id": 1,
-      "name": "Anagha Org",
-      "org_id": "orHVw3ikkCxJ",
-      "currency": "EUR",
-      "reimbursable_last_synced_at": null,
-      "ccc_last_synced_at": null,
-      "created_at": "2023-01-23T05:37:56.907997Z",
-      "updated_at": "2023-01-23T05:37:56.908051Z",
-      "user": [1]
+      id: 1,
+      name: 'Anagha Org',
+      org_id: 'orHVw3ikkCxJ',
+      currency: 'EUR',
+      reimbursable_last_synced_at: null,
+      ccc_last_synced_at: null,
+      created_at: '2023-01-23T05:37:56.907997Z',
+      updated_at: '2023-01-23T05:37:56.908051Z',
+      user: [1],
     };
     service.postWorkspace().subscribe((value) => {
       const responseKeys = Object.keys(workspaceResponse).sort();
@@ -45,38 +45,38 @@ xdescribe('SiWorkspaceService', () => {
     });
     const req = httpMock.expectOne({
       method: 'POST',
-      url: `${API_BASE_URL}/workspaces/`
+      url: `${API_BASE_URL}/workspaces/`,
     });
     req.flush(workspaceResponse);
   });
 
   it('getSiWorkspace service check', () => {
     const workspaceResponse = {
-      "id": 1,
-      "name": "Anagha Org",
-      "org_id": "orHVw3ikkCxJ",
-      "currency": "EUR",
-      "reimbursable_last_synced_at": null,
-      "ccc_last_synced_at": null,
-      "created_at": "2023-01-23T05:37:56.907997Z",
-      "updated_at": "2023-01-23T05:37:56.908051Z",
-      "user": [1]
+      id: 1,
+      name: 'Anagha Org',
+      org_id: 'orHVw3ikkCxJ',
+      currency: 'EUR',
+      reimbursable_last_synced_at: null,
+      ccc_last_synced_at: null,
+      created_at: '2023-01-23T05:37:56.907997Z',
+      updated_at: '2023-01-23T05:37:56.908051Z',
+      user: [1],
     };
-    service.getWorkspace("orHVw3ikkCxJ").subscribe((value) => {
+    service.getWorkspace('orHVw3ikkCxJ').subscribe((value) => {
       const responseKeys = Object.keys(workspaceResponse).sort();
       const actualResponseKeys = Object.keys(value).sort();
       expect(actualResponseKeys).toEqual(responseKeys);
     });
     const req = httpMock.expectOne({
       method: 'GET',
-      url: `${API_BASE_URL}/workspaces/?org_id=orHVw3ikkCxJ`
+      url: `${API_BASE_URL}/workspaces/?org_id=orHVw3ikkCxJ`,
     });
     req.flush(workspaceResponse);
   });
 
   it('getWorkspaceid service', () => {
     const workspaceId = localStorage.getItem('si.workspaceId');
-    const workspace_id = workspaceId  ? JSON.parse(workspaceId) : null;
+    const workspace_id = workspaceId ? JSON.parse(workspaceId) : null;
     const id = service.getWorkspaceId();
     const org = workspace_id;
     expect(id).toEqual(org);
@@ -95,5 +95,4 @@ xdescribe('SiWorkspaceService', () => {
     const response = service.getIntacctOnboardingState();
     expect(state).toEqual(response);
   });
-
 });

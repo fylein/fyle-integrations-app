@@ -3,12 +3,8 @@ import { CommonModule } from '@angular/common';
 
 import { QbdDirectOnboardingRoutingModule } from './qbd-direct-onboarding-routing.module';
 
-
 @NgModule({
   declarations: [],
-  imports: [
-    CommonModule,
-    QbdDirectOnboardingRoutingModule
-  ]
+  imports: [CommonModule, QbdDirectOnboardingRoutingModule],
 })
-export class QbdDirectOnboardingModule { }
+export class QbdDirectOnboardingModule {}

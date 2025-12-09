@@ -1,11 +1,27 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { brandingConfig, brandingKbArticles, brandingStyle } from 'src/app/branding/branding-config';
-import { AppName, ConfigurationCta, ConfigurationWarningEvent, ProgressPhase, Sage50AttributeType, Sage50OnboardingState, ToastSeverity, TrackingApp, UpdateEvent } from 'src/app/core/models/enum/enum.model';
+import {
+  AppName,
+  ConfigurationCta,
+  ConfigurationWarningEvent,
+  ProgressPhase,
+  Sage50AttributeType,
+  Sage50OnboardingState,
+  ToastSeverity,
+  TrackingApp,
+  UpdateEvent,
+} from 'src/app/core/models/enum/enum.model';
 import { SharedModule } from 'src/app/shared/shared.module';
-import { Sage50FyleField, Sage50ImportableField, Sage50ImportSettingsForm, Sage50ImportableCOAType, Sage50ImportableCOAGet } from 'src/app/core/models/sage50/sage50-configuration/sage50-import-settings.model';
+import {
+  Sage50FyleField,
+  Sage50ImportableField,
+  Sage50ImportSettingsForm,
+  Sage50ImportableCOAType,
+  Sage50ImportableCOAGet,
+} from 'src/app/core/models/sage50/sage50-configuration/sage50-import-settings.model';
 import { FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { ConfigurationCsvImportFieldComponent } from "src/app/shared/components/configuration/configuration-csv-import-field/configuration-csv-import-field.component";
+import { ConfigurationCsvImportFieldComponent } from 'src/app/shared/components/configuration/configuration-csv-import-field/configuration-csv-import-field.component';
 import { Sage50ImportSettingsService } from 'src/app/core/services/sage50/sage50-configuration/sage50-import-settings.service';
 import { Sage50ImportAttributesService } from 'src/app/core/services/sage50/sage50-configuration/sage50-import-attributes.service';
 import { forkJoin, pairwise, startWith } from 'rxjs';
@@ -24,13 +40,12 @@ import { BrandingService } from 'src/app/core/services/common/branding.service';
 import { TrackingService } from 'src/app/core/services/integration/tracking.service';
 
 @Component({
-    selector: 'app-sage50-import-settings',
-    imports: [SharedModule, CommonModule, ReactiveFormsModule, ConfigurationCsvImportFieldComponent, MultiSelectModule],
-    templateUrl: './sage50-import-settings.component.html',
-    styleUrl: './sage50-import-settings.component.scss'
+  selector: 'app-sage50-import-settings',
+  imports: [SharedModule, CommonModule, ReactiveFormsModule, ConfigurationCsvImportFieldComponent, MultiSelectModule],
+  templateUrl: './sage50-import-settings.component.html',
+  styleUrl: './sage50-import-settings.component.scss',
 })
 export class Sage50ImportSettingsComponent implements OnInit {
-
   // Constants
   readonly appName = AppName.SAGE50;
 
@@ -80,7 +95,7 @@ export class Sage50ImportSettingsComponent implements OnInit {
   // Form
   importSettingsForm: FormGroup<Sage50ImportSettingsForm>;
 
-  importableCOAOptions: { label: string, value: Sage50ImportableCOAType, disabled: boolean }[] = [];
+  importableCOAOptions: { label: string; value: Sage50ImportableCOAType; disabled: boolean }[] = [];
 
   sourceFieldOptions: CSVImportSourceFieldOption[] = [];
 
@@ -94,8 +109,8 @@ export class Sage50ImportSettingsComponent implements OnInit {
     private toastService: IntegrationsToastService,
     private workspaceService: WorkspaceService,
     public brandingService: BrandingService,
-    private trackingService: TrackingService
-  ) { }
+    private trackingService: TrackingService,
+  ) {}
 
   public uploadData(attributeType: Sage50AttributeType, fileName: string, jsonData: any) {
     return this.importAttributesService.importAttributes(attributeType, fileName, jsonData);
@@ -104,7 +119,7 @@ export class Sage50ImportSettingsComponent implements OnInit {
   public getSourceFieldOptions(destinationField: Sage50ImportableField) {
     // Get all selected source fields
     const selectedSourceFields: (Sage50FyleField | null)[] = [];
-    Object.keys(this.importSettingsForm.controls).forEach(key => {
+    Object.keys(this.importSettingsForm.controls).forEach((key) => {
       const formGroup = this.importSettingsForm.get(key);
 
       if (formGroup?.get('sourceField')?.value) {
@@ -113,8 +128,7 @@ export class Sage50ImportSettingsComponent implements OnInit {
       }
     });
 
-    return this.sourceFieldOptions.filter(option => {
-
+    return this.sourceFieldOptions.filter((option) => {
       // Include option if it is the current value of this source field
       if (option.value === this.importSettingsForm.get(destinationField)?.get('sourceField')?.value) {
         return true;
@@ -151,32 +165,40 @@ export class Sage50ImportSettingsComponent implements OnInit {
       next: (response: void) => {
         this.isSaveInProgress = false;
         this.toastService.displayToastMessage(
-          ToastSeverity.SUCCESS, this.translocoService.translate('sage50ImportSettings.importSettingsSavedSuccess')
+          ToastSeverity.SUCCESS,
+          this.translocoService.translate('sage50ImportSettings.importSettingsSavedSuccess'),
         );
         this.updateImportCodeFieldConfig();
         if (this.isOnboarding) {
-          this.trackingService.onOnboardingStepCompletion(TrackingApp.SAGE50, Sage50OnboardingState.IMPORT_SETTINGS, 3, response);
+          this.trackingService.onOnboardingStepCompletion(
+            TrackingApp.SAGE50,
+            Sage50OnboardingState.IMPORT_SETTINGS,
+            3,
+            response,
+          );
           this.workspaceService.setOnboardingState(Sage50OnboardingState.ADVANCED_SETTINGS);
           this.router.navigate(['/integrations/sage50/onboarding/advanced_settings']);
         } else {
           this.trackingService.onUpdateEvent(TrackingApp.SAGE50, UpdateEvent.IMPORT_SETTINGS, {
             phase: ProgressPhase.POST_ONBOARDING,
             oldState: this.importSettingsForm.value,
-            newState: response
+            newState: response,
           });
         }
       },
       error: () => {
         this.isSaveInProgress = false;
         this.toastService.displayToastMessage(
-          ToastSeverity.ERROR, this.translocoService.translate('sage50ImportSettings.importSettingsSaveError')
+          ToastSeverity.ERROR,
+          this.translocoService.translate('sage50ImportSettings.importSettingsSaveError'),
         );
-      }
+      },
     });
   }
 
   private getImportableCOACount(
-    importableChartOfAccounts: Sage50ImportableCOAGet | null, selectedAccountTypes: Sage50ImportableCOAType[]
+    importableChartOfAccounts: Sage50ImportableCOAGet | null,
+    selectedAccountTypes: Sage50ImportableCOAType[],
   ): number {
     let count = 0;
     for (const accountType of selectedAccountTypes) {
@@ -186,10 +208,12 @@ export class Sage50ImportSettingsComponent implements OnInit {
   }
 
   private setImportableCOACount(
-    importableChartOfAccounts: Sage50ImportableCOAGet | null, selectedAccountTypes?: Sage50ImportableCOAType[] | null
+    importableChartOfAccounts: Sage50ImportableCOAGet | null,
+    selectedAccountTypes?: Sage50ImportableCOAType[] | null,
   ): void {
     const currentFile = this.importSettingsForm.get('ACCOUNT')?.get('file')?.value;
-    selectedAccountTypes = selectedAccountTypes ?? this.importSettingsForm.get('ACCOUNT')?.get('accountTypes')?.value ?? [];
+    selectedAccountTypes =
+      selectedAccountTypes ?? this.importSettingsForm.get('ACCOUNT')?.get('accountTypes')?.value ?? [];
     if (currentFile && selectedAccountTypes) {
       currentFile.valueCount = this.getImportableCOACount(importableChartOfAccounts, selectedAccountTypes);
       this.importSettingsForm.get('ACCOUNT')?.get('file')?.patchValue(currentFile, { emitEvent: false });
@@ -202,20 +226,22 @@ export class Sage50ImportSettingsComponent implements OnInit {
       return {
         label: `${value} (${count})`,
         value: value,
-        disabled: value === Sage50ImportableCOAType.EXPENSES
+        disabled: value === Sage50ImportableCOAType.EXPENSES,
       };
     });
   }
 
-  private constructOptions(importableChartOfAccounts: Sage50ImportableCOAGet | null, fyleFields: Sage50SourceField[]): void {
-
+  private constructOptions(
+    importableChartOfAccounts: Sage50ImportableCOAGet | null,
+    fyleFields: Sage50SourceField[],
+  ): void {
     this.constructCOAOptions(importableChartOfAccounts);
 
     const customFieldOptions = fyleFields.map((field) => {
       return {
         label: field.display_name,
         value: field.attribute_type,
-        placeholder: null
+        placeholder: null,
       };
     });
 
@@ -224,15 +250,17 @@ export class Sage50ImportSettingsComponent implements OnInit {
       {
         label: this.translocoService.translate('sage50ImportSettings.customFieldLabel'),
         value: 'custom_field',
-        placeholder: null
-      }
+        placeholder: null,
+      },
     ];
   }
 
   private setupWatchers(): void {
     // Watch Job toggle
-    this.importSettingsForm.get('JOB')?.get('enabled')?.valueChanges
-      .subscribe((currentValue) => {
+    this.importSettingsForm
+      .get('JOB')
+      ?.get('enabled')
+      ?.valueChanges.subscribe((currentValue) => {
         if (this.isProcessingWarning) {
           return;
         }
@@ -244,8 +272,10 @@ export class Sage50ImportSettingsComponent implements OnInit {
       });
 
     // Watch Phase toggle
-    this.importSettingsForm.get('PHASE')?.get('enabled')?.valueChanges
-      .subscribe((currentValue) => {
+    this.importSettingsForm
+      .get('PHASE')
+      ?.get('enabled')
+      ?.valueChanges.subscribe((currentValue) => {
         if (this.isProcessingWarning) {
           return;
         }
@@ -257,8 +287,10 @@ export class Sage50ImportSettingsComponent implements OnInit {
       });
 
     // Watch Cost Code toggle
-    this.importSettingsForm.get('COST_CODE')?.get('enabled')?.valueChanges
-      .subscribe((currentValue) => {
+    this.importSettingsForm
+      .get('COST_CODE')
+      ?.get('enabled')
+      ?.valueChanges.subscribe((currentValue) => {
         if (this.isProcessingWarning) {
           return;
         }
@@ -270,33 +302,30 @@ export class Sage50ImportSettingsComponent implements OnInit {
       });
 
     // Watch Phase source field changes (for mapping change warning)
-    this.importSettingsForm.get('PHASE')?.get('sourceField')?.valueChanges
-      .pipe(
-        startWith(this.importSettingsForm.get('PHASE')?.get('sourceField')?.value),
-        pairwise()
-      )
+    this.importSettingsForm
+      .get('PHASE')
+      ?.get('sourceField')
+      ?.valueChanges.pipe(startWith(this.importSettingsForm.get('PHASE')?.get('sourceField')?.value), pairwise())
       .subscribe(([previousValue, currentValue]) => {
         this.handleSourceFieldChange(Sage50ImportableField.PHASE, previousValue ?? null, currentValue ?? null);
       });
 
     // Watch Cost Code source field changes (for mapping change warning)
-    this.importSettingsForm.get('COST_CODE')?.get('sourceField')?.valueChanges
-      .pipe(
-        startWith(this.importSettingsForm.get('COST_CODE')?.get('sourceField')?.value),
-        pairwise()
-      )
+    this.importSettingsForm
+      .get('COST_CODE')
+      ?.get('sourceField')
+      ?.valueChanges.pipe(startWith(this.importSettingsForm.get('COST_CODE')?.get('sourceField')?.value), pairwise())
       .subscribe(([previousValue, currentValue]) => {
         this.handleSourceFieldChange(Sage50ImportableField.COST_CODE, previousValue ?? null, currentValue ?? null);
       });
 
-
     // If a new file for ACCOUNT is uploaded
     // 1. update the counts in the account types dropdown options
     // 2. update the 'Ready to import' count (onboarding only)
-    this.importSettingsForm.get('ACCOUNT')?.get('file')?.valueChanges
-      .pipe(
-        startWith(this.importSettingsForm.get('ACCOUNT')?.get('file')?.value)
-      )
+    this.importSettingsForm
+      .get('ACCOUNT')
+      ?.get('file')
+      ?.valueChanges.pipe(startWith(this.importSettingsForm.get('ACCOUNT')?.get('file')?.value))
       .subscribe((file) => {
         if (file?.name) {
           this.importSettingService.getImportableChartOfAccounts().subscribe((importableChartOfAccounts) => {
@@ -309,13 +338,13 @@ export class Sage50ImportSettingsComponent implements OnInit {
 
     // Get the 'Ready to import' count from the selected account types (onboarding only)
     if (this.isOnboarding) {
-      this.importSettingsForm.get('ACCOUNT')?.get('accountTypes')?.valueChanges
-      .pipe(
-        startWith(this.importSettingsForm.get('ACCOUNT')?.get('accountTypes')?.value)
-      )
-      .subscribe((accountTypes) => {
-        this.setImportableCOACount(this.importableChartOfAccounts, accountTypes);
-      });
+      this.importSettingsForm
+        .get('ACCOUNT')
+        ?.get('accountTypes')
+        ?.valueChanges.pipe(startWith(this.importSettingsForm.get('ACCOUNT')?.get('accountTypes')?.value))
+        .subscribe((accountTypes) => {
+          this.setImportableCOACount(this.importableChartOfAccounts, accountTypes);
+        });
     }
   }
 
@@ -330,7 +359,11 @@ export class Sage50ImportSettingsComponent implements OnInit {
     this.isProcessingWarning = false;
   }
 
-  private handleSourceFieldChange(field: Sage50ImportableField, previousValue: string | null, currentValue: string | null): void {
+  private handleSourceFieldChange(
+    field: Sage50ImportableField,
+    previousValue: string | null,
+    currentValue: string | null,
+  ): void {
     // Only check for Phase and Cost Code fields
     const isPhaseOrCostCode = field === Sage50ImportableField.PHASE || field === Sage50ImportableField.COST_CODE;
 
@@ -392,13 +425,12 @@ export class Sage50ImportSettingsComponent implements OnInit {
     return this.currentWarningField ? sage50AttributeDisplayNames[this.currentWarningField] : '';
   }
 
-
   get previousSourceFieldDisplayName(): string {
     if (!this.previousSourceFieldValue) {
       return '';
     }
 
-    const option = this.sourceFieldOptions.find(opt => opt.value === this.previousSourceFieldValue);
+    const option = this.sourceFieldOptions.find((opt) => opt.value === this.previousSourceFieldValue);
     return option?.label || this.previousSourceFieldValue;
   }
 
@@ -412,12 +444,17 @@ export class Sage50ImportSettingsComponent implements OnInit {
     if (!data.hasAccepted && this.previousSourceFieldValue !== null) {
       // User canceled, revert to the previous source field value
       this.isRevertingSourceField = true;
-      this.importSettingsForm.get(this.currentWarningField)?.get('sourceField')?.setValue(this.previousSourceFieldValue as Sage50FyleField, { emitEvent: true });
+      this.importSettingsForm
+        .get(this.currentWarningField)
+        ?.get('sourceField')
+        ?.setValue(this.previousSourceFieldValue as Sage50FyleField, { emitEvent: true });
 
       // Also update the placeholder
-      const previousOption = this.sourceFieldOptions.find(option => option.value === this.previousSourceFieldValue);
-      this.importSettingsForm.get(this.currentWarningField)?.get('sourcePlaceholder')?.setValue(previousOption?.placeholder ?? null);
-
+      const previousOption = this.sourceFieldOptions.find((option) => option.value === this.previousSourceFieldValue);
+      this.importSettingsForm
+        .get(this.currentWarningField)
+        ?.get('sourcePlaceholder')
+        ?.setValue(previousOption?.placeholder ?? null);
 
       this.isRevertingSourceField = false;
     }
@@ -432,9 +469,9 @@ export class Sage50ImportSettingsComponent implements OnInit {
 
     const attributeStatsRequests = this.isOnboarding
       ? [
-        this.mappingService.getAttributeStats(Sage50AttributeType.ACCOUNT),
-        this.mappingService.getAttributeStats(Sage50AttributeType.VENDOR)
-      ]
+          this.mappingService.getAttributeStats(Sage50AttributeType.ACCOUNT),
+          this.mappingService.getAttributeStats(Sage50AttributeType.VENDOR),
+        ]
       : [];
 
     forkJoin([
@@ -444,21 +481,36 @@ export class Sage50ImportSettingsComponent implements OnInit {
       this.exportSettingService.getExportSettings(),
       this.mappingService.getFyleFields(),
       this.importSettingService.getImportCodeFieldsConfig(),
-      ...attributeStatsRequests
-    ]).subscribe(([importSettings, importableChartOfAccounts, accountingImportDetails, exportSettings, sourceFields, importCodeFieldsConfig, accountStats, vendorStats]) => {
+      ...attributeStatsRequests,
+    ]).subscribe(
+      ([
+        importSettings,
+        importableChartOfAccounts,
+        accountingImportDetails,
+        exportSettings,
+        sourceFields,
+        importCodeFieldsConfig,
+        accountStats,
+        vendorStats,
+      ]) => {
+        this.importableChartOfAccounts = importableChartOfAccounts ?? null;
 
-      this.importableChartOfAccounts = importableChartOfAccounts ?? null;
+        this.importStatuses = this.importSettingService.getImportStatusesByField(importCodeFieldsConfig);
 
-      this.importStatuses = this.importSettingService.getImportStatusesByField(importCodeFieldsConfig);
+        this.importSettingsForm = this.importSettingService.mapApiResponseToFormGroup(
+          importSettings,
+          accountingImportDetails,
+          exportSettings,
+          this.importStatuses,
+          accountStats,
+          vendorStats,
+        );
+        this.constructOptions(importableChartOfAccounts, sourceFields as Sage50SourceField[]);
 
-      this.importSettingsForm = this.importSettingService.mapApiResponseToFormGroup(
-        importSettings, accountingImportDetails, exportSettings, this.importStatuses, accountStats, vendorStats
-      );
-      this.constructOptions(importableChartOfAccounts, sourceFields as Sage50SourceField[]);
+        this.setupWatchers();
 
-      this.setupWatchers();
-
-      this.isLoading = false;
-    });
+        this.isLoading = false;
+      },
+    );
   }
 }

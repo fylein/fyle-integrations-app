@@ -14,9 +14,9 @@ describe('RefinerService', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-    imports: [],
-    providers: [provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting()]
-});
+      imports: [],
+      providers: [provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting()],
+    });
     service = TestBed.inject(RefinerService);
     (window as any)._refiner = () => {
       return undefined;

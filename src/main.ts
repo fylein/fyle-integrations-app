@@ -4,12 +4,11 @@ import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 import { AppModule } from './app/app.module';
 import { environment } from './environments/environment';
 
-import * as Sentry from "@sentry/angular";
+import * as Sentry from '@sentry/angular';
 
 if (environment.production) {
   enableProdMode();
 }
-
 
 if (environment.sentry_dsn) {
   Sentry.init({
@@ -24,7 +23,7 @@ if (environment.sentry_dsn) {
       Sentry.browserTracingIntegration(),
       // Registers the Replay integration,
       // Which automatically captures Session Replays
-      Sentry.replayIntegration()
+      Sentry.replayIntegration(),
     ],
 
     // Set `tracePropagationTargets` to control for which URLs trace propagation should be enabled
@@ -34,9 +33,10 @@ if (environment.sentry_dsn) {
     // Capture Replay for 10% of all sessions,
     // Plus for 100% of sessions with an error
     replaysSessionSampleRate: 0.1,
-    replaysOnErrorSampleRate: 1.0
+    replaysOnErrorSampleRate: 1.0,
   });
 }
 
-platformBrowserDynamic().bootstrapModule(AppModule, { applicationProviders: [provideZoneChangeDetection()] })
-  .catch(err => console.error(err));
+platformBrowserDynamic()
+  .bootstrapModule(AppModule, { applicationProviders: [provideZoneChangeDetection()] })
+  .catch((err) => console.error(err));

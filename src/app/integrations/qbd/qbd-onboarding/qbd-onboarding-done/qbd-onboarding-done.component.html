@@ -7,19 +7,32 @@
 <div class="tw-flex tw-justify-center tw-pr-74-px tw-pl-74-px tw-pt-24 tw-pb-20">
   <div class="onboarding-done--contents">
     <div class="tw-pt-34-px">
-      <img src="assets/gifs/success-check.gif" class="onboarding-done--align-center" [alt]="'qbdOnboardingDone.onboardingDone' | transloco" width="120px"
-        height="120px">
+      <img
+        src="assets/gifs/success-check.gif"
+        class="onboarding-done--align-center"
+        [alt]="'qbdOnboardingDone.onboardingDone' | transloco"
+        width="120px"
+        height="120px"
+      />
     </div>
     <div class="tw-text-center">
-      <h2 class="tw-text-normal-text-color !tw-font-bold !tw-text-18-px">{{ 'qbdOnboardingDone.congratulationsMessage' | transloco }}</h2>
+      <h2 class="tw-text-normal-text-color !tw-font-bold !tw-text-18-px">
+        {{ 'qbdOnboardingDone.congratulationsMessage' | transloco }}
+      </h2>
     </div>
     <div class="tw-flex tw-justify-center tw-py-24-px">
-      <app-button  [buttonSize]="ButtonSize.MEDIUM" [buttonType]="ButtonType.PRIMARY" [buttonText]="'qbdOnboardingDone.launchButtonText' | transloco " (buttonClick)="navigateToDashboard()"></app-button>
+      <app-button
+        [buttonSize]="ButtonSize.MEDIUM"
+        [buttonType]="ButtonType.PRIMARY"
+        [buttonText]="'qbdOnboardingDone.launchButtonText' | transloco"
+        (buttonClick)="navigateToDashboard()"
+      ></app-button>
     </div>
     <div class="tw-py-24-px">
-      <h5 class="tw-text-text-muted tw-text-center tw-text-14-px" [innerHTML]="'qbdOnboardingDone.reconfigureMessage' | transloco">
-
-      </h5>
+      <h5
+        class="tw-text-text-muted tw-text-center tw-text-14-px"
+        [innerHTML]="'qbdOnboardingDone.reconfigureMessage' | transloco"
+      ></h5>
     </div>
   </div>
 </div>

@@ -8,9 +8,8 @@ xdescribe('XeroExportSettingsComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ XeroExportSettingsComponent ]
-    })
-    .compileComponents();
+      declarations: [XeroExportSettingsComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(XeroExportSettingsComponent);
     component = fixture.componentInstance;

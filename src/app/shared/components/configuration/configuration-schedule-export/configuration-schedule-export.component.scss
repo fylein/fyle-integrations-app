@@ -1,27 +1,28 @@
 :host ::ng-deep .error-box .p-select {
-    @apply tw-border-border-danger-dark #{!important};
+  @apply tw-border-border-danger-dark #{!important};
 }
 
 :host ::ng-deep .normal-box .p-select {
-    @apply tw-border-select-default-border #{!important};
+  @apply tw-border-select-default-border #{!important};
 }
 
 :host ::ng-deep .normal-box .p-select.p-focus {
-    @apply tw-border-select-focused-border #{!important};
+  @apply tw-border-select-focused-border #{!important};
 }
 
 :host ::ng-deep .p-select {
-    @apply tw-w-120-px #{!important};
+  @apply tw-w-120-px #{!important};
 }
 
-:host ::ng-deep  .dropdown-size-schedule .p-disabled, .p-component:disabled {
-    @apply tw-opacity-100 tw-border-select-disabled-border;
+:host ::ng-deep .dropdown-size-schedule .p-disabled,
+.p-component:disabled {
+  @apply tw-opacity-100 tw-border-select-disabled-border;
 }
 
 :host ::ng-deep .p-select-dropdown {
-    @apply tw-hidden #{!important};
+  @apply tw-hidden #{!important};
 }
 
-input[type="text"] {
-    @apply tw-rounded-4-px tw-border-none tw-p-12-px #{!important};
+input[type='text'] {
+  @apply tw-rounded-4-px tw-border-none tw-p-12-px #{!important};
 }

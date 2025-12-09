@@ -8,9 +8,8 @@ xdescribe('XeroImportSettingsComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ XeroImportSettingsComponent ]
-    })
-    .compileComponents();
+      declarations: [XeroImportSettingsComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(XeroImportSettingsComponent);
     component = fixture.componentInstance;

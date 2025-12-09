@@ -1,4 +1,3 @@
-
 import { CommonModule } from '@angular/common';
 import type { Meta, StoryObj } from '@storybook/angular';
 import { moduleMetadata } from '@storybook/angular';
@@ -14,17 +13,17 @@ const meta: Meta<ConfigurationSelectFieldComponent> = {
   component: ConfigurationSelectFieldComponent,
   tags: ['autodocs'],
   render: (args: ConfigurationSelectFieldComponent) => ({
-    props: { ...args }
+    props: { ...args },
   }),
   decorators: [
     moduleMetadata({
       declarations: [],
-      imports: [CommonModule, SharedModule, BrowserAnimationsModule]
-    })
+      imports: [CommonModule, SharedModule, BrowserAnimationsModule],
+    }),
   ],
   argTypes: {
-    ngOnInit: { table: { disable: true } }
-  }
+    ngOnInit: { table: { disable: true } },
+  },
 };
 
 export default meta;
@@ -32,14 +31,20 @@ type Story = StoryObj<ConfigurationSelectFieldComponent>;
 
 export const simple: Story = {
   args: {
-    form: setupStoryBookFormGroup(new FormGroup({employeeMapping: new FormControl('')})),
+    form: setupStoryBookFormGroup(new FormGroup({ employeeMapping: new FormControl('') })),
     isFieldMandatory: true,
     mandatoryErrorListName: 'option',
     label: 'How are your Employees represented in QuickBooks Online?',
-    subLabel: 'Select how you represent your employees in QuickBooks Online. This would help to export the expenses from ' + brandingConfig.brandName + ' to the correct employee/vendor record in QuickBooks Online.',
-    options: [{label: 'Employee', value: 'EMPLOYEE'}, {label: 'Vendor', value: 'VENDOR'}],
+    subLabel:
+      'Select how you represent your employees in QuickBooks Online. This would help to export the expenses from ' +
+      brandingConfig.brandName +
+      ' to the correct employee/vendor record in QuickBooks Online.',
+    options: [
+      { label: 'Employee', value: 'EMPLOYEE' },
+      { label: 'Vendor', value: 'VENDOR' },
+    ],
     iconPath: 'employee',
     placeholder: 'Select representation',
-    formControllerName: 'employeeMapping'
-  }
+    formControllerName: 'employeeMapping',
+  },
 };

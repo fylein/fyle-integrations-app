@@ -1,6 +1,20 @@
-<div class="page-layout-container" [ngClass]="{'tw-h-100-vh tw-bg-bg-tertiary-lighter tw-overflow-auto': brandingFeatureConfig.isBackgroundColorAllowed}">
-    <app-main-menu [modules]="modules" [activeItem]="modules[0].value" [appName]="appName" [isDropdrownRequired]="false" (refreshDimensionClick)="refreshDimensions()" [isSyncVisible]="true" [isDisconnectRequired]="disconnectButton" (disconnectClick)="disconnect()"></app-main-menu>
-    <div class="router-outlet-container">
-        <router-outlet></router-outlet>
-    </div>
+<div
+  class="page-layout-container"
+  [ngClass]="{
+    'tw-h-100-vh tw-bg-bg-tertiary-lighter tw-overflow-auto': brandingFeatureConfig.isBackgroundColorAllowed,
+  }"
+>
+  <app-main-menu
+    [modules]="modules"
+    [activeItem]="modules[0].value"
+    [appName]="appName"
+    [isDropdrownRequired]="false"
+    (refreshDimensionClick)="refreshDimensions()"
+    [isSyncVisible]="true"
+    [isDisconnectRequired]="disconnectButton"
+    (disconnectClick)="disconnect()"
+  ></app-main-menu>
+  <div class="router-outlet-container">
+    <router-outlet></router-outlet>
+  </div>
 </div>

@@ -1,25 +1,12 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { of } from 'rxjs';
 import { QbdDirectCompleteExportLogComponent } from './qbd-direct-complete-export-log.component';
-import {
-  AccountingExportList,
-  AccountingExport
-} from 'src/app/core/models/db/accounting-export.model';
-import {
-  ExpenseGroupResponse,
-  ExpenseGroup
-} from 'src/app/core/models/db/expense-group.model';
-import {
-  Expense
-} from 'src/app/core/models/intacct/db/expense.model';
-import {
-  AppName,
-  FundSource,
-  TaskLogState
-} from 'src/app/core/models/enum/enum.model';
+import { AccountingExportList, AccountingExport } from 'src/app/core/models/db/accounting-export.model';
+import { ExpenseGroupResponse, ExpenseGroup } from 'src/app/core/models/db/expense-group.model';
+import { Expense } from 'src/app/core/models/intacct/db/expense.model';
+import { AppName, FundSource, TaskLogState } from 'src/app/core/models/enum/enum.model';
 
 export class QbdDirectCompleteExportLogComponentFixture {
-
   /**
    * Creates a basic component fixture with successful export logs
    */
@@ -56,7 +43,7 @@ export class QbdDirectCompleteExportLogComponentFixture {
       filteredAccountingExports: this.createSuccessfulAccountingExports(),
       expenses: this.createExpenses(),
       isDateSelected: false,
-      searchQuery: null
+      searchQuery: null,
     };
   }
 
@@ -73,7 +60,7 @@ export class QbdDirectCompleteExportLogComponentFixture {
         exportedAs: 'Bill',
         integrationUrl: 'https://qbd.company.com/bill/123',
         fyleUrl: 'https://fyle.app/expense/456',
-        expenses: this.createExpenses()
+        expenses: this.createExpenses(),
       },
       {
         exportedAt: new Date('2024-01-15T11:45:00Z'),
@@ -83,7 +70,7 @@ export class QbdDirectCompleteExportLogComponentFixture {
         exportedAs: 'Credit Card Purchase',
         integrationUrl: 'https://qbd.company.com/ccp/124',
         fyleUrl: 'https://fyle.app/expense/457',
-        expenses: this.createExpenses()
+        expenses: this.createExpenses(),
       },
       {
         exportedAt: new Date('2024-01-15T14:20:00Z'),
@@ -93,8 +80,8 @@ export class QbdDirectCompleteExportLogComponentFixture {
         exportedAs: 'Journal Entry',
         integrationUrl: 'https://qbd.company.com/je/125',
         fyleUrl: 'https://fyle.app/expense/458',
-        expenses: this.createExpenses()
-      }
+        expenses: this.createExpenses(),
+      },
     ];
   }
 
@@ -104,49 +91,49 @@ export class QbdDirectCompleteExportLogComponentFixture {
   private static createExpenses(): Expense[] {
     return [
       {
-          id: 2,
-          employee_name: 'John Doe',
-          employee_email: 'john.doe@company.com',
-          category: 'Travel',
-          sub_category: 'Hotel',
-          project: 'Project Alpha',
-          cost_center: 'Engineering',
-          amount: 200.00,
-          currency: 'USD',
-          // Expense_date: new Date('2024-01-11'),
-          created_at: new Date('2024-01-11T10:00:00Z'),
-          updated_at: '2024-01-11T10:00:00Z',
-          org_id: '1',          // Workspace: 1
+        id: 2,
+        employee_name: 'John Doe',
+        employee_email: 'john.doe@company.com',
+        category: 'Travel',
+        sub_category: 'Hotel',
+        project: 'Project Alpha',
+        cost_center: 'Engineering',
+        amount: 200.0,
+        currency: 'USD',
+        // Expense_date: new Date('2024-01-11'),
+        created_at: new Date('2024-01-11T10:00:00Z'),
+        updated_at: '2024-01-11T10:00:00Z',
+        org_id: '1', // Workspace: 1
 
-          expense_id: '',
-          expense_number: 'qdede2',
-          claim_number: 'cdcdcdcdcc',
-          foreign_amount: 0,
-          foreign_currency: '',
-          tax_amount: 0,
-          tax_group_id: '',
-          settlement_id: '',
-          reimbursable: false,
-          billable: false,
-          state: '',
-          vendor: '',
-          purpose: '',
-          report_id: '',
-          spent_at: '2024-01-11T10:00:00Z',
-          approved_at: new Date('2024-01-11T10:00:00Z'),
-          posted_at: new Date('2024-01-11T10:00:00Z'),
-          expense_created_at: new Date('2024-01-11T10:00:00Z'),
-          expense_updated_at: new Date('2024-01-11T10:00:00Z'),
-          fund_source: 'PERSONAL',
-          verified_at: new Date('2024-01-11T10:00:00Z'),
-          custom_properties: [],
-          paid_on_sage_intacct: false,
-          file_ids: [],
-          payment_number: '',
-          corporate_card_id: '',
-          is_skipped: false,
-          report_title: ''
-      }
+        expense_id: '',
+        expense_number: 'qdede2',
+        claim_number: 'cdcdcdcdcc',
+        foreign_amount: 0,
+        foreign_currency: '',
+        tax_amount: 0,
+        tax_group_id: '',
+        settlement_id: '',
+        reimbursable: false,
+        billable: false,
+        state: '',
+        vendor: '',
+        purpose: '',
+        report_id: '',
+        spent_at: '2024-01-11T10:00:00Z',
+        approved_at: new Date('2024-01-11T10:00:00Z'),
+        posted_at: new Date('2024-01-11T10:00:00Z'),
+        expense_created_at: new Date('2024-01-11T10:00:00Z'),
+        expense_updated_at: new Date('2024-01-11T10:00:00Z'),
+        fund_source: 'PERSONAL',
+        verified_at: new Date('2024-01-11T10:00:00Z'),
+        custom_properties: [],
+        paid_on_sage_intacct: false,
+        file_ids: [],
+        payment_number: '',
+        corporate_card_id: '',
+        is_skipped: false,
+        report_title: '',
+      },
     ];
   }
 }

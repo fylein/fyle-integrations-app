@@ -4,23 +4,25 @@ import { brandingConfig, brandingFeatureConfig } from 'src/app/branding/branding
 import { ToastSeverity } from 'src/app/core/models/enum/enum.model';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class IntegrationsToastService {
-
-  constructor(
-    private messageService: MessageService
-  ) { }
+  constructor(private messageService: MessageService) {}
 
   allowToastMessageInApps = brandingFeatureConfig.allowToastMessageInApps;
 
-  displayToastMessage(severity: ToastSeverity, summary: string, life: number = 3000, isOnboarding: boolean = false): void {
+  displayToastMessage(
+    severity: ToastSeverity,
+    summary: string,
+    life: number = 3000,
+    isOnboarding: boolean = false,
+  ): void {
     // Hide toast for onboarding pages in c1
     if (this.allowToastMessageInApps || (!this.allowToastMessageInApps && !isOnboarding)) {
-    this.messageService.add({
-      severity,
+      this.messageService.add({
+        severity,
         summary,
-        life
+        life,
       });
     }
   }

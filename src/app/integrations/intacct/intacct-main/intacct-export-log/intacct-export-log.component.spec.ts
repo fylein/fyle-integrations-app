@@ -16,11 +16,16 @@ describe('IntacctExportLogComponent', () => {
     const translocoServiceSpy = jasmine.createSpyObj('TranslocoService', ['translate']);
 
     await TestBed.configureTestingModule({
-    declarations: [IntacctExportLogComponent],
-    imports: [],
-    providers: [FormBuilder, provideRouter([]), provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting(), { provide: TranslocoService, useValue: translocoServiceSpy }]
-})
-    .compileComponents();
+      declarations: [IntacctExportLogComponent],
+      imports: [],
+      providers: [
+        FormBuilder,
+        provideRouter([]),
+        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClientTesting(),
+        { provide: TranslocoService, useValue: translocoServiceSpy },
+      ],
+    }).compileComponents();
 
     router = TestBed.inject(Router);
     spyOn(router, 'navigateByUrl');

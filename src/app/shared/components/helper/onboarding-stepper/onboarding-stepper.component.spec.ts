@@ -7,9 +7,8 @@ xdescribe('OnboardingStepperComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ QbdOnboardingStepperComponent ]
-    })
-    .compileComponents();
+      declarations: [QbdOnboardingStepperComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(QbdOnboardingStepperComponent);
     component = fixture.componentInstance;

@@ -11,12 +11,9 @@ xdescribe('OnboardingDoneComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ OnboardingDoneComponent ],
-      providers: [
-        { provide: Router, useValue: routerSpy }
-      ]
-    })
-    .compileComponents();
+      declarations: [OnboardingDoneComponent],
+      providers: [{ provide: Router, useValue: routerSpy }],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(OnboardingDoneComponent);
     component = fixture.componentInstance;

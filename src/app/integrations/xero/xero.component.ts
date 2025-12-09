@@ -13,13 +13,12 @@ import { XeroAuthService } from 'src/app/core/services/xero/xero-core/xero-auth.
 import { AuthService } from 'src/app/core/services/common/auth.service';
 
 @Component({
-    selector: 'app-xero',
-    templateUrl: './xero.component.html',
-    styleUrls: ['./xero.component.scss'],
-    standalone: false
+  selector: 'app-xero',
+  templateUrl: './xero.component.html',
+  styleUrls: ['./xero.component.scss'],
+  standalone: false,
 })
 export class XeroComponent implements OnInit {
-
   user: MinimalUser;
 
   isLoading: boolean = true;
@@ -38,7 +37,7 @@ export class XeroComponent implements OnInit {
     private workspaceService: WorkspaceService,
     private helperService: HelperService,
     private xeroAuthService: XeroAuthService,
-    private authService: AuthService
+    private authService: AuthService,
   ) {
     this.windowReference = this.windowService.nativeWindow;
   }
@@ -53,22 +52,28 @@ export class XeroComponent implements OnInit {
         [XeroOnboardingState.IMPORT_SETTINGS]: '/integrations/xero/onboarding/import_settings',
         [XeroOnboardingState.ADVANCED_CONFIGURATION]: '/integrations/xero/onboarding/advanced_settings',
         [XeroOnboardingState.CLONE_SETTINGS]: '/integrations/xero/onboarding/clone_settings',
-        [XeroOnboardingState.COMPLETE]: '/integrations/xero/main'
+        [XeroOnboardingState.COMPLETE]: '/integrations/xero/main',
       };
       this.router.navigateByUrl(onboardingStateComponentMap[this.workspace.onboarding_state]);
     }
   }
 
   private getOrCreateWorkspace(): Promise<XeroWorkspace> {
-    return this.workspaceService.getWorkspace(this.user.org_id).toPromise().then((workspaces: XeroWorkspace[]) => {
-      if (workspaces.length > 0) {
-        return workspaces[0];
-      }
+    return this.workspaceService
+      .getWorkspace(this.user.org_id)
+      .toPromise()
+      .then((workspaces: XeroWorkspace[]) => {
+        if (workspaces.length > 0) {
+          return workspaces[0];
+        }
 
-      return this.workspaceService.postWorkspace().toPromise().then((workspace: XeroWorkspace) => {
-        return workspace;
+        return this.workspaceService
+          .postWorkspace()
+          .toPromise()
+          .then((workspace: XeroWorkspace) => {
+            return workspace;
+          });
       });
-    });
   }
 
   private setupWorkspace(): void {
@@ -79,7 +84,7 @@ export class XeroComponent implements OnInit {
       const xeroShortCode = this.workspace.xero_short_code;
       const currency = {
         fyle_currency: workspace.fyle_currency,
-        xero_currency: workspace.xero_currency
+        xero_currency: workspace.xero_currency,
       };
       this.storageService.set('workspaceId', this.workspace.id);
       this.storageService.set('onboarding-state', this.workspace.onboarding_state);
@@ -93,13 +98,11 @@ export class XeroComponent implements OnInit {
   }
 
   private handleAuthParameters(): void {
-    this.route.queryParams.subscribe(params => {
+    this.route.queryParams.subscribe((params) => {
       const authCode = params.code;
 
       if (authCode) {
-        this.xeroAuthService.login(authCode).subscribe(
-          () => this.setupWorkspace()
-        );
+        this.xeroAuthService.login(authCode).subscribe(() => this.setupWorkspace());
       } else {
         this.authService.updateUserTokens('XERO');
         this.setupWorkspace();
@@ -110,6 +113,4 @@ export class XeroComponent implements OnInit {
   ngOnInit(): void {
     this.handleAuthParameters();
   }
-
-
 }

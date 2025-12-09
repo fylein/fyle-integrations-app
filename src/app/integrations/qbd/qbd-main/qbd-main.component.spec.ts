@@ -3,7 +3,10 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { QbdMainComponent } from './qbd-main.component';
 import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { of } from 'rxjs';
-import { QBDExportSettingResponse, QBDExportSettingResponse2 } from 'src/app/integrations/qbd/qbd-shared/qbd-export-setting/qbd-export-setting.fixture';
+import {
+  QBDExportSettingResponse,
+  QBDExportSettingResponse2,
+} from 'src/app/integrations/qbd/qbd-shared/qbd-export-setting/qbd-export-setting.fixture';
 import { QbdExportSettingsService } from 'src/app/core/services/qbd/qbd-configuration/qbd-export-settings.service';
 import { QbdMappingService } from 'src/app/core/services/qbd/qbd-core/qbd-mapping.service';
 import { Router } from '@angular/router';
@@ -22,25 +25,24 @@ describe('QbdMainComponent', () => {
 
     const service1 = {
       getQbdExportSettings: () => of(QBDExportSettingResponse),
-      postQbdExportSettings: () => of(QBDExportSettingResponse)
+      postQbdExportSettings: () => of(QBDExportSettingResponse),
     };
 
     const service2 = {
-      GetMappingPagesForSideNavBar: () => of(true)
+      GetMappingPagesForSideNavBar: () => of(true),
     };
 
     await TestBed.configureTestingModule({
-    declarations: [QbdMainComponent],
-    imports: [RouterTestingModule],
-    providers: [
+      declarations: [QbdMainComponent],
+      imports: [RouterTestingModule],
+      providers: [
         { provide: QbdExportSettingsService, useValue: service1 },
         { provide: Router, useValue: routerSpy },
         { provide: TranslocoService, useValue: translocoServiceSpy },
         provideHttpClient(withInterceptorsFromDi()),
-        provideHttpClientTesting()
-    ]
-})
-    .compileComponents();
+        provideHttpClientTesting(),
+      ],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(QbdMainComponent);
     component = fixture.componentInstance;

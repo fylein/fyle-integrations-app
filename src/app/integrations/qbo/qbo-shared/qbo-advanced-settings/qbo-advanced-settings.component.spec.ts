@@ -13,8 +13,36 @@ import { MappingService } from 'src/app/core/services/common/mapping.service';
 import { SkipExportService } from 'src/app/core/services/common/skip-export.service';
 import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
 import { WorkspaceService } from 'src/app/core/services/common/workspace.service';
-import { mockQboAdvancedSettings, mockSkipExportSettings, mockCustomFields, mockAdmins, mockSettingsGeneral, mockBankAccounts, mockExpenseFilter, mockExpenseFilter1, mockExpenseFilter2, mockGroupedDestinationAttributes, mockAdditionalEmails, mockMemo, mockFormattedMemo, mockDefaultMemoOptions, mockInitialMemoStructure, mocknewMemoStructure, invalidMemoStructure, mockExpenseFilterResponse } from 'src/app/integrations/qbo/qbo.fixture';
-import { AutoMapEmployeeOptions, EmployeeFieldMapping, NameInJournalEntry, Operator, QBOCorporateCreditCardExpensesObject, QBOOnboardingState, QBOReimbursableExpensesObject, ToastSeverity } from 'src/app/core/models/enum/enum.model';
+import {
+  mockQboAdvancedSettings,
+  mockSkipExportSettings,
+  mockCustomFields,
+  mockAdmins,
+  mockSettingsGeneral,
+  mockBankAccounts,
+  mockExpenseFilter,
+  mockExpenseFilter1,
+  mockExpenseFilter2,
+  mockGroupedDestinationAttributes,
+  mockAdditionalEmails,
+  mockMemo,
+  mockFormattedMemo,
+  mockDefaultMemoOptions,
+  mockInitialMemoStructure,
+  mocknewMemoStructure,
+  invalidMemoStructure,
+  mockExpenseFilterResponse,
+} from 'src/app/integrations/qbo/qbo.fixture';
+import {
+  AutoMapEmployeeOptions,
+  EmployeeFieldMapping,
+  NameInJournalEntry,
+  Operator,
+  QBOCorporateCreditCardExpensesObject,
+  QBOOnboardingState,
+  QBOReimbursableExpensesObject,
+  ToastSeverity,
+} from 'src/app/core/models/enum/enum.model';
 import { ExpenseFilter, SkipExportModel } from 'src/app/core/models/common/advanced-settings.model';
 import { GroupedDestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
 import { orgMockData } from 'src/app/core/services/org/org.fixture';
@@ -40,15 +68,31 @@ describe('QboAdvancedSettingsComponent', () => {
   let translocoService: jasmine.SpyObj<TranslocoService>;
 
   beforeEach(async () => {
-    const advancedSettingsServiceSpy = jasmine.createSpyObj('QboAdvancedSettingsService', ['getAdvancedSettings', 'postAdvancedSettings', 'getPaymentSyncOptions']);
+    const advancedSettingsServiceSpy = jasmine.createSpyObj('QboAdvancedSettingsService', [
+      'getAdvancedSettings',
+      'postAdvancedSettings',
+      'getPaymentSyncOptions',
+    ]);
     const exportSettingsServiceSpy = jasmine.createSpyObj('QboExportSettingsService', ['getExportSettings']);
     const configurationServiceSpy = jasmine.createSpyObj('ConfigurationService', ['getAdditionalEmails']);
-    const helperServiceSpy = jasmine.createSpyObj('HelperService', ['setConfigurationSettingValidatorsAndWatchers', 'handleSkipExportFormInAdvancedSettingsUpdates', 'shouldAutoEnableAccountingPeriod']);
+    const helperServiceSpy = jasmine.createSpyObj('HelperService', [
+      'setConfigurationSettingValidatorsAndWatchers',
+      'handleSkipExportFormInAdvancedSettingsUpdates',
+      'shouldAutoEnableAccountingPeriod',
+    ]);
     const qboHelperServiceSpy = jasmine.createSpyObj('QboHelperService', ['refreshQBODimensions']);
     const mappingServiceSpy = jasmine.createSpyObj('MappingService', ['getGroupedDestinationAttributes']);
-    const skipExportServiceSpy = jasmine.createSpyObj('SkipExportService', ['getExpenseFilter', 'getExpenseFields', 'postExpenseFilter', 'deleteExpenseFilter']);
+    const skipExportServiceSpy = jasmine.createSpyObj('SkipExportService', [
+      'getExpenseFilter',
+      'getExpenseFields',
+      'postExpenseFilter',
+      'deleteExpenseFilter',
+    ]);
     const toastServiceSpy = jasmine.createSpyObj('IntegrationsToastService', ['displayToastMessage']);
-    const workspaceServiceSpy = jasmine.createSpyObj('WorkspaceService', ['getWorkspaceGeneralSettings', 'setOnboardingState']);
+    const workspaceServiceSpy = jasmine.createSpyObj('WorkspaceService', [
+      'getWorkspaceGeneralSettings',
+      'setOnboardingState',
+    ]);
     const routerSpy = jasmine.createSpyObj('Router', ['navigate']);
     const orgServiceSpy = jasmine.createSpyObj('OrgService', ['getCachedOrg']);
     const translocoServiceSpy = jasmine.createSpyObj('TranslocoService', ['translate']);
@@ -57,8 +101,8 @@ describe('QboAdvancedSettingsComponent', () => {
     helperServiceSpy.shouldAutoEnableAccountingPeriod.and.returnValue(false);
 
     await TestBed.configureTestingModule({
-      declarations: [ QboAdvancedSettingsComponent ],
-      imports: [ ReactiveFormsModule ],
+      declarations: [QboAdvancedSettingsComponent],
+      imports: [ReactiveFormsModule],
       providers: [
         FormBuilder,
         { provide: QboAdvancedSettingsService, useValue: advancedSettingsServiceSpy },
@@ -72,8 +116,8 @@ describe('QboAdvancedSettingsComponent', () => {
         { provide: WorkspaceService, useValue: workspaceServiceSpy },
         { provide: Router, useValue: routerSpy },
         { provide: OrgService, useValue: orgServiceSpy },
-        { provide: TranslocoService, useValue: translocoServiceSpy }
-      ]
+        { provide: TranslocoService, useValue: translocoServiceSpy },
+      ],
     }).compileComponents();
 
     fixture = TestBed.createComponent(QboAdvancedSettingsComponent);
@@ -105,7 +149,7 @@ describe('QboAdvancedSettingsComponent', () => {
       searchOption: [null],
       search: [null],
       additionalEmails: [[]],
-      email: [[]]
+      email: [[]],
     });
 
     component.skipExportForm = new FormBuilder().group({
@@ -115,7 +159,7 @@ describe('QboAdvancedSettingsComponent', () => {
       condition2: [''],
       operator2: [''],
       value2: [''],
-      join_by: ['']
+      join_by: [''],
     });
 
     component.expenseFilters = mockSkipExportSettings;
@@ -131,7 +175,9 @@ describe('QboAdvancedSettingsComponent', () => {
       advancedSettingsService.getAdvancedSettings.and.returnValue(of(mockQboAdvancedSettings));
       skipExportService.getExpenseFilter.and.returnValue(of(mockSkipExportSettings));
       skipExportService.getExpenseFields.and.returnValue(of(mockCustomFields));
-      mappingService.getGroupedDestinationAttributes.and.returnValue(of(mockGroupedDestinationAttributes as unknown as GroupedDestinationAttribute));
+      mappingService.getGroupedDestinationAttributes.and.returnValue(
+        of(mockGroupedDestinationAttributes as unknown as GroupedDestinationAttribute),
+      );
       configurationService.getAdditionalEmails.and.returnValue(of(mockAdmins));
       workspaceService.getWorkspaceGeneralSettings.and.returnValue(of(mockSettingsGeneral));
       spyOn(component as any, 'getSettingsAndSetupForm').and.callThrough();
@@ -157,8 +203,8 @@ describe('QboAdvancedSettingsComponent', () => {
         ...mockQboAdvancedSettings,
         workspace_schedules: {
           ...mockQboAdvancedSettings.workspace_schedules,
-          additional_email_options: mockAdditionalEmails
-        }
+          additional_email_options: mockAdditionalEmails,
+        },
       };
 
       advancedSettingsService.getAdvancedSettings.and.returnValue(of(mockAdvancedSettingsWithAdditionalEmails));
@@ -194,7 +240,10 @@ describe('QboAdvancedSettingsComponent', () => {
       expect(component['saveSkipExportFields']).toHaveBeenCalled();
       // We're not directly expecting skipExportService.postExpenseFilter to be called here
       // Because it's called inside saveSkipExportFields, which we've spied on
-      expect(toastService.displayToastMessage).toHaveBeenCalledWith(ToastSeverity.SUCCESS, 'Advanced settings saved successfully');
+      expect(toastService.displayToastMessage).toHaveBeenCalledWith(
+        ToastSeverity.SUCCESS,
+        'Advanced settings saved successfully',
+      );
       expect(workspaceService.setOnboardingState).toHaveBeenCalledWith(QBOOnboardingState.COMPLETE);
       expect(router.navigate).toHaveBeenCalledWith(['/integrations/qbo/onboarding/done']);
     }));
@@ -225,7 +274,7 @@ describe('QboAdvancedSettingsComponent', () => {
       expect(component.isSaveInProgress).toBeFalse();
       expect(toastService.displayToastMessage).toHaveBeenCalledWith(
         ToastSeverity.ERROR,
-        'Error saving advanced settings, please try again later'
+        'Error saving advanced settings, please try again later',
       );
       expect(workspaceService.setOnboardingState).not.toHaveBeenCalled();
       expect(router.navigate).not.toHaveBeenCalled();
@@ -264,7 +313,7 @@ describe('QboAdvancedSettingsComponent', () => {
     it('should return false when employee_field_mapping is not VENDOR', () => {
       component.workspaceGeneralSettings = {
         employee_field_mapping: EmployeeFieldMapping.EMPLOYEE,
-        auto_map_employees: AutoMapEmployeeOptions.NAME
+        auto_map_employees: AutoMapEmployeeOptions.NAME,
       } as any;
       expect(component.isAutoCreateVendorsFieldVisible()).toBeFalse();
     });
@@ -272,7 +321,7 @@ describe('QboAdvancedSettingsComponent', () => {
     it('should return false when auto_map_employees is null', () => {
       component.workspaceGeneralSettings = {
         employee_field_mapping: EmployeeFieldMapping.VENDOR,
-        auto_map_employees: null
+        auto_map_employees: null,
       } as any;
       expect(component.isAutoCreateVendorsFieldVisible()).toBeFalse();
     });
@@ -280,7 +329,7 @@ describe('QboAdvancedSettingsComponent', () => {
     it('should return false when auto_map_employees is EMPLOYEE_CODE', () => {
       component.workspaceGeneralSettings = {
         employee_field_mapping: EmployeeFieldMapping.VENDOR,
-        auto_map_employees: AutoMapEmployeeOptions.EMPLOYEE_CODE
+        auto_map_employees: AutoMapEmployeeOptions.EMPLOYEE_CODE,
       } as any;
       expect(component.isAutoCreateVendorsFieldVisible()).toBeFalse();
     });
@@ -289,14 +338,14 @@ describe('QboAdvancedSettingsComponent', () => {
   describe('isPaymentSyncFieldVisible', () => {
     it('should return true when reimbursable_expenses_object is BILL', () => {
       component.workspaceGeneralSettings = {
-        reimbursable_expenses_object: QBOReimbursableExpensesObject.BILL
+        reimbursable_expenses_object: QBOReimbursableExpensesObject.BILL,
       } as any;
       expect(component.isPaymentSyncFieldVisible()).toBeTrue();
     });
 
     it('should return false when reimbursable_expenses_object is not BILL', () => {
       component.workspaceGeneralSettings = {
-        reimbursable_expenses_object: QBOReimbursableExpensesObject.CHECK
+        reimbursable_expenses_object: QBOReimbursableExpensesObject.CHECK,
       } as any;
       expect(component.isPaymentSyncFieldVisible()).toBeFalse();
     });
@@ -306,7 +355,7 @@ describe('QboAdvancedSettingsComponent', () => {
     it('should return true when reimbursable_expenses_object is JOURNAL_ENTRY', () => {
       component.workspaceGeneralSettings = {
         reimbursable_expenses_object: QBOReimbursableExpensesObject.JOURNAL_ENTRY,
-        corporate_credit_card_expenses_object: QBOCorporateCreditCardExpensesObject.CREDIT_CARD_PURCHASE
+        corporate_credit_card_expenses_object: QBOCorporateCreditCardExpensesObject.CREDIT_CARD_PURCHASE,
       } as any;
       expect(component.isSingleCreditLineJEFieldVisible()).toBeTrue();
     });
@@ -314,7 +363,7 @@ describe('QboAdvancedSettingsComponent', () => {
     it('should return true when corporate_credit_card_expenses_object is JOURNAL_ENTRY', () => {
       component.workspaceGeneralSettings = {
         reimbursable_expenses_object: QBOReimbursableExpensesObject.CHECK,
-        corporate_credit_card_expenses_object: QBOCorporateCreditCardExpensesObject.JOURNAL_ENTRY
+        corporate_credit_card_expenses_object: QBOCorporateCreditCardExpensesObject.JOURNAL_ENTRY,
       } as any;
       expect(component.isSingleCreditLineJEFieldVisible()).toBeTrue();
     });
@@ -322,7 +371,7 @@ describe('QboAdvancedSettingsComponent', () => {
     it('should return false when neither condition is met', () => {
       component.workspaceGeneralSettings = {
         reimbursable_expenses_object: QBOReimbursableExpensesObject.CHECK,
-        corporate_credit_card_expenses_object: QBOCorporateCreditCardExpensesObject.CREDIT_CARD_PURCHASE
+        corporate_credit_card_expenses_object: QBOCorporateCreditCardExpensesObject.CREDIT_CARD_PURCHASE,
       } as any;
       expect(component.isSingleCreditLineJEFieldVisible()).toBeFalse();
     });
@@ -332,7 +381,7 @@ describe('QboAdvancedSettingsComponent', () => {
     it('should return true when conditions are met', () => {
       component.workspaceGeneralSettings = {
         import_vendors_as_merchants: false,
-        corporate_credit_card_expenses_object: QBOCorporateCreditCardExpensesObject.CREDIT_CARD_PURCHASE
+        corporate_credit_card_expenses_object: QBOCorporateCreditCardExpensesObject.CREDIT_CARD_PURCHASE,
       } as any;
       expect(component.isAutoCreateMerchantsAsVendorsFieldVisible()).toBeTrue();
     });
@@ -340,7 +389,7 @@ describe('QboAdvancedSettingsComponent', () => {
     it('should return false when import_vendors_as_merchants is true', () => {
       component.workspaceGeneralSettings = {
         import_vendors_as_merchants: true,
-        corporate_credit_card_expenses_object: QBOCorporateCreditCardExpensesObject.CREDIT_CARD_PURCHASE
+        corporate_credit_card_expenses_object: QBOCorporateCreditCardExpensesObject.CREDIT_CARD_PURCHASE,
       } as any;
       expect(component.isAutoCreateMerchantsAsVendorsFieldVisible()).toBeFalse();
     });
@@ -348,7 +397,7 @@ describe('QboAdvancedSettingsComponent', () => {
     it('should return true when name_in_journal_entry is MERCHANT', () => {
       component.workspaceGeneralSettings = {
         import_vendors_as_merchants: false,
-        name_in_journal_entry: NameInJournalEntry.MERCHANT
+        name_in_journal_entry: NameInJournalEntry.MERCHANT,
       } as any;
       expect(component.isAutoCreateMerchantsAsVendorsFieldVisible()).toBeTrue();
     });
@@ -357,7 +406,7 @@ describe('QboAdvancedSettingsComponent', () => {
       component.workspaceGeneralSettings = {
         import_vendors_as_merchants: false,
         corporate_credit_card_expenses_object: QBOCorporateCreditCardExpensesObject.JOURNAL_ENTRY,
-        name_in_journal_entry: NameInJournalEntry.EMPLOYEE
+        name_in_journal_entry: NameInJournalEntry.EMPLOYEE,
       } as any;
       expect(component.isAutoCreateMerchantsAsVendorsFieldVisible()).toBeFalse();
     });
@@ -366,7 +415,7 @@ describe('QboAdvancedSettingsComponent', () => {
   describe('onMultiSelectChange', () => {
     it('should update memoStructure with formatted memo', () => {
       component.advancedSettingForm.patchValue({
-        memoStructure: mockMemo
+        memoStructure: mockMemo,
       });
 
       spyOn(AdvancedSettingsService, 'formatMemoPreview').and.returnValue(['Some preview text', mockFormattedMemo]);
@@ -381,7 +430,7 @@ describe('QboAdvancedSettingsComponent', () => {
   describe('createMemoStructureWatcher', () => {
     beforeEach(() => {
       component.advancedSettingForm.patchValue({
-        memoStructure: [[]]
+        memoStructure: [[]],
       });
     });
 
@@ -422,7 +471,7 @@ describe('QboAdvancedSettingsComponent', () => {
   describe('saveSkipExport', () => {
     beforeEach(() => {
       component.advancedSettingForm.patchValue({
-        skipExport: false
+        skipExport: false,
       });
       component.expenseFilters = mockSkipExportSettings;
     });
@@ -432,22 +481,24 @@ describe('QboAdvancedSettingsComponent', () => {
       component.skipExportForm.patchValue({
         condition1: { field_name: mockExpenseFilter.condition },
         operator1: 'in',
-        value1: mockExpenseFilter.values[0]
+        value1: mockExpenseFilter.values[0],
       });
       skipExportService.postExpenseFilter.and.returnValue(of(mockExpenseFilter1));
 
       component['saveSkipExport']();
       tick();
 
-      expect(skipExportService.postExpenseFilter).toHaveBeenCalledWith(jasmine.objectContaining({
-        condition: mockExpenseFilter.condition,
-        operator: 'in',
-        values: mockExpenseFilter.values[0],
-        rank: 1,
-        join_by: null,
-        is_custom: undefined,
-        custom_field_type: null
-      }));
+      expect(skipExportService.postExpenseFilter).toHaveBeenCalledWith(
+        jasmine.objectContaining({
+          condition: mockExpenseFilter.condition,
+          operator: 'in',
+          values: mockExpenseFilter.values[0],
+          rank: 1,
+          join_by: null,
+          is_custom: undefined,
+          custom_field_type: null,
+        }),
+      );
     }));
 
     it('should save two expense filters when two conditions are provided', fakeAsync(() => {
@@ -459,36 +510,37 @@ describe('QboAdvancedSettingsComponent', () => {
         condition2: { field_name: mockExpenseFilter2.condition },
         operator2: mockExpenseFilter2.operator,
         value2: mockExpenseFilter2.values[0],
-        join_by: 'AND'
+        join_by: 'AND',
       });
 
-      skipExportService.postExpenseFilter.and.returnValues(
-        of(mockExpenseFilter1),
-        of(mockExpenseFilter2)
-      );
+      skipExportService.postExpenseFilter.and.returnValues(of(mockExpenseFilter1), of(mockExpenseFilter2));
 
       component['saveSkipExport']();
       tick();
 
       expect(skipExportService.postExpenseFilter).toHaveBeenCalledTimes(2);
-      expect(skipExportService.postExpenseFilter).toHaveBeenCalledWith(jasmine.objectContaining({
-        condition: mockExpenseFilter.condition,
-        operator: 'in',
-        values: mockExpenseFilter.values[0],
-        rank: 1,
-        join_by: 'AND',
-        is_custom: undefined,
-        custom_field_type: null
-      }));
-      expect(skipExportService.postExpenseFilter).toHaveBeenCalledWith(jasmine.objectContaining({
-        condition: mockExpenseFilter2.condition,
-        operator: mockExpenseFilter2.operator,
-        values: mockExpenseFilter2.values[0],
-        rank: 2,
-        join_by: null,
-        is_custom: undefined,
-        custom_field_type: null
-      }));
+      expect(skipExportService.postExpenseFilter).toHaveBeenCalledWith(
+        jasmine.objectContaining({
+          condition: mockExpenseFilter.condition,
+          operator: 'in',
+          values: mockExpenseFilter.values[0],
+          rank: 1,
+          join_by: 'AND',
+          is_custom: undefined,
+          custom_field_type: null,
+        }),
+      );
+      expect(skipExportService.postExpenseFilter).toHaveBeenCalledWith(
+        jasmine.objectContaining({
+          condition: mockExpenseFilter2.condition,
+          operator: mockExpenseFilter2.operator,
+          values: mockExpenseFilter2.values[0],
+          rank: 2,
+          join_by: null,
+          is_custom: undefined,
+          custom_field_type: null,
+        }),
+      );
     }));
 
     it('should not save expense filter when skipExportForm is invalid', fakeAsync(() => {
@@ -501,7 +553,7 @@ describe('QboAdvancedSettingsComponent', () => {
       component.skipExportForm.patchValue({
         condition1: null,
         operator1: '',
-        value1: ''
+        value1: '',
       });
 
       // Update form controls
@@ -524,7 +576,7 @@ describe('QboAdvancedSettingsComponent', () => {
 
     it('should delete existing expense filters when skipExport is set to false', fakeAsync(() => {
       component.advancedSettingForm.patchValue({
-        skipExport: false
+        skipExport: false,
       });
       component.expenseFilters = mockSkipExportSettings;
 

@@ -7,18 +7,17 @@ import { QbdWorkspaceService } from 'src/app/core/services/qbd/qbd-core/qbd-work
 import { TranslocoService } from '@jsverse/transloco';
 
 @Component({
-    selector: 'app-qbd-onboarding-stepper',
-    templateUrl: './qbd-onboarding-stepper.component.html',
-    styleUrls: ['./qbd-onboarding-stepper.component.scss'],
-    standalone: false
+  selector: 'app-qbd-onboarding-stepper',
+  templateUrl: './qbd-onboarding-stepper.component.html',
+  styleUrls: ['./qbd-onboarding-stepper.component.scss'],
+  standalone: false,
 })
 export class QbdOnboardingStepperComponent implements OnInit {
-
   constructor(
     private router: Router,
     private workspaceService: QbdWorkspaceService,
-    private translocoService: TranslocoService
-  ) { }
+    private translocoService: TranslocoService,
+  ) {}
 
   @Input() currentStep: string;
 
@@ -27,7 +26,7 @@ export class QbdOnboardingStepperComponent implements OnInit {
   readonly isGradientAllowed: boolean = brandingFeatureConfig.isGradientAllowed;
 
   private updateActiveAndCompletedSteps(): void {
-    this.onboardingSteps.forEach(step => {
+    this.onboardingSteps.forEach((step) => {
       if (step.step === this.currentStep) {
         step.active = true;
       }
@@ -38,7 +37,7 @@ export class QbdOnboardingStepperComponent implements OnInit {
       [QBDOnboardingState.EXPORT_SETTINGS]: 2,
       [QBDOnboardingState.FIELD_MAPPINGS]: 3,
       [QBDOnboardingState.ADVANCED_SETTINGS]: 4,
-      [QBDOnboardingState.COMPLETE]: 5
+      [QBDOnboardingState.COMPLETE]: 5,
     };
     for (let index = onboardingStateStepMap[onboardingState] - 2; index > 0; index--) {
       this.onboardingSteps[index - 1].completed = true;
@@ -53,29 +52,28 @@ export class QbdOnboardingStepperComponent implements OnInit {
 
   ngOnInit(): void {
     this.onboardingSteps = [
-    {
-      active: false,
-      completed: false,
-      step: this.translocoService.translate('qbdOnboardingStepper.exportSettings'),
-      icon: 'arrow-tail-up-medium',
-      route: 'export_settings'
-    },
-    {
-      active: false,
-      completed: false,
-      step: this.translocoService.translate('qbdOnboardingStepper.fieldMapping'),
-      icon: 'mapping-medium',
-      route: 'field_mappings'
-    },
-    {
-      active: false,
-      completed: false,
-      step: this.translocoService.translate('qbdOnboardingStepper.advanced'),
-      icon: 'gear-medium',
-      route: 'advanced_settings'
-    }
-  ];
+      {
+        active: false,
+        completed: false,
+        step: this.translocoService.translate('qbdOnboardingStepper.exportSettings'),
+        icon: 'arrow-tail-up-medium',
+        route: 'export_settings',
+      },
+      {
+        active: false,
+        completed: false,
+        step: this.translocoService.translate('qbdOnboardingStepper.fieldMapping'),
+        icon: 'mapping-medium',
+        route: 'field_mappings',
+      },
+      {
+        active: false,
+        completed: false,
+        step: this.translocoService.translate('qbdOnboardingStepper.advanced'),
+        icon: 'gear-medium',
+        route: 'advanced_settings',
+      },
+    ];
     this.updateActiveAndCompletedSteps();
   }
-
 }

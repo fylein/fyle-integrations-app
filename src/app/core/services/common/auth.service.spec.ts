@@ -17,25 +17,24 @@ xdescribe('AuthService', () => {
 
   const service1 = {
     getUserProfile: () => null,
-    storeUserProfile: () => undefined
+    storeUserProfile: () => undefined,
   };
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-    imports: [],
-    providers: [
+      imports: [],
+      providers: [
         AuthService,
         { provide: UserService, useValue: service1 },
         { provide: Router, useValue: routerSpy },
         provideHttpClient(withInterceptorsFromDi()),
-        provideHttpClientTesting()
-    ]
-});
+        provideHttpClientTesting(),
+      ],
+    });
     injector = getTestBed();
     service = injector.inject(AuthService);
     userService = injector.inject(UserService);
     httpMock = injector.inject(HttpTestingController);
-
   });
 
   it('should be created', () => {
@@ -48,26 +47,26 @@ xdescribe('AuthService', () => {
   });
 
   it('should login the user', () => {
-    service.login('auth-code').subscribe(value => {
+    service.login('auth-code').subscribe((value) => {
       expect(loginResponse).toEqual(value);
     });
 
     const req = httpMock.expectOne({
       method: 'POST',
-      url: `${API_BASE_URL}/auth/login/`
+      url: `${API_BASE_URL}/auth/login/`,
     });
 
     req.flush(loginResponse);
   });
 
   it('should refresh access token', () => {
-    service.refreshAccessToken('refresh-token').subscribe(value => {
+    service.refreshAccessToken('refresh-token').subscribe((value) => {
       expect(tokenResponse).toEqual(value);
     });
 
     const req = httpMock.expectOne({
       method: 'POST',
-      url: `${API_BASE_URL}/auth/refresh/`
+      url: `${API_BASE_URL}/auth/refresh/`,
     });
 
     req.flush(tokenResponse);
@@ -94,8 +93,6 @@ xdescribe('AuthService', () => {
   });
 
   it('should not return refresh token if user detail is not found', () => {
-
-
     const accessToken = service.getRefreshToken();
     expect(accessToken).toEqual(null);
   });

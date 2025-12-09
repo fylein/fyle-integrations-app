@@ -24,13 +24,15 @@
       [accountingExportSummary]="accountingExportSummary"
       [processedCount]="processedCount"
       [reimbursableImportState]="reimbursableImportState"
-      [cccImportState]="cccImportState">
+      [cccImportState]="cccImportState"
+    >
     </app-dashboard-export-section>
     @if (!accountingExportSummary && !exportableAccountingExportIds.length) {
       <app-zero-state
         [zeroStateImageURL]="'assets/illustrations/dashboard-illustration.svg'"
         [headerText]="'dashboard.dashboardExportZeroStateHeaderText' | transloco"
-        [subHeaderText]="'dashboard.dashboardExportZeroStateSubHeaderText' | transloco">
+        [subHeaderText]="'dashboard.dashboardExportZeroStateSubHeaderText' | transloco"
+      >
       </app-zero-state>
     }
     @if (exportableAccountingExportIds.length || accountingExportSummary) {
@@ -39,7 +41,8 @@
         [exportLogVersion]="'v1'"
         [accountingExportType]="accountingExportType"
         [accountingExportSummary]="accountingExportSummary"
-        [isRealTimeExportEnabled]="isRealTimeExportEnabled">
+        [isRealTimeExportEnabled]="isRealTimeExportEnabled"
+      >
       </app-dashboard-export-summary-section>
     }
     @if (errors.EMPLOYEE_MAPPING.length || errors.CATEGORY_MAPPING.length || errors.ACCOUNTING_ERROR.length) {
@@ -55,7 +58,8 @@
         [importCodeFields]="importCodeFields"
         [errorsVersion]="'v1'"
         [exportableExpenseGroupIds]="exportableAccountingExportIds"
-        [accountingExportSummary]="accountingExportSummary">
+        [accountingExportSummary]="accountingExportSummary"
+      >
       </app-dashboard-error-section>
     }
   </div>
@@ -64,11 +68,7 @@
 @if (!isLoading && isQBOTokenNotValid) {
   <div>
     <div class="tw-flex tw-justify-center tw-items-center tw-min-h-[90vh]">
-      <app-dashboard-token-expired
-        [appName]="appName"
-        [qboCompanyName]="qboCompanyName"
-        >
-      </app-dashboard-token-expired>
+      <app-dashboard-token-expired [appName]="appName" [qboCompanyName]="qboCompanyName"> </app-dashboard-token-expired>
     </div>
   </div>
 }

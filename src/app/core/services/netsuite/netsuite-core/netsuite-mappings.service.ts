@@ -4,20 +4,19 @@ import { Observable } from 'rxjs';
 import { WorkspaceService } from '../../common/workspace.service';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class NetsuiteMappingsService {
-
   constructor(
     private apiService: ApiService,
-    private workspaceService: WorkspaceService
-  ) { }
+    private workspaceService: WorkspaceService,
+  ) {}
 
   refreshNetsuiteDimensions(dimensionsToSync: string[] = []) {
     const workspaceId = this.workspaceService.getWorkspaceId();
 
     return this.apiService.post(`/workspaces/${workspaceId}/netsuite/refresh_dimensions/`, {
-      dimensions_to_sync: dimensionsToSync
+      dimensions_to_sync: dimensionsToSync,
     });
   }
 }

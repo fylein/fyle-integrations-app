@@ -9,17 +9,35 @@ import { UserService } from 'src/app/core/services/misc/user.service';
 import { SiExportSettingsService } from 'src/app/core/services/si/si-configuration/si-export-settings.service';
 import { MinimalUser } from 'src/app/core/models/db/user.model';
 import { of } from 'rxjs';
-import { AccountingExportSummary, AccountingExportSummaryModel } from 'src/app/core/models/db/accounting-export-summary.model';
-import { mockAccountingExportSummary, mockCompletedTasksWithFailures, mockConfiguration, mockErrors, mockExportableAccountingExportIds, mockExportSettingGet, advancedSettings, mockTasksInProgress } from '../../intacct.fixture';
+import {
+  AccountingExportSummary,
+  AccountingExportSummaryModel,
+} from 'src/app/core/models/db/accounting-export-summary.model';
+import {
+  mockAccountingExportSummary,
+  mockCompletedTasksWithFailures,
+  mockConfiguration,
+  mockErrors,
+  mockExportableAccountingExportIds,
+  mockExportSettingGet,
+  advancedSettings,
+  mockTasksInProgress,
+} from '../../intacct.fixture';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { Error } from 'src/app/core/models/db/error.model';
-import { AccountingErrorType, AppName, CCCImportState, IntacctCategoryDestination, ReimbursableImportState, TaskLogState } from 'src/app/core/models/enum/enum.model';
+import {
+  AccountingErrorType,
+  AppName,
+  CCCImportState,
+  IntacctCategoryDestination,
+  ReimbursableImportState,
+  TaskLogState,
+} from 'src/app/core/models/enum/enum.model';
 import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { SiAdvancedSettingsService } from 'src/app/core/services/si/si-configuration/si-advanced-settings.service';
 import { TranslocoService } from '@jsverse/transloco';
 
 describe('IntacctDashboardComponent', () => {
-
   let component: IntacctDashboardComponent;
   let fixture: ComponentFixture<IntacctDashboardComponent>;
   let dashboardServiceSpy: jasmine.SpyObj<DashboardService>;
@@ -32,25 +50,39 @@ describe('IntacctDashboardComponent', () => {
   let translocoService: jasmine.SpyObj<TranslocoService>;
 
   beforeEach(async () => {
-    const dashboardServiceSpyObj = jasmine.createSpyObj('DashboardService', ['getExportErrors', 'triggerAccountingExport', 'getAllTasks', 'getExportableAccountingExportIds']);
-    const accountingExportServiceSpyObj = jasmine.createSpyObj('AccountingExportService', ['getAccountingExportSummary', 'importExpensesFromFyle']);
+    const dashboardServiceSpyObj = jasmine.createSpyObj('DashboardService', [
+      'getExportErrors',
+      'triggerAccountingExport',
+      'getAllTasks',
+      'getExportableAccountingExportIds',
+    ]);
+    const accountingExportServiceSpyObj = jasmine.createSpyObj('AccountingExportService', [
+      'getAccountingExportSummary',
+      'importExpensesFromFyle',
+    ]);
     const userServiceSpyObj = jasmine.createSpyObj('UserService', ['getUserProfile']);
-    const workspaceServiceSpyObj = jasmine.createSpyObj('WorkspaceService', ['getConfiguration', 'getWorkspaceId', 'setOnboardingState']);
+    const workspaceServiceSpyObj = jasmine.createSpyObj('WorkspaceService', [
+      'getConfiguration',
+      'getWorkspaceId',
+      'setOnboardingState',
+    ]);
     const intacctExportSettingServiceSpyObj = jasmine.createSpyObj('SiExportSettingsService', ['getExportSettings']);
     const exportLogServiceSpyObj = jasmine.createSpyObj('ExportLogService', ['getExportLogs']);
-    const intacctAdvancedSettingsServiceSpyObj = jasmine.createSpyObj('SiAdvancedSettingsService', ['getAdvancedSettings']);
+    const intacctAdvancedSettingsServiceSpyObj = jasmine.createSpyObj('SiAdvancedSettingsService', [
+      'getAdvancedSettings',
+    ]);
     const translocoServiceSpy = jasmine.createSpyObj('TranslocoService', ['translate'], {
       config: {
-        reRenderOnLangChange: true
+        reRenderOnLangChange: true,
       },
       langChanges$: of('en'),
-      _loadDependencies: () => Promise.resolve()
+      _loadDependencies: () => Promise.resolve(),
     });
 
     await TestBed.configureTestingModule({
-    declarations: [IntacctDashboardComponent],
-    imports: [SharedModule],
-    providers: [
+      declarations: [IntacctDashboardComponent],
+      imports: [SharedModule],
+      providers: [
         { provide: DashboardService, useValue: dashboardServiceSpyObj },
         { provide: AccountingExportService, useValue: accountingExportServiceSpyObj },
         { provide: UserService, useValue: userServiceSpyObj },
@@ -60,22 +92,26 @@ describe('IntacctDashboardComponent', () => {
         { provide: ExportLogService, useValue: exportLogServiceSpyObj },
         { provide: TranslocoService, useValue: translocoServiceSpy },
         provideHttpClient(withInterceptorsFromDi()),
-        provideHttpClientTesting()
-    ]
-}).compileComponents();
+        provideHttpClientTesting(),
+      ],
+    }).compileComponents();
 
     dashboardServiceSpy = TestBed.inject(DashboardService) as jasmine.SpyObj<DashboardService>;
     accountingExportServiceSpy = TestBed.inject(AccountingExportService) as jasmine.SpyObj<AccountingExportService>;
     userServiceSpy = TestBed.inject(UserService) as jasmine.SpyObj<UserService>;
     workspaceServiceSpy = TestBed.inject(WorkspaceService) as jasmine.SpyObj<WorkspaceService>;
     intacctExportSettingServiceSpy = TestBed.inject(SiExportSettingsService) as jasmine.SpyObj<SiExportSettingsService>;
-    intacctAdvancedSettingsServiceSpy = TestBed.inject(SiAdvancedSettingsService) as jasmine.SpyObj<SiAdvancedSettingsService>;
+    intacctAdvancedSettingsServiceSpy = TestBed.inject(
+      SiAdvancedSettingsService,
+    ) as jasmine.SpyObj<SiAdvancedSettingsService>;
     exportLogServiceSpy = TestBed.inject(ExportLogService) as jasmine.SpyObj<ExportLogService>;
     translocoService = TestBed.inject(TranslocoService) as jasmine.SpyObj<TranslocoService>;
 
     userServiceSpy.getUserProfile.and.returnValue({ full_name: 'John Doe' } as MinimalUser);
     dashboardServiceSpy.getExportErrors.and.returnValue(of([]));
-    accountingExportServiceSpy.getAccountingExportSummary.and.returnValue(of(mockAccountingExportSummary as unknown as  AccountingExportSummary));
+    accountingExportServiceSpy.getAccountingExportSummary.and.returnValue(
+      of(mockAccountingExportSummary as unknown as AccountingExportSummary),
+    );
     dashboardServiceSpy.getExportableAccountingExportIds.and.returnValue(of(mockExportableAccountingExportIds));
     dashboardServiceSpy.getAllTasks.and.returnValue(of(mockCompletedTasksWithFailures));
     workspaceServiceSpy.getConfiguration.and.returnValue(of(mockConfiguration));
@@ -84,7 +120,6 @@ describe('IntacctDashboardComponent', () => {
     dashboardServiceSpy.triggerAccountingExport.and.returnValue(of({}));
     accountingExportServiceSpy.importExpensesFromFyle.and.returnValue(of({}));
 
-
     fixture = TestBed.createComponent(IntacctDashboardComponent);
     component = fixture.componentInstance;
   });
@@ -92,7 +127,6 @@ describe('IntacctDashboardComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
-
 
   it('should initialize correctly', fakeAsync(() => {
     component.getExportErrors$ = of(mockErrors as Error[]);
@@ -105,16 +139,18 @@ describe('IntacctDashboardComponent', () => {
     expect(component.errors).toEqual({
       [AccountingErrorType.EMPLOYEE_MAPPING]: [mockErrors[0]],
       [AccountingErrorType.CATEGORY_MAPPING]: [mockErrors[1]],
-      [AccountingErrorType.ACCOUNTING_ERROR]: [mockErrors[2]]
+      [AccountingErrorType.ACCOUNTING_ERROR]: [mockErrors[2]],
     });
 
     expect(component.reimbursableImportState).toEqual(ReimbursableImportState.PROCESSING);
     expect(component.cccImportState).toEqual(CCCImportState.PAID);
 
-    expect(AccountingExportSummaryModel.parseAPIResponseToAccountingSummary).toHaveBeenCalledOnceWith(mockAccountingExportSummary);
+    expect(AccountingExportSummaryModel.parseAPIResponseToAccountingSummary).toHaveBeenCalledOnceWith(
+      mockAccountingExportSummary,
+    );
     expect(component.destinationFieldMap).toEqual({
-        "EMPLOYEE": "EMPLOYEE",
-        "CATEGORY": IntacctCategoryDestination.EXPENSE_TYPE
+      EMPLOYEE: 'EMPLOYEE',
+      CATEGORY: IntacctCategoryDestination.EXPENSE_TYPE,
     });
     expect(component.exportableAccountingExportIds).toEqual([1, 2, 3]);
     expect(component.failedExpenseGroupCount).toBe(1);

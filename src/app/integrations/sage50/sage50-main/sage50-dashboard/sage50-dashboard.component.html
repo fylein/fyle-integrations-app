@@ -1,4 +1,4 @@
-@if (isGradientAllowed){
+@if (isGradientAllowed) {
   <div class="tw-absolute tw-bg-header-1 tw-h-110-px tw-w-[100%] tw-z-[-1]"></div>
   <div class="tw-absolute tw-bg-header-2 tw-h-110-px tw-w-[100%] tw-z-[-1]"></div>
 }
@@ -23,7 +23,8 @@
     [reimbursableImportState]="reimbursableImportState"
     [isExportButtonDisabled]="showPendingMappings"
     [loaderType]="LoaderType.INDETERMINATE"
-    [cccImportState]="cccImportState">
+    [cccImportState]="cccImportState"
+  >
   </app-dashboard-export-section>
 
   @if (showPendingMappings) {
@@ -39,14 +40,23 @@
         </div>
         <div class="tw-p-24-px tw-gap-16-px tw-flex tw-flex-col">
           @if (employeeMappingStats && employeeMappingStats.unmapped_attributes_count > 0) {
-            <div class="tw-border-1-px tw-border-border-tertiary tw-rounded-8-px tw-p-24-px tw-flex tw-justify-between tw-items-center">
+            <div
+              class="tw-border-1-px tw-border-border-tertiary tw-rounded-8-px tw-p-24-px tw-flex tw-justify-between tw-items-center"
+            >
               <div>
                 <h3 class="tw-text-14-px tw-font-500 tw-text-text-primary tw-m-0">
                   {{ 'sage50Dashboard.employeeMappingTitle' | transloco }}
                 </h3>
                 @if (employeeMappingErrorStat) {
                   <p class="tw-text-12-px tw-text-text-secondary tw-mb-4-px tw-mt-4-px">
-                    {{ 'sage50Dashboard.resolvedErrorsOfTotal' | transloco: { resolvedCount: employeeMappingErrorStat.resolvedCount, totalCount: employeeMappingErrorStat.totalCount } }}
+                    {{
+                      'sage50Dashboard.resolvedErrorsOfTotal'
+                        | transloco
+                          : {
+                              resolvedCount: employeeMappingErrorStat.resolvedCount,
+                              totalCount: employeeMappingErrorStat.totalCount,
+                            }
+                    }}
                   </p>
                 }
                 <p class="tw-text-14-px tw-text-text-secondary tw-m-0 tw-mt-4-px">
@@ -57,20 +67,31 @@
                 (buttonClick)="showMappingDialog('EMPLOYEE', 'VENDOR')"
                 [buttonText]="'sage50Dashboard.mapEmployeesButtonText' | transloco"
                 [buttonType]="ButtonType.SECONDARY"
-                [buttonSize]="ButtonSize.MEDIUM">
+                [buttonSize]="ButtonSize.MEDIUM"
+              >
               </app-button>
             </div>
           }
 
           @if (corporateCardMappingStats && corporateCardMappingStats.unmapped_attributes_count > 0) {
-            <div class="tw-border-1-px tw-border-border-tertiary tw-rounded-8-px tw-p-24-px tw-flex tw-justify-between tw-items-center" [ngClass]="{'tw-mt-4': employeeMappingStats && employeeMappingStats.unmapped_attributes_count > 0}">
+            <div
+              class="tw-border-1-px tw-border-border-tertiary tw-rounded-8-px tw-p-24-px tw-flex tw-justify-between tw-items-center"
+              [ngClass]="{ 'tw-mt-4': employeeMappingStats && employeeMappingStats.unmapped_attributes_count > 0 }"
+            >
               <div>
                 <h3 class="tw-text-14-px tw-font-500 tw-text-text-primary tw-m-0">
                   {{ 'sage50Dashboard.corporateCardMappingTitle' | transloco }}
                 </h3>
                 @if (corporateCardMappingErrorStat) {
                   <p class="tw-text-12-px tw-text-text-secondary tw-mb-4-px tw-mt-4-px">
-                    {{ 'sage50Dashboard.resolvedErrorsOfTotal' | transloco: { resolvedCount: corporateCardMappingErrorStat.resolvedCount, totalCount: corporateCardMappingErrorStat.totalCount } }}
+                    {{
+                      'sage50Dashboard.resolvedErrorsOfTotal'
+                        | transloco
+                          : {
+                              resolvedCount: corporateCardMappingErrorStat.resolvedCount,
+                              totalCount: corporateCardMappingErrorStat.totalCount,
+                            }
+                    }}
                   </p>
                 }
                 <p class="tw-text-14-px tw-text-text-secondary tw-m-0 tw-mt-4-px">
@@ -81,7 +102,8 @@
                 (buttonClick)="showMappingDialog('CORPORATE_CARD', 'ACCOUNT')"
                 [buttonText]="'sage50Dashboard.mapCorporateCardsButtonText' | transloco"
                 [buttonType]="ButtonType.SECONDARY"
-                [buttonSize]="ButtonSize.MEDIUM">
+                [buttonSize]="ButtonSize.MEDIUM"
+              >
               </app-button>
             </div>
           }
@@ -100,11 +122,19 @@
         </h2>
         <p class="tw-text-14-px tw-text-text-secondary tw-m-0 tw-mt-8-px">
           <span>{{ 'sage50Dashboard.exportLogDescription' | transloco }}</span>
-          <a [href]="exportLogArticleLink" target="_blank" class="link tw-pl-6-px tw-w-fit tw-inline-flex tw-items-center">
+          <a
+            [href]="exportLogArticleLink"
+            target="_blank"
+            class="link tw-pl-6-px tw-w-fit tw-inline-flex tw-items-center"
+          >
             {{ 'sage50Dashboard.readMore' | transloco }}
             @if (brandingFeatureConfig.isIconsInsideButtonAllowed) {
-              <app-svg-icon [svgSource]="'open-in-new-tab'"
-                [width]="'16px'" [height]="'16px'" class="tw-text-link-primary tw-pl-2-px tw-w-fit">
+              <app-svg-icon
+                [svgSource]="'open-in-new-tab'"
+                [width]="'16px'"
+                [height]="'16px'"
+                class="tw-text-link-primary tw-pl-2-px tw-w-fit"
+              >
               </app-svg-icon>
             }
           </a>
@@ -126,9 +156,7 @@
       <!-- Completed export log table with filters -->
       <div>
         @if (activeExportLogModule === 'completed') {
-          <app-csv-export-log
-            [updateRecords]="updateExportLogs.bind(this)"
-          ></app-csv-export-log>
+          <app-csv-export-log [updateRecords]="updateExportLogs.bind(this)"></app-csv-export-log>
         } @else {
           <app-csv-export-log
             [updateRecords]="updateSkippedExpenses.bind(this)"
@@ -140,15 +168,35 @@
   </div>
 
   <div>
-    <p-dialog [dismissableMask]="false" [closable]="false" [(visible)]="isMappingDialogVisible" [modal]="true" [position]="'topright'" [style]="{ width: 'fit-content', height: '100vh' }" [maximizable]="false" [draggable]="false" [resizable]="false" [breakpoints]="{ '960px': '75vw' } " (onHide)="handleMappingDialogClose()">
+    <p-dialog
+      [dismissableMask]="false"
+      [closable]="false"
+      [(visible)]="isMappingDialogVisible"
+      [modal]="true"
+      [position]="'topright'"
+      [style]="{ width: 'fit-content', height: '100vh' }"
+      [maximizable]="false"
+      [draggable]="false"
+      [resizable]="false"
+      [breakpoints]="{ '960px': '75vw' }"
+      (onHide)="handleMappingDialogClose()"
+    >
       <ng-template #header pTemplate="header">
         <div class="tw-flex tw-items-start tw-justify-between tw-min-w-full">
           <div class="tw-flex tw-flex-col">
-            <p class="tw-text-18-px tw-font-500 tw-text-text-primary">{{mappingDialogTitle | transloco}}</p>
-            <p class="tw-text-12-px tw-font-400 tw-text-text-secondary tw-mt-4-px">{{ mappingDialogDescription | transloco }}</p>
+            <p class="tw-text-18-px tw-font-500 tw-text-text-primary">{{ mappingDialogTitle | transloco }}</p>
+            <p class="tw-text-12-px tw-font-400 tw-text-text-secondary tw-mt-4-px">
+              {{ mappingDialogDescription | transloco }}
+            </p>
           </div>
           <div class="tw-flex tw-self-center">
-            <app-svg-icon [svgSource]="'cross'" class="tw-cursor-pointer" (click)="handleMappingDialogClose()" [width]="'20px'" [height]="'20px'"></app-svg-icon>
+            <app-svg-icon
+              [svgSource]="'cross'"
+              class="tw-cursor-pointer"
+              (click)="handleMappingDialogClose()"
+              [width]="'20px'"
+              [height]="'20px'"
+            ></app-svg-icon>
           </div>
         </div>
       </ng-template>
@@ -162,7 +210,8 @@
         [sourceField]="mappingSourceField"
         [destinationOptions]="mappingDestinationOptions"
         [isMultiLineOption]="true"
-        [mappingStats]="currentMappingStats!">
+        [mappingStats]="currentMappingStats!"
+      >
       </app-generic-mapping-table>
     </p-dialog>
   </div>

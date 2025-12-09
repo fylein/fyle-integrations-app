@@ -1,15 +1,15 @@
 .right-margin-style {
-    margin-right: -50px;
+  margin-right: -50px;
 }
 
 .left-margin-style {
-    margin-left: -50px;
+  margin-left: -50px;
 }
 
 :host ::ng-deep .p-select {
-    @apply lg:tw-w-242-px md:tw-w-200-px tw-scale-[1] #{!important};
+  @apply lg:tw-w-242-px md:tw-w-200-px tw-scale-[1] #{!important};
 }
 
 :host ::ng-deep img {
-    @apply tw-w-120-px tw-h-240-px #{!important};
+  @apply tw-w-120-px tw-h-240-px #{!important};
 }

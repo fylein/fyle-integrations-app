@@ -8,9 +8,8 @@ xdescribe('DashboardAccountingErrorDialogComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ DashboardAccountingErrorDialogComponent ]
-    })
-    .compileComponents();
+      declarations: [DashboardAccountingErrorDialogComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(DashboardAccountingErrorDialogComponent);
     component = fixture.componentInstance;

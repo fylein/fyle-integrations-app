@@ -1,4 +1,3 @@
-
 import { CommonModule } from '@angular/common';
 import type { Meta, StoryObj } from '@storybook/angular';
 import { moduleMetadata } from '@storybook/angular';
@@ -9,17 +8,17 @@ const meta: Meta<ZeroStateComponent> = {
   component: ZeroStateComponent,
   tags: ['autodocs'],
   render: (args: ZeroStateComponent) => ({
-    props: { ...args }
+    props: { ...args },
   }),
   decorators: [
     moduleMetadata({
       declarations: [ZeroStateComponent],
-      imports: [CommonModule]
-    })
+      imports: [CommonModule],
+    }),
   ],
   argTypes: {
-    ngOnInit: { table: { disable: true } }
-  }
+    ngOnInit: { table: { disable: true } },
+  },
 };
 
 export default meta;
@@ -28,6 +27,6 @@ type Story = StoryObj<ZeroStateComponent>;
 export const simple: Story = {
   args: {
     zeroStateImageURL: 'assets/icons/dashboard-illustration.svg',
-    zeroStateCaption: 'There are no expenses to export at the moment!'
-  }
+    zeroStateCaption: 'There are no expenses to export at the moment!',
+  },
 };

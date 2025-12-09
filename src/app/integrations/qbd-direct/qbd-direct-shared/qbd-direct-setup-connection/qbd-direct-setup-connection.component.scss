@@ -1,7 +1,8 @@
-:host ::ng-deep .p-card-body, :host ::ng-deep .p-card-content {
-    @apply tw-p-0 #{!important};
+:host ::ng-deep .p-card-body,
+:host ::ng-deep .p-card-content {
+  @apply tw-p-0 #{!important};
 }
 
 :host ::ng-deep .p-card-body {
-    @apply tw-rounded-border-radius-2xl #{!important}
+  @apply tw-rounded-border-radius-2xl #{!important};
 }

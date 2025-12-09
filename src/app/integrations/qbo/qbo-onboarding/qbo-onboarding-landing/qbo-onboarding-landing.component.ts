@@ -8,13 +8,12 @@ import { BrandingService } from 'src/app/core/services/common/branding.service';
 import { QboAuthService } from 'src/app/core/services/qbo/qbo-core/qbo-auth.service';
 
 @Component({
-    selector: 'app-qbo-onboarding-landing',
-    templateUrl: './qbo-onboarding-landing.component.html',
-    styleUrls: ['./qbo-onboarding-landing.component.scss'],
-    standalone: false
+  selector: 'app-qbo-onboarding-landing',
+  templateUrl: './qbo-onboarding-landing.component.html',
+  styleUrls: ['./qbo-onboarding-landing.component.scss'],
+  standalone: false,
 })
 export class QboOnboardingLandingComponent implements OnInit, OnDestroy {
-
   appName: AppName = AppName.QBO;
 
   brandingConfig = brandingConfig;
@@ -34,8 +33,8 @@ export class QboOnboardingLandingComponent implements OnInit, OnDestroy {
   constructor(
     private router: Router,
     private qboAuthService: QboAuthService,
-    public brandingService: BrandingService
-  ) { }
+    public brandingService: BrandingService,
+  ) {}
 
   acceptWarning(data: ConfigurationWarningOut): void {
     this.isIncorrectQBOConnectedDialogVisible = false;
@@ -49,19 +48,14 @@ export class QboOnboardingLandingComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.qboAuthService.qboConnectionInProgress$
-    .pipe(takeUntil(this.destroy$))
-    .subscribe((status: boolean) => {
+    this.qboAuthService.qboConnectionInProgress$.pipe(takeUntil(this.destroy$)).subscribe((status: boolean) => {
       this.qboConnectionInProgress = status;
     });
 
-    this.qboAuthService.isIncorrectAccountSelected$
-    .pipe(takeUntil(this.destroy$))
-    .subscribe((visible: boolean) => {
+    this.qboAuthService.isIncorrectAccountSelected$.pipe(takeUntil(this.destroy$)).subscribe((visible: boolean) => {
       this.isIncorrectQBOConnectedDialogVisible = visible;
     });
   }
-
 
   ngOnDestroy(): void {
     this.destroy$.next();
@@ -70,5 +64,4 @@ export class QboOnboardingLandingComponent implements OnInit, OnDestroy {
       this.oauthCallbackSubscription.unsubscribe();
     }
   }
-
 }

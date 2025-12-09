@@ -4,7 +4,10 @@
   </div>
 }
 @if (!isLoading) {
-  <div class="configuration--contents tw-border-separator tw-mt-6" [ngClass]="brandingStyle.common.configurationContents">
+  <div
+    class="configuration--contents tw-border-separator tw-mt-6"
+    [ngClass]="brandingStyle.common.configurationContents"
+  >
     <div>
       <app-configuration-step-header
         [headerText]="'sage300AdvancedSettings.headerText' | transloco"
@@ -12,7 +15,8 @@
         [redirectLink]="supportArticleLink"
         [showSyncButton]="isOnboarding"
         [appName]="appName"
-        (refreshDimension)="refreshDimensions($event)">
+        (refreshDimension)="refreshDimensions($event)"
+      >
       </app-configuration-step-header>
     </div>
     <form [formGroup]="advancedSettingForm">
@@ -20,7 +24,8 @@
         <div class="tw-mb-16-px">
           <app-configuration-step-sub-header
             [label]="'sage300AdvancedSettings.automationLabel' | transloco"
-            [subLabel]="'sage300AdvancedSettings.automationSubLabel' | transloco">
+            [subLabel]="'sage300AdvancedSettings.automationSubLabel' | transloco"
+          >
           </app-configuration-step-sub-header>
         </div>
         <div class="tw-mb-16-px">
@@ -28,9 +33,13 @@
             <app-configuration-toggle-field
               [form]="advancedSettingForm"
               [label]="'sage300AdvancedSettings.scheduleAutomaticExportLabel' | transloco"
-              [subLabel]="'sage300AdvancedSettings.scheduleAutomaticExportSubLabel' | transloco:{ brandName: brandingConfig.brandName }"
+              [subLabel]="
+                'sage300AdvancedSettings.scheduleAutomaticExportSubLabel'
+                  | transloco: { brandName: brandingConfig.brandName }
+              "
               [formControllerName]="'scheduleEnabled'"
-              [iconPath]="'calendar'">
+              [iconPath]="'calendar'"
+            >
             </app-configuration-toggle-field>
             @if (advancedSettingForm.get('scheduleEnabled')?.value) {
               <div>
@@ -40,10 +49,14 @@
                   [isFieldMandatory]="false"
                   [mandatoryErrorListName]="'sage300AdvancedSettings.automaticExportMethodError' | transloco"
                   [label]="'sage300AdvancedSettings.exportFrequencyLabel' | transloco"
-                  [subLabel]="'sage300AdvancedSettings.exportFrequencySubLabel' | transloco:{ brandName: brandingConfig.brandName }"
+                  [subLabel]="
+                    'sage300AdvancedSettings.exportFrequencySubLabel'
+                      | transloco: { brandName: brandingConfig.brandName }
+                  "
                   [options]="hours"
                   [placeholder]="'sage300AdvancedSettings.setSchedulePlaceholder' | transloco"
-                  [formControllerName]="'scheduleAutoExportFrequency'">
+                  [formControllerName]="'scheduleAutoExportFrequency'"
+                >
                 </app-configuration-schedule-export>
               </div>
             }
@@ -52,7 +65,10 @@
         <div class="tw-mb-16-px">
           <app-configuration-step-sub-header
             [label]="'sage300AdvancedSettings.customizationLabel' | transloco"
-            [subLabel]="'sage300AdvancedSettings.customizationSubLabel' | transloco:{ brandName: brandingConfig.brandName }">
+            [subLabel]="
+              'sage300AdvancedSettings.customizationSubLabel' | transloco: { brandName: brandingConfig.brandName }
+            "
+          >
           </app-configuration-step-sub-header>
         </div>
         <div class="tw-rounded-12-px tw-border-separator tw-border tw-bg-white tw-mb-16-px">
@@ -65,22 +81,26 @@
             [options]="defaultMemoOptions"
             [iconPath]="'list'"
             [placeholder]="'sage300AdvancedSettings.setDescriptionPlaceholder' | transloco"
-            [formControllerName]="'memoStructure'">
+            [formControllerName]="'memoStructure'"
+          >
           </app-configuration-multi-select>
           <div class="preview-text">
             <div class="preview-box">
-              {{memoPreviewText}}
+              {{ memoPreviewText }}
             </div>
           </div>
         </div>
         <div class="tw-rounded-12-px tw-border-separator tw-border tw-bg-white tw-mb-16-px">
           <app-configuration-toggle-field
             [form]="advancedSettingForm"
-            [label]="'sage300AdvancedSettings.skipExportLabel' | transloco:{ brandName: brandingConfig.brandName }"
-            [subLabel]="'sage300AdvancedSettings.skipExportSubLabel' | transloco:{ brandName: brandingConfig.brandName }"
+            [label]="'sage300AdvancedSettings.skipExportLabel' | transloco: { brandName: brandingConfig.brandName }"
+            [subLabel]="
+              'sage300AdvancedSettings.skipExportSubLabel' | transloco: { brandName: brandingConfig.brandName }
+            "
             [formControllerName]="'skipExport'"
             [iconPath]="'list'"
-            [redirectLink]="skipExportRedirectLink">
+            [redirectLink]="skipExportRedirectLink"
+          >
           </app-configuration-toggle-field>
           @if (advancedSettingForm.get('skipExport')?.value) {
             <div>
@@ -90,7 +110,8 @@
                 [expenseFilter]="expenseFilters"
                 [conditionFieldOptions]="conditionFieldOptions"
                 (deleteSkipExportForm)="deleteExpenseFilter($event)"
-                (invalidSkipExportForm)="invalidSkipExportForm($event)">
+                (invalidSkipExportForm)="invalidSkipExportForm($event)"
+              >
               </app-configuration-skip-export>
             </div>
           }
@@ -98,11 +119,20 @@
       </div>
       @if (isOnboarding) {
         <app-configuration-step-footer
-          [ctaText] = "!isSaveInProgress ? (isOnboarding ? ConfigurationCtaText.SAVE_AND_CONTINUE : ConfigurationCtaText.SAVE) : ConfigurationCtaText.SAVING"
+          [ctaText]="
+            !isSaveInProgress
+              ? isOnboarding
+                ? ConfigurationCtaText.SAVE_AND_CONTINUE
+                : ConfigurationCtaText.SAVE
+              : ConfigurationCtaText.SAVING
+          "
           (save)="save()"
-          [showBackButton] = "isOnboarding"
+          [showBackButton]="isOnboarding"
           (navigateToPreviousStep)="navigateBack()"
-          [isButtonDisabled]="!advancedSettingForm.valid || !skipExportForm.valid || !getSkipExportValue() || isSkipExportFormInvalid">
+          [isButtonDisabled]="
+            !advancedSettingForm.valid || !skipExportForm.valid || !getSkipExportValue() || isSkipExportFormInvalid
+          "
+        >
         </app-configuration-step-footer>
       }
     </form>
@@ -112,11 +142,20 @@
 @if (!isLoading && !isOnboarding) {
   <div class="tw-sticky tw-top-0 tw-bottom-0 tw-left-0 tw-right-0 tw-bg-white">
     <app-configuration-step-footer
-      [ctaText] = "!isSaveInProgress ? (isOnboarding ? ConfigurationCtaText.SAVE_AND_CONTINUE : ConfigurationCtaText.SAVE) : ConfigurationCtaText.SAVING"
+      [ctaText]="
+        !isSaveInProgress
+          ? isOnboarding
+            ? ConfigurationCtaText.SAVE_AND_CONTINUE
+            : ConfigurationCtaText.SAVE
+          : ConfigurationCtaText.SAVING
+      "
       (save)="save()"
-      [showBackButton] = "isOnboarding"
+      [showBackButton]="isOnboarding"
       (navigateToPreviousStep)="navigateBack()"
-      [isButtonDisabled]="!advancedSettingForm.valid || !skipExportForm.valid || !getSkipExportValue() || isSkipExportFormInvalid">
+      [isButtonDisabled]="
+        !advancedSettingForm.valid || !skipExportForm.valid || !getSkipExportValue() || isSkipExportFormInvalid
+      "
+    >
     </app-configuration-step-footer>
   </div>
 }

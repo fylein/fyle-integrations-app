@@ -8,9 +8,8 @@ xdescribe('ConfigurationToggleFieldComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ConfigurationToggleFieldComponent ]
-    })
-    .compileComponents();
+      declarations: [ConfigurationToggleFieldComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(ConfigurationToggleFieldComponent);
     component = fixture.componentInstance;

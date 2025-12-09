@@ -1,4 +1,3 @@
-
 import { CommonModule } from '@angular/common';
 import type { Meta, StoryObj } from '@storybook/angular';
 import { moduleMetadata } from '@storybook/angular';
@@ -13,29 +12,31 @@ const meta: Meta<ConfigurationToggleFieldComponent> = {
   component: ConfigurationToggleFieldComponent,
   tags: ['autodocs'],
   render: (args: ConfigurationToggleFieldComponent) => ({
-    props: { ...args }
+    props: { ...args },
   }),
   decorators: [
     moduleMetadata({
       declarations: [ConfigurationToggleFieldComponent],
-      imports: [CommonModule, FormsModule, ReactiveFormsModule, ToggleSwitchModule ]
-    })
+      imports: [CommonModule, FormsModule, ReactiveFormsModule, ToggleSwitchModule],
+    }),
   ],
   argTypes: {
-    ngOnInit: { table: { disable: true } }
-  }
+    ngOnInit: { table: { disable: true } },
+  },
 };
 
 export default meta;
 type Story = StoryObj<ConfigurationToggleFieldComponent>;
 
-
 export const simple: Story = {
   args: {
-    form: setupStoryBookFormGroup(new FormGroup({autoCreateVendors: new FormControl(true)})),
+    form: setupStoryBookFormGroup(new FormGroup({ autoCreateVendors: new FormControl(true) })),
     iconPath: 'building',
     label: 'Auto-Create Vendors',
-    subLabel: 'While exporting reimbursable expenses from ' + brandingConfig.brandName + ', the integration will automatically create a vendor if a match does not exist in QuickBooks Online already.',
-    formControllerName: 'autoCreateVendors'
-  }
+    subLabel:
+      'While exporting reimbursable expenses from ' +
+      brandingConfig.brandName +
+      ', the integration will automatically create a vendor if a match does not exist in QuickBooks Online already.',
+    formControllerName: 'autoCreateVendors',
+  },
 };

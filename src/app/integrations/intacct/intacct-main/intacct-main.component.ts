@@ -8,13 +8,12 @@ import { SiMappingsService } from 'src/app/core/services/si/si-core/si-mappings.
 import { TranslocoService } from '@jsverse/transloco';
 
 @Component({
-    selector: 'app-intacct-main',
-    templateUrl: './intacct-main.component.html',
-    styleUrls: ['./intacct-main.component.scss'],
-    standalone: false
+  selector: 'app-intacct-main',
+  templateUrl: './intacct-main.component.html',
+  styleUrls: ['./intacct-main.component.scss'],
+  standalone: false,
 })
 export class MainComponent {
-
   modules: TabMenuItem[];
 
   appName: AppName = AppName.INTACCT;
@@ -23,13 +22,29 @@ export class MainComponent {
     private dashboardService: DashboardService,
     private mappingsService: SiMappingsService,
     private toastService: IntegrationsToastService,
-    private translocoService: TranslocoService
+    private translocoService: TranslocoService,
   ) {
     this.modules = [
-      { label: this.translocoService.translate('intacctMain.dashboardLabel'), routerLink: '/integrations/intacct/main/dashboard', value: 'dashboard' },
-      { label: this.translocoService.translate('common.exportLogTabName'), routerLink: '/integrations/intacct/main/export_log', value: 'export_log' },
-      { label: this.translocoService.translate('intacctMain.mappingLabel'), routerLink: '/integrations/intacct/main/mapping', value: 'mapping' },
-      { label: this.translocoService.translate('intacctMain.configurationLabel'), routerLink: '/integrations/intacct/main/configuration', value: 'configuration' }
+      {
+        label: this.translocoService.translate('intacctMain.dashboardLabel'),
+        routerLink: '/integrations/intacct/main/dashboard',
+        value: 'dashboard',
+      },
+      {
+        label: this.translocoService.translate('common.exportLogTabName'),
+        routerLink: '/integrations/intacct/main/export_log',
+        value: 'export_log',
+      },
+      {
+        label: this.translocoService.translate('intacctMain.mappingLabel'),
+        routerLink: '/integrations/intacct/main/mapping',
+        value: 'mapping',
+      },
+      {
+        label: this.translocoService.translate('intacctMain.configurationLabel'),
+        routerLink: '/integrations/intacct/main/configuration',
+        value: 'configuration',
+      },
     ];
   }
 
@@ -37,6 +52,9 @@ export class MainComponent {
     this.mappingsService.refreshSageIntacctDimensions().subscribe();
     this.mappingsService.refreshFyleDimensions().subscribe();
     this.dashboardService.syncExpensesFromFyle().subscribe();
-    this.toastService.displayToastMessage(ToastSeverity.SUCCESS, this.translocoService.translate('intacctMain.syncDataDimensionsToast'));
+    this.toastService.displayToastMessage(
+      ToastSeverity.SUCCESS,
+      this.translocoService.translate('intacctMain.syncDataDimensionsToast'),
+    );
   }
 }

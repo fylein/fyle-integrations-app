@@ -1,4 +1,3 @@
-
 import { Inject, Injectable, DOCUMENT } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { BrandingConfiguration } from '../../models/branding/branding-configuration.model';
@@ -7,15 +6,14 @@ import { FeatureConfiguration } from '../../models/branding/feature-configuratio
 import { TranslocoService } from '@jsverse/transloco';
 
 const faviconMap = {
-  'fyle': 'favicon.ico',
-  'co': 'favicon.png'
+  fyle: 'favicon.ico',
+  co: 'favicon.png',
 };
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class BrandingService {
-
   isOrgRebranded: boolean = false;
 
   private defaultBrandingConfig: BrandingConfiguration = defaultBrandingConfig;
@@ -23,8 +21,8 @@ export class BrandingService {
   constructor(
     @Inject(DOCUMENT) private document: Document,
     private title: Title,
-    private translocoService: TranslocoService
-  ) { }
+    private translocoService: TranslocoService,
+  ) {}
 
   get brandingConfig(): BrandingConfiguration {
     return this.defaultBrandingConfig;
@@ -58,7 +56,9 @@ export class BrandingService {
 
   private setupBrandingConfig(): void {
     this.title.setTitle(this.brandingConfig.webpageTitle);
-    this.document.getElementById('appFavicon')?.setAttribute('href', `assets/${this.brandingConfig.brandId}/${faviconMap[this.brandingConfig.brandId]}`);
+    this.document
+      .getElementById('appFavicon')
+      ?.setAttribute('href', `assets/${this.brandingConfig.brandId}/${faviconMap[this.brandingConfig.brandId]}`);
     this.document.documentElement.setAttribute('data-theme', this.brandingConfig.brandId);
   }
 

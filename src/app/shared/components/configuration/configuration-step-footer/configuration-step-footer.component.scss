@@ -1,11 +1,11 @@
 :host {
-    @apply tw-fixed tw-h-[75px] tw-bottom-0 tw-left-0 tw-right-0 tw-bg-white tw-z-50 tw-shadow-[0_-2px_8px_rgba(0,0,0,0.1)] #{!important};
+  @apply tw-fixed tw-h-[75px] tw-bottom-0 tw-left-0 tw-right-0 tw-bg-white tw-z-50 tw-shadow-[0_-2px_8px_rgba(0,0,0,0.1)] #{!important};
 }
 
 .back-btn {
-    @apply tw-py-12-px tw-px-20-px tw-bg-white tw-border tw-rounded tw-text-14-px;
+  @apply tw-py-12-px tw-px-20-px tw-bg-white tw-border tw-rounded tw-text-14-px;
 }
 
 .back-btn i {
-    @apply tw-text-slightly-normal-text-color;
+  @apply tw-text-slightly-normal-text-color;
 }

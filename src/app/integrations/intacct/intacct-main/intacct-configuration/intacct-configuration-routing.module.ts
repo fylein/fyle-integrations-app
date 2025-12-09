@@ -15,26 +15,28 @@ const routes: Routes = [
     children: [
       {
         path: 'connector',
-        component: IntacctConnectorComponent
+        component: IntacctConnectorComponent,
       },
       {
         path: 'export_settings',
-        component: IntacctExportSettingsComponent
+        component: IntacctExportSettingsComponent,
       },
       {
         path: 'import_settings',
-        component: brandingFeatureConfig.featureFlags.importSettings.importSettingsV1 ? IntacctImportSettingsComponent : IntacctC1ImportSettingsComponent
+        component: brandingFeatureConfig.featureFlags.importSettings.importSettingsV1
+          ? IntacctImportSettingsComponent
+          : IntacctC1ImportSettingsComponent,
       },
       {
         path: 'advanced_settings',
-        component: IntacctAdvancedSettingsComponent
-      }
-    ]
-  }
+        component: IntacctAdvancedSettingsComponent,
+      },
+    ],
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class IntacctConfigurationRoutingModule { }
+export class IntacctConfigurationRoutingModule {}

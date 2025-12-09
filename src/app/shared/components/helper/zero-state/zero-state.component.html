@@ -1,9 +1,22 @@
 <div class="tw-flex tw-justify-center tw-items-center tw-mt-130-px">
   <div class="tw-text-center">
     @if (illustrationsAllowed) {
-      <img class="tw-pr-4" [src]="zeroStateImageURL" [alt]="'zeroState.zeroStateAltText' | transloco">
+      <img class="tw-pr-4" [src]="zeroStateImageURL" [alt]="'zeroState.zeroStateAltText' | transloco" />
     }
-    <p class="tw-pt-8 tw-text-14-px" [ngClass]="[illustrationsAllowed ? 'tw-text-text-secondary' : 'tw-text-text-primary', brandingStyle.dashboard.zeroStateHeaderText]">{{headerText}}</p>
-    <p class="tw-text-text-primary tw-font-400 !tw-text-14-px tw-text-pretty" [ngClass]="brandingStyle.dashboard.zeroStateDescriptionText">{{subHeaderText}}</p>
+    <p
+      class="tw-pt-8 tw-text-14-px"
+      [ngClass]="[
+        illustrationsAllowed ? 'tw-text-text-secondary' : 'tw-text-text-primary',
+        brandingStyle.dashboard.zeroStateHeaderText,
+      ]"
+    >
+      {{ headerText }}
+    </p>
+    <p
+      class="tw-text-text-primary tw-font-400 !tw-text-14-px tw-text-pretty"
+      [ngClass]="brandingStyle.dashboard.zeroStateDescriptionText"
+    >
+      {{ subHeaderText }}
+    </p>
   </div>
 </div>

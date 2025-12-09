@@ -1,4 +1,3 @@
-
 import { CommonModule } from '@angular/common';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import type { Meta, StoryObj } from '@storybook/angular';
@@ -13,17 +12,17 @@ const meta: Meta<ExportLogTableComponent> = {
   component: ExportLogTableComponent,
   tags: ['autodocs'],
   render: (args: ExportLogTableComponent) => ({
-    props: { ...args }
+    props: { ...args },
   }),
   decorators: [
     moduleMetadata({
       declarations: [],
-      imports: [CommonModule, BrowserAnimationsModule, TableModule, SharedModule ]
-    })
+      imports: [CommonModule, BrowserAnimationsModule, TableModule, SharedModule],
+    }),
   ],
   argTypes: {
-    ngOnInit: { table: { disable: true } }
-  }
+    ngOnInit: { table: { disable: true } },
+  },
 };
 
 export default meta;
@@ -81,13 +80,13 @@ export const simple: Story = {
             payment_number: '1',
             corporate_card_id: '1',
             is_skipped: false,
-            report_title: 'Fyle'
-          }
-        ]
-      }
+            report_title: 'Fyle',
+          },
+        ],
+      },
     ],
     appName: AppName.QBO,
     isExportLogTable: true,
-    isDashboardFailed: false
-  }
+    isDashboardFailed: false,
+  },
 };

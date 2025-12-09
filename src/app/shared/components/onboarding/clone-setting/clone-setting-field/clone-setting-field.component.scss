@@ -1,13 +1,13 @@
 .clone-setting-field {
-    &--field-row {
-        @apply tw-flex tw-justify-between;
-    }
+  &--field-row {
+    @apply tw-flex tw-justify-between;
+  }
 
-    &--description-section {
-        @apply tw-flex tw-items-center;
-    }
+  &--description-section {
+    @apply tw-flex tw-items-center;
+  }
 
-    &--label-text {
-        @apply tw-flex tw-pl-16-px tw-py-2-px tw-text-slightly-normal-text-color tw-text-14-px tw-items-center;
-    }
+  &--label-text {
+    @apply tw-flex tw-pl-16-px tw-py-2-px tw-text-slightly-normal-text-color tw-text-14-px tw-items-center;
+  }
 }

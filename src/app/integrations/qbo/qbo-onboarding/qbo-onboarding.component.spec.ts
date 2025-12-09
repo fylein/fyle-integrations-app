@@ -8,7 +8,7 @@ describe('QboOnboardingComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ QboOnboardingComponent ]
+      declarations: [QboOnboardingComponent],
     }).compileComponents();
 
     fixture = TestBed.createComponent(QboOnboardingComponent);

@@ -1,10 +1,16 @@
-
 import { CommonModule } from '@angular/common';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import type { Meta, StoryObj } from '@storybook/angular';
 import { moduleMetadata } from '@storybook/angular';
 import { MessageService } from 'primeng/api';
-import { AccountingErrorType, AccountingExportStatus, AppName, AppUrl, ExportErrorSourceType, FundSource } from 'src/app/core/models/enum/enum.model';
+import {
+  AccountingErrorType,
+  AccountingExportStatus,
+  AppName,
+  AppUrl,
+  ExportErrorSourceType,
+  FundSource,
+} from 'src/app/core/models/enum/enum.model';
 import { DashboardService } from 'src/app/core/services/common/dashboard.service';
 import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
 import { MappingService } from 'src/app/core/services/common/mapping.service';
@@ -17,35 +23,33 @@ const meta: Meta<DashboardErrorSectionComponent> = {
   component: DashboardErrorSectionComponent,
   tags: ['autodocs'],
   render: (args: DashboardErrorSectionComponent) => ({
-    props: { ...args }
+    props: { ...args },
   }),
   decorators: [
     moduleMetadata({
       declarations: [],
       imports: [CommonModule, SharedModule, BrowserAnimationsModule],
       providers: [
-        IntegrationsToastService, MessageService,
+        IntegrationsToastService,
+        MessageService,
         {
           provide: DashboardService,
-          useValue: {
-          }
+          useValue: {},
         },
         {
           provide: MappingService,
-          useValue: {
-          }
+          useValue: {},
         },
         {
           provide: WorkspaceService,
-          useValue: {
-          }
-        }
-      ]
-    })
+          useValue: {},
+        },
+      ],
+    }),
   ],
   argTypes: {
-    ngOnInit: { table: { disable: true } }
-  }
+    ngOnInit: { table: { disable: true } },
+  },
 };
 
 export default meta;
@@ -71,7 +75,7 @@ export const simple: Story = {
             detail: null,
             created_at: '2021-06-01T06:30:00.000Z',
             updated_at: '2021-06-01T06:30:00.000Z',
-            workspace: 1
+            workspace: 1,
           },
           expense_group: {
             id: 1,
@@ -81,7 +85,7 @@ export const simple: Story = {
               employee_email: '',
               expense_id: '',
               report_id: '',
-              settlement_id: ''
+              settlement_id: '',
             },
             status: AccountingExportStatus.COMPLETE,
             mapping_errors: [],
@@ -92,7 +96,7 @@ export const simple: Story = {
             workspace: 1,
             export_url: '',
             expenses: [],
-            fund_source: FundSource.CCC
+            fund_source: FundSource.CCC,
           },
           type: AccountingErrorType.EMPLOYEE_MAPPING,
           is_resolved: false,
@@ -100,8 +104,8 @@ export const simple: Story = {
           error_detail: 'Employee Mapping Error',
           created_at: new Date(),
           updated_at: new Date(),
-          workspace: 1
-        }
+          workspace: 1,
+        },
       ],
       CATEGORY_MAPPING: [],
       ACCOUNTING_ERROR: [
@@ -119,7 +123,7 @@ export const simple: Story = {
             detail: null,
             created_at: '2021-06-01T06:30:00.000Z',
             updated_at: '2021-06-01T06:30:00.000Z',
-            workspace: 1
+            workspace: 1,
           },
           expense_group: {
             id: 1,
@@ -129,7 +133,7 @@ export const simple: Story = {
               employee_email: '',
               expense_id: '',
               report_id: '',
-              settlement_id: ''
+              settlement_id: '',
             },
             status: AccountingExportStatus.COMPLETE,
             mapping_errors: [],
@@ -140,29 +144,29 @@ export const simple: Story = {
             workspace: 1,
             export_url: '',
             expenses: [],
-            fund_source: FundSource.CCC
+            fund_source: FundSource.CCC,
           },
           type: AccountingErrorType.ACCOUNTING_ERROR,
           is_resolved: false,
           error_title: 'Invalid account code for expense',
-          error_detail: 'Account code 223 doesn\'t exist in QuickBooks Online',
+          error_detail: "Account code 223 doesn't exist in QuickBooks Online",
           created_at: new Date(),
           updated_at: new Date(),
-          workspace: 1
-        }
-      ]
+          workspace: 1,
+        },
+      ],
     },
     groupedErrorStat: {
       [AccountingErrorType.EMPLOYEE_MAPPING]: null,
-      [AccountingErrorType.CATEGORY_MAPPING]: null
+      [AccountingErrorType.CATEGORY_MAPPING]: null,
     },
     destinationFieldMap: {
       [ExportErrorSourceType.EMPLOYEE]: 'EMPLOYEE',
-      [ExportErrorSourceType.CATEGORY]: 'ACCOUNT'
+      [ExportErrorSourceType.CATEGORY]: 'ACCOUNT',
     },
     isCategoryMappingGeneric: true,
     isImportItemsEnabled: false,
     destinationOptionsVersion: 'v1',
-    errorsVersion: 'v1'
-  }
+    errorsVersion: 'v1',
+  },
 };

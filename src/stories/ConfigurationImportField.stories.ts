@@ -1,8 +1,7 @@
-
 import { CommonModule } from '@angular/common';
 import type { Meta, StoryObj } from '@storybook/angular';
 import { moduleMetadata } from '@storybook/angular';
-import type { QBOImportSettingGet} from 'src/app/core/models/qbo/qbo-configuration/qbo-import-setting.model';
+import type { QBOImportSettingGet } from 'src/app/core/models/qbo/qbo-configuration/qbo-import-setting.model';
 import { ConfigurationImportFieldComponent } from 'src/app/shared/components/configuration/configuration-import-field/configuration-import-field.component';
 import { setupStoryBookFormGroup } from './utility';
 import { AppName } from 'src/app/core/models/enum/enum.model';
@@ -15,17 +14,17 @@ const meta: Meta<ConfigurationImportFieldComponent> = {
   component: ConfigurationImportFieldComponent,
   tags: ['autodocs'],
   render: (args: ConfigurationImportFieldComponent) => ({
-    props: { ...args }
+    props: { ...args },
   }),
   decorators: [
     moduleMetadata({
       declarations: [],
-      imports: [CommonModule, BrowserAnimationsModule, SharedModule]
-    })
+      imports: [CommonModule, BrowserAnimationsModule, SharedModule],
+    }),
   ],
   argTypes: {
-    ngOnInit: { table: { disable: true } }
-  }
+    ngOnInit: { table: { disable: true } },
+  },
 };
 
 export default meta;
@@ -37,13 +36,13 @@ const fixture: QBOImportSettingGet = {
     import_items: true,
     import_vendors_as_merchants: true,
     charts_of_accounts: ['Expense'],
-    import_tax_codes: true
+    import_tax_codes: true,
   },
   general_mappings: {
     default_tax_code: {
       id: '1',
-      name: 'Tax Code'
-    }
+      name: 'Tax Code',
+    },
   },
   mapping_settings: [
     {
@@ -55,7 +54,7 @@ const fixture: QBOImportSettingGet = {
       destination_field: 'CUSTOMER',
       import_to_fyle: true,
       is_custom: true,
-      source_placeholder: 'source_placeholder'
+      source_placeholder: 'source_placeholder',
     },
     {
       id: 1,
@@ -66,10 +65,10 @@ const fixture: QBOImportSettingGet = {
       destination_field: 'CLASS',
       import_to_fyle: false,
       is_custom: true,
-      source_placeholder: 'source_placeholder'
-    }
+      source_placeholder: 'source_placeholder',
+    },
   ],
-  workspace_id: 1
+  workspace_id: 1,
 };
 const importSettingForm = QboImportSettingsService.mapAPIResponseToFormGroup(fixture);
 
@@ -78,9 +77,13 @@ export const fixedDestinationImport: Story = {
     form: setupStoryBookFormGroup(importSettingForm),
     appName: AppName.QBO,
     accountingFieldOptions: QboImportSettingsService.getQBOFields(),
-    fyleFieldOptions: [{ attribute_type: 'PROJECT', display_name: 'Project', is_dependent: false}, { attribute_type: 'COST_CENTER', display_name: 'Cost Center', is_dependent: false}, { attribute_type: 'CUSTOM_FIELD', display_name: 'Custom Field', is_dependent: false}],
-    isDestinationFixedImport: true
-  }
+    fyleFieldOptions: [
+      { attribute_type: 'PROJECT', display_name: 'Project', is_dependent: false },
+      { attribute_type: 'COST_CENTER', display_name: 'Cost Center', is_dependent: false },
+      { attribute_type: 'CUSTOM_FIELD', display_name: 'Custom Field', is_dependent: false },
+    ],
+    isDestinationFixedImport: true,
+  },
 };
 
 export const dynamicDestinationImport: Story = {
@@ -88,9 +91,13 @@ export const dynamicDestinationImport: Story = {
     form: setupStoryBookFormGroup(importSettingForm),
     appName: AppName.INTACCT,
     accountingFieldOptions: QboImportSettingsService.getQBOFields(),
-    fyleFieldOptions: [{ attribute_type: 'PROJECT', display_name: 'Project', is_dependent: false}, { attribute_type: 'COST_CENTER', display_name: 'Cost Center', is_dependent: false}, { attribute_type: 'CUSTOM_FIELD', display_name: 'Custom Field', is_dependent: false}],
-    isDestinationFixedImport: false
-  }
+    fyleFieldOptions: [
+      { attribute_type: 'PROJECT', display_name: 'Project', is_dependent: false },
+      { attribute_type: 'COST_CENTER', display_name: 'Cost Center', is_dependent: false },
+      { attribute_type: 'CUSTOM_FIELD', display_name: 'Custom Field', is_dependent: false },
+    ],
+    isDestinationFixedImport: false,
+  },
 };
 
 export const cloneSetting: Story = {
@@ -98,8 +105,12 @@ export const cloneSetting: Story = {
     form: setupStoryBookFormGroup(importSettingForm),
     appName: AppName.INTACCT,
     accountingFieldOptions: QboImportSettingsService.getQBOFields(),
-    fyleFieldOptions: [{ attribute_type: 'PROJECT', display_name: 'Project', is_dependent: false}, { attribute_type: 'COST_CENTER', display_name: 'Cost Center', is_dependent: false}, { attribute_type: 'CUSTOM_FIELD', display_name: 'Custom Field', is_dependent: false}],
+    fyleFieldOptions: [
+      { attribute_type: 'PROJECT', display_name: 'Project', is_dependent: false },
+      { attribute_type: 'COST_CENTER', display_name: 'Cost Center', is_dependent: false },
+      { attribute_type: 'CUSTOM_FIELD', display_name: 'Custom Field', is_dependent: false },
+    ],
     isDestinationFixedImport: true,
-    isCloneSettingView: true
-  }
+    isCloneSettingView: true,
+  },
 };

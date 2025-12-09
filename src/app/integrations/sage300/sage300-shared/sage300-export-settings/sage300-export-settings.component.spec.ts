@@ -8,9 +8,8 @@ xdescribe('Sage300ExportSettingsComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ Sage300ExportSettingsComponent ]
-    })
-    .compileComponents();
+      declarations: [Sage300ExportSettingsComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(Sage300ExportSettingsComponent);
     component = fixture.componentInstance;

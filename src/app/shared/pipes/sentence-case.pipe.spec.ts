@@ -11,7 +11,7 @@ const mockTranslocoService = {
       return 'QuickBooks Desktop';
     }
     return key;
-  }
+  },
 } as TranslocoService;
 
 xdescribe('SentenceCasePipe', () => {

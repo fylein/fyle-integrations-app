@@ -21,23 +21,26 @@ xdescribe('IntacctConnectorComponent', () => {
   let formBuilder: FormBuilder;
 
   beforeEach(() => {
-    mockConnectorService = jasmine.createSpyObj('IntacctConnectorService', ['connectSageIntacct', 'getSageIntacctCredential']);
+    mockConnectorService = jasmine.createSpyObj('IntacctConnectorService', [
+      'connectSageIntacct',
+      'getSageIntacctCredential',
+    ]);
     mockMappingsService = jasmine.createSpyObj('SiMappingsService', ['refreshSageIntacctDimensions']);
     mockMessageService = jasmine.createSpyObj('MessageService', ['add']);
     localStorage.setItem('si.workspaceId', '1');
     TestBed.configureTestingModule({
-    declarations: [IntacctConnectorComponent, IntacctComponent],
-    imports: [ReactiveFormsModule],
-    providers: [
+      declarations: [IntacctConnectorComponent, IntacctComponent],
+      imports: [ReactiveFormsModule],
+      providers: [
         FormBuilder,
         { provide: IntacctConnectorService, useValue: mockConnectorService },
         { provide: SiMappingsService, useValue: mockMappingsService },
         { provide: MessageService, useValue: mockMessageService },
         IntacctComponent,
         IntacctOnboardingConnectorComponent,
-        provideHttpClient(withInterceptorsFromDi())
-    ]
-}).compileComponents();
+        provideHttpClient(withInterceptorsFromDi()),
+      ],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(IntacctConnectorComponent);
     component = fixture.componentInstance;
@@ -45,21 +48,21 @@ xdescribe('IntacctConnectorComponent', () => {
     component.connectSageIntacctForm = formBuilder.group({
       userID: ['lklk'],
       companyID: ['kkjkkjkk'],
-      userPassword: ['llkl']
+      userPassword: ['llkl'],
     });
     toastService = TestBed.inject(IntegrationsToastService);
   });
 
   it('should create', () => {
-    const connectorResponse:SageIntacctCredential = {
+    const connectorResponse: SageIntacctCredential = {
       id: 1,
-      si_user_id: "string",
-      si_company_id: "string",
-      si_company_name: "string;",
-      si_user_password: "string;",
+      si_user_id: 'string',
+      si_company_id: 'string',
+      si_company_name: 'string;',
+      si_user_password: 'string;',
       created_at: new Date(),
       updated_at: new Date(),
-      workspace: 1
+      workspace: 1,
     };
     mockConnectorService.getSageIntacctCredential.and.returnValue(of(connectorResponse));
     expect(component).toBeTruthy();

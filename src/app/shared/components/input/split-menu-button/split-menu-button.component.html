@@ -1,7 +1,8 @@
 @if (isDropdownVisible) {
   <div
     #dropdownRef
-    class="tw-font-primary tw-text-14-px tw-font-500 tw-bg-white tw-rounded-lg tw-flex tw-flex-col tw-gap-0 tw-items-start tw-justify-start tw-absolute tw-z-50 tw-min-w-48 tw-top-12 tw-right-0 tw-mr-[10px] tw-mt-8-px tw-shadow-navbar-menu">
+    class="tw-font-primary tw-text-14-px tw-font-500 tw-bg-white tw-rounded-lg tw-flex tw-flex-col tw-gap-0 tw-items-start tw-justify-start tw-absolute tw-z-50 tw-min-w-48 tw-top-12 tw-right-0 tw-mr-[10px] tw-mt-8-px tw-shadow-navbar-menu"
+  >
     @for (group of dropdownOptions; track group.label) {
       <!--
       <div class="tw-rounded-tl-lg tw-rounded-tr-lg tw-border-solid tw-border-transparent tw-border-2 tw-pt-2 tw-pr-4 tw-pb-2 tw-pl-4 tw-flex tw-flex-row tw-gap-2 tw-items-center tw-justify-start tw-self-stretch tw-shrink-0 tw-h-8 tw-relative">
@@ -10,20 +11,24 @@
         </div>
       </div> -->
       @for (option of group.items; track option.label; let isFirst = $first; let isLast = $last) {
-        @if (option.label === "[divider]") {
+        @if (option.label === '[divider]') {
           <div class="tw-border-t tw-border-separator tw-w-full tw-mx-4 tw-self-center"></div>
         } @else {
           <div
             (click)="handleOptionClick(option)"
             [class]="setItemClasses(isFirst, isLast)"
-          [ngClass]="{
-            'hover:tw-bg-bg-red hover:tw-text-white tw-text-text-red' : !isCurrentIntegrationItem(option.label) && isLast && isDisconnectRequired,
-            'hover:tw-text-white hover:tw-bg-action-major-600 tw-text-action-major-500 tw-cursor-pointer': !isCurrentIntegrationItem(option.label),
-            'tw-text-link-muted tw-cursor-default hover:tw-bg-bg-link-muted': isCurrentIntegrationItem(option.label),
-          }"
-            class="tw-border-solid tw-border-transparent tw-border-2 tw-pt-2 tw-pr-4 tw-pb-2 tw-pl-4 tw-flex tw-flex-row tw-gap-2 tw-items-center tw-justify-start tw-self-stretch tw-shrink-0 tw-h-8 tw-relative tw-transition-colors tw-duration-200">
+            [ngClass]="{
+              'hover:tw-bg-bg-red hover:tw-text-white tw-text-text-red':
+                !isCurrentIntegrationItem(option.label) && isLast && isDisconnectRequired,
+              'hover:tw-text-white hover:tw-bg-action-major-600 tw-text-action-major-500 tw-cursor-pointer':
+                !isCurrentIntegrationItem(option.label),
+              'tw-text-link-muted tw-cursor-default hover:tw-bg-bg-link-muted': isCurrentIntegrationItem(option.label),
+            }"
+            class="tw-border-solid tw-border-transparent tw-border-2 tw-pt-2 tw-pr-4 tw-pb-2 tw-pl-4 tw-flex tw-flex-row tw-gap-2 tw-items-center tw-justify-start tw-self-stretch tw-shrink-0 tw-h-8 tw-relative tw-transition-colors tw-duration-200"
+          >
             <div
-              class="tw-text-left tw-text-14-px tw-leading-normal tw-relative tw-flex tw-items-center tw-justify-start">
+              class="tw-text-left tw-text-14-px tw-leading-normal tw-relative tw-flex tw-items-center tw-justify-start"
+            >
               {{ option.label }}
             </div>
           </div>
@@ -33,4 +38,11 @@
   </div>
 }
 
-<app-button [buttonSize]="ButtonSize.MEDIUM" [buttonType]="ButtonType.SECONDARY" [styleClasses]="'tw-text-14-px'" [svgSource]="'arrow-down'" [buttonText]="buttonText" (click)="toggleDropdown($event)"></app-button>
+<app-button
+  [buttonSize]="ButtonSize.MEDIUM"
+  [buttonType]="ButtonType.SECONDARY"
+  [styleClasses]="'tw-text-14-px'"
+  [svgSource]="'arrow-down'"
+  [buttonText]="buttonText"
+  (click)="toggleDropdown($event)"
+></app-button>

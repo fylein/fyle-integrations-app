@@ -6,7 +6,7 @@ export type MinimalUser = {
   user_id: string;
   org_id: string;
   org_name: string;
-}
+};
 
 export interface User extends MinimalUser {
   active: boolean;

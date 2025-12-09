@@ -7,13 +7,12 @@ import { TrackingService } from 'src/app/core/services/integration/tracking.serv
 import { TranslocoService } from '@jsverse/transloco';
 
 @Component({
-    selector: 'app-qbd-configuration',
-    templateUrl: './qbd-configuration.component.html',
-    styleUrls: ['./qbd-configuration.component.scss'],
-    standalone: false
+  selector: 'app-qbd-configuration',
+  templateUrl: './qbd-configuration.component.html',
+  styleUrls: ['./qbd-configuration.component.scss'],
+  standalone: false,
 })
 export class QbdConfigurationComponent implements OnInit {
-
   modules: TabMenuItem[];
 
   activeModule: string;
@@ -22,18 +21,28 @@ export class QbdConfigurationComponent implements OnInit {
 
   constructor(
     private router: Router,
-    private translocoService: TranslocoService
-  ) { }
+    private translocoService: TranslocoService,
+  ) {}
 
   ngOnInit(): void {
     this.modules = [
-      {label: this.translocoService.translate('qbdConfiguration.exportSettings'), routerLink: '/integrations/qbd/main/configuration/export_settings', value: 'export_settings'},
-      {label: this.translocoService.translate('qbdConfiguration.fieldMapping'), routerLink: '/integrations/qbd/main/configuration/field_mapping', value: 'field_mapping'},
-      {label: this.translocoService.translate('qbdConfiguration.advancedSettings'), routerLink: '/integrations/qbd/main/configuration/advanced_settings', value: 'advanced_settings'}
+      {
+        label: this.translocoService.translate('qbdConfiguration.exportSettings'),
+        routerLink: '/integrations/qbd/main/configuration/export_settings',
+        value: 'export_settings',
+      },
+      {
+        label: this.translocoService.translate('qbdConfiguration.fieldMapping'),
+        routerLink: '/integrations/qbd/main/configuration/field_mapping',
+        value: 'field_mapping',
+      },
+      {
+        label: this.translocoService.translate('qbdConfiguration.advancedSettings'),
+        routerLink: '/integrations/qbd/main/configuration/advanced_settings',
+        value: 'advanced_settings',
+      },
     ];
     this.activeModule = this.modules[0].value;
     this.router.navigateByUrl(this.modules[0].routerLink!);
   }
-
-
 }

@@ -11,18 +11,18 @@ const routes: Routes = [
     children: [
       {
         path: 'travelperk',
-        component: OauthTravelperkComponent
+        component: OauthTravelperkComponent,
       },
       {
         path: 'default',
-        component: OauthDefaultComponent
-      }
-    ]
-  }
+        component: OauthDefaultComponent,
+      },
+    ],
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class OauthRoutingModule { }
+export class OauthRoutingModule {}

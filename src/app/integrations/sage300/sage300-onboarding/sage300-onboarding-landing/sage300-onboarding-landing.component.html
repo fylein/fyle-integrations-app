@@ -1,8 +1,24 @@
 <div>
-    <div>
-        <app-landing-page-header [iconPath]="'assets/logos/sage300-logo.svg'" [appName]="'sage300OnboardingLanding.appName' | transloco" [appDescription]="'sage300OnboardingLanding.appDescription' | transloco: { brandName: brandingConfig.brandName }" [isLoading]="false" [isIntegrationSetupInProgress]="false" [isIntegrationConnected]="false" [redirectLink]="redirectLink" [buttonText]="'sage300OnboardingLanding.buttonText' | transloco" [postConnectionRoute]="'sage300/onboarding/connector'"></app-landing-page-header>
-    </div>
-    <div>
-        <app-landing-page-body [headlineText]="'sage300OnboardingLanding.headlineText' | transloco" [headerText]="'sage300OnboardingLanding.headerText' | transloco" [embedVideo]="embedVideoLink" [svgPath]="'assets/flow-charts/' + brandingService.getAssetsBrandId() + '-sage300-flow-chart.svg'" [appName]="appName"></app-landing-page-body>
-    </div>
+  <div>
+    <app-landing-page-header
+      [iconPath]="'assets/logos/sage300-logo.svg'"
+      [appName]="'sage300OnboardingLanding.appName' | transloco"
+      [appDescription]="'sage300OnboardingLanding.appDescription' | transloco: { brandName: brandingConfig.brandName }"
+      [isLoading]="false"
+      [isIntegrationSetupInProgress]="false"
+      [isIntegrationConnected]="false"
+      [redirectLink]="redirectLink"
+      [buttonText]="'sage300OnboardingLanding.buttonText' | transloco"
+      [postConnectionRoute]="'sage300/onboarding/connector'"
+    ></app-landing-page-header>
+  </div>
+  <div>
+    <app-landing-page-body
+      [headlineText]="'sage300OnboardingLanding.headlineText' | transloco"
+      [headerText]="'sage300OnboardingLanding.headerText' | transloco"
+      [embedVideo]="embedVideoLink"
+      [svgPath]="'assets/flow-charts/' + brandingService.getAssetsBrandId() + '-sage300-flow-chart.svg'"
+      [appName]="appName"
+    ></app-landing-page-body>
+  </div>
 </div>

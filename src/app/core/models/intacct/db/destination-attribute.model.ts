@@ -1,4 +1,4 @@
-import { DestinationAttribute } from "../../db/destination-attribute.model";
+import { DestinationAttribute } from '../../db/destination-attribute.model';
 
 type IntacctDestinationAttributeDetail = {
   email?: string;
@@ -22,25 +22,25 @@ export type PaginatedintacctDestinationAttribute = {
 };
 
 export type ExportSettingDestinationAttributeOption = {
-  'VENDOR': IntacctDestinationAttribute[],
-  'ACCOUNT': IntacctDestinationAttribute[],
-  'EXPENSE_PAYMENT_TYPE': IntacctDestinationAttribute[],
-  'CCC_EXPENSE_PAYMENT_TYPE': IntacctDestinationAttribute[],
-  'CHARGE_CARD': IntacctDestinationAttribute[],
-}
+  VENDOR: IntacctDestinationAttribute[];
+  ACCOUNT: IntacctDestinationAttribute[];
+  EXPENSE_PAYMENT_TYPE: IntacctDestinationAttribute[];
+  CCC_EXPENSE_PAYMENT_TYPE: IntacctDestinationAttribute[];
+  CHARGE_CARD: IntacctDestinationAttribute[];
+};
 
 export type GroupedDestinationAttribute = {
-  ACCOUNT: IntacctDestinationAttribute[],
-  EXPENSE_TYPE: IntacctDestinationAttribute[],
-  EXPENSE_PAYMENT_TYPE: IntacctDestinationAttribute[],
-  VENDOR: IntacctDestinationAttribute[],
-  CHARGE_CARD_NUMBER: IntacctDestinationAttribute[],
-  TAX_DETAIL: IntacctDestinationAttribute[],
-  LOCATION: IntacctDestinationAttribute[],
-  DEPARTMENT: IntacctDestinationAttribute[],
-  PROJECT: IntacctDestinationAttribute[],
-  CLASS: IntacctDestinationAttribute[],
-  ITEM: IntacctDestinationAttribute[],
-  PAYMENT_ACCOUNT: IntacctDestinationAttribute[],
-  EMPLOYEE: IntacctDestinationAttribute[]
+  ACCOUNT: IntacctDestinationAttribute[];
+  EXPENSE_TYPE: IntacctDestinationAttribute[];
+  EXPENSE_PAYMENT_TYPE: IntacctDestinationAttribute[];
+  VENDOR: IntacctDestinationAttribute[];
+  CHARGE_CARD_NUMBER: IntacctDestinationAttribute[];
+  TAX_DETAIL: IntacctDestinationAttribute[];
+  LOCATION: IntacctDestinationAttribute[];
+  DEPARTMENT: IntacctDestinationAttribute[];
+  PROJECT: IntacctDestinationAttribute[];
+  CLASS: IntacctDestinationAttribute[];
+  ITEM: IntacctDestinationAttribute[];
+  PAYMENT_ACCOUNT: IntacctDestinationAttribute[];
+  EMPLOYEE: IntacctDestinationAttribute[];
 };

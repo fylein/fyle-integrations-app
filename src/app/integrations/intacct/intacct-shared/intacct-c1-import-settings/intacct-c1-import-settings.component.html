@@ -4,12 +4,22 @@
   </div>
 }
 @if (!isLoading) {
-  <div [ngClass]="[brandingStyle.configuration.settingsContainer, isOnboarding ? brandingStyle.common.configurationContents : brandingStyle.common.configurationContentsDashboard, isOnboarding ? 'configuration--contents' : '']">
+  <div
+    [ngClass]="[
+      brandingStyle.configuration.settingsContainer,
+      isOnboarding ? brandingStyle.common.configurationContents : brandingStyle.common.configurationContentsDashboard,
+      isOnboarding ? 'configuration--contents' : '',
+    ]"
+  >
     <div>
-      <app-configuration-step-header [headerText]="'intacctC1ImportSettings.header' | transloco"
+      <app-configuration-step-header
+        [headerText]="'intacctC1ImportSettings.header' | transloco"
         [contentText]="'intacctC1ImportSettings.contentText' | transloco"
-        [redirectLink]="supportArticleLink" [showSyncButton]="isOnboarding" [appName]="appName"
-        (refreshDimension)="refreshDimensions()">
+        [redirectLink]="supportArticleLink"
+        [showSyncButton]="isOnboarding"
+        [appName]="appName"
+        (refreshDimension)="refreshDimensions()"
+      >
       </app-configuration-step-header>
     </div>
     <div>
@@ -26,17 +36,25 @@
               [dependentImportFields]="dependentImportFields"
               [dependentDestinationValue]="'PROJECT'"
               [isDestinationFixedImport]="true"
-              (showWarningForDependentFields)="showWarningForDependentFields()">
+              (showWarningForDependentFields)="showWarningForDependentFields()"
+            >
             </app-configuration-import-field>
           </div>
         </div>
         @if (isOnboarding) {
           <app-configuration-step-footer
-            [ctaText] = "!saveInProgress ? (isOnboarding ? ConfigurationCtaText.SAVE_AND_CONTINUE : ConfigurationCtaText.SAVE) : ConfigurationCtaText.SAVING"
+            [ctaText]="
+              !saveInProgress
+                ? isOnboarding
+                  ? ConfigurationCtaText.SAVE_AND_CONTINUE
+                  : ConfigurationCtaText.SAVE
+                : ConfigurationCtaText.SAVING
+            "
             [isButtonDisabled]="!importSettingsForm.valid"
             [showBackButton]="isOnboarding ? true : false"
             (save)="save()"
-            (navigateToPreviousStep)="navigateToPreviousStep()">
+            (navigateToPreviousStep)="navigateToPreviousStep()"
+          >
           </app-configuration-step-footer>
         }
       </form>
@@ -46,7 +64,8 @@
         [customFieldForm]="customFieldForm"
         [showCustomFieldCreationDialog]="showDialog"
         (saveCustomFieldFn)="saveCustomField()"
-        (closeModelFn)="closeModel()">
+        (closeModelFn)="closeModel()"
+      >
       </app-configuration-custom-field-creation-dialog>
     </div>
   </div>
@@ -54,11 +73,18 @@
 @if (!isLoading && !isOnboarding) {
   <div class="tw-sticky tw-top-0 tw-bottom-0 tw-left-0 tw-right-0 tw-bg-white">
     <app-configuration-step-footer
-      [ctaText] = "!saveInProgress ? (isOnboarding ? ConfigurationCtaText.SAVE_AND_CONTINUE : ConfigurationCtaText.SAVE) : ConfigurationCtaText.SAVING"
+      [ctaText]="
+        !saveInProgress
+          ? isOnboarding
+            ? ConfigurationCtaText.SAVE_AND_CONTINUE
+            : ConfigurationCtaText.SAVE
+          : ConfigurationCtaText.SAVING
+      "
       [isButtonDisabled]="!importSettingsForm.valid"
       [showBackButton]="isOnboarding ? true : false"
       (save)="save()"
-      (navigateToPreviousStep)="navigateToPreviousStep()">
+      (navigateToPreviousStep)="navigateToPreviousStep()"
+    >
     </app-configuration-step-footer>
   </div>
 }
@@ -67,16 +93,24 @@
     (warningAccepted)="acceptDependentFieldWarning($event)"
     [isWarningVisible]="showDependentFieldWarning"
     [headerText]="'intacctC1ImportSettings.warningHeader' | transloco"
-    [contextText]="(importSettings?.dependent_field_settings?.cost_type_field_name ? 'intacctC1ImportSettings.warningContextWithCostTypes' : 'intacctC1ImportSettings.warningContext') | transloco: { brandName: brandingConfig.brandName }"
-    [confirmBtnText]="'intacctC1ImportSettings.continue' | transloco">
+    [contextText]="
+      (importSettings?.dependent_field_settings?.cost_type_field_name
+        ? 'intacctC1ImportSettings.warningContextWithCostTypes'
+        : 'intacctC1ImportSettings.warningContext'
+      ) | transloco: { brandName: brandingConfig.brandName }
+    "
+    [confirmBtnText]="'intacctC1ImportSettings.continue' | transloco"
+  >
   </app-configuration-confirmation-dialog>
 </div>
 @if (isDialogVisible) {
   <div>
     <app-preview-dialog
       [isPreviewDialogVisible]="true"
-      [iconPath]="'assets/illustrations/sageIntacct/IntacctImportSettings.png'" (closeDialog)="showPreviewDialog(false)"
-      [header]="'intacctC1ImportSettings.preview' | transloco">
+      [iconPath]="'assets/illustrations/sageIntacct/IntacctImportSettings.png'"
+      (closeDialog)="showPreviewDialog(false)"
+      [header]="'intacctC1ImportSettings.preview' | transloco"
+    >
     </app-preview-dialog>
   </div>
 }

@@ -8,9 +8,8 @@ xdescribe('OptionalFieldComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ OptionalFieldComponent ]
-    })
-    .compileComponents();
+      declarations: [OptionalFieldComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(OptionalFieldComponent);
     component = fixture.componentInstance;

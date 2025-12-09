@@ -7,13 +7,12 @@ import { TravelperkService } from 'src/app/core/services/travelperk/travelperk-c
 import { TranslocoService } from '@jsverse/transloco';
 
 @Component({
-    selector: 'app-travelperk-main',
-    templateUrl: './travelperk-main.component.html',
-    styleUrls: ['./travelperk-main.component.scss'],
-    standalone: false
+  selector: 'app-travelperk-main',
+  templateUrl: './travelperk-main.component.html',
+  styleUrls: ['./travelperk-main.component.scss'],
+  standalone: false,
 })
 export class TravelperkMainComponent implements OnInit {
-
   appName: AppName = AppName.TRAVELPERK;
 
   modules: TabMenuItem[];
@@ -24,12 +23,16 @@ export class TravelperkMainComponent implements OnInit {
     private travelperkService: TravelperkService,
     private toastService: IntegrationsToastService,
     private router: Router,
-    private translocoService: TranslocoService
-  ) { }
+    private translocoService: TranslocoService,
+  ) {}
 
   ngOnInit(): void {
     this.modules = [
-      { label: this.translocoService.translate('travelperkMain.configurationLabel'), routerLink: '/integrations/travelperk/main/configuration', value: 'configuration' }
+      {
+        label: this.translocoService.translate('travelperkMain.configurationLabel'),
+        routerLink: '/integrations/travelperk/main/configuration',
+        value: 'configuration',
+      },
     ];
   }
 
@@ -37,14 +40,20 @@ export class TravelperkMainComponent implements OnInit {
     this.isConnectionInProgress = true;
     this.travelperkService.disconnect().subscribe(() => {
       this.isConnectionInProgress = false;
-      this.toastService.displayToastMessage(ToastSeverity.SUCCESS, this.translocoService.translate('travelperkMain.disconnectSuccess'));
+      this.toastService.displayToastMessage(
+        ToastSeverity.SUCCESS,
+        this.translocoService.translate('travelperkMain.disconnectSuccess'),
+      );
       this.router.navigate(['/integrations/travelperk/onboarding/landing']);
     });
   }
 
-  refreshDimentions():void {
+  refreshDimentions(): void {
     this.travelperkService.syncCategories().subscribe();
     this.travelperkService.syncPaymentProfile().subscribe;
-    this.toastService.displayToastMessage(ToastSeverity.SUCCESS, this.translocoService.translate('travelperkMain.syncDataDimensions'));
+    this.toastService.displayToastMessage(
+      ToastSeverity.SUCCESS,
+      this.translocoService.translate('travelperkMain.syncDataDimensions'),
+    );
   }
 }

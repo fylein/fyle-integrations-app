@@ -1,5 +1,8 @@
 <div class="tw-pb-48-px page-layout-container">
-  <app-onboarding-steppers [onboardingSteps]="onboardingSteps" [disableConnectionStepsIfCompleted]="true"></app-onboarding-steppers>
+  <app-onboarding-steppers
+    [onboardingSteps]="onboardingSteps"
+    [disableConnectionStepsIfCompleted]="true"
+  ></app-onboarding-steppers>
   <div class="tw-flex-grow">
     @if (isLoading) {
       <div class="tw-flex tw-justify-center tw-items-center tw-pt-80-px tw-h-full">
@@ -7,34 +10,81 @@
       </div>
     }
     @if (!isLoading) {
-      <div class="configuration--contents tw-border-border-tertiary tw-mt-24-px" [ngClass]="brandingStyle.common.configurationContents">
+      <div
+        class="configuration--contents tw-border-border-tertiary tw-mt-24-px"
+        [ngClass]="brandingStyle.common.configurationContents"
+      >
         <div>
           <app-configuration-step-header
             [headerText]="'qbd_direct.configuration.preRequisite.configurationHeaderText' | transloco"
             [contentText]="'qbd_direct.configuration.preRequisite.configurationSubHeaderText' | transloco"
             [redirectLink]="QBDconnectorArticleLink"
-            [appName]="appName">
+            [appName]="appName"
+          >
           </app-configuration-step-header>
         </div>
         <div class="tw-px-24-px tw-py-10-px">
           @for (step of preRequisitesteps; track step) {
             <div>
-              <div class="tw-flex tw-items-center tw-justify-between tw-py-14-px tw-gap-5" [ngClass]="brandingStyle.qbd_direct.onboarding.preRequisiteCard">
+              <div
+                class="tw-flex tw-items-center tw-justify-between tw-py-14-px tw-gap-5"
+                [ngClass]="brandingStyle.qbd_direct.onboarding.preRequisiteCard"
+              >
                 <div class="tw-flex tw-items-center tw-justify-center">
-                  <div class="!tw-w-45-px !tw-h-45-px tw-border tw-border-border-tertiary tw-flex tw-items-center tw-justify-center tw-bg-disabled-bg-color" [ngClass]="brandingStyle.qbd_direct.onboarding.preRequisiteContainer">
-                    <app-svg-icon [svgSource]="step.iconName" [width]="'18px'" [height]="'18px'" [isTextColorAllowed]="true" [styleClasses]="brandingFeatureConfig.disableTextColorWhenChecked ? (step.state === qbdPreRequisiteState.COMPLETE ? 'tw-text-icon-disable' : 'tw-text-icon-tertiary') : ''"></app-svg-icon>
+                  <div
+                    class="!tw-w-45-px !tw-h-45-px tw-border tw-border-border-tertiary tw-flex tw-items-center tw-justify-center tw-bg-disabled-bg-color"
+                    [ngClass]="brandingStyle.qbd_direct.onboarding.preRequisiteContainer"
+                  >
+                    <app-svg-icon
+                      [svgSource]="step.iconName"
+                      [width]="'18px'"
+                      [height]="'18px'"
+                      [isTextColorAllowed]="true"
+                      [styleClasses]="
+                        brandingFeatureConfig.disableTextColorWhenChecked
+                          ? step.state === qbdPreRequisiteState.COMPLETE
+                            ? 'tw-text-icon-disable'
+                            : 'tw-text-icon-tertiary'
+                          : ''
+                      "
+                    ></app-svg-icon>
                   </div>
                   <div class="tw-ml-16-px">
-                    <h4 class="{{brandingStyle.qbd_direct.onboarding.preRequisiteHeaderText}}" [ngClass]="brandingFeatureConfig.disableTextColorWhenChecked ? (step.state === qbdPreRequisiteState.COMPLETE ? 'tw-text-text-disable' : brandingStyle.qbd_direct.onboarding.preRequisiteHeaderFont) : ''" [innerHTML]="step.label"></h4>
-                    <p class="tw-pt-4-px {{brandingStyle.qbd_direct.onboarding.preRequisiteDescriptionText}}" [ngClass]="brandingFeatureConfig.disableTextColorWhenChecked ? (step.state === qbdPreRequisiteState.COMPLETE ? 'tw-text-text-disable' : brandingStyle.qbd_direct.onboarding.preRequisiteDescriptionFont) : ''">
+                    <h4
+                      class="{{ brandingStyle.qbd_direct.onboarding.preRequisiteHeaderText }}"
+                      [ngClass]="
+                        brandingFeatureConfig.disableTextColorWhenChecked
+                          ? step.state === qbdPreRequisiteState.COMPLETE
+                            ? 'tw-text-text-disable'
+                            : brandingStyle.qbd_direct.onboarding.preRequisiteHeaderFont
+                          : ''
+                      "
+                      [innerHTML]="step.label"
+                    ></h4>
+                    <p
+                      class="tw-pt-4-px {{ brandingStyle.qbd_direct.onboarding.preRequisiteDescriptionText }}"
+                      [ngClass]="
+                        brandingFeatureConfig.disableTextColorWhenChecked
+                          ? step.state === qbdPreRequisiteState.COMPLETE
+                            ? 'tw-text-text-disable'
+                            : brandingStyle.qbd_direct.onboarding.preRequisiteDescriptionFont
+                          : ''
+                      "
+                    >
                       <span [innerHTML]="step.caption"></span>
-                      @if(step.externalLink) {
+                      @if (step.externalLink) {
                         <a
                           [href]="step.externalLink"
                           target="_blank"
                           class="tw-cursor-pointer tw-ml-4-px tw-inline-flex tw-items-center"
-                          [ngClass]="brandingFeatureConfig.disableTextColorWhenChecked ? (step.state === qbdPreRequisiteState.COMPLETE ? 'tw-text-text-disable' : 'link') : 'link'"
-                          >
+                          [ngClass]="
+                            brandingFeatureConfig.disableTextColorWhenChecked
+                              ? step.state === qbdPreRequisiteState.COMPLETE
+                                ? 'tw-text-text-disable'
+                                : 'link'
+                              : 'link'
+                          "
+                        >
                           {{ 'qbdDirectOnboardingPreRequisite.learnMore' | transloco }}
                           <app-svg-icon
                             [svgSource]="'open-in-new-tab'"
@@ -54,14 +104,22 @@
                     [unCheckedText]="'qbdDirectOnboardingPreRequisite.markAsDone' | transloco"
                     [id]="step.id"
                     [disabled]="brandingFeatureConfig.qbdDirect.unlockStepsInOrder ? isStepDisabled(step.id) : false"
-                    (checkBoxUpdated)="updateConnectorStatus($event)">
+                    (checkBoxUpdated)="updateConnectorStatus($event)"
+                  >
                   </app-checkbox-button>
                 </div>
               </div>
             </div>
           }
         </div>
-        <app-configuration-step-footer [shouldShowQBDAssistedSetup]="true" [qbdDirectInteractionType]="QBDDirectInteractionType.QUERY" [ctaText]="!saveInProgress ? ConfigurationCtaText.CONTINUE : ConfigurationCtaText.SAVING" [AppName]="appName" [isButtonDisabled]="isContinueDisabled" (save)="continueToNextStep()"></app-configuration-step-footer>
+        <app-configuration-step-footer
+          [shouldShowQBDAssistedSetup]="true"
+          [qbdDirectInteractionType]="QBDDirectInteractionType.QUERY"
+          [ctaText]="!saveInProgress ? ConfigurationCtaText.CONTINUE : ConfigurationCtaText.SAVING"
+          [AppName]="appName"
+          [isButtonDisabled]="isContinueDisabled"
+          (save)="continueToNextStep()"
+        ></app-configuration-step-footer>
       </div>
     }
   </div>

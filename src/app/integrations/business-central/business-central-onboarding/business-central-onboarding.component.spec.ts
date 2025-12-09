@@ -8,9 +8,8 @@ xdescribe('BusinessCentralOnboardingComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ BusinessCentralOnboardingComponent ]
-    })
-    .compileComponents();
+      declarations: [BusinessCentralOnboardingComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(BusinessCentralOnboardingComponent);
     component = fixture.componentInstance;

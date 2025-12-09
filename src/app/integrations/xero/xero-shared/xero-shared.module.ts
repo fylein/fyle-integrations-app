@@ -7,20 +7,8 @@ import { SharedModule } from 'src/app/shared/shared.module';
 import { MultiSelectModule } from 'primeng/multiselect';
 
 @NgModule({
-  declarations: [
-    XeroExportSettingsComponent,
-    XeroImportSettingsComponent,
-    XeroAdvancedSettingsComponent
-  ],
-  imports: [
-    CommonModule,
-    SharedModule,
-    MultiSelectModule
-  ],
-  exports: [
-    XeroExportSettingsComponent,
-    XeroImportSettingsComponent,
-    XeroAdvancedSettingsComponent
-  ]
+  declarations: [XeroExportSettingsComponent, XeroImportSettingsComponent, XeroAdvancedSettingsComponent],
+  imports: [CommonModule, SharedModule, MultiSelectModule],
+  exports: [XeroExportSettingsComponent, XeroImportSettingsComponent, XeroAdvancedSettingsComponent],
 })
-export class XeroSharedModule { }
+export class XeroSharedModule {}

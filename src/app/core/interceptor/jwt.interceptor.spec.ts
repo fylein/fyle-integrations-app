@@ -1,6 +1,12 @@
 import { getTestBed, inject, TestBed } from '@angular/core/testing';
 import { JwtHelperService, JWT_OPTIONS } from '@auth0/angular-jwt';
-import { HttpClient, HttpRequest, HTTP_INTERCEPTORS, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
+import {
+  HttpClient,
+  HttpRequest,
+  HTTP_INTERCEPTORS,
+  provideHttpClient,
+  withInterceptorsFromDi,
+} from '@angular/common/http';
 import { JwtInterceptor } from './jwt.interceptor';
 import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
 import { environment } from 'src/environments/environment';
@@ -25,32 +31,33 @@ xdescribe('JwtInterceptor', () => {
       logout: () => undefined,
       refreshAccessToken: () => of(tokenResponse),
       getRefreshToken: () => 'fyle',
-      getAccessToken: () => of('fyle')
+      getAccessToken: () => of('fyle'),
     };
 
     TestBed.configureTestingModule({
-    imports: [],
-    providers: [
-        ApiService, JwtHelperService,
+      imports: [],
+      providers: [
+        ApiService,
+        JwtHelperService,
         {
-            provide: HTTP_INTERCEPTORS,
-            useClass: JwtInterceptor,
-            multi: true
+          provide: HTTP_INTERCEPTORS,
+          useClass: JwtInterceptor,
+          multi: true,
         },
         {
-            provide: JWT_OPTIONS,
-            useValue: JWT_OPTIONS
+          provide: JWT_OPTIONS,
+          useValue: JWT_OPTIONS,
         },
         {
-            provide: AuthService,
-            useValue: service1
+          provide: AuthService,
+          useValue: service1,
         },
         JwtInterceptor,
         JwtHelperService,
         provideHttpClient(withInterceptorsFromDi()),
-        provideHttpClientTesting()
-    ]
-});
+        provideHttpClientTesting(),
+      ],
+    });
 
     injector = getTestBed();
     client = TestBed.inject(HttpClient);
@@ -61,14 +68,13 @@ xdescribe('JwtInterceptor', () => {
     interceptor = TestBed.inject(JwtInterceptor);
   });
 
-
   it('should create the interceptor', inject([AuthService], (service: AuthService) => {
     const next: any = {
       handle: () => {
-        return Observable.create((subscriber: { complete: () => void; }) => {
+        return Observable.create((subscriber: { complete: () => void }) => {
           subscriber.complete();
         });
-      }
+      },
     };
 
     const requestMock = new HttpRequest('GET', '/test');
@@ -82,10 +88,10 @@ xdescribe('JwtInterceptor', () => {
 
     const next: any = {
       handle: () => {
-        return Observable.create((subscriber: { complete: () => void; }) => {
+        return Observable.create((subscriber: { complete: () => void }) => {
           subscriber.complete();
         });
-      }
+      },
     };
 
     const requestMock = new HttpRequest('GET', '/dummy');
@@ -98,10 +104,10 @@ xdescribe('JwtInterceptor', () => {
   it('should activate the interceptor', inject([AuthService], (service: AuthService) => {
     const next: any = {
       handle: () => {
-        return Observable.create((subscriber: { complete: () => void; }) => {
+        return Observable.create((subscriber: { complete: () => void }) => {
           subscriber.complete();
         });
-      }
+      },
     };
 
     const requestMock = new HttpRequest('GET', `${API_BASE_URL}/api/auth/`);
@@ -135,13 +141,13 @@ xdescribe('JwtInterceptor', () => {
     const dummyAccessToken = 'ey.ey.ey';
 
     spyOn(authService, 'getAccessToken').and.returnValue(dummyAccessToken);
-    spyOn((interceptor as any), 'isTokenExpiring').and.returnValue(false);
+    spyOn(interceptor as any, 'isTokenExpiring').and.returnValue(false);
 
     expect((interceptor as any).getAccessToken('user')).toBeDefined();
   });
 
   it('should check for expiry date', () => {
-    spyOn((jwtHelperService), 'getTokenExpirationDate').and.returnValue(new Date());
+    spyOn(jwtHelperService, 'getTokenExpirationDate').and.returnValue(new Date());
 
     expect((interceptor as any).isTokenExpiring()).toBeDefined();
   });

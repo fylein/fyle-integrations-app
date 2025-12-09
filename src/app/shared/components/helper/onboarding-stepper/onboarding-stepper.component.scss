@@ -1,76 +1,75 @@
 .step {
-    @apply tw-w-48-px tw-h-48-px tw-rounded-full tw-box-border tw-flex tw-items-center ; 
-  }
-  
-  .step-state {
-    @apply tw-bg-white tw-border ;
-  }
-  
-  .line-active {
-    @apply tw-border-t-2-px tw-border-dashed tw-border-border-secondary tw-w-40 tw-h-2-px ;
-  }
-  
-  .line-inactive {
-    @apply tw-border-t-2-px tw-border-solid tw-border-border-success tw-w-40 tw-h-2-px ;
+  @apply tw-w-48-px tw-h-48-px tw-rounded-full tw-box-border tw-flex tw-items-center;
+}
+
+.step-state {
+  @apply tw-bg-white tw-border;
+}
+
+.line-active {
+  @apply tw-border-t-2-px tw-border-dashed tw-border-border-secondary tw-w-40 tw-h-2-px;
+}
+
+.line-inactive {
+  @apply tw-border-t-2-px tw-border-solid tw-border-border-success tw-w-40 tw-h-2-px;
+}
+
+.step-name-pre-requisite {
+  &--text {
+    @apply tw-relative tw-left-[-18px];
   }
 
-  .step-name-pre-requisite {
-    &--text {
-      @apply tw-relative tw-left-[-18px] ;
-    }
+  &--icon {
+    @apply tw-w-24-px tw-h-24-px;
+  }
+}
 
-    &--icon {
-      @apply tw-w-24-px tw-h-24-px ;
-    }
+.step-name-connector {
+  &--text {
+    @apply tw-relative tw-left-[-50px];
   }
 
-  .step-name-connector {
-    &--text {
-      @apply tw-relative tw-left-[-50px] ;
-    }
-
-    &--icon {
-      @apply tw-w-24-px tw-h-24-px ;
-    }
+  &--icon {
+    @apply tw-w-24-px tw-h-24-px;
   }
-  
-  .step-name-export {
-    &--text {
-      @apply tw-relative tw-left-[-20px] ;
-    }
+}
 
-    &--icon {
-      @apply tw-w-16-px tw-h-20-px ;
-    }
-  }
-  
-  .step-name-import {
-    &--text {
-      @apply tw-relative tw-left-[-18px] ;
-    }
-
-    &--icon {
-      @apply tw-w-24-px tw-h-24-px ;
-    }
+.step-name-export {
+  &--text {
+    @apply tw-relative tw-left-[-20px];
   }
 
-  .step-name-field {
-    &--text {
-      @apply tw-relative tw-left-[-18px] ;
-    }
-
-    &--icon {
-      @apply tw-w-20-px tw-h-20-px ;
-    }
+  &--icon {
+    @apply tw-w-16-px tw-h-20-px;
   }
-  
-  .step-name-advanced {
-    &--text {
-      @apply tw-relative tw-left-[-30px] ;
-    }
+}
 
-    &--icon {
-      @apply tw-w-20-px tw-h-20-px ;
-    }
+.step-name-import {
+  &--text {
+    @apply tw-relative tw-left-[-18px];
   }
-  
+
+  &--icon {
+    @apply tw-w-24-px tw-h-24-px;
+  }
+}
+
+.step-name-field {
+  &--text {
+    @apply tw-relative tw-left-[-18px];
+  }
+
+  &--icon {
+    @apply tw-w-20-px tw-h-20-px;
+  }
+}
+
+.step-name-advanced {
+  &--text {
+    @apply tw-relative tw-left-[-30px];
+  }
+
+  &--icon {
+    @apply tw-w-20-px tw-h-20-px;
+  }
+}

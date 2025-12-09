@@ -8,9 +8,8 @@ xdescribe('ConfigurationImportFieldComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ConfigurationImportFieldComponent ]
-    })
-    .compileComponents();
+      declarations: [ConfigurationImportFieldComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(ConfigurationImportFieldComponent);
     component = fixture.componentInstance;

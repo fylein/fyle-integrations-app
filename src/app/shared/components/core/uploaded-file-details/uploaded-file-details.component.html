@@ -1,45 +1,50 @@
-<div class="tw-flex tw-items-center tw-gap-[10px] tw-bg-input-disabled-bg tw-px-24-px tw-py-12-px tw-rounded-[10px] tw-text-14-px tw-text-text-secondary">
-    <div class="tw-flex tw-items-center tw-gap-[4px]">
-        <img src="assets/icons/file-csv-dark.svg" [alt]="'uploadedFileDetails.csvUploadAlt' | transloco">
-        <span
-            #fileNameElement
-            class="tw-font-500 tw-truncate tw-max-w-[140px]"
-            [pTooltip]="fileNameElement.offsetWidth < fileNameElement.scrollWidth ? (file.name ?? '') : ''"
-            tooltipPosition="top">{{ file.name ?? '' }}</span>
-    </div>
+<div
+  class="tw-flex tw-items-center tw-gap-[10px] tw-bg-input-disabled-bg tw-px-24-px tw-py-12-px tw-rounded-[10px] tw-text-14-px tw-text-text-secondary"
+>
+  <div class="tw-flex tw-items-center tw-gap-[4px]">
+    <img src="assets/icons/file-csv-dark.svg" [alt]="'uploadedFileDetails.csvUploadAlt' | transloco" />
+    <span
+      #fileNameElement
+      class="tw-font-500 tw-truncate tw-max-w-[140px]"
+      [pTooltip]="fileNameElement.offsetWidth < fileNameElement.scrollWidth ? (file.name ?? '') : ''"
+      tooltipPosition="top"
+      >{{ file.name ?? '' }}</span
+    >
+  </div>
 
-    <div class="tw-border-l tw-border-input-disabled-border tw-self-stretch"></div>
+  <div class="tw-border-l tw-border-input-disabled-border tw-self-stretch"></div>
 
-    <p>
-        @if (isOnboarding) {
-            <span>{{ 'uploadedFileDetails.valuesReadyToImportLabel' | transloco }}</span>
-        } @else {
-            <span>{{ 'uploadedFileDetails.valuesImportedLabel' | transloco }}</span>
-        }
-        <strong class="tw-pl-4-px tw-font-500">{{ file.valueCount || 0 }}</strong>
-    </p>
+  <p>
+    @if (isOnboarding) {
+      <span>{{ 'uploadedFileDetails.valuesReadyToImportLabel' | transloco }}</span>
+    } @else {
+      <span>{{ 'uploadedFileDetails.valuesImportedLabel' | transloco }}</span>
+    }
+    <strong class="tw-pl-4-px tw-font-500">{{ file.valueCount || 0 }}</strong>
+  </p>
 
-    <div class="tw-border-l tw-border-input-disabled-border tw-self-stretch"></div>
+  <div class="tw-border-l tw-border-input-disabled-border tw-self-stretch"></div>
 
-    <p>
-        <span>{{ 'uploadedFileDetails.lastUploadedAtLabel' | transloco }}</span>
-        <strong class="tw-pl-2-px tw-font-500">
-            {{ file.lastUploadedAt ? (file.lastUploadedAt | date:'MMM d, yyyy, hh:mm a') : '' }}
-        </strong>
-    </p>
+  <p>
+    <span>{{ 'uploadedFileDetails.lastUploadedAtLabel' | transloco }}</span>
+    <strong class="tw-pl-2-px tw-font-500">
+      {{ file.lastUploadedAt ? (file.lastUploadedAt | date: 'MMM d, yyyy, hh:mm a') : '' }}
+    </strong>
+  </p>
 
-    <div class="tw-grow"></div>
+  <div class="tw-grow"></div>
 
-    <app-button
-        [buttonType]="ButtonType.TERTIARY"
-        [buttonSize]="ButtonSize.MEDIUM"
-        [buttonText]="'uploadedFileDetails.reuploadButtonLabel' | transloco"
-        [svgSource]="'upload'"
-        [iconSize]="'20px'"
-        [iconViewbox]="'0 0 16 16'"
-        (buttonClick)="reuploadClick.emit()"
-        [pTooltip]="tooltipText"
-        [tooltipPosition]="'top'"
-        styleClasses="!tw-p-0 !tw-h-auto tw-shrink-0">
-    </app-button>
+  <app-button
+    [buttonType]="ButtonType.TERTIARY"
+    [buttonSize]="ButtonSize.MEDIUM"
+    [buttonText]="'uploadedFileDetails.reuploadButtonLabel' | transloco"
+    [svgSource]="'upload'"
+    [iconSize]="'20px'"
+    [iconViewbox]="'0 0 16 16'"
+    (buttonClick)="reuploadClick.emit()"
+    [pTooltip]="tooltipText"
+    [tooltipPosition]="'top'"
+    styleClasses="!tw-p-0 !tw-h-auto tw-shrink-0"
+  >
+  </app-button>
 </div>

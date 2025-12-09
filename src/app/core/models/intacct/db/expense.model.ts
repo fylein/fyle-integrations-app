@@ -1,4 +1,4 @@
-import { environment } from "src/environments/environment";
+import { environment } from 'src/environments/environment';
 
 export { Expense } from '../../db/expense.model';
 
@@ -14,7 +14,7 @@ export interface ExpenseList {
 }
 
 export class ExpenseModel {
-  static constructViewExpenseUrl (expense_id: string) {
+  static constructViewExpenseUrl(expense_id: string) {
     const url = `${environment.fyle_app_url}/app/admin/#/company_expenses?txnId=${expense_id}`;
     return url;
   }

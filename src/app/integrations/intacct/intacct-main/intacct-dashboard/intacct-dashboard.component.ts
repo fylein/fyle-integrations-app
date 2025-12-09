@@ -1,14 +1,34 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Observable, Subject, catchError, forkJoin, from, interval, of, switchMap, takeUntil, takeWhile } from 'rxjs';
 import { brandingConfig, brandingFeatureConfig } from 'src/app/branding/branding-config';
-import { AccountingErrorType, AppName, AppUrl, CCCImportState, ExpenseState, ExportState, FyleReferenceType, IntacctCategoryDestination, IntacctCorporateCreditCardExpensesObject, IntacctErrorType, IntacctReimbursableExpensesObject, MappingSourceField, ReimbursableImportState, SageIntacctField, TaskLogState, TaskLogType } from 'src/app/core/models/enum/enum.model';
+import {
+  AccountingErrorType,
+  AppName,
+  AppUrl,
+  CCCImportState,
+  ExpenseState,
+  ExportState,
+  FyleReferenceType,
+  IntacctCategoryDestination,
+  IntacctCorporateCreditCardExpensesObject,
+  IntacctErrorType,
+  IntacctReimbursableExpensesObject,
+  MappingSourceField,
+  ReimbursableImportState,
+  SageIntacctField,
+  TaskLogState,
+  TaskLogType,
+} from 'src/app/core/models/enum/enum.model';
 import { ExpenseGroupList } from 'src/app/core/models/intacct/db/expense-group.model';
 import { Expense } from 'src/app/core/models/intacct/db/expense.model';
 import { LastExport } from 'src/app/core/models/intacct/db/last-export.model';
 import { IntacctTaskLog, IntacctTaskResponse } from 'src/app/core/models/intacct/db/task-log.model';
 import { UserService } from 'src/app/core/services/misc/user.service';
 import { ExportLogService } from 'src/app/core/services/si/si-core/si-export-log.service';
-import { AccountingExportSummary, AccountingExportSummaryModel } from 'src/app/core/models/db/accounting-export-summary.model';
+import {
+  AccountingExportSummary,
+  AccountingExportSummaryModel,
+} from 'src/app/core/models/db/accounting-export-summary.model';
 import { AccountingGroupedErrorStat, AccountingGroupedErrors, Error } from 'src/app/core/models/db/error.model';
 import { DashboardModel, DestinationFieldMap } from 'src/app/core/models/db/dashboard.model';
 import { DashboardService } from 'src/app/core/services/common/dashboard.service';
@@ -19,13 +39,12 @@ import { Router } from '@angular/router';
 import { SiAdvancedSettingsService } from 'src/app/core/services/si/si-configuration/si-advanced-settings.service';
 
 @Component({
-    selector: 'app-intacct-dashboard',
-    templateUrl: './intacct-dashboard.component.html',
-    styleUrls: ['./intacct-dashboard.component.scss'],
-    standalone: false
+  selector: 'app-intacct-dashboard',
+  templateUrl: './intacct-dashboard.component.html',
+  styleUrls: ['./intacct-dashboard.component.scss'],
+  standalone: false,
 })
 export class IntacctDashboardComponent implements OnInit, OnDestroy {
-
   isLoading: boolean = true;
 
   AppUrl = AppUrl;
@@ -58,11 +77,11 @@ export class IntacctDashboardComponent implements OnInit, OnDestroy {
 
   expenseGroupSetting: string;
 
-  expenseGroups: ExpenseGroupList [];
+  expenseGroups: ExpenseGroupList[];
 
   groupedErrorStat: AccountingGroupedErrorStat = {
     [AccountingErrorType.EMPLOYEE_MAPPING]: null,
-    [AccountingErrorType.CATEGORY_MAPPING]: null
+    [AccountingErrorType.CATEGORY_MAPPING]: null,
   };
 
   ExportState = ExportState;
@@ -87,26 +106,43 @@ export class IntacctDashboardComponent implements OnInit, OnDestroy {
 
   getExportErrors$: Observable<Error[]> = this.dashboardService.getExportErrors('v1');
 
-  getAccountingExportSummary$: Observable<AccountingExportSummary> = this.accountingExportService.getAccountingExportSummary('v1', brandingFeatureConfig.featureFlags.dashboard.useRepurposedExportSummary, AppName.INTACCT);
+  getAccountingExportSummary$: Observable<AccountingExportSummary> =
+    this.accountingExportService.getAccountingExportSummary(
+      'v1',
+      brandingFeatureConfig.featureFlags.dashboard.useRepurposedExportSummary,
+      AppName.INTACCT,
+    );
 
-  accountingExportType: TaskLogType[] = [TaskLogType.CREATING_BILLS, TaskLogType.CREATING_CHARGE_CARD_TRANSACTIONS, TaskLogType.CREATING_JOURNAL_ENTRIES, TaskLogType.CREATING_EXPENSE_REPORTS];
+  accountingExportType: TaskLogType[] = [
+    TaskLogType.CREATING_BILLS,
+    TaskLogType.CREATING_CHARGE_CARD_TRANSACTIONS,
+    TaskLogType.CREATING_JOURNAL_ENTRIES,
+    TaskLogType.CREATING_EXPENSE_REPORTS,
+  ];
 
-  destinationFieldMap : DestinationFieldMap;
+  destinationFieldMap: DestinationFieldMap;
 
-  acceptedCodeField: string[] = [SageIntacctField.ACCOUNT, SageIntacctField.DEPARTMENT, MappingSourceField.PROJECT, IntacctCategoryDestination.EXPENSE_TYPE];
+  acceptedCodeField: string[] = [
+    SageIntacctField.ACCOUNT,
+    SageIntacctField.DEPARTMENT,
+    MappingSourceField.PROJECT,
+    IntacctCategoryDestination.EXPENSE_TYPE,
+  ];
 
-  readonly dummyExpenseGroupList: ExpenseGroupList[] = [{
-    index: 0,
-    exportedAt: new Date(),
-    employee: ['a', 'b'],
-    expenseType: 'Corporate Card',
-    referenceNumber: '123',
-    exportedAs: 'a',
-    intacctUrl: 'a',
-    fyleUrl: 'a',
-    fyleReferenceType: FyleReferenceType.EXPENSE,
-    expenses: []
-  }];
+  readonly dummyExpenseGroupList: ExpenseGroupList[] = [
+    {
+      index: 0,
+      exportedAt: new Date(),
+      employee: ['a', 'b'],
+      expenseType: 'Corporate Card',
+      referenceNumber: '123',
+      exportedAs: 'a',
+      intacctUrl: 'a',
+      fyleUrl: 'a',
+      fyleReferenceType: FyleReferenceType.EXPENSE,
+      expenses: [],
+    },
+  ];
 
   readonly brandingConfig = brandingConfig;
 
@@ -125,8 +161,8 @@ export class IntacctDashboardComponent implements OnInit, OnDestroy {
     private workspaceService: WorkspaceService,
     private intacctExportSettingService: SiExportSettingsService,
     private router: Router,
-    private intacctAdvancedSettingsService: SiAdvancedSettingsService
-  ) { }
+    private intacctAdvancedSettingsService: SiAdvancedSettingsService,
+  ) {}
 
   export() {
     this.isExportInProgress = true;
@@ -136,67 +172,98 @@ export class IntacctDashboardComponent implements OnInit, OnDestroy {
   }
 
   private pollExportStatus(exportableAccountingExportIds: number[] = []): void {
-    interval(3000).pipe(
-      switchMap(() => from(this.dashboardService.getAllTasks([], exportableAccountingExportIds, this.accountingExportType, AppName.INTACCT))),
-      takeUntil(this.destroy$),
-      takeWhile((response: IntacctTaskResponse) =>
-        response.results.filter(task =>
-          (task.status === TaskLogState.IN_PROGRESS || task.status === TaskLogState.ENQUEUED)
-        ).length > 0, true
+    interval(3000)
+      .pipe(
+        switchMap(() =>
+          from(
+            this.dashboardService.getAllTasks(
+              [],
+              exportableAccountingExportIds,
+              this.accountingExportType,
+              AppName.INTACCT,
+            ),
+          ),
+        ),
+        takeUntil(this.destroy$),
+        takeWhile(
+          (response: IntacctTaskResponse) =>
+            response.results.filter(
+              (task) => task.status === TaskLogState.IN_PROGRESS || task.status === TaskLogState.ENQUEUED,
+            ).length > 0,
+          true,
+        ),
       )
-    ).subscribe((res: IntacctTaskResponse) => {
-      this.processedCount = res.results.filter(
-        (task: { status: string; type: TaskLogType; expense_group: number; }) =>
-          (task.status !== 'IN_PROGRESS' && task.status !== 'ENQUEUED') &&
-          (
+      .subscribe((res: IntacctTaskResponse) => {
+        this.processedCount = res.results.filter(
+          (task: { status: string; type: TaskLogType; expense_group: number }) =>
+            task.status !== 'IN_PROGRESS' &&
+            task.status !== 'ENQUEUED' &&
             task.type !== TaskLogType.FETCHING_EXPENSES &&
             task.type !== TaskLogType.CREATING_AP_PAYMENT &&
-            task.type !== TaskLogType.CREATING_REIMBURSEMENT
-          ) &&
-          exportableAccountingExportIds.includes(task.expense_group)
+            task.type !== TaskLogType.CREATING_REIMBURSEMENT &&
+            exportableAccountingExportIds.includes(task.expense_group),
         ).length;
-      this.exportProgressPercentage = Math.round((this.processedCount / exportableAccountingExportIds.length) * 100);
+        this.exportProgressPercentage = Math.round((this.processedCount / exportableAccountingExportIds.length) * 100);
 
-      if (res.results.filter(task => (task.status === TaskLogState.IN_PROGRESS || task.status === TaskLogState.ENQUEUED)).length === 0) {
-        forkJoin([
-          this.getExportErrors$,
-          this.getAccountingExportSummary$.pipe(catchError(() => of(null)))
-        ]).subscribe(responses => {
-          this.errors = DashboardModel.parseAPIResponseToGroupedError(responses[0]);
-          this.groupedErrorStat = {
-            EMPLOYEE_MAPPING: null,
-            CATEGORY_MAPPING: null
-          };
+        if (
+          res.results.filter(
+            (task) => task.status === TaskLogState.IN_PROGRESS || task.status === TaskLogState.ENQUEUED,
+          ).length === 0
+        ) {
+          forkJoin([
+            this.getExportErrors$,
+            this.getAccountingExportSummary$.pipe(catchError(() => of(null))),
+          ]).subscribe((responses) => {
+            this.errors = DashboardModel.parseAPIResponseToGroupedError(responses[0]);
+            this.groupedErrorStat = {
+              EMPLOYEE_MAPPING: null,
+              CATEGORY_MAPPING: null,
+            };
 
-          if (responses[1]) {
-            this.accountingExportSummary = AccountingExportSummaryModel.parseAPIResponseToAccountingSummary(responses[1]);
-          }
+            if (responses[1]) {
+              this.accountingExportSummary = AccountingExportSummaryModel.parseAPIResponseToAccountingSummary(
+                responses[1],
+              );
+            }
 
-          this.failedExpenseGroupCount = res.results.filter(task => task.status === TaskLogState.FAILED || task.status === TaskLogState.FATAL).length;
+            this.failedExpenseGroupCount = res.results.filter(
+              (task) => task.status === TaskLogState.FAILED || task.status === TaskLogState.FATAL,
+            ).length;
 
-          this.exportableAccountingExportIds = res.results.filter(task => task.status === TaskLogState.FAILED || task.status === TaskLogState.FATAL).map(taskLog => taskLog.expense_group);
+            this.exportableAccountingExportIds = res.results
+              .filter((task) => task.status === TaskLogState.FAILED || task.status === TaskLogState.FATAL)
+              .map((taskLog) => taskLog.expense_group);
 
-          this.isExportInProgress = false;
-          this.exportProgressPercentage = 0;
-          this.processedCount = 0;
-        });
-      }
-    });
+            this.isExportInProgress = false;
+            this.exportProgressPercentage = 0;
+            this.processedCount = 0;
+          });
+        }
+      });
   }
 
   private setupPage(): void {
     forkJoin([
       this.getExportErrors$,
       this.getAccountingExportSummary$.pipe(catchError(() => of(null))),
-      this.dashboardService.getAllTasks([TaskLogState.ENQUEUED, TaskLogState.IN_PROGRESS, TaskLogState.FAILED], undefined, this.accountingExportType, AppName.INTACCT),
+      this.dashboardService.getAllTasks(
+        [TaskLogState.ENQUEUED, TaskLogState.IN_PROGRESS, TaskLogState.FAILED],
+        undefined,
+        this.accountingExportType,
+        AppName.INTACCT,
+      ),
       this.workspaceService.getConfiguration(),
       this.dashboardService.getExportableAccountingExportIds('v1'),
       this.intacctExportSettingService.getExportSettings(),
-      this.intacctAdvancedSettingsService.getAdvancedSettings()
+      this.intacctAdvancedSettingsService.getAdvancedSettings(),
     ]).subscribe((responses) => {
       this.errors = DashboardModel.parseAPIResponseToGroupedError(responses[0]);
-      this.reimbursableImportState = responses[5].configurations?.reimbursable_expenses_object ? this.reimbursableExpenseImportStateMap[responses[5].expense_group_settings.expense_state] : null;
-      this.cccImportState = responses[5].configurations?.corporate_credit_card_expenses_object ? this.cccExpenseImportStateMap[responses[5].expense_group_settings.ccc_expense_state] : null;
+      this.reimbursableImportState = responses[5].configurations?.reimbursable_expenses_object
+        ? this.reimbursableExpenseImportStateMap[responses[5].expense_group_settings.expense_state]
+        : null;
+      this.cccImportState = responses[5].configurations?.corporate_credit_card_expenses_object
+        ? this.cccExpenseImportStateMap[responses[5].expense_group_settings.ccc_expense_state]
+        : null;
 
       if (responses[1]) {
         this.accountingExportSummary = AccountingExportSummaryModel.parseAPIResponseToAccountingSummary(responses[1]);
@@ -204,15 +271,21 @@ export class IntacctDashboardComponent implements OnInit, OnDestroy {
 
       this.destinationFieldMap = {
         EMPLOYEE: responses[3].employee_field_mapping,
-        CATEGORY: (responses[3].reimbursable_expenses_object === IntacctReimbursableExpensesObject.EXPENSE_REPORT || responses[3].corporate_credit_card_expenses_object === IntacctCorporateCreditCardExpensesObject.EXPENSE_REPORT) ? IntacctCategoryDestination.EXPENSE_TYPE : IntacctCategoryDestination.ACCOUNT
+        CATEGORY:
+          responses[3].reimbursable_expenses_object === IntacctReimbursableExpensesObject.EXPENSE_REPORT ||
+          responses[3].corporate_credit_card_expenses_object === IntacctCorporateCreditCardExpensesObject.EXPENSE_REPORT
+            ? IntacctCategoryDestination.EXPENSE_TYPE
+            : IntacctCategoryDestination.ACCOUNT,
       };
 
       this.isLoading = false;
 
       const queuedTasks: IntacctTaskLog[] = responses[2].results.filter(
-        (task: IntacctTaskLog) => task.status === TaskLogState.ENQUEUED || task.status === TaskLogState.IN_PROGRESS
+        (task: IntacctTaskLog) => task.status === TaskLogState.ENQUEUED || task.status === TaskLogState.IN_PROGRESS,
       );
-      this.failedExpenseGroupCount = responses[2].results.filter((task: IntacctTaskLog) => task.status === TaskLogState.FAILED || task.status === TaskLogState.FATAL).length;
+      this.failedExpenseGroupCount = responses[2].results.filter(
+        (task: IntacctTaskLog) => task.status === TaskLogState.FAILED || task.status === TaskLogState.FATAL,
+      ).length;
 
       this.exportableAccountingExportIds = responses[4].exportable_expense_group_ids;
 
@@ -234,8 +307,7 @@ export class IntacctDashboardComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-
-    if (this.router.url.includes("/token_expired/")){
+    if (this.router.url.includes('/token_expired/')) {
       this.isIntacctTokenNotValid = true;
     }
 

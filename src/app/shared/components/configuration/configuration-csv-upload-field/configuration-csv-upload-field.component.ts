@@ -1,8 +1,14 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 
 import { TranslocoModule, TranslocoService } from '@jsverse/transloco';
-import { ButtonSize, ButtonType, ClickEvent, Sage50AttributeType, TrackingApp } from 'src/app/core/models/enum/enum.model';
-import { CsvUploadButtonComponent } from "../../input/csv-upload-button/csv-upload-button.component";
+import {
+  ButtonSize,
+  ButtonType,
+  ClickEvent,
+  Sage50AttributeType,
+  TrackingApp,
+} from 'src/app/core/models/enum/enum.model';
+import { CsvUploadButtonComponent } from '../../input/csv-upload-button/csv-upload-button.component';
 import { CsvUploadDialogComponent } from '../../dialog/csv-upload-dialog/csv-upload-dialog.component';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { SharedModule } from 'src/app/shared/shared.module';
@@ -11,14 +17,13 @@ import { UploadedCSVFile } from 'src/app/core/models/misc/configuration-csv-impo
 import { TrackingService } from 'src/app/core/services/integration/tracking.service';
 
 @Component({
-    selector: 'app-configuration-csv-upload-field',
-    imports: [TranslocoModule, SharedModule, CsvUploadButtonComponent],
-    providers: [DialogService],
-    templateUrl: './configuration-csv-upload-field.component.html',
-    styleUrl: './configuration-csv-upload-field.component.scss'
+  selector: 'app-configuration-csv-upload-field',
+  imports: [TranslocoModule, SharedModule, CsvUploadButtonComponent],
+  providers: [DialogService],
+  templateUrl: './configuration-csv-upload-field.component.html',
+  styleUrl: './configuration-csv-upload-field.component.scss',
 })
 export class ConfigurationCsvUploadFieldComponent {
-
   @Input({ required: true }) attributeType!: Sage50AttributeType;
 
   @Input({ required: true }) label!: string;
@@ -46,19 +51,19 @@ export class ConfigurationCsvUploadFieldComponent {
   constructor(
     public dialogService: DialogService,
     public translocoService: TranslocoService,
-    private trackingService: TrackingService
-  ) { }
+    private trackingService: TrackingService,
+  ) {}
 
   handleUploadClick() {
-    this.trackingService.onClickEvent(TrackingApp.SAGE50, ClickEvent.UPLOAD_CSV, {field: this.attributeType});
+    this.trackingService.onClickEvent(TrackingApp.SAGE50, ClickEvent.UPLOAD_CSV, { field: this.attributeType });
     this.ref = this.dialogService.open(CsvUploadDialogComponent, {
       showHeader: false,
       data: {
         attributeType: this.attributeType,
         articleLink: this.articleLink,
         uploadData: this.uploadData,
-        videoURL: this.videoURL
-      }
+        videoURL: this.videoURL,
+      },
     });
 
     this.ref?.onClose.subscribe((file: UploadedCSVFile | undefined) => {
@@ -69,5 +74,4 @@ export class ConfigurationCsvUploadFieldComponent {
       }
     });
   }
-
 }

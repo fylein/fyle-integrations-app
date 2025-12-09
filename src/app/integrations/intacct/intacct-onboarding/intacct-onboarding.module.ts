@@ -22,15 +22,8 @@ import { IntacctOnboardingAdvancedSettingComponent } from './intacct-onboarding-
     IntacctOnboardingDoneComponent,
     IntacctOnboardingImportSettingComponent,
     IntacctOnboardingExportSettingComponent,
-    IntacctOnboardingAdvancedSettingComponent
+    IntacctOnboardingAdvancedSettingComponent,
   ],
-  imports: [
-    CommonModule,
-    OnboardingRoutingModule,
-    SharedModule,
-    IntacctSharedModule,
-    FormsModule,
-    ReactiveFormsModule
-  ]
+  imports: [CommonModule, OnboardingRoutingModule, SharedModule, IntacctSharedModule, FormsModule, ReactiveFormsModule],
 })
-export class IntacctOnboardingModule { }
+export class IntacctOnboardingModule {}

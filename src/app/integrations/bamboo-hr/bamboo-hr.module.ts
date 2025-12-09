@@ -20,12 +20,8 @@ import { ToastModule } from 'primeng/toast';
 
 import { MessageService } from 'primeng/api';
 
-
 @NgModule({
-  declarations: [
-    BambooHrComponent,
-    ConfigurationComponent
-  ],
+  declarations: [BambooHrComponent, ConfigurationComponent],
   imports: [
     CommonModule,
     BambooHrRoutingModule,
@@ -41,10 +37,8 @@ import { MessageService } from 'primeng/api';
     MultiSelectModule,
     SkeletonModule,
     ProgressSpinnerModule,
-    ToastModule
+    ToastModule,
   ],
-  providers: [
-    MessageService
-  ]
+  providers: [MessageService],
 })
-export class BambooHrModule { }
+export class BambooHrModule {}

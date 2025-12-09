@@ -6,10 +6,6 @@ import { QbdDirectComponent } from './qbd-direct.component';
 
 @NgModule({
   declarations: [],
-  imports: [
-    CommonModule,
-    QbdDirectRoutingModule,
-    SharedModule
-  ]
+  imports: [CommonModule, QbdDirectRoutingModule, SharedModule],
 })
-export class QbdDirectModule { }
+export class QbdDirectModule {}

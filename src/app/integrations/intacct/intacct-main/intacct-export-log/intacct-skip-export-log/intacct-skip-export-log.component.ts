@@ -2,7 +2,11 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { PaginatorPage, TrackingApp } from 'src/app/core/models/enum/enum.model';
 import { DateFilter, SelectedDateFilter } from 'src/app/core/models/qbd/misc/qbd-date-filter.model';
-import { SkipExportLogResponse, SkipExportList, SkipExportLog } from 'src/app/core/models/intacct/db/expense-group.model';
+import {
+  SkipExportLogResponse,
+  SkipExportList,
+  SkipExportLog,
+} from 'src/app/core/models/intacct/db/expense-group.model';
 import { Paginator } from 'src/app/core/models/misc/paginator.model';
 import { TrackingService } from 'src/app/core/services/integration/tracking.service';
 import { ExportLogService } from 'src/app/core/services/common/export-log.service';
@@ -15,13 +19,12 @@ import { UserService } from 'src/app/core/services/misc/user.service';
 import { AccountingExportService } from 'src/app/core/services/common/accounting-export.service';
 
 @Component({
-    selector: 'app-intacct-skip-export-log',
-    templateUrl: './intacct-skip-export-log.component.html',
-    styleUrls: ['./intacct-skip-export-log.component.scss'],
-    standalone: false
+  selector: 'app-intacct-skip-export-log',
+  templateUrl: './intacct-skip-export-log.component.html',
+  styleUrls: ['./intacct-skip-export-log.component.scss'],
+  standalone: false,
 })
 export class IntacctSkipExportLogComponent implements OnInit {
-
   isLoading: boolean = true;
 
   expenses: SkipExportList[];
@@ -76,18 +79,16 @@ export class IntacctSkipExportLogComponent implements OnInit {
     private trackingService: TrackingService,
     private exportLogService: ExportLogService,
     private paginatorService: PaginatorService,
-    private accountingExportService: AccountingExportService
+    private accountingExportService: AccountingExportService,
   ) {
     this.dateOptions = this.accountingExportService.getDateOptionsV2();
-    this.searchQuerySubject.pipe(
-    debounceTime(1000)
-  ).subscribe((query: string) => {
-    this.searchQuery = query;
-    this.offset = 0;
-    this.currentPage = Math.ceil(this.offset / this.limit) + 1;
-    this.getSkippedExpenses(this.limit, this.offset);
-  });
-}
+    this.searchQuerySubject.pipe(debounceTime(1000)).subscribe((query: string) => {
+      this.searchQuery = query;
+      this.offset = 0;
+      this.currentPage = Math.ceil(this.offset / this.limit) + 1;
+      this.getSkippedExpenses(this.limit, this.offset);
+    });
+  }
 
   public handleSimpleSearch(query: string) {
     this.searchQuerySubject.next(query);
@@ -117,17 +118,21 @@ export class IntacctSkipExportLogComponent implements OnInit {
       this.paginatorService.storePageSize(PaginatorPage.EXPORT_LOG, limit);
     }
 
-    return this.exportLogService.getSkippedExpenses(limit, offset, this.selectedDateFilter, this.searchQuery).subscribe((skippedExpenses: SkipExportLogResponse) => {
-      this.totalCount = skippedExpenses.count;
-      const orgId = this.userService.getUserProfile().org_id;
-      skippedExpenses.results.forEach((skippedExpense: SkipExportLog) => {
-        skippedExpenseGroup.push(SkippedAccountingExportModel.parseAPIResponseToSkipExportList(skippedExpense, orgId));
-      });
+    return this.exportLogService
+      .getSkippedExpenses(limit, offset, this.selectedDateFilter, this.searchQuery)
+      .subscribe((skippedExpenses: SkipExportLogResponse) => {
+        this.totalCount = skippedExpenses.count;
+        const orgId = this.userService.getUserProfile().org_id;
+        skippedExpenses.results.forEach((skippedExpense: SkipExportLog) => {
+          skippedExpenseGroup.push(
+            SkippedAccountingExportModel.parseAPIResponseToSkipExportList(skippedExpense, orgId),
+          );
+        });
 
-      this.filteredExpenses = skippedExpenseGroup;
-      this.expenses = [...this.filteredExpenses];
-      this.isLoading = false;
-    });
+        this.filteredExpenses = skippedExpenseGroup;
+        this.expenses = [...this.filteredExpenses];
+        this.isLoading = false;
+      });
   }
 
   private setupForm(): void {
@@ -135,7 +140,7 @@ export class IntacctSkipExportLogComponent implements OnInit {
       searchOption: [''],
       dateRange: [null],
       start: [''],
-      end: ['']
+      end: [''],
     });
 
     this.skipExportLogForm.controls.start.valueChanges.subscribe((dateRange) => {
@@ -150,7 +155,7 @@ export class IntacctSkipExportLogComponent implements OnInit {
         this.hideCalendar = true;
         this.selectedDateFilter = {
           startDate: dateRange[0],
-          endDate: dateRange[1]
+          endDate: dateRange[1],
         };
 
         this.isDateSelected = true;
@@ -158,8 +163,8 @@ export class IntacctSkipExportLogComponent implements OnInit {
           this.hideCalendar = false;
         }, 10);
         this.getSkippedExpenses(paginator.limit, paginator.offset);
-    }
-  });
+      }
+    });
   }
 
   private getSkippedExpensesAndSetupPage(): void {
@@ -175,7 +180,7 @@ export class IntacctSkipExportLogComponent implements OnInit {
   private trackDateFilter(filterType: 'existing' | 'custom', selectedDateFilter: SelectedDateFilter): void {
     const trackingProperty = {
       filterType,
-      ...selectedDateFilter
+      ...selectedDateFilter,
     };
     this.trackingService.onDateFilter(TrackingApp.INTACCT, trackingProperty);
   }
@@ -183,5 +188,4 @@ export class IntacctSkipExportLogComponent implements OnInit {
   ngOnInit(): void {
     this.getSkippedExpensesAndSetupPage();
   }
-
 }

@@ -8,9 +8,9 @@ export type LoaderSpinnerSizes = 'horizontal-sm' | 'vertical-sm' | 'vertical-md'
 const DEFAULT_VARIANT: LoaderSpinnerVariants = 'neutral';
 
 @Component({
-    selector: 'app-loader',
-    templateUrl: './loader.component.html',
-    standalone: false
+  selector: 'app-loader',
+  templateUrl: './loader.component.html',
+  standalone: false,
 })
 export class LoaderComponent implements OnInit {
   constructor(private translocoService: TranslocoService) {}
@@ -34,7 +34,7 @@ export class LoaderComponent implements OnInit {
   @Input() size: LoaderSpinnerSizes = 'vertical-md';
 
   /** Compute CSS classes for host */
-    get hostClasses(): string[] {
+  get hostClasses(): string[] {
     const classes: string[] = [];
 
     // Base loader classes
@@ -65,7 +65,7 @@ export class LoaderComponent implements OnInit {
     return ['tw-w-full', 'tw-h-full'];
   }
 
-    /** Get spinner track classes */
+  /** Get spinner track classes */
   get spinnerTrackClasses(): string[] {
     const classes: string[] = ['tw-fill-none', 'tw-stroke-[6px]'];
 
@@ -79,14 +79,14 @@ export class LoaderComponent implements OnInit {
     return classes;
   }
 
-      /** Get spinner segment classes */
+  /** Get spinner segment classes */
   get spinnerSegmentClasses(): string[] {
     const classes: string[] = [
       'tw-fill-none',
       'tw-stroke-[6px]',
       'tw-stroke-round',
       'tw-origin-[25px_25px]',
-      'tw-animate-loader-spin'
+      'tw-animate-loader-spin',
     ];
 
     // Variant-specific colors
@@ -113,28 +113,28 @@ export class LoaderComponent implements OnInit {
       'horizontal-sm': {
         containerClasses: ['tw-flex-row'],
         spinnerClasses: ['tw-w-20-px', 'tw-h-20-px'],
-        titleClasses: ['tw-ml-8-px', 'tw-mt-0']
+        titleClasses: ['tw-ml-8-px', 'tw-mt-0'],
       },
       'vertical-sm': {
         containerClasses: ['tw-flex-col'],
         spinnerClasses: ['tw-w-32-px', 'tw-h-32-px'],
-        titleClasses: ['tw-mt-12-px']
+        titleClasses: ['tw-mt-12-px'],
       },
       'vertical-md': {
         containerClasses: ['tw-flex-col'],
         spinnerClasses: ['tw-w-56-px', 'tw-h-56-px'],
-        titleClasses: ['tw-mt-16-px']
+        titleClasses: ['tw-mt-16-px'],
       },
       'vertical-lg': {
         containerClasses: ['tw-flex-col'],
         spinnerClasses: ['tw-w-80-px', 'tw-h-80-px'],
-        titleClasses: ['tw-mt-22-px']
+        titleClasses: ['tw-mt-22-px'],
       },
       'vertical-xl': {
         containerClasses: ['tw-flex-col'],
         spinnerClasses: ['tw-w-[104px]', 'tw-h-[104px]'],
-        titleClasses: ['tw-mt-26-px']
-      }
+        titleClasses: ['tw-mt-26-px'],
+      },
     };
 
     return configs[size] || configs['vertical-md'];

@@ -9,13 +9,12 @@ import { SnakeCaseToSpaceCasePipe } from 'src/app/shared/pipes/snake-case-to-spa
 import { TranslocoService } from '@jsverse/transloco';
 
 @Component({
-    selector: 'app-sage300-mapping',
-    templateUrl: './sage300-mapping.component.html',
-    styleUrls: ['./sage300-mapping.component.scss'],
-    standalone: false
+  selector: 'app-sage300-mapping',
+  templateUrl: './sage300-mapping.component.html',
+  styleUrls: ['./sage300-mapping.component.scss'],
+  standalone: false,
 })
 export class Sage300MappingComponent implements OnInit {
-
   isLoading: boolean;
 
   mappingPages: TabMenuItem[];
@@ -33,23 +32,37 @@ export class Sage300MappingComponent implements OnInit {
   constructor(
     private router: Router,
     private mappingService: MappingService,
-    private translocoService: TranslocoService
-  ) { }
+    private translocoService: TranslocoService,
+  ) {}
 
   private setupPage(): void {
     this.isLoading = true;
     this.mappingPages = [
-      {label: this.translocoService.translate('sage300Mapping.employeeLabel'), routerLink: '/integrations/sage300/main/mapping/employee', value: 'employee'},
-      {label: this.translocoService.translate('sage300Mapping.categoryLabel'), routerLink: '/integrations/sage300/main/mapping/category', value: 'category'}
+      {
+        label: this.translocoService.translate('sage300Mapping.employeeLabel'),
+        routerLink: '/integrations/sage300/main/mapping/employee',
+        value: 'employee',
+      },
+      {
+        label: this.translocoService.translate('sage300Mapping.categoryLabel'),
+        routerLink: '/integrations/sage300/main/mapping/category',
+        value: 'category',
+      },
     ];
     this.mappingService.getMappingSettings().subscribe((response) => {
       if (response.results && Array.isArray(response.results)) {
         response.results.forEach((item) => {
-          if (item.source_field!==FyleField.EMPLOYEE && item.source_field!=='CATEGORY' && item.source_field !== 'PROJECT') {
+          if (
+            item.source_field !== FyleField.EMPLOYEE &&
+            item.source_field !== 'CATEGORY' &&
+            item.source_field !== 'PROJECT'
+          ) {
             this.mappingPages.push({
-              label: new SentenceCasePipe(this.translocoService).transform(new SnakeCaseToSpaceCasePipe().transform(item.source_field)),
+              label: new SentenceCasePipe(this.translocoService).transform(
+                new SnakeCaseToSpaceCasePipe().transform(item.source_field),
+              ),
               routerLink: `/integrations/sage300/main/mapping/${encodeURIComponent(item.source_field.toLowerCase())}`,
-              value: 'mapping_' + item.source_field.toLowerCase()
+              value: 'mapping_' + item.source_field.toLowerCase(),
             });
           }
         });

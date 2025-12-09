@@ -2,7 +2,10 @@ import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
 import { NavigationExtras, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { brandingConfig, brandingDemoVideoLinks, brandingKbArticles } from 'src/app/branding/branding-config';
-import { BusinessCentralConnectorPost, BusinessCentralConnectorModel } from 'src/app/core/models/business-central/business-central-configuration/business-central-connector.model';
+import {
+  BusinessCentralConnectorPost,
+  BusinessCentralConnectorModel,
+} from 'src/app/core/models/business-central/business-central-configuration/business-central-connector.model';
 import { AppName, BusinessCentralOnboardingState, ToastSeverity } from 'src/app/core/models/enum/enum.model';
 import { ConfigurationWarningOut } from 'src/app/core/models/misc/configuration-warning.model';
 import { BusinessCentralConnectorService } from 'src/app/core/services/business-central/business-central-configuration/business-central-connector.service';
@@ -15,13 +18,12 @@ import { TranslocoService } from '@jsverse/transloco';
 import { BrandingService } from 'src/app/core/services/common/branding.service';
 
 @Component({
-    selector: 'app-business-central-onboarding-landing',
-    templateUrl: './business-central-onboarding-landing.component.html',
-    styleUrls: ['./business-central-onboarding-landing.component.scss'],
-    standalone: false
+  selector: 'app-business-central-onboarding-landing',
+  templateUrl: './business-central-onboarding-landing.component.html',
+  styleUrls: ['./business-central-onboarding-landing.component.scss'],
+  standalone: false,
 })
 export class BusinessCentralOnboardingLandingComponent implements OnInit, OnDestroy {
-
   appName: AppName = AppName.BUSINESS_CENTRAL;
 
   redirectLink = brandingKbArticles.onboardingArticles.BUSINESS_CENTRAL.LANDING;
@@ -46,8 +48,8 @@ export class BusinessCentralOnboardingLandingComponent implements OnInit, OnDest
     private businessCentralHelperService: BusinessCentralHelperService,
     private workspaceService: WorkspaceService,
     private translocoService: TranslocoService,
-    public brandingService: BrandingService
-  ) { }
+    public brandingService: BrandingService,
+  ) {}
 
   acceptWarning(data: ConfigurationWarningOut): void {
     this.isIncorrectBCConnectedDialogVisible = false;
@@ -67,22 +69,31 @@ export class BusinessCentralOnboardingLandingComponent implements OnInit, OnDest
   }
 
   private postBusinessCentralCredentials(code: string): void {
-    const payload: BusinessCentralConnectorPost = BusinessCentralConnectorModel.constructPayload(code, +this.workspaceService.getWorkspaceId());
-    this.businessCentralConnectorService.connectBusinessCentral(payload).subscribe(() => {
-      this.businessCentralHelperService.refreshBusinessCentralDimensions(true).subscribe(() => {
-        this.businessCentralConnectionInProgress = false;
-        this.isIntegrationConnected = true;
-        this.checkProgressAndRedirect();
-      });
-    }, (error) => {
-      const errorMessage = 'message' in error.error ? error.error.message : this.translocoService.translate('businessCentralOnboardingLanding.connectionFailedToast');
-      if (errorMessage === 'Please choose the correct Dynamic 365 Business Central account') {
-        this.isIncorrectBCConnectedDialogVisible = true;
-      } else {
-        this.toastService.displayToastMessage(ToastSeverity.ERROR, errorMessage);
-        this.router.navigate([`/integrations/business_central/onboarding/landing`]);
-      }
-    });
+    const payload: BusinessCentralConnectorPost = BusinessCentralConnectorModel.constructPayload(
+      code,
+      +this.workspaceService.getWorkspaceId(),
+    );
+    this.businessCentralConnectorService.connectBusinessCentral(payload).subscribe(
+      () => {
+        this.businessCentralHelperService.refreshBusinessCentralDimensions(true).subscribe(() => {
+          this.businessCentralConnectionInProgress = false;
+          this.isIntegrationConnected = true;
+          this.checkProgressAndRedirect();
+        });
+      },
+      (error) => {
+        const errorMessage =
+          'message' in error.error
+            ? error.error.message
+            : this.translocoService.translate('businessCentralOnboardingLanding.connectionFailedToast');
+        if (errorMessage === 'Please choose the correct Dynamic 365 Business Central account') {
+          this.isIncorrectBCConnectedDialogVisible = true;
+        } else {
+          this.toastService.displayToastMessage(ToastSeverity.ERROR, errorMessage);
+          this.router.navigate([`/integrations/business_central/onboarding/landing`]);
+        }
+      },
+    );
   }
 
   private checkProgressAndRedirect(): void {
@@ -94,8 +105,7 @@ export class BusinessCentralOnboardingLandingComponent implements OnInit, OnDest
     }
   }
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 
   ngOnDestroy(): void {
     if (this.oauthCallbackSubscription) {

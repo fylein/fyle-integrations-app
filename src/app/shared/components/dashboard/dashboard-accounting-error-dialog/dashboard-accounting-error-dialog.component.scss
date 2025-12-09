@@ -1,11 +1,11 @@
 :host ::ng-deep .p-datepicker table td > span.p-highlight {
-    @apply tw-text-white tw-bg-mandatory-field-color #{!important};
+  @apply tw-text-white tw-bg-mandatory-field-color #{!important};
 }
 
 :host ::ng-deep .p-datepicker table td > span:focus {
-    @apply tw-shadow-none #{!important};
+  @apply tw-shadow-none #{!important};
 }
 
 :host ::ng-deep .p-datepicker table th {
-    @apply tw-text-center ;
+  @apply tw-text-center;
 }

@@ -1,70 +1,73 @@
 @if (isGradientAllowed) {
-<div class="tw-absolute tw-bg-header-1 tw-h-110-px tw-w-[100%] tw-z-[-1]"></div>
-<div class="tw-absolute tw-bg-header-2 tw-h-110-px tw-w-[100%] tw-z-[-1]"></div>
+  <div class="tw-absolute tw-bg-header-1 tw-h-110-px tw-w-[100%] tw-z-[-1]"></div>
+  <div class="tw-absolute tw-bg-header-2 tw-h-110-px tw-w-[100%] tw-z-[-1]"></div>
 }
 
-@if (isLoading){
-<div class="tw-flex tw-justify-center tw-items-center tw-h-full">
+@if (isLoading) {
+  <div class="tw-flex tw-justify-center tw-items-center tw-h-full">
     <app-loader></app-loader>
-</div>
+  </div>
 }
 
-@if (!isLoading && !isIntacctTokenNotValid){
-    <app-dashboard-export-section
-        (export)="export()"
-        [appName]="appName"
-        [isImportInProgress]="isImportInProgress"
-        [isExportInProgress]="isExportInProgress"
-        [exportableAccountingExportIds]="exportableAccountingExportIds"
-        [failedExpenseGroupCount]="failedExpenseGroupCount"
-        [exportProgressPercentage]="exportProgressPercentage"
-        [accountingExportSummary]="accountingExportSummary"
-        [processedCount]="processedCount"
-        [reimbursableImportState]="reimbursableImportState"
-        [cccImportState]="cccImportState">
-    </app-dashboard-export-section>
+@if (!isLoading && !isIntacctTokenNotValid) {
+  <app-dashboard-export-section
+    (export)="export()"
+    [appName]="appName"
+    [isImportInProgress]="isImportInProgress"
+    [isExportInProgress]="isExportInProgress"
+    [exportableAccountingExportIds]="exportableAccountingExportIds"
+    [failedExpenseGroupCount]="failedExpenseGroupCount"
+    [exportProgressPercentage]="exportProgressPercentage"
+    [accountingExportSummary]="accountingExportSummary"
+    [processedCount]="processedCount"
+    [reimbursableImportState]="reimbursableImportState"
+    [cccImportState]="cccImportState"
+  >
+  </app-dashboard-export-section>
 
-    @if(!accountingExportSummary && !exportableAccountingExportIds.length){
+  @if (!accountingExportSummary && !exportableAccountingExportIds.length) {
     <app-zero-state
-        [zeroStateImageURL]="'assets/illustrations/dashboard-illustration.svg'"
-        [headerText]="'dashboard.dashboardExportZeroStateHeaderText' | transloco"
-        [subHeaderText]="'dashboard.dashboardExportZeroStateSubHeaderText' | transloco">
+      [zeroStateImageURL]="'assets/illustrations/dashboard-illustration.svg'"
+      [headerText]="'dashboard.dashboardExportZeroStateHeaderText' | transloco"
+      [subHeaderText]="'dashboard.dashboardExportZeroStateSubHeaderText' | transloco"
+    >
     </app-zero-state>
-    }
+  }
 
-
-    @if(exportableAccountingExportIds.length || accountingExportSummary){
+  @if (exportableAccountingExportIds.length || accountingExportSummary) {
     <app-dashboard-export-summary-section
-        [appName]="appName"
-        [exportLogVersion]="'v1'"
-        [accountingExportType]="accountingExportType"
-        [accountingExportSummary]="accountingExportSummary"
-        [isRealTimeExportEnabled]="isRealTimeExportEnabled">
+      [appName]="appName"
+      [exportLogVersion]="'v1'"
+      [accountingExportType]="accountingExportType"
+      [accountingExportSummary]="accountingExportSummary"
+      [isRealTimeExportEnabled]="isRealTimeExportEnabled"
+    >
     </app-dashboard-export-summary-section>
-    }
+  }
 
-    @if ((errors.EMPLOYEE_MAPPING.length || errors.CATEGORY_MAPPING.length || errors.ACCOUNTING_ERROR.length) && exportableAccountingExportIds.length){
+  @if (
+    (errors.EMPLOYEE_MAPPING.length || errors.CATEGORY_MAPPING.length || errors.ACCOUNTING_ERROR.length) &&
+    exportableAccountingExportIds.length
+  ) {
     <app-dashboard-error-section
-        [appName]="appName"
-        [apiModuleUrl]="AppUrl.INTACCT"
-        [errors]="errors"
-        [groupedErrorStat]="groupedErrorStat"
-        [destinationFieldMap]="destinationFieldMap"
-        [isCategoryMappingGeneric]="false"
-        [destinationOptionsVersion]="'v1'"
-        [importCodeFields]="acceptedCodeField"
-        [errorsVersion]="'v1'"
-        [exportableExpenseGroupIds]="exportableAccountingExportIds"
-        [accountingExportSummary]="accountingExportSummary">
+      [appName]="appName"
+      [apiModuleUrl]="AppUrl.INTACCT"
+      [errors]="errors"
+      [groupedErrorStat]="groupedErrorStat"
+      [destinationFieldMap]="destinationFieldMap"
+      [isCategoryMappingGeneric]="false"
+      [destinationOptionsVersion]="'v1'"
+      [importCodeFields]="acceptedCodeField"
+      [errorsVersion]="'v1'"
+      [exportableExpenseGroupIds]="exportableAccountingExportIds"
+      [accountingExportSummary]="accountingExportSummary"
+    >
     </app-dashboard-error-section>
-    }
+  }
 }
 
 @if (!isLoading && isIntacctTokenNotValid) {
   <div class="tw-flex tw-justify-center tw-items-center tw-min-h-[90vh]">
-    <app-dashboard-token-expired
-      [appName]="appName"
-    >
-    </app-dashboard-token-expired>
+    <app-dashboard-token-expired [appName]="appName"> </app-dashboard-token-expired>
   </div>
 }

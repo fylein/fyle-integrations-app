@@ -5,14 +5,8 @@ import { QbdDirectConfigurationRoutingModule } from './qbd-direct-configuration-
 import { QbdDirectConfigurationComponent } from './qbd-direct-configuration.component';
 import { SharedModule } from 'src/app/shared/shared.module';
 
-
 @NgModule({
   declarations: [],
-  imports: [
-    CommonModule,
-    QbdDirectConfigurationComponent,
-    QbdDirectConfigurationRoutingModule,
-    SharedModule
-  ]
+  imports: [CommonModule, QbdDirectConfigurationComponent, QbdDirectConfigurationRoutingModule, SharedModule],
 })
-export class QbdDirectConfigurationModule { }
+export class QbdDirectConfigurationModule {}

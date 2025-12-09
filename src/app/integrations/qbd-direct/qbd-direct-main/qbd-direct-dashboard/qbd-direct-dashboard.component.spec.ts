@@ -8,9 +8,8 @@ xdescribe('QbdDirectDashboardComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [QbdDirectDashboardComponent]
-    })
-    .compileComponents();
+      imports: [QbdDirectDashboardComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(QbdDirectDashboardComponent);
     component = fixture.componentInstance;

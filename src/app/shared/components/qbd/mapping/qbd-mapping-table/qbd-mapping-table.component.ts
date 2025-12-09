@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { FieldType, OperatingSystem } from 'src/app/core/models/enum/enum.model';
 import { QBDMapping, QBDMappingModel, QBDMappingPost } from 'src/app/core/models/qbd/db/qbd-mapping.model';
@@ -9,13 +9,12 @@ import { ActivatedRoute } from '@angular/router';
 import { TranslocoService } from '@jsverse/transloco';
 
 @Component({
-    selector: 'app-qbd-mapping-table',
-    templateUrl: './qbd-mapping-table.component.html',
-    styleUrls: ['./qbd-mapping-table.component.scss'],
-    standalone: false
+  selector: 'app-qbd-mapping-table',
+  templateUrl: './qbd-mapping-table.component.html',
+  styleUrls: ['./qbd-mapping-table.component.scss'],
+  standalone: false,
 })
 export class QbdMappingTableComponent implements OnInit {
-
   @Input() mappings!: QBDMapping[] | EmployeeMapping[];
 
   @Input() destinationFieldType: FieldType;
@@ -44,8 +43,8 @@ export class QbdMappingTableComponent implements OnInit {
 
   constructor(
     public route: ActivatedRoute,
-    private translocoService: TranslocoService
-  ) { }
+    private translocoService: TranslocoService,
+  ) {}
 
   onTextBoxChange(event: any): void {
     const targetValue: string = event.target.value;
@@ -69,7 +68,10 @@ export class QbdMappingTableComponent implements OnInit {
   }
 
   getPlaceholder(): string {
-    const value = this.route.snapshot.params.source_field === 'corporate_card' ? this.translocoService.translate('qbdMappingTable.creditCardAccount') : this.translocoService.translate('qbdMappingTable.account');
+    const value =
+      this.route.snapshot.params.source_field === 'corporate_card'
+        ? this.translocoService.translate('qbdMappingTable.creditCardAccount')
+        : this.translocoService.translate('qbdMappingTable.account');
     return this.translocoService.translate('qbdMappingTable.enterValue', { value: value });
   }
 
@@ -83,7 +85,5 @@ export class QbdMappingTableComponent implements OnInit {
             </div>`;
   }
 
-  ngOnInit(): void {
-  }
-
+  ngOnInit(): void {}
 }

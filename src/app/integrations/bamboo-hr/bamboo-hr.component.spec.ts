@@ -5,7 +5,12 @@ import { FormBuilder } from '@angular/forms';
 import { By } from '@angular/platform-browser';
 import { MessageService } from 'primeng/api';
 import { of, throwError } from 'rxjs';
-import { bambooHRMockConfiguration, bambooHRMockConfigurationPayload, bambooHrMockData, bambooHrMockWithoutToken } from 'src/app/core/services/bamboo-hr/bamboo-hr.fixture';
+import {
+  bambooHRMockConfiguration,
+  bambooHRMockConfigurationPayload,
+  bambooHrMockData,
+  bambooHrMockWithoutToken,
+} from 'src/app/core/services/bamboo-hr/bamboo-hr.fixture';
 import { BambooHrService } from 'src/app/core/services/bamboo-hr/bamboo-hr.service';
 import { orgMockData } from 'src/app/core/services/org/org.fixture';
 import { OrgService } from 'src/app/core/services/org/org.service';
@@ -24,7 +29,7 @@ xdescribe('BambooHrComponent', () => {
     getAdditionalEmails: () => of(bambooHRMockConfiguration.additional_email_options),
     createWorkatoWorkspace: () => of({}),
     connectSendgrid: () => of({}),
-    connectFyle: () => of({})
+    connectFyle: () => of({}),
   };
 
   const service2 = {
@@ -35,23 +40,22 @@ xdescribe('BambooHrComponent', () => {
     uploadPackage: () => of({}),
     disconnectBambooHr: () => of({}),
     syncEmployees: () => of({}),
-    postConfigurations: () => of(bambooHRMockConfigurationPayload)
+    postConfigurations: () => of(bambooHRMockConfigurationPayload),
   };
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-    declarations: [BambooHrComponent],
-    imports: [],
-    providers: [
+      declarations: [BambooHrComponent],
+      imports: [],
+      providers: [
         FormBuilder,
         MessageService,
         { provide: OrgService, useValue: service1 },
         { provide: BambooHrService, useValue: service2 },
         provideHttpClient(withInterceptorsFromDi()),
-        provideHttpClientTesting()
-    ]
-})
-    .compileComponents();
+        provideHttpClientTesting(),
+      ],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(BambooHrComponent);
     formBuilder = TestBed.inject(FormBuilder);
@@ -133,7 +137,7 @@ xdescribe('BambooHrComponent', () => {
     component.isBambooConnectionInProgress = true;
     component.bambooConnectionForm = formBuilder.group({
       subdomain: ['real domain'],
-      apiToken: ['loloxoxo']
+      apiToken: ['loloxoxo'],
     });
     component.connectBambooHR();
 

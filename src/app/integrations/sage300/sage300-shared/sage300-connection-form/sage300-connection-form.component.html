@@ -1,11 +1,36 @@
-  <form [formGroup]="connectSage300Form">
-    <div [ngClass]="isReconnecting ? '' : 'tw-mb-16-px'">
-      <app-configuration-text-field [styleClasses]="isReconnecting ? 'tw-min-w-full' : undefined" [customErrorMessage]="'sage300ConnectionForm.identifierError' | transloco" [form]="connectSage300Form" [formControllerName]="'companyID'" [isFieldMandatory]="true" [label]="'sage300ConnectionForm.identifierLabel' | transloco" [placeholder]="'sage300ConnectionForm.identifierPlaceholder' | transloco"></app-configuration-text-field>
-    </div>
-    <div class="tw-mb-16-px">
-      <app-configuration-text-field [styleClasses]="isReconnecting ? 'tw-min-w-full' : undefined" [customErrorMessage]="'sage300ConnectionForm.userIdError' | transloco" [form]="connectSage300Form" [formControllerName]="'userID'" [isFieldMandatory]="true" [label]="'sage300ConnectionForm.userIdLabel' | transloco" [placeholder]="'sage300ConnectionForm.userIdPlaceholder' | transloco"></app-configuration-text-field>
-    </div>
-    <div>
-      <app-configuration-text-field [styleClasses]="isReconnecting ? 'tw-min-w-full' : undefined" [customErrorMessage]="'sage300ConnectionForm.passwordError' | transloco" [form]="connectSage300Form" [formControllerName]="'userPassword'" [isFieldMandatory]="true" [label]="'sage300ConnectionForm.passwordLabel' | transloco" [placeholder]="'sage300ConnectionForm.passwordPlaceholder' | transloco" [type]="'password'"></app-configuration-text-field>
-    </div>
-  </form>
+<form [formGroup]="connectSage300Form">
+  <div [ngClass]="isReconnecting ? '' : 'tw-mb-16-px'">
+    <app-configuration-text-field
+      [styleClasses]="isReconnecting ? 'tw-min-w-full' : undefined"
+      [customErrorMessage]="'sage300ConnectionForm.identifierError' | transloco"
+      [form]="connectSage300Form"
+      [formControllerName]="'companyID'"
+      [isFieldMandatory]="true"
+      [label]="'sage300ConnectionForm.identifierLabel' | transloco"
+      [placeholder]="'sage300ConnectionForm.identifierPlaceholder' | transloco"
+    ></app-configuration-text-field>
+  </div>
+  <div class="tw-mb-16-px">
+    <app-configuration-text-field
+      [styleClasses]="isReconnecting ? 'tw-min-w-full' : undefined"
+      [customErrorMessage]="'sage300ConnectionForm.userIdError' | transloco"
+      [form]="connectSage300Form"
+      [formControllerName]="'userID'"
+      [isFieldMandatory]="true"
+      [label]="'sage300ConnectionForm.userIdLabel' | transloco"
+      [placeholder]="'sage300ConnectionForm.userIdPlaceholder' | transloco"
+    ></app-configuration-text-field>
+  </div>
+  <div>
+    <app-configuration-text-field
+      [styleClasses]="isReconnecting ? 'tw-min-w-full' : undefined"
+      [customErrorMessage]="'sage300ConnectionForm.passwordError' | transloco"
+      [form]="connectSage300Form"
+      [formControllerName]="'userPassword'"
+      [isFieldMandatory]="true"
+      [label]="'sage300ConnectionForm.passwordLabel' | transloco"
+      [placeholder]="'sage300ConnectionForm.passwordPlaceholder' | transloco"
+      [type]="'password'"
+    ></app-configuration-text-field>
+  </div>
+</form>

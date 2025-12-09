@@ -8,13 +8,12 @@ import { SharedModule } from 'src/app/shared/shared.module';
 import { TranslocoModule, TranslocoService } from '@jsverse/transloco';
 
 @Component({
-    selector: 'app-qbd-direct-export-log',
-    imports: [RouterModule, CommonModule, SharedModule, TranslocoModule],
-    templateUrl: './qbd-direct-export-log.component.html',
-    styleUrl: './qbd-direct-export-log.component.scss'
+  selector: 'app-qbd-direct-export-log',
+  imports: [RouterModule, CommonModule, SharedModule, TranslocoModule],
+  templateUrl: './qbd-direct-export-log.component.html',
+  styleUrl: './qbd-direct-export-log.component.scss',
 })
 export class QbdDirectExportLogComponent implements OnInit {
-
   modules: TabMenuItem[];
 
   activeModule: string;
@@ -29,18 +28,23 @@ export class QbdDirectExportLogComponent implements OnInit {
 
   constructor(
     private router: Router,
-    private translocoService: TranslocoService
-  ) { }
-
+    private translocoService: TranslocoService,
+  ) {}
 
   ngOnInit(): void {
     this.modules = [
-      {label: this.translocoService.translate('qbdDirectExportLog.completed'), routerLink: '/integrations/qbd_direct/main/export_log/complete', value: 'complete'},
-      {label: this.translocoService.translate('qbdDirectExportLog.skipped'), routerLink: '/integrations/qbd_direct/main/export_log/skipped', value: 'skipped'}
+      {
+        label: this.translocoService.translate('qbdDirectExportLog.completed'),
+        routerLink: '/integrations/qbd_direct/main/export_log/complete',
+        value: 'complete',
+      },
+      {
+        label: this.translocoService.translate('qbdDirectExportLog.skipped'),
+        routerLink: '/integrations/qbd_direct/main/export_log/skipped',
+        value: 'skipped',
+      },
     ];
     this.activeModule = this.modules[0].value;
     this.router.navigateByUrl(this.modules[0].routerLink!);
   }
-
-
 }

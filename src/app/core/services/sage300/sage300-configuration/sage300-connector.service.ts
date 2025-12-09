@@ -16,11 +16,9 @@ import { TranslocoService } from '@jsverse/transloco';
 const sage300CredentialCache = new Subject<void>();
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
-
 export class Sage300ConnectorService {
-
   workspaceId: number;
 
   sage300Credential: Sage300Credential | null = null;
@@ -34,7 +32,7 @@ export class Sage300ConnectorService {
     private mappingsService: Sage300MappingService,
     private toastService: IntegrationsToastService,
     private workspaceService: WorkspaceService,
-    private translocoService: TranslocoService
+    private translocoService: TranslocoService,
   ) {
     helper.setBaseApiURL();
   }
@@ -42,25 +40,28 @@ export class Sage300ConnectorService {
   mapAPIResponseToConnectorFormGroup(sage300Connection: Sage300Credential | null): FormGroup {
     const isDisabled = sage300Connection?.identifier ? true : false;
     return new FormGroup({
-      companyID: new FormControl({value: sage300Connection?.identifier ? sage300Connection?.identifier : null, disabled: isDisabled}, Validators.required),
+      companyID: new FormControl(
+        { value: sage300Connection?.identifier ? sage300Connection?.identifier : null, disabled: isDisabled },
+        Validators.required,
+      ),
       userID: new FormControl('', Validators.required),
-      userPassword: new FormControl('', Validators.required)
+      userPassword: new FormControl('', Validators.required),
     });
   }
 
   @Cacheable({
-    cacheBusterObserver: sage300CredentialCache
+    cacheBusterObserver: sage300CredentialCache,
   })
   getSage300Credential(): Observable<Sage300Credential> {
     return this.apiService.get(`/workspaces/${this.storageService.get('workspaceId')}/credentials/sage300/`, {});
   }
 
   @CacheBuster({
-    cacheBusterNotifier: sage300CredentialCache
+    cacheBusterNotifier: sage300CredentialCache,
   })
   upsertCredentials(data: Sage300Credential): Observable<Sage300Credential> {
     globalCacheBusterNotifier.next();
-    if (this.doesSage300CredentialsExist){
+    if (this.doesSage300CredentialsExist) {
       return this.apiService.patch(`/workspaces/${this.storageService.get('workspaceId')}/credentials/sage300/`, data);
     }
     return this.apiService.post(`/workspaces/${this.storageService.get('workspaceId')}/credentials/sage300/`, data);
@@ -79,11 +80,15 @@ export class Sage300ConnectorService {
         return true;
       }),
       catchError((error) => {
-        if (error.error.message !== "Sage300 credentials not found" && shouldShowTokenExpiredMessage) {
-          this.toastService.displayToastMessage(ToastSeverity.ERROR, this.translocoService.translate('services.sage300Connector.connectionExpiredToast'), 6000);
+        if (error.error.message !== 'Sage300 credentials not found' && shouldShowTokenExpiredMessage) {
+          this.toastService.displayToastMessage(
+            ToastSeverity.ERROR,
+            this.translocoService.translate('services.sage300Connector.connectionExpiredToast'),
+            6000,
+          );
         }
         return of(false);
-      })
+      }),
     );
   }
 
@@ -97,7 +102,7 @@ export class Sage300ConnectorService {
       catchError(() => {
         this.doesSage300CredentialsExist = false;
         return of(this.mapAPIResponseToConnectorFormGroup(null));
-      })
+      }),
     );
   }
 
@@ -106,7 +111,7 @@ export class Sage300ConnectorService {
       username: sage300SetupForm.get('userID')?.value,
       identifier: sage300SetupForm.get('companyID')?.value,
       password: sage300SetupForm.get('userPassword')?.value,
-      workspace: this.storageService.get('workspaceId')
+      workspace: this.storageService.get('workspaceId'),
     };
 
     return this.upsertCredentials(sage300Credential).pipe(
@@ -116,19 +121,29 @@ export class Sage300ConnectorService {
             map(() => {
               return {
                 sage300SetupForm: this.mapAPIResponseToConnectorFormGroup(sage300Credential),
-                isSage300Connected: true
+                isSage300Connected: true,
               };
-            })
+            }),
           );
         }
-          this.toastService.displayToastMessage(ToastSeverity.SUCCESS, this.translocoService.translate('services.sage300Connector.connectionReconnectedToast'), 6000);
-          return of({ sage300SetupForm: this.mapAPIResponseToConnectorFormGroup(sage300Credential), isSage300Connected: true });
+        this.toastService.displayToastMessage(
+          ToastSeverity.SUCCESS,
+          this.translocoService.translate('services.sage300Connector.connectionReconnectedToast'),
+          6000,
+        );
+        return of({
+          sage300SetupForm: this.mapAPIResponseToConnectorFormGroup(sage300Credential),
+          isSage300Connected: true,
+        });
       }),
       catchError(() => {
-        this.toastService.displayToastMessage(ToastSeverity.ERROR, this.translocoService.translate('services.sage300Connector.connectionErrorToast'), 6000);
-        return of({sage300SetupForm: sage300SetupForm, isSage300Connected: false});
-      })
+        this.toastService.displayToastMessage(
+          ToastSeverity.ERROR,
+          this.translocoService.translate('services.sage300Connector.connectionErrorToast'),
+          6000,
+        );
+        return of({ sage300SetupForm: sage300SetupForm, isSage300Connected: false });
+      }),
     );
   }
-
 }

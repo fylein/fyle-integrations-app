@@ -8,9 +8,8 @@ xdescribe('GenericMappingTableComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ GenericMappingTableComponent ]
-    })
-    .compileComponents();
+      declarations: [GenericMappingTableComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(GenericMappingTableComponent);
     component = fixture.componentInstance;

@@ -1,16 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-    selector: 'app-oauth',
-    templateUrl: './oauth.component.html',
-    styleUrls: ['./oauth.component.scss'],
-    standalone: false
+  selector: 'app-oauth',
+  templateUrl: './oauth.component.html',
+  styleUrls: ['./oauth.component.scss'],
+  standalone: false,
 })
 export class OauthComponent implements OnInit {
+  constructor() {}
 
-  constructor() { }
-
-  ngOnInit(): void {
-  }
-
+  ngOnInit(): void {}
 }

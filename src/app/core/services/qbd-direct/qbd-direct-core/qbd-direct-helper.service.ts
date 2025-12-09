@@ -8,26 +8,30 @@ import { TrackingService } from '../../integration/tracking.service';
 import { TranslocoService } from '@jsverse/transloco';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class QbdDirectHelperService {
-
   constructor(
     private apiService: ApiService,
     private workspaceService: WorkspaceService,
     private toastService: IntegrationsToastService,
     private trackingService: TrackingService,
-    private translocoService: TranslocoService
-  ) { }
+    private translocoService: TranslocoService,
+  ) {}
 
   importQBDAttributes(refresh: boolean): Observable<{}> {
-    return this.apiService.post(`/workspaces/${this.workspaceService.getWorkspaceId()}/qbd/import_attributes/`, {refresh});
+    return this.apiService.post(`/workspaces/${this.workspaceService.getWorkspaceId()}/qbd/import_attributes/`, {
+      refresh,
+    });
   }
 
   importAttributes(refresh: boolean): void {
     this.trackingService.onClickEvent(TrackingApp.QBD_DIRECT, ClickEvent.QBD_DIRECT_SYNC);
     this.workspaceService.importFyleAttributes(refresh).subscribe();
     this.importQBDAttributes(refresh).subscribe();
-    this.toastService.displayToastMessage(ToastSeverity.SUCCESS, this.translocoService.translate('services.qbdDirectHelper.syncDataDimensionsToast'));
+    this.toastService.displayToastMessage(
+      ToastSeverity.SUCCESS,
+      this.translocoService.translate('services.qbdDirectHelper.syncDataDimensionsToast'),
+    );
   }
 }

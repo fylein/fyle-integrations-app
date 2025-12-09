@@ -8,9 +8,8 @@ xdescribe('XeroDashboardComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ XeroDashboardComponent ]
-    })
-    .compileComponents();
+      declarations: [XeroDashboardComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(XeroDashboardComponent);
     component = fixture.componentInstance;

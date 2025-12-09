@@ -1,5 +1,5 @@
-import { TaskLogState } from "../enum/enum.model";
-import { PaginatedResponse } from "./paginated-response.model";
+import { TaskLogState } from '../enum/enum.model';
+import { PaginatedResponse } from './paginated-response.model';
 
 export type TaskLog = {
   created_at: Date;

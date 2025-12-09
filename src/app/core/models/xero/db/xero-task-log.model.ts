@@ -1,7 +1,6 @@
-import { PaginatedResponse } from "../../db/paginated-response.model";
-import { TaskLog } from "../../db/task-log.model";
-import { TaskLogState, TaskLogType } from "../../enum/enum.model";
-
+import { PaginatedResponse } from '../../db/paginated-response.model';
+import { TaskLog } from '../../db/task-log.model';
+import { TaskLogState, TaskLogType } from '../../enum/enum.model';
 
 export type XeroError = {
   expense_group_id: number;

@@ -6,11 +6,23 @@
 }
 <div class="tw-flex tw-justify-center tw-pr-74-px tw-pl-74-px tw-pt-24 tw-pb-20">
   <div class="onboarding-done--contents" [ngClass]="brandingStyle.common.mainComponentShadow">
-    <div class="tw-pt-34-px tw-flex tw-justify-center" [ngClass]="brandingFeatureConfig.featureFlags.contentVersion === 'v1' ? 'tw-mb-30-px' : 'tw-mb-20-px'">
-      <app-svg-icon [isTextColorAllowed]="true" [svgSource]="'check-large'" [width]="'30px'" [height]="'30px'" [styleClasses]="'tw-p-16-px tw-bg-success-toast tw-rounded-50 tw-text-white'"></app-svg-icon>
+    <div
+      class="tw-pt-34-px tw-flex tw-justify-center"
+      [ngClass]="brandingFeatureConfig.featureFlags.contentVersion === 'v1' ? 'tw-mb-30-px' : 'tw-mb-20-px'"
+    >
+      <app-svg-icon
+        [isTextColorAllowed]="true"
+        [svgSource]="'check-large'"
+        [width]="'30px'"
+        [height]="'30px'"
+        [styleClasses]="'tw-p-16-px tw-bg-success-toast tw-rounded-50 tw-text-white'"
+      ></app-svg-icon>
     </div>
     <div class="tw-text-center">
-      <h2 class="tw-text-text-primary !tw-text-18-px" [ngClass]="brandingStyle.qbd_direct.onboarding.configurationDoneHeader">
+      <h2
+        class="tw-text-text-primary !tw-text-18-px"
+        [ngClass]="brandingStyle.qbd_direct.onboarding.configurationDoneHeader"
+      >
         @if (brandingFeatureConfig.featureFlags.contentVersion === 'v1') {
           <span>
             {{ 'onboardingDone.congratulationsText' | transloco }}
@@ -23,11 +35,22 @@
     </div>
     <div class="tw-flex tw-justify-center tw-py-20-px">
       <div>
-        <app-button [buttonSize]="ButtonSize.MEDIUM" [buttonType]="ButtonType.PRIMARY" (buttonClick)="navigateToDashboard()" [buttonText]="'configuration.done.ctaText' | transloco "></app-button>
+        <app-button
+          [buttonSize]="ButtonSize.MEDIUM"
+          [buttonType]="ButtonType.PRIMARY"
+          (buttonClick)="navigateToDashboard()"
+          [buttonText]="'configuration.done.ctaText' | transloco"
+        ></app-button>
       </div>
     </div>
     <div [ngClass]="brandingStyle.qbd_direct.onboarding.configurationDoneDescription">
-      <h5 [ngClass]="brandingFeatureConfig.featureFlags.contentVersion === 'v1' ? 'tw-text-text-muted' : 'tw-text-text-primary'" class="tw-text-center tw-text-14-px tw-font-400" [innerHTML]="'configuration.done.hintText' | transloco"></h5>
+      <h5
+        [ngClass]="
+          brandingFeatureConfig.featureFlags.contentVersion === 'v1' ? 'tw-text-text-muted' : 'tw-text-text-primary'
+        "
+        class="tw-text-center tw-text-14-px tw-font-400"
+        [innerHTML]="'configuration.done.hintText' | transloco"
+      ></h5>
     </div>
   </div>
 </div>

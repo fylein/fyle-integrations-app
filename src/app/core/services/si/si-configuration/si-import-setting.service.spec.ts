@@ -9,9 +9,9 @@ xdescribe('SiImportSettingsService', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-    imports: [],
-    providers: [SiImportSettingsService, provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting()]
-});
+      imports: [],
+      providers: [SiImportSettingsService, provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting()],
+    });
     service = TestBed.inject(SiImportSettingsService);
   });
 

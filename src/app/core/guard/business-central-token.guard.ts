@@ -9,52 +9,52 @@ import { AppUrl, BusinessCentralOnboardingState, ToastSeverity } from '../models
 import { HelperService } from '../services/common/helper.service';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
-export class BusinessCentralTokenGuard  {
-
+export class BusinessCentralTokenGuard {
   constructor(
     private businessCentralConnectorService: BusinessCentralConnectorService,
     private helperService: HelperService,
     private router: Router,
     private toastService: IntegrationsToastService,
-    private workspaceService: WorkspaceService
-  ) { }
+    private workspaceService: WorkspaceService,
+  ) {}
 
   canActivate(
     route: ActivatedRouteSnapshot,
-    state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-      this.helperService.setBaseApiURL(AppUrl.BUSINESS_CENTRAL);
-      const workspaceId = this.workspaceService.getWorkspaceId();
+    state: RouterStateSnapshot,
+  ): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
+    this.helperService.setBaseApiURL(AppUrl.BUSINESS_CENTRAL);
+    const workspaceId = this.workspaceService.getWorkspaceId();
 
-      if (!workspaceId) {
-        return this.router.navigateByUrl(`integrations/business_central/`);
-      }
+    if (!workspaceId) {
+      return this.router.navigateByUrl(`integrations/business_central/`);
+    }
 
-      return forkJoin(
-        [
-          this.businessCentralConnectorService.getBusinessCentralCredentials(),
-          this.businessCentralConnectorService.getBusinessCentralConnection()
-        ]
-      ).pipe(
-        map(response => !!response),
-        catchError(error => {
-          if (error.status === 400) {
-            globalCacheBusterNotifier.next();
-            this.toastService.displayToastMessage(ToastSeverity.ERROR, 'Oops! Your Dynamics 365 Business Central connection expired, please connect again');
+    return forkJoin([
+      this.businessCentralConnectorService.getBusinessCentralCredentials(),
+      this.businessCentralConnectorService.getBusinessCentralConnection(),
+    ]).pipe(
+      map((response) => !!response),
+      catchError((error) => {
+        if (error.status === 400) {
+          globalCacheBusterNotifier.next();
+          this.toastService.displayToastMessage(
+            ToastSeverity.ERROR,
+            'Oops! Your Dynamics 365 Business Central connection expired, please connect again',
+          );
 
-            const onboardingState: BusinessCentralOnboardingState = this.workspaceService.getOnboardingState();
+          const onboardingState: BusinessCentralOnboardingState = this.workspaceService.getOnboardingState();
 
-            if (onboardingState !==  BusinessCentralOnboardingState.COMPLETE) {
-              return this.router.navigateByUrl('integrations/business_central/onboarding/connector');
-            }
-
-            return this.router.navigateByUrl('integrations/business_central/onboarding/landing');
+          if (onboardingState !== BusinessCentralOnboardingState.COMPLETE) {
+            return this.router.navigateByUrl('integrations/business_central/onboarding/connector');
           }
 
-          return throwError(error);
-        })
-      );
-  }
+          return this.router.navigateByUrl('integrations/business_central/onboarding/landing');
+        }
 
+        return throwError(error);
+      }),
+    );
+  }
 }

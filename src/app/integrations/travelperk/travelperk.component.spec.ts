@@ -6,7 +6,13 @@ import { of, throwError } from 'rxjs';
 import { TravelperkComponent } from './travelperk.component';
 import { OrgService } from 'src/app/core/services/org/org.service';
 import { generateTokenData, orgMockData } from 'src/app/core/services/org/org.fixture';
-import { connectAwsS3MockData, connectTravelperkMockData, travelperkErrorMockData, travelperkMockData, workatoConnectionStatusMockData } from 'src/app/core/services/travelperk/travelperk.fixture';
+import {
+  connectAwsS3MockData,
+  connectTravelperkMockData,
+  travelperkErrorMockData,
+  travelperkMockData,
+  workatoConnectionStatusMockData,
+} from 'src/app/core/services/travelperk/travelperk.fixture';
 import { EventsService } from 'src/app/core/services/common/events.service';
 import { MessageService } from 'primeng/api';
 
@@ -26,7 +32,7 @@ xdescribe('TravelperkComponent', () => {
     getConfigurations: () => of(throwError({})),
     patchConfigurations: () => of({}),
     postConfigurations: () => of({}),
-    connect: () => of({})
+    connect: () => of({}),
   };
 
   const service2 = {
@@ -35,27 +41,26 @@ xdescribe('TravelperkComponent', () => {
     connectFyle: () => of({}),
     generateToken: () => of(generateTokenData),
     getCachedOrg: () => of(orgMockData),
-    getOrgs: () => of([orgMockData])
+    getOrgs: () => of([orgMockData]),
   };
 
   const service3 = {
-    getWorkatoConnectionStatus: of(workatoConnectionStatusMockData)
+    getWorkatoConnectionStatus: of(workatoConnectionStatusMockData),
   };
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-    declarations: [TravelperkComponent],
-    imports: [],
-    providers: [
+      declarations: [TravelperkComponent],
+      imports: [],
+      providers: [
         { provide: TravelperkService, useValue: service1 },
         { provide: OrgService, useValue: service2 },
         { provide: EventsService, useValue: service3 },
         MessageService,
         provideHttpClient(withInterceptorsFromDi()),
-        provideHttpClientTesting()
-    ]
-})
-    .compileComponents();
+        provideHttpClientTesting(),
+      ],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(TravelperkComponent);
     component = fixture.componentInstance;
@@ -117,7 +122,7 @@ xdescribe('TravelperkComponent', () => {
     const popupMock: any = {
       closed: false,
       location: { href: 'https://yourredirecturi.com?code=123456789' },
-      close: jasmine.createSpy('close')
+      close: jasmine.createSpy('close'),
     };
     spyOn(window, 'open').and.returnValue(popupMock);
     tick(500);

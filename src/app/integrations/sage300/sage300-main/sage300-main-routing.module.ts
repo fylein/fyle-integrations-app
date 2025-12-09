@@ -11,34 +11,34 @@ const routes: Routes = [
       {
         path: '',
         redirectTo: 'dashboard',
-        pathMatch: 'full'
+        pathMatch: 'full',
       },
       {
         path: 'dashboard',
-        loadChildren: () => import('./sage300-dashboard/sage300-dashboard.module').then(m => m.Sage300DashboardModule)
+        loadChildren: () =>
+          import('./sage300-dashboard/sage300-dashboard.module').then((m) => m.Sage300DashboardModule),
       },
       {
         path: 'configuration',
-        loadChildren: () => import('./sage300-configuration/sage300-configuration.module').then(m => m.Sage300ConfigurationModule)
+        loadChildren: () =>
+          import('./sage300-configuration/sage300-configuration.module').then((m) => m.Sage300ConfigurationModule),
       },
       {
         path: 'mapping',
-        loadChildren: () => import('./sage300-mapping/sage300-mapping.module').then(m => m.Sage300MappingModule)
+        loadChildren: () => import('./sage300-mapping/sage300-mapping.module').then((m) => m.Sage300MappingModule),
       },
       {
         path: 'export_log',
-        loadChildren: () => import('./sage300-export-log/sage300-export-log.module').then(m => m.Sage300ExportLogModule)
-      }
-    ]
-  }
+        loadChildren: () =>
+          import('./sage300-export-log/sage300-export-log.module').then((m) => m.Sage300ExportLogModule),
+      },
+    ],
+  },
 ];
 
 @NgModule({
   declarations: [],
-  imports: [
-    CommonModule,
-    RouterModule.forChild(routes)
-  ],
-  exports: [RouterModule]
+  imports: [CommonModule, RouterModule.forChild(routes)],
+  exports: [RouterModule],
 })
-export class Sage300MainRoutingModule { }
+export class Sage300MainRoutingModule {}

@@ -1,29 +1,30 @@
 :host ::ng-deep .p-select {
-    @apply tw-w-fit tw-h-32-px tw-flex tw-items-center tw-px-10-px tw-py-6-px #{!important};
+  @apply tw-w-fit tw-h-32-px tw-flex tw-items-center tw-px-10-px tw-py-6-px #{!important};
 }
 
 :host ::ng-deep span {
-    @apply tw-text-text-muted tw-text-12-px tw-font-500 #{!important};
+  @apply tw-text-text-muted tw-text-12-px tw-font-500 #{!important};
 }
 
-.prevBtn:disabled, .nextBtn:disabled {
-    @apply tw-cursor-not-allowed #{!important};
+.prevBtn:disabled,
+.nextBtn:disabled {
+  @apply tw-cursor-not-allowed #{!important};
 }
 
 :host ::ng-deep .p-select .p-select-label.p-inputtext {
-    @apply tw-pr-10-px #{!important};
+  @apply tw-pr-10-px #{!important};
 }
 
 [data-theme='co'] {
-    :host ::ng-deep .p-select .p-select-dropdown {
-        content: url('/assets/icons/co/grv-chevron-down-small.svg') !important;
-        @apply tw-w-12-px #{!important};
-    }
+  :host ::ng-deep .p-select .p-select-dropdown {
+    content: url('/assets/icons/co/grv-chevron-down-small.svg') !important;
+    @apply tw-w-12-px #{!important};
+  }
 }
 
 .pi-chevron-left {
-    margin-left: -10px;
+  margin-left: -10px;
 }
 .pi-chevron-right {
-    margin-right: -10px;
+  margin-right: -10px;
 }

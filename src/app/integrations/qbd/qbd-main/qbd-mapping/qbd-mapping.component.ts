@@ -5,13 +5,12 @@ import { brandingFeatureConfig, brandingStyle } from 'src/app/branding/branding-
 import { TranslocoService } from '@jsverse/transloco';
 
 @Component({
-    selector: 'app-qbd-mapping',
-    templateUrl: './qbd-mapping.component.html',
-    styleUrls: ['./qbd-mapping.component.scss'],
-    standalone: false
+  selector: 'app-qbd-mapping',
+  templateUrl: './qbd-mapping.component.html',
+  styleUrls: ['./qbd-mapping.component.scss'],
+  standalone: false,
 })
 export class QbdMappingComponent implements OnInit {
-
   mappingPages: TabMenuItem[];
 
   activeModule: string;
@@ -22,16 +21,23 @@ export class QbdMappingComponent implements OnInit {
 
   constructor(
     private router: Router,
-    private translocoService: TranslocoService
-  ) { }
+    private translocoService: TranslocoService,
+  ) {}
 
   ngOnInit(): void {
     this.mappingPages = [
-      {label: this.translocoService.translate('qbdMapping.corporateCardLabel'), routerLink: '/integrations/qbd/main/mapping/corporate_card', value: 'corporate_card'},
-      {label: this.translocoService.translate('qbdMapping.itemLabel'), routerLink: '/integrations/qbd/main/mapping/item', value: 'item'}
+      {
+        label: this.translocoService.translate('qbdMapping.corporateCardLabel'),
+        routerLink: '/integrations/qbd/main/mapping/corporate_card',
+        value: 'corporate_card',
+      },
+      {
+        label: this.translocoService.translate('qbdMapping.itemLabel'),
+        routerLink: '/integrations/qbd/main/mapping/item',
+        value: 'item',
+      },
     ];
     this.activeModule = this.mappingPages[0].value;
     this.router.navigateByUrl(this.mappingPages[0].routerLink!);
   }
-
 }

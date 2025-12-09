@@ -4,16 +4,15 @@ import { Expense } from 'src/app/core/models/intacct/db/expense.model';
 import { environment } from 'src/environments/environment';
 
 @Component({
-    selector: 'app-dashboard-intacct-errors',
-    templateUrl: './dashboard-intacct-errors.component.html',
-    styleUrls: ['./dashboard-intacct-errors.component.scss'],
-    standalone: false
+  selector: 'app-dashboard-intacct-errors',
+  templateUrl: './dashboard-intacct-errors.component.html',
+  styleUrls: ['./dashboard-intacct-errors.component.scss'],
+  standalone: false,
 })
 export class DashboardIntacctErrorsComponent implements OnInit {
-
   @Input() intacctErrorExpenses: Expense[];
 
-  constructor() { }
+  constructor() {}
 
   openUrl(event: Event, expense_id: string) {
     const url = `${environment.fyle_app_url}/app/admin/#/company_expenses?txnId=${expense_id}`;
@@ -21,7 +20,5 @@ export class DashboardIntacctErrorsComponent implements OnInit {
     event.stopPropagation();
   }
 
-  ngOnInit(): void {
-  }
-
+  ngOnInit(): void {}
 }

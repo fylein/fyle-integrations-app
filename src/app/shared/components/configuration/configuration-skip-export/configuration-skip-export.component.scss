@@ -11,11 +11,11 @@
 }
 
 .fields-header {
-    @apply tw-pb-8-px tw-text-14-px tw-text-form-label-text-color;
+  @apply tw-pb-8-px tw-text-14-px tw-text-form-label-text-color;
 }
 
 .delete-icon {
-    @apply tw-text-center tw-cursor-pointer tw-ml-26-px tw-max-h-20-px tw-max-w-20-px;
+  @apply tw-text-center tw-cursor-pointer tw-ml-26-px tw-max-h-20-px tw-max-w-20-px;
 }
 
 .value-input-field {
@@ -23,77 +23,76 @@
 }
 
 :host ::ng-deep .joinby-field .p-select {
-    @apply tw-w-98-px tw-h-38-px #{!important} ;
+  @apply tw-w-98-px tw-h-38-px #{!important};
 }
 
 :host ::ng-deep .p-select .p-select-dropdown-icon {
-    @apply tw-text-12-px tw-mr-12-px tw-w-auto;
+  @apply tw-text-12-px tw-mr-12-px tw-w-auto;
 }
 
 :host ::ng-deep .p-datepicker .p-inputtext {
-    @apply tw-cursor-pointer tw-w-360-px tw-h-40-px tw-border tw-border-solid tw-py-10-px tw-px-14-px #{!important};
+  @apply tw-cursor-pointer tw-w-360-px tw-h-40-px tw-border tw-border-solid tw-py-10-px tw-px-14-px #{!important};
 }
 
 :host ::ng-deep .p-autocomplete-input-multiple-token {
-    @apply tw-h-24-px tw-items-center tw-bg-white tw-border tw-border-line-inactive tw-shadow-chip-shadow
+  @apply tw-h-24-px tw-items-center tw-bg-white tw-border tw-border-line-inactive tw-shadow-chip-shadow;
 }
 
-  /* To remove blue hover and other styles */
-  :host ::ng-deep .p-autocomplete-input-multiple input:focus {
-    // outline: none !important;
-    box-shadow: none !important;
-    // border-color: inherit !important;
-    border: 1px solid inherit !important;
-  }
+/* To remove blue hover and other styles */
+:host ::ng-deep .p-autocomplete-input-multiple input:focus {
+  // outline: none !important;
+  box-shadow: none !important;
+  // border-color: inherit !important;
+  border: 1px solid inherit !important;
+}
 
-  /* Scrollable container */
-  :host ::ng-deep .p-autocomplete-input-multiple-multiple-container {
-    max-height: 80px;
-    overflow-y: auto;
-    width: 360px !important;
-    height: auto !important;
-    min-height: 38px !important;
-    padding-top: 2px!important;
-    padding-bottom: 2px!important;
-    box-shadow: 1px 1px white;
-  }
+/* Scrollable container */
+:host ::ng-deep .p-autocomplete-input-multiple-multiple-container {
+  max-height: 80px;
+  overflow-y: auto;
+  width: 360px !important;
+  height: auto !important;
+  min-height: 38px !important;
+  padding-top: 2px !important;
+  padding-bottom: 2px !important;
+  box-shadow: 1px 1px white;
+}
 
-  :host ::ng-deep .p-autocomplete-input-multiple-multiple-container:enabled:focus {
-    box-shadow: none;
-    border: 1px solid var(--select-focused-border);
-  }
+:host ::ng-deep .p-autocomplete-input-multiple-multiple-container:enabled:focus {
+  box-shadow: none;
+  border: 1px solid var(--select-focused-border);
+}
 
-  /* Change text color to black */
-  :host ::ng-deep .p-autocomplete-input-multiple-token-label {
-    @apply tw-text-chips-body-text-color #{!important};
-  }
+/* Change text color to black */
+:host ::ng-deep .p-autocomplete-input-multiple-token-label {
+  @apply tw-text-chips-body-text-color #{!important};
+}
 
+:host ::ng-deep .p-autocomplete-input-multiple-token-icon {
+  @apply tw-text-slightly-normal-text-color #{!important};
+}
 
-  :host ::ng-deep .p-autocomplete-input-multiple-token-icon {
-    @apply tw-text-slightly-normal-text-color #{!important};
-  }
+:host ::ng-deep .p-autocomplete-input-multiple-multiple-container::-webkit-scrollbar {
+  background: transparent; /* For WebKit browsers like Chrome and Safari */
+}
 
-  :host ::ng-deep .p-autocomplete-input-multiple-multiple-container::-webkit-scrollbar {
-    background: transparent;  /* For WebKit browsers like Chrome and Safari */
-  }
+:host ::ng-deep .p-select-panel .p-select-items .p-select-item:not(.p-highlight):hover .p-datepicker .p-inputtext {
+  @apply tw-bg-input-read-only-bg #{!important};
+}
 
-  :host ::ng-deep .p-select-panel .p-select-items .p-select-item:not(.p-highlight):hover .p-datepicker .p-inputtext{
-    @apply tw-bg-input-read-only-bg #{!important};
-  }
+:host ::ng-deep .p-datepicker ::placeholder {
+  @apply tw-text-placeholder #{!important};
+}
 
-  :host ::ng-deep .p-datepicker ::placeholder {
-    @apply tw-text-placeholder #{!important};
-  }
+.chip-hint {
+  @apply tw-text-12-px tw-text-form-default-help-text-color #{!important};
+}
 
-  .chip-hint {
-    @apply tw-text-12-px tw-text-form-default-help-text-color #{!important};
-  }
+:host ::ng-deep .p-select {
+  transform: scale(0.9);
+  width: 180px !important;
+}
 
-  :host ::ng-deep .p-select {
-    transform: scale(0.9);
-    width: 180px !important;
-  }
-
-  :host ::ng-deep input {
-    @apply tw-text-14-px #{!important};
-  }
+:host ::ng-deep input {
+  @apply tw-text-14-px #{!important};
+}

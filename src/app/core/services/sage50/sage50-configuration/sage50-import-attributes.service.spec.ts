@@ -11,8 +11,8 @@ describe('Usage50UimportUattributesService', () => {
       providers: [
         Usage50UimportUattributesService,
         provideHttpClient(withInterceptorsFromDi()),
-        provideHttpClientTesting()
-      ]
+        provideHttpClientTesting(),
+      ],
     });
     service = TestBed.inject(Usage50UimportUattributesService);
   });

@@ -1,9 +1,21 @@
 <div [formGroup]="form">
   <div>
-    <p-dialog header="Header" [dismissableMask]="true" [(visible)]="isCustomSegmentDialogVisible" [showHeader]="true" [modal]="true" (onHide)="close()" [breakpoints]="{ '960px': '75vw' }" [draggable]="false" [style]="{ width: '800px', height: '900px' }">
+    <p-dialog
+      header="Header"
+      [dismissableMask]="true"
+      [(visible)]="isCustomSegmentDialogVisible"
+      [showHeader]="true"
+      [modal]="true"
+      (onHide)="close()"
+      [breakpoints]="{ '960px': '75vw' }"
+      [draggable]="false"
+      [style]="{ width: '800px', height: '900px' }"
+    >
       <ng-template pTemplate="header">
         <div>
-          <span class="tw-text-20-px tw-font-500 tw-text-modal-header-text-color">{{'netsuite.configuration.importSetting.customSegmentHeader' | transloco}}</span>
+          <span class="tw-text-20-px tw-font-500 tw-text-modal-header-text-color">{{
+            'netsuite.configuration.importSetting.customSegmentHeader' | transloco
+          }}</span>
         </div>
       </ng-template>
       @if (isLoading) {
@@ -18,38 +30,64 @@
               <div>
                 <div class="tw-mb-14-px">
                   <div class="tw-mb-10-px">
-                    <app-mandatory-field></app-mandatory-field><label for="" class="tw-text-14-px tw-text-form-label-text-color tw-font-400 tw-ml-6-px">{{ 'netsuiteCustomSegmentDialog.chooseCustomFieldType' | transloco }}</label>
+                    <app-mandatory-field></app-mandatory-field
+                    ><label for="" class="tw-text-14-px tw-text-form-label-text-color tw-font-400 tw-ml-6-px">{{
+                      'netsuiteCustomSegmentDialog.chooseCustomFieldType' | transloco
+                    }}</label>
                   </div>
                   <div>
-                    <p-select appendTo="body" [options]="options"
-                      formControlName="customFieldType" [placeholder]="'netsuiteCustomSegmentDialog.selectCustomFieldType' | transloco"
+                    <p-select
+                      appendTo="body"
+                      [options]="options"
+                      formControlName="customFieldType"
+                      [placeholder]="'netsuiteCustomSegmentDialog.selectCustomFieldType' | transloco"
                       [dropdownIcon]="'pi pi-chevron-down ' + brandingConfig.brandId"
-                                    [ngClass]="{
-                                        'error-box': form.controls.customFieldType.invalid && true && form.controls.customFieldType.touched,
-                                        'normal-box': !(form.controls.customFieldType.invalid && true && form.controls.customFieldType.touched)
-                                    }" [required]="true">
+                      [ngClass]="{
+                        'error-box':
+                          form.controls.customFieldType.invalid && true && form.controls.customFieldType.touched,
+                        'normal-box': !(
+                          form.controls.customFieldType.invalid &&
+                          true &&
+                          form.controls.customFieldType.touched
+                        ),
+                      }"
+                      [required]="true"
+                    >
                       <ng-template let-option pTemplate="item">
                         <div>
-                          {{ brandingConfig.brandId ==='co' ? (option.label| sentenceCase) : (option.label)}}
+                          {{ brandingConfig.brandId === 'co' ? (option.label | sentenceCase) : option.label }}
                         </div>
                       </ng-template>
                       <ng-template pTemplate="selectedItem" let-item>
                         <span>
-                          {{ brandingConfig.brandId ==='co' ? (item.label| sentenceCase) : (item.label)}}
+                          {{ brandingConfig.brandId === 'co' ? (item.label | sentenceCase) : item.label }}
                         </span>
                       </ng-template>
                     </p-select>
-                    @if (form.controls.customFieldType.touched && !form.controls.customFieldType.valid && !form.controls.customFieldType.disabled) {
-                      <app-mandatory-error-message [customErrorMessage]="'netsuiteCustomSegmentDialog.customFieldTypeRequired' | transloco"></app-mandatory-error-message>
+                    @if (
+                      form.controls.customFieldType.touched &&
+                      !form.controls.customFieldType.valid &&
+                      !form.controls.customFieldType.disabled
+                    ) {
+                      <app-mandatory-error-message
+                        [customErrorMessage]="'netsuiteCustomSegmentDialog.customFieldTypeRequired' | transloco"
+                      ></app-mandatory-error-message>
                     }
                   </div>
                 </div>
                 <div>
-                  <app-configuration-info-label
-                    [infoText]="'netsuiteCustomSegmentDialog.followStepsInfo' | transloco">
+                  <app-configuration-info-label [infoText]="'netsuiteCustomSegmentDialog.followStepsInfo' | transloco">
                   </app-configuration-info-label>
-                  <video controls="controls" width="800" height="600" name="sample video" class="tw-mt-16-px" loop autoplay>
-                    <source [src]="setImagesForCustomSegment()">
+                  <video
+                    controls="controls"
+                    width="800"
+                    height="600"
+                    name="sample video"
+                    class="tw-mt-16-px"
+                    loop
+                    autoplay
+                  >
+                    <source [src]="setImagesForCustomSegment()" />
                   </video>
                 </div>
               </div>
@@ -58,20 +96,42 @@
               <div>
                 <div class="tw-mb-14-px">
                   <div class="tw-mb-10-px">
-                    <app-mandatory-field></app-mandatory-field><label for="" class="tw-text-14-px tw-text-form-label-text-color tw-font-400 tw-ml-6-px">{{ 'netsuiteCustomSegmentDialog.enterInternalId' | transloco: { value: this.form.controls.customFieldType.value | snakeCaseToSpaceCase | lowercase } }}</label>
+                    <app-mandatory-field></app-mandatory-field
+                    ><label for="" class="tw-text-14-px tw-text-form-label-text-color tw-font-400 tw-ml-6-px">{{
+                      'netsuiteCustomSegmentDialog.enterInternalId'
+                        | transloco
+                          : { value: this.form.controls.customFieldType.value | snakeCaseToSpaceCase | lowercase }
+                    }}</label>
                   </div>
                   <div>
-                    <input type="text" class="tw-border-box-color" [ngClass]="[form.controls.internalId.invalid && form.controls.internalId.touched ? 'error-box' : 'normal-box']"  pInputText formControlName="internalId" [placeholder]="'netsuiteCustomSegmentDialog.enterInternalIdPlaceholder' | transloco" required>
-                    @if (form.controls.internalId.touched && !form.controls.internalId.valid && !form.controls.internalId.disabled) {
-                      <app-mandatory-error-message [customErrorMessage]="'netsuiteCustomSegmentDialog.internalIdRequired' | transloco"></app-mandatory-error-message>
+                    <input
+                      type="text"
+                      class="tw-border-box-color"
+                      [ngClass]="[
+                        form.controls.internalId.invalid && form.controls.internalId.touched
+                          ? 'error-box'
+                          : 'normal-box',
+                      ]"
+                      pInputText
+                      formControlName="internalId"
+                      [placeholder]="'netsuiteCustomSegmentDialog.enterInternalIdPlaceholder' | transloco"
+                      required
+                    />
+                    @if (
+                      form.controls.internalId.touched &&
+                      !form.controls.internalId.valid &&
+                      !form.controls.internalId.disabled
+                    ) {
+                      <app-mandatory-error-message
+                        [customErrorMessage]="'netsuiteCustomSegmentDialog.internalIdRequired' | transloco"
+                      ></app-mandatory-error-message>
                     }
                   </div>
                 </div>
                 <div>
-                  <app-configuration-info-label
-                    [infoText]="'netsuiteCustomSegmentDialog.followStepsInfo' | transloco">
+                  <app-configuration-info-label [infoText]="'netsuiteCustomSegmentDialog.followStepsInfo' | transloco">
                   </app-configuration-info-label>
-                  <img class="tw-mt-16-px" width="800" height="600" [src]="setImagesForCustomSegment()" alt="">
+                  <img class="tw-mt-16-px" width="800" height="600" [src]="setImagesForCustomSegment()" alt="" />
                 </div>
               </div>
             }
@@ -79,20 +139,38 @@
               <div>
                 <div class="tw-mb-14-px">
                   <div class="tw-mb-10-px">
-                    <app-mandatory-field></app-mandatory-field><label for="" class="tw-text-14-px tw-text-form-label-text-color tw-font-400 tw-ml-6-px">{{ 'netsuiteCustomSegmentDialog.enterTransactionLineFieldId' | transloco }}</label>
+                    <app-mandatory-field></app-mandatory-field
+                    ><label for="" class="tw-text-14-px tw-text-form-label-text-color tw-font-400 tw-ml-6-px">{{
+                      'netsuiteCustomSegmentDialog.enterTransactionLineFieldId' | transloco
+                    }}</label>
                   </div>
                   <div>
-                    <input type="text" class="tw-border-box-color" [ngClass]="[form.controls.scriptId.invalid && form.controls.scriptId.touched ? 'error-box' : 'normal-box']"  pInputText formControlName="scriptId" [placeholder]="'netsuiteCustomSegmentDialog.transactionLineFieldIdPlaceholder' | transloco" required>
-                    @if (form.controls.scriptId.touched && !form.controls.scriptId.valid && !form.controls.scriptId.disabled) {
-                      <app-mandatory-error-message [customErrorMessage]="'netsuiteCustomSegmentDialog.transactionLineFieldIdRequired' | transloco"></app-mandatory-error-message>
+                    <input
+                      type="text"
+                      class="tw-border-box-color"
+                      [ngClass]="[
+                        form.controls.scriptId.invalid && form.controls.scriptId.touched ? 'error-box' : 'normal-box',
+                      ]"
+                      pInputText
+                      formControlName="scriptId"
+                      [placeholder]="'netsuiteCustomSegmentDialog.transactionLineFieldIdPlaceholder' | transloco"
+                      required
+                    />
+                    @if (
+                      form.controls.scriptId.touched &&
+                      !form.controls.scriptId.valid &&
+                      !form.controls.scriptId.disabled
+                    ) {
+                      <app-mandatory-error-message
+                        [customErrorMessage]="'netsuiteCustomSegmentDialog.transactionLineFieldIdRequired' | transloco"
+                      ></app-mandatory-error-message>
                     }
                   </div>
                 </div>
                 <div>
-                  <app-configuration-info-label
-                    [infoText]="'netsuiteCustomSegmentDialog.followStepsInfo' | transloco">
+                  <app-configuration-info-label [infoText]="'netsuiteCustomSegmentDialog.followStepsInfo' | transloco">
                   </app-configuration-info-label>
-                  <img width="800" height="600" class="tw-mt-16-px" [src]="setImagesForCustomSegment()" alt="">
+                  <img width="800" height="600" class="tw-mt-16-px" [src]="setImagesForCustomSegment()" alt="" />
                 </div>
               </div>
             }
@@ -101,7 +179,12 @@
             <div class="tw-flex tw-items-center tw-justify-end tw-text-14-px">
               <div class="tw-mr-16-px">
                 @if (brandingFeatureConfig.isDashboardButtonOutlined) {
-                  <app-button [buttonSize]="ButtonSize.SMALL" [buttonType]="ButtonType.SECONDARY" (buttonClick)="close()" [buttonText]="'netsuiteCustomSegmentDialog.cancel' | transloco"></app-button>
+                  <app-button
+                    [buttonSize]="ButtonSize.SMALL"
+                    [buttonType]="ButtonType.SECONDARY"
+                    (buttonClick)="close()"
+                    [buttonText]="'netsuiteCustomSegmentDialog.cancel' | transloco"
+                  ></app-button>
                 } @else {
                   <button type="button" class="p-button outline-sm" (click)="close()">
                     {{ 'netsuiteCustomSegmentDialog.cancel' | transloco }}
@@ -109,10 +192,22 @@
                 }
               </div>
               @if (stepNumber < 3) {
-                <app-button  [buttonSize]="ButtonSize.SMALL" [buttonType]="ButtonType.PRIMARY" [disabled]="isDisabled()" (buttonClick)="proceedToNextStep(stepNumber)" [buttonText]="'netsuiteCustomSegmentDialog.next' | transloco"></app-button>
+                <app-button
+                  [buttonSize]="ButtonSize.SMALL"
+                  [buttonType]="ButtonType.PRIMARY"
+                  [disabled]="isDisabled()"
+                  (buttonClick)="proceedToNextStep(stepNumber)"
+                  [buttonText]="'netsuiteCustomSegmentDialog.next' | transloco"
+                ></app-button>
               }
               @if (stepNumber === 3) {
-                <app-button  [buttonSize]="ButtonSize.SMALL" [buttonType]="ButtonType.PRIMARY" [disabled]="form.invalid" (buttonClick)="save()" [buttonText]="'netsuiteCustomSegmentDialog.save' | transloco"></app-button>
+                <app-button
+                  [buttonSize]="ButtonSize.SMALL"
+                  [buttonType]="ButtonType.PRIMARY"
+                  [disabled]="form.invalid"
+                  (buttonClick)="save()"
+                  [buttonText]="'netsuiteCustomSegmentDialog.save' | transloco"
+                ></app-button>
               }
             </div>
           </div>

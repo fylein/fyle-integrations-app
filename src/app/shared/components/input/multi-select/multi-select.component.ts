@@ -2,13 +2,12 @@ import { Component, Input, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 
 @Component({
-    selector: 'app-multi-select',
-    templateUrl: './multi-select.component.html',
-    styleUrls: ['./multi-select.component.scss'],
-    standalone: false
+  selector: 'app-multi-select',
+  templateUrl: './multi-select.component.html',
+  styleUrls: ['./multi-select.component.scss'],
+  standalone: false,
 })
 export class MultiSelectComponent {
-
   @Input() form: FormGroup;
 
   @Input() formControllerName: string;
@@ -19,6 +18,5 @@ export class MultiSelectComponent {
 
   @Input() options: any[];
 
-  constructor() { }
-
+  constructor() {}
 }

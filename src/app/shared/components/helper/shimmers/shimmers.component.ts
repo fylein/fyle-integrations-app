@@ -1,13 +1,12 @@
 import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
-    selector: 'app-shimmers',
-    templateUrl: './shimmers.component.html',
-    styleUrls: ['./shimmers.component.scss'],
-    standalone: false
+  selector: 'app-shimmers',
+  templateUrl: './shimmers.component.html',
+  styleUrls: ['./shimmers.component.scss'],
+  standalone: false,
 })
 export class ShimmersComponent implements OnInit {
-
   @Input() exportLogHeader: string;
 
   @Input() isExportLogFetchInProgress: boolean;
@@ -16,9 +15,7 @@ export class ShimmersComponent implements OnInit {
 
   @Input() isMappingTableShimmers: boolean;
 
-  constructor() { }
+  constructor() {}
 
-  ngOnInit(): void {
-  }
-
+  ngOnInit(): void {}
 }

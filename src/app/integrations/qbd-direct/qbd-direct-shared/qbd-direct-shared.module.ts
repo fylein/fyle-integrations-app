@@ -16,14 +16,14 @@ import { QbdDirectImportSettingsComponent } from './qbd-direct-import-settings/q
     QbdDirectSetupConnectionComponent,
     QbdDirectDataSyncComponent,
     QbdDirectExportSettingsComponent,
-    QbdDirectImportSettingsComponent
+    QbdDirectImportSettingsComponent,
   ],
   exports: [
     QbdDirectDownloadFileComponent,
     QbdDirectSetupConnectionComponent,
     QbdDirectDataSyncComponent,
     QbdDirectExportSettingsComponent,
-    QbdDirectImportSettingsComponent
-  ]
+    QbdDirectImportSettingsComponent,
+  ],
 })
-export class QbdDirectSharedModule { }
+export class QbdDirectSharedModule {}

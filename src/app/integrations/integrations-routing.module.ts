@@ -11,62 +11,62 @@ const routes: Routes = [
     children: [
       {
         path: 'landing',
-        component: LandingComponent
+        component: LandingComponent,
       },
       {
         path: 'landing_v2',
-        component: LandingV2Component
+        component: LandingV2Component,
       },
       {
         path: 'bamboo_hr',
-        loadChildren: () => import('./bamboo-hr/bamboo-hr.module').then(m => m.BambooHrModule)
+        loadChildren: () => import('./bamboo-hr/bamboo-hr.module').then((m) => m.BambooHrModule),
       },
       {
         path: 'qbd',
-        loadChildren: () => import('./qbd/qbd.module').then(m => m.QbdModule)
+        loadChildren: () => import('./qbd/qbd.module').then((m) => m.QbdModule),
       },
       {
         path: 'travelperk',
-        loadChildren: () => import('./travelperk/travelperk.module').then(m => m.TravelperkModule)
+        loadChildren: () => import('./travelperk/travelperk.module').then((m) => m.TravelperkModule),
       },
       {
         path: 'intacct',
-        loadChildren: () => import('./intacct/intacct.module').then(m => m.IntacctModule)
+        loadChildren: () => import('./intacct/intacct.module').then((m) => m.IntacctModule),
       },
       {
         path: 'sage300',
-        loadChildren: () => import('./sage300/sage300.module').then(m => m.Sage300Module)
+        loadChildren: () => import('./sage300/sage300.module').then((m) => m.Sage300Module),
       },
       {
         path: 'qbo',
-        loadChildren: () => import('./qbo/qbo.module').then(m => m.QboModule)
+        loadChildren: () => import('./qbo/qbo.module').then((m) => m.QboModule),
       },
       {
         path: 'business_central',
-        loadChildren: () => import('./business-central/business-central.module').then(m => m.BusinessCentralModule)
+        loadChildren: () => import('./business-central/business-central.module').then((m) => m.BusinessCentralModule),
       },
       {
         path: 'netsuite',
-        loadChildren: () => import('./netsuite/netsuite.module').then(m => m.NetsuiteModule)
+        loadChildren: () => import('./netsuite/netsuite.module').then((m) => m.NetsuiteModule),
       },
       {
         path: 'xero',
-        loadChildren: () => import('./xero/xero.module').then(m => m.XeroModule)
+        loadChildren: () => import('./xero/xero.module').then((m) => m.XeroModule),
       },
       {
         path: 'qbd_direct',
-        loadChildren: () => import('./qbd-direct/qbd-direct.module').then(m => m.QbdDirectModule)
+        loadChildren: () => import('./qbd-direct/qbd-direct.module').then((m) => m.QbdDirectModule),
       },
       {
         path: 'sage50',
-        loadChildren: () => import('./sage50/sage50-routing').then(m => m.SAGE50_ROUTES)
-      }
-    ]
-  }
+        loadChildren: () => import('./sage50/sage50-routing').then((m) => m.SAGE50_ROUTES),
+      },
+    ],
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class IntegrationsRoutingModule { }
+export class IntegrationsRoutingModule {}

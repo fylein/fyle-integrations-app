@@ -5,13 +5,12 @@ import { Observable } from 'rxjs';
 import { Token } from 'src/app/core/models/misc/token.model';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class BusinessCentralAuthService {
-
   constructor(
     private apiService: ApiService,
-    helper: HelperService
+    helper: HelperService,
   ) {
     helper.setBaseApiURL();
   }

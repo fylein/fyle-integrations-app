@@ -1,8 +1,7 @@
-import { Observable } from "rxjs";
-import { Sage50AttributeType } from "../enum/enum.model";
+import { Observable } from 'rxjs';
+import { Sage50AttributeType } from '../enum/enum.model';
 
-export type CSVImportAttributeType =
-  | Sage50AttributeType;
+export type CSVImportAttributeType = Sage50AttributeType;
 
 export interface CSVImportAttributesValidResponse {
   file_name: string;
@@ -21,6 +20,6 @@ export interface CSVImportAttributesService {
   importAttributes(
     attributeType: CSVImportAttributeType,
     fileName: string,
-    jsonData: any
+    jsonData: any,
   ): Observable<CSVImportAttributesValidResponse>;
 }

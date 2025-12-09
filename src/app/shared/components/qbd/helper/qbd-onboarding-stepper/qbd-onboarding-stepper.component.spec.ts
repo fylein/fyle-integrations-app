@@ -22,26 +22,25 @@ describe('QbdOnboardingStepperComponent', () => {
   beforeEach(async () => {
     const translocoServiceSpy = jasmine.createSpyObj('TranslocoService', ['translate'], {
       config: {
-        reRenderOnLangChange: true
+        reRenderOnLangChange: true,
       },
       langChanges$: of('en'),
-      _loadDependencies: () => Promise.resolve()
+      _loadDependencies: () => Promise.resolve(),
     });
     service2 = {
-      getOnboardingState: () => QBDOnboardingState.FIELD_MAPPINGS
+      getOnboardingState: () => QBDOnboardingState.FIELD_MAPPINGS,
     };
     localStorage.setItem('QBDOnboardingState', JSON.stringify('EXPORT_SETTINGS'));
     await TestBed.configureTestingModule({
-    declarations: [QbdOnboardingStepperComponent],
-    imports: [RouterTestingModule, SharedModule, NoopAnimationsModule, TranslocoModule],
-    providers: [
+      declarations: [QbdOnboardingStepperComponent],
+      imports: [RouterTestingModule, SharedModule, NoopAnimationsModule, TranslocoModule],
+      providers: [
         { provide: Router, useValue: routerSpy },
         { provide: QbdWorkspaceService, useValue: service2 },
         provideHttpClient(withInterceptorsFromDi()),
-        { provide: TranslocoService, useValue: translocoServiceSpy }
-    ]
-})
-    .compileComponents();
+        { provide: TranslocoService, useValue: translocoServiceSpy },
+      ],
+    }).compileComponents();
 
     translocoService = TestBed.inject(TranslocoService) as jasmine.SpyObj<TranslocoService>;
 

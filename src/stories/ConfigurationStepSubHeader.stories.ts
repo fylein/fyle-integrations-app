@@ -1,4 +1,3 @@
-
 import { CommonModule } from '@angular/common';
 import type { Meta, StoryObj } from '@storybook/angular';
 import { moduleMetadata } from '@storybook/angular';
@@ -10,17 +9,17 @@ const meta: Meta<ConfigurationStepSubHeaderComponent> = {
   component: ConfigurationStepSubHeaderComponent,
   tags: ['autodocs'],
   render: (args: ConfigurationStepSubHeaderComponent) => ({
-    props: { ...args }
+    props: { ...args },
   }),
   decorators: [
     moduleMetadata({
       declarations: [ConfigurationStepSubHeaderComponent],
-      imports: [CommonModule]
-    })
+      imports: [CommonModule],
+    }),
   ],
   argTypes: {
-    ngOnInit: { table: { disable: true } }
-  }
+    ngOnInit: { table: { disable: true } },
+  },
 };
 
 export default meta;
@@ -29,6 +28,9 @@ type Story = StoryObj<ConfigurationStepSubHeaderComponent>;
 export const simple: Story = {
   args: {
     label: 'Other Preferences',
-    subLabel: 'Based on your preference, you can choose whether you want to create any new records in QuickBooks Online from ' + brandingConfig.brandName + '. (when there is no employee record found, or when the accounting period is closed)'
-  }
+    subLabel:
+      'Based on your preference, you can choose whether you want to create any new records in QuickBooks Online from ' +
+      brandingConfig.brandName +
+      '. (when there is no employee record found, or when the accounting period is closed)',
+  },
 };

@@ -10,22 +10,22 @@ describe('AuthGuard', () => {
   let authService: AuthService;
 
   const router = {
-    navigate: jasmine.createSpy('navigate')
+    navigate: jasmine.createSpy('navigate'),
   };
 
   beforeEach(() => {
     const service1 = {
-      isLoggedIn: () => true
+      isLoggedIn: () => true,
     };
 
     TestBed.configureTestingModule({
-    imports: [RouterTestingModule],
-    providers: [
+      imports: [RouterTestingModule],
+      providers: [
         { provide: AuthService, useValue: service1 },
         { provide: Router, useValue: router },
-        provideHttpClient(withInterceptorsFromDi())
-    ]
-});
+        provideHttpClient(withInterceptorsFromDi()),
+      ],
+    });
 
     authService = TestBed.inject(AuthService);
     guard = TestBed.inject(AuthGuard);

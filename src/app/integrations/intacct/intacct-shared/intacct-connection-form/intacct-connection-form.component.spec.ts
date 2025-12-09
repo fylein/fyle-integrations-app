@@ -6,7 +6,6 @@ import { IntacctConnectionFormComponent } from './intacct-connection-form.compon
 import { TranslocoModule, TranslocoService } from '@jsverse/transloco';
 import { of } from 'rxjs';
 
-
 describe('IntacctConnectionFormComponent', () => {
   let component: IntacctConnectionFormComponent;
   let fixture: ComponentFixture<IntacctConnectionFormComponent>;
@@ -14,19 +13,17 @@ describe('IntacctConnectionFormComponent', () => {
   beforeEach(async () => {
     const translocoServiceSpy = jasmine.createSpyObj('TranslocoService', ['translate'], {
       config: {
-        reRenderOnLangChange: true
+        reRenderOnLangChange: true,
       },
       langChanges$: of('en'),
-      _loadDependencies: () => Promise.resolve()
+      _loadDependencies: () => Promise.resolve(),
     });
-
 
     await TestBed.configureTestingModule({
       declarations: [IntacctConnectionFormComponent],
       imports: [HttpClientTestingModule, ReactiveFormsModule, TranslocoModule],
-      providers: [ { provide: TranslocoService, useValue: translocoServiceSpy }]
-    })
-    .compileComponents();
+      providers: [{ provide: TranslocoService, useValue: translocoServiceSpy }],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(IntacctConnectionFormComponent);
     component = fixture.componentInstance;
@@ -35,7 +32,7 @@ describe('IntacctConnectionFormComponent', () => {
     component.connectIntacctForm = formBuilder.group({
       companyID: [''],
       userID: [''],
-      userPassword: ['']
+      userPassword: [''],
     });
 
     fixture.detectChanges();

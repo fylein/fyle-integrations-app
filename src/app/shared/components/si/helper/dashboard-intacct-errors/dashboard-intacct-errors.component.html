@@ -1,31 +1,36 @@
 <div>
-      <p-table [value]="intacctErrorExpenses" [tableStyle]="{ 'min-width': '20rem' }">
-        <ng-template pTemplate="header">
-            <tr>
-                <th>{{ 'dashboardIntacctErrors.expenseId' | transloco }}</th>
-                <th>{{ 'dashboardIntacctErrors.employeeNameAndId' | transloco }}</th>
-                <th>{{ 'dashboardIntacctErrors.expenseType' | transloco }}</th>
-            </tr>
-        </ng-template>
-        <ng-template pTemplate="body" let-rowData let-rowIndex="rowIndex">
-            <tr>
-                <td class="tw-cursor-pointer tw-underline" (click)="openUrl($event, rowData.expense_id)">
-                    {{rowData.expense_number}}
-                </td>
-                <td>
-                    <h4>
-                        {{rowData.employee_name}}
-                    </h4>
-                    <h5 class="tw-font-400 !tw-text-12-px tw-text-placeholder">
-                        {{rowData.employee_email}}
-                    </h5>
-                </td>
-                <td>
-                    <h4>
-                        {{(rowData.fund_source === 'PERSONAL' ? 'dashboardIntacctErrors.reimbursable' : 'dashboardIntacctErrors.corporateCard') | transloco}}
-                    </h4>
-                </td>
-            </tr>
-        </ng-template>
-    </p-table>
+  <p-table [value]="intacctErrorExpenses" [tableStyle]="{ 'min-width': '20rem' }">
+    <ng-template pTemplate="header">
+      <tr>
+        <th>{{ 'dashboardIntacctErrors.expenseId' | transloco }}</th>
+        <th>{{ 'dashboardIntacctErrors.employeeNameAndId' | transloco }}</th>
+        <th>{{ 'dashboardIntacctErrors.expenseType' | transloco }}</th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-rowData let-rowIndex="rowIndex">
+      <tr>
+        <td class="tw-cursor-pointer tw-underline" (click)="openUrl($event, rowData.expense_id)">
+          {{ rowData.expense_number }}
+        </td>
+        <td>
+          <h4>
+            {{ rowData.employee_name }}
+          </h4>
+          <h5 class="tw-font-400 !tw-text-12-px tw-text-placeholder">
+            {{ rowData.employee_email }}
+          </h5>
+        </td>
+        <td>
+          <h4>
+            {{
+              (rowData.fund_source === 'PERSONAL'
+                ? 'dashboardIntacctErrors.reimbursable'
+                : 'dashboardIntacctErrors.corporateCard'
+              ) | transloco
+            }}
+          </h4>
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
 </div>

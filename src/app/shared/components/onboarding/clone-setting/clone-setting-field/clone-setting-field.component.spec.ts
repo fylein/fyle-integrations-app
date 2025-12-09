@@ -8,9 +8,8 @@ xdescribe('CloneSettingFieldComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ CloneSettingFieldComponent ]
-    })
-    .compileComponents();
+      declarations: [CloneSettingFieldComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(CloneSettingFieldComponent);
     component = fixture.componentInstance;

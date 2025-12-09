@@ -2,11 +2,26 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Subject, debounceTime, filter, forkJoin } from 'rxjs';
-import { brandingConfig, brandingFeatureConfig, brandingKbArticles, brandingStyle } from 'src/app/branding/branding-config';
+import {
+  brandingConfig,
+  brandingFeatureConfig,
+  brandingKbArticles,
+  brandingStyle,
+} from 'src/app/branding/branding-config';
 import { ExportSettingOptionSearch } from 'src/app/core/models/common/export-settings.model';
 import { SelectFormOption } from 'src/app/core/models/common/select-form-option.model';
 import { DestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
-import { AppName, ConfigurationCta, ConfigurationWarningEvent, EmployeeFieldMapping, ExpenseGroupingFieldOption, XeroExportSettingDestinationOptionKey, ToastSeverity, XeroOnboardingState, XeroCorporateCreditCardExpensesObject } from 'src/app/core/models/enum/enum.model';
+import {
+  AppName,
+  ConfigurationCta,
+  ConfigurationWarningEvent,
+  EmployeeFieldMapping,
+  ExpenseGroupingFieldOption,
+  XeroExportSettingDestinationOptionKey,
+  ToastSeverity,
+  XeroOnboardingState,
+  XeroCorporateCreditCardExpensesObject,
+} from 'src/app/core/models/enum/enum.model';
 import { ConfigurationWarningOut } from 'src/app/core/models/misc/configuration-warning.model';
 import { XeroExportSettingGet } from 'src/app/core/models/xero/xero-configuration/xero-export-settings.model';
 import { HelperService } from 'src/app/core/services/common/helper.service';
@@ -20,13 +35,12 @@ import { ExportSettingsService } from 'src/app/core/services/common/export-setti
 import { BrandingService } from 'src/app/core/services/common/branding.service';
 
 @Component({
-    selector: 'app-xero-export-settings',
-    templateUrl: './xero-export-settings.component.html',
-    styleUrls: ['./xero-export-settings.component.scss'],
-    standalone: false
+  selector: 'app-xero-export-settings',
+  templateUrl: './xero-export-settings.component.html',
+  styleUrls: ['./xero-export-settings.component.scss'],
+  standalone: false,
 })
 export class XeroExportSettingsComponent implements OnInit {
-
   isLoading: boolean = true;
 
   redirectLink: string = brandingKbArticles.onboardingArticles.XERO.EXPORT_SETTING;
@@ -37,7 +51,7 @@ export class XeroExportSettingsComponent implements OnInit {
 
   windowReference: Window;
 
-  exportSettings:  XeroExportSettingGet;
+  exportSettings: XeroExportSettingGet;
 
   bankAccounts: DestinationAttribute[];
 
@@ -81,13 +95,13 @@ export class XeroExportSettingsComponent implements OnInit {
 
   XeroExportSettingDestinationOptionKey = XeroExportSettingDestinationOptionKey;
 
-  previewImagePaths =[
+  previewImagePaths = [
     {
-      'PURCHASE BILL': 'assets/illustrations/xero/bill.png'
+      'PURCHASE BILL': 'assets/illustrations/xero/bill.png',
     },
     {
-      'BANK TRANSACTION': 'assets/illustrations/xero/bank-transaction.png'
-    }
+      'BANK TRANSACTION': 'assets/illustrations/xero/bank-transaction.png',
+    },
   ];
 
   readonly brandingFeatureConfig = brandingFeatureConfig;
@@ -101,18 +115,19 @@ export class XeroExportSettingsComponent implements OnInit {
     private xeroExportSettingService: XeroExportSettingsService,
     private mappingService: MappingService,
     private xeroHelperService: XeroHelperService,
-    private router : Router,
+    private router: Router,
     private workspaceService: WorkspaceService,
     private toastService: IntegrationsToastService,
     private translocoService: TranslocoService,
     private exportSettingsService: ExportSettingsService,
-    public brandingService: BrandingService
+    public brandingService: BrandingService,
   ) {
-    this.reimbursableExpenseGroupingDateOptions = this.xeroExportSettingService.getReimbursableExpenseGroupingDateOptions();
+    this.reimbursableExpenseGroupingDateOptions =
+      this.xeroExportSettingService.getReimbursableExpenseGroupingDateOptions();
     this.reimbursableExportTypes = this.xeroExportSettingService.getReimbursableExportTypes();
-    this.creditCardExportTypes =  this.xeroExportSettingService.getCreditCardExportTypes();
-    this.reimbursableExpenseGroupByOptions =  this.xeroExportSettingService.getReimbursableExpenseGroupingOptions();
-    this.cccExpenseGroupByOptions =  this.xeroExportSettingService.getCCCExpenseGroupingOptions();
+    this.creditCardExportTypes = this.xeroExportSettingService.getCreditCardExportTypes();
+    this.reimbursableExpenseGroupByOptions = this.xeroExportSettingService.getReimbursableExpenseGroupingOptions();
+    this.cccExpenseGroupByOptions = this.xeroExportSettingService.getCCCExpenseGroupingOptions();
     this.cccExpenseGroupingDateOptions = this.xeroExportSettingService.getCCCExpenseGroupingDateOptions();
     this.splitExpenseGroupingOptions = this.xeroExportSettingService.getSplitExpenseGroupingOptions();
     this.autoMapEmployeeTypes = this.xeroExportSettingService.getAutoMapEmployeeOptions();
@@ -130,15 +145,23 @@ export class XeroExportSettingsComponent implements OnInit {
 
   private setupCustomWatchers(): void {
     // Removing not relevant date options
-    this.reimbursableExpenseGroupingDateOptions = this.exportSettingsService.constructExportDateOptions(false, this.exportSettingForm.controls.reimbursableExportGroup.value, this.exportSettingForm.controls.reimbursableExportDate.value);
-    this.cccExpenseGroupingDateOptions = this.exportSettingsService.constructExportDateOptions(true, this.exportSettingForm.controls.creditCardExportGroup.value, this.exportSettingForm.controls.creditCardExportDate.value);
+    this.reimbursableExpenseGroupingDateOptions = this.exportSettingsService.constructExportDateOptions(
+      false,
+      this.exportSettingForm.controls.reimbursableExportGroup.value,
+      this.exportSettingForm.controls.reimbursableExportDate.value,
+    );
+    this.cccExpenseGroupingDateOptions = this.exportSettingsService.constructExportDateOptions(
+      true,
+      this.exportSettingForm.controls.creditCardExportGroup.value,
+      this.exportSettingForm.controls.creditCardExportDate.value,
+    );
   }
 
   save() {
     if (this.exportSettingForm.valid) {
       this.constructPayloadAndSave({
         hasAccepted: true,
-        event: ConfigurationWarningEvent.XERO_EXPORT_SETTINGS
+        event: ConfigurationWarningEvent.XERO_EXPORT_SETTINGS,
       });
     }
   }
@@ -148,42 +171,51 @@ export class XeroExportSettingsComponent implements OnInit {
     if (event.hasAccepted) {
       this.isSaveInProgress = true;
       const exportSettingPayload = this.xeroExportSettingService.constructPayload(this.exportSettingForm);
-      this.xeroExportSettingService.postExportSettings(exportSettingPayload).subscribe((response: XeroExportSettingGet) => {
-        this.isSaveInProgress = false;
-        this.toastService.displayToastMessage(ToastSeverity.SUCCESS, this.translocoService.translate('xeroExportSettings.exportSettingsSuccess'), undefined, this.isOnboarding);
+      this.xeroExportSettingService.postExportSettings(exportSettingPayload).subscribe(
+        (response: XeroExportSettingGet) => {
+          this.isSaveInProgress = false;
+          this.toastService.displayToastMessage(
+            ToastSeverity.SUCCESS,
+            this.translocoService.translate('xeroExportSettings.exportSettingsSuccess'),
+            undefined,
+            this.isOnboarding,
+          );
 
-        if (this.isOnboarding) {
-          this.workspaceService.setOnboardingState(XeroOnboardingState.IMPORT_SETTINGS);
-          this.router.navigate([`/integrations/xero/onboarding/import_settings`]);
-        }
-      }, () => {
-        this.isSaveInProgress = false;
-        this.toastService.displayToastMessage(ToastSeverity.ERROR, this.translocoService.translate('xeroExportSettings.exportSettingsError'));
-      });
+          if (this.isOnboarding) {
+            this.workspaceService.setOnboardingState(XeroOnboardingState.IMPORT_SETTINGS);
+            this.router.navigate([`/integrations/xero/onboarding/import_settings`]);
+          }
+        },
+        () => {
+          this.isSaveInProgress = false;
+          this.toastService.displayToastMessage(
+            ToastSeverity.ERROR,
+            this.translocoService.translate('xeroExportSettings.exportSettingsError'),
+          );
+        },
+      );
     }
   }
 
-
   private optionSearchWatcher(): void {
-    this.optionSearchUpdate.pipe(
-      debounceTime(1000)
-    ).subscribe((event: ExportSettingOptionSearch) => {
+    this.optionSearchUpdate.pipe(debounceTime(1000)).subscribe((event: ExportSettingOptionSearch) => {
       const existingOptions = this.bankAccounts;
 
-      this.mappingService.getPaginatedDestinationAttributes(event.destinationOptionKey, event.searchTerm).subscribe((response) => {
+      this.mappingService
+        .getPaginatedDestinationAttributes(event.destinationOptionKey, event.searchTerm)
+        .subscribe((response) => {
+          // Insert new options to existing options
+          response.results.forEach((option) => {
+            if (!existingOptions.find((existingOption) => existingOption.destination_id === option.destination_id)) {
+              existingOptions.push(option);
+            }
+          });
 
-        // Insert new options to existing options
-        response.results.forEach((option) => {
-          if (!existingOptions.find((existingOption) => existingOption.destination_id === option.destination_id)) {
-            existingOptions.push(option);
-          }
+          this.bankAccounts = existingOptions.concat();
+          this.bankAccounts.sort((a, b) => (a.value || '').localeCompare(b.value || ''));
+
+          this.isOptionSearchInProgress = false;
         });
-
-        this.bankAccounts = existingOptions.concat();
-        this.bankAccounts.sort((a, b) => (a.value || '').localeCompare(b.value || ''));
-
-        this.isOptionSearchInProgress = false;
-      });
     });
   }
 
@@ -198,46 +230,51 @@ export class XeroExportSettingsComponent implements OnInit {
     this.isOnboarding = this.router.url.includes('onboarding');
     const destinationAttributes = ['BANK_ACCOUNT'];
 
-    const groupedAttributes = destinationAttributes.map(destinationAttribute =>
-      this.mappingService.getPaginatedDestinationAttributes(destinationAttribute).pipe(filter(response => !!response))
+    const groupedAttributes = destinationAttributes.map((destinationAttribute) =>
+      this.mappingService
+        .getPaginatedDestinationAttributes(destinationAttribute)
+        .pipe(filter((response) => !!response)),
     );
 
-    forkJoin([
-      this.xeroExportSettingService.getExportSettings(),
-      ...groupedAttributes
-    ]).subscribe(([exportSettings, bankAccounts]) => {
-      this.exportSettings = exportSettings;
-      this.bankAccounts = bankAccounts.results;
+    forkJoin([this.xeroExportSettingService.getExportSettings(), ...groupedAttributes]).subscribe(
+      ([exportSettings, bankAccounts]) => {
+        this.exportSettings = exportSettings;
+        this.bankAccounts = bankAccounts.results;
 
-      if (this.exportSettings.general_mappings) {
-        this.helperService.addDestinationAttributeIfNotExists({
-          options: this.bankAccounts,
-          destination_id: this.exportSettings.general_mappings.bank_account.id,
-          value: this.exportSettings.general_mappings.bank_account.name
-        });
-      }
-      this.exportSettingForm = this.xeroExportSettingService.mapAPIResponseToFormGroup(this.exportSettings, this.bankAccounts);
-      if (!this.brandingFeatureConfig.featureFlags.exportSettings.reimbursableExpenses) {
-        this.exportSettingForm.controls.creditCardExpense.patchValue(true);
-      }
-      this.helperService.addExportSettingFormValidator(this.exportSettingForm);
-      const [exportSettingValidatorRule, exportModuleRule] = XeroExportSettingsService.getValidators();
+        if (this.exportSettings.general_mappings) {
+          this.helperService.addDestinationAttributeIfNotExists({
+            options: this.bankAccounts,
+            destination_id: this.exportSettings.general_mappings.bank_account.id,
+            value: this.exportSettings.general_mappings.bank_account.name,
+          });
+        }
+        this.exportSettingForm = this.xeroExportSettingService.mapAPIResponseToFormGroup(
+          this.exportSettings,
+          this.bankAccounts,
+        );
+        if (!this.brandingFeatureConfig.featureFlags.exportSettings.reimbursableExpenses) {
+          this.exportSettingForm.controls.creditCardExpense.patchValue(true);
+        }
+        this.helperService.addExportSettingFormValidator(this.exportSettingForm);
+        const [exportSettingValidatorRule, exportModuleRule] = XeroExportSettingsService.getValidators();
 
-      this.helperService.setConfigurationSettingValidatorsAndWatchers(exportSettingValidatorRule, this.exportSettingForm);
+        this.helperService.setConfigurationSettingValidatorsAndWatchers(
+          exportSettingValidatorRule,
+          this.exportSettingForm,
+        );
 
-      this.helperService.setExportTypeValidatorsAndWatchers(exportModuleRule, this.exportSettingForm);
+        this.helperService.setExportTypeValidatorsAndWatchers(exportModuleRule, this.exportSettingForm);
 
-      this.setupCustomWatchers();
+        this.setupCustomWatchers();
 
-      this.optionSearchWatcher();
+        this.optionSearchWatcher();
 
-      this.isLoading = false;
-
-    });
+        this.isLoading = false;
+      },
+    );
   }
 
   ngOnInit(): void {
     this.setupPage();
   }
-
 }

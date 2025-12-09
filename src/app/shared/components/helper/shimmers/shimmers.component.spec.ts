@@ -8,9 +8,8 @@ xdescribe('ShimmersComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ShimmersComponent ]
-    })
-    .compileComponents();
+      declarations: [ShimmersComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(ShimmersComponent);
     component = fixture.componentInstance;

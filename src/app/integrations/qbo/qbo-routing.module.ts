@@ -10,27 +10,27 @@ const routes: Routes = [
     children: [
       {
         path: 'onboarding',
-        loadChildren: () => import('./qbo-onboarding/qbo-onboarding.module').then(m => m.QboOnboardingModule)
+        loadChildren: () => import('./qbo-onboarding/qbo-onboarding.module').then((m) => m.QboOnboardingModule),
       },
       {
         path: 'main',
-        loadChildren: () => import('./qbo-main/qbo-main.module').then(m => m.QboMainModule),
-        canActivate: [QboTokenGuard]
+        loadChildren: () => import('./qbo-main/qbo-main.module').then((m) => m.QboMainModule),
+        canActivate: [QboTokenGuard],
       },
       {
         path: 'token_expired',
-        loadChildren: () => import('./qbo-main/qbo-main.module').then(m => m.QboMainModule)
+        loadChildren: () => import('./qbo-main/qbo-main.module').then((m) => m.QboMainModule),
       },
       {
         path: 'disconnect',
-        loadChildren: () => import('./qbo-main/qbo-main.module').then(m => m.QboMainModule)
-      }
-    ]
-  }
+        loadChildren: () => import('./qbo-main/qbo-main.module').then((m) => m.QboMainModule),
+      },
+    ],
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class QboRoutingModule { }
+export class QboRoutingModule {}

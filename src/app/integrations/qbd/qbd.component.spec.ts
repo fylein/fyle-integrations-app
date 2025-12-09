@@ -18,27 +18,26 @@ describe('QbdComponent', () => {
   beforeEach(async () => {
     const localStorageDump = {
       email: 'fyle@fyle.in',
-      org_id: '2'
+      org_id: '2',
     };
     localStorage.setItem('user', JSON.stringify(localStorageDump));
     const service1 = {
       getQBDWorkspace: () => of(workspaceResponse),
       postQBDWorkspace: () => of(workspaceResponse),
-      syncFyleDimensions: () => of({})
+      syncFyleDimensions: () => of({}),
     };
     const translocoSpy = jasmine.createSpyObj('TranslocoService', ['translate']);
 
     await TestBed.configureTestingModule({
-    declarations: [QbdComponent],
-    imports: [RouterTestingModule],
-    providers: [
+      declarations: [QbdComponent],
+      imports: [RouterTestingModule],
+      providers: [
         { provide: QbdWorkspaceService, useValue: service1 },
         provideHttpClient(withInterceptorsFromDi()),
         provideHttpClientTesting(),
-        { provide: TranslocoService, useValue: translocoSpy }
-    ]
-})
-    .compileComponents();
+        { provide: TranslocoService, useValue: translocoSpy },
+      ],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(QbdComponent);
     component = fixture.componentInstance;

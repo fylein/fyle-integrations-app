@@ -20,13 +20,12 @@ import { UserService } from 'src/app/core/services/misc/user.service';
 import { AccountingExportService } from 'src/app/core/services/common/accounting-export.service';
 
 @Component({
-    selector: 'app-xero-complete-export-log',
-    templateUrl: './xero-complete-export-log.component.html',
-    styleUrls: ['./xero-complete-export-log.component.scss'],
-    standalone: false
+  selector: 'app-xero-complete-export-log',
+  templateUrl: './xero-complete-export-log.component.html',
+  styleUrls: ['./xero-complete-export-log.component.scss'],
+  standalone: false,
 })
 export class XeroCompleteExportLogComponent implements OnInit {
-
   isLoading: boolean;
 
   appName: AppName = AppName.XERO;
@@ -47,9 +46,9 @@ export class XeroCompleteExportLogComponent implements OnInit {
 
   isCalendarVisible: boolean;
 
-  accountingExports: AccountingExportList [];
+  accountingExports: AccountingExportList[];
 
-  filteredAccountingExports: AccountingExportList [];
+  filteredAccountingExports: AccountingExportList[];
 
   expenses: Expense[] = [];
 
@@ -78,12 +77,10 @@ export class XeroCompleteExportLogComponent implements OnInit {
     private storageService: StorageService,
     private workspaceService: WorkspaceService,
     private translocoService: TranslocoService,
-    private accountingExportService: AccountingExportService
+    private accountingExportService: AccountingExportService,
   ) {
     this.dateOptions = this.accountingExportService.getDateOptionsV2();
-    this.searchQuerySubject.pipe(
-      debounceTime(1000)
-    ).subscribe((query: string) => {
+    this.searchQuerySubject.pipe(debounceTime(1000)).subscribe((query: string) => {
       this.searchQuery = query;
       this.offset = 0;
       this.currentPage = Math.ceil(this.offset / this.limit) + 1;
@@ -113,24 +110,32 @@ export class XeroCompleteExportLogComponent implements OnInit {
     this.getAccountingExports(this.limit, offset);
   }
 
-  private getAccountingExports(limit: number, offset:number) {
+  private getAccountingExports(limit: number, offset: number) {
     this.isLoading = true;
     if (this.limit !== limit) {
       this.paginatorService.storePageSize(PaginatorPage.EXPORT_LOG, limit);
     }
 
-    this.exportLogService.getExpenseGroups(TaskLogState.COMPLETE, limit, offset, this.selectedDateFilter, null, this.searchQuery).subscribe((accountingExportResponse: ExpenseGroupResponse) => {
+    this.exportLogService
+      .getExpenseGroups(TaskLogState.COMPLETE, limit, offset, this.selectedDateFilter, null, this.searchQuery)
+      .subscribe((accountingExportResponse: ExpenseGroupResponse) => {
         this.totalCount = accountingExportResponse.count;
         this.xeroShortCode = this.storageService.get('xeroShortCode');
         this.accountingExportService.assignXeroShortCode(this.xeroShortCode);
-        const accountingExports: AccountingExportList[] = accountingExportResponse.results.map((accountingExport: ExpenseGroup) =>
-          this.accountingExportService.parseExpenseGroupAPIResponseToExportLog(accountingExport, this.org_id, AppName.XERO, this.translocoService)
+        const accountingExports: AccountingExportList[] = accountingExportResponse.results.map(
+          (accountingExport: ExpenseGroup) =>
+            this.accountingExportService.parseExpenseGroupAPIResponseToExportLog(
+              accountingExport,
+              this.org_id,
+              AppName.XERO,
+              this.translocoService,
+            ),
         );
 
         this.filteredAccountingExports = accountingExports;
         this.accountingExports = [...this.filteredAccountingExports];
         this.isLoading = false;
-    });
+      });
   }
 
   private setupForm(): void {
@@ -138,7 +143,7 @@ export class XeroCompleteExportLogComponent implements OnInit {
       searchOption: [''],
       dateRange: [null],
       start: [''],
-      end: ['']
+      end: [''],
     });
 
     this.exportLogForm.controls.start.valueChanges.subscribe((dateRange) => {
@@ -152,7 +157,7 @@ export class XeroCompleteExportLogComponent implements OnInit {
         this.hideCalendar = true;
         this.selectedDateFilter = {
           startDate: dateRange[0],
-          endDate: dateRange[1]
+          endDate: dateRange[1],
         };
 
         this.isDateSelected = true;
@@ -179,5 +184,4 @@ export class XeroCompleteExportLogComponent implements OnInit {
   ngOnInit(): void {
     this.getAccountingExportsAndSetupPage();
   }
-
 }

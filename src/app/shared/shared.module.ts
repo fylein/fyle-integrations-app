@@ -191,7 +191,7 @@ import { AlertComponent } from './components/core/alert/alert.component';
     SkippedExportLogComponent,
     ConfigurationFieldContainerComponent,
     UploadedFileDetailsComponent,
-    AlertComponent
+    AlertComponent,
   ],
   imports: [
     CommonModule,
@@ -218,7 +218,7 @@ import { AlertComponent } from './components/core/alert/alert.component';
     InputIconModule,
     CheckboxButtonComponent,
     TranslocoModule,
-    SplitButtonModule
+    SplitButtonModule,
   ],
   exports: [
     CommonModule,
@@ -247,7 +247,9 @@ import { AlertComponent } from './components/core/alert/alert.component';
     DialogModule,
     DatePickerModule,
     AutoCompleteModule,
-    FormsModule, ReactiveFormsModule, ProgressBarModule,
+    FormsModule,
+    ReactiveFormsModule,
+    ProgressBarModule,
     ToastModule,
     IntacctConnectorComponent,
     NetsuiteConnectorComponent,
@@ -309,7 +311,7 @@ import { AlertComponent } from './components/core/alert/alert.component';
     TranslocoModule,
     ConfigurationFieldContainerComponent,
     UploadedFileDetailsComponent,
-    AlertComponent
-  ]
+    AlertComponent,
+  ],
 })
-export class SharedModule { }
+export class SharedModule {}

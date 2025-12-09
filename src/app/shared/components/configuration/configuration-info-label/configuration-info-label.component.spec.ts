@@ -8,9 +8,8 @@ xdescribe('ConfigurationInfoLabelComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ConfigurationInfoLabelComponent ]
-    })
-    .compileComponents();
+      declarations: [ConfigurationInfoLabelComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(ConfigurationInfoLabelComponent);
     component = fixture.componentInstance;

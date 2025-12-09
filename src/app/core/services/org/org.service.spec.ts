@@ -17,18 +17,18 @@ xdescribe('OrgService', () => {
   const API_BASE_URL = environment.cluster_domain_api_url;
 
   const service1 = {
-    get: () => '1'
+    get: () => '1',
   };
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-    imports: [],
-    providers: [
+      imports: [],
+      providers: [
         { provide: StorageService, useValue: service1 },
         provideHttpClient(withInterceptorsFromDi()),
-        provideHttpClientTesting()
-    ]
-});
+        provideHttpClientTesting(),
+      ],
+    });
     injector = getTestBed();
     service = TestBed.inject(OrgService);
     storageService = injector.inject(StorageService);
@@ -46,7 +46,7 @@ xdescribe('OrgService', () => {
 
     const req = httpMock.expectOne({
       method: 'PATCH',
-      url: `${API_BASE_URL}/orgs/`
+      url: `${API_BASE_URL}/orgs/`,
     });
 
     req.flush(orgMockData);
@@ -60,7 +60,7 @@ xdescribe('OrgService', () => {
 
     const req = httpMock.expectOne({
       method: 'PATCH',
-      url: `${API_BASE_URL}/orgs/1/workato_workspace/`
+      url: `${API_BASE_URL}/orgs/1/workato_workspace/`,
     });
 
     req.flush({});
@@ -74,7 +74,7 @@ xdescribe('OrgService', () => {
 
     const req = httpMock.expectOne({
       method: 'POST',
-      url: `${API_BASE_URL}/orgs/1/connect_fyle/`
+      url: `${API_BASE_URL}/orgs/1/connect_fyle/`,
     });
 
     req.flush({});
@@ -88,7 +88,7 @@ xdescribe('OrgService', () => {
 
     const req = httpMock.expectOne({
       method: 'POST',
-      url: `${API_BASE_URL}/orgs/1/connect_fyle/`
+      url: `${API_BASE_URL}/orgs/1/connect_fyle/`,
     });
 
     req.flush({});
@@ -102,7 +102,7 @@ xdescribe('OrgService', () => {
 
     const req = httpMock.expectOne({
       method: 'POST',
-      url: `${API_BASE_URL}/orgs/1/sendgrid_connection/`
+      url: `${API_BASE_URL}/orgs/1/sendgrid_connection/`,
     });
 
     req.flush({});
@@ -116,7 +116,7 @@ xdescribe('OrgService', () => {
 
     const req = httpMock.expectOne({
       method: 'GET',
-      url: `${API_BASE_URL}/orgs/1/admins/`
+      url: `${API_BASE_URL}/orgs/1/admins/`,
     });
 
     req.flush(bambooHRMockConfigurationPayload.additional_email_options);
@@ -134,7 +134,7 @@ xdescribe('OrgService', () => {
 
     const req = httpMock.expectOne({
       method: 'GET',
-      url: `${API_BASE_URL}/orgs/?org_id=loloi`
+      url: `${API_BASE_URL}/orgs/?org_id=loloi`,
     });
 
     expect(req.request.params.get('org_id')).toEqual('loloi');
@@ -142,7 +142,7 @@ xdescribe('OrgService', () => {
     req.flush(orgMockData);
   });
 
-  it("getCachedOrg service check", () => {
+  it('getCachedOrg service check', () => {
     const org = service.getCachedOrg();
     if (org === null) {
       expect(org).toBeNull;
@@ -151,21 +151,19 @@ xdescribe('OrgService', () => {
     }
   });
 
-  it("get token for iframe", () => {
+  it('get token for iframe', () => {
     service.generateToken('25').subscribe((res) => {
       expect(res).toEqual(generateTokenData);
     });
 
     const req = httpMock.expectOne(
-      req => req.method === 'GET' && req.url.includes(`${API_BASE_URL}/orgs/1/generate_token/`)
+      (req) => req.method === 'GET' && req.url.includes(`${API_BASE_URL}/orgs/1/generate_token/`),
     );
 
     req.flush(generateTokenData);
   });
 
-
   it('sanitizeUrl function check', () => {
     expect(service.sanitizeUrl('fyke')).toBeDefined();
   });
-
 });

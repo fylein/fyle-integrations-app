@@ -8,9 +8,8 @@ xdescribe('MappingCardHeaderComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ MappingCardHeaderComponent ]
-    })
-    .compileComponents();
+      declarations: [MappingCardHeaderComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(MappingCardHeaderComponent);
     component = fixture.componentInstance;

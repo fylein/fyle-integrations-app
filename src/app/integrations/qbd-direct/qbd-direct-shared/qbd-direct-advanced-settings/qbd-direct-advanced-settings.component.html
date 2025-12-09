@@ -4,7 +4,13 @@
   </div>
 }
 @if (!isLoading) {
-  <div [ngClass]="[brandingStyle.configuration.settingsContainer, isOnboarding ? brandingStyle.common.configurationContents : brandingStyle.common.configurationContentsDashboard, isOnboarding ? 'configuration--contents' : '']">
+  <div
+    [ngClass]="[
+      brandingStyle.configuration.settingsContainer,
+      isOnboarding ? brandingStyle.common.configurationContents : brandingStyle.common.configurationContentsDashboard,
+      isOnboarding ? 'configuration--contents' : '',
+    ]"
+  >
     <div>
       <app-configuration-step-header
         [headerText]="'qbd_direct.configuration.advancedSettings.stepName' | transloco"
@@ -12,7 +18,8 @@
         [showSyncButton]="isOnboarding"
         [appName]="appName.QBD_DIRECT"
         [redirectLink]="redirectLink"
-        (refreshDimension)="refreshDimensions()">
+        (refreshDimension)="refreshDimensions()"
+      >
       </app-configuration-step-header>
     </div>
     <div>
@@ -21,16 +28,21 @@
           <div [ngClass]="brandingStyle.configuration.configurationAdvancedSettingAutomationCardHeader">
             <app-configuration-step-sub-header
               [label]="'qbd_direct.configuration.advancedSettings.automationLabel' | transloco"
-              [subLabel]="'qbd_direct.configuration.advancedSettings.automationSubLabel' | transloco">
+              [subLabel]="'qbd_direct.configuration.advancedSettings.automationSubLabel' | transloco"
+            >
             </app-configuration-step-sub-header>
           </div>
           <div [ngClass]="brandingStyle.configuration.configurationAdvancedSettingAutomationCardBody">
             <app-configuration-toggle-field
               [form]="advancedSettingsForm"
               [label]="'qbd_direct.configuration.advancedSettings.scheduleAutoExportLabel' | transloco"
-              [subLabel]="'qbd_direct.configuration.advancedSettings.scheduleAutoExportSubLabel' | transloco: {brandName: brandingConfig.brandName}"
+              [subLabel]="
+                'qbd_direct.configuration.advancedSettings.scheduleAutoExportSubLabel'
+                  | transloco: { brandName: brandingConfig.brandName }
+              "
               [iconPath]="'calendar'"
-              [formControllerName]="'exportSchedule'">
+              [formControllerName]="'exportSchedule'"
+            >
             </app-configuration-toggle-field>
             @if (advancedSettingsForm.value.exportSchedule) {
               <div>
@@ -40,10 +52,14 @@
                   [isFieldMandatory]="false"
                   [mandatoryErrorListName]="'qbdDirectAdvancedSettings.automaticExportMethod' | transloco"
                   [label]="'qbd_direct.configuration.advancedSettings.autoExportfrequencyLabel' | transloco"
-                  [subLabel]="'qbd_direct.configuration.advancedSettings.autoExportfrequencySubLabel' | transloco : {brandName: brandingConfig.brandName}"
+                  [subLabel]="
+                    'qbd_direct.configuration.advancedSettings.autoExportfrequencySubLabel'
+                      | transloco: { brandName: brandingConfig.brandName }
+                  "
                   [options]="hours"
                   [isEmailPresent]="false"
-                  [formControllerName]="'exportScheduleFrequency'">
+                  [formControllerName]="'exportScheduleFrequency'"
+                >
                 </app-configuration-schedule-export>
               </div>
             }
@@ -51,7 +67,11 @@
           <div [ngClass]="brandingStyle.configuration.configurationAdvancedSettingAutomationCardHeader">
             <app-configuration-step-sub-header
               [label]="'qbd_direct.configuration.advancedSettings.otherPreferencesLabel' | transloco"
-              [subLabel]="'qbd_direct.configuration.advancedSettings.otherPreferencesSubLabel' | transloco: {brandName: brandingConfig.brandName}">
+              [subLabel]="
+                'qbd_direct.configuration.advancedSettings.otherPreferencesSubLabel'
+                  | transloco: { brandName: brandingConfig.brandName }
+              "
+            >
             </app-configuration-step-sub-header>
           </div>
           @if (isReimbursableExportTypePresent || isAutoCreateMerchantsAsVendorsFieldVisible()) {
@@ -59,10 +79,19 @@
               @if (isReimbursableExportTypePresent) {
                 <app-configuration-toggle-field
                   [form]="advancedSettingsForm"
-                  [label]="('qbd_direct.configuration.advancedSettings.autoCreateReimbursableEnitityLabel' | transloco) + (employeeMapping | snakeCaseToSpaceCase | lowercase) + ('qbdDirectAdvancedSettings.entityPluralInQuickbooksDesktop' | transloco)"
+                  [label]="
+                    ('qbd_direct.configuration.advancedSettings.autoCreateReimbursableEnitityLabel' | transloco) +
+                    (employeeMapping | snakeCaseToSpaceCase | lowercase) +
+                    ('qbdDirectAdvancedSettings.entityPluralInQuickbooksDesktop' | transloco)
+                  "
                   [iconPath]="'user-plus'"
-                  [subLabel]="('qbd_direct.configuration.advancedSettings.autoCreateReimbursableEnititySubLabel' | transloco) + (employeeMapping | snakeCaseToSpaceCase | lowercase) + ('qbdDirectAdvancedSettings.entityRecordSubLabel' | transloco)"
-                  [formControllerName]="'autoCreateReimbursableEnitity'">
+                  [subLabel]="
+                    ('qbd_direct.configuration.advancedSettings.autoCreateReimbursableEnititySubLabel' | transloco) +
+                    (employeeMapping | snakeCaseToSpaceCase | lowercase) +
+                    ('qbdDirectAdvancedSettings.entityRecordSubLabel' | transloco)
+                  "
+                  [formControllerName]="'autoCreateReimbursableEnitity'"
+                >
                 </app-configuration-toggle-field>
               }
               @if (isAutoCreateMerchantsAsVendorsFieldVisible()) {
@@ -70,8 +99,12 @@
                   [form]="advancedSettingsForm"
                   [iconPath]="'user-plus'"
                   [label]="'qbd_direct.configuration.advancedSettings.autoCreateMerchantsAsVendorsLabel' | transloco"
-                  [subLabel]="'qbd_direct.configuration.advancedSettings.autoCreateMerchantsAsVendorsSubLabel' | transloco: {brandName: brandingConfig.brandName}"
-                  [formControllerName]="'autoCreateMerchantsAsVendors'">
+                  [subLabel]="
+                    'qbd_direct.configuration.advancedSettings.autoCreateMerchantsAsVendorsSubLabel'
+                      | transloco: { brandName: brandingConfig.brandName }
+                  "
+                  [formControllerName]="'autoCreateMerchantsAsVendors'"
+                >
                 </app-configuration-toggle-field>
               }
             </div>
@@ -79,23 +112,36 @@
           <div [ngClass]="brandingStyle.configuration.configurationAdvancedSettingCustomizationCardHeader">
             <app-configuration-step-sub-header
               [label]="'qbd_direct.configuration.advancedSettings.customizeSectionLabel' | transloco"
-              [subLabel]="'qbd_direct.configuration.advancedSettings.customizeSectionSubLabel' | transloco : {brandName: brandingConfig.brandName}">
+              [subLabel]="
+                'qbd_direct.configuration.advancedSettings.customizeSectionSubLabel'
+                  | transloco: { brandName: brandingConfig.brandName }
+              "
+            >
             </app-configuration-step-sub-header>
           </div>
-          <div class="tw-bg-white" [ngClass]="brandingStyle.configuration.configurationAdvancedSettingCustomizationCardBody">
+          <div
+            class="tw-bg-white"
+            [ngClass]="brandingStyle.configuration.configurationAdvancedSettingCustomizationCardBody"
+          >
             <app-configuration-multi-select
               [form]="advancedSettingsForm"
               [label]="'qbd_direct.configuration.advancedSettings.topLevelMemoStructureLabel' | transloco"
-              [subLabel]="'qbd_direct.configuration.advancedSettings.topLevelMemoStructureSubLabel' | transloco : {brandName: brandingConfig.brandName}"
+              [subLabel]="
+                'qbd_direct.configuration.advancedSettings.topLevelMemoStructureSubLabel'
+                  | transloco: { brandName: brandingConfig.brandName }
+              "
               [isFieldMandatory]="true"
               [mandatoryErrorListName]="'qbdDirectAdvancedSettings.topLevelMemo' | transloco"
               [options]="defaultTopMemoOptions"
               [iconPath]="'list'"
               [placeholder]="'qbdDirectAdvancedSettings.selectTopMemoTypePlaceholder' | transloco"
-              [formControllerName]="'topMemoStructure'">
+              [formControllerName]="'topMemoStructure'"
+            >
             </app-configuration-multi-select>
             <div class="tw-p-24-px">
-              <div class="tw-bg-input-read-only-bg tw-rounded-4-px tw-text-14-px tw-py-8-px tw-px-8-px tw-border-input-read-only-border tw-border-solid">
+              <div
+                class="tw-bg-input-read-only-bg tw-rounded-4-px tw-text-14-px tw-py-8-px tw-px-8-px tw-border-input-read-only-border tw-border-solid"
+              >
                 <span>{{ topMemoPreviewText }}</span>
               </div>
             </div>
@@ -104,26 +150,36 @@
               [isFieldMandatory]="true"
               [customErrorMessage]="'qbdDirectAdvancedSettings.selectAtleastOneMemoError' | transloco"
               [label]="'qbd_direct.configuration.advancedSettings.memoStructureLabel' | transloco"
-              [subLabel]="'qbd_direct.configuration.advancedSettings.memoStructureSubLabel' | transloco : {brandName: brandingConfig.brandName}"
+              [subLabel]="
+                'qbd_direct.configuration.advancedSettings.memoStructureSubLabel'
+                  | transloco: { brandName: brandingConfig.brandName }
+              "
               [options]="defaultMemoFields"
               [iconPath]="'list'"
               [placeholder]="'qbdDirectAdvancedSettings.selectMemoTypesPlaceholder' | transloco"
-              [formControllerName]="'expenseMemoStructure'">
+              [formControllerName]="'expenseMemoStructure'"
+            >
             </app-configuration-multi-select>
             <div class="tw-p-24-px">
-              <div class="tw-bg-input-read-only-bg tw-rounded-4-px tw-text-14-px tw-py-8-px tw-px-8-px tw-border-input-read-only-border tw-border-solid">
+              <div
+                class="tw-bg-input-read-only-bg tw-rounded-4-px tw-text-14-px tw-py-8-px tw-px-8-px tw-border-input-read-only-border tw-border-solid"
+              >
                 <span>{{ memoPreviewText }}</span>
               </div>
             </div>
           </div>
           @if (brandingFeatureConfig.featureFlags.advancedSettings.skipExport) {
-            <div class="tw-bg-white tw-my-16-px" [ngClass]="brandingStyle.configuration.configurationAdvancedSettingSingleCard">
+            <div
+              class="tw-bg-white tw-my-16-px"
+              [ngClass]="brandingStyle.configuration.configurationAdvancedSettingSingleCard"
+            >
               <app-configuration-toggle-field
                 [form]="advancedSettingsForm"
                 [label]="'qbd_direct.configuration.advancedSettings.skipExportLabel' | transloco"
                 [subLabel]="'qbd_direct.configuration.advancedSettings.skipExportSubLabel' | transloco"
                 [formControllerName]="'skipExport'"
-                [iconPath]="'list'">
+                [iconPath]="'list'"
+              >
               </app-configuration-toggle-field>
               @if (advancedSettingsForm.value.skipExport) {
                 <div>
@@ -132,7 +188,8 @@
                     [skipExportForm]="skipExportForm"
                     [expenseFilter]="expenseFilters"
                     [conditionFieldOptions]="conditionFieldOptions"
-                    (deleteSkipExportForm)="deleteExpenseFilter($event)">
+                    (deleteSkipExportForm)="deleteExpenseFilter($event)"
+                  >
                   </app-configuration-skip-export>
                 </div>
               }
@@ -140,7 +197,20 @@
           }
         </div>
         @if (isOnboarding) {
-          <app-configuration-step-footer [ctaText]="!saveInProgress ? (isOnboarding ? ConfigurationCtaText.SAVE_AND_CONTINUE : ConfigurationCtaText.SAVE) : ConfigurationCtaText.SAVING" [isButtonDisabled]="!advancedSettingsForm.valid || saveInProgress || !skipExportForm.valid" (save)="save()" [showBackButton]="isOnboarding ? true : false" (navigateToPreviousStep)="navigateToPreviousStep()" [AppName]="appName.QBD_DIRECT"></app-configuration-step-footer>
+          <app-configuration-step-footer
+            [ctaText]="
+              !saveInProgress
+                ? isOnboarding
+                  ? ConfigurationCtaText.SAVE_AND_CONTINUE
+                  : ConfigurationCtaText.SAVE
+                : ConfigurationCtaText.SAVING
+            "
+            [isButtonDisabled]="!advancedSettingsForm.valid || saveInProgress || !skipExportForm.valid"
+            (save)="save()"
+            [showBackButton]="isOnboarding ? true : false"
+            (navigateToPreviousStep)="navigateToPreviousStep()"
+            [AppName]="appName.QBD_DIRECT"
+          ></app-configuration-step-footer>
         }
       </form>
     </div>
@@ -149,6 +219,19 @@
 
 @if (!isLoading && !isOnboarding) {
   <div class="tw-sticky tw-top-0 tw-bottom-0 tw-left-0 tw-right-0 tw-bg-white">
-    <app-configuration-step-footer [ctaText]="!saveInProgress ? (isOnboarding ? ConfigurationCtaText.SAVE_AND_CONTINUE : ConfigurationCtaText.SAVE) : ConfigurationCtaText.SAVING" [isButtonDisabled]="!advancedSettingsForm.valid || saveInProgress || !skipExportForm.valid" (save)="save()" [showBackButton]="isOnboarding ? true : false" (navigateToPreviousStep)="navigateToPreviousStep()" [AppName]="appName.QBD_DIRECT"></app-configuration-step-footer>
+    <app-configuration-step-footer
+      [ctaText]="
+        !saveInProgress
+          ? isOnboarding
+            ? ConfigurationCtaText.SAVE_AND_CONTINUE
+            : ConfigurationCtaText.SAVE
+          : ConfigurationCtaText.SAVING
+      "
+      [isButtonDisabled]="!advancedSettingsForm.valid || saveInProgress || !skipExportForm.valid"
+      (save)="save()"
+      [showBackButton]="isOnboarding ? true : false"
+      (navigateToPreviousStep)="navigateToPreviousStep()"
+      [AppName]="appName.QBD_DIRECT"
+    ></app-configuration-step-footer>
   </div>
 }

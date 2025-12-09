@@ -1,4 +1,3 @@
-
 import { CommonModule } from '@angular/common';
 import type { Meta, StoryObj } from '@storybook/angular';
 import { moduleMetadata } from '@storybook/angular';
@@ -13,17 +12,17 @@ const meta: Meta<DashboardExportSectionComponent> = {
   component: DashboardExportSectionComponent,
   tags: ['autodocs'],
   render: (args: DashboardExportSectionComponent) => ({
-    props: { ...args }
+    props: { ...args },
   }),
   decorators: [
     moduleMetadata({
       declarations: [],
-      imports: [CommonModule, SharedModule, ProgressBarModule, TooltipModule ]
-    })
+      imports: [CommonModule, SharedModule, ProgressBarModule, TooltipModule],
+    }),
   ],
   argTypes: {
-    ngOnInit: { table: { disable: true } }
-  }
+    ngOnInit: { table: { disable: true } },
+  },
 };
 
 export default meta;
@@ -47,10 +46,10 @@ export const readyState: Story = {
       failed_accounting_export_count: 0,
       created_at: '2021-09-01T08:00:00Z',
       updated_at: '2021-09-01T08:00:00Z',
-      workspace: 1
+      workspace: 1,
     },
-    processedCount: 0
-  }
+    processedCount: 0,
+  },
 };
 
 export const exportInProgress: Story = {
@@ -72,10 +71,10 @@ export const exportInProgress: Story = {
       failed_accounting_export_count: 0,
       created_at: '2021-09-01T08:00:00Z',
       updated_at: '2021-09-01T08:00:00Z',
-      workspace: 1
+      workspace: 1,
     },
-    processedCount: 1
-  }
+    processedCount: 1,
+  },
 };
 
 export const importInProgress: Story = {
@@ -97,8 +96,8 @@ export const importInProgress: Story = {
       failed_accounting_export_count: 0,
       created_at: '2021-09-01T08:00:00Z',
       updated_at: '2021-09-01T08:00:00Z',
-      workspace: 1
+      workspace: 1,
     },
-    processedCount: 1
-  }
+    processedCount: 1,
+  },
 };

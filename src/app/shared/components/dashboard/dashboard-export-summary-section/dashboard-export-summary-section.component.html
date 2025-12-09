@@ -1,73 +1,243 @@
 <div [ngClass]="brandingStyle.common.mainComponentPadding">
-  <div class="tw-rounded-8-px tw-bg-white tw-border-1-px tw-border-border-tertiary" [ngClass]="brandingStyle.common.mainComponentShadow">
+  <div
+    class="tw-rounded-8-px tw-bg-white tw-border-1-px tw-border-border-tertiary"
+    [ngClass]="brandingStyle.common.mainComponentShadow"
+  >
     <div class="tw-flex tw-justify-between tw-items-center tw-p-24-px">
       <!-- Temporary hack to enable repurposed export summary only for allowed apps - #q2_real_time_exports_integrations -->
-      <h4 class="tw-text-text-primary" [ngClass]="brandingStyle.dashboard.exportSummaryHeaderText">{{ brandingFeatureConfig.featureFlags.dashboard.useRepurposedExportSummary && [AppName.XERO, AppName.QBO, AppName.NETSUITE, AppName.INTACCT, AppName.QBD_DIRECT, AppName.SAGE300].includes(appName) ? "Today's export overview" : 'Your last export'}}</h4>
+      <h4 class="tw-text-text-primary" [ngClass]="brandingStyle.dashboard.exportSummaryHeaderText">
+        {{
+          brandingFeatureConfig.featureFlags.dashboard.useRepurposedExportSummary &&
+          [AppName.XERO, AppName.QBO, AppName.NETSUITE, AppName.INTACCT, AppName.QBD_DIRECT, AppName.SAGE300].includes(
+            appName
+          )
+            ? "Today's export overview"
+            : 'Your last export'
+        }}
+      </h4>
     </div>
     <div class="tw-border-border-tertiary tw-border-t-1-px">
       <div class="tw-p-6 tw-rounded-6-px tw-bg-white">
-        <div class="inside-container tw-rounded-12-px tw-bg-white" [ngClass]="brandingStyle.dashboard.exportSummaryContentCard">
+        <div
+          class="inside-container tw-rounded-12-px tw-bg-white"
+          [ngClass]="brandingStyle.dashboard.exportSummaryContentCard"
+        >
           <div class="tw-flex tw-items-center tw-justify-between">
             <div class="tw-flex tw-items-center">
-              <app-svg-icon [svgSource]="'check-circle-outline-small'" [c1SvgSource]="'grv-checkmark-encircled-success'" [width]="'18px'" [height]="'18px'" [styleClasses]="'tw-text-icon-success ' + brandingStyle.dashboard.exportSummaryIcon" [isTextColorAllowed]="true"></app-svg-icon>
-              <p class="tw-text-14-px tw-pl-10-px tw-w-[160px]" [ngClass]="brandingStyle.dashboard.exportSummaryDescriptionText">{{'dashboard.lastExportSuccessText' | transloco}}</p>
+              <app-svg-icon
+                [svgSource]="'check-circle-outline-small'"
+                [c1SvgSource]="'grv-checkmark-encircled-success'"
+                [width]="'18px'"
+                [height]="'18px'"
+                [styleClasses]="'tw-text-icon-success ' + brandingStyle.dashboard.exportSummaryIcon"
+                [isTextColorAllowed]="true"
+              ></app-svg-icon>
+              <p
+                class="tw-text-14-px tw-pl-10-px tw-w-[160px]"
+                [ngClass]="brandingStyle.dashboard.exportSummaryDescriptionText"
+              >
+                {{ 'dashboard.lastExportSuccessText' | transloco }}
+              </p>
 
               <!-- Temporary hack to enable repurposed export summary only for allowed apps - #q2_real_time_exports_integrations -->
-              @if (brandingFeatureConfig.featureFlags.dashboard.useRepurposedExportSummary && [AppName.XERO, AppName.QBO, AppName.NETSUITE, AppName.INTACCT, AppName.QBD_DIRECT, AppName.SAGE300].includes(appName)) {
-                <span class="tw-text-14-px tw-text-right" [ngClass]="[brandingStyle.dashboard.exportSummaryDescriptionText, brandingStyle.dashboard.exportSummaryCountText]">
-                  {{ accountingExportSummary?.repurposed_successful_count ? accountingExportSummary?.repurposed_successful_count : 0 }}
+              @if (
+                brandingFeatureConfig.featureFlags.dashboard.useRepurposedExportSummary &&
+                [
+                  AppName.XERO,
+                  AppName.QBO,
+                  AppName.NETSUITE,
+                  AppName.INTACCT,
+                  AppName.QBD_DIRECT,
+                  AppName.SAGE300,
+                ].includes(appName)
+              ) {
+                <span
+                  class="tw-text-14-px tw-text-right"
+                  [ngClass]="[
+                    brandingStyle.dashboard.exportSummaryDescriptionText,
+                    brandingStyle.dashboard.exportSummaryCountText,
+                  ]"
+                >
+                  {{
+                    accountingExportSummary?.repurposed_successful_count
+                      ? accountingExportSummary?.repurposed_successful_count
+                      : 0
+                  }}
                 </span>
                 @if (accountingExportSummary?.repurposed_successful_count) {
-                  <a (click)="showExportLog(AccountingExportStatus.COMPLETE)" class="tw-ml-20-px tw-text-14-px tw-py-10-px" [ngClass]="brandingStyle.dashboard.exportSummaryViewText">{{ (brandingConfig.brandId === 'co' && appName === AppName.QBD_DIRECT ? 'qbd_direct.dashboard.viewText' : 'dashboard.viewText') | transloco }}</a>
+                  <a
+                    (click)="showExportLog(AccountingExportStatus.COMPLETE)"
+                    class="tw-ml-20-px tw-text-14-px tw-py-10-px"
+                    [ngClass]="brandingStyle.dashboard.exportSummaryViewText"
+                    >{{
+                      (brandingConfig.brandId === 'co' && appName === AppName.QBD_DIRECT
+                        ? 'qbd_direct.dashboard.viewText'
+                        : 'dashboard.viewText'
+                      ) | transloco
+                    }}</a
+                  >
                 }
               } @else {
-                <span class="tw-text-14-px tw-text-right" [ngClass]="[brandingStyle.dashboard.exportSummaryDescriptionText, brandingStyle.dashboard.exportSummaryCountText]">
-                  {{ accountingExportSummary?.successful_accounting_export_count ? accountingExportSummary?.successful_accounting_export_count : 0 }}
+                <span
+                  class="tw-text-14-px tw-text-right"
+                  [ngClass]="[
+                    brandingStyle.dashboard.exportSummaryDescriptionText,
+                    brandingStyle.dashboard.exportSummaryCountText,
+                  ]"
+                >
+                  {{
+                    accountingExportSummary?.successful_accounting_export_count
+                      ? accountingExportSummary?.successful_accounting_export_count
+                      : 0
+                  }}
                 </span>
                 @if (accountingExportSummary?.successful_accounting_export_count) {
-                  <a (click)="showExportLog(AccountingExportStatus.COMPLETE)" class="tw-ml-20-px tw-text-14-px tw-py-10-px" [ngClass]="brandingStyle.dashboard.exportSummaryViewText">{{ (brandingConfig.brandId === 'co' && appName === AppName.QBD_DIRECT ? 'qbd_direct.dashboard.viewText' : 'dashboard.viewText') | transloco }}</a>
+                  <a
+                    (click)="showExportLog(AccountingExportStatus.COMPLETE)"
+                    class="tw-ml-20-px tw-text-14-px tw-py-10-px"
+                    [ngClass]="brandingStyle.dashboard.exportSummaryViewText"
+                    >{{
+                      (brandingConfig.brandId === 'co' && appName === AppName.QBD_DIRECT
+                        ? 'qbd_direct.dashboard.viewText'
+                        : 'dashboard.viewText'
+                      ) | transloco
+                    }}</a
+                  >
                 }
               }
             </div>
-            @if (!brandingFeatureConfig.featureFlags.dashboard.useRepurposedExportSummary || ![AppName.XERO, AppName.QBO, AppName.NETSUITE, AppName.INTACCT, AppName.QBD_DIRECT, AppName.SAGE300].includes(appName)) {
+            @if (
+              !brandingFeatureConfig.featureFlags.dashboard.useRepurposedExportSummary ||
+              ![
+                AppName.XERO,
+                AppName.QBO,
+                AppName.NETSUITE,
+                AppName.INTACCT,
+                AppName.QBD_DIRECT,
+                AppName.SAGE300,
+              ].includes(appName)
+            ) {
               <div class="tw-flex tw-flex-col">
                 <span class="tw-w-260-px tw-text-right">
-                  <span class="tw-text-14-px tw-text-text-muted tw-font-400">{{'dashboard.lastExportedAtText' | transloco}} </span>
-                  <span class="tw-text-14-px" [ngClass]="brandingStyle.dashboard.exportSummaryDescriptionText">{{ accountingExportSummary ? (accountingExportSummary.last_exported_at | date: 'h:mm a,') : 'None' }}
-                  {{ accountingExportSummary ? (accountingExportSummary.last_exported_at | date: 'MMM dd yyyy') : '' }}</span>
+                  <span class="tw-text-14-px tw-text-text-muted tw-font-400"
+                    >{{ 'dashboard.lastExportedAtText' | transloco }}
+                  </span>
+                  <span class="tw-text-14-px" [ngClass]="brandingStyle.dashboard.exportSummaryDescriptionText"
+                    >{{
+                      accountingExportSummary ? (accountingExportSummary.last_exported_at | date: 'h:mm a,') : 'None'
+                    }}
+                    {{
+                      accountingExportSummary ? (accountingExportSummary.last_exported_at | date: 'MMM dd yyyy') : ''
+                    }}</span
+                  >
                 </span>
               </div>
             }
           </div>
-          <div  [ngClass]="brandingStyle.dashboard.exportSummaryCenterContent"></div>
-          <div class="tw-flex tw-items-center tw-justify-between" [ngClass]="{'tw-pt-10-px': !accountingExportSummary?.failed_accounting_export_count}">
+          <div [ngClass]="brandingStyle.dashboard.exportSummaryCenterContent"></div>
+          <div
+            class="tw-flex tw-items-center tw-justify-between"
+            [ngClass]="{ 'tw-pt-10-px': !accountingExportSummary?.failed_accounting_export_count }"
+          >
             <div class="tw-flex tw-items-center">
-              <app-svg-icon [svgSource]="'danger-outline'" [c1SvgSource]="'grv-cross-filled-medium'" [width]="'18px'" [height]="'18px'" [styleClasses]="'tw-text-icon-danger ' + brandingStyle.dashboard.exportSummaryIcon" [isTextColorAllowed]="true"></app-svg-icon>
-              <p class="tw-text-14-px tw-pl-10-px tw-w-[160px]" [ngClass]="brandingStyle.dashboard.exportSummaryDescriptionText">{{'dashboard.lastExportFailedText' | transloco}}</p>
+              <app-svg-icon
+                [svgSource]="'danger-outline'"
+                [c1SvgSource]="'grv-cross-filled-medium'"
+                [width]="'18px'"
+                [height]="'18px'"
+                [styleClasses]="'tw-text-icon-danger ' + brandingStyle.dashboard.exportSummaryIcon"
+                [isTextColorAllowed]="true"
+              ></app-svg-icon>
+              <p
+                class="tw-text-14-px tw-pl-10-px tw-w-[160px]"
+                [ngClass]="brandingStyle.dashboard.exportSummaryDescriptionText"
+              >
+                {{ 'dashboard.lastExportFailedText' | transloco }}
+              </p>
 
               <!-- Temporary hack to enable repurposed export summary only for allowed apps - #q2_real_time_exports_integrations -->
-              @if (brandingFeatureConfig.featureFlags.dashboard.useRepurposedExportSummary && [AppName.XERO, AppName.QBO, AppName.NETSUITE, AppName.INTACCT, AppName.QBD_DIRECT, AppName.SAGE300].includes(appName)) {
-                <span class="tw-text-right tw-text-14-px" [ngClass]="[brandingStyle.dashboard.exportSummaryDescriptionText, brandingStyle.dashboard.exportSummaryCountText]">
-                  {{ accountingExportSummary?.repurposed_failed_count ? accountingExportSummary?.repurposed_failed_count : 0 }}
+              @if (
+                brandingFeatureConfig.featureFlags.dashboard.useRepurposedExportSummary &&
+                [
+                  AppName.XERO,
+                  AppName.QBO,
+                  AppName.NETSUITE,
+                  AppName.INTACCT,
+                  AppName.QBD_DIRECT,
+                  AppName.SAGE300,
+                ].includes(appName)
+              ) {
+                <span
+                  class="tw-text-right tw-text-14-px"
+                  [ngClass]="[
+                    brandingStyle.dashboard.exportSummaryDescriptionText,
+                    brandingStyle.dashboard.exportSummaryCountText,
+                  ]"
+                >
+                  {{
+                    accountingExportSummary?.repurposed_failed_count
+                      ? accountingExportSummary?.repurposed_failed_count
+                      : 0
+                  }}
                 </span>
                 @if (accountingExportSummary?.repurposed_failed_count) {
-                  <a (click)="showExportLog(AccountingExportStatus.FAILED)" class="tw-ml-20-px tw-text-14-px tw-py-10-px" [ngClass]="brandingStyle.dashboard.exportSummaryViewText">{{ (brandingConfig.brandId === 'co' && appName === AppName.QBD_DIRECT ? 'qbd_direct.dashboard.viewText' : 'dashboard.viewText') | transloco }}</a>
+                  <a
+                    (click)="showExportLog(AccountingExportStatus.FAILED)"
+                    class="tw-ml-20-px tw-text-14-px tw-py-10-px"
+                    [ngClass]="brandingStyle.dashboard.exportSummaryViewText"
+                    >{{
+                      (brandingConfig.brandId === 'co' && appName === AppName.QBD_DIRECT
+                        ? 'qbd_direct.dashboard.viewText'
+                        : 'dashboard.viewText'
+                      ) | transloco
+                    }}</a
+                  >
                 }
               } @else {
-                <span class="tw-text-right tw-text-14-px" [ngClass]="[brandingStyle.dashboard.exportSummaryDescriptionText, brandingStyle.dashboard.exportSummaryCountText]">
-                  {{ accountingExportSummary?.failed_accounting_export_count ? accountingExportSummary?.failed_accounting_export_count : 0 }}
+                <span
+                  class="tw-text-right tw-text-14-px"
+                  [ngClass]="[
+                    brandingStyle.dashboard.exportSummaryDescriptionText,
+                    brandingStyle.dashboard.exportSummaryCountText,
+                  ]"
+                >
+                  {{
+                    accountingExportSummary?.failed_accounting_export_count
+                      ? accountingExportSummary?.failed_accounting_export_count
+                      : 0
+                  }}
                 </span>
                 @if (accountingExportSummary?.failed_accounting_export_count) {
-                  <a (click)="showExportLog(AccountingExportStatus.FAILED)" class="tw-ml-20-px tw-text-14-px tw-py-10-px" [ngClass]="brandingStyle.dashboard.exportSummaryViewText">{{ (brandingConfig.brandId === 'co' && appName === AppName.QBD_DIRECT ? 'qbd_direct.dashboard.viewText' : 'dashboard.viewText') | transloco }}</a>
+                  <a
+                    (click)="showExportLog(AccountingExportStatus.FAILED)"
+                    class="tw-ml-20-px tw-text-14-px tw-py-10-px"
+                    [ngClass]="brandingStyle.dashboard.exportSummaryViewText"
+                    >{{
+                      (brandingConfig.brandId === 'co' && appName === AppName.QBD_DIRECT
+                        ? 'qbd_direct.dashboard.viewText'
+                        : 'dashboard.viewText'
+                      ) | transloco
+                    }}</a
+                  >
                 }
               }
             </div>
             <div class="tw-flex tw-flex-col">
               @if (accountingExportSummary?.next_export_at && !isRealTimeExportEnabled) {
                 <span class="tw-w-260-px tw-text-right">
-                  <span class="tw-text-14-px tw-text-text-muted tw-font-400">{{'dashboard.nextExportAtText' | transloco}} </span>
-                  <span class="tw-text-14-px" [ngClass]="brandingStyle.dashboard.exportSummaryDescriptionText">{{ accountingExportSummary?.next_export_at ? (accountingExportSummary?.next_export_at | date: 'h:mm a,') : 'None' }}
-                  {{ accountingExportSummary ? (accountingExportSummary.next_export_at | date: 'MMM dd yyyy') : '' }}</span>
+                  <span class="tw-text-14-px tw-text-text-muted tw-font-400"
+                    >{{ 'dashboard.nextExportAtText' | transloco }}
+                  </span>
+                  <span class="tw-text-14-px" [ngClass]="brandingStyle.dashboard.exportSummaryDescriptionText"
+                    >{{
+                      accountingExportSummary?.next_export_at
+                        ? (accountingExportSummary?.next_export_at | date: 'h:mm a,')
+                        : 'None'
+                    }}
+                    {{
+                      accountingExportSummary ? (accountingExportSummary.next_export_at | date: 'MMM dd yyyy') : ''
+                    }}</span
+                  >
                 </span>
               }
             </div>
@@ -79,5 +249,13 @@
 </div>
 
 <div>
-  <app-dashboard-export-log-dialog (hideExportLogDialog)="handleDialogClose()" [appName]="appName" [isExportLogVisible]="isExportLogVisible" [accountingExports]="filteredAccountingExports" [isExportLogFetchInProgress]="isExportLogFetchInProgress" [exportLogHeader]="exportLogHeader" [exportLogSubHeader]="exportLogSubHeader"></app-dashboard-export-log-dialog>
+  <app-dashboard-export-log-dialog
+    (hideExportLogDialog)="handleDialogClose()"
+    [appName]="appName"
+    [isExportLogVisible]="isExportLogVisible"
+    [accountingExports]="filteredAccountingExports"
+    [isExportLogFetchInProgress]="isExportLogFetchInProgress"
+    [exportLogHeader]="exportLogHeader"
+    [exportLogSubHeader]="exportLogSubHeader"
+  ></app-dashboard-export-log-dialog>
 </div>

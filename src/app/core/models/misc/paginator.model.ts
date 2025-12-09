@@ -1,4 +1,4 @@
 export type Paginator = {
-    limit: number,
-    offset: number
+  limit: number;
+  offset: number;
 };

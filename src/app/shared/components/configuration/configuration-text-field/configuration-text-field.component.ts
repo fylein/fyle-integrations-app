@@ -3,13 +3,12 @@ import { FormGroup } from '@angular/forms';
 import { brandingConfig, brandingStyle } from 'src/app/branding/branding-config';
 
 @Component({
-    selector: 'app-configuration-text-field',
-    templateUrl: './configuration-text-field.component.html',
-    styleUrls: ['./configuration-text-field.component.scss'],
-    standalone: false
+  selector: 'app-configuration-text-field',
+  templateUrl: './configuration-text-field.component.html',
+  styleUrls: ['./configuration-text-field.component.scss'],
+  standalone: false,
 })
 export class ConfigurationTextFieldComponent implements OnInit {
-
   @Input() form: FormGroup;
 
   @Input() label: string;
@@ -38,7 +37,7 @@ export class ConfigurationTextFieldComponent implements OnInit {
 
   isPasswordVisible: boolean = false;
 
-  constructor() { }
+  constructor() {}
 
   changeFormControllerType(showPassword: boolean) {
     this.isPasswordVisible = showPassword;
@@ -49,5 +48,4 @@ export class ConfigurationTextFieldComponent implements OnInit {
     this.isPasswordField = this.type === 'password';
     this.isPasswordVisible = false;
   }
-
 }

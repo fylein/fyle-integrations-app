@@ -10,8 +10,21 @@ import { TrackingService } from 'src/app/core/services/integration/tracking.serv
 import { SiWorkspaceService } from 'src/app/core/services/si/si-core/si-workspace.service';
 import { SiMappingsService } from 'src/app/core/services/si/si-core/si-mappings.service';
 import { SkipExportComponent } from 'src/app/shared/components/si/helper/skip-export/skip-export.component';
-import { adminEmails, advancedSettings, configurationForAdvancedSettings, configurationWithFyleToIntacct, configurationWithIntacctToFyle, configurationWithOutSync, expenseFilter, groupedAttributes, mockExportSettingGet } from '../../intacct.fixture';
-import { Configuration, ExpenseFilterResponse } from 'src/app/core/models/intacct/intacct-configuration/advanced-settings.model';
+import {
+  adminEmails,
+  advancedSettings,
+  configurationForAdvancedSettings,
+  configurationWithFyleToIntacct,
+  configurationWithIntacctToFyle,
+  configurationWithOutSync,
+  expenseFilter,
+  groupedAttributes,
+  mockExportSettingGet,
+} from '../../intacct.fixture';
+import {
+  Configuration,
+  ExpenseFilterResponse,
+} from 'src/app/core/models/intacct/intacct-configuration/advanced-settings.model';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { IntacctOnboardingState, PaymentSyncDirection, ToastSeverity } from 'src/app/core/models/enum/enum.model';
 import { SkipExport } from 'src/app/core/models/intacct/misc/skip-export.model';
@@ -37,19 +50,31 @@ describe('IntacctAdvancedSettingsComponent', () => {
       'getExpenseFilter',
       'getAdditionalEmails',
       'postAdvancedSettings',
-      'deleteExpenseFilter'
+      'deleteExpenseFilter',
     ]);
     const toastServiceSpy = jasmine.createSpyObj('IntegrationsToastService', ['displayToastMessage']);
-    const trackingServiceSpy = jasmine.createSpyObj('TrackingService', ['trackTimeSpent', 'integrationsOnboardingCompletion', 'intacctUpdateEvent']);
-    const workspaceServiceSpy = jasmine.createSpyObj('SiWorkspaceService', ['getIntacctOnboardingState', 'setIntacctOnboardingState']);
-    const mappingServiceSpy = jasmine.createSpyObj('SiMappingsService', ['getGroupedDestinationAttributes', 'getConfiguration', 'refreshSageIntacctDimensions', 'refreshFyleDimensions']);
+    const trackingServiceSpy = jasmine.createSpyObj('TrackingService', [
+      'trackTimeSpent',
+      'integrationsOnboardingCompletion',
+      'intacctUpdateEvent',
+    ]);
+    const workspaceServiceSpy = jasmine.createSpyObj('SiWorkspaceService', [
+      'getIntacctOnboardingState',
+      'setIntacctOnboardingState',
+    ]);
+    const mappingServiceSpy = jasmine.createSpyObj('SiMappingsService', [
+      'getGroupedDestinationAttributes',
+      'getConfiguration',
+      'refreshSageIntacctDimensions',
+      'refreshFyleDimensions',
+    ]);
     const siExportSettingsServiceSpy = jasmine.createSpyObj('SiExportSettingsService', ['getExportSettings']);
     const translocoServiceSpy = jasmine.createSpyObj('TranslocoService', ['translate'], {
       config: {
-        reRenderOnLangChange: true
+        reRenderOnLangChange: true,
       },
       langChanges$: of('en'),
-      _loadDependencies: () => Promise.resolve()
+      _loadDependencies: () => Promise.resolve(),
     });
 
     await TestBed.configureTestingModule({
@@ -64,8 +89,8 @@ describe('IntacctAdvancedSettingsComponent', () => {
         { provide: SiMappingsService, useValue: mappingServiceSpy },
         { provide: SiExportSettingsService, useValue: siExportSettingsServiceSpy },
         { provide: TranslocoService, useValue: translocoServiceSpy },
-        provideRouter([])
-      ]
+        provideRouter([]),
+      ],
     }).compileComponents();
 
     advancedSettingsService = TestBed.inject(SiAdvancedSettingsService) as jasmine.SpyObj<SiAdvancedSettingsService>;
@@ -99,7 +124,9 @@ describe('IntacctAdvancedSettingsComponent', () => {
       tick();
 
       expect(component.isLoading).toBeFalse();
-      expect(component.adminEmails).toEqual(adminEmails.concat(advancedSettings.workspace_schedules.additional_email_options));
+      expect(component.adminEmails).toEqual(
+        adminEmails.concat(advancedSettings.workspace_schedules.additional_email_options),
+      );
       expect(component.advancedSettings).toEqual(advancedSettings);
       expect(component.sageIntacctLocations).toEqual(groupedAttributes.LOCATION);
       expect(component.sageIntacctDefaultItem).toEqual(groupedAttributes.ITEM);
@@ -108,7 +135,9 @@ describe('IntacctAdvancedSettingsComponent', () => {
       expect(component.sageIntacctClasses).toEqual(groupedAttributes.CLASS);
       expect(component.sageIntacctPaymentAccount).toEqual(groupedAttributes.PAYMENT_ACCOUNT);
       expect(component.reimbursableExpense).toEqual(configurationForAdvancedSettings.reimbursable_expenses_object);
-      expect(component.corporateCreditCardExpense).toEqual(configurationForAdvancedSettings.corporate_credit_card_expenses_object);
+      expect(component.corporateCreditCardExpense).toEqual(
+        configurationForAdvancedSettings.corporate_credit_card_expenses_object,
+      );
       expect(component.importVendorsAsMerchants).toEqual(configurationForAdvancedSettings.import_vendors_as_merchants);
       expect(component.useMerchantInJournalLine).toEqual(configurationForAdvancedSettings.use_merchant_in_journal_line);
       expect(component.employeeFieldMapping).toEqual(configurationForAdvancedSettings.employee_field_mapping);
@@ -122,7 +151,11 @@ describe('IntacctAdvancedSettingsComponent', () => {
 
       expect(component.advancedSettingsForm.get('exportSchedule')?.value).toBeTrue();
       expect(component.advancedSettingsForm.get('exportScheduleFrequency')?.value).toBe(12);
-      expect(component.advancedSettingsForm.get('setDescriptionField')?.value).toEqual(['employee_email', 'merchant', 'purpose']);
+      expect(component.advancedSettingsForm.get('setDescriptionField')?.value).toEqual([
+        'employee_email',
+        'merchant',
+        'purpose',
+      ]);
     });
 
     it('should handle onboarding state correctly', () => {
@@ -157,7 +190,9 @@ describe('IntacctAdvancedSettingsComponent', () => {
       component.advancedSettingsForm.get('setDescriptionField')?.setValue(newMemoStructure);
       tick();
 
-      expect(component.memoPreviewText).toBe('Client Meeting - Meals and Entertainment - ' + new Date(Date.now()).toLocaleDateString());
+      expect(component.memoPreviewText).toBe(
+        'Client Meeting - Meals and Entertainment - ' + new Date(Date.now()).toLocaleDateString(),
+      );
     }));
 
     it('should update defaultPaymentAccount validators when autoSyncPayments changes', fakeAsync(() => {
@@ -169,7 +204,9 @@ describe('IntacctAdvancedSettingsComponent', () => {
       component.advancedSettingsForm.get('autoSyncPayments')?.setValue(null);
       tick();
 
-      expect(component.advancedSettingsForm.get('defaultPaymentAccount')?.hasValidator(Validators.required)).toBeFalse();
+      expect(
+        component.advancedSettingsForm.get('defaultPaymentAccount')?.hasValidator(Validators.required),
+      ).toBeFalse();
     }));
   });
 
@@ -193,7 +230,10 @@ describe('IntacctAdvancedSettingsComponent', () => {
 
       expect(advancedSettingsService.postAdvancedSettings).toHaveBeenCalled();
       expect(component.skipExportChild.saveSkipExportFields).toHaveBeenCalled();
-      expect(toastService.displayToastMessage).toHaveBeenCalledWith(ToastSeverity.SUCCESS, 'Advanced settings saved successfully');
+      expect(toastService.displayToastMessage).toHaveBeenCalledWith(
+        ToastSeverity.SUCCESS,
+        'Advanced settings saved successfully',
+      );
       expect(trackingService.trackTimeSpent).toHaveBeenCalled();
       expect(trackingService.integrationsOnboardingCompletion).toHaveBeenCalled();
       expect(workspaceService.setIntacctOnboardingState).toHaveBeenCalledWith(IntacctOnboardingState.COMPLETE);
@@ -215,7 +255,10 @@ describe('IntacctAdvancedSettingsComponent', () => {
       expect(advancedSettingsService.deleteExpenseFilter).toHaveBeenCalledTimes(2);
       expect(advancedSettingsService.deleteExpenseFilter).toHaveBeenCalledWith(1);
       expect(advancedSettingsService.deleteExpenseFilter).toHaveBeenCalledWith(2);
-      expect(toastService.displayToastMessage).toHaveBeenCalledWith(ToastSeverity.SUCCESS, 'Advanced settings saved successfully');
+      expect(toastService.displayToastMessage).toHaveBeenCalledWith(
+        ToastSeverity.SUCCESS,
+        'Advanced settings saved successfully',
+      );
     }));
 
     it('should handle save when not in onboarding state', fakeAsync(() => {
@@ -240,7 +283,10 @@ describe('IntacctAdvancedSettingsComponent', () => {
       tick();
 
       expect(advancedSettingsService.postAdvancedSettings).toHaveBeenCalled();
-      expect(toastService.displayToastMessage).toHaveBeenCalledWith(ToastSeverity.ERROR, 'Error saving advanced settings, please try again later');
+      expect(toastService.displayToastMessage).toHaveBeenCalledWith(
+        ToastSeverity.ERROR,
+        'Error saving advanced settings, please try again later',
+      );
       expect(component.saveInProgress).toBeFalse();
     }));
   });
@@ -276,7 +322,10 @@ describe('IntacctAdvancedSettingsComponent', () => {
 
         expect(mappingService.refreshSageIntacctDimensions).toHaveBeenCalled();
         expect(mappingService.refreshFyleDimensions).toHaveBeenCalled();
-        expect(toastService.displayToastMessage).toHaveBeenCalledWith(ToastSeverity.SUCCESS, 'Syncing data dimensions from Sage Intacct');
+        expect(toastService.displayToastMessage).toHaveBeenCalledWith(
+          ToastSeverity.SUCCESS,
+          'Syncing data dimensions from Sage Intacct',
+        );
       });
     });
 
@@ -293,11 +342,15 @@ describe('IntacctAdvancedSettingsComponent', () => {
 
     describe('getPaymentSyncConfiguration', () => {
       it('should return FYLE_TO_INTACCT when sync_fyle_to_sage_intacct_payments is true', () => {
-        expect(component['getPaymentSyncConfiguration'](configurationWithFyleToIntacct)).toBe(PaymentSyncDirection.FYLE_TO_INTACCT);
+        expect(component['getPaymentSyncConfiguration'](configurationWithFyleToIntacct)).toBe(
+          PaymentSyncDirection.FYLE_TO_INTACCT,
+        );
       });
 
       it('should return INTACCT_TO_FYLE when sync_sage_intacct_to_fyle_payments is true', () => {
-        expect(component['getPaymentSyncConfiguration'](configurationWithIntacctToFyle)).toBe(PaymentSyncDirection.INTACCT_TO_FYLE);
+        expect(component['getPaymentSyncConfiguration'](configurationWithIntacctToFyle)).toBe(
+          PaymentSyncDirection.INTACCT_TO_FYLE,
+        );
       });
 
       it('should return an empty string when both sync options are false', () => {

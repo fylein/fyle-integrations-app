@@ -4,14 +4,13 @@ import { ApiService } from '../../common/api.service';
 import { Cacheable, globalCacheBusterNotifier } from 'ts-cacheable';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class XeroHelperService {
-
   constructor(
     private apiService: ApiService,
-    private workspaceService: WorkspaceService
-  ) { }
+    private workspaceService: WorkspaceService,
+  ) {}
 
   @Cacheable()
   syncXeroDimensions() {

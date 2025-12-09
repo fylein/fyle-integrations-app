@@ -4,14 +4,13 @@ import { ApiService } from '../../common/api.service';
 import { WorkspaceService } from '../../common/workspace.service';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class QbdDirectAssistedSetupService {
-
   constructor(
     private apiService: ApiService,
-    private workspaceService: WorkspaceService
-  ) { }
+    private workspaceService: WorkspaceService,
+  ) {}
 
   bookSlot(): Observable<any> {
     const workspaceId = this.workspaceService.getWorkspaceId();

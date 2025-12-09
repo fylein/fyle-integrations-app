@@ -1,4 +1,3 @@
-
 import { CommonModule } from '@angular/common';
 import type { Meta, StoryObj } from '@storybook/angular';
 import { moduleMetadata } from '@storybook/angular';
@@ -9,17 +8,17 @@ const meta: Meta<CloneSettingHeaderComponent> = {
   component: CloneSettingHeaderComponent,
   tags: ['autodocs'],
   render: (args: CloneSettingHeaderComponent) => ({
-    props: { ...args }
+    props: { ...args },
   }),
   decorators: [
     moduleMetadata({
       declarations: [CloneSettingHeaderComponent],
-      imports: [CommonModule]
-    })
+      imports: [CommonModule],
+    }),
   ],
   argTypes: {
-    ngOnInit: { table: { disable: true } }
-  }
+    ngOnInit: { table: { disable: true } },
+  },
 };
 
 export default meta;
@@ -28,6 +27,6 @@ type Story = StoryObj<CloneSettingHeaderComponent>;
 export const simple: Story = {
   args: {
     headerText: 'Advanced Settings',
-    subHeaderText: 'In this section,  you can configure settings to automate and customize your expense exports'
-  }
+    subHeaderText: 'In this section,  you can configure settings to automate and customize your expense exports',
+  },
 };

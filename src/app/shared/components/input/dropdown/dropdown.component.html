@@ -5,18 +5,23 @@
     [placeholder]="placeholder"
     [options]="options"
     [disabled]="isDisabled"
-    [formControlName]="formControllerName">
+    [formControlName]="formControllerName"
+  >
     <ng-template pTemplate="item" let-item>
-      <div  #textElement
+      <div
+        #textElement
         class="tw-flex tw-justify-between tw-items-center"
-        [ngStyle]="{'white-space': 'nowrap', 'overflow': 'hidden', 'text-overflow': 'ellipsis', 'max-width': '16rem'}"
+        [ngStyle]="{ 'white-space': 'nowrap', overflow: 'hidden', 'text-overflow': 'ellipsis', 'max-width': '16rem' }"
         [pTooltip]="textElement.offsetWidth < textElement.scrollWidth ? item[displayKey] : null"
-        tooltipPosition="top">
+        tooltipPosition="top"
+      >
         <span>
           {{ item[displayKey] }}
         </span>
         @if (isMultiLineOption) {
-          <p class="tw-text-text-muted tw-text-12-px">{{ item['subLabel'] }}{{ 'dropdown.subLabelSuffix' | transloco }}</p>
+          <p class="tw-text-text-muted tw-text-12-px">
+            {{ item['subLabel'] }}{{ 'dropdown.subLabelSuffix' | transloco }}
+          </p>
         }
       </div>
     </ng-template>

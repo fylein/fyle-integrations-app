@@ -1,4 +1,3 @@
-
 import { CommonModule } from '@angular/common';
 import type { Meta, StoryObj } from '@storybook/angular';
 import { moduleMetadata } from '@storybook/angular';
@@ -10,17 +9,17 @@ const meta: Meta<ShimmersComponent> = {
   component: ShimmersComponent,
   tags: ['autodocs'],
   render: (args: ShimmersComponent) => ({
-    props: { ...args }
+    props: { ...args },
   }),
   decorators: [
     moduleMetadata({
       declarations: [ShimmersComponent],
-      imports: [CommonModule, SkeletonModule]
-    })
+      imports: [CommonModule, SkeletonModule],
+    }),
   ],
   argTypes: {
-    ngOnInit: { table: { disable: true } }
-  }
+    ngOnInit: { table: { disable: true } },
+  },
 };
 
 export default meta;
@@ -29,20 +28,20 @@ type Story = StoryObj<ShimmersComponent>;
 export const exportLog: Story = {
   args: {
     isExportLogFetchInProgress: true,
-    exportLogHeader: 'Export Logs'
-  }
+    exportLogHeader: 'Export Logs',
+  },
 };
 
 export const dashboard: Story = {
   args: {
     exportLogHeader: 'Dashboard',
-    isDashboardImportInProgress: true
-  }
+    isDashboardImportInProgress: true,
+  },
 };
 
 export const mapping: Story = {
   args: {
     exportLogHeader: 'Mapping',
-    isMappingTableShimmers: true
-  }
+    isMappingTableShimmers: true,
+  },
 };

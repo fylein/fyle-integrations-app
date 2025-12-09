@@ -1,4 +1,3 @@
-
 import { CommonModule } from '@angular/common';
 import type { Meta, StoryObj } from '@storybook/angular';
 import { moduleMetadata } from '@storybook/angular';
@@ -21,45 +20,60 @@ const meta: Meta<CloneSettingFieldComponent> = {
   component: CloneSettingFieldComponent,
   tags: ['autodocs'],
   render: (args: CloneSettingFieldComponent) => ({
-    props: { ...args }
+    props: { ...args },
   }),
   decorators: [
     moduleMetadata({
       declarations: [],
-      imports: [CommonModule, BrowserAnimationsModule, SharedModule, RippleModule, ToggleSwitchModule, FormsModule, ReactiveFormsModule, SelectModule, MultiSelectModule,  TooltipModule]
-    })
+      imports: [
+        CommonModule,
+        BrowserAnimationsModule,
+        SharedModule,
+        RippleModule,
+        ToggleSwitchModule,
+        FormsModule,
+        ReactiveFormsModule,
+        SelectModule,
+        MultiSelectModule,
+        TooltipModule,
+      ],
+    }),
   ],
-  argTypes: {
-  }
+  argTypes: {},
 };
 
 export default meta;
 type Story = StoryObj<CloneSettingFieldComponent>;
 
-
 export const toggle: Story = {
   args: {
     iconSource: 'arrow-tail-down',
     label: 'Import Tax from QuickBooks Online',
-    form: setupStoryBookFormGroup(new FormGroup({taxCode: new FormControl(true)})),
+    form: setupStoryBookFormGroup(new FormGroup({ taxCode: new FormControl(true) })),
     formControllerName: 'taxCode',
     inputType: InputType.TOGGLE,
-    tooltipText: 'The imported Tax codes from QuickBooks Online will be set as Tax group in ' + brandingConfig.brandName + '. This will be a selectable field while creating an expense.'
-  }
+    tooltipText:
+      'The imported Tax codes from QuickBooks Online will be set as Tax group in ' +
+      brandingConfig.brandName +
+      '. This will be a selectable field while creating an expense.',
+  },
 };
 
 export const dropdown: Story = {
   args: {
     iconSource: 'calendar',
     label: 'Set the Credit Card export date as',
-    options: [{label: 'Transaction date', value: 'transaction_date'}, {label: 'Expense date', value: 'expense_date'}],
+    options: [
+      { label: 'Transaction date', value: 'transaction_date' },
+      { label: 'Expense date', value: 'expense_date' },
+    ],
     placeholder: 'Select export date',
-    form: setupStoryBookFormGroup(new FormGroup({creditCardExportDate: new FormControl(null)})),
+    form: setupStoryBookFormGroup(new FormGroup({ creditCardExportDate: new FormControl(null) })),
     formControllerName: 'emotion',
     inputType: InputType.DROPDOWN,
     dropdownDisplayKey: 'label',
-    tooltipText: 'The selected date will reflect in the corporate card expenses exported to QuickBooks Online.'
-  }
+    tooltipText: 'The selected date will reflect in the corporate card expenses exported to QuickBooks Online.',
+  },
 };
 
 export const multiSelect: Story = {
@@ -67,11 +81,10 @@ export const multiSelect: Story = {
     label: 'Select the accounts from QuickBooks Online to import as categories',
     options: QboImportSettingsService.getChartOfAccountTypesList(),
     placeholder: 'Select Chart of Accouts',
-    form: setupStoryBookFormGroup(new FormGroup({chartOfAccountTypes: new FormControl(['Expense'])})),
+    form: setupStoryBookFormGroup(new FormGroup({ chartOfAccountTypes: new FormControl(['Expense']) })),
     formControllerName: 'chartOfAccountTypes',
     inputType: InputType.MULTI_SELECT,
     dropdownDisplayKey: 'label',
-    tooltipText: 'By default expense will be selected. Open the dropdown to select more as per your requirements'
-  }
+    tooltipText: 'By default expense will be selected. Open the dropdown to select more as per your requirements',
+  },
 };
-

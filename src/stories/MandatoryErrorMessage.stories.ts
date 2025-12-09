@@ -1,4 +1,3 @@
-
 import { CommonModule } from '@angular/common';
 import type { Meta, StoryObj } from '@storybook/angular';
 import { moduleMetadata } from '@storybook/angular';
@@ -9,17 +8,17 @@ const meta: Meta<MandatoryErrorMessageComponent> = {
   component: MandatoryErrorMessageComponent,
   tags: ['autodocs'],
   render: (args: MandatoryErrorMessageComponent) => ({
-    props: { ...args }
+    props: { ...args },
   }),
   decorators: [
     moduleMetadata({
       declarations: [MandatoryErrorMessageComponent],
-      imports: [CommonModule]
-    })
+      imports: [CommonModule],
+    }),
   ],
   argTypes: {
-    ngOnInit: { table: { disable: true } }
-  }
+    ngOnInit: { table: { disable: true } },
+  },
 };
 
 export default meta;
@@ -27,12 +26,12 @@ type Story = StoryObj<MandatoryErrorMessageComponent>;
 
 export const simple: Story = {
   args: {
-    listName: 'project'
-  }
+    listName: 'project',
+  },
 };
 
 export const project: Story = {
   args: {
-    customErrorMessage: 'Project is mandatory'
-  }
+    customErrorMessage: 'Project is mandatory',
+  },
 };

@@ -5,13 +5,12 @@ import { AppName } from 'src/app/core/models/enum/enum.model';
 import { WindowService } from 'src/app/core/services/common/window.service';
 
 @Component({
-    selector: 'app-configuration-toggle-field',
-    templateUrl: './configuration-toggle-field.component.html',
-    styleUrls: ['./configuration-toggle-field.component.scss'],
-    standalone: false
+  selector: 'app-configuration-toggle-field',
+  templateUrl: './configuration-toggle-field.component.html',
+  styleUrls: ['./configuration-toggle-field.component.scss'],
+  standalone: false,
 })
 export class ConfigurationToggleFieldComponent implements OnInit, OnChanges {
-
   @Input() form: FormGroup;
 
   @Input() formControllerName: string;
@@ -46,12 +45,9 @@ export class ConfigurationToggleFieldComponent implements OnInit, OnChanges {
 
   readonly brandingStyle = brandingStyle;
 
-  constructor(
-    public windowService: WindowService
-  ) { }
+  constructor(public windowService: WindowService) {}
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.disabled?.currentValue) {
@@ -60,5 +56,4 @@ export class ConfigurationToggleFieldComponent implements OnInit, OnChanges {
       this.form.get(this.formControllerName)?.enable();
     }
   }
-
 }

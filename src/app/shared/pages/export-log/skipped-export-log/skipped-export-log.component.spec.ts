@@ -9,7 +9,12 @@ import { ExportLogService } from 'src/app/core/services/common/export-log.servic
 import { AccountingExportService } from 'src/app/core/services/common/accounting-export.service';
 import { WindowService } from 'src/app/core/services/common/window.service';
 import { PaginatorService } from 'src/app/core/services/common/paginator.service';
-import { mockSkippedExpenseGroup, mockSkippedExpenseGroupWithDateRange, mockPaginator, mockUserProfile } from 'src/app/integrations/qbo/qbo.fixture';
+import {
+  mockSkippedExpenseGroup,
+  mockSkippedExpenseGroupWithDateRange,
+  mockPaginator,
+  mockUserProfile,
+} from 'src/app/integrations/qbo/qbo.fixture';
 import { PaginatorPage } from 'src/app/core/models/enum/enum.model';
 
 describe('SkippedExportLogComponent', () => {
@@ -29,16 +34,16 @@ describe('SkippedExportLogComponent', () => {
     accountingExportServiceSpy.getDateOptionsV2.and.returnValue(of([]));
 
     await TestBed.configureTestingModule({
-      declarations: [ SkippedExportLogComponent ],
-      imports: [ ReactiveFormsModule ],
+      declarations: [SkippedExportLogComponent],
+      imports: [ReactiveFormsModule],
       providers: [
         FormBuilder,
         { provide: ExportLogService, useValue: exportLogServiceSpy },
         { provide: UserService, useValue: userServiceSpy },
         { provide: AccountingExportService, useValue: accountingExportServiceSpy },
         { provide: WindowService, useValue: {} },
-        { provide: PaginatorService, useValue: paginatorServiceSpy }
-      ]
+        { provide: PaginatorService, useValue: paginatorServiceSpy },
+      ],
     }).compileComponents();
 
     exportLogService = TestBed.inject(ExportLogService) as jasmine.SpyObj<ExportLogService>;

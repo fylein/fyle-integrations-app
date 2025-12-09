@@ -12,22 +12,22 @@ const routes: Routes = [
     children: [
       {
         path: 'export_settings',
-        component: QboExportSettingsComponent
+        component: QboExportSettingsComponent,
       },
       {
         path: 'import_settings',
-        component: QboImportSettingsComponent
+        component: QboImportSettingsComponent,
       },
       {
         path: 'advanced_settings',
-        component: QboAdvancedSettingsComponent
-      }
-    ]
-  }
+        component: QboAdvancedSettingsComponent,
+      },
+    ],
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class QboConfigurationRoutingModule { }
+export class QboConfigurationRoutingModule {}

@@ -6,30 +6,33 @@ import { FormGroup } from '@angular/forms';
 import { XeroAdvancedSettingsService } from 'src/app/core/services/xero/xero-configuration/xero-advanced-settings.service';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
-
 export class XeroCloneSettingsService {
-
   constructor(
     private xeroExportSettingsService: XeroExportSettingsService,
     private xeroImportSettingsService: XeroImportSettingsService,
-    private xeroAdvancedSettingsService: XeroAdvancedSettingsService
-  ) { }
+    private xeroAdvancedSettingsService: XeroAdvancedSettingsService,
+  ) {}
 
-  constructPayload(exportSettingForm: FormGroup, importSettingForm: FormGroup, advancedSettingForm: FormGroup, isTaxGroupSyncAllowed: boolean): XeroCloneSettingPost {
+  constructPayload(
+    exportSettingForm: FormGroup,
+    importSettingForm: FormGroup,
+    advancedSettingForm: FormGroup,
+    isTaxGroupSyncAllowed: boolean,
+  ): XeroCloneSettingPost {
     const exportSettingPayload = this.xeroExportSettingsService.constructPayload(exportSettingForm, true);
     const importSettingPayload = this.xeroImportSettingsService.constructPayload(importSettingForm, true);
     const advancedSettingPayload = this.xeroAdvancedSettingsService.constructPayload(advancedSettingForm, true);
 
     if (!isTaxGroupSyncAllowed) {
-        importSettingPayload.workspace_general_settings.import_tax_codes = false;
+      importSettingPayload.workspace_general_settings.import_tax_codes = false;
     }
 
     return {
-        export_settings: exportSettingPayload,
-        import_settings: importSettingPayload,
-        advanced_settings: advancedSettingPayload
+      export_settings: exportSettingPayload,
+      import_settings: importSettingPayload,
+      advanced_settings: advancedSettingPayload,
     };
   }
 }

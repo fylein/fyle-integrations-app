@@ -10,19 +10,23 @@ const routes: Routes = [
     children: [
       {
         path: 'onboarding',
-        loadChildren: () => import('./business-central-onboarding/business-central-onboarding.module').then(m => m.BusinessCentralOnboardingModule)
+        loadChildren: () =>
+          import('./business-central-onboarding/business-central-onboarding.module').then(
+            (m) => m.BusinessCentralOnboardingModule,
+          ),
       },
       {
         path: 'main',
-        loadChildren: () => import('./business-central-main/business-central-main.module').then(m => m.BusinessCentralMainModule),
-        canActivate: [BusinessCentralTokenGuard]
-      }
-    ]
-  }
+        loadChildren: () =>
+          import('./business-central-main/business-central-main.module').then((m) => m.BusinessCentralMainModule),
+        canActivate: [BusinessCentralTokenGuard],
+      },
+    ],
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class BusinessCentralRoutingModule { }
+export class BusinessCentralRoutingModule {}

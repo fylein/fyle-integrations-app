@@ -1,4 +1,4 @@
-import { DestinationAttribute } from "../../db/destination-attribute.model";
+import { DestinationAttribute } from '../../db/destination-attribute.model';
 
 type NetsuiteDestinationAttributeDetail = {
   country?: string;

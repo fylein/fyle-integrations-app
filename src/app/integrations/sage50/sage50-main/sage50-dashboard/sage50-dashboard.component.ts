@@ -3,7 +3,20 @@ import { Subject, forkJoin, interval, from, Observable } from 'rxjs';
 import { map, switchMap, takeUntil, takeWhile } from 'rxjs/operators';
 import { AccountingExportSummary } from 'src/app/core/models/db/accounting-export-summary.model';
 import { DashboardModel } from 'src/app/core/models/db/dashboard.model';
-import { AppName, ButtonSize, ButtonType, CCCImportState, ReimbursableImportState, TaskLogState, FyleField, MappingState, LoaderType, TrackingApp, ClickEvent, RefinerSurveyType } from 'src/app/core/models/enum/enum.model';
+import {
+  AppName,
+  ButtonSize,
+  ButtonType,
+  CCCImportState,
+  ReimbursableImportState,
+  TaskLogState,
+  FyleField,
+  MappingState,
+  LoaderType,
+  TrackingApp,
+  ClickEvent,
+  RefinerSurveyType,
+} from 'src/app/core/models/enum/enum.model';
 import { DashboardService } from 'src/app/core/services/common/dashboard.service';
 import { AccountingExportService } from 'src/app/core/services/common/accounting-export.service';
 import { ErrorStat } from 'src/app/core/models/db/error.model';
@@ -13,14 +26,17 @@ import { Sage50ExportSettingsService } from 'src/app/core/services/sage50/sage50
 import { Sage50ImportSettingsService } from 'src/app/core/services/sage50/sage50-configuration/sage50-import-settings.service';
 import { FormBuilder } from '@angular/forms';
 import { MappingStats } from 'src/app/core/models/db/mapping.model';
-import { Sage50ReimbursableExportType, Sage50CCCExportType } from 'src/app/core/models/sage50/sage50-configuration/sage50-export-settings.model';
+import {
+  Sage50ReimbursableExportType,
+  Sage50CCCExportType,
+} from 'src/app/core/models/sage50/sage50-configuration/sage50-export-settings.model';
 import { Sage50ImportableField } from 'src/app/core/models/sage50/sage50-configuration/sage50-import-settings.model';
 import { DestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
 import { ExtendedGenericMapping } from 'src/app/core/models/db/extended-generic-mapping.model';
 import { MappingService } from 'src/app/core/services/common/mapping.service';
 import { DialogModule } from 'primeng/dialog';
 import { CommonModule } from '@angular/common';
-import { CsvExportLogComponent } from "src/app/shared/components/export-log/csv-export-log/csv-export-log.component";
+import { CsvExportLogComponent } from 'src/app/shared/components/export-log/csv-export-log/csv-export-log.component';
 import { SelectedDateFilter } from 'src/app/core/models/qbd/misc/qbd-date-filter.model';
 import { TabMenuItem } from 'src/app/core/models/common/tab-menu.model';
 import { TranslocoService } from '@jsverse/transloco';
@@ -34,13 +50,12 @@ import { RefinerService } from 'src/app/core/services/integration/refiner.servic
 import { environment } from 'src/environments/environment';
 
 @Component({
-    selector: 'app-sage50-dashboard',
-    imports: [SharedModule, CommonModule, DialogModule, CsvExportLogComponent],
-    templateUrl: './sage50-dashboard.component.html',
-    styleUrls: ['./sage50-dashboard.component.scss']
+  selector: 'app-sage50-dashboard',
+  imports: [SharedModule, CommonModule, DialogModule, CsvExportLogComponent],
+  templateUrl: './sage50-dashboard.component.html',
+  styleUrls: ['./sage50-dashboard.component.scss'],
 })
 export class Sage50DashboardComponent implements OnInit, OnDestroy {
-
   readonly brandingStyle = brandingStyle;
 
   readonly brandingFeatureConfig = brandingFeatureConfig;
@@ -136,43 +151,49 @@ export class Sage50DashboardComponent implements OnInit, OnDestroy {
     private exportLogService: ExportLogService,
     private translocoService: TranslocoService,
     private trackingService: TrackingService,
-    private refinerService: RefinerService
-  ) { }
+    private refinerService: RefinerService,
+  ) {}
 
   export() {
     this.isExportInProgress = true;
-    this.dashboardService.triggerAccountingExport("v2").subscribe(() => {
+    this.dashboardService.triggerAccountingExport('v2').subscribe(() => {
       this.trackingService.onClickEvent(TrackingApp.SAGE50, ClickEvent.EXPORT_EXPENSES);
       this.pollExportStatus();
     });
   }
 
   private pollExportStatus(): void {
-    interval(1000).pipe(
-      switchMap(() => from(
-        this.accountingExportService.getExportLogs(
-          [TaskLogState.ENQUEUED, TaskLogState.IN_PROGRESS]
-        ).toPromise()
-      )),
-      takeUntil(this.destroy$),
-      takeWhile((response: any) =>
-        response.results.filter((task: any) =>
-          (task.status === TaskLogState.IN_PROGRESS || task.status === TaskLogState.ENQUEUED)
-        ).length > 0, true
+    interval(1000)
+      .pipe(
+        switchMap(() =>
+          from(
+            this.accountingExportService.getExportLogs([TaskLogState.ENQUEUED, TaskLogState.IN_PROGRESS]).toPromise(),
+          ),
+        ),
+        takeUntil(this.destroy$),
+        takeWhile(
+          (response: any) =>
+            response.results.filter(
+              (task: any) => task.status === TaskLogState.IN_PROGRESS || task.status === TaskLogState.ENQUEUED,
+            ).length > 0,
+          true,
+        ),
       )
-    ).subscribe((res: any) => {
-      const allTasks = res.results;
+      .subscribe((res: any) => {
+        const allTasks = res.results;
 
-      if (!allTasks.length) {
+        if (!allTasks.length) {
           this.exportableAccountingExportIds = [];
           this.isExportInProgress = false;
           this.csvExportLogComponent.applyFilters();
-      }
+        }
 
-      this.refinerService.triggerSurvey(
-        AppName.SAGE50, environment.refiner_survey.sage50.export_done_survery_id, RefinerSurveyType.EXPORT_DONE
-      );
-    });
+        this.refinerService.triggerSurvey(
+          AppName.SAGE50,
+          environment.refiner_survey.sage50.export_done_survery_id,
+          RefinerSurveyType.EXPORT_DONE,
+        );
+      });
   }
 
   showMappingDialog(mappingType: 'EMPLOYEE' | 'CORPORATE_CARD', destinationType: string) {
@@ -195,12 +216,25 @@ export class Sage50DashboardComponent implements OnInit, OnDestroy {
       this.employeeFieldMapping = FyleField.VENDOR;
       this.currentMappingStats = this.corporateCardMappingStats;
     }
-    this.trackingService.onClickEvent(TrackingApp.SAGE50, ClickEvent.RESOLVE_MAPPING_ERROR, {field: mappingType, stats: this.currentMappingStats});
+    this.trackingService.onClickEvent(TrackingApp.SAGE50, ClickEvent.RESOLVE_MAPPING_ERROR, {
+      field: mappingType,
+      stats: this.currentMappingStats,
+    });
 
     // Fetch destination options, unmapped source attributes, and import settings to check if codes should be shown
     forkJoin([
       this.mappingService.getPaginatedDestinationAttributes(destinationType, undefined, undefined),
-      this.mappingService.getGenericMappingsV2(100, 0, destinationType, MappingState.UNMAPPED, '', this.mappingSourceField, false, null, this.appName)
+      this.mappingService.getGenericMappingsV2(
+        100,
+        0,
+        destinationType,
+        MappingState.UNMAPPED,
+        '',
+        this.mappingSourceField,
+        false,
+        null,
+        this.appName,
+      ),
     ]).subscribe(
       ([destinationResponse, mappingsResponse]) => {
         this.mappingDestinationOptions = destinationResponse.results;
@@ -210,7 +244,7 @@ export class Sage50DashboardComponent implements OnInit, OnDestroy {
       },
       () => {
         this.isMappingDialogLoading = false;
-      }
+      },
     );
   }
 
@@ -220,7 +254,7 @@ export class Sage50DashboardComponent implements OnInit, OnDestroy {
 
     forkJoin([
       this.mappingService.getMappingStats('EMPLOYEE', 'VENDOR', AppName.SAGE50),
-      this.mappingService.getMappingStats('CORPORATE_CARD', 'ACCOUNT', AppName.SAGE50)
+      this.mappingService.getMappingStats('CORPORATE_CARD', 'ACCOUNT', AppName.SAGE50),
     ]).subscribe((responses) => {
       const newEmployeeMappingStats = responses[0];
       const newCorporateCardMappingStats = responses[1];
@@ -233,13 +267,13 @@ export class Sage50DashboardComponent implements OnInit, OnDestroy {
         if (!this.employeeMappingErrorStat) {
           this.employeeMappingErrorStat = {
             resolvedCount: previousUnmappedCount - currentUnmappedCount,
-            totalCount: previousUnmappedCount
+            totalCount: previousUnmappedCount,
           };
         } else if (previousUnmappedCount !== currentUnmappedCount) {
           // Update resolved count
           this.employeeMappingErrorStat = {
             resolvedCount: this.employeeMappingErrorStat.totalCount - currentUnmappedCount,
-            totalCount: this.employeeMappingErrorStat.totalCount
+            totalCount: this.employeeMappingErrorStat.totalCount,
           };
         }
       }
@@ -252,13 +286,13 @@ export class Sage50DashboardComponent implements OnInit, OnDestroy {
         if (!this.corporateCardMappingErrorStat) {
           this.corporateCardMappingErrorStat = {
             resolvedCount: previousUnmappedCount - currentUnmappedCount,
-            totalCount: previousUnmappedCount
+            totalCount: previousUnmappedCount,
           };
         } else if (previousUnmappedCount !== currentUnmappedCount) {
           // Update resolved count
           this.corporateCardMappingErrorStat = {
             resolvedCount: this.corporateCardMappingErrorStat.totalCount - currentUnmappedCount,
-            totalCount: this.corporateCardMappingErrorStat.totalCount
+            totalCount: this.corporateCardMappingErrorStat.totalCount,
           };
         }
       }
@@ -268,46 +302,64 @@ export class Sage50DashboardComponent implements OnInit, OnDestroy {
   }
 
   setPendingMappings(employeeMappingStats: MappingStats, corporateCardMappingStats: MappingStats): void {
+    if (
+      this.reimbursableExportType === Sage50ReimbursableExportType.PURCHASES_RECEIVE_INVENTORY &&
+      employeeMappingStats
+    ) {
+      this.employeeMappingStats = employeeMappingStats;
+    }
 
-        if (this.reimbursableExportType === Sage50ReimbursableExportType.PURCHASES_RECEIVE_INVENTORY && employeeMappingStats) {
-          this.employeeMappingStats = employeeMappingStats;
-        }
+    if (this.cccExportType === Sage50CCCExportType.PAYMENTS_JOURNAL && corporateCardMappingStats) {
+      this.corporateCardMappingStats = corporateCardMappingStats;
+    }
 
-        if (this.cccExportType === Sage50CCCExportType.PAYMENTS_JOURNAL && corporateCardMappingStats) {
-          this.corporateCardMappingStats = corporateCardMappingStats;
-        }
-
-        this.showPendingMappings =
-          (this.employeeMappingStats?.unmapped_attributes_count ?? 0) > 0 ||
-          (this.corporateCardMappingStats?.unmapped_attributes_count ?? 0) > 0;
+    this.showPendingMappings =
+      (this.employeeMappingStats?.unmapped_attributes_count ?? 0) > 0 ||
+      (this.corporateCardMappingStats?.unmapped_attributes_count ?? 0) > 0;
   }
 
-  updateExportLogs(limit: number, offset:number, selectedDateFilter: SelectedDateFilter | null, searchQuery: string | null) {
+  updateExportLogs(
+    limit: number,
+    offset: number,
+    selectedDateFilter: SelectedDateFilter | null,
+    searchQuery: string | null,
+  ) {
     return this.accountingExportService.getAccountingExports(
-      [], [TaskLogState.COMPLETE], null, limit, offset, selectedDateFilter, null, searchQuery, this.appName
+      [],
+      [TaskLogState.COMPLETE],
+      null,
+      limit,
+      offset,
+      selectedDateFilter,
+      null,
+      searchQuery,
+      this.appName,
     );
   }
 
-  updateSkippedExpenses(limit: number, offset:number, selectedDateFilter: SelectedDateFilter | null, searchQuery: string | null) {
+  updateSkippedExpenses(
+    limit: number,
+    offset: number,
+    selectedDateFilter: SelectedDateFilter | null,
+    searchQuery: string | null,
+  ) {
     return this.exportLogService.getSkippedExpenses(limit, offset, selectedDateFilter, searchQuery);
   }
 
   private setupPage(): void {
     this.exportLogModules = [
       { label: this.translocoService.translate('sage50Dashboard.completed'), value: 'completed' },
-      { label: this.translocoService.translate('sage50Dashboard.skipped'), value: 'skipped' }
+      { label: this.translocoService.translate('sage50Dashboard.skipped'), value: 'skipped' },
     ];
     this.activeExportLogModule = this.exportLogModules[0].value;
 
     forkJoin([
       this.dashboardService.getExportableAccountingExportIds('v3'),
       this.sage50ExportSettingService.getExportSettings(),
-      this.accountingExportService.getExportLogs(
-        [TaskLogState.ENQUEUED, TaskLogState.IN_PROGRESS]
-        ),
+      this.accountingExportService.getExportLogs([TaskLogState.ENQUEUED, TaskLogState.IN_PROGRESS]),
       this.mappingService.getMappingStats('EMPLOYEE', 'VENDOR', AppName.SAGE50),
       this.mappingService.getMappingStats('CORPORATE_CARD', 'ACCOUNT', AppName.SAGE50),
-      this.skipExportService.getExpenseFilter()
+      this.skipExportService.getExpenseFilter(),
     ]).subscribe((responses) => {
       this.isLoading = false;
 
@@ -319,19 +371,28 @@ export class Sage50DashboardComponent implements OnInit, OnDestroy {
       const expenseFilters = responses[5];
 
       this.shouldShowExportLog =
-        this.brandingFeatureConfig.featureFlags.advancedSettings.skipExport &&
-        expenseFilters.count > 0;
+        this.brandingFeatureConfig.featureFlags.advancedSettings.skipExport && expenseFilters.count > 0;
 
       this.reimbursableExportType = exportSettings?.reimbursable_expense_export_type ?? null;
       this.cccExportType = exportSettings?.credit_card_expense_export_type ?? null;
       this.setPendingMappings(employeeMappingStats, corporateCardMappingStats);
-      const queuedTasks = exportLogs.results.filter((task: any) => task.status === TaskLogState.ENQUEUED || task.status === TaskLogState.IN_PROGRESS);
+      const queuedTasks = exportLogs.results.filter(
+        (task: any) => task.status === TaskLogState.ENQUEUED || task.status === TaskLogState.IN_PROGRESS,
+      );
 
       const exportableCount = exportableResponse?.ready_to_export_count || 0;
-      this.exportableAccountingExportIds = Array(exportableCount).fill(0).map((_, i) => i + 1);
+      this.exportableAccountingExportIds = Array(exportableCount)
+        .fill(0)
+        .map((_, i) => i + 1);
 
-      this.reimbursableImportState = (exportSettings?.reimbursable_expense_export_type && exportSettings?.reimbursable_expense_state) ? this.reimbursableExpenseImportStateMap[exportSettings.reimbursable_expense_state] : null;
-      this.cccImportState = (exportSettings?.credit_card_expense_export_type && exportSettings?.credit_card_expense_state) ? this.cccExpenseImportStateMap[exportSettings.credit_card_expense_state] : null;
+      this.reimbursableImportState =
+        exportSettings?.reimbursable_expense_export_type && exportSettings?.reimbursable_expense_state
+          ? this.reimbursableExpenseImportStateMap[exportSettings.reimbursable_expense_state]
+          : null;
+      this.cccImportState =
+        exportSettings?.credit_card_expense_export_type && exportSettings?.credit_card_expense_state
+          ? this.cccExpenseImportStateMap[exportSettings.credit_card_expense_state]
+          : null;
 
       if (queuedTasks.length) {
         this.isImportInProgress = false;
@@ -341,7 +402,9 @@ export class Sage50DashboardComponent implements OnInit, OnDestroy {
         this.accountingExportService.importExpensesFromFyle('v3').subscribe(() => {
           this.dashboardService.getExportableAccountingExportIds('v3').subscribe((exportableAccountingExportIds) => {
             const newExportableCount = exportableAccountingExportIds?.ready_to_export_count || 0;
-            this.exportableAccountingExportIds = Array(newExportableCount).fill(0).map((_, i) => i + 1);
+            this.exportableAccountingExportIds = Array(newExportableCount)
+              .fill(0)
+              .map((_, i) => i + 1);
             this.isImportInProgress = false;
             this.isExportInProgress = false;
           });
@@ -359,4 +422,3 @@ export class Sage50DashboardComponent implements OnInit, OnDestroy {
     this.destroy$.complete();
   }
 }
-

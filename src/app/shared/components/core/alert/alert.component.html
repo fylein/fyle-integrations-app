@@ -1,33 +1,33 @@
 @if (variant === 'standard') {
-    <!--
+  <!--
         Standard alerts have:
         - a filled section with a white icon
         - a content section
         - a colored border
     -->
+  <div
+    class="tw-rounded-8-px tw-flex tw-overflow-hidden tw-border"
+    [ngClass]="{
+      'tw-border-border-info': type === 'info',
+      'tw-border-border-danger-dark': type === 'danger',
+    }"
+  >
+    <!-- Filled section with the icon -->
     <div
-        class="tw-rounded-8-px tw-flex tw-overflow-hidden tw-border"
-        [ngClass]="{
-            'tw-border-border-info': type === 'info',
-            'tw-border-border-danger-dark': type === 'danger'
-        }"
+      class="tw-p-8-px tw-flex tw-items-center tw-shrink-0"
+      [ngClass]="{
+        'tw-bg-bg-info': type === 'info',
+        'tw-bg-bg-danger-dark': type === 'danger',
+      }"
     >
-        <!-- Filled section with the icon -->
-        <div
-            class="tw-p-8-px tw-flex tw-items-center tw-shrink-0"
-            [ngClass]="{
-                'tw-bg-bg-info': type === 'info',
-                'tw-bg-bg-danger-dark': type === 'danger'
-            }"
-        >
-            <img [src]="iconSrc" [alt]="iconAlt" [class]="'tw-w-20-px tw-h-20-px'">
-        </div>
-        <div class="tw-p-16-px tw-pl-24-px">
-            <ng-container *ngTemplateOutlet="content"></ng-container>
-        </div>
+      <img [src]="iconSrc" [alt]="iconAlt" [class]="'tw-w-20-px tw-h-20-px'" />
     </div>
+    <div class="tw-p-16-px tw-pl-24-px">
+      <ng-container *ngTemplateOutlet="content"></ng-container>
+    </div>
+  </div>
 } @else {
-    <!--
+  <!--
         Subtle alerts have the simplest layout:
         - only an icon and content (no separate section for the icon)
 
@@ -35,22 +35,22 @@
         - a border with a subtle color
         - a container-level padding
     -->
-    <div
-        class="tw-flex tw-gap-8-px"
-        [ngClass]="{
-            'tw-border tw-border-border-subtle tw-p-12-px tw-rounded-8-px': variant === 'subtle-bordered',
-        }"
-    >
-        <img [src]="iconSrc" [alt]="iconAlt" [class]="'tw-w-20-px tw-h-20-px tw-shrink-0'">
-        <ng-container *ngTemplateOutlet="content"></ng-container>
-    </div>
+  <div
+    class="tw-flex tw-gap-8-px"
+    [ngClass]="{
+      'tw-border tw-border-border-subtle tw-p-12-px tw-rounded-8-px': variant === 'subtle-bordered',
+    }"
+  >
+    <img [src]="iconSrc" [alt]="iconAlt" [class]="'tw-w-20-px tw-h-20-px tw-shrink-0'" />
+    <ng-container *ngTemplateOutlet="content"></ng-container>
+  </div>
 }
 
 <ng-template #content>
-    <div class="tw-text-14-px tw-text-text-primary tw-font-400">
-        @if (title) {
-            <h5 class="tw-font-700">{{ title }}</h5>
-        }
-        <ng-content></ng-content>
-    </div>
+  <div class="tw-text-14-px tw-text-text-primary tw-font-400">
+    @if (title) {
+      <h5 class="tw-font-700">{{ title }}</h5>
+    }
+    <ng-content></ng-content>
+  </div>
 </ng-template>

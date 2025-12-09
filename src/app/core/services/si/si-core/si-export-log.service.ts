@@ -6,28 +6,38 @@ import { UserService } from '../../misc/user.service';
 import { SiWorkspaceService } from '../si-core/si-workspace.service';
 import { FyleReferenceType, TaskLogState } from 'src/app/core/models/enum/enum.model';
 import { SelectedDateFilter } from 'src/app/core/models/qbd/misc/qbd-date-filter.model';
-import { ExpenseGroup, ExpenseGroupDescription, ExpenseGroupResponse, SkipExportLogResponse } from 'src/app/core/models/intacct/db/expense-group.model';
+import {
+  ExpenseGroup,
+  ExpenseGroupDescription,
+  ExpenseGroupResponse,
+  SkipExportLogResponse,
+} from 'src/app/core/models/intacct/db/expense-group.model';
 import { ExpenseGroupSetting } from 'src/app/core/models/db/expense-group-setting.model';
 import { Expense } from 'src/app/core/models/intacct/db/expense.model';
 import { ApiService } from '../../common/api.service';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ExportLogService {
-
   private org_id: string = this.userService.getUserProfile().org_id;
 
   constructor(
     private apiService: ApiService,
     private userService: UserService,
-    private workspaceService: SiWorkspaceService
-  ) { }
+    private workspaceService: SiWorkspaceService,
+  ) {}
 
-  getExpenseGroups(state: TaskLogState | TaskLogState.COMPLETE, limit: number, offset: number, selectedDateFilter: SelectedDateFilter | null, exportedAt: Date | void | null): Observable<ExpenseGroupResponse> {
+  getExpenseGroups(
+    state: TaskLogState | TaskLogState.COMPLETE,
+    limit: number,
+    offset: number,
+    selectedDateFilter: SelectedDateFilter | null,
+    exportedAt: Date | void | null,
+  ): Observable<ExpenseGroupResponse> {
     const params: any = {
       limit,
-      offset
+      offset,
     };
     params.state = state;
 
@@ -62,7 +72,7 @@ export class ExportLogService {
   getSkipExportLogs(limit: number, offset: number): Observable<SkipExportLogResponse> {
     const workspaceId = this.workspaceService.getWorkspaceId();
 
-    return this.apiService.get(`/workspaces/${workspaceId}/fyle/expenses/`, {limit, offset});
+    return this.apiService.get(`/workspaces/${workspaceId}/fyle/expenses/`, { limit, offset });
   }
 
   getExpenseGroupSettings(): Observable<ExpenseGroupSetting> {
@@ -70,7 +80,7 @@ export class ExportLogService {
     return this.apiService.get(`/workspaces/${workspaceId}/fyle/expense_group_settings/`, {});
   }
 
-  generateFyleUrl(expenseGroup: ExpenseGroup, referenceType: FyleReferenceType) : string {
+  generateFyleUrl(expenseGroup: ExpenseGroup, referenceType: FyleReferenceType): string {
     let url = `${environment.fyle_app_url}/app/`;
     if (referenceType === FyleReferenceType.EXPENSE) {
       url += `admin/#/company_expenses?txnId=${expenseGroup.expenses[0].expense_id}`;

@@ -3,13 +3,10 @@ import { MinimalUser } from '../../models/db/user.model';
 import { StorageService } from '../common/storage.service';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class UserService {
-
-  constructor(
-    private storageService: StorageService
-  ) { }
+  constructor(private storageService: StorageService) {}
 
   storeUserProfile(userProfile: MinimalUser): void {
     this.storageService.set('user', userProfile);

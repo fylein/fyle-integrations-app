@@ -8,11 +8,7 @@ describe('ExportLogService', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [
-        ExportLogService,
-        provideHttpClient(withInterceptorsFromDi()),
-        provideHttpClientTesting()
-      ]
+      providers: [ExportLogService, provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting()],
     });
     service = TestBed.inject(ExportLogService);
   });

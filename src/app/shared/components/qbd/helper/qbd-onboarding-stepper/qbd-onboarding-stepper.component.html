@@ -7,7 +7,7 @@
 
 <div class="tw-py-24-px tw-text-slightly-normal-text-color">
   <div>
-    <div class="tw-normal-text-color tw-text-center tw-pb-16-px ">
+    <div class="tw-normal-text-color tw-text-center tw-pb-16-px">
       <p class="!tw-font-400">{{ 'qbdOnboardingStepper.description' | transloco }}</p>
     </div>
     <div class="tw-flex tw-justify-center">
@@ -15,33 +15,70 @@
         <div>
           <div class="tw-grip tw-grid-cols-1">
             <div class="tw-flex tw-items-center">
-              <div class="tw-flex tw-justify-center step" (click)="navigate(onboardingStep.completed, onboardingStep.route)" [ngClass]="[onboardingStep.active && !onboardingStep.completed ? 'step-state tw-border-success-toast tw-cursor-pointer' : 'step-state tw-border-box-color tw-cursor-not-allowed', onboardingStep.active && onboardingStep.completed ? 'step-state tw-border-success-toast !tw-cursor-pointer' : '',onboardingStep.completed && !onboardingStep.active ? '!tw-bg-success-toast tw-border-success-toast !tw-cursor-pointer':'',]">
+              <div
+                class="tw-flex tw-justify-center step"
+                (click)="navigate(onboardingStep.completed, onboardingStep.route)"
+                [ngClass]="[
+                  onboardingStep.active && !onboardingStep.completed
+                    ? 'step-state tw-border-success-toast tw-cursor-pointer'
+                    : 'step-state tw-border-box-color tw-cursor-not-allowed',
+                  onboardingStep.active && onboardingStep.completed
+                    ? 'step-state tw-border-success-toast !tw-cursor-pointer'
+                    : '',
+                  onboardingStep.completed && !onboardingStep.active
+                    ? '!tw-bg-success-toast tw-border-success-toast !tw-cursor-pointer'
+                    : '',
+                ]"
+              >
                 @if (onboardingStep.active) {
-                  <app-svg-icon [svgSource]="onboardingStep.icon" [width]="'20px'" [height]="'20px'" [styleClasses]="'tw-text-success-toast'"></app-svg-icon>
+                  <app-svg-icon
+                    [svgSource]="onboardingStep.icon"
+                    [width]="'20px'"
+                    [height]="'20px'"
+                    [styleClasses]="'tw-text-success-toast'"
+                  ></app-svg-icon>
                 }
                 @if (!onboardingStep.active && onboardingStep.completed) {
-                  <app-svg-icon [svgSource]="'check-medium'" [width]="'20px'" [height]="'20px'" [styleClasses]="'tw-text-white'"></app-svg-icon>
+                  <app-svg-icon
+                    [svgSource]="'check-medium'"
+                    [width]="'20px'"
+                    [height]="'20px'"
+                    [styleClasses]="'tw-text-white'"
+                  ></app-svg-icon>
                 }
                 @if (!onboardingStep.active && !onboardingStep.completed) {
-                  <app-svg-icon [svgSource]="onboardingStep.icon" [width]="'20px'" [height]="'20px'" [styleClasses]="'tw-text-placeholder'"></app-svg-icon>
+                  <app-svg-icon
+                    [svgSource]="onboardingStep.icon"
+                    [width]="'20px'"
+                    [height]="'20px'"
+                    [styleClasses]="'tw-text-placeholder'"
+                  ></app-svg-icon>
                 }
               </div>
               @if (i + 1 !== 3) {
                 <div>
                   @if (!onboardingStep.completed) {
                     <div>
-                      <hr class="line-active">
+                      <hr class="line-active" />
                     </div>
                   }
                   @if (onboardingStep.completed) {
                     <div>
-                      <hr class="line-inactive">
+                      <hr class="line-inactive" />
                     </div>
                   }
                 </div>
               }
             </div>
-            <div class="tw-text-14-px tw-pt-10-px tw-font-500" [ngClass]="[onboardingStep.route === 'export_settings' ? 'step-name-export' : '', onboardingStep.route === 'field_mappings' ? 'step-name-field' : '', onboardingStep.route === 'advanced_settings' ? 'step-name-advanced' : '', !onboardingStep.active ? 'tw-text-text-muted' : 'tw-text-normal-text-color' ]">
+            <div
+              class="tw-text-14-px tw-pt-10-px tw-font-500"
+              [ngClass]="[
+                onboardingStep.route === 'export_settings' ? 'step-name-export' : '',
+                onboardingStep.route === 'field_mappings' ? 'step-name-field' : '',
+                onboardingStep.route === 'advanced_settings' ? 'step-name-advanced' : '',
+                !onboardingStep.active ? 'tw-text-text-muted' : 'tw-text-normal-text-color',
+              ]"
+            >
               {{ onboardingStep.step }}
             </div>
           </div>

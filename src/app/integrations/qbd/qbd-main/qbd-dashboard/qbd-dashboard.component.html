@@ -16,43 +16,64 @@
     <div class="tw-shadow-app-card tw-rounded-12-px tw-bg-white tw-border-1-px tw-border-separator">
       <div class="tw-p-24-px">
         @if (exportPresent) {
-          <div class="tw-flex tw-justify-between tw-items-center ">
+          <div class="tw-flex tw-justify-between tw-items-center">
             <div class="tw-w-3/5">
-              <h3 class="tw-text-18-px tw-font-500 tw-text-slightly-normal-text-color">{{ 'qbdDashboard.downloadExpensesTitle' | transloco: { brandName: brandingConfig.brandName } }}</h3>
-              <h5 class="tw-text-14-px tw-font-400 tw-text-slightly-normal-text-color tw-pt-2-px">{{ 'qbdDashboard.iifFileGenerationInfo' | transloco }}</h5>
+              <h3 class="tw-text-18-px tw-font-500 tw-text-slightly-normal-text-color">
+                {{ 'qbdDashboard.downloadExpensesTitle' | transloco: { brandName: brandingConfig.brandName } }}
+              </h3>
+              <h5 class="tw-text-14-px tw-font-400 tw-text-slightly-normal-text-color tw-pt-2-px">
+                {{ 'qbdDashboard.iifFileGenerationInfo' | transloco }}
+              </h5>
             </div>
             <div class="tw-flex tw-items-end tw-justify-end">
               <div>
-                <app-button (buttonClick)="triggerExports()"  [buttonSize]="ButtonSize.MEDIUM" [buttonType]="ButtonType.PRIMARY" [svgSource]="'arrow-tail-right-medium'" [disabled]="exportInProgress || disableQBDExportButton" [buttonText]="!exportInProgress ? ('qbdDashboard.exportIifFileButton' | transloco) : ('qbdDashboard.exportingButton' | transloco)"></app-button>
+                <app-button
+                  (buttonClick)="triggerExports()"
+                  [buttonSize]="ButtonSize.MEDIUM"
+                  [buttonType]="ButtonType.PRIMARY"
+                  [svgSource]="'arrow-tail-right-medium'"
+                  [disabled]="exportInProgress || disableQBDExportButton"
+                  [buttonText]="
+                    !exportInProgress
+                      ? ('qbdDashboard.exportIifFileButton' | transloco)
+                      : ('qbdDashboard.exportingButton' | transloco)
+                  "
+                ></app-button>
                 @if (nextExportDate) {
-                  <p class="tw-pt-8-px tw-float-right tw-text-12-px tw-font-500 tw-text-text-muted">{{ 'qbdDashboard.nextExportSchedule' | transloco }} {{ nextExportDate | date : 'd MMM, yyyy'}}</p>
+                  <p class="tw-pt-8-px tw-float-right tw-text-12-px tw-font-500 tw-text-text-muted">
+                    {{ 'qbdDashboard.nextExportSchedule' | transloco }} {{ nextExportDate | date: 'd MMM, yyyy' }}
+                  </p>
                 }
               </div>
             </div>
           </div>
         }
         @if (!exportPresent) {
-          <div class="tw-flex tw-justify-between tw-items-center ">
+          <div class="tw-flex tw-justify-between tw-items-center">
             <div class="tw-flex tw-items-start">
               <div class="tw-pr-14-px">
                 @if (illustrationsAllowed) {
-                  <img src="assets/illustrations/pinktick.svg" >
+                  <img src="assets/illustrations/pinktick.svg" />
                 }
               </div>
               <div>
-                <h3 class="tw-text-20-px tw-font-400 tw-text-normal-text-color">{{ 'qbdDashboard.allCaughtUp' | transloco }}</h3>
-                <h5 class="tw-text-14-px tw-font-400 tw-text-text-muted tw-pt-4-px">{{ 'qbdDashboard.noExpensesToExport' | transloco: { brandName: brandingConfig.brandName } }}</h5>
+                <h3 class="tw-text-20-px tw-font-400 tw-text-normal-text-color">
+                  {{ 'qbdDashboard.allCaughtUp' | transloco }}
+                </h3>
+                <h5 class="tw-text-14-px tw-font-400 tw-text-text-muted tw-pt-4-px">
+                  {{ 'qbdDashboard.noExpensesToExport' | transloco: { brandName: brandingConfig.brandName } }}
+                </h5>
               </div>
             </div>
             <div>
-              <img src="assets/illustrations/export.svg" alt="">
+              <img src="assets/illustrations/export.svg" alt="" />
             </div>
           </div>
         }
       </div>
       @if (exportInProgress) {
-        <div >
-          <p-progressBar class="!tw-h-6-px" [value]="exportProgressPercentage" [showValue]='false'></p-progressBar>
+        <div>
+          <p-progressBar class="!tw-h-6-px" [value]="exportProgressPercentage" [showValue]="false"></p-progressBar>
         </div>
       }
     </div>
@@ -68,7 +89,8 @@
                 [exportLogForm]="exportLogForm"
                 [hideCalendar]="hideCalendar"
                 [dateOptions]="dateOptions"
-                [isSimpleSearchRequired]="false">
+                [isSimpleSearchRequired]="false"
+              >
               </app-export-log-filter>
             }
           </div>
@@ -89,21 +111,36 @@
               <ng-template pTemplate="body" let-exports let-i="rowIndex">
                 <tr>
                   <td>
-                    <p class="tw-font-400 tw-text-sub-text-color">{{exports.created_at | date}}</p>
-                    <span class="tw-font-400 !tw-text-12-px tw-text-placeholder">{{exports.created_at | date : "hh:mm a"}}</span>
+                    <p class="tw-font-400 tw-text-sub-text-color">{{ exports.created_at | date }}</p>
+                    <span class="tw-font-400 !tw-text-12-px tw-text-placeholder">{{
+                      exports.created_at | date: 'hh:mm a'
+                    }}</span>
                   </td>
-                  <td>{{getTypeString(exports.type)| sentenceCase }}</td>
-                  <td>{{getExpenseType(exports.fund_source)| sentenceCase }}</td>
+                  <td>{{ getTypeString(exports.type) | sentenceCase }}</td>
+                  <td>{{ getExpenseType(exports.fund_source) | sentenceCase }}</td>
                   <td>
                     @if (!downloadingExportId[i]) {
                       <div>
-                        <button (click)="getDownloadLink(exports,i)" [pTooltip]="'qbdDashboard.downloadTooltip' | transloco" tooltipPosition="top"><app-svg-icon [styleClasses]="'tw-pt-5-px'" [svgSource]="'download'" [width]="'24px'" [height]="'24px'"></app-svg-icon></button>
+                        <button
+                          (click)="getDownloadLink(exports, i)"
+                          [pTooltip]="'qbdDashboard.downloadTooltip' | transloco"
+                          tooltipPosition="top"
+                        >
+                          <app-svg-icon
+                            [styleClasses]="'tw-pt-5-px'"
+                            [svgSource]="'download'"
+                            [width]="'24px'"
+                            [height]="'24px'"
+                          ></app-svg-icon>
+                        </button>
                       </div>
                     }
                     @if (downloadingExportId[i]) {
                       <div class="tw-flex tw-items-center">
                         <i class="pi pi-spin pi-spinner tw-text-sub-text-color tw-text-16-px"></i>
-                        <p class="tw-text-14-px tw-text-sub-text-color tw-pl-10-px">{{ 'qbdDashboard.downloading' | transloco }}</p>
+                        <p class="tw-text-14-px tw-text-sub-text-color tw-pl-10-px">
+                          {{ 'qbdDashboard.downloading' | transloco }}
+                        </p>
                       </div>
                     }
                   </td>
@@ -114,13 +151,23 @@
         }
         @if (accountingExports.count === 0) {
           <div>
-            <app-zero-state-with-illustration [mainText]="'qbdDashboard.noIifLogs' | transloco" [subText]="'qbdDashboard.noIifLogsSubtext' | transloco"></app-zero-state-with-illustration>
+            <app-zero-state-with-illustration
+              [mainText]="'qbdDashboard.noIifLogs' | transloco"
+              [subText]="'qbdDashboard.noIifLogsSubtext' | transloco"
+            ></app-zero-state-with-illustration>
           </div>
         }
       </div>
       @if (accountingExports.count > 0) {
         <div class="tw-p-24-px">
-          <app-paginator [totalCount]="totalCount"(pageSizeChangeEvent)="pageSizeChanges($event)" (pageOffsetChangeEvent)="pageOffsetChanges($event)" [pageType]="PaginatorPage.DASHBOARD" [page]="currentPage" [dropDownValue]="limit"></app-paginator>
+          <app-paginator
+            [totalCount]="totalCount"
+            (pageSizeChangeEvent)="pageSizeChanges($event)"
+            (pageOffsetChangeEvent)="pageOffsetChanges($event)"
+            [pageType]="PaginatorPage.DASHBOARD"
+            [page]="currentPage"
+            [dropDownValue]="limit"
+          ></app-paginator>
         </div>
       }
     </div>

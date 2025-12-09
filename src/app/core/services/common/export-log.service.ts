@@ -15,29 +15,34 @@ import { CsvJsonTranslatorService } from './csv-json-translator.service';
 import { downloadCSVFile } from '../../util/downloadFile';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ExportLogService {
-
   constructor(
     private apiService: ApiService,
     private userService: UserService,
     private workspaceService: WorkspaceService,
     private helper: HelperService,
     private translocoService: TranslocoService,
-    private csvJsonTranslatorService: CsvJsonTranslatorService
-  ) { }
+    private csvJsonTranslatorService: CsvJsonTranslatorService,
+  ) {}
 
-  getSkippedExpenses(limit: number, offset: number, selectedDateFilter?: SelectedDateFilter | null, query?: string | null, appName?:string): Observable<SkipExportLogResponse> {
+  getSkippedExpenses(
+    limit: number,
+    offset: number,
+    selectedDateFilter?: SelectedDateFilter | null,
+    query?: string | null,
+    appName?: string,
+  ): Observable<SkipExportLogResponse> {
     const workspaceId = this.workspaceService.getWorkspaceId();
     const params: SkipExportParam = {
       limit,
       offset,
       org_id: this.userService.getUserProfile().org_id,
-      is_skipped: true
+      is_skipped: true,
     };
 
-    if (query){
+    if (query) {
       params.expense_number = query;
       params.employee_email = query;
       params.employee_name = query;
@@ -59,10 +64,18 @@ export class ExportLogService {
     return this.apiService.get(this.helper.buildEndpointPath(`${workspaceId}/fyle/expenses/`), params);
   }
 
-  getExpenseGroups(state: TaskLogState, limit: number, offset: number, selectedDateFilter?: SelectedDateFilter | null, exportedAt?: string | null, query?: string | null, appName?: AppName): Observable<ExpenseGroupResponse> {
+  getExpenseGroups(
+    state: TaskLogState,
+    limit: number,
+    offset: number,
+    selectedDateFilter?: SelectedDateFilter | null,
+    exportedAt?: string | null,
+    query?: string | null,
+    appName?: AppName,
+  ): Observable<ExpenseGroupResponse> {
     const params: ExpenseGroupParam = {
       limit,
-      offset
+      offset,
     };
 
     if (appName === AppName.QBD_DIRECT) {
@@ -84,7 +97,12 @@ export class ExportLogService {
       if (state === TaskLogState.COMPLETE) {
         params.exported_at__gte = dateRangeInAPIFormat.start;
         params.exported_at__lte = dateRangeInAPIFormat.end;
-      } else if (appName && [AppName.XERO, AppName.QBO, AppName.NETSUITE, AppName.INTACCT, AppName.QBD_DIRECT, AppName.SAGE300].includes(appName)) {
+      } else if (
+        appName &&
+        [AppName.XERO, AppName.QBO, AppName.NETSUITE, AppName.INTACCT, AppName.QBD_DIRECT, AppName.SAGE300].includes(
+          appName,
+        )
+      ) {
         // Temporary hack to enable repurposed export summary only for allowed apps - #q2_real_time_exports_integrations
         params.updated_at__gte = dateRangeInAPIFormat.start;
         params.updated_at__lte = dateRangeInAPIFormat.end;
@@ -96,7 +114,10 @@ export class ExportLogService {
     }
 
     if (appName === AppName.NETSUITE) {
-      return this.apiService.get(`/workspaces/${this.workspaceService.getWorkspaceId()}/fyle/expense_groups/v2/`, params);
+      return this.apiService.get(
+        `/workspaces/${this.workspaceService.getWorkspaceId()}/fyle/expense_groups/v2/`,
+        params,
+      );
     } else if (appName === AppName.QBD_DIRECT) {
       if (params.status__in?.includes(AccountingExportStatus.FAILED)) {
         params.status__in = [AccountingExportStatus.ERROR, AccountingExportStatus.FATAL];
@@ -104,13 +125,12 @@ export class ExportLogService {
 
       return this.apiService.get(`/workspaces/${this.workspaceService.getWorkspaceId()}/export_logs/`, params);
     }
-      return this.apiService.get(`/workspaces/${this.workspaceService.getWorkspaceId()}/fyle/expense_groups/`, params);
-
+    return this.apiService.get(`/workspaces/${this.workspaceService.getWorkspaceId()}/fyle/expense_groups/`, params);
   }
 
   getExportData(fileId: string): Observable<any[]> {
     return this.apiService.post(`/${this.workspaceService.getWorkspaceId()}/export_logs/export_data/`, {
-      file_id: fileId
+      file_id: fileId,
     });
   }
 
@@ -152,9 +172,9 @@ export class ExportLogService {
     }
 
     const exportTypeDisplayNames: Record<typeof exportLog.type, string> = {
-      'GENERAL_JOURNAL_ENTRY': this.translocoService.translate('services.exportLog.generalJournalEntryDisplayName'),
-      'PURCHASES_RECEIVE_INVENTORY': this.translocoService.translate('services.exportLog.purchasesDisplayName'),
-      'PAYMENTS_JOURNAL': this.translocoService.translate('services.exportLog.paymentsDisplayName')
+      GENERAL_JOURNAL_ENTRY: this.translocoService.translate('services.exportLog.generalJournalEntryDisplayName'),
+      PURCHASES_RECEIVE_INVENTORY: this.translocoService.translate('services.exportLog.purchasesDisplayName'),
+      PAYMENTS_JOURNAL: this.translocoService.translate('services.exportLog.paymentsDisplayName'),
     };
 
     const year = exportedDate.getFullYear().toString().padStart(4, '0');

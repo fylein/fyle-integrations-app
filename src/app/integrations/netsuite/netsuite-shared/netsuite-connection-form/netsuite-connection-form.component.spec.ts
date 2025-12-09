@@ -8,9 +8,8 @@ xdescribe('NetsuiteConnectionFormComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [NetsuiteConnectionFormComponent]
-    })
-    .compileComponents();
+      declarations: [NetsuiteConnectionFormComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(NetsuiteConnectionFormComponent);
     component = fixture.componentInstance;

@@ -14,15 +14,16 @@ xdescribe('AppLandingPageHeaderComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-    declarations: [AppLandingPageHeaderComponent],
-    imports: [RouterTestingModule // Added RouterTestingModule for navigation testing
-    ],
-    providers: [
+      declarations: [AppLandingPageHeaderComponent],
+      imports: [
+        RouterTestingModule, // Added RouterTestingModule for navigation testing
+      ],
+      providers: [
         { provide: Router, useValue: routerSpy },
         provideHttpClient(withInterceptorsFromDi()),
-        provideHttpClientTesting()
-    ]
-}).compileComponents();
+        provideHttpClientTesting(),
+      ],
+    }).compileComponents();
   });
 
   beforeEach(() => {

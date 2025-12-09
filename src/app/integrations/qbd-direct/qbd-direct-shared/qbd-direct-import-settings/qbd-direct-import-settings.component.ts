@@ -4,13 +4,33 @@ import { FormGroup, Validators, AbstractControl, FormBuilder, FormArray } from '
 import { Router } from '@angular/router';
 import { MultiSelectModule } from 'primeng/multiselect';
 import { catchError, forkJoin, of } from 'rxjs';
-import { brandingKbArticles, brandingFeatureConfig, brandingStyle, brandingConfig } from 'src/app/branding/branding-config';
+import {
+  brandingKbArticles,
+  brandingFeatureConfig,
+  brandingStyle,
+  brandingConfig,
+} from 'src/app/branding/branding-config';
 import { ExpenseField, ImportCodeFieldConfigType } from 'src/app/core/models/common/import-settings.model';
 import { SelectFormOption } from 'src/app/core/models/common/select-form-option.model';
 import { DefaultDestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
 import { FyleField, IntegrationField } from 'src/app/core/models/db/mapping.model';
-import { AppName, ConfigurationCta, QBDReimbursableExpensesObject, QBDCorporateCreditCardExpensesObject, DefaultImportFields, ToastSeverity, QbdDirectOnboardingState, ProgressPhase, QbdDirectUpdateEvent, TrackingApp, Page } from 'src/app/core/models/enum/enum.model';
-import { QbdDirectImportSettingGet, QbdDirectImportSettingPost } from 'src/app/core/models/qbd-direct/qbd-direct-configuration/qbd-direct-import-settings.model';
+import {
+  AppName,
+  ConfigurationCta,
+  QBDReimbursableExpensesObject,
+  QBDCorporateCreditCardExpensesObject,
+  DefaultImportFields,
+  ToastSeverity,
+  QbdDirectOnboardingState,
+  ProgressPhase,
+  QbdDirectUpdateEvent,
+  TrackingApp,
+  Page,
+} from 'src/app/core/models/enum/enum.model';
+import {
+  QbdDirectImportSettingGet,
+  QbdDirectImportSettingPost,
+} from 'src/app/core/models/qbd-direct/qbd-direct-configuration/qbd-direct-import-settings.model';
 import { QbdDirectExportSettingGet } from 'src/app/core/models/qbd-direct/qbd-direct-configuration/qbd-direct-export-settings.model';
 import { HelperService } from 'src/app/core/services/common/helper.service';
 import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
@@ -27,13 +47,12 @@ import { ImportSettingsService } from 'src/app/core/services/common/import-setti
 import { BrandingService } from 'src/app/core/services/common/branding.service';
 
 @Component({
-    selector: 'app-qbd-direct-import-settings',
-    imports: [CommonModule, SharedModule, MultiSelectModule, TranslocoModule],
-    templateUrl: './qbd-direct-import-settings.component.html',
-    styleUrl: './qbd-direct-import-settings.component.scss'
+  selector: 'app-qbd-direct-import-settings',
+  imports: [CommonModule, SharedModule, MultiSelectModule, TranslocoModule],
+  templateUrl: './qbd-direct-import-settings.component.html',
+  styleUrl: './qbd-direct-import-settings.component.scss',
 })
 export class QbdDirectImportSettingsComponent implements OnInit {
-
   isLoading: boolean = true;
 
   supportArticleLink: string = brandingKbArticles.onboardingArticles.QBD_DIRECT.IMPORT_SETTING;
@@ -59,7 +78,7 @@ export class QbdDirectImportSettingsComponent implements OnInit {
   customFieldForm: FormGroup = this.formBuilder.group({
     attribute_type: ['', Validators.required],
     display_name: [''],
-    source_placeholder: ['', Validators.required]
+    source_placeholder: ['', Validators.required],
   });
 
   showCustomFieldDialog: boolean;
@@ -96,7 +115,7 @@ export class QbdDirectImportSettingsComponent implements OnInit {
 
   readonly brandingFeatureConfig = brandingFeatureConfig;
 
-  importCodeSelectorOptions: Record<string, { label: string; value: boolean; subLabel: string; }[]>;
+  importCodeSelectorOptions: Record<string, { label: string; value: boolean; subLabel: string }[]>;
 
   sessionStartTime: Date = new Date();
 
@@ -116,7 +135,7 @@ export class QbdDirectImportSettingsComponent implements OnInit {
     private trackingService: TrackingService,
     private translocoService: TranslocoService,
     private qbdDirectImportSettingsService: QbdDirectImportSettingsService,
-    public brandingService: BrandingService
+    public brandingService: BrandingService,
   ) {
     this.customFieldOption = this.qbdDirectImportSettingsService.getCustomFieldOption();
     this.chartOfAccountTypesList = this.qbdDirectImportSettingsService.getChartOfAccountTypesList();
@@ -148,7 +167,10 @@ export class QbdDirectImportSettingsComponent implements OnInit {
   }
 
   updateImportCodeFieldConfig() {
-    if (this.importSettingForm.controls.importCategories.value && this.QbdDirectImportCodeFieldCodeConfig[DefaultImportFields.ACCOUNT]) {
+    if (
+      this.importSettingForm.controls.importCategories.value &&
+      this.QbdDirectImportCodeFieldCodeConfig[DefaultImportFields.ACCOUNT]
+    ) {
       this.QbdDirectImportCodeFieldCodeConfig[DefaultImportFields.ACCOUNT] = false;
     }
   }
@@ -158,7 +180,7 @@ export class QbdDirectImportSettingsComponent implements OnInit {
       attribute_type: this.customFieldForm.value.attribute_type.split(' ').join('_').toUpperCase(),
       display_name: this.customFieldForm.value.attribute_type,
       source_placeholder: this.customFieldForm.value.source_placeholder,
-      is_dependent: false
+      is_dependent: false,
     };
 
     if (this.customFieldControl) {
@@ -170,10 +192,18 @@ export class QbdDirectImportSettingsComponent implements OnInit {
         destination_field: this.customFieldControl.get('destination_field')?.value,
         import_to_fyle: true,
         is_custom: true,
-        source_placeholder: this.customField.source_placeholder
+        source_placeholder: this.customField.source_placeholder,
       };
-      (this.importSettingForm.get('expenseFields') as FormArray).controls.filter(field => field.get('destination_field')?.value === this.customFieldControl.get('destination_field')?.value)[0].patchValue(expenseField);
-      ((this.importSettingForm.get('expenseFields') as FormArray).controls.filter(field => field.get('destination_field')?.value === this.customFieldControl.get('destination_field')?.value)[0] as FormGroup).controls.import_to_fyle.disable();
+      (this.importSettingForm.get('expenseFields') as FormArray).controls
+        .filter(
+          (field) => field.get('destination_field')?.value === this.customFieldControl.get('destination_field')?.value,
+        )[0]
+        .patchValue(expenseField);
+      (
+        (this.importSettingForm.get('expenseFields') as FormArray).controls.filter(
+          (field) => field.get('destination_field')?.value === this.customFieldControl.get('destination_field')?.value,
+        )[0] as FormGroup
+      ).controls.import_to_fyle.disable();
       this.customFieldForm.reset();
       this.showCustomFieldDialog = false;
     }
@@ -199,9 +229,18 @@ export class QbdDirectImportSettingsComponent implements OnInit {
       if (!isImportCategoriesEnabled) {
         this.importSettingForm.controls.chartOfAccountTypes.setValue(['Expense']);
         this.importSettingForm.controls.importCategoryCode.clearValidators();
-        this.importSettingForm.controls.importCategoryCode.setValue(this.importSettings?.import_settings?.import_code_fields ? this.qbdDirectImportSettingsService.getImportCodeField(this.importSettings.import_settings.import_code_fields, DefaultImportFields.ACCOUNT, this.QbdDirectImportCodeFieldCodeConfig) : null);
-      } if (isImportCategoriesEnabled) {
-		    this.helper.markControllerAsRequired(this.importSettingForm, 'importCategoryCode');
+        this.importSettingForm.controls.importCategoryCode.setValue(
+          this.importSettings?.import_settings?.import_code_fields
+            ? this.qbdDirectImportSettingsService.getImportCodeField(
+                this.importSettings.import_settings.import_code_fields,
+                DefaultImportFields.ACCOUNT,
+                this.QbdDirectImportCodeFieldCodeConfig,
+              )
+            : null,
+        );
+      }
+      if (isImportCategoriesEnabled) {
+        this.helper.markControllerAsRequired(this.importSettingForm, 'importCategoryCode');
       }
     });
   }
@@ -209,10 +248,10 @@ export class QbdDirectImportSettingsComponent implements OnInit {
   private importCategroyCodeWatcher(): void {
     this.importSettingForm.controls.importCategoryCode.valueChanges.subscribe((isImportCategorieCode) => {
       if (isImportCategorieCode && this.importSettingForm.controls.importCategories) {
-          this.updateImportCodeFields(true, DefaultImportFields.ACCOUNT);
-        } else {
-          this.updateImportCodeFields(false, DefaultImportFields.ACCOUNT);
-        }
+        this.updateImportCodeFields(true, DefaultImportFields.ACCOUNT);
+      } else {
+        this.updateImportCodeFields(false, DefaultImportFields.ACCOUNT);
+      }
     });
   }
 
@@ -220,8 +259,8 @@ export class QbdDirectImportSettingsComponent implements OnInit {
     this.createCOAWatcher();
     this.importCategroyCodeWatcher();
     const expenseFieldArray = this.importSettingForm.get('expenseFields') as FormArray;
-    expenseFieldArray.controls.forEach((control:AbstractControl) => {
-      control.valueChanges.subscribe((value: { source_field: string; destination_field: string; }) => {
+    expenseFieldArray.controls.forEach((control: AbstractControl) => {
+      control.valueChanges.subscribe((value: { source_field: string; destination_field: string }) => {
         if (value.source_field === 'custom_field') {
           this.initializeCustomFieldForm(true);
           this.customFieldType = '';
@@ -231,7 +270,7 @@ export class QbdDirectImportSettingsComponent implements OnInit {
             destination_field: control.get('destination_field')?.value,
             import_to_fyle: control.get('import_to_fyle')?.value,
             is_custom: control.get('is_custom')?.value,
-            source_placeholder: null
+            source_placeholder: null,
           });
         }
       });
@@ -245,33 +284,49 @@ export class QbdDirectImportSettingsComponent implements OnInit {
   save(): void {
     this.isSaveInProgress = true;
     const importSettingPayload = this.qbdDirectImportSettingsService.constructPayload(this.importSettingForm);
-    this.importSettingService.postImportSettings(importSettingPayload).subscribe((response: QbdDirectImportSettingPost) => {
-      this.trackingService.trackTimeSpent(TrackingApp.QBD_DIRECT, Page.IMPORT_SETTINGS_QBD_DIRECT, this.sessionStartTime);
-      if (this.workspaceService.getOnboardingState() === QbdDirectOnboardingState.IMPORT_SETTINGS) {
-        this.trackingService.integrationsOnboardingCompletion(TrackingApp.QBD_DIRECT, QbdDirectOnboardingState.IMPORT_SETTINGS, 4, importSettingPayload);
-      } else {
-        this.trackingService.onUpdateEvent(
+    this.importSettingService.postImportSettings(importSettingPayload).subscribe(
+      (response: QbdDirectImportSettingPost) => {
+        this.trackingService.trackTimeSpent(
           TrackingApp.QBD_DIRECT,
-          QbdDirectUpdateEvent.IMPORT_SETTINGS_QBD_DIRECT,
-          {
+          Page.IMPORT_SETTINGS_QBD_DIRECT,
+          this.sessionStartTime,
+        );
+        if (this.workspaceService.getOnboardingState() === QbdDirectOnboardingState.IMPORT_SETTINGS) {
+          this.trackingService.integrationsOnboardingCompletion(
+            TrackingApp.QBD_DIRECT,
+            QbdDirectOnboardingState.IMPORT_SETTINGS,
+            4,
+            importSettingPayload,
+          );
+        } else {
+          this.trackingService.onUpdateEvent(TrackingApp.QBD_DIRECT, QbdDirectUpdateEvent.IMPORT_SETTINGS_QBD_DIRECT, {
             phase: this.getPhase(),
             oldState: this.importSettings,
-            newState: response
-          }
-        );
-      }
+            newState: response,
+          });
+        }
 
-      this.isSaveInProgress = false;
-      this.toastService.displayToastMessage(ToastSeverity.SUCCESS, this.translocoService.translate('qbdDirectImportSettings.saveSuccess'), undefined, this.isOnboarding);
-      this.updateImportCodeFieldConfig();
-      if (this.isOnboarding) {
-        this.workspaceService.setOnboardingState(QbdDirectOnboardingState.ADVANCED_SETTINGS);
-        this.router.navigate([`/integrations/qbd_direct/onboarding/advanced_settings`]);
-      }
-    }, () => {
-      this.isSaveInProgress = false;
-      this.toastService.displayToastMessage(ToastSeverity.ERROR, this.translocoService.translate('qbdDirectImportSettings.saveError'));
-    });
+        this.isSaveInProgress = false;
+        this.toastService.displayToastMessage(
+          ToastSeverity.SUCCESS,
+          this.translocoService.translate('qbdDirectImportSettings.saveSuccess'),
+          undefined,
+          this.isOnboarding,
+        );
+        this.updateImportCodeFieldConfig();
+        if (this.isOnboarding) {
+          this.workspaceService.setOnboardingState(QbdDirectOnboardingState.ADVANCED_SETTINGS);
+          this.router.navigate([`/integrations/qbd_direct/onboarding/advanced_settings`]);
+        }
+      },
+      () => {
+        this.isSaveInProgress = false;
+        this.toastService.displayToastMessage(
+          ToastSeverity.ERROR,
+          this.translocoService.translate('qbdDirectImportSettings.saveError'),
+        );
+      },
+    );
   }
 
   private setupPage(): void {
@@ -282,41 +337,56 @@ export class QbdDirectImportSettingsComponent implements OnInit {
       this.importSettingService.getQbdDirectFields(),
       this.importSettingService.getImportCodeFieldConfig(),
       this.advancedSettingsService.getQbdAdvancedSettings().pipe(catchError(() => of(null))),
-      this.exportSettingService.getQbdExportSettings()
-    ]).subscribe(([importSettingsResponse, fyleFieldsResponse, QbdDirectFields, importCodeFieldConfig, advancedSettingsResponse, exportSettingsResponse]) => {
-      this.QbdDirectFields = QbdDirectFields;
-      this.importSettings = importSettingsResponse;
-      this.exportSettings = exportSettingsResponse;
+      this.exportSettingService.getQbdExportSettings(),
+    ]).subscribe(
+      ([
+        importSettingsResponse,
+        fyleFieldsResponse,
+        QbdDirectFields,
+        importCodeFieldConfig,
+        advancedSettingsResponse,
+        exportSettingsResponse,
+      ]) => {
+        this.QbdDirectFields = QbdDirectFields;
+        this.importSettings = importSettingsResponse;
+        this.exportSettings = exportSettingsResponse;
 
-      this.QbdDirectImportCodeFieldCodeConfig = importCodeFieldConfig;
-      this.isImportMerchantsAllowed = advancedSettingsResponse?.auto_create_merchant_as_vendor ? false : true;
-      this.importSettingForm = this.qbdDirectImportSettingsService.mapAPIResponseToFormGroup(this.importSettings, this.QbdDirectFields, this.QbdDirectImportCodeFieldCodeConfig);
-      this.fyleFields = fyleFieldsResponse;
-      this.fyleFields.push({ attribute_type: 'custom_field', display_name: this.translocoService.translate('qbdDirectImportSettings.createCustomField'), is_dependent: false });
-      this.updateImportCodeFieldConfig();
-      this.setupFormWatchers();
-      this.initializeCustomFieldForm(false);
-      this.isLoading = false;
-    });
+        this.QbdDirectImportCodeFieldCodeConfig = importCodeFieldConfig;
+        this.isImportMerchantsAllowed = advancedSettingsResponse?.auto_create_merchant_as_vendor ? false : true;
+        this.importSettingForm = this.qbdDirectImportSettingsService.mapAPIResponseToFormGroup(
+          this.importSettings,
+          this.QbdDirectFields,
+          this.QbdDirectImportCodeFieldCodeConfig,
+        );
+        this.fyleFields = fyleFieldsResponse;
+        this.fyleFields.push({
+          attribute_type: 'custom_field',
+          display_name: this.translocoService.translate('qbdDirectImportSettings.createCustomField'),
+          is_dependent: false,
+        });
+        this.updateImportCodeFieldConfig();
+        this.setupFormWatchers();
+        this.initializeCustomFieldForm(false);
+        this.isLoading = false;
+      },
+    );
   }
-
 
   ngOnInit(): void {
     this.importCodeSelectorOptions = {
-      "ACCOUNT": [
+      ACCOUNT: [
         {
           label: this.translocoService.translate('qbdDirectImportSettings.importCodesAndNames'),
           value: true,
-          subLabel: this.translocoService.translate('qbdDirectImportSettings.importCodesAndNamesSubLabel')
+          subLabel: this.translocoService.translate('qbdDirectImportSettings.importCodesAndNamesSubLabel'),
         },
         {
           label: this.translocoService.translate('qbdDirectImportSettings.importNamesOnly'),
           value: false,
-          subLabel: this.translocoService.translate('qbdDirectImportSettings.importNamesOnlySubLabel')
-        }
-      ]
+          subLabel: this.translocoService.translate('qbdDirectImportSettings.importNamesOnlySubLabel'),
+        },
+      ],
     };
     this.setupPage();
   }
-
 }

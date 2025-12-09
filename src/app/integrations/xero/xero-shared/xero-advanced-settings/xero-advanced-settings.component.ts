@@ -2,11 +2,22 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { forkJoin } from 'rxjs';
-import { brandingConfig, brandingFeatureConfig, brandingKbArticles, brandingStyle } from 'src/app/branding/branding-config';
+import {
+  brandingConfig,
+  brandingFeatureConfig,
+  brandingKbArticles,
+  brandingStyle,
+} from 'src/app/branding/branding-config';
 import { environment } from 'src/environments/environment';
 import { EmailOption, SelectFormOption } from 'src/app/core/models/common/select-form-option.model';
 import { DestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
-import { AppName, ConfigurationCta, ToastSeverity, XeroFyleField, XeroOnboardingState } from 'src/app/core/models/enum/enum.model';
+import {
+  AppName,
+  ConfigurationCta,
+  ToastSeverity,
+  XeroFyleField,
+  XeroOnboardingState,
+} from 'src/app/core/models/enum/enum.model';
 import { Org } from 'src/app/core/models/org/org.model';
 import { XeroWorkspaceGeneralSetting } from 'src/app/core/models/xero/db/xero-workspace-general-setting.model';
 import { XeroAdvancedSettingGet } from 'src/app/core/models/xero/xero-configuration/xero-advanced-settings.model';
@@ -21,13 +32,12 @@ import { TranslocoService } from '@jsverse/transloco';
 import { AdvancedSettingsService } from 'src/app/core/services/common/advanced-settings.service';
 
 @Component({
-    selector: 'app-xero-advanced-settings',
-    templateUrl: './xero-advanced-settings.component.html',
-    styleUrls: ['./xero-advanced-settings.component.scss'],
-    standalone: false
+  selector: 'app-xero-advanced-settings',
+  templateUrl: './xero-advanced-settings.component.html',
+  styleUrls: ['./xero-advanced-settings.component.scss'],
+  standalone: false,
 })
 export class XeroAdvancedSettingsComponent implements OnInit {
-
   appName: AppName = AppName.XERO;
 
   isLoading: boolean = true;
@@ -40,7 +50,15 @@ export class XeroAdvancedSettingsComponent implements OnInit {
 
   memoPreviewText: string;
 
-  defaultMemoFields: string[] = ['employee_email', 'merchant', 'purpose', 'category', 'spent_on', 'report_number', 'expense_link'];
+  defaultMemoFields: string[] = [
+    'employee_email',
+    'merchant',
+    'purpose',
+    'category',
+    'spent_on',
+    'report_number',
+    'expense_link',
+  ];
 
   workspaceGeneralSettings: XeroWorkspaceGeneralSetting;
 
@@ -68,7 +86,6 @@ export class XeroAdvancedSettingsComponent implements OnInit {
 
   readonly brandingStyle = brandingStyle;
 
-
   constructor(
     private advancedSettingService: XeroAdvancedSettingsService,
     private router: Router,
@@ -79,7 +96,7 @@ export class XeroAdvancedSettingsComponent implements OnInit {
     private orgService: OrgService,
     private helperService: HelperService,
     private translocoService: TranslocoService,
-    private xeroAdvancedSettingsService: XeroAdvancedSettingsService
+    private xeroAdvancedSettingsService: XeroAdvancedSettingsService,
   ) {
     this.paymentSyncOptions = this.advancedSettingService.getPaymentSyncOptions();
   }
@@ -98,18 +115,29 @@ export class XeroAdvancedSettingsComponent implements OnInit {
     const advancedSettingPayload = this.advancedSettingService.constructPayload(this.advancedSettingForm);
     this.isSaveInProgress = true;
 
-    this.advancedSettingService.postAdvancedSettings(advancedSettingPayload).subscribe(() => {
-      this.isSaveInProgress = false;
-      this.toastService.displayToastMessage(ToastSeverity.SUCCESS, this.translocoService.translate('xeroAdvancedSettings.advancedSettingsSuccess'), undefined, this.isOnboarding);
+    this.advancedSettingService.postAdvancedSettings(advancedSettingPayload).subscribe(
+      () => {
+        this.isSaveInProgress = false;
+        this.toastService.displayToastMessage(
+          ToastSeverity.SUCCESS,
+          this.translocoService.translate('xeroAdvancedSettings.advancedSettingsSuccess'),
+          undefined,
+          this.isOnboarding,
+        );
 
-      if (this.isOnboarding) {
-        this.workspaceService.setOnboardingState(XeroOnboardingState.COMPLETE);
-        this.router.navigate([`/integrations/xero/onboarding/done`]);
-      }
-    }, () => {
-      this.isSaveInProgress = false;
-      this.toastService.displayToastMessage(ToastSeverity.ERROR, this.translocoService.translate('xeroAdvancedSettings.advancedSettingsError'));
-    });
+        if (this.isOnboarding) {
+          this.workspaceService.setOnboardingState(XeroOnboardingState.COMPLETE);
+          this.router.navigate([`/integrations/xero/onboarding/done`]);
+        }
+      },
+      () => {
+        this.isSaveInProgress = false;
+        this.toastService.displayToastMessage(
+          ToastSeverity.ERROR,
+          this.translocoService.translate('xeroAdvancedSettings.advancedSettingsError'),
+        );
+      },
+    );
   }
 
   refreshDimensions() {
@@ -131,7 +159,7 @@ export class XeroAdvancedSettingsComponent implements OnInit {
       merchant: this.translocoService.translate('xeroAdvancedSettings.previewMerchant'),
       report_number: this.translocoService.translate('xeroAdvancedSettings.previewReportNumber'),
       spent_on: today.toLocaleDateString(),
-      expense_link: `${environment.fyle_app_url}/app/main/#/enterprise/view_expense/`
+      expense_link: `${environment.fyle_app_url}/app/main/#/enterprise/view_expense/`,
     };
 
     this.memoPreviewText = '';
@@ -165,13 +193,21 @@ export class XeroAdvancedSettingsComponent implements OnInit {
       this.advancedSettingService.getAdvancedSettings(),
       this.mappingService.getDestinationAttributes(XeroFyleField.BANK_ACCOUNT, 'v1', 'xero'),
       this.workspaceService.getWorkspaceGeneralSettings(),
-      this.advancedSettingService.getWorkspaceAdmins()
-    ]).subscribe(response => {
+      this.advancedSettingService.getWorkspaceAdmins(),
+    ]).subscribe((response) => {
       this.advancedSettings = response[0];
       this.billPaymentAccounts = response[1];
       this.workspaceGeneralSettings = response[2];
-      this.adminEmails = this.advancedSettings.workspace_schedules?.additional_email_options ? this.advancedSettings.workspace_schedules?.additional_email_options.concat(response[3]).flat() : response[3];
-      this.advancedSettingForm = this.xeroAdvancedSettingsService.mapAPIResponseToFormGroup(this.advancedSettings, this.adminEmails, this.billPaymentAccounts, this.helperService.shouldAutoEnableAccountingPeriod(this.org.created_at), this.isOnboarding);
+      this.adminEmails = this.advancedSettings.workspace_schedules?.additional_email_options
+        ? this.advancedSettings.workspace_schedules?.additional_email_options.concat(response[3]).flat()
+        : response[3];
+      this.advancedSettingForm = this.xeroAdvancedSettingsService.mapAPIResponseToFormGroup(
+        this.advancedSettings,
+        this.adminEmails,
+        this.billPaymentAccounts,
+        this.helperService.shouldAutoEnableAccountingPeriod(this.org.created_at),
+        this.isOnboarding,
+      );
       this.setupFormWatchers();
       this.createMemoStructureWatcher();
       this.isLoading = false;
@@ -181,5 +217,4 @@ export class XeroAdvancedSettingsComponent implements OnInit {
   ngOnInit(): void {
     this.setupPage();
   }
-
 }

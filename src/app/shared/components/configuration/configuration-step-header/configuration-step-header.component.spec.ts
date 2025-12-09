@@ -10,11 +10,10 @@ xdescribe('ConfigurationStepHeaderComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-    declarations: [ConfigurationStepHeaderComponent],
-    imports: [],
-    providers: [provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting()]
-})
-    .compileComponents();
+      declarations: [ConfigurationStepHeaderComponent],
+      imports: [],
+      providers: [provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting()],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(ConfigurationStepHeaderComponent);
     component = fixture.componentInstance;

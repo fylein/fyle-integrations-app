@@ -1,8 +1,8 @@
 {
-    "brandName": "{{BRAND_NAME}}",
-    "webpageTitle": "{{WEBPAGE_TITLE}}",
-    "brandId": "{{BRAND_ID}}",
-    "supportEmail": "{{SUPPORT_EMAIL}}",
-    "helpArticleDomain": "{{HELP_ARTICLE_DOMAIN}}",
-    "envId": "{{ENV_ID}}"
+  "brandName": "{{BRAND_NAME}}",
+  "webpageTitle": "{{WEBPAGE_TITLE}}",
+  "brandId": "{{BRAND_ID}}",
+  "supportEmail": "{{SUPPORT_EMAIL}}",
+  "helpArticleDomain": "{{HELP_ARTICLE_DOMAIN}}",
+  "envId": "{{ENV_ID}}"
 }

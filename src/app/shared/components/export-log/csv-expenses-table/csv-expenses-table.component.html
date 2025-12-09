@@ -1,9 +1,9 @@
 @if (expenses.length > 0) {
-  <p-table #dt1 [value]="expenses" [ngClass]="{'skipped-expenses': isSkippedExpenses}">
+  <p-table #dt1 [value]="expenses" [ngClass]="{ 'skipped-expenses': isSkippedExpenses }">
     <ng-template pTemplate="header">
       <tr>
         @if (isSkippedExpenses) {
-          <th>{{ 'csvExpensesTable.exportSkippedOn' | transloco}}</th>
+          <th>{{ 'csvExpensesTable.exportSkippedOn' | transloco }}</th>
         }
         <th>{{ 'csvExpensesTable.expenseId' | transloco }}</th>
         <th>{{ 'csvExpensesTable.employee' | transloco }}</th>
@@ -17,38 +17,40 @@
         @if (isSkippedExpenses) {
           <!-- Skipped On -->
           <td>
-            <p class="tw-font-400 tw-text-text-secondary">{{expense.updated_at | date}}</p>
-            <span class="tw-font-400 !tw-text-12-px tw-text-text-muted">{{expense.updated_at | date : "hh:mm a"}}</span>
+            <p class="tw-font-400 tw-text-text-secondary">{{ expense.updated_at | date }}</p>
+            <span class="tw-font-400 !tw-text-12-px tw-text-text-muted">{{
+              expense.updated_at | date: 'hh:mm a'
+            }}</span>
           </td>
         }
         <!-- Expense ID -->
         <td class="cursor-pointer" (click)="openUrl(expense.fyleUrl)">
           <span class="link">
-            {{expense.expense_number}}
+            {{ expense.expense_number }}
           </span>
         </td>
         <!-- Employee -->
         <td>
           <h4 class="tw-text-14-px tw-font-400 tw-text-text-secondary">
-            {{expense.employee[0]}}
+            {{ expense.employee[0] }}
           </h4>
           <h5 class="tw-font-400 !tw-text-12-px tw-text-text-muted">
-            {{expense.employee[1]}}
+            {{ expense.employee[1] }}
           </h5>
         </td>
         <!-- Amount -->
         <td>
-          <p class="tw-font-400 tw-text-text-secondary">{{expense.amount | currency}}</p>
-          <span class="tw-font-400 !tw-text-12-px tw-text-text-muted">{{expense.expenseType}}</span>
+          <p class="tw-font-400 tw-text-text-secondary">{{ expense.amount | currency }}</p>
+          <span class="tw-font-400 !tw-text-12-px tw-text-text-muted">{{ expense.expenseType }}</span>
         </td>
         <!-- Spend Date -->
         <td>
-          <p class="tw-font-400 tw-text-text-secondary">{{expense.spent_at | date}}</p>
+          <p class="tw-font-400 tw-text-text-secondary">{{ expense.spent_at | date }}</p>
         </td>
         <!-- Report Details -->
         <td>
-          <p class="tw-font-400 tw-text-text-secondary">{{expense.report_title}}</p>
-          <span class="tw-font-400 !tw-text-12-px tw-text-text-muted">{{expense.claim_number}}</span>
+          <p class="tw-font-400 tw-text-text-secondary">{{ expense.report_title }}</p>
+          <span class="tw-font-400 !tw-text-12-px tw-text-text-muted">{{ expense.claim_number }}</span>
         </td>
       </tr>
     </ng-template>

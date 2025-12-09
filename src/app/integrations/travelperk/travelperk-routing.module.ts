@@ -10,19 +10,20 @@ const routes: Routes = [
     children: [
       {
         path: 'onboarding',
-        loadChildren: () => import('./travelperk-onboarding/travelperk-onboarding.module').then(m => m.TravelperkOnboardingModule)
+        loadChildren: () =>
+          import('./travelperk-onboarding/travelperk-onboarding.module').then((m) => m.TravelperkOnboardingModule),
       },
       {
         path: 'main',
-        loadChildren: () => import('./travelperk-main/travelperk-main.module').then(m => m.TravelperkMainModule),
-        canActivate: [TravelperkTokenGuard]
-      }
-    ]
-  }
+        loadChildren: () => import('./travelperk-main/travelperk-main.module').then((m) => m.TravelperkMainModule),
+        canActivate: [TravelperkTokenGuard],
+      },
+    ],
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class TravelperkRoutingModule { }
+export class TravelperkRoutingModule {}

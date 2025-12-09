@@ -1,12 +1,22 @@
 import { FormGroup, FormControl } from '@angular/forms';
 import { QbdDirectAdvancedSettingsGet } from 'src/app/core/models/qbd-direct/qbd-direct-configuration/qbd-direct-advanced-settings.model';
 import { QbdDirectExportSettingGet } from 'src/app/core/models/qbd-direct/qbd-direct-configuration/qbd-direct-export-settings.model';
-import { ExpenseFilterResponse, ConditionField, EmailOption, ExpenseFilter } from 'src/app/core/models/common/advanced-settings.model';
+import {
+  ExpenseFilterResponse,
+  ConditionField,
+  EmailOption,
+  ExpenseFilter,
+} from 'src/app/core/models/common/advanced-settings.model';
 import { QbdDirectImportSettingGet } from 'src/app/core/models/qbd-direct/qbd-direct-configuration/qbd-direct-import-settings.model';
-import { EmployeeFieldMapping, NameInJournalEntry, QBDCorporateCreditCardExpensesObject, Operator, JoinOption } from 'src/app/core/models/enum/enum.model';
+import {
+  EmployeeFieldMapping,
+  NameInJournalEntry,
+  QBDCorporateCreditCardExpensesObject,
+  Operator,
+  JoinOption,
+} from 'src/app/core/models/enum/enum.model';
 
 export class QbdDirectAdvancedSettingsComponentFixture {
-
   /**
    * Creates fixture data for component initialization
    */
@@ -27,7 +37,7 @@ export class QbdDirectAdvancedSettingsComponentFixture {
       showAutoCreateMerchantsAsVendorsField: true,
       memoPreviewText: 'John Doe - Uber',
       topMemoPreviewText: 'Business Travel',
-      memoStructure: ['employee_name', 'merchant']
+      memoStructure: ['employee_name', 'merchant'],
     };
   }
 
@@ -38,7 +48,7 @@ export class QbdDirectAdvancedSettingsComponentFixture {
     return {
       ...this.createBasicComponentFixture(),
       isOnboarding: true,
-      qbdDirectAdvancedSettings: this.createOnboardingAdvancedSettings()
+      qbdDirectAdvancedSettings: this.createOnboardingAdvancedSettings(),
     };
   }
 
@@ -49,7 +59,7 @@ export class QbdDirectAdvancedSettingsComponentFixture {
     return {
       ...this.createBasicComponentFixture(),
       expenseFilters: this.createExpenseFiltersWithData(),
-      skipExportForm: this.createSkipExportFormWithData()
+      skipExportForm: this.createSkipExportFormWithData(),
     };
   }
 
@@ -66,7 +76,7 @@ export class QbdDirectAdvancedSettingsComponentFixture {
       autoCreateReimbursableEntity: new FormControl(true),
       autoCreateMerchantsAsVendors: new FormControl(true),
       skipExport: new FormControl(false),
-      searchOption: new FormControl('')
+      searchOption: new FormControl(''),
     });
   }
 
@@ -81,7 +91,7 @@ export class QbdDirectAdvancedSettingsComponentFixture {
       join_by: new FormControl(null),
       condition2: new FormControl(null),
       operator2: new FormControl(null),
-      value2: new FormControl(null)
+      value2: new FormControl(null),
     });
   }
 
@@ -96,7 +106,7 @@ export class QbdDirectAdvancedSettingsComponentFixture {
       join_by: new FormControl('AND'),
       condition2: new FormControl('amount'),
       operator2: new FormControl('greater_than'),
-      value2: new FormControl('100')
+      value2: new FormControl('100'),
     });
   }
 
@@ -117,7 +127,7 @@ export class QbdDirectAdvancedSettingsComponentFixture {
       interval_hours: 6,
       auto_create_merchant_as_vendor: true,
       auto_create_reimbursable_entity: true,
-      is_real_time_export_enabled: false
+      is_real_time_export_enabled: false,
     };
   }
 
@@ -138,7 +148,7 @@ export class QbdDirectAdvancedSettingsComponentFixture {
       interval_hours: 6,
       auto_create_merchant_as_vendor: false,
       auto_create_reimbursable_entity: false,
-      is_real_time_export_enabled: false
+      is_real_time_export_enabled: false,
     };
   }
 
@@ -166,7 +176,7 @@ export class QbdDirectAdvancedSettingsComponentFixture {
       default_reimbursable_accounts_payable_account_name: '',
       default_reimbursable_accounts_payable_account_id: '',
       default_ccc_accounts_payable_account_name: '',
-      default_ccc_accounts_payable_account_id: ''
+      default_ccc_accounts_payable_account_id: '',
     };
   }
 
@@ -178,7 +188,7 @@ export class QbdDirectAdvancedSettingsComponentFixture {
       count: 0,
       next: null,
       previous: null,
-      results: []
+      results: [],
     };
   }
 
@@ -202,7 +212,7 @@ export class QbdDirectAdvancedSettingsComponentFixture {
           custom_field_type: null,
           created_at: new Date(),
           updated_at: new Date(),
-          workspace: 1
+          workspace: 1,
         },
         {
           id: 2,
@@ -215,9 +225,9 @@ export class QbdDirectAdvancedSettingsComponentFixture {
           custom_field_type: null,
           created_at: new Date(),
           updated_at: new Date(),
-          workspace: 1
-        }
-      ]
+          workspace: 1,
+        },
+      ],
     };
   }
 
@@ -229,28 +239,28 @@ export class QbdDirectAdvancedSettingsComponentFixture {
       {
         field_name: 'employee_email',
         type: 'text',
-        is_custom: false
+        is_custom: false,
       },
       {
         field_name: 'amount',
         type: 'number',
-        is_custom: false
+        is_custom: false,
       },
       {
         field_name: 'category',
         type: 'text',
-        is_custom: false
+        is_custom: false,
       },
       {
         field_name: 'vendor',
         type: 'text',
-        is_custom: false
+        is_custom: false,
       },
       {
         field_name: 'project',
         type: 'text',
-        is_custom: false
-      }
+        is_custom: false,
+      },
     ];
   }
 
@@ -261,7 +271,7 @@ export class QbdDirectAdvancedSettingsComponentFixture {
     return [
       { email: 'admin@example.com', name: 'Admin User' },
       { email: 'manager@example.com', name: 'Manager User' },
-      { email: 'finance@example.com', name: 'Finance Team' }
+      { email: 'finance@example.com', name: 'Finance Team' },
     ];
   }
 
@@ -275,10 +285,10 @@ export class QbdDirectAdvancedSettingsComponentFixture {
         import_item_as_category: false,
         import_vendor_as_merchant: false,
         chart_of_accounts: ['Account 1', 'Account 2'],
-        import_code_fields: ['field1', 'field2']
+        import_code_fields: ['field1', 'field2'],
       },
       mapping_settings: [],
-      workspace_id: 1
+      workspace_id: 1,
     };
   }
 
@@ -290,8 +300,8 @@ export class QbdDirectAdvancedSettingsComponentFixture {
       ...this.createBasicComponentFixture(),
       qbdDirectAdvancedSettings: {
         ...this.createQbdDirectAdvancedSettings(),
-        is_real_time_export_enabled: true
-      }
+        is_real_time_export_enabled: true,
+      },
     };
   }
 
@@ -307,9 +317,9 @@ export class QbdDirectAdvancedSettingsComponentFixture {
         interval_hours: 12,
         emails_selected: [
           { email: 'admin@example.com', name: 'Admin' },
-          { email: 'manager@example.com', name: 'Manager' }
-        ]
-      }
+          { email: 'manager@example.com', name: 'Manager' },
+        ],
+      },
     };
   }
 
@@ -322,8 +332,8 @@ export class QbdDirectAdvancedSettingsComponentFixture {
       qbdDirectAdvancedSettings: {
         ...this.createQbdDirectAdvancedSettings(),
         auto_create_merchant_as_vendor: true,
-        auto_create_reimbursable_entity: true
-      }
+        auto_create_reimbursable_entity: true,
+      },
     };
   }
 
@@ -336,11 +346,11 @@ export class QbdDirectAdvancedSettingsComponentFixture {
       qbdDirectAdvancedSettings: {
         ...this.createQbdDirectAdvancedSettings(),
         line_level_memo_structure: ['employee_name', 'merchant', 'category'],
-        top_level_memo_structure: ['purpose', 'project']
+        top_level_memo_structure: ['purpose', 'project'],
       },
       memoPreviewText: 'John Doe - Uber - Travel',
       topMemoPreviewText: 'Business Travel - Project Alpha',
-      memoStructure: ['employee_name', 'merchant', 'category']
+      memoStructure: ['employee_name', 'merchant', 'category'],
     };
   }
 }

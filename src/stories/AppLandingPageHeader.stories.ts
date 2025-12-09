@@ -1,4 +1,3 @@
-
 import { CommonModule } from '@angular/common';
 import type { Meta, StoryObj } from '@storybook/angular';
 import { moduleMetadata } from '@storybook/angular';
@@ -12,48 +11,57 @@ const meta: Meta<AppLandingPageHeaderComponent> = {
   component: AppLandingPageHeaderComponent,
   tags: ['autodocs'],
   render: (args: AppLandingPageHeaderComponent) => ({
-    props: { ...args }
+    props: { ...args },
   }),
   decorators: [
     moduleMetadata({
       declarations: [AppLandingPageHeaderComponent],
-      imports: [CommonModule, ButtonModule]
-    })
+      imports: [CommonModule, ButtonModule],
+    }),
   ],
   argTypes: {
-    ngOnInit: { table: { disable: true } }
-  }
+    ngOnInit: { table: { disable: true } },
+  },
 };
 
 export default meta;
 type Story = StoryObj<AppLandingPageHeaderComponent>;
 
-
 export const qbo: Story = {
   args: {
     appName: AppName.QBO,
     iconPath: 'assets/logos/qbo.png',
-    appDescription: 'Import data from QuickBooks Online to ' + brandingConfig.brandName + ' and Export expenses from ' + brandingConfig.brandName + ' to QuickBooks Online. ',
+    appDescription:
+      'Import data from QuickBooks Online to ' +
+      brandingConfig.brandName +
+      ' and Export expenses from ' +
+      brandingConfig.brandName +
+      ' to QuickBooks Online. ',
     isLoading: false,
     isIntegrationSetupInProgress: false,
     isIntegrationConnected: false,
     redirectLink: 'qbo/onboarding/connector',
     buttonText: 'Connect',
     postConnectionRoute: 'qbo/onboarding/connector',
-    showQBOButton: true
-  }
+    showQBOButton: true,
+  },
 };
 
 export const QBD: Story = {
   args: {
     appName: AppName.QBD,
     iconPath: 'assets/logos/quickbooks-desktop.svg',
-    appDescription: 'Import data from QBD to ' + brandingConfig.brandName + ' and Export expenses from ' + brandingConfig.brandName + ' to QBD. ',
+    appDescription:
+      'Import data from QBD to ' +
+      brandingConfig.brandName +
+      ' and Export expenses from ' +
+      brandingConfig.brandName +
+      ' to QBD. ',
     isLoading: false,
     isIntegrationSetupInProgress: false,
     isIntegrationConnected: false,
     redirectLink: 'qbd/onboarding/connector',
     buttonText: 'Connect',
-    postConnectionRoute: 'qbd/onboarding/connector'
-  }
+    postConnectionRoute: 'qbd/onboarding/connector',
+  },
 };

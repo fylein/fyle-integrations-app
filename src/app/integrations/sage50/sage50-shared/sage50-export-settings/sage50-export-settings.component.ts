@@ -1,13 +1,45 @@
 import { Component, OnInit } from '@angular/core';
-import { brandingConfig, brandingKbArticles, brandingStyle, brandingDemoVideoLinks } from 'src/app/branding/branding-config';
-import { AppName, ClickEvent, ConfigurationCta, ConfigurationWarningEvent, ExpenseGroupingFieldOption, ProgressPhase, Sage50AttributeType, Sage50ExportSettingDestinationOptionKey, Sage50OnboardingState, ToastSeverity, TrackingApp, UpdateEvent } from 'src/app/core/models/enum/enum.model';
+import {
+  brandingConfig,
+  brandingKbArticles,
+  brandingStyle,
+  brandingDemoVideoLinks,
+} from 'src/app/branding/branding-config';
+import {
+  AppName,
+  ClickEvent,
+  ConfigurationCta,
+  ConfigurationWarningEvent,
+  ExpenseGroupingFieldOption,
+  ProgressPhase,
+  Sage50AttributeType,
+  Sage50ExportSettingDestinationOptionKey,
+  Sage50OnboardingState,
+  ToastSeverity,
+  TrackingApp,
+  UpdateEvent,
+} from 'src/app/core/models/enum/enum.model';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { CommonModule, LowerCasePipe } from '@angular/common';
 import { FormGroup } from '@angular/forms';
-import { Sage50ExportSettingsService, FIELD_DEPENDENCIES } from 'src/app/core/services/sage50/sage50-configuration/sage50-export-settings.service';
-import { Sage50CCCExpensesDate, Sage50CCCExportType, Sage50ExpensesGroupedBy, Sage50ExportSettingsForm, Sage50ReimbursableExpenseDate, Sage50ReimbursableExportType, Sage50ExportSettingsGet } from 'src/app/core/models/sage50/sage50-configuration/sage50-export-settings.model';
+import {
+  Sage50ExportSettingsService,
+  FIELD_DEPENDENCIES,
+} from 'src/app/core/services/sage50/sage50-configuration/sage50-export-settings.service';
+import {
+  Sage50CCCExpensesDate,
+  Sage50CCCExportType,
+  Sage50ExpensesGroupedBy,
+  Sage50ExportSettingsForm,
+  Sage50ReimbursableExpenseDate,
+  Sage50ReimbursableExportType,
+  Sage50ExportSettingsGet,
+} from 'src/app/core/models/sage50/sage50-configuration/sage50-export-settings.model';
 import { catchError, debounceTime, forkJoin, Observable, of, pairwise, startWith, Subject } from 'rxjs';
-import { DestinationAttribute, PaginatedDestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
+import {
+  DestinationAttribute,
+  PaginatedDestinationAttribute,
+} from 'src/app/core/models/db/destination-attribute.model';
 import { Sage50MappingService } from 'src/app/core/services/sage50/sage50-core/sage50-mapping.service';
 import { ExportSettingOptionSearch } from 'src/app/core/models/common/export-settings.model';
 import { SelectFormOption } from 'src/app/core/models/common/select-form-option.model';
@@ -26,14 +58,13 @@ import { BrandingService } from 'src/app/core/services/common/branding.service';
 import { TrackingService } from 'src/app/core/services/integration/tracking.service';
 
 @Component({
-    selector: 'app-sage50-export-settings',
-    imports: [SharedModule, CommonModule],
-    providers: [DialogService],
-    templateUrl: './sage50-export-settings.component.html',
-    styleUrl: './sage50-export-settings.component.scss'
+  selector: 'app-sage50-export-settings',
+  imports: [SharedModule, CommonModule],
+  providers: [DialogService],
+  templateUrl: './sage50-export-settings.component.html',
+  styleUrl: './sage50-export-settings.component.scss',
 })
 export class Sage50ExportSettingsComponent implements OnInit {
-
   // Constants
   readonly appName = AppName.SAGE50;
 
@@ -56,19 +87,21 @@ export class Sage50ExportSettingsComponent implements OnInit {
   readonly ConfigurationWarningEvent = ConfigurationWarningEvent;
 
   readonly allowedAccountTypes: string[] = [
-    'Accounts Payable', 'Long Term Liabilities', 'Other Current Liabilities'
+    'Accounts Payable',
+    'Long Term Liabilities',
+    'Other Current Liabilities',
   ] as const;
 
   previewImagePaths = [
     {
-      'GENERAL_JOURNAL_ENTRY': 'assets/illustrations/sage50/Reimbursable - General Journal Entry.jpg',
-      'PURCHASES_RECEIVE_INVENTORY': 'assets/illustrations/sage50/Reimbursable - Purchases Receive Inventory.jpg'
+      GENERAL_JOURNAL_ENTRY: 'assets/illustrations/sage50/Reimbursable - General Journal Entry.jpg',
+      PURCHASES_RECEIVE_INVENTORY: 'assets/illustrations/sage50/Reimbursable - Purchases Receive Inventory.jpg',
     },
     {
-      'PAYMENTS_JOURNAL': 'assets/illustrations/sage50/CCC - Payments Journal.jpg',
-      'GENERAL_JOURNAL_ENTRY': 'assets/illustrations/sage50/CCC - General Journal Entry.jpg',
-      'PURCHASES_RECEIVE_INVENTORY': 'assets/illustrations/sage50/CCC - Purchases Receive Inventory.jpg'
-    }
+      PAYMENTS_JOURNAL: 'assets/illustrations/sage50/CCC - Payments Journal.jpg',
+      GENERAL_JOURNAL_ENTRY: 'assets/illustrations/sage50/CCC - General Journal Entry.jpg',
+      PURCHASES_RECEIVE_INVENTORY: 'assets/illustrations/sage50/CCC - Purchases Receive Inventory.jpg',
+    },
   ];
 
   // Static options
@@ -142,17 +175,17 @@ export class Sage50ExportSettingsComponent implements OnInit {
   }
 
   get cccExportDateSubLabel(): string {
-    return this.isCCCExportDateDisabled ?
-      this.translocoService.translate('sage50ExportSettings.cccExportDateFixedSubLabel', {
-        selectedDateOption: this.getSelectedLabel('cccExportDate') ?? 'date',
-        brandName: brandingConfig.brandName
-      }) :
-      this.translocoService.translate('sage50ExportSettings.cccExportDateEditableSubLabel');
+    return this.isCCCExportDateDisabled
+      ? this.translocoService.translate('sage50ExportSettings.cccExportDateFixedSubLabel', {
+          selectedDateOption: this.getSelectedLabel('cccExportDate') ?? 'date',
+          brandName: brandingConfig.brandName,
+        })
+      : this.translocoService.translate('sage50ExportSettings.cccExportDateEditableSubLabel');
   }
 
-  getSelectedLabel(field: keyof Sage50ExportSettingsForm): string | null{
+  getSelectedLabel(field: keyof Sage50ExportSettingsForm): string | null {
     const selectedValue = this.exportSettingsForm.get(field)?.value;
-    const selectedLabel = this.reimbursableDateOptions.find(option => option.value === selectedValue)?.label;
+    const selectedLabel = this.reimbursableDateOptions.find((option) => option.value === selectedValue)?.label;
     return selectedLabel ? new LowerCasePipe().transform(selectedLabel) : null;
   }
 
@@ -173,44 +206,57 @@ export class Sage50ExportSettingsComponent implements OnInit {
     private sage50ImportAttributesService: Sage50ImportAttributesService,
     private dialogService: DialogService,
     public brandingService: BrandingService,
-    private trackingService: TrackingService
-  ) { }
+    private trackingService: TrackingService,
+  ) {}
 
   onSave(): void {
     this.isSaveInProgress = true;
-    this.exportSettingService.constructPayloadAndPost(
-      this.exportSettingsForm, this.exportSettingsResponse, this.isReimbursableEnabled, this.isCCCEnabled
-    ).subscribe({
-      next: (response: void) => {
-        this.isSaveInProgress = false;
-        this.toastService.displayToastMessage(
-          ToastSeverity.SUCCESS,
-          this.translocoService.translate('sage50ExportSettings.exportSettingsSavedSuccess')
-        );
+    this.exportSettingService
+      .constructPayloadAndPost(
+        this.exportSettingsForm,
+        this.exportSettingsResponse,
+        this.isReimbursableEnabled,
+        this.isCCCEnabled,
+      )
+      .subscribe({
+        next: (response: void) => {
+          this.isSaveInProgress = false;
+          this.toastService.displayToastMessage(
+            ToastSeverity.SUCCESS,
+            this.translocoService.translate('sage50ExportSettings.exportSettingsSavedSuccess'),
+          );
 
-        const hasMappings = this.exportSettingsForm.get('reimbursableExportType')?.value === Sage50ReimbursableExportType.PURCHASES_RECEIVE_INVENTORY || this.exportSettingsForm.get('cccExportType')?.value === Sage50CCCExportType.PAYMENTS_JOURNAL;
-        this.mappingService.shouldShowMappingPage.emit(hasMappings);
+          const hasMappings =
+            this.exportSettingsForm.get('reimbursableExportType')?.value ===
+              Sage50ReimbursableExportType.PURCHASES_RECEIVE_INVENTORY ||
+            this.exportSettingsForm.get('cccExportType')?.value === Sage50CCCExportType.PAYMENTS_JOURNAL;
+          this.mappingService.shouldShowMappingPage.emit(hasMappings);
 
-        if (this.isOnboarding) {
-          this.trackingService.onOnboardingStepCompletion(TrackingApp.SAGE50, Sage50OnboardingState.EXPORT_SETTINGS, 2, response);
-          this.workspaceService.setOnboardingState(Sage50OnboardingState.IMPORT_SETTINGS);
-          this.router.navigate(['/integrations/sage50/onboarding/import_settings']);
-        } else {
-          this.trackingService.onUpdateEvent(TrackingApp.SAGE50, UpdateEvent.EXPORT_SETTINGS, {
-            phase: ProgressPhase.POST_ONBOARDING,
-            oldState: this.exportSettingsForm.value,
-            newState: response
-          });
-        }
-      },
-      error: () => {
-        this.isSaveInProgress = false;
-        this.toastService.displayToastMessage(
-          ToastSeverity.ERROR,
-          this.translocoService.translate('sage50ExportSettings.exportSettingsSaveError')
-        );
-      }
-    });
+          if (this.isOnboarding) {
+            this.trackingService.onOnboardingStepCompletion(
+              TrackingApp.SAGE50,
+              Sage50OnboardingState.EXPORT_SETTINGS,
+              2,
+              response,
+            );
+            this.workspaceService.setOnboardingState(Sage50OnboardingState.IMPORT_SETTINGS);
+            this.router.navigate(['/integrations/sage50/onboarding/import_settings']);
+          } else {
+            this.trackingService.onUpdateEvent(TrackingApp.SAGE50, UpdateEvent.EXPORT_SETTINGS, {
+              phase: ProgressPhase.POST_ONBOARDING,
+              oldState: this.exportSettingsForm.value,
+              newState: response,
+            });
+          }
+        },
+        error: () => {
+          this.isSaveInProgress = false;
+          this.toastService.displayToastMessage(
+            ToastSeverity.ERROR,
+            this.translocoService.translate('sage50ExportSettings.exportSettingsSaveError'),
+          );
+        },
+      });
   }
 
   onBackButtonClick(): void {
@@ -233,7 +279,7 @@ export class Sage50ExportSettingsComponent implements OnInit {
     this.isPaymentMethodPreviewDialogVisible = false;
   }
 
-  onExportTypeDropdownChange(changeEvent: {event: any, formControllerName: string}): void {
+  onExportTypeDropdownChange(changeEvent: { event: any; formControllerName: string }): void {
     const { event, formControllerName } = changeEvent;
     const selectedExportType = event.value;
 
@@ -254,12 +300,13 @@ export class Sage50ExportSettingsComponent implements OnInit {
       // Store pending change and show warning
       this.pendingExportChange = {
         previousValue: previousExportType,
-        newValue: selectedExportType
+        newValue: selectedExportType,
       };
 
-      this.selectedExportTypeName = selectedExportType === Sage50CCCExportType.PAYMENTS_JOURNAL
-        ? this.translocoService.translate('sage50ExportSettings.paymentsLabel')
-        : this.translocoService.translate('sage50ExportSettings.purchasesLabel');
+      this.selectedExportTypeName =
+        selectedExportType === Sage50CCCExportType.PAYMENTS_JOURNAL
+          ? this.translocoService.translate('sage50ExportSettings.paymentsLabel')
+          : this.translocoService.translate('sage50ExportSettings.purchasesLabel');
       this.showPurchasesExportWarning = true;
     } else {
       // Update tracking variable with the new value since no warning is needed
@@ -274,7 +321,9 @@ export class Sage50ExportSettingsComponent implements OnInit {
       return false;
     }
 
-    return [Sage50CCCExportType.PAYMENTS_JOURNAL, Sage50CCCExportType.PURCHASES_RECEIVE_INVENTORY].includes(selectedExportType);
+    return [Sage50CCCExportType.PAYMENTS_JOURNAL, Sage50CCCExportType.PURCHASES_RECEIVE_INVENTORY].includes(
+      selectedExportType,
+    );
   }
 
   acceptPurchasesExportWarning(data: ConfigurationWarningOut): void {
@@ -294,8 +343,8 @@ export class Sage50ExportSettingsComponent implements OnInit {
         attributeType: Sage50AttributeType.VENDOR,
         articleLink: this.brandingKbArticles.postOnboardingArticles.SAGE50.VENDOR,
         uploadData: this.uploadVendorData.bind(this),
-        videoURL: this.brandingDemoVideoLinks.postOnboarding.SAGE50.VENDOR
-      }
+        videoURL: this.brandingDemoVideoLinks.postOnboarding.SAGE50.VENDOR,
+      },
     });
 
     this.vendorUploadDialogRef?.onClose.subscribe((file: UploadedCSVFile | undefined) => {
@@ -338,7 +387,7 @@ export class Sage50ExportSettingsComponent implements OnInit {
       exportSettings?.default_mileage_account,
       exportSettings?.ccc_default_credit_line_account,
       exportSettings?.ccc_default_account_payable_account,
-      exportSettings?.default_cash_account
+      exportSettings?.default_cash_account,
     ];
 
     for (const account of extraAccountOptions) {
@@ -357,9 +406,7 @@ export class Sage50ExportSettingsComponent implements OnInit {
   }
 
   private optionSearchWatcher(): void {
-    this.optionSearchUpdate.pipe(
-      debounceTime(1000)
-    ).subscribe((event) => {
+    this.optionSearchUpdate.pipe(debounceTime(1000)).subscribe((event) => {
       let options: DestinationAttribute[] = [];
       let destinationAttributesObservable: Observable<PaginatedDestinationAttribute>;
       switch (event.destinationOptionKey) {
@@ -400,16 +447,18 @@ export class Sage50ExportSettingsComponent implements OnInit {
 
   private setupFieldWatchers(): void {
     // Toggle field watchers - clear export type if the corresponding toggle is turned off
-    this.exportSettingsForm.get('reimbursableExpenses')?.valueChanges
-      .pipe(startWith(this.exportSettingsForm.get('reimbursableExpenses')?.value)) // Manually trigger on init
+    this.exportSettingsForm
+      .get('reimbursableExpenses')
+      ?.valueChanges.pipe(startWith(this.exportSettingsForm.get('reimbursableExpenses')?.value)) // Manually trigger on init
       .subscribe((reimbursableExpenses) => {
         if (!reimbursableExpenses) {
           this.exportSettingsForm.get('reimbursableExportType')?.setValue(null);
         }
       });
 
-    this.exportSettingsForm.get('cccExpenses')?.valueChanges
-      .pipe(startWith(this.exportSettingsForm.get('cccExpenses')?.value)) // Manually trigger on init
+    this.exportSettingsForm
+      .get('cccExpenses')
+      ?.valueChanges.pipe(startWith(this.exportSettingsForm.get('cccExpenses')?.value)) // Manually trigger on init
       .subscribe((cccExpenses) => {
         if (!cccExpenses) {
           this.exportSettingsForm.get('cccExportType')?.setValue(null);
@@ -418,20 +467,27 @@ export class Sage50ExportSettingsComponent implements OnInit {
 
     // Watcher for CCC export type -> hard-code CCC export group
     // The CCC export group is always EXPENSE when the CCC export type is Payments / Purcheses
-    this.exportSettingsForm.get('cccExportType')?.valueChanges
-      .pipe(startWith(this.exportSettingsForm.get('cccExportType')?.value)) // Manually trigger on init
+    this.exportSettingsForm
+      .get('cccExportType')
+      ?.valueChanges.pipe(startWith(this.exportSettingsForm.get('cccExportType')?.value)) // Manually trigger on init
       .subscribe((cccExportType) => {
-        if ([Sage50CCCExportType.PAYMENTS_JOURNAL, Sage50CCCExportType.PURCHASES_RECEIVE_INVENTORY].includes(cccExportType!)) {
+        if (
+          [Sage50CCCExportType.PAYMENTS_JOURNAL, Sage50CCCExportType.PURCHASES_RECEIVE_INVENTORY].includes(
+            cccExportType!,
+          )
+        ) {
           this.exportSettingsForm.get('cccExportGroup')?.setValue(Sage50ExpensesGroupedBy.EXPENSE);
           this.isCCCExportGroupEditable = false;
         } else {
           this.isCCCExportGroupEditable = true;
         }
-      });7;
+      });
+    7;
 
     // Watchers for date fields
-    this.exportSettingsForm.get('reimbursableExportGroup')?.valueChanges
-      .pipe(startWith(this.exportSettingsForm.get('reimbursableExportGroup')?.value)) // Manually trigger on init
+    this.exportSettingsForm
+      .get('reimbursableExportGroup')
+      ?.valueChanges.pipe(startWith(this.exportSettingsForm.get('reimbursableExportGroup')?.value)) // Manually trigger on init
       .subscribe((reimbursableExportGroup) => {
         // On reimbursable export group change, update only the date value
         if (reimbursableExportGroup === Sage50ExpensesGroupedBy.EXPENSE) {
@@ -439,24 +495,27 @@ export class Sage50ExportSettingsComponent implements OnInit {
         } else if (reimbursableExportGroup === Sage50ExpensesGroupedBy.REPORT) {
           this.exportSettingsForm.get('reimbursableExportDate')?.setValue(Sage50ReimbursableExpenseDate.CURRENT_DATE);
         }
-    });
+      });
 
-    this.exportSettingsForm.get('cccExportGroup')?.valueChanges
-      .pipe(startWith(this.exportSettingsForm.get('cccExportGroup')?.value)) // Manually trigger on init
+    this.exportSettingsForm
+      .get('cccExportGroup')
+      ?.valueChanges.pipe(startWith(this.exportSettingsForm.get('cccExportGroup')?.value)) // Manually trigger on init
       .subscribe((cccExportGroup) => {
         // On ccc export group change, 1. update date options
         const expenseGroupingFieldOption = {
           [Sage50ExpensesGroupedBy.EXPENSE]: ExpenseGroupingFieldOption.EXPENSE,
-          [Sage50ExpensesGroupedBy.REPORT]: ExpenseGroupingFieldOption.REPORT
+          [Sage50ExpensesGroupedBy.REPORT]: ExpenseGroupingFieldOption.REPORT,
         };
 
         let newOptions = this.exportSettingService.constructExportDateOptions(
-          true, expenseGroupingFieldOption[cccExportGroup!], null
+          true,
+          expenseGroupingFieldOption[cccExportGroup!],
+          null,
         );
 
         if (cccExportGroup === Sage50ExpensesGroupedBy.EXPENSE) {
           // Sage50 only: remove current_date when grouping by expense
-          newOptions = newOptions.filter(option => option.value !== Sage50CCCExpensesDate.CURRENT_DATE);
+          newOptions = newOptions.filter((option) => option.value !== Sage50CCCExpensesDate.CURRENT_DATE);
         }
 
         this.cccExpenseDateOptions = newOptions;
@@ -467,57 +526,61 @@ export class Sage50ExportSettingsComponent implements OnInit {
         } else if (cccExportGroup === Sage50ExpensesGroupedBy.EXPENSE) {
           this.exportSettingsForm.get('cccExportDate')?.setValue(Sage50CCCExpensesDate.POSTED_AT);
         }
-    });
+      });
   }
 
   ngOnInit(): void {
     this.isOnboarding = this.router.url.includes('onboarding');
     this.isLoading = true;
 
-    const attributesByAccountType = this.allowedAccountTypes.map(accountType =>
-      this.mappingService.getAccounts([accountType])
+    const attributesByAccountType = this.allowedAccountTypes.map((accountType) =>
+      this.mappingService.getAccounts([accountType]),
     );
 
     forkJoin([
       this.exportSettingService.getExportSettings().pipe(catchError(() => of(null))),
       this.workspaceService.getWorkspace(this.userService.getUserProfile().org_id) as Observable<Sage50Workspace[]>,
       ...attributesByAccountType,
-      this.mappingService.getVendors()
-    ]).subscribe(([exportSettings, workspaces, accountsPayable, longTermLiabilities, otherCurrentLiabilities, vendors]) => {
+      this.mappingService.getVendors(),
+    ]).subscribe(
+      ([exportSettings, workspaces, accountsPayable, longTermLiabilities, otherCurrentLiabilities, vendors]) => {
+        this.exportSettingsResponse = exportSettings;
 
-      this.exportSettingsResponse = exportSettings;
+        // Set the payment method enabled flags based on the workspace settings
+        const paymentModes = workspaces?.[0]?.org_settings?.enabled_payment_modes;
+        if (paymentModes?.length > 0) {
+          this.isReimbursableEnabled = paymentModes.includes('REIMBURSABLE');
+          this.isCCCEnabled = paymentModes.includes('CREDIT_CARD');
+        }
 
-      // Set the payment method enabled flags based on the workspace settings
-      const paymentModes = workspaces?.[0]?.org_settings?.enabled_payment_modes;
-      if (paymentModes?.length > 0) {
-        this.isReimbursableEnabled = paymentModes.includes("REIMBURSABLE");
-        this.isCCCEnabled = paymentModes.includes("CREDIT_CARD");
-      }
+        this.isPerDiemEnabled = workspaces?.[0]?.org_settings.is_per_diem_enabled ?? false;
+        this.isMileageEnabled = workspaces?.[0]?.org_settings.is_mileage_enabled ?? false;
 
-      this.isPerDiemEnabled = workspaces?.[0]?.org_settings.is_per_diem_enabled ?? false;
-      this.isMileageEnabled = workspaces?.[0]?.org_settings.is_mileage_enabled ?? false;
+        this.accounts = [
+          ...accountsPayable.results,
+          ...longTermLiabilities.results,
+          ...otherCurrentLiabilities.results,
+        ];
 
-      this.accounts = [
-        ...accountsPayable.results,
-        ...longTermLiabilities.results,
-        ...otherCurrentLiabilities.results
-      ];
+        this.vendors = vendors.results;
 
-      this.vendors = vendors.results;
+        this.exportSettingsForm = this.exportSettingService.mapApiResponseToFormGroup(
+          exportSettings,
+          this.isReimbursableEnabled,
+          this.isCCCEnabled,
+          this.isPerDiemEnabled,
+          this.isMileageEnabled,
+        );
 
-      this.exportSettingsForm = this.exportSettingService.mapApiResponseToFormGroup(
-        exportSettings, this.isReimbursableEnabled, this.isCCCEnabled, this.isPerDiemEnabled, this.isMileageEnabled
-      );
+        // Initialize tracking variable for warning dialog with current form value
+        this.lastCCCExportType = this.exportSettingsForm.get('cccExportType')?.value || null;
 
-      // Initialize tracking variable for warning dialog with current form value
-      this.lastCCCExportType = this.exportSettingsForm.get('cccExportType')?.value || null;
+        this.addMissingOptionsAndSort(exportSettings);
+        this.optionSearchWatcher();
+        this.setupFieldWatchers();
 
-      this.addMissingOptionsAndSort(exportSettings);
-      this.optionSearchWatcher();
-      this.setupFieldWatchers();
-
-      this.isLoading = false;
-    });
+        this.isLoading = false;
+      },
+    );
   }
 }
-

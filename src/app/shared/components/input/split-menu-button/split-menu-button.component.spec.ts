@@ -8,9 +8,8 @@ describe('SplitMenuButtonComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [SplitMenuButtonComponent]
-    })
-    .compileComponents();
+      imports: [SplitMenuButtonComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(SplitMenuButtonComponent);
     component = fixture.componentInstance;

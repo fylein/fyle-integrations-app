@@ -11,7 +11,12 @@ import { QbdMappingService } from 'src/app/core/services/qbd/qbd-core/qbd-mappin
 import { of, throwError } from 'rxjs';
 import { MappingState, OperatingSystem } from 'src/app/core/models/enum/enum.model';
 import { WindowService } from 'src/app/core/services/common/window.service';
-import { getMappingResponse, getMappingStatsResponse, postMappingPayload, postMappingResponse } from './qbd-generic-mapping.fixture';
+import {
+  getMappingResponse,
+  getMappingStatsResponse,
+  postMappingPayload,
+  postMappingResponse,
+} from './qbd-generic-mapping.fixture';
 import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 xdescribe('QbdGenericMappingComponent', () => {
@@ -25,25 +30,28 @@ xdescribe('QbdGenericMappingComponent', () => {
     const service1 = {
       getMappings: () => of(getMappingStatsResponse),
       postMappings: () => of(postMappingResponse),
-      getMappingStats: () => of(getMappingStatsResponse)
+      getMappingStats: () => of(getMappingStatsResponse),
     };
 
     const service2 = {
-      getOperatingSystem: () => OperatingSystem.MAC
+      getOperatingSystem: () => OperatingSystem.MAC,
     };
 
     const service3 = {
-      displayToastMessage: () => undefined
+      displayToastMessage: () => undefined,
     };
     await TestBed.configureTestingModule({
-    declarations: [QbdGenericMappingComponent],
-    imports: [RouterTestingModule, SharedModule, NoopAnimationsModule],
-    providers: [QbdMappingService,
+      declarations: [QbdGenericMappingComponent],
+      imports: [RouterTestingModule, SharedModule, NoopAnimationsModule],
+      providers: [
+        QbdMappingService,
         { provide: QbdMappingService, useValue: service1 },
         { provide: WindowService, useValue: service2 },
-        { provide: IntegrationsToastService, useValue: service3 }, provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting()]
-})
-    .compileComponents();
+        { provide: IntegrationsToastService, useValue: service3 },
+        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClientTesting(),
+      ],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(QbdGenericMappingComponent);
     component = fixture.componentInstance;
@@ -75,7 +83,7 @@ xdescribe('QbdGenericMappingComponent', () => {
 
   it('postMapping function check', () => {
     expect(component.postMapping(postMappingPayload)).toBeUndefined();
-    spyOn(mappingService, 'postMappings').and.returnValue(throwError({Error}));
+    spyOn(mappingService, 'postMappings').and.returnValue(throwError({ Error }));
     expect(component.postMapping(postMappingPayload)).toBeUndefined();
   });
 

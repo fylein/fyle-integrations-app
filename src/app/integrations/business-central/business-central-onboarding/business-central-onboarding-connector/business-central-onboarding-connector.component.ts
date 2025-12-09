@@ -2,9 +2,18 @@ import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription, forkJoin } from 'rxjs';
-import { BusinessCentralConnectorModel, BusinessCentralConnectorPost } from 'src/app/core/models/business-central/business-central-configuration/business-central-connector.model';
+import {
+  BusinessCentralConnectorModel,
+  BusinessCentralConnectorPost,
+} from 'src/app/core/models/business-central/business-central-configuration/business-central-connector.model';
 import { BusinessCentralCredential } from 'src/app/core/models/business-central/db/business-central-credentials.model';
-import { AppName, BusinessCentralField, BusinessCentralOnboardingState, ConfigurationCta, ToastSeverity } from 'src/app/core/models/enum/enum.model';
+import {
+  AppName,
+  BusinessCentralField,
+  BusinessCentralOnboardingState,
+  ConfigurationCta,
+  ToastSeverity,
+} from 'src/app/core/models/enum/enum.model';
 import { OnboardingStepper } from 'src/app/core/models/misc/onboarding-stepper.model';
 import { BusinessCentralConnectorService } from 'src/app/core/services/business-central/business-central-configuration/business-central-connector.service';
 import { BusinessCentralExportSettingsService } from 'src/app/core/services/business-central/business-central-configuration/business-central-export-settings.service';
@@ -20,25 +29,29 @@ import { ConfigurationWarningOut } from 'src/app/core/models/misc/configuration-
 import { MappingService } from 'src/app/core/services/common/mapping.service';
 import { BusinessCentralDestinationAttributes } from 'src/app/core/models/business-central/db/business-central-destination-attribute.model';
 import { GroupedDestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
-import { BusinessCentralCompanyPost, BusinessCentralWorkspace } from 'src/app/core/models/business-central/db/business-central-workspace.model';
+import {
+  BusinessCentralCompanyPost,
+  BusinessCentralWorkspace,
+} from 'src/app/core/models/business-central/db/business-central-workspace.model';
 import { MinimalUser } from 'src/app/core/models/db/user.model';
 import { UserService } from 'src/app/core/services/misc/user.service';
 import { BusinessCentralMappingService } from 'src/app/core/services/business-central/business-central-core/business-central-mapping.service';
 import { TranslocoService } from '@jsverse/transloco';
 
 @Component({
-    selector: 'app-business-central-onboarding-connector',
-    templateUrl: './business-central-onboarding-connector.component.html',
-    styleUrls: ['./business-central-onboarding-connector.component.scss'],
-    standalone: false
+  selector: 'app-business-central-onboarding-connector',
+  templateUrl: './business-central-onboarding-connector.component.html',
+  styleUrls: ['./business-central-onboarding-connector.component.scss'],
+  standalone: false,
 })
 export class BusinessCentralOnboardingConnectorComponent implements OnInit, OnDestroy {
-
   isLoading: boolean = true;
 
   redirectLink = brandingKbArticles.topLevelArticles.BUSINESS_CENTRAL;
 
-  onboardingSteps: OnboardingStepper[] = this.onboardingService.getOnboardingSteps('Connect to Dynamics \n 365 Business Central');
+  onboardingSteps: OnboardingStepper[] = this.onboardingService.getOnboardingSteps(
+    'Connect to Dynamics \n 365 Business Central',
+  );
 
   connectBusinessCentralForm: FormGroup;
 
@@ -89,9 +102,8 @@ export class BusinessCentralOnboardingConnectorComponent implements OnInit, OnDe
     private helperService: HelperService,
     private mappingService: MappingService,
     private mapping: BusinessCentralMappingService,
-    private translocoService: TranslocoService
-  ) {
-  }
+    private translocoService: TranslocoService,
+  ) {}
 
   disconnectBusinessCentral(): void {
     this.isLoading = true;
@@ -124,33 +136,38 @@ export class BusinessCentralOnboardingConnectorComponent implements OnInit, OnDe
   }
 
   private showOrHideDisconnectBusinessCentral(): void {
-    this.businessCentralExportSettingsService.getExportSettings().subscribe(exportSettings => {
-      // Do nothing
-      this.isContinueDisabled = false;
-      this.isLoading = false;
+    this.businessCentralExportSettingsService.getExportSettings().subscribe(
+      (exportSettings) => {
+        // Do nothing
+        this.isContinueDisabled = false;
+        this.isLoading = false;
 
-      if (!(exportSettings?.reimbursable_expenses_export_type || exportSettings?.credit_card_expense_export_type)) {
+        if (!(exportSettings?.reimbursable_expenses_export_type || exportSettings?.credit_card_expense_export_type)) {
+          this.showDisconnectBusinessCentral = true;
+        }
+      },
+      () => {
+        // Showing Disconnect Business Central button since the customer didn't set up the next step
         this.showDisconnectBusinessCentral = true;
-      }
-    }, () => {
-      // Showing Disconnect Business Central button since the customer didn't set up the next step
-      this.showDisconnectBusinessCentral = true;
-      this.isLoading = false;
-    });
+        this.isLoading = false;
+      },
+    );
   }
 
   private getCompanyOptions() {
-    this.mappingService.getGroupedDestinationAttributes([BusinessCentralField.COMPANY], 'v2', 'business_central').subscribe((businessCentralCompanyDetails: GroupedDestinationAttribute) => {
-      this.businessCentralConnectionInProgress = false;
-      this.businessCentralCompanyOptions = businessCentralCompanyDetails.COMPANY;
-      this.isBusinessCentralConnected = false;
-      this.businessCentralTokenExpired = false;
-      this.isContinueDisabled = true;
-      this.isLoading = false;
-    });
+    this.mappingService
+      .getGroupedDestinationAttributes([BusinessCentralField.COMPANY], 'v2', 'business_central')
+      .subscribe((businessCentralCompanyDetails: GroupedDestinationAttribute) => {
+        this.businessCentralConnectionInProgress = false;
+        this.businessCentralCompanyOptions = businessCentralCompanyDetails.COMPANY;
+        this.isBusinessCentralConnected = false;
+        this.businessCentralTokenExpired = false;
+        this.isContinueDisabled = true;
+        this.isLoading = false;
+      });
   }
 
-  getCompanyDetails(){
+  getCompanyDetails() {
     this.workspaceService.getWorkspace(this.user.org_id).subscribe((workspace: BusinessCentralWorkspace) => {
       if (workspace?.business_central_company_id) {
         this.businessCentralCompanyName = workspace?.business_central_company_name;
@@ -166,53 +183,72 @@ export class BusinessCentralOnboardingConnectorComponent implements OnInit, OnDe
   }
 
   private postBusinessCentralCredentials(code: string): void {
-    const payload: BusinessCentralConnectorPost = BusinessCentralConnectorModel.constructPayload(code, +this.workspaceService.getWorkspaceId());
+    const payload: BusinessCentralConnectorPost = BusinessCentralConnectorModel.constructPayload(
+      code,
+      +this.workspaceService.getWorkspaceId(),
+    );
 
-    this.businessCentralConnectorService.connectBusinessCentral(payload).subscribe((businessCentralCredential: BusinessCentralCredential) => {
-      this.getCompanyDetails();
-    }, (error) => {
-      const errorMessage = 'message' in error ? error.message : this.translocoService.translate('businessCentralOnboardingConnector.connectionFailedError');
-      if (errorMessage === 'Please choose the correct Dynamic 365 Business Central account') {
-        this.isIncorrectBusinessCentralConnectedDialogVisible = true;
-      } else {
-        this.toastService.displayToastMessage(ToastSeverity.ERROR, errorMessage);
-        this.router.navigate([`/integrations/business_central/onboarding/landing`]);
-      }
-    });
+    this.businessCentralConnectorService.connectBusinessCentral(payload).subscribe(
+      (businessCentralCredential: BusinessCentralCredential) => {
+        this.getCompanyDetails();
+      },
+      (error) => {
+        const errorMessage =
+          'message' in error
+            ? error.message
+            : this.translocoService.translate('businessCentralOnboardingConnector.connectionFailedError');
+        if (errorMessage === 'Please choose the correct Dynamic 365 Business Central account') {
+          this.isIncorrectBusinessCentralConnectedDialogVisible = true;
+        } else {
+          this.toastService.displayToastMessage(ToastSeverity.ERROR, errorMessage);
+          this.router.navigate([`/integrations/business_central/onboarding/landing`]);
+        }
+      },
+    );
   }
 
   private getSettings(): void {
-    this.businessCentralConnectorService.getBusinessCentralCredentials().subscribe((businessCentralCredential: BusinessCentralCredential) => {
-      this.getCompanyDetails();
-    }, (error) => {
-
-      // Token expired
-      if ('id' in error.error) {
-        // We have a BusinessCentral row present in DB
-        this.businessCentralTokenExpired = error.error.is_expired;
-        if (this.businessCentralTokenExpired) {
-          this.businessCentralCompanyName = error.error.company_name;
+    this.businessCentralConnectorService.getBusinessCentralCredentials().subscribe(
+      (businessCentralCredential: BusinessCentralCredential) => {
+        this.getCompanyDetails();
+      },
+      (error) => {
+        // Token expired
+        if ('id' in error.error) {
+          // We have a BusinessCentral row present in DB
+          this.businessCentralTokenExpired = error.error.is_expired;
+          if (this.businessCentralTokenExpired) {
+            this.businessCentralCompanyName = error.error.company_name;
+          }
         }
-      }
 
-      this.isBusinessCentralConnected = false;
-      this.isContinueDisabled = true;
-      this.isLoading = false;
-    });
+        this.isBusinessCentralConnected = false;
+        this.isContinueDisabled = true;
+        this.isLoading = false;
+      },
+    );
   }
 
   save(): void {
     this.saveInProgress = true;
     if (!this.businessCentralCompanyName) {
-      const data: BusinessCentralCompanyPost = BusinessCentralConnectorModel.constructCompanyPost(this.businessCentralCompanyselected.destination_id, this.businessCentralCompanyselected.value);
-      this.businessCentralConnectorService.postBusinessCentralCompany(data).subscribe((workspace: BusinessCentralWorkspace) => {
-        this.mapping.importBusinessCentralAttributes(true).subscribe(() => {
-          this.saveInProgress = false;
-          this.toastService.displayToastMessage(ToastSeverity.SUCCESS, this.translocoService.translate('businessCentralOnboardingConnector.companySavedSuccess'));
-          this.workspaceService.setOnboardingState(BusinessCentralOnboardingState.EXPORT_SETTINGS);
-          this.router.navigate([`/integrations/business_central/onboarding/export_settings`]);
+      const data: BusinessCentralCompanyPost = BusinessCentralConnectorModel.constructCompanyPost(
+        this.businessCentralCompanyselected.destination_id,
+        this.businessCentralCompanyselected.value,
+      );
+      this.businessCentralConnectorService
+        .postBusinessCentralCompany(data)
+        .subscribe((workspace: BusinessCentralWorkspace) => {
+          this.mapping.importBusinessCentralAttributes(true).subscribe(() => {
+            this.saveInProgress = false;
+            this.toastService.displayToastMessage(
+              ToastSeverity.SUCCESS,
+              this.translocoService.translate('businessCentralOnboardingConnector.companySavedSuccess'),
+            );
+            this.workspaceService.setOnboardingState(BusinessCentralOnboardingState.EXPORT_SETTINGS);
+            this.router.navigate([`/integrations/business_central/onboarding/export_settings`]);
+          });
         });
-      });
     } else {
       this.saveInProgress = false;
       this.router.navigate([`/integrations/business_central/onboarding/export_settings`]);
@@ -239,5 +275,4 @@ export class BusinessCentralOnboardingConnectorComponent implements OnInit, OnDe
       this.oauthCallbackSubscription.unsubscribe();
     }
   }
-
 }

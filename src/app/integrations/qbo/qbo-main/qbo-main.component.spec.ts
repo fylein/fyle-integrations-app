@@ -8,9 +8,8 @@ xdescribe('QboMainComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ QboMainComponent ]
-    })
-    .compileComponents();
+      declarations: [QboMainComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(QboMainComponent);
     component = fixture.componentInstance;

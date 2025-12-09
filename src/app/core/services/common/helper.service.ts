@@ -3,9 +3,22 @@ import { Router } from '@angular/router';
 import { ApiService } from './api.service';
 import { environment } from 'src/environments/environment';
 import { AppUrlMap } from '../../models/integrations/integrations.model';
-import { AppUrl, BusinessCentralExportType, ExpenseGroupingFieldOption, ExpenseState, FyleField, ProgressPhase, Sage300ExportType, XeroCorporateCreditCardExpensesObject, XeroReimbursableExpensesObject } from '../../models/enum/enum.model';
+import {
+  AppUrl,
+  BusinessCentralExportType,
+  ExpenseGroupingFieldOption,
+  ExpenseState,
+  FyleField,
+  ProgressPhase,
+  Sage300ExportType,
+  XeroCorporateCreditCardExpensesObject,
+  XeroReimbursableExpensesObject,
+} from '../../models/enum/enum.model';
 import { AbstractControl, FormGroup, ValidatorFn, Validators } from '@angular/forms';
-import { ExportModuleRule, ExportSettingValidatorRule } from '../../models/sage300/sage300-configuration/sage300-export-setting.model';
+import {
+  ExportModuleRule,
+  ExportSettingValidatorRule,
+} from '../../models/sage300/sage300-configuration/sage300-export-setting.model';
 import { SnakeCaseToSpaceCasePipe } from 'src/app/shared/pipes/snake-case-to-space-case.pipe';
 import { SkipExportValidatorRule, skipExportValidator } from '../../models/common/advanced-settings.model';
 import { StorageService } from './storage.service';
@@ -17,15 +30,14 @@ import { brandingFeatureConfig } from 'src/app/branding/branding-config';
 import { TranslocoService } from '@jsverse/transloco';
 
 type PollDimensionsSyncStatusParams = {
-  onPollingComplete: () => void
-  getWorkspacesObserver: () => Observable<{destination_synced_at: any}[]>
-}
+  onPollingComplete: () => void;
+  getWorkspacesObserver: () => Observable<{ destination_synced_at: any }[]>;
+};
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class HelperService {
-
   @Output() oauthCallbackUrl: EventEmitter<string> = new EventEmitter();
 
   private readonly AUTO_ENABLE_ACCOUNTING_PERIOD_DATE = new Date('2024-11-18');
@@ -34,7 +46,7 @@ export class HelperService {
     private apiService: ApiService,
     private router: Router,
     private storageService: StorageService,
-    private translocoService: TranslocoService
+    private translocoService: TranslocoService,
   ) {}
 
   shouldAutoEnableAccountingPeriod(workspaceCreatedAt: Date): boolean {
@@ -56,7 +68,7 @@ export class HelperService {
     return this.storageService.get('cluster-domain') || environment.cluster_domain_api_url;
   }
 
-  setBaseApiURL(appUrl: string| void, options = { auth: false }): void {
+  setBaseApiURL(appUrl: string | void, options = { auth: false }): void {
     const urlSplit = this.router.url.split('/');
     let module: AppUrl;
 
@@ -71,16 +83,18 @@ export class HelperService {
     const apiUrlMap: AppUrlMap = {
       [AppUrl.INTACCT]: environment.production ? `${this.apiBaseUrl}/intacct-api/api` : environment.si_api_url,
       [AppUrl.QBD]: environment.qbd_api_url,
-      [AppUrl.QBD_DIRECT]: environment.production ? `${this.apiBaseUrl}/quickbooks-connector-api/api` : environment.qbd_direct_api_url,
-      [AppUrl.TRAVELPERK]: `${this.apiBaseUrl}/${environment.production ? 'integrations-api/': ''}api`,
-      [AppUrl.BAMBOO_HR]: `${this.apiBaseUrl}/${environment.production ? 'integrations-api/': ''}api`,
+      [AppUrl.QBD_DIRECT]: environment.production
+        ? `${this.apiBaseUrl}/quickbooks-connector-api/api`
+        : environment.qbd_direct_api_url,
+      [AppUrl.TRAVELPERK]: `${this.apiBaseUrl}/${environment.production ? 'integrations-api/' : ''}api`,
+      [AppUrl.BAMBOO_HR]: `${this.apiBaseUrl}/${environment.production ? 'integrations-api/' : ''}api`,
       [AppUrl.SAGE300]: environment.sage300_api_url,
-      [AppUrl.INTEGRATION]: `${this.apiBaseUrl}/${environment.production ? 'integrations-api/': ''}api`,
+      [AppUrl.INTEGRATION]: `${this.apiBaseUrl}/${environment.production ? 'integrations-api/' : ''}api`,
       [AppUrl.BUSINESS_CENTRAL]: environment.business_central_api_url,
       [AppUrl.QBO]: environment.production ? `${this.apiBaseUrl}/quickbooks-api/api` : environment.qbo_api_url,
       [AppUrl.NETSUITE]: environment.production ? `${this.apiBaseUrl}/netsuite-api/api` : environment.netsuite_api_url,
       [AppUrl.XERO]: environment.production ? `${this.apiBaseUrl}/xero-api/api` : environment.xero_api_url,
-      [AppUrl.SAGE50]: environment.sage50_api_url + (options.auth ? '' : '/sage50')
+      [AppUrl.SAGE50]: environment.sage50_api_url + (options.auth ? '' : '/sage50'),
     };
 
     const apiUrl = apiUrlMap[module] ?? apiUrlMap.integration;
@@ -134,7 +148,9 @@ export class HelperService {
   }
 
   getExportType(exportType: string | null): string {
-    return exportType ? new SnakeCaseToSpaceCasePipe().transform(new LowerCasePipe().transform(exportType)): this.translocoService.translate('services.helper.expense');
+    return exportType
+      ? new SnakeCaseToSpaceCasePipe().transform(new LowerCasePipe().transform(exportType))
+      : this.translocoService.translate('services.helper.expense');
   }
 
   setOrClearValidators(selectedValue: string, value: string[], form: FormGroup): void {
@@ -142,9 +158,15 @@ export class HelperService {
       value.forEach((controllerName: string) => {
         this.markControllerAsRequired(form, controllerName);
         const urlSplit = this.router.url.split('/');
-        if (urlSplit[2] === AppUrl.SAGE300 && (controllerName === 'cccExportType' || controllerName === 'reimbursableExportType')) {
+        if (
+          urlSplit[2] === AppUrl.SAGE300 &&
+          (controllerName === 'cccExportType' || controllerName === 'reimbursableExportType')
+        ) {
           this.setSage300ExportTypeControllerValue(form, controllerName);
-        } else if (urlSplit[2] === AppUrl.XERO && (controllerName === 'creditCardExportType' || controllerName === 'reimbursableExportType')) {
+        } else if (
+          urlSplit[2] === AppUrl.XERO &&
+          (controllerName === 'creditCardExportType' || controllerName === 'reimbursableExportType')
+        ) {
           this.setXeroExportTypeControllerValue(form, controllerName);
         }
       });
@@ -155,13 +177,19 @@ export class HelperService {
     }
   }
 
-  setConfigurationSettingValidatorsAndWatchers(validatorRule: ExportSettingValidatorRule | SkipExportValidatorRule, form: FormGroup) {
+  setConfigurationSettingValidatorsAndWatchers(
+    validatorRule: ExportSettingValidatorRule | SkipExportValidatorRule,
+    form: FormGroup,
+  ) {
     // If reimbursable expenses are not allowed
     // -> only ccc expenses are allowed
     // -> no switches (reimbursableExpense or creditCardExpense) are shown
     // -> ccc fields should be required by default (instead of watching valueChanges of creditCardExpense)
 
-    if (!brandingFeatureConfig.featureFlags.exportSettings.reimbursableExpenses && 'creditCardExpense' in validatorRule) {
+    if (
+      !brandingFeatureConfig.featureFlags.exportSettings.reimbursableExpenses &&
+      'creditCardExpense' in validatorRule
+    ) {
       const values = validatorRule.creditCardExpense;
       values?.forEach((value) => {
         this.markControllerAsRequired(form, value);
@@ -176,11 +204,19 @@ export class HelperService {
     }
   }
 
-  setExportTypeValidatorsAndWatchers(exportTypeValidatorRule: ExportModuleRule[], form: FormGroup, commonFormFields: string[] | void): void {
+  setExportTypeValidatorsAndWatchers(
+    exportTypeValidatorRule: ExportModuleRule[],
+    form: FormGroup,
+    commonFormFields: string[] | void,
+  ): void {
     Object.values(exportTypeValidatorRule).forEach((values) => {
       form.controls[values.formController].valueChanges.subscribe((isSelected) => {
         const urlSplit = this.router.url.split('/');
-        if (urlSplit[2] === AppUrl.BUSINESS_CENTRAL && values.formController === 'reimbursableExportType' && isSelected === BusinessCentralExportType.PURCHASE_INVOICE) {
+        if (
+          urlSplit[2] === AppUrl.BUSINESS_CENTRAL &&
+          values.formController === 'reimbursableExportType' &&
+          isSelected === BusinessCentralExportType.PURCHASE_INVOICE
+        ) {
           form.controls.reimbursableEmployeeMapping.patchValue(FyleField.VENDOR);
         }
         Object.entries(values.requiredValue).forEach(([key, value]) => {
@@ -199,7 +235,7 @@ export class HelperService {
   }
 
   exportSelectionValidator(exportSettingForm: FormGroup): ValidatorFn {
-    return (control: AbstractControl): {[key: string]: object} | null => {
+    return (control: AbstractControl): { [key: string]: object } | null => {
       let forbidden = true;
       if (exportSettingForm) {
         if (typeof control.value === 'boolean') {
@@ -210,7 +246,10 @@ export class HelperService {
               forbidden = false;
             }
           }
-        } else if ((control.value === ExpenseState.PAID || control.value === ExpenseState.PAYMENT_PROCESSING) && (control.parent?.get('reimbursableExpense')?.value || control.parent?.get('creditCardExpense')?.value)) {
+        } else if (
+          (control.value === ExpenseState.PAID || control.value === ExpenseState.PAYMENT_PROCESSING) &&
+          (control.parent?.get('reimbursableExpense')?.value || control.parent?.get('creditCardExpense')?.value)
+        ) {
           forbidden = false;
         }
         if (!forbidden) {
@@ -221,8 +260,8 @@ export class HelperService {
       }
       return {
         forbiddenOption: {
-          value: control.value
-        }
+          value: control.value,
+        },
       };
     };
   }
@@ -235,7 +274,11 @@ export class HelperService {
     form.reset();
   }
 
-  handleSkipExportFormInAdvancedSettingsUpdates(skipExportForm: FormGroup, fields: skipExportValidator, advancedSettingForm: FormGroup): void {
+  handleSkipExportFormInAdvancedSettingsUpdates(
+    skipExportForm: FormGroup,
+    fields: skipExportValidator,
+    advancedSettingForm: FormGroup,
+  ): void {
     advancedSettingForm.controls.skipExport.valueChanges.subscribe((isChanged) => {
       if (isChanged) {
         fields.isChanged.forEach((value: string) => {
@@ -291,17 +334,19 @@ export class HelperService {
   /**
    * If the destination attribute with `destination_id` does not exist in `options`, add it
    */
-  addDestinationAttributeIfNotExists(
-    {options, destination_id, value}: {options: DestinationAttribute[]; destination_id?: string | null; value?: string | null}
-  ) {
-    if (
-      destination_id &&
-      options &&
-      !options.find((option) => option.destination_id === destination_id)
-    ) {
+  addDestinationAttributeIfNotExists({
+    options,
+    destination_id,
+    value,
+  }: {
+    options: DestinationAttribute[];
+    destination_id?: string | null;
+    value?: string | null;
+  }) {
+    if (destination_id && options && !options.find((option) => option.destination_id === destination_id)) {
       options.push({
         value: value || '',
-        destination_id
+        destination_id,
       } as DestinationAttribute);
     }
 
@@ -311,19 +356,19 @@ export class HelperService {
   /**
    * If the default destination attribute with `destination_id` does not exist in `options`, add it
    */
-  addDefaultDestinationAttributeIfNotExists(
-    {options, newOption}: {options: DefaultDestinationAttribute[]; newOption: DefaultDestinationAttribute}
-  ) {
-    if (
-      newOption.id && options &&
-      !options.find((option) => option.id === newOption.id)
-    ) {
+  addDefaultDestinationAttributeIfNotExists({
+    options,
+    newOption,
+  }: {
+    options: DefaultDestinationAttribute[];
+    newOption: DefaultDestinationAttribute;
+  }) {
+    if (newOption.id && options && !options.find((option) => option.id === newOption.id)) {
       options.push(newOption);
     }
 
     options.sort((a, b) => (a.name || '').localeCompare(b.name || ''));
   }
-
 
   /**
    * Checks every `DIMENSIONS_POLLING_INTERVAL` ms whether dimensions have been refreshed
@@ -332,8 +377,7 @@ export class HelperService {
    * Terminates either when dimensions have been refreshed, when refresh dimensions fails,
    * or when polling times out - whichever occurs first.
    */
-  pollDimensionsSyncStatus({onPollingComplete, getWorkspacesObserver}: PollDimensionsSyncStatusParams) {
-
+  pollDimensionsSyncStatus({ onPollingComplete, getWorkspacesObserver }: PollDimensionsSyncStatusParams) {
     /** Time (in ms) to wait before each request while polling for refresh dimensions status */
     const DIMENSIONS_POLLING_INTERVAL = 3000;
 
@@ -342,11 +386,12 @@ export class HelperService {
 
     const ticks = Math.floor(DIMENSIONS_POLLING_TIMEOUT / DIMENSIONS_POLLING_INTERVAL);
 
-    const pollingSubscription = interval(DIMENSIONS_POLLING_INTERVAL).pipe(take(ticks)).subscribe(
-      {
+    const pollingSubscription = interval(DIMENSIONS_POLLING_INTERVAL)
+      .pipe(take(ticks))
+      .subscribe({
         next: (_tick) => {
-          getWorkspacesObserver().subscribe(workspaces => {
-            const {destination_synced_at} = workspaces[0];
+          getWorkspacesObserver().subscribe((workspaces) => {
+            const { destination_synced_at } = workspaces[0];
             if (destination_synced_at !== null) {
               onPollingComplete();
               pollingSubscription.unsubscribe();
@@ -356,7 +401,7 @@ export class HelperService {
 
         complete: () => {
           onPollingComplete();
-        }
-    });
+        },
+      });
   }
 }

@@ -2,7 +2,12 @@ import { HttpTestingController, provideHttpClientTesting } from '@angular/common
 import { getTestBed, TestBed } from '@angular/core/testing';
 import { environment } from 'src/environments/environment';
 import { OrgService } from '../org/org.service';
-import { bambooHRMockConfiguration, bambooHRMockConfigurationPayload, bambooHRMockConnectionPayload, bambooHrMockData } from './bamboo-hr.fixture';
+import {
+  bambooHRMockConfiguration,
+  bambooHRMockConfigurationPayload,
+  bambooHRMockConnectionPayload,
+  bambooHrMockData,
+} from './bamboo-hr.fixture';
 
 import { BambooHrService } from './bamboo-hr.service';
 import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
@@ -14,18 +19,18 @@ xdescribe('BambooHrService', () => {
   let orgService: OrgService;
   const API_BASE_URL = environment.cluster_domain_api_url;
   const service1 = {
-    getOrgId: () => 1
+    getOrgId: () => 1,
   };
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-    imports: [],
-    providers: [
+      imports: [],
+      providers: [
         { provide: OrgService, useValue: service1 },
         provideHttpClient(withInterceptorsFromDi()),
-        provideHttpClientTesting()
-    ]
-});
+        provideHttpClientTesting(),
+      ],
+    });
     injector = getTestBed();
     service = TestBed.inject(BambooHrService);
     orgService = injector.inject(OrgService);
@@ -43,7 +48,7 @@ xdescribe('BambooHrService', () => {
 
     const req = httpMock.expectOne({
       method: 'GET',
-      url: `${API_BASE_URL}/orgs/1/bamboohr/`
+      url: `${API_BASE_URL}/orgs/1/bamboohr/`,
     });
 
     req.flush(bambooHrMockData);
@@ -56,7 +61,7 @@ xdescribe('BambooHrService', () => {
 
     const req = httpMock.expectOne({
       method: 'POST',
-      url: `${API_BASE_URL}/orgs/1/bamboohr/folder/`
+      url: `${API_BASE_URL}/orgs/1/bamboohr/folder/`,
     });
 
     req.flush({});
@@ -69,7 +74,7 @@ xdescribe('BambooHrService', () => {
 
     const req = httpMock.expectOne({
       method: 'POST',
-      url: `${API_BASE_URL}/orgs/1/bamboohr/packages/`
+      url: `${API_BASE_URL}/orgs/1/bamboohr/packages/`,
     });
 
     req.flush({});
@@ -82,7 +87,7 @@ xdescribe('BambooHrService', () => {
 
     const req = httpMock.expectOne({
       method: 'POST',
-      url: `${API_BASE_URL}/orgs/1/bamboohr/bamboo_connection/`
+      url: `${API_BASE_URL}/orgs/1/bamboohr/bamboo_connection/`,
     });
 
     req.flush({});
@@ -95,7 +100,7 @@ xdescribe('BambooHrService', () => {
 
     const req = httpMock.expectOne({
       method: 'GET',
-      url: `${API_BASE_URL}/orgs/1/bamboohr/configuration/?org_id=1`
+      url: `${API_BASE_URL}/orgs/1/bamboohr/configuration/?org_id=1`,
     });
 
     expect(req.request.params.get('org_id')).toEqual('1');
@@ -110,7 +115,7 @@ xdescribe('BambooHrService', () => {
 
     const req = httpMock.expectOne({
       method: 'POST',
-      url: `${API_BASE_URL}/orgs/1/bamboohr/configuration/`
+      url: `${API_BASE_URL}/orgs/1/bamboohr/configuration/`,
     });
 
     req.flush(bambooHRMockConfiguration);
@@ -123,7 +128,7 @@ xdescribe('BambooHrService', () => {
 
     const req = httpMock.expectOne({
       method: 'POST',
-      url: `${API_BASE_URL}/orgs/1/bamboohr/disconnect/`
+      url: `${API_BASE_URL}/orgs/1/bamboohr/disconnect/`,
     });
 
     req.flush({});
@@ -136,7 +141,7 @@ xdescribe('BambooHrService', () => {
 
     const req = httpMock.expectOne({
       method: 'POST',
-      url: `${API_BASE_URL}/orgs/1/bamboohr/refresh_employees/`
+      url: `${API_BASE_URL}/orgs/1/bamboohr/refresh_employees/`,
     });
 
     req.flush({});

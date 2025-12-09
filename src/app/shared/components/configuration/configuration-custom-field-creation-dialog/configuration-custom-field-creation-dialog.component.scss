@@ -1,31 +1,31 @@
 .label-content {
-    @apply tw-bg-input-read-only-bg tw-border tw-border-input-read-only-border tw-rounded-4-px tw-h-auto ;
+  @apply tw-bg-input-read-only-bg tw-border tw-border-input-read-only-border tw-rounded-4-px tw-h-auto;
 }
-  
+
 .name-text {
-    @apply tw-pt-12-px tw-pr-0 tw-pb-8-px tw-pl-16-px ;
+  @apply tw-pt-12-px tw-pr-0 tw-pb-8-px tw-pl-16-px;
 }
 
 .form-field {
-    @apply tw-pt-8-px tw-pr-16-px tw-pl-16-px tw-pb-22-px ;
+  @apply tw-pt-8-px tw-pr-16-px tw-pl-16-px tw-pb-22-px;
 }
 
 .form-input {
-    @apply tw-text-14-px tw-pt-10-px tw-pr-0 tw-pb-10-px tw-pl-14-px tw-h-32-px tw-bg-white tw-border tw-border-input-read-only-border tw-box-border tw-rounded-8-px ;
+  @apply tw-text-14-px tw-pt-10-px tw-pr-0 tw-pb-10-px tw-pl-14-px tw-h-32-px tw-bg-white tw-border tw-border-input-read-only-border tw-box-border tw-rounded-8-px;
 }
 
 :host ::ng-deep .p-button {
-    @apply tw-w-fit #{!important};
+  @apply tw-w-fit #{!important};
 }
 
 .form-input-disabled {
-    @apply tw-text-14-px tw-pt-10-px tw-pr-0 tw-pb-10-px tw-pl-14-px tw-bg-input-read-only-bg tw-border tw-border-input-read-only-border tw-box-border tw-rounded-8-px ;
+  @apply tw-text-14-px tw-pt-10-px tw-pr-0 tw-pb-10-px tw-pl-14-px tw-bg-input-read-only-bg tw-border tw-border-input-read-only-border tw-box-border tw-rounded-8-px;
 }
 
-input[type="text"] {
-    @apply tw-rounded-4-px tw-border tw-border-input-read-only-border tw-py-8-px tw-pl-14-px tw-pr-12-px #{!important};
+input[type='text'] {
+  @apply tw-rounded-4-px tw-border tw-border-input-read-only-border tw-py-8-px tw-pl-14-px tw-pr-12-px #{!important};
 }
 
 ::placeholder {
-    @apply tw-text-input-default-placeholder-text tw-text-14-px #{!important};
+  @apply tw-text-input-default-placeholder-text tw-text-14-px #{!important};
 }

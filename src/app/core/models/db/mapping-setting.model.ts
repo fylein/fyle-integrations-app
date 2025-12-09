@@ -1,4 +1,4 @@
-import { PaginatedResponse } from "./paginated-response.model";
+import { PaginatedResponse } from './paginated-response.model';
 
 export type MappingSetting = {
   id: number;
@@ -9,8 +9,8 @@ export type MappingSetting = {
   destination_field: string;
   import_to_fyle: boolean;
   is_custom: boolean;
-  source_placeholder: string | null
-}
+  source_placeholder: string | null;
+};
 
 export interface MappingSettingResponse extends PaginatedResponse {
   results: MappingSetting[];

@@ -8,9 +8,8 @@ xdescribe('NetsuiteCompleteExportLogsComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ NetsuiteCompleteExportLogsComponent ]
-    })
-    .compileComponents();
+      declarations: [NetsuiteCompleteExportLogsComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(NetsuiteCompleteExportLogsComponent);
     component = fixture.componentInstance;

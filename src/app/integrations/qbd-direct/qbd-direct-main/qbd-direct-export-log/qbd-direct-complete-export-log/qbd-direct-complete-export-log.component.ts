@@ -18,13 +18,12 @@ import { SharedModule } from 'src/app/shared/shared.module';
 import { TranslocoService } from '@jsverse/transloco';
 
 @Component({
-    selector: 'app-qbd-direct-complete-export-log',
-    imports: [CommonModule, SharedModule],
-    templateUrl: './qbd-direct-complete-export-log.component.html',
-    styleUrl: './qbd-direct-complete-export-log.component.scss'
+  selector: 'app-qbd-direct-complete-export-log',
+  imports: [CommonModule, SharedModule],
+  templateUrl: './qbd-direct-complete-export-log.component.html',
+  styleUrl: './qbd-direct-complete-export-log.component.scss',
 })
 export class QbdDirectCompleteExportLogComponent implements OnInit {
-
   isLoading: boolean;
 
   appName: AppName = AppName.QBD_DIRECT;
@@ -45,9 +44,9 @@ export class QbdDirectCompleteExportLogComponent implements OnInit {
 
   hideCalendar: boolean;
 
-  accountingExports: AccountingExportList [];
+  accountingExports: AccountingExportList[];
 
-  filteredAccountingExports: AccountingExportList [];
+  filteredAccountingExports: AccountingExportList[];
 
   expenses: Expense[] = [];
 
@@ -72,12 +71,10 @@ export class QbdDirectCompleteExportLogComponent implements OnInit {
     private paginatorService: PaginatorService,
     private userService: UserService,
     private accountingExportService: AccountingExportService,
-    private translocoService: TranslocoService
+    private translocoService: TranslocoService,
   ) {
     this.dateOptions = this.accountingExportService.getDateOptionsV2();
-    this.searchQuerySubject.pipe(
-      debounceTime(1000)
-    ).subscribe((query: string) => {
+    this.searchQuerySubject.pipe(debounceTime(1000)).subscribe((query: string) => {
       this.searchQuery = query;
       this.offset = 0;
       this.currentPage = Math.ceil(this.offset / this.limit) + 1;
@@ -107,23 +104,40 @@ export class QbdDirectCompleteExportLogComponent implements OnInit {
     this.getAccountingExports(this.limit, offset);
   }
 
-  private getAccountingExports(limit: number, offset:number) {
+  private getAccountingExports(limit: number, offset: number) {
     this.isLoading = true;
 
     if (this.limit !== limit) {
       this.paginatorService.storePageSize(PaginatorPage.EXPORT_LOG, limit);
     }
 
-    this.accountingExportService.getAccountingExports([], [TaskLogState.COMPLETE], null, limit, offset, this.selectedDateFilter, null, this.searchQuery, this.appName).subscribe((accountingExportResponse) => {
+    this.accountingExportService
+      .getAccountingExports(
+        [],
+        [TaskLogState.COMPLETE],
+        null,
+        limit,
+        offset,
+        this.selectedDateFilter,
+        null,
+        this.searchQuery,
+        this.appName,
+      )
+      .subscribe((accountingExportResponse) => {
         this.totalCount = accountingExportResponse.count;
 
-      const accountingExports: AccountingExportList[] = accountingExportResponse.results.map((accountingExport: AccountingExport) =>
-        this.accountingExportService.parseAPIResponseToExportLog(accountingExport, this.org_id, this.translocoService)
-      );
-      this.filteredAccountingExports = accountingExports;
-      this.accountingExports = [...this.filteredAccountingExports];
-      this.isLoading = false;
-    });
+        const accountingExports: AccountingExportList[] = accountingExportResponse.results.map(
+          (accountingExport: AccountingExport) =>
+            this.accountingExportService.parseAPIResponseToExportLog(
+              accountingExport,
+              this.org_id,
+              this.translocoService,
+            ),
+        );
+        this.filteredAccountingExports = accountingExports;
+        this.accountingExports = [...this.filteredAccountingExports];
+        this.isLoading = false;
+      });
   }
 
   private setupForm(): void {
@@ -131,7 +145,7 @@ export class QbdDirectCompleteExportLogComponent implements OnInit {
       searchOption: [''],
       dateRange: [null],
       start: [''],
-      end: ['']
+      end: [''],
     });
 
     this.exportLogForm.controls.start.valueChanges.subscribe((dateRange) => {
@@ -145,7 +159,7 @@ export class QbdDirectCompleteExportLogComponent implements OnInit {
         this.hideCalendar = true;
         this.selectedDateFilter = {
           startDate: dateRange[0],
-          endDate: dateRange[1]
+          endDate: dateRange[1],
         };
 
         this.isDateSelected = true;
@@ -172,6 +186,4 @@ export class QbdDirectCompleteExportLogComponent implements OnInit {
   ngOnInit(): void {
     this.getAccountingExportsAndSetupPage();
   }
-
-
 }

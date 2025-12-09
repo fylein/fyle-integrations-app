@@ -1,15 +1,20 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { brandingConfig, brandingFeatureConfig } from 'src/app/branding/branding-config';
-import { AppName, ButtonSize, ButtonType, ConfigurationCta, QBDDirectInteractionType } from 'src/app/core/models/enum/enum.model';
+import {
+  AppName,
+  ButtonSize,
+  ButtonType,
+  ConfigurationCta,
+  QBDDirectInteractionType,
+} from 'src/app/core/models/enum/enum.model';
 
 @Component({
-    selector: 'app-configuration-step-footer',
-    templateUrl: './configuration-step-footer.component.html',
-    styleUrls: ['./configuration-step-footer.component.scss'],
-    standalone: false
+  selector: 'app-configuration-step-footer',
+  templateUrl: './configuration-step-footer.component.html',
+  styleUrls: ['./configuration-step-footer.component.scss'],
+  standalone: false,
 })
 export class ConfigurationStepFooterComponent implements OnInit {
-
   @Input() ctaText: string;
 
   @Input() isButtonDisabled: boolean;
@@ -42,7 +47,7 @@ export class ConfigurationStepFooterComponent implements OnInit {
 
   readonly ConfigurationCta = ConfigurationCta;
 
-  constructor() { }
+  constructor() {}
 
   ngOnInit(): void {}
 
@@ -57,5 +62,4 @@ export class ConfigurationStepFooterComponent implements OnInit {
   saveChanges(): void {
     this.save.emit();
   }
-
 }

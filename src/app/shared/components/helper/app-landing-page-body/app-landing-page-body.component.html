@@ -1,20 +1,31 @@
-<div class="tw-flex tw-justify-center tw-text-center tw-flex-col" [ngClass]="brandingStyle.qbd_direct.onboarding.bodyStyle">
+<div
+  class="tw-flex tw-justify-center tw-text-center tw-flex-col"
+  [ngClass]="brandingStyle.qbd_direct.onboarding.bodyStyle"
+>
   @if (brandingFeatureConfig.shouldShowOnboardingYouTubeVideo || appName === AppName.SAGE50) {
     @if (!headlineText) {
-      <p class="tw-text-normal-text-color" [ngClass]="brandingStyle.qbd_direct.onboarding.bodyTopText">{{ 'appLandingPageBody.simpleTutorial' | transloco }}</p>
+      <p class="tw-text-normal-text-color" [ngClass]="brandingStyle.qbd_direct.onboarding.bodyTopText">
+        {{ 'appLandingPageBody.simpleTutorial' | transloco }}
+      </p>
     }
     @if (headlineText) {
-      <p class="tw-text-text-primary"  [ngClass]="brandingStyle.qbd_direct.onboarding.bodyTopText">{{ headlineText }}</p>
+      <p class="tw-text-text-primary" [ngClass]="brandingStyle.qbd_direct.onboarding.bodyTopText">{{ headlineText }}</p>
     }
     <p class="tw-text-text-tertiary tw-text-14-px tw-pt-8-px tw-flex tw-justify-center">
-      {{headerText}}
+      {{ headerText }}
       @if (redirectLink) {
         <a
           class="link tw-w-fit tw-font-500 tw-inline-flex tw-items-center tw-pl-2-px"
-          (click)="windowService.openInNewTab(redirectLink)">
-          {{ 'common.readMoreText' | transloco}}
+          (click)="windowService.openInNewTab(redirectLink)"
+        >
+          {{ 'common.readMoreText' | transloco }}
           @if (brandingFeatureConfig.isIconsInsideButtonAllowed) {
-            <app-svg-icon [svgSource]="'open-in-new-tab'" [width]="'16px'" [height]="'16px'" class="tw-text-link-primary tw-pl-2-px tw-w-fit"></app-svg-icon>
+            <app-svg-icon
+              [svgSource]="'open-in-new-tab'"
+              [width]="'16px'"
+              [height]="'16px'"
+              class="tw-text-link-primary tw-pl-2-px tw-w-fit"
+            ></app-svg-icon>
           }
         </a>
       }
@@ -22,18 +33,26 @@
 
     @if (embedVideo) {
       <div class="tw-flex tw-justify-center tw-pt-24-px">
-        <iframe class="{{brandingStyle.qbd_direct.onboarding.tutorialvideoClass}}" [src]="embedVideoUrl" [title]="'appLandingPageBody.integrationTitle' | transloco: { brandName: brandingConfig.brandName, appName: appName }" frameborder="0" allowfullscreen></iframe>
+        <iframe
+          class="{{ brandingStyle.qbd_direct.onboarding.tutorialvideoClass }}"
+          [src]="embedVideoUrl"
+          [title]="
+            'appLandingPageBody.integrationTitle' | transloco: { brandName: brandingConfig.brandName, appName: appName }
+          "
+          frameborder="0"
+          allowfullscreen
+        ></iframe>
       </div>
     }
   }
-  @if(!embedVideo && embedImage) {
+  @if (!embedVideo && embedImage) {
     <div class="tw-flex tw-justify-center tw-pt-24-px">
-      <img src="{{embedImage}}" class="{{brandingStyle.qbd_direct.onboarding.tutorialvideoClass}}">
+      <img src="{{ embedImage }}" class="{{ brandingStyle.qbd_direct.onboarding.tutorialvideoClass }}" />
     </div>
   }
-  @if(svgPath) {
+  @if (svgPath) {
     <div class="tw-flex tw-justify-center" [ngClass]="brandingStyle.qbd_direct.onboarding.flowChart">
-      <img src="{{svgPath}}" />
+      <img src="{{ svgPath }}" />
     </div>
   }
 </div>

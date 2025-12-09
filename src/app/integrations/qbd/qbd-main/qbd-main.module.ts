@@ -11,19 +11,7 @@ import { TableModule } from 'primeng/table';
 import { TooltipModule } from 'primeng/tooltip';
 
 @NgModule({
-  declarations: [
-    QbdConfigurationComponent,
-    QbdDashboardComponent,
-    QbdMappingComponent
-  ],
-  imports: [
-    CommonModule,
-    SharedModule,
-    TabsModule,
-    SelectModule,
-    TableModule,
-    MainRoutingModule,
-    TooltipModule
-  ]
+  declarations: [QbdConfigurationComponent, QbdDashboardComponent, QbdMappingComponent],
+  imports: [CommonModule, SharedModule, TabsModule, SelectModule, TableModule, MainRoutingModule, TooltipModule],
 })
-export class QbdMainModule { }
+export class QbdMainModule {}

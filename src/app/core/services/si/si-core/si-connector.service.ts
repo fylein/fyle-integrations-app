@@ -13,14 +13,12 @@ import { IntegrationsToastService } from '../../common/integrations-toast.servic
 import { ToastSeverity } from 'src/app/core/models/enum/enum.model';
 import { TranslocoService } from '@jsverse/transloco';
 
-
 const sageIntacctCredentialCache = new Subject<void>();
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class IntacctConnectorService {
-
   workspaceId: number;
 
   intacctCredential: SageIntacctCredential | null = null;
@@ -31,15 +29,21 @@ export class IntacctConnectorService {
     private storageService: StorageService,
     private mappingsService: SiMappingsService,
     private toastService: IntegrationsToastService,
-    private translocoService: TranslocoService
-  ) { }
+    private translocoService: TranslocoService,
+  ) {}
 
   mapAPIResponseToSage300ConnectorFormGroup(sageIntacctConnection: SageIntacctCredential | null): FormGroup {
     const isDisabled = sageIntacctConnection?.si_company_id ? true : false;
     return new FormGroup({
-      companyID: new FormControl({value: sageIntacctConnection?.si_company_id ? sageIntacctConnection?.si_company_id : null, disabled: isDisabled}, Validators.required),
+      companyID: new FormControl(
+        {
+          value: sageIntacctConnection?.si_company_id ? sageIntacctConnection?.si_company_id : null,
+          disabled: isDisabled,
+        },
+        Validators.required,
+      ),
       userID: new FormControl('', Validators.required),
-      userPassword: new FormControl('', Validators.required)
+      userPassword: new FormControl('', Validators.required),
     });
   }
 
@@ -47,12 +51,12 @@ export class IntacctConnectorService {
     return {
       si_user_id: form.get('userID')?.value,
       si_company_id: form.get('companyID')?.value,
-      si_user_password: form.get('userPassword')?.value
+      si_user_password: form.get('userPassword')?.value,
     };
   }
 
   @Cacheable({
-    cacheBusterObserver: sageIntacctCredentialCache
+    cacheBusterObserver: sageIntacctCredentialCache,
   })
   getSageIntacctCredential(): Observable<SageIntacctCredential> {
     this.workspaceId = this.storageService.get('workspaceId');
@@ -60,7 +64,7 @@ export class IntacctConnectorService {
   }
 
   @CacheBuster({
-    cacheBusterNotifier: sageIntacctCredentialCache
+    cacheBusterNotifier: sageIntacctCredentialCache,
   })
   private postCredentials(data: SageIntacctCredential): Observable<SageIntacctCredential> {
     this.workspaceId = this.storageService.get('workspaceId');
@@ -68,7 +72,10 @@ export class IntacctConnectorService {
     return this.apiService.post('/workspaces/' + this.workspaceId + '/credentials/sage_intacct/', data);
   }
 
-  connectSageIntacct(connectIntacctForm: FormGroup, isReconnecting?: boolean): Observable<{intacctSetupForm: FormGroup, isIntacctConnected: boolean}> {
+  connectSageIntacct(
+    connectIntacctForm: FormGroup,
+    isReconnecting?: boolean,
+  ): Observable<{ intacctSetupForm: FormGroup; isIntacctConnected: boolean }> {
     this.workspaceId = this.storageService.get('workspaceId');
     const connectorPayload = this.constructSage300ConnectionPayload(connectIntacctForm);
     return this.postCredentials(connectorPayload).pipe(
@@ -76,22 +83,38 @@ export class IntacctConnectorService {
         if (!isReconnecting) {
           return this.mappingsService.refreshSageIntacctDimensions(['location_entities']).pipe(
             map(() => {
-              return { intacctSetupForm: this.mapAPIResponseToSage300ConnectorFormGroup(response), isIntacctConnected: true };
-            })
+              return {
+                intacctSetupForm: this.mapAPIResponseToSage300ConnectorFormGroup(response),
+                isIntacctConnected: true,
+              };
+            }),
           );
         }
-          this.toastService.displayToastMessage(ToastSeverity.SUCCESS, this.translocoService.translate('services.siConnector.connectionReconnectedToast'), 6000);
-          return of({ intacctSetupForm: this.mapAPIResponseToSage300ConnectorFormGroup(response), isIntacctConnected: true });
-
+        this.toastService.displayToastMessage(
+          ToastSeverity.SUCCESS,
+          this.translocoService.translate('services.siConnector.connectionReconnectedToast'),
+          6000,
+        );
+        return of({
+          intacctSetupForm: this.mapAPIResponseToSage300ConnectorFormGroup(response),
+          isIntacctConnected: true,
+        });
       }),
       catchError(() => {
-        this.toastService.displayToastMessage(ToastSeverity.ERROR, this.translocoService.translate('services.siConnector.connectionErrorToast'), 6000);
-        return of({ intacctSetupForm: this.mapAPIResponseToSage300ConnectorFormGroup(this.intacctCredential), isIntacctConnected: false });
-      })
+        this.toastService.displayToastMessage(
+          ToastSeverity.ERROR,
+          this.translocoService.translate('services.siConnector.connectionErrorToast'),
+          6000,
+        );
+        return of({
+          intacctSetupForm: this.mapAPIResponseToSage300ConnectorFormGroup(this.intacctCredential),
+          isIntacctConnected: false,
+        });
+      }),
     );
   }
 
-  getIntacctFormGroup(): Observable<{intacctSetupForm: FormGroup}> {
+  getIntacctFormGroup(): Observable<{ intacctSetupForm: FormGroup }> {
     return this.getSageIntacctCredential().pipe(
       map((intacctCredential) => {
         this.intacctCredential = intacctCredential;
@@ -100,9 +123,9 @@ export class IntacctConnectorService {
       catchError(() => {
         this.intacctCredential = null;
         return of({
-          intacctSetupForm: this.mapAPIResponseToSage300ConnectorFormGroup(null)
+          intacctSetupForm: this.mapAPIResponseToSage300ConnectorFormGroup(null),
         });
-      })
+      }),
     );
   }
 
@@ -119,11 +142,15 @@ export class IntacctConnectorService {
         return true;
       }),
       catchError((error) => {
-        if (error.error.message !== "Intacct credentials not found" && shouldShowTokenExpiredMessage) {
-          this.toastService.displayToastMessage(ToastSeverity.ERROR, this.translocoService.translate('services.siConnector.connectionExpiredToast'), 6000);
+        if (error.error.message !== 'Intacct credentials not found' && shouldShowTokenExpiredMessage) {
+          this.toastService.displayToastMessage(
+            ToastSeverity.ERROR,
+            this.translocoService.translate('services.siConnector.connectionExpiredToast'),
+            6000,
+          );
         }
         return of(false);
-      })
+      }),
     );
   }
 
@@ -135,8 +162,6 @@ export class IntacctConnectorService {
 
   getLocationEntityMapping(): Observable<LocationEntityMapping> {
     const workspaceId = this.workspaceService.getWorkspaceId();
-    return this.apiService.get(
-      `/workspaces/${workspaceId}/mappings/location_entity/`, {}
-    );
+    return this.apiService.get(`/workspaces/${workspaceId}/mappings/location_entity/`, {});
   }
 }

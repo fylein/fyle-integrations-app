@@ -7,19 +7,16 @@ let API_BASE_URL: string;
 
 const httpOptions = {
   headers: new HttpHeaders({
-    'Content-Type': 'application/json'
+    'Content-Type': 'application/json',
   }),
-  body: {}
+  body: {},
 };
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ApiService {
-
-  constructor(
-    private http: HttpClient
-  ) { }
+  constructor(private http: HttpClient) {}
 
   getBaseApiURL(): string {
     return API_BASE_URL;
@@ -43,7 +40,7 @@ export class ApiService {
 
       if (raiseError) {
         console.error(
-          `Backend returned code ${error.status}, url was: ${url} method was: ${httpMethod}, body was: ${JSON.stringify(error.error)}`
+          `Backend returned code ${error.status}, url was: ${url} method was: ${httpMethod}, body was: ${JSON.stringify(error.error)}`,
         );
       }
     }
@@ -52,41 +49,51 @@ export class ApiService {
 
   post(endpoint: string, body: {}): Observable<any> {
     const url = API_BASE_URL + endpoint;
-    return this.http.post(url, body, httpOptions).pipe(catchError(error => {
-      return this.handleError(error, 'POST', url);
-    }));
+    return this.http.post(url, body, httpOptions).pipe(
+      catchError((error) => {
+        return this.handleError(error, 'POST', url);
+      }),
+    );
   }
 
   get(endpoint: string, apiParams: any, apiBaseUrl?: string): Observable<any> {
     let params = new HttpParams();
-    Object.keys(apiParams).forEach(key => {
+    Object.keys(apiParams).forEach((key) => {
       params = params.set(key, apiParams[key]);
     });
     const url = (apiBaseUrl ? apiBaseUrl : API_BASE_URL) + endpoint;
-    return this.http.get(url, { params }).pipe(catchError(error => {
-      return this.handleError(error, 'GET', url);
-    }));
+    return this.http.get(url, { params }).pipe(
+      catchError((error) => {
+        return this.handleError(error, 'GET', url);
+      }),
+    );
   }
 
   patch(endpoint: string, body: {}): Observable<any> {
     const url = API_BASE_URL + endpoint;
-    return this.http.patch(url, body, httpOptions).pipe(catchError(error => {
-      return this.handleError(error, 'PATCH', url);
-    }));
+    return this.http.patch(url, body, httpOptions).pipe(
+      catchError((error) => {
+        return this.handleError(error, 'PATCH', url);
+      }),
+    );
   }
 
   put(endpoint: string, body: {}): Observable<any> {
     const url = API_BASE_URL + endpoint;
-    return this.http.put(url, body, httpOptions).pipe(catchError(error => {
-      return this.handleError(error, 'PUT', url);
-    }));
+    return this.http.put(url, body, httpOptions).pipe(
+      catchError((error) => {
+        return this.handleError(error, 'PUT', url);
+      }),
+    );
   }
 
   delete(endpoint: string, body: {}): Observable<any> {
     httpOptions.body = body;
     const url = API_BASE_URL + endpoint;
-    return this.http.delete(url, httpOptions).pipe(catchError(error => {
-      return this.handleError(error, 'DELETE', url);
-    }));
+    return this.http.delete(url, httpOptions).pipe(
+      catchError((error) => {
+        return this.handleError(error, 'DELETE', url);
+      }),
+    );
   }
 }

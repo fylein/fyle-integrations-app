@@ -18,13 +18,12 @@ import { TranslocoService } from '@jsverse/transloco';
 import { AccountingExportService } from 'src/app/core/services/common/accounting-export.service';
 
 @Component({
-    selector: 'app-qbo-complete-export-log',
-    templateUrl: './qbo-complete-export-log.component.html',
-    styleUrls: ['./qbo-complete-export-log.component.scss'],
-    standalone: false
+  selector: 'app-qbo-complete-export-log',
+  templateUrl: './qbo-complete-export-log.component.html',
+  styleUrls: ['./qbo-complete-export-log.component.scss'],
+  standalone: false,
 })
 export class QboCompleteExportLogComponent implements OnInit {
-
   isLoading: boolean;
 
   appName: AppName = AppName.QBO;
@@ -45,9 +44,9 @@ export class QboCompleteExportLogComponent implements OnInit {
 
   hideCalendar: boolean;
 
-  accountingExports: AccountingExportList [];
+  accountingExports: AccountingExportList[];
 
-  filteredAccountingExports: AccountingExportList [];
+  filteredAccountingExports: AccountingExportList[];
 
   expenses: Expense[] = [];
 
@@ -70,12 +69,10 @@ export class QboCompleteExportLogComponent implements OnInit {
     private paginatorService: PaginatorService,
     private userService: UserService,
     private translocoService: TranslocoService,
-    private accountingExportService: AccountingExportService
+    private accountingExportService: AccountingExportService,
   ) {
     this.dateOptions = this.accountingExportService.getDateOptionsV2();
-    this.searchQuerySubject.pipe(
-      debounceTime(1000)
-    ).subscribe((query: string) => {
+    this.searchQuerySubject.pipe(debounceTime(1000)).subscribe((query: string) => {
       this.searchQuery = query;
       this.offset = 0;
       this.currentPage = Math.ceil(this.offset / this.limit) + 1;
@@ -105,23 +102,31 @@ export class QboCompleteExportLogComponent implements OnInit {
     this.getAccountingExports(this.limit, offset);
   }
 
-  private getAccountingExports(limit: number, offset:number) {
+  private getAccountingExports(limit: number, offset: number) {
     this.isLoading = true;
 
     if (this.limit !== limit) {
       this.paginatorService.storePageSize(PaginatorPage.EXPORT_LOG, limit);
     }
 
-    this.exportLogService.getExpenseGroups(TaskLogState.COMPLETE, limit, offset, this.selectedDateFilter, null, this.searchQuery).subscribe((accountingExportResponse: ExpenseGroupResponse) => {
+    this.exportLogService
+      .getExpenseGroups(TaskLogState.COMPLETE, limit, offset, this.selectedDateFilter, null, this.searchQuery)
+      .subscribe((accountingExportResponse: ExpenseGroupResponse) => {
         this.totalCount = accountingExportResponse.count;
 
-      const accountingExports: AccountingExportList[] = accountingExportResponse.results.map((accountingExport: ExpenseGroup) =>
-        this.accountingExportService.parseExpenseGroupAPIResponseToExportLog(accountingExport, this.org_id, AppName.QBO, this.translocoService)
-      );
-      this.filteredAccountingExports = accountingExports;
-      this.accountingExports = [...this.filteredAccountingExports];
-      this.isLoading = false;
-    });
+        const accountingExports: AccountingExportList[] = accountingExportResponse.results.map(
+          (accountingExport: ExpenseGroup) =>
+            this.accountingExportService.parseExpenseGroupAPIResponseToExportLog(
+              accountingExport,
+              this.org_id,
+              AppName.QBO,
+              this.translocoService,
+            ),
+        );
+        this.filteredAccountingExports = accountingExports;
+        this.accountingExports = [...this.filteredAccountingExports];
+        this.isLoading = false;
+      });
   }
 
   private setupForm(): void {
@@ -129,7 +134,7 @@ export class QboCompleteExportLogComponent implements OnInit {
       searchOption: [''],
       dateRange: [null],
       start: [''],
-      end: ['']
+      end: [''],
     });
 
     this.exportLogForm.controls.start.valueChanges.subscribe((dateRange) => {
@@ -143,7 +148,7 @@ export class QboCompleteExportLogComponent implements OnInit {
         this.hideCalendar = true;
         this.selectedDateFilter = {
           startDate: dateRange[0],
-          endDate: dateRange[1]
+          endDate: dateRange[1],
         };
 
         this.isDateSelected = true;
@@ -170,5 +175,4 @@ export class QboCompleteExportLogComponent implements OnInit {
   ngOnInit(): void {
     this.getAccountingExportsAndSetupPage();
   }
-
 }

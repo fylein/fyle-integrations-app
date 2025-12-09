@@ -1,14 +1,26 @@
 <div class="clone-setting-field--field-row">
   <div class="clone-setting-field--description-section">
     @if (iconSource) {
-      <app-svg-icon [width]="'24px'" [height]="'24px'" [svgSource]="iconSource" [styleClasses]="'tw-text-menu-inactive-text-color'"></app-svg-icon>
+      <app-svg-icon
+        [width]="'24px'"
+        [height]="'24px'"
+        [svgSource]="iconSource"
+        [styleClasses]="'tw-text-menu-inactive-text-color'"
+      ></app-svg-icon>
     }
     <span class="clone-setting-field--label-text">
       {{ label }}
       @if (isFieldMandatory) {
         <app-mandatory-field></app-mandatory-field>
       }
-      <app-svg-icon [width]="'16px'" [height]="'16px'" [svgSource]="'info-circle-fill'" [styleClasses]="'tw-text-placeholder tw-ml-8-px tw-pb-4-px'" [tooltipText]="tooltipText" [tooltipPosition]="'top'"></app-svg-icon>
+      <app-svg-icon
+        [width]="'16px'"
+        [height]="'16px'"
+        [svgSource]="'info-circle-fill'"
+        [styleClasses]="'tw-text-placeholder tw-ml-8-px tw-pb-4-px'"
+        [tooltipText]="tooltipText"
+        [tooltipPosition]="'top'"
+      ></app-svg-icon>
     </span>
   </div>
   <div>
@@ -21,15 +33,12 @@
         [formControllerName]="formControllerName"
         [displayKey]="dropdownDisplayKey"
         [isMultiLineOption]="isMultiLineOption"
-        [additionalClasses]="additionalClasses">
+        [additionalClasses]="additionalClasses"
+      >
       </app-select>
     }
     @if (inputType === InputType.TOGGLE) {
-      <app-toggle
-        [form]="form"
-        [isDisabled]="isDisabled"
-        [formControllerName]="formControllerName">
-      </app-toggle>
+      <app-toggle [form]="form" [isDisabled]="isDisabled" [formControllerName]="formControllerName"> </app-toggle>
     }
     @if (inputType === InputType.MULTI_SELECT) {
       <app-multi-select
@@ -37,7 +46,8 @@
         [formControllerName]="formControllerName"
         [disabledOption]="disabledOption"
         [placeholder]="placeholder"
-        [options]="options">
+        [options]="options"
+      >
       </app-multi-select>
     }
   </div>

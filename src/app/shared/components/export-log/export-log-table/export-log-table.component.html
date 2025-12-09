@@ -3,18 +3,23 @@
     <ng-template pTemplate="header">
       <tr class="tw-text-text-primary">
         @if (!isDashboardFailed) {
-          <th class="tw-min-w-120-px">{{ 'exportLog.tableHeaders.dateTime' | transloco}}</th>
+          <th class="tw-min-w-120-px">{{ 'exportLog.tableHeaders.dateTime' | transloco }}</th>
         }
         <th>{{ 'exportLogTable.employee' | transloco }}</th>
         @if (isExportLogTable && brandingFeatureConfig.featureFlags.exportLog.expenseType) {
-          <th>{{ 'exportLog.tableHeaders.expenseType' | transloco}}</th>
+          <th>{{ 'exportLog.tableHeaders.expenseType' | transloco }}</th>
         }
         <th>{{ 'exportLogTable.referenceID' | transloco }}</th>
         @if (!isDashboardFailed) {
-          <th>{{ 'exportLog.tableHeaders.exportedAs' | transloco}}</th>
+          <th>{{ 'exportLog.tableHeaders.exportedAs' | transloco }}</th>
         }
-        @if (!isDashboardFailed && appName !== AppName.SAGE300 && appName !== AppName.QBD_DIRECT && appName !== AppName.BUSINESS_CENTRAL) {
-          <th>{{ 'exportLogTable.linkTo' | transloco }} {{appName}}</th>
+        @if (
+          !isDashboardFailed &&
+          appName !== AppName.SAGE300 &&
+          appName !== AppName.QBD_DIRECT &&
+          appName !== AppName.BUSINESS_CENTRAL
+        ) {
+          <th>{{ 'exportLogTable.linkTo' | transloco }} {{ appName }}</th>
         }
         @if (isDashboardFailed) {
           <th class="tw-min-w-120-px">{{ 'exportLogTable.linkTo' | transloco }} {{ brandingConfig.brandName }}</th>
@@ -25,42 +30,66 @@
       <tr class="clickable-row" (click)="displayChildTable(rowData)">
         @if (!isDashboardFailed) {
           <td>
-            <p class="tw-text-14-px tw-font-400 tw-text-text-secondary">{{rowData.exportedAt | date}}</p>
-            <span class="tw-font-400 !tw-text-12-px tw-text-text-muted">{{rowData.exportedAt | date : "hh:mm a"}}</span>
+            <p class="tw-text-14-px tw-font-400 tw-text-text-secondary">{{ rowData.exportedAt | date }}</p>
+            <span class="tw-font-400 !tw-text-12-px tw-text-text-muted">{{
+              rowData.exportedAt | date: 'hh:mm a'
+            }}</span>
           </td>
         }
         <td>
-          <h4 class="tw-text-14-px tw-font-400 tw-text-text-secondary"
-            [ngClass]="{'truncate': rowData.employee[0]?.length > 16 && !isExportLogTable}"
+          <h4
+            class="tw-text-14-px tw-font-400 tw-text-text-secondary"
+            [ngClass]="{ truncate: rowData.employee[0]?.length > 16 && !isExportLogTable }"
             [pTooltip]="rowData.employee[0]?.length > 16 && !isExportLogTable ? rowData.employee[0] : null"
-            tooltipPosition="top">
-            {{rowData.employee[0]}}
+            tooltipPosition="top"
+          >
+            {{ rowData.employee[0] }}
           </h4>
-          <h5 class="tw-font-400 !tw-text-12-px tw-text-text-muted"
-            [ngClass]="{'truncate': rowData.employee[1]?.length > 16 && !isExportLogTable}"
+          <h5
+            class="tw-font-400 !tw-text-12-px tw-text-text-muted"
+            [ngClass]="{ truncate: rowData.employee[1]?.length > 16 && !isExportLogTable }"
             [pTooltip]="rowData.employee[1]?.length > 16 && !isExportLogTable ? rowData.employee[1] : null"
-            tooltipPosition="top">
-            {{rowData.employee[1]}}
+            tooltipPosition="top"
+          >
+            {{ rowData.employee[1] }}
           </h5>
         </td>
         @if (isExportLogTable && brandingFeatureConfig.featureFlags.exportLog.expenseType) {
-          <td class="tw-text-text-secondary">{{rowData.expenseType | sentenceCase}}</td>
+          <td class="tw-text-text-secondary">{{ rowData.expenseType | sentenceCase }}</td>
         }
-        <td class="tw-text-text-secondary tw-underline" (click)="openUrl(rowData.fyleUrl)">{{rowData.referenceNumber}}</td>
+        <td class="tw-text-text-secondary tw-underline" (click)="openUrl(rowData.fyleUrl)">
+          {{ rowData.referenceNumber }}
+        </td>
         @if (!isDashboardFailed) {
           <td class="tw-text-text-secondary">
-            <span [ngClass]="{'truncate-export-type': rowData.exportedAs?.length > 10 && !isExportLogTable}"
+            <span
+              [ngClass]="{ 'truncate-export-type': rowData.exportedAs?.length > 10 && !isExportLogTable }"
               [pTooltip]="rowData.exportedAs.length > 10 && !isExportLogTable ? rowData.exportedAs : null"
-              tooltipPosition="top">
-              {{ (rowData.exportedAs | snakeCaseToSpaceCase | sentenceCase) }}
+              tooltipPosition="top"
+            >
+              {{ rowData.exportedAs | snakeCaseToSpaceCase | sentenceCase }}
             </span>
           </td>
         }
-        @if (!isDashboardFailed && appName !== AppName.SAGE300 && appName !== AppName.QBD_DIRECT && appName !== AppName.BUSINESS_CENTRAL) {
+        @if (
+          !isDashboardFailed &&
+          appName !== AppName.SAGE300 &&
+          appName !== AppName.QBD_DIRECT &&
+          appName !== AppName.BUSINESS_CENTRAL
+        ) {
           <td>
             <div>
-              <button (click)="openUrl(rowData.integrationUrl)" [pTooltip]="'exportLogTable.openInNewTab' | transloco" tooltipPosition="top">
-                <app-svg-icon [styleClasses]="'tw-pt-5-px'" [svgSource]="'open-in-new-tab-standard'" [width]="'24px'" [height]="'24px'"></app-svg-icon>
+              <button
+                (click)="openUrl(rowData.integrationUrl)"
+                [pTooltip]="'exportLogTable.openInNewTab' | transloco"
+                tooltipPosition="top"
+              >
+                <app-svg-icon
+                  [styleClasses]="'tw-pt-5-px'"
+                  [svgSource]="'open-in-new-tab-standard'"
+                  [width]="'24px'"
+                  [height]="'24px'"
+                ></app-svg-icon>
               </button>
             </div>
           </td>
@@ -68,8 +97,17 @@
         @if (isDashboardFailed) {
           <td>
             <div>
-              <button (click)="openUrl(rowData.fyleUrl)" [pTooltip]="'exportLogTable.openInNewTab' | transloco" tooltipPosition="top">
-                <app-svg-icon [styleClasses]="'tw-pt-5-px'" [svgSource]="'open-in-new-tab-standard'" [width]="'24px'" [height]="'24px'"></app-svg-icon>
+              <button
+                (click)="openUrl(rowData.fyleUrl)"
+                [pTooltip]="'exportLogTable.openInNewTab' | transloco"
+                tooltipPosition="top"
+              >
+                <app-svg-icon
+                  [styleClasses]="'tw-pt-5-px'"
+                  [svgSource]="'open-in-new-tab-standard'"
+                  [width]="'24px'"
+                  [height]="'24px'"
+                ></app-svg-icon>
               </button>
             </div>
           </td>
@@ -79,4 +117,8 @@
   </p-table>
 }
 
-<app-export-log-child-table-dialog [isDialogOpen]="isChildTableVisible" [expenses]="expenses" (hideChildTable)="handleDialogClose()"></app-export-log-child-table-dialog>
+<app-export-log-child-table-dialog
+  [isDialogOpen]="isChildTableVisible"
+  [expenses]="expenses"
+  (hideChildTable)="handleDialogClose()"
+></app-export-log-child-table-dialog>

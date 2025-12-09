@@ -3,14 +3,13 @@ import { Router } from '@angular/router';
 import { AuthService } from '../services/common/auth.service';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
-export class AuthGuard  {
-
+export class AuthGuard {
   constructor(
     private router: Router,
-    private authService: AuthService
-  ) { }
+    private authService: AuthService,
+  ) {}
 
   canActivate() {
     if (!this.authService.isLoggedIn()) {
@@ -20,5 +19,4 @@ export class AuthGuard  {
 
     return true;
   }
-
 }

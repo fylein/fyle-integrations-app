@@ -10,20 +10,13 @@ import { TravelperkSharedModule } from '../travelperk-shared/travelperk-shared.m
 import { SharedModule } from 'src/app/shared/shared.module';
 import { SkeletonModule } from 'primeng/skeleton';
 
-
 @NgModule({
   declarations: [
     TravelperkOnboardingDoneComponent,
     TravelperkOnboardingLandingComponent,
     TravelperkOnboardingAdvancedSettingsComponent,
-    TravelperkOnboardingPaymentProfileSettingsComponent
+    TravelperkOnboardingPaymentProfileSettingsComponent,
   ],
-  imports: [
-    CommonModule,
-    TravelperkSharedModule,
-    SharedModule,
-    SkeletonModule,
-    TravelperkOnboardingRoutingModule
-  ]
+  imports: [CommonModule, TravelperkSharedModule, SharedModule, SkeletonModule, TravelperkOnboardingRoutingModule],
 })
-export class TravelperkOnboardingModule { }
+export class TravelperkOnboardingModule {}

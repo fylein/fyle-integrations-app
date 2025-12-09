@@ -5,19 +5,21 @@ import { HelperService } from '../../common/helper.service';
 import { Observable } from 'rxjs/internal/Observable';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class BusinessCentralMappingService {
-
   constructor(
     private apiService: ApiService,
     private workspaceService: WorkspaceService,
-    helper: HelperService
+    helper: HelperService,
   ) {
     helper.setBaseApiURL();
   }
 
   importBusinessCentralAttributes(refresh: boolean): Observable<{}> {
-    return this.apiService.post(`/workspaces/${this.workspaceService.getWorkspaceId()}/business_central/import_attributes/`, {refresh});
+    return this.apiService.post(
+      `/workspaces/${this.workspaceService.getWorkspaceId()}/business_central/import_attributes/`,
+      { refresh },
+    );
   }
 }

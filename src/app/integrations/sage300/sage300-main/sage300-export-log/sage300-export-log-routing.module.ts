@@ -11,19 +11,19 @@ const routes: Routes = [
     children: [
       {
         path: 'complete_export_log',
-        component: Sage300CompleteExportLogComponent
+        component: Sage300CompleteExportLogComponent,
       },
       {
         path: 'skip_export_log',
-        component: Sage300SkippedExportLogComponent
-      }
-    ]
-  }
+        component: Sage300SkippedExportLogComponent,
+      },
+    ],
+  },
 ];
 
 @NgModule({
   declarations: [],
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class Sage300ExportLogRoutingModule { }
+export class Sage300ExportLogRoutingModule {}

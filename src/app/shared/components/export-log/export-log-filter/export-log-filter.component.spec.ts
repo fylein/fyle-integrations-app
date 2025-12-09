@@ -8,9 +8,8 @@ xdescribe('ExportLogFilterComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ExportLogFilterComponent ]
-    })
-    .compileComponents();
+      declarations: [ExportLogFilterComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(ExportLogFilterComponent);
     component = fixture.componentInstance;

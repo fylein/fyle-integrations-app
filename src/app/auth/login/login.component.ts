@@ -21,23 +21,28 @@ import { QbdDirectAuthService } from 'src/app/core/services/qbd-direct/qbd-direc
 import { EventsService } from 'src/app/core/services/common/events.service';
 import { IntegrationsService } from 'src/app/core/services/common/integrations.service';
 import { Tokens } from 'src/app/core/models/misc/integration-tokens-map';
-import { appKeyToAccountingIntegrationApp, Integration, integrationCallbackUrlMap } from 'src/app/core/models/integrations/integrations.model';
+import {
+  appKeyToAccountingIntegrationApp,
+  Integration,
+  integrationCallbackUrlMap,
+} from 'src/app/core/models/integrations/integrations.model';
 import { RedirectUriStorageService } from 'src/app/core/services/misc/redirect-uri-storage.service';
 import { IframeOriginStorageService } from 'src/app/core/services/misc/iframe-origin-storage.service';
 
 @Component({
-    selector: 'app-login',
-    templateUrl: './login.component.html',
-    styleUrls: ['./login.component.scss'],
-    standalone: false
+  selector: 'app-login',
+  templateUrl: './login.component.html',
+  styleUrls: ['./login.component.scss'],
+  standalone: false,
 })
 export class LoginComponent implements OnInit {
-
   readonly brandingConfig = brandingConfig;
 
   readonly isINCluster = this.storageService.get('cluster-domain')?.includes('in1');
 
-  readonly exposeApps = !this.isINCluster ? exposeAppConfig[brandingConfig.brandId][brandingConfig.envId] : exposeAppConfig[brandingConfig.brandId]['production-1-in'];
+  readonly exposeApps = !this.isINCluster
+    ? exposeAppConfig[brandingConfig.brandId][brandingConfig.envId]
+    : exposeAppConfig[brandingConfig.brandId]['production-1-in'];
 
   constructor(
     private authService: AuthService,
@@ -49,7 +54,7 @@ export class LoginComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private sage300AuthService: Sage300AuthService,
-    private siAuthService : SiAuthService,
+    private siAuthService: SiAuthService,
     private nsAuthService: NetsuiteAuthService,
     private xeroAuthService: XeroAuthService,
     private storageService: StorageService,
@@ -57,9 +62,8 @@ export class LoginComponent implements OnInit {
     private eventsService: EventsService,
     private integrationsService: IntegrationsService,
     private redirectUriStorageService: RedirectUriStorageService,
-    private iframeOriginStorageService: IframeOriginStorageService
-  ) { }
-
+    private iframeOriginStorageService: IframeOriginStorageService,
+  ) {}
 
   openInAppIntegration(inAppIntegration: InAppIntegration): void {
     this.router.navigate([this.integrationsService.inAppIntegrationUrlMap[inAppIntegration]]);
@@ -68,13 +72,13 @@ export class LoginComponent implements OnInit {
   loginAndRedirectToInAppIntegration(redirectUri: string, inAppIntegrationKey: IntegrationAppKey): void {
     const authCode = redirectUri.split('code=')[1].split('&')[0];
     let login$;
-    if (inAppIntegrationKey === "INTACCT") {
+    if (inAppIntegrationKey === 'INTACCT') {
       login$ = this.siAuthService.loginWithAuthCode(authCode);
-    } else if (inAppIntegrationKey === "QBO") {
+    } else if (inAppIntegrationKey === 'QBO') {
       login$ = this.qboAuthService.loginWithAuthCode(authCode);
-    } else if (inAppIntegrationKey === "XERO") {
+    } else if (inAppIntegrationKey === 'XERO') {
       login$ = this.xeroAuthService.login(authCode);
-    } else if (inAppIntegrationKey === "NETSUITE") {
+    } else if (inAppIntegrationKey === 'NETSUITE') {
       login$ = this.nsAuthService.loginWithAuthCode(authCode);
     } else {
       return;
@@ -82,8 +86,8 @@ export class LoginComponent implements OnInit {
 
     login$.subscribe((token: Token) => {
       const tokens: Tokens = {
-        'access_token': token.access_token,
-        'refresh_token': token.refresh_token
+        access_token: token.access_token,
+        refresh_token: token.refresh_token,
       };
 
       this.authService.storeTokens(inAppIntegrationKey, tokens);
@@ -100,25 +104,27 @@ export class LoginComponent implements OnInit {
 
   private setupLoginWatcher(): void {
     this.eventsService.sageIntacctLogin.subscribe((redirectUri: string) => {
-      this.loginAndRedirectToInAppIntegration(redirectUri, "INTACCT");
+      this.loginAndRedirectToInAppIntegration(redirectUri, 'INTACCT');
     });
 
     this.eventsService.qboLogin.subscribe((redirectUri: string) => {
-      this.loginAndRedirectToInAppIntegration(redirectUri, "QBO");
+      this.loginAndRedirectToInAppIntegration(redirectUri, 'QBO');
     });
 
     this.eventsService.xeroLogin.subscribe((redirectUri: string) => {
-      this.loginAndRedirectToInAppIntegration(redirectUri, "XERO");
+      this.loginAndRedirectToInAppIntegration(redirectUri, 'XERO');
     });
 
     this.eventsService.netsuiteLogin.subscribe((redirectUri: string) => {
-      this.loginAndRedirectToInAppIntegration(redirectUri, "NETSUITE");
+      this.loginAndRedirectToInAppIntegration(redirectUri, 'NETSUITE');
     });
   }
 
-  private redirect(redirectUri: string | undefined, code:string): void {
+  private redirect(redirectUri: string | undefined, code: string): void {
     if (redirectUri) {
-      brandingFeatureConfig.loginRedirectUri ? this.router.navigate([redirectUri], { queryParams: { code: code } }) : this.router.navigate([redirectUri]);
+      brandingFeatureConfig.loginRedirectUri
+        ? this.router.navigate([redirectUri], { queryParams: { code: code } })
+        : this.router.navigate([redirectUri]);
     } else {
       this.router.navigate(['/integrations']);
     }
@@ -137,13 +143,11 @@ export class LoginComponent implements OnInit {
      * When an app is switched, we replace the tokens in localstorage > 'user' object
      * with the stored token of the current app. (also see AppComponent)
      */
-    const connectedAppKeys = integrations.map(integration =>
-      this.integrationsService.getIntegrationKey(integration.tpa_name)!
+    const connectedAppKeys = integrations.map(
+      (integration) => this.integrationsService.getIntegrationKey(integration.tpa_name)!,
     );
 
-    const appsWithUniqueTpaIds: IntegrationAppKey[] = [
-      "NETSUITE", "INTACCT", "QBO", "XERO"
-    ];
+    const appsWithUniqueTpaIds: IntegrationAppKey[] = ['NETSUITE', 'INTACCT', 'QBO', 'XERO'];
 
     this.authService.clearTokens();
     let deferRedirect = false;
@@ -156,7 +160,7 @@ export class LoginComponent implements OnInit {
         const accountingIntegrationApp = appKeyToAccountingIntegrationApp[appKey]!;
         const payload = {
           callbackUrl: integrationCallbackUrlMap[accountingIntegrationApp][0],
-          clientId: integrationCallbackUrlMap[accountingIntegrationApp][1]
+          clientId: integrationCallbackUrlMap[accountingIntegrationApp][1],
         };
 
         this.eventsService.postEvent(payload);
@@ -179,15 +183,15 @@ export class LoginComponent implements OnInit {
     this.authService.getClusterDomainByCode(code).subscribe((clusterDomainWithToken: ClusterDomainWithToken) => {
       this.storageService.set('cluster-domain', clusterDomainWithToken.cluster_domain);
       this.helperService.setBaseApiURL(AppUrl.INTEGRATION);
-      this.authService.loginWithRefreshToken(clusterDomainWithToken.tokens.refresh_token).subscribe(response => {
+      this.authService.loginWithRefreshToken(clusterDomainWithToken.tokens.refresh_token).subscribe((response) => {
         const user: MinimalUser = {
-          'email': response.user.email,
-          'access_token': response.access_token,
-          'refresh_token': clusterDomainWithToken.tokens.refresh_token,
-          'full_name': response.user.full_name,
-          'user_id': response.user.user_id,
-          'org_id': response.user.org_id,
-          'org_name': response.user.org_name
+          email: response.user.email,
+          access_token: response.access_token,
+          refresh_token: clusterDomainWithToken.tokens.refresh_token,
+          full_name: response.user.full_name,
+          user_id: response.user.user_id,
+          org_id: response.user.org_id,
+          org_name: response.user.org_name,
         };
         this.userService.storeUserProfile(user);
 
@@ -210,7 +214,9 @@ export class LoginComponent implements OnInit {
 
         if (this.exposeApps?.BUSINESS_CENTRAL) {
           this.helperService.setBaseApiURL(AppUrl.BUSINESS_CENTRAL);
-          this.businessCentralAuthService.loginWithRefreshToken(clusterDomainWithToken.tokens.refresh_token).subscribe();
+          this.businessCentralAuthService
+            .loginWithRefreshToken(clusterDomainWithToken.tokens.refresh_token)
+            .subscribe();
         }
 
         if (this.exposeApps?.SAGE50) {
@@ -246,7 +252,7 @@ export class LoginComponent implements OnInit {
           this.setupLoginWatcher();
           const integrationsAppTokens = {
             refresh_token: clusterDomainWithToken.tokens.refresh_token,
-            access_token: response.access_token
+            access_token: response.access_token,
           };
           this.integrationsService.getIntegrations().subscribe((integrations) => {
             const deferRedirect = this.loginToConnectedApps(integrations, integrationsAppTokens);
@@ -266,7 +272,7 @@ export class LoginComponent implements OnInit {
   }
 
   private login(): void {
-    this.route.queryParams.subscribe(params => {
+    this.route.queryParams.subscribe((params) => {
       if (params.code) {
         if (params.redirect_uri) {
           this.eventsService.resetNavigationHistory(params.redirect_uri);
@@ -285,5 +291,4 @@ export class LoginComponent implements OnInit {
     this.authService.checkLoginStatusAndLogout();
     this.login();
   }
-
 }

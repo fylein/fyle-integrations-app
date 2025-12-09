@@ -1,5 +1,5 @@
 :host ::ng-deep .error-box {
-    @apply tw-border-border-danger-dark #{!important};
+  @apply tw-border-border-danger-dark #{!important};
 }
 /*
 :host ::ng-deep .normal-box  {
@@ -7,10 +7,10 @@
 } */
 
 .sub-text {
-    color: #5A5D72;
-    font-size: 12px;
+  color: #5a5d72;
+  font-size: 12px;
 }
 
 .radius {
-    border-radius: 4px;
+  border-radius: 4px;
 }

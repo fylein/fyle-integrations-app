@@ -10,11 +10,10 @@ import { AuthService } from '../services/common/auth.service';
 
 @Injectable()
 export class JwtInterceptor implements HttpInterceptor {
-
   constructor(
     private authService: AuthService,
-    private jwtHelpter: JwtHelperService
-  ) { }
+    private jwtHelpter: JwtHelperService,
+  ) {}
 
   private refreshTokenInProgress = false;
 
@@ -28,7 +27,7 @@ export class JwtInterceptor implements HttpInterceptor {
             return this.handleError({ status: 401, error: 'Unauthorized' } as HttpErrorResponse);
           }
           return this.executeHttpRequest(request, next, accessToken);
-        })
+        }),
       );
     }
 
@@ -38,14 +37,15 @@ export class JwtInterceptor implements HttpInterceptor {
 
   // Certain api's do not require token in headers.
   private isTokenMandatory(url: string): boolean {
-    const endpointWithoutToken = url.includes('/api/auth/') || url.includes('/travelperk/connect') || url.includes('amazonaws.com');
+    const endpointWithoutToken =
+      url.includes('/api/auth/') || url.includes('/travelperk/connect') || url.includes('amazonaws.com');
     return !endpointWithoutToken;
   }
 
   private executeHttpRequest(request: HttpRequest<any>, next: HttpHandler, accessToken: string) {
     request = request.clone({
       url: request.url,
-      headers: request.headers.set('Authorization', `Bearer ${accessToken}`)
+      headers: request.headers.set('Authorization', `Bearer ${accessToken}`),
     });
     return next.handle(request).pipe(catchError((error: HttpErrorResponse) => this.handleError(error)));
   }
@@ -71,14 +71,14 @@ export class JwtInterceptor implements HttpInterceptor {
           this.refreshTokenInProgress = false;
           this.refreshTokenSubject.next(newAccessToken);
           return of(newAccessToken);
-        })
+        }),
       );
     }
 
     return this.refreshTokenSubject.pipe(
       filter((result) => result !== null),
       take(1),
-      map(() => this.authService.getAccessToken())
+      map(() => this.authService.getAccessToken()),
     );
   }
 
@@ -103,7 +103,7 @@ export class JwtInterceptor implements HttpInterceptor {
     if (refreshToken) {
       return this.authService.refreshAccessToken(refreshToken).pipe(
         catchError((error) => this.handleError(error)),
-        map((token: Token) => this.authService.updateAccessToken(token.access_token))
+        map((token: Token) => this.authService.updateAccessToken(token.access_token)),
       );
     }
 

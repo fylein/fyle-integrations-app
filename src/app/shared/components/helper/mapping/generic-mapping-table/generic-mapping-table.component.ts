@@ -8,20 +8,27 @@ import { DestinationAttribute } from 'src/app/core/models/db/destination-attribu
 import { ExtendedGenericMapping } from 'src/app/core/models/db/extended-generic-mapping.model';
 import { GenericMapping, MappingClass } from 'src/app/core/models/db/generic-mapping.model';
 import { MappingStats } from 'src/app/core/models/db/mapping.model';
-import { AppName, IntacctCorporateCreditCardExpensesObject, FyleField, IntacctReimbursableExpensesObject, ToastSeverity, QBOCorporateCreditCardExpensesObject, QboExportSettingDestinationOptionKey } from 'src/app/core/models/enum/enum.model';
+import {
+  AppName,
+  IntacctCorporateCreditCardExpensesObject,
+  FyleField,
+  IntacctReimbursableExpensesObject,
+  ToastSeverity,
+  QBOCorporateCreditCardExpensesObject,
+  QboExportSettingDestinationOptionKey,
+} from 'src/app/core/models/enum/enum.model';
 import { HelperService } from 'src/app/core/services/common/helper.service';
 import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
 import { MappingService } from 'src/app/core/services/common/mapping.service';
 import { WorkspaceService } from 'src/app/core/services/common/workspace.service';
 
 @Component({
-    selector: 'app-generic-mapping-table',
-    templateUrl: './generic-mapping-table.component.html',
-    styleUrls: ['./generic-mapping-table.component.scss'],
-    standalone: false
+  selector: 'app-generic-mapping-table',
+  templateUrl: './generic-mapping-table.component.html',
+  styleUrls: ['./generic-mapping-table.component.scss'],
+  standalone: false,
 })
 export class GenericMappingTableComponent implements OnInit {
-
   @Input() isLoading: boolean;
 
   @Input() appName: AppName;
@@ -65,7 +72,7 @@ export class GenericMappingTableComponent implements OnInit {
   isSearching: boolean;
 
   form: FormGroup = new FormGroup({
-    searchOption: new FormControl('')
+    searchOption: new FormControl(''),
   });
 
   isSearchFocused: boolean;
@@ -78,19 +85,19 @@ export class GenericMappingTableComponent implements OnInit {
 
   readonly brandingStyle = brandingStyle;
 
-  optionSearchUpdate = new Subject<{searchTerm: string}>();
+  optionSearchUpdate = new Subject<{ searchTerm: string }>();
 
   @ViewChild('filterInput') filterInput!: ElementRef;
 
-  private optionsMap: {[key: string]: boolean} = {};
+  private optionsMap: { [key: string]: boolean } = {};
 
   constructor(
     private mappingService: MappingService,
     private toastService: IntegrationsToastService,
     private workspaceService: WorkspaceService,
     public helper: HelperService,
-    private translocoService: TranslocoService
-  ) { }
+    private translocoService: TranslocoService,
+  ) {}
 
   clearSearch($event: Event) {
     this.form.controls.searchOption.reset();
@@ -109,13 +116,13 @@ export class GenericMappingTableComponent implements OnInit {
       }
       setTimeout(() => {
         this.filterInput.nativeElement.focus();
-    }, 0);
+      }, 0);
     }
   }
 
   constructDestinationOptions() {
-    const mappingType:string = this.filteredMappings.flatMap(mapping =>
-      Object.keys(mapping).filter(key => key.includes('mapping'))
+    const mappingType: string = this.filteredMappings.flatMap((mapping) =>
+      Object.keys(mapping).filter((key) => key.includes('mapping')),
     )[0];
 
     this.filteredMappings.forEach((data: any) => {
@@ -123,10 +130,14 @@ export class GenericMappingTableComponent implements OnInit {
       if (mapping && mapping.length > 0) {
         const mappingDestinationKey = this.getMappingDestinationKey(data);
         const destinationAttribute = mapping[0][mappingDestinationKey];
-        if (destinationAttribute && (this.isMultiLineOption || !this.destinationOptions.some((map: any) => map.value === destinationAttribute.value))) {
+        if (
+          destinationAttribute &&
+          (this.isMultiLineOption ||
+            !this.destinationOptions.some((map: any) => map.value === destinationAttribute.value))
+        ) {
           // Prevent duplicates by checking value and code combination
-          const isDuplicate = this.destinationOptions.some((map: any) =>
-            map.value === destinationAttribute.value && map.code === destinationAttribute.code
+          const isDuplicate = this.destinationOptions.some(
+            (map: any) => map.value === destinationAttribute.value && map.code === destinationAttribute.code,
           );
           if (!isDuplicate) {
             this.destinationOptions.push(destinationAttribute);
@@ -147,20 +158,26 @@ export class GenericMappingTableComponent implements OnInit {
   }
 
   optionSearchWatcher() {
-    this.optionSearchUpdate.pipe(
-      debounceTime(1000)
-      ).subscribe((event: any) => {
-        if (this.searchHandler !== undefined) {
-          this.searchHandler(event.searchTerm).subscribe(() => {
-            this.isSearching = false;
-          });
-          return;
-        }
-        const existingOptions = this.destinationOptions.concat();
-        const newOptions: DestinationAttribute[] = [];
-        this.destinationAttributes ||= this.destinationField;
+    this.optionSearchUpdate.pipe(debounceTime(1000)).subscribe((event: any) => {
+      if (this.searchHandler !== undefined) {
+        this.searchHandler(event.searchTerm).subscribe(() => {
+          this.isSearching = false;
+        });
+        return;
+      }
+      const existingOptions = this.destinationOptions.concat();
+      const newOptions: DestinationAttribute[] = [];
+      this.destinationAttributes ||= this.destinationField;
 
-        this.mappingService.getPaginatedDestinationAttributes(this.destinationAttributes, event.searchTerm, this.displayName, this.appName, this.detailAccountType).subscribe((response) => {
+      this.mappingService
+        .getPaginatedDestinationAttributes(
+          this.destinationAttributes,
+          event.searchTerm,
+          this.displayName,
+          this.appName,
+          this.detailAccountType,
+        )
+        .subscribe((response) => {
           response.results.forEach((option) => {
             // If option is not already present in the list, add it
             if (!this.optionsMap[option.id.toString()]) {
@@ -173,30 +190,28 @@ export class GenericMappingTableComponent implements OnInit {
           this.sortDropdownOptions();
           this.isSearching = false;
         });
-      }
-    );
+    });
   }
 
   searchOptions(event: any) {
     if (event.filter) {
       this.isSearching = true;
-      this.optionSearchUpdate.next({searchTerm: (event.filter as string).trim()});
+      this.optionSearchUpdate.next({ searchTerm: (event.filter as string).trim() });
     }
   }
 
   getMappingDestinationKey(genericMapping: ExtendedGenericMapping) {
     if (genericMapping.employeemapping?.length) {
-      if (this.employeeFieldMapping===FyleField.VENDOR) {
+      if (this.employeeFieldMapping === FyleField.VENDOR) {
         return 'destination_vendor';
-      } else if (this.employeeFieldMapping===FyleField.EMPLOYEE) {
+      } else if (this.employeeFieldMapping === FyleField.EMPLOYEE) {
         return 'destination_employee';
       }
     } else if (genericMapping.categorymapping?.length) {
       if (this.destinationField === 'ACCOUNT') {
         return 'destination_account';
       }
-        return 'destination_expense_head';
-
+      return 'destination_expense_head';
     }
     return 'destination';
   }
@@ -213,8 +228,7 @@ export class GenericMappingTableComponent implements OnInit {
       if (this.destinationField === 'ACCOUNT') {
         return genericMapping.categorymapping[0].destination_account;
       }
-        return genericMapping.categorymapping[0].destination_expense_head;
-
+      return genericMapping.categorymapping[0].destination_expense_head;
     } else if (genericMapping.mapping?.length) {
       return genericMapping.mapping[0].destination;
     }
@@ -223,34 +237,59 @@ export class GenericMappingTableComponent implements OnInit {
 
   save(selectedRow: ExtendedGenericMapping, event: any): void {
     if (selectedRow.employeemapping) {
-      const employeeMapping = MappingClass.constructEmployeeMappingPayload(selectedRow, event, this.employeeFieldMapping, this.workspaceService.getWorkspaceId());
-      this.mappingService.postEmployeeMappings(employeeMapping).subscribe((response) => {
-        this.appName === AppName.NETSUITE ? this.decrementUnmappedCountInNetsuiteEmployeeMapping(selectedRow.employeemapping) : this.decrementUnmappedCountIfNeeded(selectedRow.employeemapping);
-        selectedRow.employeemapping = [response];
-        this.displaySuccessToast(this.translocoService.translate('mapping.employeeMappingToastText'));
-      }, () => {
-        this.displayErrorToast();
-      });
+      const employeeMapping = MappingClass.constructEmployeeMappingPayload(
+        selectedRow,
+        event,
+        this.employeeFieldMapping,
+        this.workspaceService.getWorkspaceId(),
+      );
+      this.mappingService.postEmployeeMappings(employeeMapping).subscribe(
+        (response) => {
+          this.appName === AppName.NETSUITE
+            ? this.decrementUnmappedCountInNetsuiteEmployeeMapping(selectedRow.employeemapping)
+            : this.decrementUnmappedCountIfNeeded(selectedRow.employeemapping);
+          selectedRow.employeemapping = [response];
+          this.displaySuccessToast(this.translocoService.translate('mapping.employeeMappingToastText'));
+        },
+        () => {
+          this.displayErrorToast();
+        },
+      );
     } else if (selectedRow.categorymapping) {
-      const categoryMappingsPayload = MappingClass.constructCategoryMappingPayload(selectedRow, event, this.destinationField, this.workspaceService.getWorkspaceId());
+      const categoryMappingsPayload = MappingClass.constructCategoryMappingPayload(
+        selectedRow,
+        event,
+        this.destinationField,
+        this.workspaceService.getWorkspaceId(),
+      );
 
-      this.mappingService.postCategoryMappings(categoryMappingsPayload).subscribe((response) => {
-        this.decrementUnmappedCountIfNeeded(selectedRow.categorymapping);
-        selectedRow.categorymapping = [response];
-        this.displaySuccessToast(this.translocoService.translate('mapping.categoryMappingToastText'));
-      }, () => {
-        this.displayErrorToast();
-      });
+      this.mappingService.postCategoryMappings(categoryMappingsPayload).subscribe(
+        (response) => {
+          this.decrementUnmappedCountIfNeeded(selectedRow.categorymapping);
+          selectedRow.categorymapping = [response];
+          this.displaySuccessToast(this.translocoService.translate('mapping.categoryMappingToastText'));
+        },
+        () => {
+          this.displayErrorToast();
+        },
+      );
     } else {
-      const genericMappingPayload = MappingClass.constructGenericMappingPayload(selectedRow, event, {source_field: this.sourceField, destination_field: event.value.attribute_type, app_name: this.appName});
-
-      this.mappingService.postMapping(genericMappingPayload).subscribe((response: GenericMapping) => {
-        this.decrementUnmappedCountIfNeeded(selectedRow.mapping);
-        selectedRow.mapping = [response];
-        this.displaySuccessToast(this.translocoService.translate('mapping.mappingToastText'));
-      }, () => {
-        this.displayErrorToast();
+      const genericMappingPayload = MappingClass.constructGenericMappingPayload(selectedRow, event, {
+        source_field: this.sourceField,
+        destination_field: event.value.attribute_type,
+        app_name: this.appName,
       });
+
+      this.mappingService.postMapping(genericMappingPayload).subscribe(
+        (response: GenericMapping) => {
+          this.decrementUnmappedCountIfNeeded(selectedRow.mapping);
+          selectedRow.mapping = [response];
+          this.displaySuccessToast(this.translocoService.translate('mapping.mappingToastText'));
+        },
+        () => {
+          this.displayErrorToast();
+        },
+      );
     }
   }
 
@@ -261,9 +300,17 @@ export class GenericMappingTableComponent implements OnInit {
   }
 
   decrementUnmappedCountInNetsuiteEmployeeMapping(mapping: any): void {
-    if (mapping[0]?.destination_employee === null && !this.isDashboardMappingResolve && this.destinationField === FyleField.EMPLOYEE) {
+    if (
+      mapping[0]?.destination_employee === null &&
+      !this.isDashboardMappingResolve &&
+      this.destinationField === FyleField.EMPLOYEE
+    ) {
       this.mappingStats.unmapped_attributes_count -= 1;
-    } else if (mapping[0]?.destination_vendor === null && !this.isDashboardMappingResolve && this.destinationField === FyleField.VENDOR) {
+    } else if (
+      mapping[0]?.destination_vendor === null &&
+      !this.isDashboardMappingResolve &&
+      this.destinationField === FyleField.VENDOR
+    ) {
       this.mappingStats.unmapped_attributes_count -= 1;
     }
   }
@@ -273,7 +320,10 @@ export class GenericMappingTableComponent implements OnInit {
   }
 
   displayErrorToast(): void {
-    this.toastService.displayToastMessage(ToastSeverity.ERROR, this.translocoService.translate('genericMappingTable.somethingWentWrong'));
+    this.toastService.displayToastMessage(
+      ToastSeverity.ERROR,
+      this.translocoService.translate('genericMappingTable.somethingWentWrong'),
+    );
   }
 
   ngOnInit(): void {
@@ -281,5 +331,4 @@ export class GenericMappingTableComponent implements OnInit {
     this.constructDestinationOptions();
     this.optionSearchWatcher();
   }
-
 }

@@ -5,24 +5,24 @@ import { TranslocoService } from '@jsverse/transloco';
 import { XeroOnboardingService } from 'src/app/core/services/xero/xero-configuration/xero-onboarding.service';
 
 @Component({
-    selector: 'app-xero-onboarding-advanced-settings',
-    templateUrl: './xero-onboarding-advanced-settings.component.html',
-    styleUrls: ['./xero-onboarding-advanced-settings.component.scss'],
-    standalone: false
+  selector: 'app-xero-onboarding-advanced-settings',
+  templateUrl: './xero-onboarding-advanced-settings.component.html',
+  styleUrls: ['./xero-onboarding-advanced-settings.component.scss'],
+  standalone: false,
 })
 export class XeroOnboardingAdvancedSettingsComponent implements OnInit {
-
   onboardingSteps: OnboardingStepper[] = [];
 
   constructor(
     private workspaceService: WorkspaceService,
     private translocoService: TranslocoService,
-    private xeroOnboardingService: XeroOnboardingService
-  ) { }
-
+    private xeroOnboardingService: XeroOnboardingService,
+  ) {}
 
   ngOnInit(): void {
-    this.onboardingSteps = this.xeroOnboardingService.getOnboardingSteps(this.translocoService.translate('xero.configuration.advancedSettings.stepName'), this.workspaceService.getOnboardingState());
+    this.onboardingSteps = this.xeroOnboardingService.getOnboardingSteps(
+      this.translocoService.translate('xero.configuration.advancedSettings.stepName'),
+      this.workspaceService.getOnboardingState(),
+    );
   }
-
 }

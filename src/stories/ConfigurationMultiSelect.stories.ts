@@ -1,4 +1,3 @@
-
 import { CommonModule } from '@angular/common';
 import type { Meta, StoryObj } from '@storybook/angular';
 import { moduleMetadata } from '@storybook/angular';
@@ -14,17 +13,17 @@ const meta: Meta<ConfigurationMultiSelectComponent> = {
   component: ConfigurationMultiSelectComponent,
   tags: ['autodocs'],
   render: (args: ConfigurationMultiSelectComponent) => ({
-    props: { ...args }
+    props: { ...args },
   }),
   decorators: [
     moduleMetadata({
       declarations: [],
-      imports: [CommonModule, BrowserAnimationsModule, SharedModule, FormsModule, ReactiveFormsModule]
-    })
+      imports: [CommonModule, BrowserAnimationsModule, SharedModule, FormsModule, ReactiveFormsModule],
+    }),
   ],
   argTypes: {
-    ngOnInit: { table: { disable: true } }
-  }
+    ngOnInit: { table: { disable: true } },
+  },
 };
 
 export default meta;
@@ -35,7 +34,7 @@ export const simple: Story = {
     label: 'Select the accounts from QuickBooks Online to import as categories',
     options: QboImportSettingsService.getChartOfAccountTypesList(),
     placeholder: 'Select Chart of Accouts',
-    form: setupStoryBookFormGroup(new FormGroup({chartOfAccountTypes: new FormControl(['Expense'])})),
-    formControllerName: 'chartOfAccountTypes'
-  }
+    form: setupStoryBookFormGroup(new FormGroup({ chartOfAccountTypes: new FormControl(['Expense']) })),
+    formControllerName: 'chartOfAccountTypes',
+  },
 };

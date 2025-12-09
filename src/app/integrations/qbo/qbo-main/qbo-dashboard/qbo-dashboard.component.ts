@@ -2,10 +2,28 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable, Subject, catchError, forkJoin, from, interval, of, switchMap, takeUntil, takeWhile } from 'rxjs';
 import { brandingConfig, brandingFeatureConfig } from 'src/app/branding/branding-config';
-import { AccountingExportSummary, AccountingExportSummaryModel } from 'src/app/core/models/db/accounting-export-summary.model';
+import {
+  AccountingExportSummary,
+  AccountingExportSummaryModel,
+} from 'src/app/core/models/db/accounting-export-summary.model';
 import { DashboardModel, DestinationFieldMap } from 'src/app/core/models/db/dashboard.model';
-import { AccountingGroupedErrorStat, AccountingGroupedErrors, Error, ErrorResponse } from 'src/app/core/models/db/error.model';
-import { AccountingErrorType, AppName, AppUrl, CCCExpenseState, CCCImportState, ExpenseState, QBOTaskLogType, ReimbursableImportState, TaskLogState } from 'src/app/core/models/enum/enum.model';
+import {
+  AccountingGroupedErrorStat,
+  AccountingGroupedErrors,
+  Error,
+  ErrorResponse,
+} from 'src/app/core/models/db/error.model';
+import {
+  AccountingErrorType,
+  AppName,
+  AppUrl,
+  CCCExpenseState,
+  CCCImportState,
+  ExpenseState,
+  QBOTaskLogType,
+  ReimbursableImportState,
+  TaskLogState,
+} from 'src/app/core/models/enum/enum.model';
 import { QBOTaskLog, QBOTaskResponse } from 'src/app/core/models/qbo/db/qbo-task-log.model';
 import { AccountingExportService } from 'src/app/core/services/common/accounting-export.service';
 import { DashboardService } from 'src/app/core/services/common/dashboard.service';
@@ -17,13 +35,12 @@ import { QboConnectorService } from 'src/app/core/services/qbo/qbo-configuration
 import { QBOCredential } from 'src/app/core/models/qbo/db/qbo-credential.model';
 
 @Component({
-    selector: 'app-qbo-dashboard',
-    templateUrl: './qbo-dashboard.component.html',
-    styleUrls: ['./qbo-dashboard.component.scss'],
-    standalone: false
+  selector: 'app-qbo-dashboard',
+  templateUrl: './qbo-dashboard.component.html',
+  styleUrls: ['./qbo-dashboard.component.scss'],
+  standalone: false,
 })
 export class QboDashboardComponent implements OnInit, OnDestroy {
-
   isLoading: boolean = true;
 
   isQBOTokenNotValid: boolean = false;
@@ -48,20 +65,34 @@ export class QboDashboardComponent implements OnInit, OnDestroy {
 
   errors: AccountingGroupedErrors;
 
-  destinationFieldMap : DestinationFieldMap;
+  destinationFieldMap: DestinationFieldMap;
 
   readonly brandingConfig = brandingConfig;
 
   groupedErrorStat: AccountingGroupedErrorStat = {
     [AccountingErrorType.EMPLOYEE_MAPPING]: null,
-    [AccountingErrorType.CATEGORY_MAPPING]: null
+    [AccountingErrorType.CATEGORY_MAPPING]: null,
   };
 
   getExportErrors$: Observable<Error[]> = this.dashboardService.getExportErrors('v1');
 
-  getAccountingExportSummary$: Observable<AccountingExportSummary> = this.accountingExportService.getAccountingExportSummary('v1', brandingFeatureConfig.featureFlags.dashboard.useRepurposedExportSummary, AppName.QBO);
+  getAccountingExportSummary$: Observable<AccountingExportSummary> =
+    this.accountingExportService.getAccountingExportSummary(
+      'v1',
+      brandingFeatureConfig.featureFlags.dashboard.useRepurposedExportSummary,
+      AppName.QBO,
+    );
 
-  accountingExportType: QBOTaskLogType[] = [QBOTaskLogType.FETCHING_EXPENSE, QBOTaskLogType.CREATING_BILL, QBOTaskLogType.CREATING_EXPENSE, QBOTaskLogType.CREATING_CHECK, QBOTaskLogType.CREATING_CREDIT_CARD_PURCHASE, QBOTaskLogType.CREATING_JOURNAL_ENTRY, QBOTaskLogType.CREATING_CREDIT_CARD_CREDIT, QBOTaskLogType.CREATING_DEBIT_CARD_EXPENSE];
+  accountingExportType: QBOTaskLogType[] = [
+    QBOTaskLogType.FETCHING_EXPENSE,
+    QBOTaskLogType.CREATING_BILL,
+    QBOTaskLogType.CREATING_EXPENSE,
+    QBOTaskLogType.CREATING_CHECK,
+    QBOTaskLogType.CREATING_CREDIT_CARD_PURCHASE,
+    QBOTaskLogType.CREATING_JOURNAL_ENTRY,
+    QBOTaskLogType.CREATING_CREDIT_CARD_CREDIT,
+    QBOTaskLogType.CREATING_DEBIT_CARD_EXPENSE,
+  ];
 
   isImportItemsEnabled: boolean;
 
@@ -91,8 +122,8 @@ export class QboDashboardComponent implements OnInit, OnDestroy {
     private importSettingService: QboImportSettingsService,
     private router: Router,
     private qboAdvancedSettingsService: QboAdvancedSettingsService,
-    private qboConnectorService: QboConnectorService
-  ) { }
+    private qboConnectorService: QboConnectorService,
+  ) {}
 
   export() {
     this.isExportInProgress = true;
@@ -102,52 +133,73 @@ export class QboDashboardComponent implements OnInit, OnDestroy {
   }
 
   private pollExportStatus(exportableAccountingExportIds: number[] = []): void {
-    interval(3000).pipe(
-      switchMap(() => from(this.dashboardService.getAllTasks([], exportableAccountingExportIds, this.accountingExportType))),
-      takeUntil(this.destroy$),
-      takeWhile((response: QBOTaskResponse) =>
-        response.results.filter(task =>
-          (task.status === TaskLogState.IN_PROGRESS || task.status === TaskLogState.ENQUEUED)
-        ).length > 0, true
+    interval(3000)
+      .pipe(
+        switchMap(() =>
+          from(this.dashboardService.getAllTasks([], exportableAccountingExportIds, this.accountingExportType)),
+        ),
+        takeUntil(this.destroy$),
+        takeWhile(
+          (response: QBOTaskResponse) =>
+            response.results.filter(
+              (task) => task.status === TaskLogState.IN_PROGRESS || task.status === TaskLogState.ENQUEUED,
+            ).length > 0,
+          true,
+        ),
       )
-    ).subscribe((res: QBOTaskResponse) => {
-      this.processedCount = res.results.filter(task => (task.status !== TaskLogState.IN_PROGRESS && task.status !== TaskLogState.ENQUEUED)).length;
-      this.exportProgressPercentage = Math.round((this.processedCount / this.exportableAccountingExportIds.length) * 100);
+      .subscribe((res: QBOTaskResponse) => {
+        this.processedCount = res.results.filter(
+          (task) => task.status !== TaskLogState.IN_PROGRESS && task.status !== TaskLogState.ENQUEUED,
+        ).length;
+        this.exportProgressPercentage = Math.round(
+          (this.processedCount / this.exportableAccountingExportIds.length) * 100,
+        );
 
-      if (res.results.filter(task => (task.status === TaskLogState.IN_PROGRESS || task.status === TaskLogState.ENQUEUED)).length === 0) {
-        forkJoin([
-          this.getExportErrors$,
-          this.getAccountingExportSummary$
-        ]).subscribe(responses => {
-          this.errors = DashboardModel.parseAPIResponseToGroupedError(responses[0]);
-          this.groupedErrorStat = {
-            EMPLOYEE_MAPPING: null,
-            CATEGORY_MAPPING: null
-          };
-          this.accountingExportSummary = AccountingExportSummaryModel.parseAPIResponseToAccountingSummary(responses[1]);
-          this.failedExpenseGroupCount = res.results.filter(task => task.status === TaskLogState.FAILED || task.status === TaskLogState.FATAL).length;
+        if (
+          res.results.filter(
+            (task) => task.status === TaskLogState.IN_PROGRESS || task.status === TaskLogState.ENQUEUED,
+          ).length === 0
+        ) {
+          forkJoin([this.getExportErrors$, this.getAccountingExportSummary$]).subscribe((responses) => {
+            this.errors = DashboardModel.parseAPIResponseToGroupedError(responses[0]);
+            this.groupedErrorStat = {
+              EMPLOYEE_MAPPING: null,
+              CATEGORY_MAPPING: null,
+            };
+            this.accountingExportSummary = AccountingExportSummaryModel.parseAPIResponseToAccountingSummary(
+              responses[1],
+            );
+            this.failedExpenseGroupCount = res.results.filter(
+              (task) => task.status === TaskLogState.FAILED || task.status === TaskLogState.FATAL,
+            ).length;
 
-          this.exportableAccountingExportIds = res.results.filter(task => task.status === TaskLogState.FAILED || task.status === TaskLogState.FATAL).map(taskLog => taskLog.expense_group);
+            this.exportableAccountingExportIds = res.results
+              .filter((task) => task.status === TaskLogState.FAILED || task.status === TaskLogState.FATAL)
+              .map((taskLog) => taskLog.expense_group);
 
-          this.isExportInProgress = false;
-          this.exportProgressPercentage = 0;
-          this.processedCount = 0;
-        });
-      }
-    });
+            this.isExportInProgress = false;
+            this.exportProgressPercentage = 0;
+            this.processedCount = 0;
+          });
+        }
+      });
   }
 
   private setupPage(): void {
     forkJoin([
       this.getExportErrors$,
       this.getAccountingExportSummary$.pipe(catchError(() => of(null))),
-      this.dashboardService.getAllTasks([TaskLogState.ENQUEUED, TaskLogState.IN_PROGRESS, TaskLogState.FAILED], undefined, this.accountingExportType),
+      this.dashboardService.getAllTasks(
+        [TaskLogState.ENQUEUED, TaskLogState.IN_PROGRESS, TaskLogState.FAILED],
+        undefined,
+        this.accountingExportType,
+      ),
       this.workspaceService.getWorkspaceGeneralSettings(),
       this.dashboardService.getExportableAccountingExportIds('v1'),
       this.qboExportSettingsService.getExportSettings(),
       this.importSettingService.getImportSettings(),
       this.qboAdvancedSettingsService.getAdvancedSettings(),
-      this.qboConnectorService.getQBOCredentials().pipe(catchError(({ error }: { error: QBOCredential }) => of(error)))
+      this.qboConnectorService.getQBOCredentials().pipe(catchError(({ error }: { error: QBOCredential }) => of(error))),
     ]).subscribe((responses) => {
       this.errors = DashboardModel.parseAPIResponseToGroupedError(responses[0]);
       this.isImportItemsEnabled = responses[3].import_items;
@@ -156,7 +208,7 @@ export class QboDashboardComponent implements OnInit, OnDestroy {
       }
       this.destinationFieldMap = {
         EMPLOYEE: responses[3].employee_field_mapping,
-        CATEGORY: 'ACCOUNT'
+        CATEGORY: 'ACCOUNT',
       };
 
       this.isLoading = false;
@@ -167,13 +219,21 @@ export class QboDashboardComponent implements OnInit, OnDestroy {
 
       this.importCodeFields = responses[6].workspace_general_settings?.import_code_fields;
 
-      const queuedTasks: QBOTaskLog[] = responses[2].results.filter((task: QBOTaskLog) => task.status === TaskLogState.ENQUEUED || task.status === TaskLogState.IN_PROGRESS);
-      this.failedExpenseGroupCount = responses[2].results.filter((task: QBOTaskLog) => task.status === TaskLogState.FAILED || task.status === TaskLogState.FATAL).length;
+      const queuedTasks: QBOTaskLog[] = responses[2].results.filter(
+        (task: QBOTaskLog) => task.status === TaskLogState.ENQUEUED || task.status === TaskLogState.IN_PROGRESS,
+      );
+      this.failedExpenseGroupCount = responses[2].results.filter(
+        (task: QBOTaskLog) => task.status === TaskLogState.FAILED || task.status === TaskLogState.FATAL,
+      ).length;
 
       this.exportableAccountingExportIds = responses[4].exportable_expense_group_ids;
 
-      this.reimbursableImportState = responses[5].workspace_general_settings.reimbursable_expenses_object ? this.reimbursableExpenseImportStateMap[responses[5].expense_group_settings.expense_state] : null;
-      this.cccImportState = responses[5].workspace_general_settings.corporate_credit_card_expenses_object ? this.cccExpenseImportStateMap[responses[5].expense_group_settings.ccc_expense_state] : null;
+      this.reimbursableImportState = responses[5].workspace_general_settings.reimbursable_expenses_object
+        ? this.reimbursableExpenseImportStateMap[responses[5].expense_group_settings.expense_state]
+        : null;
+      this.cccImportState = responses[5].workspace_general_settings.corporate_credit_card_expenses_object
+        ? this.cccExpenseImportStateMap[responses[5].expense_group_settings.ccc_expense_state]
+        : null;
 
       this.isRealTimeExportEnabled = responses[7]?.workspace_schedules?.is_real_time_export_enabled;
 
@@ -195,15 +255,13 @@ export class QboDashboardComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.setupPage();
 
-    if (this.router.url.includes("/token_expired/") || this.router.url.includes("/disconnect/")){
+    if (this.router.url.includes('/token_expired/') || this.router.url.includes('/disconnect/')) {
       this.isQBOTokenNotValid = true;
     }
-
   }
 
   ngOnDestroy(): void {
     this.destroy$.next();
     this.destroy$.complete();
   }
-
 }

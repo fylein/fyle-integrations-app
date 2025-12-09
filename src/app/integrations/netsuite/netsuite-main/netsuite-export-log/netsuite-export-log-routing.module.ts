@@ -11,18 +11,18 @@ const routes: Routes = [
     children: [
       {
         path: 'complete',
-        component: NetsuiteCompleteExportLogsComponent
+        component: NetsuiteCompleteExportLogsComponent,
       },
       {
         path: 'skipped',
-        component: NetsuiteSkippedExportLogComponent
-      }
-    ]
-  }
+        component: NetsuiteSkippedExportLogComponent,
+      },
+    ],
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class NetsuiteExportLogRoutingModule { }
+export class NetsuiteExportLogRoutingModule {}

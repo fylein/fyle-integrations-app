@@ -9,9 +9,8 @@ xdescribe('MandatoryErrorMessageComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ MandatoryErrorMessageComponent ]
-    })
-    .compileComponents();
+      declarations: [MandatoryErrorMessageComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(MandatoryErrorMessageComponent);
     component = fixture.componentInstance;
@@ -59,5 +58,4 @@ xdescribe('MandatoryErrorMessageComponent', () => {
     const listNamespanText = listNamespan[0].nativeElement.innerHTML;
     expect(listNamespanText).toEqual(component.customErrorMessage);
   });
-
 });

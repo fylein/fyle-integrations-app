@@ -1,4 +1,3 @@
-
 import { CommonModule } from '@angular/common';
 import type { Meta, StoryObj } from '@storybook/angular';
 import { moduleMetadata } from '@storybook/angular';
@@ -13,17 +12,17 @@ const meta: Meta<ConfigurationCustomFieldCreationDialogComponent> = {
   component: ConfigurationCustomFieldCreationDialogComponent,
   tags: ['autodocs'],
   render: (args: ConfigurationCustomFieldCreationDialogComponent) => ({
-    props: { ...args }
+    props: { ...args },
   }),
   decorators: [
     moduleMetadata({
       declarations: [],
-      imports: [CommonModule, DialogModule, BrowserAnimationsModule, FormsModule, ReactiveFormsModule]
-    })
+      imports: [CommonModule, DialogModule, BrowserAnimationsModule, FormsModule, ReactiveFormsModule],
+    }),
   ],
   argTypes: {
-    ngOnInit: { table: { disable: true } }
-  }
+    ngOnInit: { table: { disable: true } },
+  },
 };
 
 export default meta;
@@ -31,7 +30,13 @@ type Story = StoryObj<ConfigurationCustomFieldCreationDialogComponent>;
 
 export const simple: Story = {
   args: {
-    customFieldForm: setupStoryBookFormGroup(new FormGroup({attribute_type: new FormControl(''), display_name: new FormControl(''), source_placeholder: new FormControl('')})),
-    showCustomFieldCreationDialog: true
-  }
+    customFieldForm: setupStoryBookFormGroup(
+      new FormGroup({
+        attribute_type: new FormControl(''),
+        display_name: new FormControl(''),
+        source_placeholder: new FormControl(''),
+      }),
+    ),
+    showCustomFieldCreationDialog: true,
+  },
 };

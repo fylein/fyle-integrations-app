@@ -1,4 +1,3 @@
-
 import { CommonModule } from '@angular/common';
 import type { Meta, StoryObj } from '@storybook/angular';
 import { moduleMetadata } from '@storybook/angular';
@@ -10,17 +9,17 @@ const meta: Meta<DashboardAccountingErrorDialogComponent> = {
   component: DashboardAccountingErrorDialogComponent,
   tags: ['autodocs'],
   render: (args: DashboardAccountingErrorDialogComponent) => ({
-    props: { ...args }
+    props: { ...args },
   }),
   decorators: [
     moduleMetadata({
       declarations: [DashboardAccountingErrorDialogComponent],
-      imports: [CommonModule, TableModule]
-    })
+      imports: [CommonModule, TableModule],
+    }),
   ],
   argTypes: {
-    ngOnInit: { table: { disable: true } }
-  }
+    ngOnInit: { table: { disable: true } },
+  },
 };
 
 export default meta;
@@ -69,8 +68,8 @@ export const simple: Story = {
         payment_number: '1',
         corporate_card_id: '1',
         is_skipped: false,
-        report_title: 'Fyle'
-      }
-    ]
-  }
+        report_title: 'Fyle',
+      },
+    ],
+  },
 };

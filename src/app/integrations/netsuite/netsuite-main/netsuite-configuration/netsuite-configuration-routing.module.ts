@@ -13,26 +13,26 @@ const routes: Routes = [
     children: [
       {
         path: 'connector',
-        component: NetsuiteConnectorComponent
+        component: NetsuiteConnectorComponent,
       },
       {
         path: 'export_settings',
-        component: NetsuiteExportSettingsComponent
+        component: NetsuiteExportSettingsComponent,
       },
       {
         path: 'import_settings',
-        component: NetsuiteImportSettingsComponent
+        component: NetsuiteImportSettingsComponent,
       },
       {
         path: 'advanced_settings',
-        component: NetsuiteAdvancedSettingsComponent
-      }
-    ]
-  }
+        component: NetsuiteAdvancedSettingsComponent,
+      },
+    ],
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class NetsuiteConfigurationRoutingModule { }
+export class NetsuiteConfigurationRoutingModule {}

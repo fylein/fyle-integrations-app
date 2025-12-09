@@ -8,9 +8,8 @@ xdescribe('QbdDirectExportSettingsComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [QbdDirectExportSettingsComponent]
-    })
-    .compileComponents();
+      imports: [QbdDirectExportSettingsComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(QbdDirectExportSettingsComponent);
     component = fixture.componentInstance;

@@ -1,40 +1,39 @@
 .error-box {
-    @apply tw-border-border-danger-dark #{!important};
+  @apply tw-border-border-danger-dark #{!important};
 }
 
-.normal-box  {
-    @apply tw-border-box-color #{!important};
+.normal-box {
+  @apply tw-border-box-color #{!important};
 }
 
 .normal-box :enabled:focus-visible {
-    @apply tw-border-faded-text-color #{!important};
+  @apply tw-border-faded-text-color #{!important};
 }
 
 .p-inputtext {
-    @apply tw-h-40-px tw-py-10-px tw-px-14-px tw-text-slightly-normal-text-color tw-border tw-border-solid tw-rounded-4-px #{!important}
+  @apply tw-h-40-px tw-py-10-px tw-px-14-px tw-text-slightly-normal-text-color tw-border tw-border-solid tw-rounded-4-px #{!important};
 }
 
 .p-input-icon-right > i {
-    @apply tw-absolute tw-right-12-px tw-top-1/2 tw-transform tw--translate-y-1/2 tw-z-10;
+  @apply tw-absolute tw-right-12-px tw-top-1/2 tw-transform tw--translate-y-1/2 tw-z-10;
 }
 
-
 .pi-eye.co {
-    @apply tw--mt-4-px #{!important};
+  @apply tw--mt-4-px #{!important};
 }
 
 .pi-eye-slash.co {
-    @apply tw--mt-4-px #{!important};
+  @apply tw--mt-4-px #{!important};
 }
 
 .pi-eye.fyle {
-    @apply tw-mt-4-px #{!important};
+  @apply tw-mt-4-px #{!important};
 }
 
 .pi-eye-slash.fyle {
-    @apply tw-mt-0 #{!important};
+  @apply tw-mt-0 #{!important};
 }
 
 .p-input-icon-right .p-inputtext {
-    @apply tw-pr-40-px #{!important};
+  @apply tw-pr-40-px #{!important};
 }

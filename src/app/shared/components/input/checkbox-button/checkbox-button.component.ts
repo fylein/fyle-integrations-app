@@ -6,19 +6,18 @@ import { brandingConfig, brandingStyle } from 'src/app/branding/branding-config'
 import { CheckBoxUpdate } from 'src/app/core/models/common/helper.model';
 
 @Component({
-    selector: 'app-checkbox-button',
-    imports: [ButtonModule, CommonModule, FormsModule],
-    standalone: true,
-    templateUrl: './checkbox-button.component.html',
-    styleUrl: './checkbox-button.component.scss'
+  selector: 'app-checkbox-button',
+  imports: [ButtonModule, CommonModule, FormsModule],
+  standalone: true,
+  templateUrl: './checkbox-button.component.html',
+  styleUrl: './checkbox-button.component.scss',
 })
 export class CheckboxButtonComponent {
+  @Input({ required: true }) unCheckedText: string;
 
-  @Input({required: true}) unCheckedText: string;
+  @Input({ required: true }) checkedText: string;
 
-  @Input({required: true}) checkedText: string;
-
-  @Input({required: true}) id: number;
+  @Input({ required: true }) id: number;
 
   @Input() disabled: boolean = false;
 
@@ -36,6 +35,6 @@ export class CheckboxButtonComponent {
     }
 
     this.isCheckboxSelected = !this.isCheckboxSelected;
-    this.checkBoxUpdated.emit({id: this.id, value: this.isCheckboxSelected});
+    this.checkBoxUpdated.emit({ id: this.id, value: this.isCheckboxSelected });
   }
 }

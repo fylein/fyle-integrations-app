@@ -11,8 +11,8 @@ describe('UqbdUdirectUonboardingService', () => {
       providers: [
         UqbdUdirectUonboardingService,
         provideHttpClient(withInterceptorsFromDi()),
-        provideHttpClientTesting()
-      ]
+        provideHttpClientTesting(),
+      ],
     });
     service = TestBed.inject(UqbdUdirectUonboardingService);
   });

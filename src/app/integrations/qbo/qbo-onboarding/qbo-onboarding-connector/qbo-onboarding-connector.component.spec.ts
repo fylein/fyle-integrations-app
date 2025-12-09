@@ -8,9 +8,8 @@ xdescribe('QboOnboardingConnectorComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ QboOnboardingConnectorComponent ]
-    })
-    .compileComponents();
+      declarations: [QboOnboardingConnectorComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(QboOnboardingConnectorComponent);
     component = fixture.componentInstance;

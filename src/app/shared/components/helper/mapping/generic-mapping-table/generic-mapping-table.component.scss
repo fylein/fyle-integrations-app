@@ -1,72 +1,74 @@
 :host ::ng-deep .dropdown-width {
-    @apply tw-w-220-px #{!important};
+  @apply tw-w-220-px #{!important};
 }
 
-:host ::ng-deep .prevBtn:disabled > .pi-chevron-left,:host ::ng-deep .nextBtn:disabled > .pi-chevron-right,
-:host ::ng-deep .prevBtn:disabled > .pi-minus, :host ::ng-deep .nextBtn:disabled > .pi-minus {
-    @apply tw-text-placeholder #{!important};
+:host ::ng-deep .prevBtn:disabled > .pi-chevron-left,
+:host ::ng-deep .nextBtn:disabled > .pi-chevron-right,
+:host ::ng-deep .prevBtn:disabled > .pi-minus,
+:host ::ng-deep .nextBtn:disabled > .pi-minus {
+  @apply tw-text-placeholder #{!important};
 }
 
 :host ::ng-deep .mappingFilterDropdown .p-select {
-    @apply tw-w-200-px #{!important}
+  @apply tw-w-200-px #{!important};
 }
 
 :host ::ng-deep .p-inputwrapper.p-select {
-    @apply tw-min-w-[260px] tw-max-w-[300px] #{!important};
+  @apply tw-min-w-[260px] tw-max-w-[300px] #{!important};
 }
 
 :host ::ng-deep .filterDropdown .p-select .p-select-label.p-inputtext {
-    @apply tw-py-10-px #{!important};
+  @apply tw-py-10-px #{!important};
 }
 
-:host ::ng-deep .selectedItem  .p-select .p-select-label.p-inputtext {
-    @apply tw-py-5-px #{!important};
+:host ::ng-deep .selectedItem .p-select .p-select-label.p-inputtext {
+  @apply tw-py-5-px #{!important};
 }
 
-:host ::ng-deep .selectedItem  .p-select-dropdown {
-    @apply tw-hidden #{!important};
+:host ::ng-deep .selectedItem .p-select-dropdown {
+  @apply tw-hidden #{!important};
 }
 
-:host ::ng-deep .filterDropdown  .p-select-dropdown {
-    @apply tw-block #{!important};
+:host ::ng-deep .filterDropdown .p-select-dropdown {
+  @apply tw-block #{!important};
 }
 
 :host ::ng-deep .textbox {
-    @apply tw-border-r-0 #{!important}
+  @apply tw-border-r-0 #{!important};
 }
 
 th {
-    @apply tw-text-12-px tw-text-normal-text-color tw-font-500 tw-h-40-px tw-py-10-px #{!important};
+  @apply tw-text-12-px tw-text-normal-text-color tw-font-500 tw-h-40-px tw-py-10-px #{!important};
 }
 
 td {
-    @apply tw-text-14-px tw-text-sub-text-color tw-font-400 #{!important};
+  @apply tw-text-14-px tw-text-sub-text-color tw-font-400 #{!important};
 }
 
 .pi-check:before {
-    @apply tw-text-14-px tw-cursor-pointer tw-text-text-muted #{!important};
+  @apply tw-text-14-px tw-cursor-pointer tw-text-text-muted #{!important};
 }
 
 :host ::ng-deep .tooltip-main {
-    @apply tw-px-6 tw-pb-4 tw-text-center #{!important}
+  @apply tw-px-6 tw-pb-4 tw-text-center #{!important};
 }
 
 :host ::ng-deep .tooltip-save {
-    @apply tw-text-12-px #{!important}
+  @apply tw-text-12-px #{!important};
 }
 
 :host ::ng-deep .tooltip-return {
-    @apply tw-mt-6-px tw-px-4-px tw-py-4-px tw-text-9-px tw-rounded-md tw-bg-placeholder  #{!important}
+  @apply tw-mt-6-px tw-px-4-px tw-py-4-px tw-text-9-px tw-rounded-md tw-bg-placeholder  #{!important};
 }
 
-input[type="text"] {
-    @apply tw-border-border-primary tw-text-search-focused-text #{!important};
+input[type='text'] {
+  @apply tw-border-border-primary tw-text-search-focused-text #{!important};
 }
 
 ::placeholder {
-    @apply tw-text-search-focused-placeholder-text;
+  @apply tw-text-search-focused-placeholder-text;
 }
 
-.fyle input[type="text"]:focus{
-    @apply tw-border tw-border-border-primary #{!important};
+.fyle input[type='text']:focus {
+  @apply tw-border tw-border-border-primary #{!important};
 }

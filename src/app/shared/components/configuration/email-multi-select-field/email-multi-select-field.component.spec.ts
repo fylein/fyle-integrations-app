@@ -14,21 +14,20 @@ xdescribe('EmailMultiSelectFieldComponent', () => {
   let el: DebugElement;
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ EmailMultiSelectFieldComponent ],
-      providers: [FormBuilder,  MessageService]
-    })
-    .compileComponents();
+      declarations: [EmailMultiSelectFieldComponent],
+      providers: [FormBuilder, MessageService],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(EmailMultiSelectFieldComponent);
     component = fixture.componentInstance;
     el = fixture.debugElement;
     formbuilder = TestBed.inject(FormBuilder);
-    component.options = [{name: 'dhaarani', email: "dhaarani@fylehq.com"}];
+    component.options = [{ name: 'dhaarani', email: 'dhaarani@fylehq.com' }];
     component.formControllerName = 'email';
     component.form = formbuilder.group({
-      email: [[{name: 'shwetabh', email: "shwetabh.kumar@fylehq.com"}]],
-      additionalEmails: [[{name: 'shwetabh', email: "shwetabh.kumar@fylehq.com"}]],
-      search: []
+      email: [[{ name: 'shwetabh', email: 'shwetabh.kumar@fylehq.com' }]],
+      additionalEmails: [[{ name: 'shwetabh', email: 'shwetabh.kumar@fylehq.com' }]],
+      search: [],
     });
     fixture.detectChanges();
   });
@@ -36,7 +35,6 @@ xdescribe('EmailMultiSelectFieldComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
-
 
   it('openDialog function check', () => {
     const button = fixture.debugElement.query(By.css('.tw-cursor-pointer')).children[1];
@@ -48,7 +46,7 @@ xdescribe('EmailMultiSelectFieldComponent', () => {
   it('addemail function check', () => {
     component.addEmailForm = formbuilder.group({
       name: ['shwetabhkjj'],
-      email: ["shwetabhkumar.kumar@fylehq.com"]
+      email: ['shwetabhkumar.kumar@fylehq.com'],
     });
     fixture.detectChanges();
     const button = fixture.debugElement.query(By.css('.save-btn'));
@@ -61,14 +59,19 @@ xdescribe('EmailMultiSelectFieldComponent', () => {
   });
 
   it('assignSelectedEmail function check', () => {
-      expect((component as any).assignSelectedEmail([])).toBeUndefined();
+    expect((component as any).assignSelectedEmail([])).toBeUndefined();
   });
 
   it('removeEmail function check', () => {
     expect(component.removeEmail()).toBeUndefined();
     component.form = formbuilder.group({
-      email: [[{name: 'shwetabh', email: "shwetabh.kumar@fylehq.com"}, {name: 'shwetabhww', email: "shwetabhoop.kumar@fylehq.com"}]],
-      search: []
+      email: [
+        [
+          { name: 'shwetabh', email: 'shwetabh.kumar@fylehq.com' },
+          { name: 'shwetabhww', email: 'shwetabhoop.kumar@fylehq.com' },
+        ],
+      ],
+      search: [],
     });
     fixture.detectChanges();
     expect(component.removeEmail()).toBeUndefined();
@@ -77,7 +80,7 @@ xdescribe('EmailMultiSelectFieldComponent', () => {
   it('should clear search', () => {
     const option = {
       filter: (value?: any) => 'asd',
-      reset: () => 'void'
+      reset: () => 'void',
     };
     component.form.controls.search.patchValue('Ashwin');
     component.clearSearch(option);

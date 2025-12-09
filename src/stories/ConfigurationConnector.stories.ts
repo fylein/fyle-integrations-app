@@ -1,4 +1,3 @@
-
 import { CommonModule } from '@angular/common';
 import type { Meta, StoryObj } from '@storybook/angular';
 import { moduleMetadata } from '@storybook/angular';
@@ -10,17 +9,17 @@ const meta: Meta<ConfigurationConnectorComponent> = {
   component: ConfigurationConnectorComponent,
   tags: ['autodocs'],
   render: (args: ConfigurationConnectorComponent) => ({
-    props: { ...args }
+    props: { ...args },
   }),
   decorators: [
     moduleMetadata({
       declarations: [],
-      imports: [CommonModule, SharedModule]
-    })
+      imports: [CommonModule, SharedModule],
+    }),
   ],
   argTypes: {
-    ngOnInit: { table: { disable: true } }
-  }
+    ngOnInit: { table: { disable: true } },
+  },
 };
 
 export default meta;
@@ -35,8 +34,8 @@ export const simple: Story = {
     isAccountingCompanyConnected: true,
     showDisconnect: true,
     accountingCompanyConnectionInProgress: false,
-    switchLinkText: 'Disconnect'
-  }
+    switchLinkText: 'Disconnect',
+  },
 };
 
 export const expiredToken: Story = {
@@ -48,8 +47,8 @@ export const expiredToken: Story = {
     isAccountingCompanyConnected: true,
     showDisconnect: false,
     accountingCompanyConnectionInProgress: false,
-    switchLinkText: 'Disconnect'
-  }
+    switchLinkText: 'Disconnect',
+  },
 };
 
 export const refreshingDimension: Story = {
@@ -61,6 +60,6 @@ export const refreshingDimension: Story = {
     isAccountingCompanyConnected: false,
     showDisconnect: false,
     accountingCompanyConnectionInProgress: true,
-    switchLinkText: 'Disconnect'
-  }
+    switchLinkText: 'Disconnect',
+  },
 };

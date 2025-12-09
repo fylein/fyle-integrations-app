@@ -1,11 +1,11 @@
 <div>
-  @if (mappingType==='CATEGORY_MAPPING') {
+  @if (mappingType === 'CATEGORY_MAPPING') {
     <div>
       <p-table [value]="groupedError">
         <ng-template pTemplate="header">
           <tr>
             <th>{{ 'dashboardMappingResolve.categoryHeader' | transloco }}</th>
-            <th>{{getCategoryDestinationType() | snakeCaseToSpaceCase | sentenceCase}}</th>
+            <th>{{ getCategoryDestinationType() | snakeCaseToSpaceCase | sentenceCase }}</th>
           </tr>
         </ng-template>
         <ng-template pTemplate="body" let-error let-rowIndex="rowIndex">
@@ -13,13 +13,16 @@
             <tr>
               <td>{{ error.expense_attribute.value }}</td>
               <td>
-                <p-select appendTo="body" (onShow)="tableDropdownWidth()"
+                <p-select
+                  appendTo="body"
+                  (onShow)="tableDropdownWidth()"
                   [options]="getCategoryMappingOptions()"
                   optionLabel="value"
                   [placeholder]="'dashboardMappingResolve.selectOptionPlaceholder' | transloco"
-                  (onChange)="saveCategoryMapping(error.expense_attribute, $event);"
+                  (onChange)="saveCategoryMapping(error.expense_attribute, $event)"
                   [filter]="true"
-                  filterBy="value">
+                  filterBy="value"
+                >
                 </p-select>
               </td>
             </tr>
@@ -29,13 +32,15 @@
       </p-table>
     </div>
   }
-  @if (mappingType==='EMPLOYEE_MAPPING') {
+  @if (mappingType === 'EMPLOYEE_MAPPING') {
     <div>
       <p-table [value]="groupedError">
         <ng-template pTemplate="header">
           <tr>
             <th>{{ 'dashboardMappingResolve.employeeEmailHeader' | transloco }}</th>
-            <th>{{ 'dashboardMappingResolve.sageIntacctHeader' | transloco }}{{getEmployeeAttributeType() | lowercase}}</th>
+            <th>
+              {{ 'dashboardMappingResolve.sageIntacctHeader' | transloco }}{{ getEmployeeAttributeType() | lowercase }}
+            </th>
           </tr>
         </ng-template>
         <ng-template pTemplate="body" let-error>
@@ -43,13 +48,16 @@
             <tr>
               <td>{{ error.expense_attribute.value }}</td>
               <td>
-                <p-select appendTo="body" (onShow)="tableDropdownWidth()"
+                <p-select
+                  appendTo="body"
+                  (onShow)="tableDropdownWidth()"
                   [options]="fyleEmployeeOptions"
                   optionLabel="value"
                   [placeholder]="'dashboardMappingResolve.selectOptionPlaceholder' | transloco"
-                  (onChange)="saveEmployeeMapping(error.expense_attribute, $event);"
+                  (onChange)="saveEmployeeMapping(error.expense_attribute, $event)"
                   [filter]="true"
-                  filterBy="value">
+                  filterBy="value"
+                >
                 </p-select>
               </td>
             </tr>
@@ -62,7 +70,7 @@
 </div>
 
 <ng-template #shimmers>
-  @for (_ of [0,1,2,3,4,5,6]; track _) {
+  @for (_ of [0, 1, 2, 3, 4, 5, 6]; track _) {
     <tr>
       @if (isLoading) {
         <td><p-skeleton width="150px" height="28px" shape="rectangle"></p-skeleton></td>

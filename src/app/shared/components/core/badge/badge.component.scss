@@ -1,33 +1,33 @@
 .badge {
-    @apply tw-inline-flex tw-py-spacing-2 tw-px-spacing-6;
-    @apply tw-justify-center tw-items-center tw-rounded-full tw-text-center;
+  @apply tw-inline-flex tw-py-spacing-2 tw-px-spacing-6;
+  @apply tw-justify-center tw-items-center tw-rounded-full tw-text-center;
 
-    /* Body-semibold/font-10 */
-    @apply tw-text-size-10 tw-not-italic tw-font-500 tw-leading-[125%];
-    @apply tw-relative tw-bottom-[2px];
+  /* Body-semibold/font-10 */
+  @apply tw-text-size-10 tw-not-italic tw-font-500 tw-leading-[125%];
+  @apply tw-relative tw-bottom-[2px];
 }
 
 .theme-light {
-    @apply tw-border tw-border-solid tw-border-badge-light-border-color;
-    @apply tw-bg-badge-light-bg;
+  @apply tw-border tw-border-solid tw-border-badge-light-border-color;
+  @apply tw-bg-badge-light-bg;
 }
 
 .theme-brand {
-    @apply tw-bg-badge-brand-bg;
-    @apply tw-text-badge-dark-text-color;
+  @apply tw-bg-badge-brand-bg;
+  @apply tw-text-badge-dark-text-color;
 }
 
 .theme-dark {
-    @apply tw-bg-badge-dark-bg;
-    @apply tw-text-badge-dark-text-color;
+  @apply tw-bg-badge-dark-bg;
+  @apply tw-text-badge-dark-text-color;
 }
 
 .theme-success {
-    @apply tw-bg-bg-success-light tw-border tw-border-solid tw-border-border-success-light;
-    @apply tw-text-text-success;
+  @apply tw-bg-bg-success-light tw-border tw-border-solid tw-border-border-success-light;
+  @apply tw-text-text-success;
 }
 
 .size-large {
-    @apply tw-min-w-24-px;
-    @apply tw-min-h-24-px;
+  @apply tw-min-w-24-px;
+  @apply tw-min-h-24-px;
 }

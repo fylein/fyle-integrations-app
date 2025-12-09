@@ -10,9 +10,21 @@ import { SiWorkspaceService } from 'src/app/core/services/si/si-core/si-workspac
 import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
 import { TrackingService } from 'src/app/core/services/integration/tracking.service';
 import { mockExportSettings, mockPaginatedDestinationAttributes } from '../../intacct.fixture';
-import { EmployeeFieldMapping, ExpenseGroupingFieldOption, ExportDateType, FyleField, IntacctCorporateCreditCardExpensesObject, IntacctOnboardingState, IntacctReimbursableExpensesObject, ToastSeverity } from 'src/app/core/models/enum/enum.model';
+import {
+  EmployeeFieldMapping,
+  ExpenseGroupingFieldOption,
+  ExportDateType,
+  FyleField,
+  IntacctCorporateCreditCardExpensesObject,
+  IntacctOnboardingState,
+  IntacctReimbursableExpensesObject,
+  ToastSeverity,
+} from 'src/app/core/models/enum/enum.model';
 import { ExportSettingOptionSearch } from 'src/app/core/models/common/export-settings.model';
-import { IntacctDestinationAttribute, PaginatedintacctDestinationAttribute } from 'src/app/core/models/intacct/db/destination-attribute.model';
+import {
+  IntacctDestinationAttribute,
+  PaginatedintacctDestinationAttribute,
+} from 'src/app/core/models/intacct/db/destination-attribute.model';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { brandingConfig, brandingFeatureConfig } from 'src/app/branding/branding-config';
 import { ExportSettingGet } from 'src/app/core/models/intacct/intacct-configuration/export-settings.model';
@@ -21,7 +33,6 @@ import { c1FeatureConfig } from 'src/app/branding/c1/branding-config';
 import { fyleFeatureConfig } from 'src/app/branding/fyle/branding-config';
 import { TranslocoService } from '@jsverse/transloco';
 import { ExportSettingsService } from 'src/app/core/services/common/export-settings.service';
-
 
 describe('IntacctExportSettingsComponent', () => {
   let component: IntacctExportSettingsComponent;
@@ -36,23 +47,37 @@ describe('IntacctExportSettingsComponent', () => {
   let translocoService: jasmine.SpyObj<TranslocoService>;
 
   beforeEach(async () => {
-    const exportSettingServiceSpy = jasmine.createSpyObj('SiExportSettingsService', ['getExportSettings', 'postExportSettings']);
-    const mappingServiceSpy = jasmine.createSpyObj('SiMappingsService', ['getPaginatedDestinationAttributes', 'refreshSageIntacctDimensions', 'refreshFyleDimensions']);
-    const workspaceServiceSpy = jasmine.createSpyObj('SiWorkspaceService', ['getIntacctOnboardingState', 'setIntacctOnboardingState']);
+    const exportSettingServiceSpy = jasmine.createSpyObj('SiExportSettingsService', [
+      'getExportSettings',
+      'postExportSettings',
+    ]);
+    const mappingServiceSpy = jasmine.createSpyObj('SiMappingsService', [
+      'getPaginatedDestinationAttributes',
+      'refreshSageIntacctDimensions',
+      'refreshFyleDimensions',
+    ]);
+    const workspaceServiceSpy = jasmine.createSpyObj('SiWorkspaceService', [
+      'getIntacctOnboardingState',
+      'setIntacctOnboardingState',
+    ]);
     const toastServiceSpy = jasmine.createSpyObj('IntegrationsToastService', ['displayToastMessage']);
-    const trackingServiceSpy = jasmine.createSpyObj('TrackingService', ['trackTimeSpent', 'integrationsOnboardingCompletion', 'intacctUpdateEvent']);
+    const trackingServiceSpy = jasmine.createSpyObj('TrackingService', [
+      'trackTimeSpent',
+      'integrationsOnboardingCompletion',
+      'intacctUpdateEvent',
+    ]);
 
     const translocoServiceSpy = jasmine.createSpyObj('TranslocoService', ['translate'], {
       config: {
-        reRenderOnLangChange: true
+        reRenderOnLangChange: true,
       },
       langChanges$: of('en'),
-      _loadDependencies: () => Promise.resolve()
+      _loadDependencies: () => Promise.resolve(),
     });
 
     await TestBed.configureTestingModule({
-      declarations: [ IntacctExportSettingsComponent ],
-      imports: [ SharedModule, ReactiveFormsModule, RouterModule.forRoot([]) ],
+      declarations: [IntacctExportSettingsComponent],
+      imports: [SharedModule, ReactiveFormsModule, RouterModule.forRoot([])],
       providers: [
         FormBuilder,
         { provide: SiExportSettingsService, useValue: exportSettingServiceSpy },
@@ -61,8 +86,8 @@ describe('IntacctExportSettingsComponent', () => {
         { provide: IntegrationsToastService, useValue: toastServiceSpy },
         { provide: TrackingService, useValue: trackingServiceSpy },
         { provide: TranslocoService, useValue: translocoServiceSpy },
-        provideRouter([])
-      ]
+        provideRouter([]),
+      ],
     }).compileComponents();
 
     siExportSettingsService = TestBed.inject(SiExportSettingsService) as jasmine.SpyObj<SiExportSettingsService>;
@@ -83,7 +108,7 @@ describe('IntacctExportSettingsComponent', () => {
       of(copy.ACCOUNT as unknown as PaginatedintacctDestinationAttribute),
       of(copy.EXPENSE_PAYMENT_TYPE as unknown as PaginatedintacctDestinationAttribute),
       of(copy.VENDOR as unknown as PaginatedintacctDestinationAttribute),
-      of(copy.CHARGE_CARD_NUMBER as unknown as PaginatedintacctDestinationAttribute)
+      of(copy.CHARGE_CARD_NUMBER as unknown as PaginatedintacctDestinationAttribute),
     );
 
     fixture = TestBed.createComponent(IntacctExportSettingsComponent);
@@ -101,42 +126,49 @@ describe('IntacctExportSettingsComponent', () => {
     }));
 
     it('should initialize destination options correctly', () => {
+      expect(component.destinationOptions.ACCOUNT).toEqual(
+        jasmine.arrayContaining(
+          mockPaginatedDestinationAttributes.ACCOUNT.results,
+        ) as unknown as IntacctDestinationAttribute[],
+      );
 
-      expect(component.destinationOptions.ACCOUNT).toEqual(jasmine.arrayContaining(
-        mockPaginatedDestinationAttributes.ACCOUNT.results
-      ) as unknown as IntacctDestinationAttribute[]);
+      expect(component.destinationOptions.EXPENSE_PAYMENT_TYPE).toEqual(
+        jasmine.arrayContaining(
+          mockPaginatedDestinationAttributes.EXPENSE_PAYMENT_TYPE.results.filter((attr) => attr.detail.is_reimbursable),
+        ) as unknown as IntacctDestinationAttribute[],
+      );
 
-      expect(component.destinationOptions.EXPENSE_PAYMENT_TYPE).toEqual(jasmine.arrayContaining(
-        (mockPaginatedDestinationAttributes.EXPENSE_PAYMENT_TYPE.results)
-          .filter((attr) => attr.detail.is_reimbursable)
-      ) as unknown as IntacctDestinationAttribute[]);
+      expect(component.destinationOptions.CCC_EXPENSE_PAYMENT_TYPE).toEqual(
+        jasmine.arrayContaining(
+          mockPaginatedDestinationAttributes.EXPENSE_PAYMENT_TYPE.results.filter(
+            (attr) => !attr.detail.is_reimbursable,
+          ),
+        ) as unknown as IntacctDestinationAttribute[],
+      );
 
-      expect(component.destinationOptions.CCC_EXPENSE_PAYMENT_TYPE).toEqual(jasmine.arrayContaining(
-        (mockPaginatedDestinationAttributes.EXPENSE_PAYMENT_TYPE.results)
-          .filter((attr) => !attr.detail.is_reimbursable)
-      ) as unknown as IntacctDestinationAttribute[]);
+      expect(component.destinationOptions.VENDOR).toEqual(
+        jasmine.arrayContaining(
+          mockPaginatedDestinationAttributes.VENDOR.results,
+        ) as unknown as IntacctDestinationAttribute[],
+      );
 
-      expect(component.destinationOptions.VENDOR).toEqual(jasmine.arrayContaining(
-        mockPaginatedDestinationAttributes.VENDOR.results
-      ) as unknown as IntacctDestinationAttribute[]);
-
-      expect(component.destinationOptions.CHARGE_CARD).toEqual(jasmine.arrayContaining(
-        mockPaginatedDestinationAttributes.CHARGE_CARD_NUMBER.results as unknown as IntacctDestinationAttribute[]
-      ) as unknown as IntacctDestinationAttribute[]);
+      expect(component.destinationOptions.CHARGE_CARD).toEqual(
+        jasmine.arrayContaining(
+          mockPaginatedDestinationAttributes.CHARGE_CARD_NUMBER.results as unknown as IntacctDestinationAttribute[],
+        ) as unknown as IntacctDestinationAttribute[],
+      );
     });
 
     it('should add missing destination options', () => {
-
       expect(component.destinationOptions.ACCOUNT).toContain({
         destination_id: mockExportSettings.general_mappings.default_gl_account.id,
-        value: mockExportSettings.general_mappings.default_gl_account.name
+        value: mockExportSettings.general_mappings.default_gl_account.name,
       } as unknown as IntacctDestinationAttribute);
 
       expect(component.destinationOptions.ACCOUNT).toContain({
         destination_id: mockExportSettings.general_mappings.default_credit_card.id,
-        value: mockExportSettings.general_mappings.default_credit_card.name
+        value: mockExportSettings.general_mappings.default_credit_card.name,
       } as unknown as IntacctDestinationAttribute);
-
     });
 
     it('should fetch and store export settings', () => {
@@ -159,7 +191,10 @@ describe('IntacctExportSettingsComponent', () => {
       tick();
 
       expect(siExportSettingsService.postExportSettings).toHaveBeenCalled();
-      expect(toastService.displayToastMessage).toHaveBeenCalledWith(ToastSeverity.SUCCESS, 'Export settings saved successfully');
+      expect(toastService.displayToastMessage).toHaveBeenCalledWith(
+        ToastSeverity.SUCCESS,
+        'Export settings saved successfully',
+      );
       expect(trackingService.integrationsOnboardingCompletion).toHaveBeenCalled();
       expect(workspaceService.setIntacctOnboardingState).toHaveBeenCalledWith(IntacctOnboardingState.IMPORT_SETTINGS);
       expect(router.navigate).toHaveBeenCalledWith(['/integrations/intacct/onboarding/import_settings']);
@@ -173,7 +208,10 @@ describe('IntacctExportSettingsComponent', () => {
       component.save();
 
       expect(siExportSettingsService.postExportSettings).toHaveBeenCalled();
-      expect(toastService.displayToastMessage).toHaveBeenCalledWith(ToastSeverity.SUCCESS, 'Export settings saved successfully');
+      expect(toastService.displayToastMessage).toHaveBeenCalledWith(
+        ToastSeverity.SUCCESS,
+        'Export settings saved successfully',
+      );
       expect(trackingService.intacctUpdateEvent).toHaveBeenCalled();
       expect(router.navigate).not.toHaveBeenCalled();
     });
@@ -184,7 +222,10 @@ describe('IntacctExportSettingsComponent', () => {
       fixture.detectChanges();
       component.save();
 
-      expect(toastService.displayToastMessage).toHaveBeenCalledWith(ToastSeverity.ERROR, 'Error saving export settings, please try again later');
+      expect(toastService.displayToastMessage).toHaveBeenCalledWith(
+        ToastSeverity.ERROR,
+        'Error saving export settings, please try again later',
+      );
       expect(component.saveInProgress).toBeFalse();
     });
   });
@@ -196,7 +237,10 @@ describe('IntacctExportSettingsComponent', () => {
       expect(mappingService.refreshSageIntacctDimensions).toHaveBeenCalled();
       expect(mappingService.refreshFyleDimensions).toHaveBeenCalled();
       translocoService.translate.and.returnValue('Syncing data dimensions from Sage Intacct');
-      expect(toastService.displayToastMessage).toHaveBeenCalledWith(ToastSeverity.SUCCESS, 'Syncing data dimensions from Sage Intacct');
+      expect(toastService.displayToastMessage).toHaveBeenCalledWith(
+        ToastSeverity.SUCCESS,
+        'Syncing data dimensions from Sage Intacct',
+      );
     });
 
     it('should navigate to previous step', () => {
@@ -207,15 +251,15 @@ describe('IntacctExportSettingsComponent', () => {
     it('should return the correct employee field mapping', () => {
       fixture.detectChanges();
 
-      expect(
-        component.getEmployeeFieldMapping(FyleField.VENDOR, IntacctReimbursableExpensesObject.BILL)
-      ).toBe('vendor');
+      expect(component.getEmployeeFieldMapping(FyleField.VENDOR, IntacctReimbursableExpensesObject.BILL)).toBe(
+        'vendor',
+      );
 
-      expect(component.getEmployeeFieldMapping(null, IntacctReimbursableExpensesObject.JOURNAL_ENTRY))
-        .toBe(new LowerCasePipe().transform(component.exportSettingsForm.get('employeeFieldMapping')?.value));
+      expect(component.getEmployeeFieldMapping(null, IntacctReimbursableExpensesObject.JOURNAL_ENTRY)).toBe(
+        new LowerCasePipe().transform(component.exportSettingsForm.get('employeeFieldMapping')?.value),
+      );
 
-      expect(component.getEmployeeFieldMapping(null, IntacctReimbursableExpensesObject.BILL))
-        .toBe('vendor');
+      expect(component.getEmployeeFieldMapping(null, IntacctReimbursableExpensesObject.BILL)).toBe('vendor');
     });
 
     it('should get the correct export type', () => {
@@ -236,26 +280,39 @@ describe('IntacctExportSettingsComponent', () => {
         component.exportSettingsForm.get('reimbursableExpense')?.setValue(true);
         tick();
 
-        expect(component.exportSettingsForm.get('reimbursableExportType')?.hasValidator(Validators.required)).toBeTrue();
-        expect(component.exportSettingsForm.get('reimbursableExportGroup')?.hasValidator(Validators.required)).toBeTrue();
-        expect(component.exportSettingsForm.get('reimbursableExportDate')?.hasValidator(Validators.required)).toBeTrue();
+        expect(
+          component.exportSettingsForm.get('reimbursableExportType')?.hasValidator(Validators.required),
+        ).toBeTrue();
+        expect(
+          component.exportSettingsForm.get('reimbursableExportGroup')?.hasValidator(Validators.required),
+        ).toBeTrue();
+        expect(
+          component.exportSettingsForm.get('reimbursableExportDate')?.hasValidator(Validators.required),
+        ).toBeTrue();
       }));
 
       it('should disable fields on disabling reimbursable expenses', fakeAsync(() => {
         component.exportSettingsForm.get('reimbursableExpense')?.setValue(false);
         tick();
 
-        expect(component.exportSettingsForm.get('reimbursableExportType')?.hasValidator(Validators.required)).toBeFalse();
-        expect(component.exportSettingsForm.get('reimbursableExportGroup')?.hasValidator(Validators.required)).toBeFalse();
-        expect(component.exportSettingsForm.get('reimbursableExportDate')?.hasValidator(Validators.required)).toBeFalse();
+        expect(
+          component.exportSettingsForm.get('reimbursableExportType')?.hasValidator(Validators.required),
+        ).toBeFalse();
+        expect(
+          component.exportSettingsForm.get('reimbursableExportGroup')?.hasValidator(Validators.required),
+        ).toBeFalse();
+        expect(
+          component.exportSettingsForm.get('reimbursableExportDate')?.hasValidator(Validators.required),
+        ).toBeFalse();
         expect(component.exportSettingsForm.get('reimbursableExportType')?.value).toBeNull();
       }));
     });
 
     describe('Reimbursable Export Type Watchers', () => {
-
       it('should handle reimbursableExportType being changed to Journal Entry', fakeAsync(() => {
-        component.exportSettingsForm.get('reimbursableExportType')?.setValue(IntacctReimbursableExpensesObject.JOURNAL_ENTRY);
+        component.exportSettingsForm
+          .get('reimbursableExportType')
+          ?.setValue(IntacctReimbursableExpensesObject.JOURNAL_ENTRY);
         tick();
 
         expect(component.exportSettingsForm.get('glAccount')?.hasValidator(Validators.required)).toBeTrue();
@@ -263,7 +320,9 @@ describe('IntacctExportSettingsComponent', () => {
       }));
 
       it('should handle reimbursableExportType being changed to Expense Report', fakeAsync(() => {
-        component.exportSettingsForm.get('reimbursableExportType')?.setValue(IntacctReimbursableExpensesObject.EXPENSE_REPORT);
+        component.exportSettingsForm
+          .get('reimbursableExportType')
+          ?.setValue(IntacctReimbursableExpensesObject.EXPENSE_REPORT);
         tick();
 
         expect(component.exportSettingsForm.get('employeeFieldMapping')?.value).toBe(FyleField.EMPLOYEE);
@@ -302,7 +361,9 @@ describe('IntacctExportSettingsComponent', () => {
 
     describe('CCC Export Type Watchers', () => {
       it('should handle cccExportType being changed to Charge Card Transaction', fakeAsync(() => {
-        component.exportSettingsForm.get('cccExportType')?.setValue(IntacctCorporateCreditCardExpensesObject.CHARGE_CARD_TRANSACTION);
+        component.exportSettingsForm
+          .get('cccExportType')
+          ?.setValue(IntacctCorporateCreditCardExpensesObject.CHARGE_CARD_TRANSACTION);
         tick();
 
         expect(component.exportSettingsForm.get('chargeCard')?.hasValidator(Validators.required)).toBeTrue();
@@ -318,7 +379,9 @@ describe('IntacctExportSettingsComponent', () => {
       }));
 
       it('should handle cccExportType being changed to Expense Report', fakeAsync(() => {
-        component.exportSettingsForm.get('cccExportType')?.setValue(IntacctCorporateCreditCardExpensesObject.EXPENSE_REPORT);
+        component.exportSettingsForm
+          .get('cccExportType')
+          ?.setValue(IntacctCorporateCreditCardExpensesObject.EXPENSE_REPORT);
         tick();
 
         expect(component.exportSettingsForm.get('employeeFieldMapping')?.value).toBe(EmployeeFieldMapping.EMPLOYEE);
@@ -326,7 +389,9 @@ describe('IntacctExportSettingsComponent', () => {
       }));
 
       it('should handle cccExportType being changed to Journal Entry', fakeAsync(() => {
-        component.exportSettingsForm.get('cccExportType')?.setValue(IntacctCorporateCreditCardExpensesObject.JOURNAL_ENTRY);
+        component.exportSettingsForm
+          .get('cccExportType')
+          ?.setValue(IntacctCorporateCreditCardExpensesObject.JOURNAL_ENTRY);
         tick();
 
         expect(component.exportSettingsForm.get('employeeFieldMapping')?.enabled).toBeTrue();
@@ -346,7 +411,7 @@ describe('IntacctExportSettingsComponent', () => {
 
         expect(component.reimbursableExpenseGroupingDateOptions).not.toContain({
           label: 'Spend date',
-          value: ExportDateType.SPENT_AT
+          value: ExportDateType.SPENT_AT,
         });
       }));
     });
@@ -379,11 +444,13 @@ describe('IntacctExportSettingsComponent', () => {
       it('should handle option search for reimbursable expense payment type', fakeAsync(() => {
         const searchEvent = {
           searchTerm: 'test',
-          destinationOptionKey: 'EXPENSE_PAYMENT_TYPE'
+          destinationOptionKey: 'EXPENSE_PAYMENT_TYPE',
         } as ExportSettingOptionSearch;
 
         mappingService.getPaginatedDestinationAttributes.and.returnValue(
-          of(mockPaginatedDestinationAttributes.EXPENSE_PAYMENT_TYPE as unknown as PaginatedintacctDestinationAttribute)
+          of(
+            mockPaginatedDestinationAttributes.EXPENSE_PAYMENT_TYPE as unknown as PaginatedintacctDestinationAttribute,
+          ),
         );
 
         component.searchOptionsDropdown(searchEvent);
@@ -391,9 +458,8 @@ describe('IntacctExportSettingsComponent', () => {
 
         expect(mappingService.getPaginatedDestinationAttributes).toHaveBeenCalledWith('EXPENSE_PAYMENT_TYPE', 'test');
 
-        const isReimbursable = (option: IntacctDestinationAttribute) => (
-          option.detail ? option.detail.is_reimbursable : true
-        );
+        const isReimbursable = (option: IntacctDestinationAttribute) =>
+          option.detail ? option.detail.is_reimbursable : true;
 
         expect(component.destinationOptions.EXPENSE_PAYMENT_TYPE.every(isReimbursable)).toBeTrue();
         expect(component.isOptionSearchInProgress).toBeFalse();
@@ -402,31 +468,34 @@ describe('IntacctExportSettingsComponent', () => {
       it('should handle option search for CCC expense payment type', fakeAsync(() => {
         const searchEvent = {
           searchTerm: 'test',
-          destinationOptionKey: 'CCC_EXPENSE_PAYMENT_TYPE'
+          destinationOptionKey: 'CCC_EXPENSE_PAYMENT_TYPE',
         };
 
         mappingService.getPaginatedDestinationAttributes.and.returnValue(
-          of(mockPaginatedDestinationAttributes.EXPENSE_PAYMENT_TYPE as unknown as PaginatedintacctDestinationAttribute)
+          of(
+            mockPaginatedDestinationAttributes.EXPENSE_PAYMENT_TYPE as unknown as PaginatedintacctDestinationAttribute,
+          ),
         );
 
         component.searchOptionsDropdown(searchEvent as ExportSettingOptionSearch);
         tick(1000);
 
         expect(mappingService.getPaginatedDestinationAttributes).toHaveBeenCalledWith('EXPENSE_PAYMENT_TYPE', 'test');
-        expect(component.destinationOptions.CCC_EXPENSE_PAYMENT_TYPE.every(option => (
-          option.detail ? !option.detail.is_reimbursable : true
-        ))).toBeTrue();
+        expect(
+          component.destinationOptions.CCC_EXPENSE_PAYMENT_TYPE.every((option) =>
+            option.detail ? !option.detail.is_reimbursable : true,
+          ),
+        ).toBeTrue();
         expect(component.isOptionSearchInProgress).toBeFalse();
       }));
     });
-
-
   });
 
   describe('C1 Specific Behavior', () => {
     it('should handle setup with c1 branding', () => {
       brandingConfig.brandId = 'co';
-      brandingFeatureConfig.featureFlags.exportSettings.isReimbursableExpensesAllowed = c1FeatureConfig.featureFlags.exportSettings.isReimbursableExpensesAllowed;
+      brandingFeatureConfig.featureFlags.exportSettings.isReimbursableExpensesAllowed =
+        c1FeatureConfig.featureFlags.exportSettings.isReimbursableExpensesAllowed;
 
       fixture = TestBed.createComponent(IntacctExportSettingsComponent);
       component = fixture.componentInstance;
@@ -439,7 +508,8 @@ describe('IntacctExportSettingsComponent', () => {
 
     afterAll(() => {
       brandingConfig.brandId = 'fyle';
-      brandingFeatureConfig.featureFlags.exportSettings.isReimbursableExpensesAllowed = fyleFeatureConfig.featureFlags.exportSettings.isReimbursableExpensesAllowed;
+      brandingFeatureConfig.featureFlags.exportSettings.isReimbursableExpensesAllowed =
+        fyleFeatureConfig.featureFlags.exportSettings.isReimbursableExpensesAllowed;
     });
   });
 
@@ -460,7 +530,9 @@ describe('IntacctExportSettingsComponent', () => {
         return key as T;
       });
 
-      component.exportSettingsForm.get('cccExportType')?.setValue(IntacctCorporateCreditCardExpensesObject.CHARGE_CARD_TRANSACTION);
+      component.exportSettingsForm
+        .get('cccExportType')
+        ?.setValue(IntacctCorporateCreditCardExpensesObject.CHARGE_CARD_TRANSACTION);
       tick();
 
       component.exportSettingsForm.get('cccExportGroup')?.setValue(ExpenseGroupingFieldOption.EXPENSE_ID);
@@ -468,23 +540,25 @@ describe('IntacctExportSettingsComponent', () => {
       expect(component.cccExpenseGroupingDateOptions).toEqual([
         {
           label: 'Export date',
-          value: ExportDateType.CURRENT_DATE
+          value: ExportDateType.CURRENT_DATE,
         },
         {
           label: 'Spend date',
-          value: ExportDateType.SPENT_AT
+          value: ExportDateType.SPENT_AT,
         },
         {
           label: 'Card transaction post date',
-          value: ExportDateType.POSTED_AT
-        }
+          value: ExportDateType.POSTED_AT,
+        },
       ]);
     }));
 
     it('should enable the employeeFieldMapping field when at least one export type is Journal Entry', () => {
       fixture.detectChanges();
-      component.exportSettings.configurations.reimbursable_expenses_object = IntacctReimbursableExpensesObject.JOURNAL_ENTRY;
-      component.exportSettings.configurations.corporate_credit_card_expenses_object = IntacctCorporateCreditCardExpensesObject.CHARGE_CARD_TRANSACTION;
+      component.exportSettings.configurations.reimbursable_expenses_object =
+        IntacctReimbursableExpensesObject.JOURNAL_ENTRY;
+      component.exportSettings.configurations.corporate_credit_card_expenses_object =
+        IntacctCorporateCreditCardExpensesObject.CHARGE_CARD_TRANSACTION;
 
       component['exportFieldsWatcher']();
 

@@ -1,7 +1,7 @@
-import { PaginatedResponse } from "../../db/paginated-response.model";
-import { FyleReferenceType } from "../../enum/enum.model";
-import { ExpenseDetails } from "../../db/expense-details.model";
-import { Expense } from "./expense.model";
+import { PaginatedResponse } from '../../db/paginated-response.model';
+import { FyleReferenceType } from '../../enum/enum.model';
+import { ExpenseDetails } from '../../db/expense-details.model';
+import { Expense } from './expense.model';
 
 export type ExpenseGroupDescription = {
   claim_number: string;

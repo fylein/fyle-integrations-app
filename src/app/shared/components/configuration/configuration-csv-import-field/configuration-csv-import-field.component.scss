@@ -1,24 +1,27 @@
 .custom-option {
-    @apply tw-flex tw-text-mandatory-field-color;
+  @apply tw-flex tw-text-mandatory-field-color;
 }
 
 .body-container {
-    container-type: inline-size;
-    container-name: body;
+  container-type: inline-size;
+  container-name: body;
 }
 
-.responsive-field, :host ::ng-deep .responsive-field .p-select {
-    width: 220px !important;
+.responsive-field,
+:host ::ng-deep .responsive-field .p-select {
+  width: 220px !important;
 }
 
 @container body (width > 870px) {
-    .responsive-field, :host ::ng-deep .responsive-field .p-select {
-        width: 270px !important;
-    }
+  .responsive-field,
+  :host ::ng-deep .responsive-field .p-select {
+    width: 270px !important;
+  }
 }
 
 @container body (width > 940px) {
-    .responsive-field, :host ::ng-deep .responsive-field .p-select{
-        width: 300px !important;
-    }
+  .responsive-field,
+  :host ::ng-deep .responsive-field .p-select {
+    width: 300px !important;
+  }
 }

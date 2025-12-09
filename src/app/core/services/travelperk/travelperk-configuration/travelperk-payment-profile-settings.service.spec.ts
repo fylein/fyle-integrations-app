@@ -11,8 +11,8 @@ describe('UtravelperkUpaymentUprofileUsettingsService', () => {
       providers: [
         UtravelperkUpaymentUprofileUsettingsService,
         provideHttpClient(withInterceptorsFromDi()),
-        provideHttpClientTesting()
-      ]
+        provideHttpClientTesting(),
+      ],
     });
     service = TestBed.inject(UtravelperkUpaymentUprofileUsettingsService);
   });

@@ -9,21 +9,20 @@ xdescribe('ConfigurationRadioFieldComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ConfigurationRadioFieldComponent ]
-    })
-    .compileComponents();
+      declarations: [ConfigurationRadioFieldComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(ConfigurationRadioFieldComponent);
     component = fixture.componentInstance;
     component.options = [
       {
         value: ExpenseState.PAYMENT_PROCESSING,
-        label: 'Payment Processing'
+        label: 'Payment Processing',
       },
       {
         value: ExpenseState.PAID,
-        label: 'Paid'
-      }
+        label: 'Paid',
+      },
     ];
     fixture.detectChanges();
   });

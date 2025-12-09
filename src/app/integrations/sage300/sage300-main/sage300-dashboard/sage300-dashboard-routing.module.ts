@@ -6,12 +6,12 @@ import { Sage300DashboardComponent } from './sage300-dashboard.component';
 const routes: Routes = [
   {
     path: '',
-    component: Sage300DashboardComponent
-  }
+    component: Sage300DashboardComponent,
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class Sage300DashboardRoutingModule { }
+export class Sage300DashboardRoutingModule {}

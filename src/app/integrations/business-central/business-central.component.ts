@@ -12,13 +12,12 @@ import { WindowService } from 'src/app/core/services/common/window.service';
 import { WorkspaceService } from 'src/app/core/services/common/workspace.service';
 
 @Component({
-    selector: 'app-business-central',
-    templateUrl: './business-central.component.html',
-    styleUrls: ['./business-central.component.scss'],
-    standalone: false
+  selector: 'app-business-central',
+  templateUrl: './business-central.component.html',
+  styleUrls: ['./business-central.component.scss'],
+  standalone: false,
 })
 export class BusinessCentralComponent implements OnInit {
-
   user: MinimalUser = this.userService.getUserProfile();
 
   workspace: BusinessCentralWorkspace;
@@ -35,7 +34,7 @@ export class BusinessCentralComponent implements OnInit {
     private userService: IntegrationsUserService,
     private windowService: WindowService,
     private workspaceService: WorkspaceService,
-    private authService: AuthService
+    private authService: AuthService,
   ) {
     this.windowReference = this.windowService.nativeWindow;
   }
@@ -48,8 +47,9 @@ export class BusinessCentralComponent implements OnInit {
         [BusinessCentralOnboardingState.COMPANY_SELECTION]: '/integrations/business_central/onboarding/landing',
         [BusinessCentralOnboardingState.EXPORT_SETTINGS]: '/integrations/business_central/onboarding/export_settings',
         [BusinessCentralOnboardingState.IMPORT_SETTINGS]: '/integrations/business_central/onboarding/import_settings',
-        [BusinessCentralOnboardingState.ADVANCED_SETTINGS]: '/integrations/business_central/onboarding/advanced_settings',
-        [BusinessCentralOnboardingState.COMPLETE]: '/integrations/business_central/main/dashboard'
+        [BusinessCentralOnboardingState.ADVANCED_SETTINGS]:
+          '/integrations/business_central/onboarding/advanced_settings',
+        [BusinessCentralOnboardingState.COMPLETE]: '/integrations/business_central/main/dashboard',
       };
       this.router.navigateByUrl(onboardingStateComponentMap[this.workspace.onboarding_state]);
     }
@@ -57,19 +57,21 @@ export class BusinessCentralComponent implements OnInit {
 
   private setupWorkspace(): void {
     this.helperService.setBaseApiURL(AppUrl.BUSINESS_CENTRAL);
-    this.workspaceService.getWorkspace(this.user.org_id).subscribe((workspaces: BusinessCentralWorkspace) => {
-      if (workspaces?.id) {
-        this.storeWorkspaceAndNavigate(workspaces);
-      }
-    }, () => {
-      this.workspaceService.postWorkspace().subscribe((workspaces: any) => {
-        this.storeWorkspaceAndNavigate(workspaces);
-      });
-    }
+    this.workspaceService.getWorkspace(this.user.org_id).subscribe(
+      (workspaces: BusinessCentralWorkspace) => {
+        if (workspaces?.id) {
+          this.storeWorkspaceAndNavigate(workspaces);
+        }
+      },
+      () => {
+        this.workspaceService.postWorkspace().subscribe((workspaces: any) => {
+          this.storeWorkspaceAndNavigate(workspaces);
+        });
+      },
     );
   }
 
-  storeWorkspaceAndNavigate(workspace:BusinessCentralWorkspace) {
+  storeWorkspaceAndNavigate(workspace: BusinessCentralWorkspace) {
     this.workspace = workspace;
     this.storageService.set('workspaceId', this.workspace.id);
     this.storageService.set('onboarding-state', this.workspace.onboarding_state);
@@ -83,5 +85,4 @@ export class BusinessCentralComponent implements OnInit {
     this.authService.updateUserTokens('BUSINESS_CENTRAL');
     this.setupWorkspace();
   }
-
 }

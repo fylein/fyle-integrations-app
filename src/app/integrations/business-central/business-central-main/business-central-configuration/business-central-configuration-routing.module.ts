@@ -12,22 +12,22 @@ const routes: Routes = [
     children: [
       {
         path: 'export_settings',
-        component: BusinessCentralExportSettingsComponent
+        component: BusinessCentralExportSettingsComponent,
       },
       {
         path: 'import_settings',
-        component: BusinessCentralImportSettingsComponent
+        component: BusinessCentralImportSettingsComponent,
       },
       {
         path: 'advanced_settings',
-        component: BusinessCentralAdvancedSettingsComponent
-      }
-    ]
-  }
+        component: BusinessCentralAdvancedSettingsComponent,
+      },
+    ],
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class BusinessCentralConfigurationRoutingModule { }
+export class BusinessCentralConfigurationRoutingModule {}

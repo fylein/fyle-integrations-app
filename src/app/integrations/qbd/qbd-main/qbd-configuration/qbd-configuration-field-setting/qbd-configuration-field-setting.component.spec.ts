@@ -8,9 +8,8 @@ describe('QbdConfigurationFieldSettingComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ QbdConfigurationFieldSettingComponent ]
-    })
-    .compileComponents();
+      declarations: [QbdConfigurationFieldSettingComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(QbdConfigurationFieldSettingComponent);
     component = fixture.componentInstance;

@@ -23,13 +23,24 @@ import {
   importSettingsWithProjectMapping,
   expenseFieldsExpectedForC1,
   blankMapping,
-  customFieldFormValue
+  customFieldFormValue,
 } from '../../intacct.fixture';
 import { IntacctConfiguration } from 'src/app/core/models/db/configuration.model';
-import { ImportSettingGet, ImportSettingPost, ImportSettings } from 'src/app/core/models/intacct/intacct-configuration/import-settings.model';
+import {
+  ImportSettingGet,
+  ImportSettingPost,
+  ImportSettings,
+} from 'src/app/core/models/intacct/intacct-configuration/import-settings.model';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { provideHttpClientTesting } from '@angular/common/http/testing';
-import { IntacctOnboardingState, IntacctUpdateEvent, Page, ProgressPhase, ToastSeverity, TrackingApp } from 'src/app/core/models/enum/enum.model';
+import {
+  IntacctOnboardingState,
+  IntacctUpdateEvent,
+  Page,
+  ProgressPhase,
+  ToastSeverity,
+  TrackingApp,
+} from 'src/app/core/models/enum/enum.model';
 import { ExpenseField } from 'src/app/core/models/intacct/db/expense-field.model';
 import { MappingSourceField } from 'src/app/core/models/enum/enum.model';
 import { ConfigurationWarningOut } from 'src/app/core/models/misc/configuration-warning.model';
@@ -56,26 +67,36 @@ describe('IntacctC1ImportSettingsComponent', () => {
       'getFyleFields',
       'getConfiguration',
       'refreshSageIntacctDimensions',
-      'refreshFyleDimensions'
+      'refreshFyleDimensions',
     ]);
-    const importSettingServiceSpy = jasmine.createSpyObj('SiImportSettingsService', ['getImportSettings', 'postImportSettings']);
+    const importSettingServiceSpy = jasmine.createSpyObj('SiImportSettingsService', [
+      'getImportSettings',
+      'postImportSettings',
+    ]);
     const connectorServiceSpy = jasmine.createSpyObj('IntacctConnectorService', ['getLocationEntityMapping']);
     const storageServiceSpy = jasmine.createSpyObj('StorageService', ['get']);
     const toastServiceSpy = jasmine.createSpyObj('IntegrationsToastService', ['displayToastMessage']);
-    const trackingServiceSpy = jasmine.createSpyObj('TrackingService', ['trackTimeSpent', 'intacctUpdateEvent', 'integrationsOnboardingCompletion']);
-    const workspaceServiceSpy = jasmine.createSpyObj('SiWorkspaceService', ['getIntacctOnboardingState', 'setIntacctOnboardingState']);
+    const trackingServiceSpy = jasmine.createSpyObj('TrackingService', [
+      'trackTimeSpent',
+      'intacctUpdateEvent',
+      'integrationsOnboardingCompletion',
+    ]);
+    const workspaceServiceSpy = jasmine.createSpyObj('SiWorkspaceService', [
+      'getIntacctOnboardingState',
+      'setIntacctOnboardingState',
+    ]);
     const helperServiceSpy = jasmine.createSpyObj('HelperService', [
       'disableFormField',
       'enableFormField',
       'markControllerAsRequired',
-      'clearValidatorAndResetValue'
+      'clearValidatorAndResetValue',
     ]);
     const translocoServiceSpy = jasmine.createSpyObj('TranslocoService', ['translate']);
 
     await TestBed.configureTestingModule({
-    declarations: [IntacctC1ImportSettingsComponent],
-    imports: [SharedModule, RouterModule.forRoot([]), ReactiveFormsModule],
-    providers: [
+      declarations: [IntacctC1ImportSettingsComponent],
+      imports: [SharedModule, RouterModule.forRoot([]), ReactiveFormsModule],
+      providers: [
         FormBuilder,
         { provide: SiMappingsService, useValue: mappingServiceSpy },
         { provide: SiImportSettingsService, useValue: importSettingServiceSpy },
@@ -88,9 +109,9 @@ describe('IntacctC1ImportSettingsComponent', () => {
         { provide: TranslocoService, useValue: translocoServiceSpy },
         provideRouter([]),
         provideHttpClient(withInterceptorsFromDi()),
-        provideHttpClientTesting()
-    ]
-}).compileComponents();
+        provideHttpClientTesting(),
+      ],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(IntacctC1ImportSettingsComponent);
     component = fixture.componentInstance;
@@ -120,7 +141,6 @@ describe('IntacctC1ImportSettingsComponent', () => {
   });
 
   describe('Initialization', () => {
-
     it('should initialize component with correct data', () => {
       translocoService.translate.and.returnValue('General ledger account');
       component.ngOnInit();
@@ -162,11 +182,8 @@ describe('IntacctC1ImportSettingsComponent', () => {
   });
 
   describe('Form Initialization', () => {
-
     it('should generate the correct expense fields', () => {
-      importSettingService.getImportSettings.and.returnValue(of(
-        importSettingsWithProjectMapping as ImportSettingGet
-      ));
+      importSettingService.getImportSettings.and.returnValue(of(importSettingsWithProjectMapping as ImportSettingGet));
       spyOn<any>(component, 'createFormGroup').and.callThrough();
       component.ngOnInit();
 
@@ -198,16 +215,20 @@ describe('IntacctC1ImportSettingsComponent', () => {
       component.save();
 
       expect(importSettingService.postImportSettings).toHaveBeenCalled();
-      expect(toastService.displayToastMessage).toHaveBeenCalledWith(ToastSeverity.SUCCESS, 'Import settings saved successfully');
-      expect(trackingService.trackTimeSpent).toHaveBeenCalledWith(TrackingApp.INTACCT, Page.IMPORT_SETTINGS_INTACCT, jasmine.any(Date));
-      expect(trackingService.intacctUpdateEvent).toHaveBeenCalledWith(
-        IntacctUpdateEvent.ADVANCED_SETTINGS_INTACCT,
-        {
-          phase: ProgressPhase.POST_ONBOARDING,
-          oldState: importSettings,
-          newState: importSettings
-        }
+      expect(toastService.displayToastMessage).toHaveBeenCalledWith(
+        ToastSeverity.SUCCESS,
+        'Import settings saved successfully',
       );
+      expect(trackingService.trackTimeSpent).toHaveBeenCalledWith(
+        TrackingApp.INTACCT,
+        Page.IMPORT_SETTINGS_INTACCT,
+        jasmine.any(Date),
+      );
+      expect(trackingService.intacctUpdateEvent).toHaveBeenCalledWith(IntacctUpdateEvent.ADVANCED_SETTINGS_INTACCT, {
+        phase: ProgressPhase.POST_ONBOARDING,
+        oldState: importSettings,
+        newState: importSettings,
+      });
       expect(component.saveInProgress).toBeFalse();
       expect(router.navigate).not.toHaveBeenCalled();
     });
@@ -221,8 +242,15 @@ describe('IntacctC1ImportSettingsComponent', () => {
       component.save();
 
       expect(importSettingService.postImportSettings).toHaveBeenCalled();
-      expect(trackingService.integrationsOnboardingCompletion).toHaveBeenCalledWith(TrackingApp.INTACCT, IntacctOnboardingState.IMPORT_SETTINGS, 3, jasmine.any(Object));
-      expect(workspaceService.setIntacctOnboardingState).toHaveBeenCalledWith(IntacctOnboardingState.ADVANCED_CONFIGURATION);
+      expect(trackingService.integrationsOnboardingCompletion).toHaveBeenCalledWith(
+        TrackingApp.INTACCT,
+        IntacctOnboardingState.IMPORT_SETTINGS,
+        3,
+        jasmine.any(Object),
+      );
+      expect(workspaceService.setIntacctOnboardingState).toHaveBeenCalledWith(
+        IntacctOnboardingState.ADVANCED_CONFIGURATION,
+      );
       expect(router.navigate).toHaveBeenCalledWith(['/integrations/intacct/onboarding/advanced_settings']);
     });
 
@@ -235,7 +263,10 @@ describe('IntacctC1ImportSettingsComponent', () => {
       component.save();
 
       expect(importSettingService.postImportSettings).toHaveBeenCalled();
-      expect(toastService.displayToastMessage).toHaveBeenCalledWith(ToastSeverity.ERROR, 'Error saving import settings, please try again later');
+      expect(toastService.displayToastMessage).toHaveBeenCalledWith(
+        ToastSeverity.ERROR,
+        'Error saving import settings, please try again later',
+      );
       expect(component.saveInProgress).toBeFalse();
     });
   });
@@ -249,10 +280,19 @@ describe('IntacctC1ImportSettingsComponent', () => {
     beforeEach(() => {
       component.ngOnInit();
 
-      isDependentImportEnabledValueChangeSpy = spyOn(component.importSettingsForm.controls.isDependentImportEnabled.valueChanges, 'subscribe').and.callThrough();
+      isDependentImportEnabledValueChangeSpy = spyOn(
+        component.importSettingsForm.controls.isDependentImportEnabled.valueChanges,
+        'subscribe',
+      ).and.callThrough();
       blankExpenseField = component['createFormGroup'](blankMapping);
-      costCodesValueChangeSubscription = spyOn(component.importSettingsForm.controls.costCodes.valueChanges, 'subscribe');
-      costTypesValueChangeSubscription = spyOn(component.importSettingsForm.controls.costTypes.valueChanges, 'subscribe');
+      costCodesValueChangeSubscription = spyOn(
+        component.importSettingsForm.controls.costCodes.valueChanges,
+        'subscribe',
+      );
+      costTypesValueChangeSubscription = spyOn(
+        component.importSettingsForm.controls.costTypes.valueChanges,
+        'subscribe',
+      );
 
       spyOn(blankExpenseField.valueChanges, 'subscribe').and.callThrough();
     });
@@ -263,7 +303,9 @@ describe('IntacctC1ImportSettingsComponent', () => {
       });
 
       it('should setup watchers for dependent fields', () => {
-        expect(component.importSettingsForm.controls.isDependentImportEnabled.valueChanges.subscribe).toHaveBeenCalled();
+        expect(
+          component.importSettingsForm.controls.isDependentImportEnabled.valueChanges.subscribe,
+        ).toHaveBeenCalled();
         expect(component.importSettingsForm.controls.costCodes.valueChanges.subscribe).toHaveBeenCalled();
         expect(component.importSettingsForm.controls.costTypes.valueChanges.subscribe).toHaveBeenCalled();
       });
@@ -348,14 +390,17 @@ describe('IntacctC1ImportSettingsComponent', () => {
 
       expect(mappingService.refreshSageIntacctDimensions).toHaveBeenCalled();
       expect(mappingService.refreshFyleDimensions).toHaveBeenCalled();
-      expect(toastService.displayToastMessage).toHaveBeenCalledWith(ToastSeverity.SUCCESS, 'Syncing data dimensions from Sage Intacct');
+      expect(toastService.displayToastMessage).toHaveBeenCalledWith(
+        ToastSeverity.SUCCESS,
+        'Syncing data dimensions from Sage Intacct',
+      );
     });
 
     it('removeFilter should reset source_field and import_to_fyle', () => {
       const mockFormGroup = jasmine.createSpyObj('FormGroup', ['controls']);
       mockFormGroup.controls = {
         source_field: jasmine.createSpyObj('AbstractControl', ['patchValue']),
-        import_to_fyle: jasmine.createSpyObj('AbstractControl', ['patchValue'])
+        import_to_fyle: jasmine.createSpyObj('AbstractControl', ['patchValue']),
       };
       component.removeFilter(mockFormGroup);
       expect(mockFormGroup.controls.source_field.patchValue).toHaveBeenCalledWith('');
@@ -365,7 +410,7 @@ describe('IntacctC1ImportSettingsComponent', () => {
     it('hasDuplicateOption should return true for valid control', () => {
       const mockFormGroup = jasmine.createSpyObj('FormGroup', ['controls']);
       mockFormGroup.controls = {
-        testControl: { valid: true }
+        testControl: { valid: true },
       };
       expect(component.hasDuplicateOption(mockFormGroup, 0, 'testControl')).toBeTrue();
     });
@@ -415,7 +460,11 @@ describe('IntacctC1ImportSettingsComponent', () => {
       component.closeModel();
 
       expect(component.customFieldControl.get('source_field')?.value).toBeNull();
-      expect(component.customFieldForm.value).toEqual({ attribute_type: null, display_name: null, source_placeholder: null });
+      expect(component.customFieldForm.value).toEqual({
+        attribute_type: null,
+        display_name: null,
+        source_placeholder: null,
+      });
       expect(component.showDialog).toBeFalse();
     });
 
@@ -442,20 +491,24 @@ describe('IntacctC1ImportSettingsComponent', () => {
       it('should update form for costCodes', () => {
         component.customFieldType = 'costCodes';
         component.saveDependentCustomField();
-        expect(component.costCodeFieldOption[component.costCodeFieldOption.length - 1])
-          .toEqual(jasmine.objectContaining(customFieldFormValue));
-        expect(component.importSettingsForm.get('costCodes')?.value)
-          .toEqual(jasmine.objectContaining(customFieldFormValue));
+        expect(component.costCodeFieldOption[component.costCodeFieldOption.length - 1]).toEqual(
+          jasmine.objectContaining(customFieldFormValue),
+        );
+        expect(component.importSettingsForm.get('costCodes')?.value).toEqual(
+          jasmine.objectContaining(customFieldFormValue),
+        );
       });
 
       it('should update form for non-costCodes', () => {
         component.customFieldType = 'costTypes';
         component.saveDependentCustomField();
 
-        expect(component.costCategoryOption[component.costCodeFieldOption.length - 1])
-          .toEqual(jasmine.objectContaining(customFieldFormValue));
-        expect(component.importSettingsForm.get('costTypes')?.value)
-          .toEqual(jasmine.objectContaining(customFieldFormValue));
+        expect(component.costCategoryOption[component.costCodeFieldOption.length - 1]).toEqual(
+          jasmine.objectContaining(customFieldFormValue),
+        );
+        expect(component.importSettingsForm.get('costTypes')?.value).toEqual(
+          jasmine.objectContaining(customFieldFormValue),
+        );
       });
     });
 
@@ -463,29 +516,31 @@ describe('IntacctC1ImportSettingsComponent', () => {
       component.customFieldForm.patchValue(customFieldFormValue);
 
       const mockExpenseField = component['createFormGroup']({
-        destination_field: "CUSTOMER",
+        destination_field: 'CUSTOMER',
         import_to_fyle: false,
         is_custom: false,
-        source_field: "",
-        source_placeholder: null
+        source_field: '',
+        source_placeholder: null,
       });
       component.customFieldControl = mockExpenseField;
 
       component.saveFyleExpenseField();
 
-      const customerExpenseField = (component.importSettingsForm.get('expenseFields') as FormArray)
-        .controls.filter(field => (
-          field.get('destination_field')?.value ===
-          component.customFieldControl.get('destination_field')?.value
-        ))[0];
+      const customerExpenseField = (component.importSettingsForm.get('expenseFields') as FormArray).controls.filter(
+        (field) =>
+          field.get('destination_field')?.value === component.customFieldControl.get('destination_field')?.value,
+      )[0];
 
-      expect(customerExpenseField.value).toEqual(jasmine.objectContaining({
-        destination_field: "CUSTOMER",
-        source_field: "TEST",
-        source_placeholder: "TEST_PLACEHOLDER"
-      }));
-      expect(component.fyleFields[component.fyleFields.length - 2])
-        .toEqual(jasmine.objectContaining(customFieldFormValue));
+      expect(customerExpenseField.value).toEqual(
+        jasmine.objectContaining({
+          destination_field: 'CUSTOMER',
+          source_field: 'TEST',
+          source_placeholder: 'TEST_PLACEHOLDER',
+        }),
+      );
+      expect(component.fyleFields[component.fyleFields.length - 2]).toEqual(
+        jasmine.objectContaining(customFieldFormValue),
+      );
       expect(component.fyleFields[component.fyleFields.length - 1]).toEqual(component.customFieldOption[0]);
     });
   });

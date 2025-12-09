@@ -1,4 +1,3 @@
-
 import { CommonModule } from '@angular/common';
 import { HttpClient, HttpHandler } from '@angular/common/http';
 import type { Meta, StoryObj } from '@storybook/angular';
@@ -15,7 +14,7 @@ const meta: Meta<DashboardExportSummarySectionComponent> = {
   component: DashboardExportSummarySectionComponent,
   tags: ['autodocs'],
   render: (args: DashboardExportSummarySectionComponent) => ({
-    props: { ...args }
+    props: { ...args },
   }),
   decorators: [
     moduleMetadata({
@@ -24,30 +23,26 @@ const meta: Meta<DashboardExportSummarySectionComponent> = {
       providers: [
         {
           provide: AccountingExportService,
-          useValue: {
-          }
+          useValue: {},
         },
         {
           provide: ApiService,
-          useValue: {
-          }
+          useValue: {},
         },
         {
           provide: HttpClient,
-          useValue: {
-          }
+          useValue: {},
         },
         {
           provide: ExportLogService,
-          useValue: {
-          }
-        }
-      ]
-    })
+          useValue: {},
+        },
+      ],
+    }),
   ],
   argTypes: {
-    ngOnInit: { table: { disable: true } }
-  }
+    ngOnInit: { table: { disable: true } },
+  },
 };
 
 export default meta;
@@ -57,7 +52,16 @@ export const simple: Story = {
   args: {
     appName: AppName.QBO,
     exportLogVersion: 'v1',
-    accountingExportType: [QBOTaskLogType.FETCHING_EXPENSE, QBOTaskLogType.CREATING_BILL, QBOTaskLogType.CREATING_EXPENSE, QBOTaskLogType.CREATING_CHECK, QBOTaskLogType.CREATING_CREDIT_CARD_PURCHASE, QBOTaskLogType.CREATING_JOURNAL_ENTRY, QBOTaskLogType.CREATING_CREDIT_CARD_CREDIT, QBOTaskLogType.CREATING_DEBIT_CARD_EXPENSE],
+    accountingExportType: [
+      QBOTaskLogType.FETCHING_EXPENSE,
+      QBOTaskLogType.CREATING_BILL,
+      QBOTaskLogType.CREATING_EXPENSE,
+      QBOTaskLogType.CREATING_CHECK,
+      QBOTaskLogType.CREATING_CREDIT_CARD_PURCHASE,
+      QBOTaskLogType.CREATING_JOURNAL_ENTRY,
+      QBOTaskLogType.CREATING_CREDIT_CARD_CREDIT,
+      QBOTaskLogType.CREATING_DEBIT_CARD_EXPENSE,
+    ],
     accountingExportSummary: {
       id: 1,
       last_exported_at: '2021-09-01T08:00:00Z',
@@ -68,7 +72,7 @@ export const simple: Story = {
       failed_accounting_export_count: 0,
       created_at: '2021-09-01T08:00:00Z',
       updated_at: '2021-09-01T08:00:00Z',
-      workspace: 1
-    }
-  }
+      workspace: 1,
+    },
+  },
 };

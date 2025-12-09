@@ -31,7 +31,6 @@ describe('QboComponent', () => {
   let translocoService: jasmine.SpyObj<TranslocoService>;
 
   beforeEach(async () => {
-
     const helperSpy = jasmine.createSpyObj('HelperService', ['setBaseApiURL']);
     const qboHelperSpy = jasmine.createSpyObj('QboHelperService', ['syncFyleDimensions', 'syncQBODimensions']);
     const storageSpy = jasmine.createSpyObj('StorageService', ['set']);
@@ -44,22 +43,22 @@ describe('QboComponent', () => {
       get nativeWindow() {
         return {
           location: {
-            pathname: '/integrations/qbo'
+            pathname: '/integrations/qbo',
           },
           // Add other required properties of Window object
           clientInformation: {},
           closed: false,
           customElements: {} as any,
-          devicePixelRatio: 1
+          devicePixelRatio: 1,
           // Add more properties as needed
         } as Window;
-      }
+      },
     };
 
     await TestBed.configureTestingModule({
-    declarations: [QboComponent],
-    imports: [SharedModule],
-    providers: [
+      declarations: [QboComponent],
+      imports: [SharedModule],
+      providers: [
         { provide: HelperService, useValue: helperSpy },
         { provide: QboHelperService, useValue: qboHelperSpy },
         { provide: StorageService, useValue: storageSpy },
@@ -71,9 +70,9 @@ describe('QboComponent', () => {
         provideHttpClient(withInterceptorsFromDi()),
         provideHttpClientTesting(),
         MessageService,
-        { provide: TranslocoService, useValue: translocoSpy }
-    ]
-}).compileComponents();
+        { provide: TranslocoService, useValue: translocoSpy },
+      ],
+    }).compileComponents();
 
     helperServiceSpy = TestBed.inject(HelperService) as jasmine.SpyObj<HelperService>;
     qboHelperServiceSpy = TestBed.inject(QboHelperService) as jasmine.SpyObj<QboHelperService>;
@@ -99,7 +98,7 @@ describe('QboComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should update the user\'s tokens', () => {
+  it("should update the user's tokens", () => {
     fixture.detectChanges();
     expect(authServiceSpy.updateUserTokens).toHaveBeenCalledOnceWith('QBO');
   });

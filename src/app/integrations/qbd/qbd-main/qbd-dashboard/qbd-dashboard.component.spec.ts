@@ -7,7 +7,17 @@ import { QbdAdvancedSettingsService } from 'src/app/core/services/qbd/qbd-config
 import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
 import { QbdIifLogsService } from 'src/app/core/services/qbd/qbd-core/qbd-iif-logs.service';
 import { QbdDashboardComponent } from './qbd-dashboard.component';
-import { errorResponse, getQbdAccountingExports, getQbdAccountingExports2, postQbdAccountingExports, postQbdTriggerExportResponse, postQbdTriggerExportResponse2, QBDAdvancedSettingResponse, QBDAdvancedSettingResponse2, QBDAdvancedSettingResponse3 } from './qbd-dashboard.fixture';
+import {
+  errorResponse,
+  getQbdAccountingExports,
+  getQbdAccountingExports2,
+  postQbdAccountingExports,
+  postQbdTriggerExportResponse,
+  postQbdTriggerExportResponse2,
+  QBDAdvancedSettingResponse,
+  QBDAdvancedSettingResponse2,
+  QBDAdvancedSettingResponse3,
+} from './qbd-dashboard.fixture';
 import { TranslocoModule, TranslocoService } from '@jsverse/transloco';
 
 describe('QbdDashboardComponent', () => {
@@ -21,41 +31,40 @@ describe('QbdDashboardComponent', () => {
   let translocoService: jasmine.SpyObj<TranslocoService>;
 
   beforeEach(async () => {
-
     service1 = {
       getQbdAccountingExports: () => of(getQbdAccountingExports),
       postQbdAccountingExports: () => of(postQbdAccountingExports),
-      triggerQBDExport: () => of(postQbdTriggerExportResponse)
+      triggerQBDExport: () => of(postQbdTriggerExportResponse),
     };
 
     service2 = {
-      getQbdAdvancedSettings: () => of(QBDAdvancedSettingResponse)
+      getQbdAdvancedSettings: () => of(QBDAdvancedSettingResponse),
     };
 
     service3 = {
-      displayToastMessage: () => undefined
+      displayToastMessage: () => undefined,
     };
 
     const translocoServiceSpy = jasmine.createSpyObj('TranslocoService', ['translate'], {
       config: {
-        reRenderOnLangChange: true
+        reRenderOnLangChange: true,
       },
       langChanges$: of('en'),
-      _loadDependencies: () => Promise.resolve()
+      _loadDependencies: () => Promise.resolve(),
     });
 
     await TestBed.configureTestingModule({
-    declarations: [QbdDashboardComponent],
-    imports: [RouterTestingModule, TranslocoModule],
-    providers: [FormBuilder,
+      declarations: [QbdDashboardComponent],
+      imports: [RouterTestingModule, TranslocoModule],
+      providers: [
+        FormBuilder,
         { provide: QbdIifLogsService, useValue: service1 },
         { provide: QbdAdvancedSettingsService, useValue: service2 },
         { provide: IntegrationsToastService, useValue: service3 },
         { provide: TranslocoService, useValue: translocoServiceSpy },
-        provideHttpClient(withInterceptorsFromDi())
-    ]
-})
-    .compileComponents();
+        provideHttpClient(withInterceptorsFromDi()),
+      ],
+    }).compileComponents();
 
     translocoService = TestBed.inject(TranslocoService) as jasmine.SpyObj<TranslocoService>;
 
@@ -66,12 +75,12 @@ describe('QbdDashboardComponent', () => {
     component.limit = 10;
     component.selectedDateFilter = {
       endDate: new Date(),
-      startDate: new Date('Wed Feb 01 2023')
+      startDate: new Date('Wed Feb 01 2023'),
     };
     component.exportLogForm = formbuilder.group({
       dateRange: [null],
       start: [[new Date(), new Date()]],
-      end: new Date()
+      end: new Date(),
     });
     fixture.detectChanges();
   });
@@ -123,7 +132,7 @@ describe('QbdDashboardComponent', () => {
     expect(component.triggerExports()).toBeUndefined();
   });
 
-  it("pollExportStatus function check", fakeAsync(() => {
+  it('pollExportStatus function check', fakeAsync(() => {
     spyOn(iifLogsService, 'getQbdAccountingExports').and.returnValue(of(getQbdAccountingExports2));
     const result = component.triggerExports();
     tick(3002);
@@ -137,7 +146,7 @@ describe('QbdDashboardComponent', () => {
     expect(component.exportInProgress).toBeFalse();
   }));
 
-  it("pollExportStatus function check", fakeAsync(() => {
+  it('pollExportStatus function check', fakeAsync(() => {
     spyOn(iifLogsService, 'getQbdAccountingExports').and.returnValue(of(getQbdAccountingExports));
     const result = component.triggerExports();
     tick(3002);
@@ -149,7 +158,7 @@ describe('QbdDashboardComponent', () => {
     discardPeriodicTasks();
   }));
 
-  it("pollExportStatus function check", fakeAsync(() => {
+  it('pollExportStatus function check', fakeAsync(() => {
     spyOn(iifLogsService, 'getQbdAccountingExports').and.returnValue(of(getQbdAccountingExports));
     spyOn(iifLogsService, 'triggerQBDExport').and.returnValue(of(postQbdTriggerExportResponse2));
     const result = component.triggerExports();
@@ -164,7 +173,7 @@ describe('QbdDashboardComponent', () => {
   }));
 
   it('showCalendar function check', () => {
-    const event = new Event("click", undefined);
+    const event = new Event('click', undefined);
     expect(component.showCalendar(event)).toBeUndefined();
     expect(component.isCalendarVisible).toBeTrue();
   });

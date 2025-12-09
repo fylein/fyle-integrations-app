@@ -1,10 +1,9 @@
 import { Pipe, PipeTransform } from '@angular/core';
 import { TranslocoService } from '@jsverse/transloco';
 
-
 @Pipe({
-    name: 'sentenceCase',
-    standalone: false
+  name: 'sentenceCase',
+  standalone: false,
 })
 export class SentenceCasePipe implements PipeTransform {
   private WORDS_TO_PRESERVE_CASE: string[];
@@ -14,7 +13,7 @@ export class SentenceCasePipe implements PipeTransform {
       this.translocoService.translate('pipes.sentenceCase.quickbooksOnline'),
       this.translocoService.translate('integrations.reBrandedShortName'),
       this.translocoService.translate('pipes.sentenceCase.quickbooksDesktop'),
-      this.translocoService.translate('pipes.sentenceCase.employeeOrVendor')
+      this.translocoService.translate('pipes.sentenceCase.employeeOrVendor'),
     ];
   }
 

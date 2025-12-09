@@ -1,11 +1,11 @@
 :host ::ng-deep .p-progressbar {
-    @apply tw-h-1.5 tw-bg-progress-bar-bg #{!important};
+  @apply tw-h-1.5 tw-bg-progress-bar-bg #{!important};
 }
 
 :host ::ng-deep .p-progressbar .p-progressbar-value {
-    @apply tw-bg-mandatory-field-color tw-rounded-md  #{!important};
+  @apply tw-bg-mandatory-field-color tw-rounded-md  #{!important};
 }
 
 :host ::ng-deep .p-progressbar-determinate .p-progressbar-value {
-    content: none #{!important};
+  content: none #{!important};
 }

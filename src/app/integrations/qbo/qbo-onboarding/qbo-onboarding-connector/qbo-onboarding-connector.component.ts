@@ -2,10 +2,21 @@ import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ConfirmEventType } from 'primeng/api';
 import { Subscription } from 'rxjs';
-import { brandingConfig, brandingFeatureConfig, brandingKbArticles, brandingStyle } from 'src/app/branding/branding-config';
+import {
+  brandingConfig,
+  brandingFeatureConfig,
+  brandingKbArticles,
+  brandingStyle,
+} from 'src/app/branding/branding-config';
 import { BrandingConfiguration } from 'src/app/core/models/branding/branding-configuration.model';
 import { CloneSettingExist } from 'src/app/core/models/common/clone-setting.model';
-import { AppName, ConfigurationCta, ConfigurationWarningEvent, QBOOnboardingState, ToastSeverity } from 'src/app/core/models/enum/enum.model';
+import {
+  AppName,
+  ConfigurationCta,
+  ConfigurationWarningEvent,
+  QBOOnboardingState,
+  ToastSeverity,
+} from 'src/app/core/models/enum/enum.model';
 import { ConfigurationWarningOut } from 'src/app/core/models/misc/configuration-warning.model';
 import { OnboardingStepper } from 'src/app/core/models/misc/onboarding-stepper.model';
 import { QBOCredential } from 'src/app/core/models/qbo/db/qbo-credential.model';
@@ -24,13 +35,12 @@ import { TranslocoService } from '@jsverse/transloco';
 import { QboOnboardingService } from 'src/app/core/services/qbo/qbo-configuration/qbo-onboarding.service';
 
 @Component({
-    selector: 'app-qbo-onboarding-connector',
-    templateUrl: './qbo-onboarding-connector.component.html',
-    styleUrls: ['./qbo-onboarding-connector.component.scss'],
-    standalone: false
+  selector: 'app-qbo-onboarding-connector',
+  templateUrl: './qbo-onboarding-connector.component.html',
+  styleUrls: ['./qbo-onboarding-connector.component.scss'],
+  standalone: false,
 })
 export class QboOnboardingConnectorComponent implements OnInit, OnDestroy {
-
   onboardingSteps: OnboardingStepper[] = [];
 
   isLoading: boolean = true;
@@ -90,8 +100,8 @@ export class QboOnboardingConnectorComponent implements OnInit, OnDestroy {
     private workspaceService: WorkspaceService,
     private storageService: StorageService,
     private translocoService: TranslocoService,
-    private qboOnboardingService: QboOnboardingService
-  ) { }
+    private qboOnboardingService: QboOnboardingService,
+  ) {}
 
   connectQbo(): void {
     this.qboConnectionInProgress = true;
@@ -142,8 +152,13 @@ export class QboOnboardingConnectorComponent implements OnInit, OnDestroy {
   private checkCloneSettingsAvailablity(): void {
     this.cloneSettingService.checkCloneSettingsExists().subscribe((response: CloneSettingExist) => {
       if (response.is_available) {
-        this.warningHeaderText = this.translocoService.translate('qboOnboardingConnector.prefilledSettingsWarningHeader');
-        this.warningContextText = this.translocoService.translate('qboOnboardingConnector.prefilledSettingsWarningContent', { workspaceName: `(${response.workspace_name})` });
+        this.warningHeaderText = this.translocoService.translate(
+          'qboOnboardingConnector.prefilledSettingsWarningHeader',
+        );
+        this.warningContextText = this.translocoService.translate(
+          'qboOnboardingConnector.prefilledSettingsWarningContent',
+          { workspaceName: `(${response.workspace_name})` },
+        );
         this.primaryButtonText = this.translocoService.translate('qboOnboardingConnector.continueButtonText');
         this.warningEvent = ConfigurationWarningEvent.CLONE_SETTINGS;
         this.isWarningDialogVisible = true;
@@ -156,19 +171,27 @@ export class QboOnboardingConnectorComponent implements OnInit, OnDestroy {
   }
 
   private showOrHideDisconnectQBO(): void {
-    this.qboExportSettingsService.getExportSettings().subscribe(exportSettings => {
-      // Do nothing
-      this.isContinueDisabled = false;
-      this.isLoading = false;
+    this.qboExportSettingsService.getExportSettings().subscribe(
+      (exportSettings) => {
+        // Do nothing
+        this.isContinueDisabled = false;
+        this.isLoading = false;
 
-      if (!(exportSettings.workspace_general_settings?.reimbursable_expenses_object || exportSettings.workspace_general_settings?.corporate_credit_card_expenses_object)) {
+        if (
+          !(
+            exportSettings.workspace_general_settings?.reimbursable_expenses_object ||
+            exportSettings.workspace_general_settings?.corporate_credit_card_expenses_object
+          )
+        ) {
+          this.showDisconnectQBO = true;
+        }
+      },
+      () => {
+        // Showing Disconnect QBO button since the customer didn't set up the next step
         this.showDisconnectQBO = true;
-      }
-    }, () => {
-      // Showing Disconnect QBO button since the customer didn't set up the next step
-      this.showDisconnectQBO = true;
-      this.isLoading = false;
-    });
+        this.isLoading = false;
+      },
+    );
   }
 
   private handlePostQBOConnection(qboCredential: QBOCredential): void {
@@ -184,51 +207,67 @@ export class QboOnboardingConnectorComponent implements OnInit, OnDestroy {
   private postQboCredentials(code: string, realmId: string): void {
     const payload: QBOConnectorPost = QBOConnectorModel.constructPayload(code, realmId);
 
-    this.qboConnectorService.connectQBO(payload).subscribe((qboCredential: QBOCredential) => {
-      this.qboHelperService.refreshQBODimensions().subscribe();
+    this.qboConnectorService.connectQBO(payload).subscribe(
+      (qboCredential: QBOCredential) => {
+        this.qboHelperService.refreshQBODimensions().subscribe();
 
-      const fyleOrgId = this.storageService.get('org').fyle_org_id;
-      this.helperService.pollDimensionsSyncStatus({
-        onPollingComplete: () => {
-          this.handlePostQBOConnection(qboCredential);
-        },
-        getWorkspacesObserver: () => this.workspaceService.getWorkspace(fyleOrgId)
-      });
-
-    }, (error) => {
-      const errorMessage = 'message' in error.error ? error.error.message : this.translocoService.translate('qboOnboardingConnector.failedToConnectQBO');
-      if (errorMessage === 'Please choose the correct QuickBooks Online account') {
-        this.warningHeaderText = this.translocoService.translate('qboOnboardingConnector.incorrectAccountWarningHeader');
-        this.warningContextText = this.translocoService.translate('qboOnboardingConnector.incorrectAccountWarningContent', { accountName: this.qboCompanyName || 'a different' });
-        this.primaryButtonText = this.translocoService.translate('qboOnboardingConnector.reconnectButtonText');
-        this.warningEvent = ConfigurationWarningEvent.INCORRECT_QBO_ACCOUNT_CONNECTED;
-        this.isWarningDialogVisible = true;
-      } else {
-        this.toastService.displayToastMessage(ToastSeverity.ERROR, this.translocoService.translate('qboOnboardingConnector.somethingWentWrong'));
-        this.router.navigate([`/integrations/qbo/onboarding/landing`]);
-      }
-    });
+        const fyleOrgId = this.storageService.get('org').fyle_org_id;
+        this.helperService.pollDimensionsSyncStatus({
+          onPollingComplete: () => {
+            this.handlePostQBOConnection(qboCredential);
+          },
+          getWorkspacesObserver: () => this.workspaceService.getWorkspace(fyleOrgId),
+        });
+      },
+      (error) => {
+        const errorMessage =
+          'message' in error.error
+            ? error.error.message
+            : this.translocoService.translate('qboOnboardingConnector.failedToConnectQBO');
+        if (errorMessage === 'Please choose the correct QuickBooks Online account') {
+          this.warningHeaderText = this.translocoService.translate(
+            'qboOnboardingConnector.incorrectAccountWarningHeader',
+          );
+          this.warningContextText = this.translocoService.translate(
+            'qboOnboardingConnector.incorrectAccountWarningContent',
+            { accountName: this.qboCompanyName || 'a different' },
+          );
+          this.primaryButtonText = this.translocoService.translate('qboOnboardingConnector.reconnectButtonText');
+          this.warningEvent = ConfigurationWarningEvent.INCORRECT_QBO_ACCOUNT_CONNECTED;
+          this.isWarningDialogVisible = true;
+        } else {
+          this.toastService.displayToastMessage(
+            ToastSeverity.ERROR,
+            this.translocoService.translate('qboOnboardingConnector.somethingWentWrong'),
+          );
+          this.router.navigate([`/integrations/qbo/onboarding/landing`]);
+        }
+      },
+    );
   }
 
   private getSettings(): void {
-    this.qboConnectorService.getQBOCredentials().subscribe((qboCredential: QBOCredential) => {
-      this.qboCompanyName = qboCredential.company_name;
-      this.showOrHideDisconnectQBO();
-      this.isQboConnected = true;
-    }, (error) => {
-      // Token expired
-      if ('id' in error.error) {
-        // We have a QBO row present in DB
-        this.qboTokenExpired = error.error.is_expired;
-        if (this.qboTokenExpired) {
-          this.qboCompanyName = error.error.company_name;
+    this.qboConnectorService.getQBOCredentials().subscribe(
+      (qboCredential: QBOCredential) => {
+        this.qboCompanyName = qboCredential.company_name;
+        this.showOrHideDisconnectQBO();
+        this.isQboConnected = true;
+      },
+      (error) => {
+        // Token expired
+        if ('id' in error.error) {
+          // We have a QBO row present in DB
+          this.qboTokenExpired = error.error.is_expired;
+          if (this.qboTokenExpired) {
+            this.qboCompanyName = error.error.company_name;
+          }
         }
-      }
 
-      this.isQboConnected = false;
-      this.isContinueDisabled = true;
-      this.isLoading = false;
-    });
+        this.isQboConnected = false;
+        this.isContinueDisabled = true;
+        this.isLoading = false;
+      },
+    );
   }
 
   private setupPage(): void {
@@ -244,7 +283,10 @@ export class QboOnboardingConnectorComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.onboardingSteps = this.qboOnboardingService.getOnboardingSteps(this.translocoService.translate('configuration.connector.stepName'), this.workspaceService.getOnboardingState());
+    this.onboardingSteps = this.qboOnboardingService.getOnboardingSteps(
+      this.translocoService.translate('configuration.connector.stepName'),
+      this.workspaceService.getOnboardingState(),
+    );
 
     this.setupPage();
   }
@@ -254,5 +296,4 @@ export class QboOnboardingConnectorComponent implements OnInit, OnDestroy {
       this.oauthCallbackSubscription.unsubscribe();
     }
   }
-
 }

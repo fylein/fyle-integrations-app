@@ -14,13 +14,12 @@ import { TranslocoService } from '@jsverse/transloco';
 import { BrandingService } from 'src/app/core/services/common/branding.service';
 
 @Component({
-    selector: 'app-travelperk-onboarding-landing',
-    templateUrl: './travelperk-onboarding-landing.component.html',
-    styleUrls: ['./travelperk-onboarding-landing.component.scss'],
-    standalone: false
+  selector: 'app-travelperk-onboarding-landing',
+  templateUrl: './travelperk-onboarding-landing.component.html',
+  styleUrls: ['./travelperk-onboarding-landing.component.scss'],
+  standalone: false,
 })
 export class TravelperkOnboardingLandingComponent implements OnInit {
-
   brandingKbArticles = brandingKbArticles;
 
   AppName = AppName;
@@ -48,15 +47,18 @@ export class TravelperkOnboardingLandingComponent implements OnInit {
     private storageService: StorageService,
     private router: Router,
     private translocoService: TranslocoService,
-    public brandingService: BrandingService
-  ) { }
+    public brandingService: BrandingService,
+  ) {}
 
   disconnect(): void {
     this.isConnectionInProgress = true;
     this.travelperkService.disconnect().subscribe(() => {
       this.isIntegrationConnected = false;
       this.isConnectionInProgress = false;
-      this.toastService.displayToastMessage(ToastSeverity.SUCCESS, this.translocoService.translate('travelperkOnboardingLanding.disconnectSuccess'));
+      this.toastService.displayToastMessage(
+        ToastSeverity.SUCCESS,
+        this.translocoService.translate('travelperkOnboardingLanding.disconnectSuccess'),
+      );
     });
   }
 
@@ -76,20 +78,29 @@ export class TravelperkOnboardingLandingComponent implements OnInit {
 
         clearInterval(activePopup);
       } catch (error) {
-        if (error instanceof DOMException && error.message.includes('An attempt was made to break through the security policy of the user agent')) {
+        if (
+          error instanceof DOMException &&
+          error.message.includes('An attempt was made to break through the security policy of the user agent')
+        ) {
           this.travelperkService.getTravelperkData().subscribe(() => {
             this.isIntegrationConnected = true;
             this.isConnectionInProgress = false;
-            this.toastService.displayToastMessage(ToastSeverity.SUCCESS, this.translocoService.translate('travelperkOnboardingLanding.connectSuccess'));
-            this.travelperkData?.onboarding_state === TravelPerkOnboardingState.COMPLETE ? '' : this.storageService.set('onboarding-state', TravelPerkOnboardingState.PAYMENT_PROFILE_SETTINGS);
-            forkJoin([
-              this.travelperkService.syncPaymentProfile(),
-              this.travelperkService.syncCategories()
-            ]).subscribe(() => {
-              popup?.close();
-              clearInterval(activePopup);
-              this.travelperkData?.onboarding_state === TravelPerkOnboardingState.COMPLETE ? this.router.navigateByUrl('/integrations/travelperk/main') : this.router.navigateByUrl('/integrations/travelperk/onboarding/payment_profile_settings');
-            });
+            this.toastService.displayToastMessage(
+              ToastSeverity.SUCCESS,
+              this.translocoService.translate('travelperkOnboardingLanding.connectSuccess'),
+            );
+            this.travelperkData?.onboarding_state === TravelPerkOnboardingState.COMPLETE
+              ? ''
+              : this.storageService.set('onboarding-state', TravelPerkOnboardingState.PAYMENT_PROFILE_SETTINGS);
+            forkJoin([this.travelperkService.syncPaymentProfile(), this.travelperkService.syncCategories()]).subscribe(
+              () => {
+                popup?.close();
+                clearInterval(activePopup);
+                this.travelperkData?.onboarding_state === TravelPerkOnboardingState.COMPLETE
+                  ? this.router.navigateByUrl('/integrations/travelperk/main')
+                  : this.router.navigateByUrl('/integrations/travelperk/onboarding/payment_profile_settings');
+              },
+            );
           });
         }
       }
@@ -97,17 +108,19 @@ export class TravelperkOnboardingLandingComponent implements OnInit {
   }
 
   private setupPage(): void {
-    this.travelperkService.getTravelperkData().subscribe((travelperkData : Travelperk) => {
-      this.travelperkData = travelperkData;
-      this.isIntegrationConnected = travelperkData.is_travelperk_connected;
-      this.isLoading = false;
-    }, () => {
-      this.isLoading = false;
-    });
+    this.travelperkService.getTravelperkData().subscribe(
+      (travelperkData: Travelperk) => {
+        this.travelperkData = travelperkData;
+        this.isIntegrationConnected = travelperkData.is_travelperk_connected;
+        this.isLoading = false;
+      },
+      () => {
+        this.isLoading = false;
+      },
+    );
   }
 
   ngOnInit(): void {
     this.setupPage();
   }
-
 }

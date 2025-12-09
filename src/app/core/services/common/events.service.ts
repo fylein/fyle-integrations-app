@@ -4,17 +4,28 @@ import { WorkatoConnectionStatus } from '../../models/travelperk/travelperk.mode
 import { WindowService } from './window.service';
 import { NavigationStart, Router } from '@angular/router';
 
-
 const MODULE_PATHS = [
-  'main', 'mapping', 'export_log', 'configuration', 'onboarding',
-  'bamboo_hr', 'qbd', 'travelperk', 'intacct', 'qbo', 'sage300', 'business_central', 'netsuite', 'xero', 'qbd_direct'
+  'main',
+  'mapping',
+  'export_log',
+  'configuration',
+  'onboarding',
+  'bamboo_hr',
+  'qbd',
+  'travelperk',
+  'intacct',
+  'qbo',
+  'sage300',
+  'business_central',
+  'netsuite',
+  'xero',
+  'qbd_direct',
 ];
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class EventsService {
-
   @Output() getWorkatoConnectionStatus: EventEmitter<WorkatoConnectionStatus> = new EventEmitter();
 
   @Output() sageIntacctLogin: EventEmitter<string> = new EventEmitter();
@@ -29,14 +40,14 @@ export class EventsService {
 
   constructor(
     private router: Router,
-    private windowService: WindowService
+    private windowService: WindowService,
   ) {
     // Initially, we have no previous page to navigate to. So, hide the back button
     this.postEvent({ updateIframedAppNavigationAvailability: false });
   }
 
   private isModule(path: string) {
-    return MODULE_PATHS.includes((path.split('/').pop() as string));
+    return MODULE_PATHS.includes(path.split('/').pop() as string);
   }
 
   private get isNavigationAvailable() {
@@ -83,25 +94,38 @@ export class EventsService {
   }
 
   receiveEvent(): void {
-    this.windowService.nativeWindow.addEventListener('message', (message) => {
-      if (message.data && message.data.redirectUri && (message.origin === environment.fyle_app_url || message.origin === environment.fyle_app_local)) {
-        if (message.data.redirectUri.includes('sage-intacct')) {
-          this.sageIntacctLogin.emit(message.data.redirectUri);
-        } else if (message.data.redirectUri.includes('quickbooks')) {
-          this.qboLogin.emit(message.data.redirectUri);
-        } else if (message.data.redirectUri.includes('xero')) {
-          this.xeroLogin.emit(message.data.redirectUri);
-        } else if (message.data.redirectUri.includes('netsuite')) {
-          this.netsuiteLogin.emit(message.data.redirectUri);
-        } else {
-          this.windowService.openInNewTab(message.data.redirectUri);
+    this.windowService.nativeWindow.addEventListener(
+      'message',
+      (message) => {
+        if (
+          message.data &&
+          message.data.redirectUri &&
+          (message.origin === environment.fyle_app_url || message.origin === environment.fyle_app_local)
+        ) {
+          if (message.data.redirectUri.includes('sage-intacct')) {
+            this.sageIntacctLogin.emit(message.data.redirectUri);
+          } else if (message.data.redirectUri.includes('quickbooks')) {
+            this.qboLogin.emit(message.data.redirectUri);
+          } else if (message.data.redirectUri.includes('xero')) {
+            this.xeroLogin.emit(message.data.redirectUri);
+          } else if (message.data.redirectUri.includes('netsuite')) {
+            this.netsuiteLogin.emit(message.data.redirectUri);
+          } else {
+            this.windowService.openInNewTab(message.data.redirectUri);
+          }
+        } else if (message.data && message.data.navigateBack) {
+          this.checkStateAndNavigate();
+        } else if (
+          message.data &&
+          typeof message.data !== 'object' &&
+          JSON.parse(message.data).type === 'connectionStatusChange' &&
+          message.origin.includes('workato')
+        ) {
+          this.getWorkatoConnectionStatus.emit(JSON.parse(message.data));
         }
-      } else if (message.data && message.data.navigateBack) {
-        this.checkStateAndNavigate();
-      } else if (message.data && typeof (message.data) !== 'object' && JSON.parse(message.data).type === 'connectionStatusChange' && message.origin.includes('workato')) {
-        this.getWorkatoConnectionStatus.emit(JSON.parse(message.data));
-      }
-    }, false);
+      },
+      false,
+    );
   }
 
   postEvent(payload: Object): void {
@@ -113,11 +137,11 @@ export class EventsService {
       if (routerEvent instanceof NavigationStart) {
         // Keep updating the current route to the parent app to help in navigation during browser refresh
         this.postEvent({
-          currentRoute: routerEvent.url.substring(1)
+          currentRoute: routerEvent.url.substring(1),
         });
 
         // Check if this route has already been added to history - this happens with export_logs
-        const isDuplicate = this.history.length > 0 && (routerEvent.url === this.history[this.history.length - 1]);
+        const isDuplicate = this.history.length > 0 && routerEvent.url === this.history[this.history.length - 1];
 
         // Add the current route to the history stack only if the user is navigating forward
         if (!routerEvent.restoredState && !isDuplicate) {
@@ -126,7 +150,7 @@ export class EventsService {
 
         // Hide the 'back' button in fyle app if there is no previous navigatable page
         this.postEvent({
-          updateIframedAppNavigationAvailability: this.isNavigationAvailable
+          updateIframedAppNavigationAvailability: this.isNavigationAvailable,
         });
       }
     });

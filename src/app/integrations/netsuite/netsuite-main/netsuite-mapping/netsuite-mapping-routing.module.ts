@@ -10,14 +10,14 @@ const routes: Routes = [
     children: [
       {
         path: ':source_field',
-        component: NetsuiteBaseMappingComponent
-      }
-    ]
-  }
+        component: NetsuiteBaseMappingComponent,
+      },
+    ],
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class NetsuiteMappingRoutingModule { }
+export class NetsuiteMappingRoutingModule {}

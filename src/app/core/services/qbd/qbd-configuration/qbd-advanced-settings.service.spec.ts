@@ -11,8 +11,8 @@ describe('UqbdUadvancedUsettingsService', () => {
       providers: [
         UqbdUadvancedUsettingsService,
         provideHttpClient(withInterceptorsFromDi()),
-        provideHttpClientTesting()
-      ]
+        provideHttpClientTesting(),
+      ],
     });
     service = TestBed.inject(UqbdUadvancedUsettingsService);
   });

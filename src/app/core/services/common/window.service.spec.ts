@@ -10,7 +10,7 @@ describe('WindowService', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [ WindowService ]
+      providers: [WindowService],
     });
     service = TestBed.inject(WindowService);
   });
@@ -23,7 +23,7 @@ describe('WindowService', () => {
     const popupMock: any = {
       closed: false,
       location: { href: 'https://yourredirecturi.com?code=123456789' },
-      close: jasmine.createSpy('close')
+      close: jasmine.createSpy('close'),
     };
     spyOn(window, 'open').and.returnValue(popupMock);
     expect(service.openInNewTab('hehe')).toBeUndefined();
@@ -37,5 +37,4 @@ describe('WindowService', () => {
     const userAgent = service.nativeWindow.navigator.userAgent.includes(OperatingSystem.MAC) ? OperatingSystem.MAC : '';
     expect(service.getOperatingSystem()).toBe(userAgent);
   });
-
 });

@@ -8,30 +8,30 @@ import { IntegrationsToastService } from '../services/common/integrations-toast.
 import { TravelPerkOnboardingState, ToastSeverity } from '../models/enum/enum.model';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class TravelperkTokenGuard {
   constructor(
     private travelperkService: TravelperkService,
     private router: Router,
     private toastService: IntegrationsToastService,
-    private workspaceService: WorkspaceService
-  ) { }
+    private workspaceService: WorkspaceService,
+  ) {}
 
-  canActivate(
-    route: ActivatedRouteSnapshot,
-    state: RouterStateSnapshot
-  ): Observable<boolean> {
+  canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> {
     return this.travelperkService.getTravelperkTokenHealth().pipe(
       map(() => true),
-      catchError(error => {
+      catchError((error) => {
         if (error.status === 400) {
           globalCacheBusterNotifier.next();
-          this.toastService.displayToastMessage(ToastSeverity.ERROR, 'Oops! Your TravelPerk connection expired, please connect again');
+          this.toastService.displayToastMessage(
+            ToastSeverity.ERROR,
+            'Oops! Your TravelPerk connection expired, please connect again',
+          );
           this.router.navigateByUrl('integrations/travelperk/onboarding/landing');
         }
         return throwError(() => error);
-      })
+      }),
     );
   }
 }

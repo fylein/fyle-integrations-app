@@ -1,52 +1,59 @@
 <div class="tw-flex tw-flex-col">
-    <!-- Header -->
-    <div class="tw-flex tw-justify-between tw-items-center tw-p-24-px">
-        <div class="tw-flex tw-items-center tw-gap-10-px tw-min-h-32-px">
-            @if (type === 'ERROR') {
-                <div class="tw-flex tw-items-center tw-gap-10-px">
-                    <div class="tw-w-32-px tw-h-32-px tw-rounded-4-px tw-bg-bg-danger-light tw-flex tw-items-center tw-justify-center">
-                        <app-svg-icon
-                            [svgSource]="'danger-outline'"
-                            [width]="'20px'"
-                            [height]="'20px'"
-                            [viewBox]="'0 0 18 18'"
-                            [styleClasses]="'tw-text-alert-toast tw-relative tw-top-[2px]'"
-                        ></app-svg-icon>
-                    </div>
-                    <h3 class="tw-text-20-px tw-font-500 tw-text-text-primary">
-                        {{ header }}
-                    </h3>
-                </div>
-            } @else {
-                <h3 class="tw-text-20-px tw-font-500 tw-text-text-primary">
-                    {{ header }}
-                </h3>
-            }
+  <!-- Header -->
+  <div class="tw-flex tw-justify-between tw-items-center tw-p-24-px">
+    <div class="tw-flex tw-items-center tw-gap-10-px tw-min-h-32-px">
+      @if (type === 'ERROR') {
+        <div class="tw-flex tw-items-center tw-gap-10-px">
+          <div
+            class="tw-w-32-px tw-h-32-px tw-rounded-4-px tw-bg-bg-danger-light tw-flex tw-items-center tw-justify-center"
+          >
+            <app-svg-icon
+              [svgSource]="'danger-outline'"
+              [width]="'20px'"
+              [height]="'20px'"
+              [viewBox]="'0 0 18 18'"
+              [styleClasses]="'tw-text-alert-toast tw-relative tw-top-[2px]'"
+            ></app-svg-icon>
+          </div>
+          <h3 class="tw-text-20-px tw-font-500 tw-text-text-primary">
+            {{ header }}
+          </h3>
         </div>
-
-        <app-svg-icon [svgSource]="'cross'" class="tw-cursor-pointer" (click)="closeDialog.emit()" [width]="'20px'" [height]="'20px'"></app-svg-icon>
+      } @else {
+        <h3 class="tw-text-20-px tw-font-500 tw-text-text-primary">
+          {{ header }}
+        </h3>
+      }
     </div>
 
+    <app-svg-icon
+      [svgSource]="'cross'"
+      class="tw-cursor-pointer"
+      (click)="closeDialog.emit()"
+      [width]="'20px'"
+      [height]="'20px'"
+    ></app-svg-icon>
+  </div>
 
-    <!-- Dialog content -->
-    <ng-content></ng-content>
+  <!-- Dialog content -->
+  <ng-content></ng-content>
 
-    <!-- Footer -->
-    <div class="tw-flex tw-justify-end tw-px-24-px tw-py-16-px tw-gap-10-px">
-        @if (showCancelButton) {
-            <app-button
-                [buttonText]="'dialog.cancel' | transloco"
-                [buttonType]="ButtonType.SECONDARY"
-                [buttonSize]="ButtonSize.MEDIUM"
-                (buttonClick)="closeDialog.emit()"
-            ></app-button>
-        }
-        <app-button
-            [buttonText]="buttonText"
-            [buttonType]="buttonType"
-            [buttonSize]="ButtonSize.MEDIUM"
-            (buttonClick)="buttonClick.emit()"
-            [disabled]="isButtonDisabled"
-        ></app-button>
-    </div>
+  <!-- Footer -->
+  <div class="tw-flex tw-justify-end tw-px-24-px tw-py-16-px tw-gap-10-px">
+    @if (showCancelButton) {
+      <app-button
+        [buttonText]="'dialog.cancel' | transloco"
+        [buttonType]="ButtonType.SECONDARY"
+        [buttonSize]="ButtonSize.MEDIUM"
+        (buttonClick)="closeDialog.emit()"
+      ></app-button>
+    }
+    <app-button
+      [buttonText]="buttonText"
+      [buttonType]="buttonType"
+      [buttonSize]="ButtonSize.MEDIUM"
+      (buttonClick)="buttonClick.emit()"
+      [disabled]="isButtonDisabled"
+    ></app-button>
+  </div>
 </div>

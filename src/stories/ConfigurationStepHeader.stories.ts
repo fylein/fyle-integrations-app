@@ -1,4 +1,3 @@
-
 import { CommonModule } from '@angular/common';
 import type { Meta, StoryObj } from '@storybook/angular';
 import { moduleMetadata } from '@storybook/angular';
@@ -11,17 +10,17 @@ const meta: Meta<ConfigurationStepHeaderComponent> = {
   component: ConfigurationStepHeaderComponent,
   tags: ['autodocs'],
   render: (args: ConfigurationStepHeaderComponent) => ({
-    props: { ...args }
+    props: { ...args },
   }),
   decorators: [
     moduleMetadata({
       declarations: [ConfigurationStepHeaderComponent],
-      imports: [CommonModule, TooltipModule ]
-    })
+      imports: [CommonModule, TooltipModule],
+    }),
   ],
   argTypes: {
-    ngOnInit: { table: { disable: true } }
-  }
+    ngOnInit: { table: { disable: true } },
+  },
 };
 
 export default meta;
@@ -33,6 +32,6 @@ export const simple: Story = {
     contentText: 'In this section, you can customize the integration based on your accounting requirements.',
     redirectLink: 'https://www.fylehq.com/help/en/articles/5239189-advanced-settings',
     showSyncButton: true,
-    appName: AppName.QBO
-  }
+    appName: AppName.QBO,
+  },
 };

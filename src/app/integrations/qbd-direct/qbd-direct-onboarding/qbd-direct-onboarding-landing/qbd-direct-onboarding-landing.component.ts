@@ -1,4 +1,3 @@
-
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { brandingConfig, brandingDemoVideoLinks, brandingKbArticles } from 'src/app/branding/branding-config';
@@ -12,13 +11,12 @@ import { SharedModule } from 'src/app/shared/shared.module';
 import { TranslocoModule } from '@jsverse/transloco';
 
 @Component({
-    selector: 'app-qbd-direct-onboarding-landing',
-    imports: [SharedModule, TranslocoModule],
-    templateUrl: './qbd-direct-onboarding-landing.component.html',
-    styleUrl: './qbd-direct-onboarding-landing.component.scss'
+  selector: 'app-qbd-direct-onboarding-landing',
+  imports: [SharedModule, TranslocoModule],
+  templateUrl: './qbd-direct-onboarding-landing.component.html',
+  styleUrl: './qbd-direct-onboarding-landing.component.scss',
 })
 export class QbdDirectOnboardingLandingComponent implements OnInit {
-
   appName: AppName = AppName.QBD_DIRECT;
 
   brandingConfig = brandingConfig;
@@ -36,16 +34,18 @@ export class QbdDirectOnboardingLandingComponent implements OnInit {
     private workspaceService: WorkspaceService,
     private userService: UserService,
     private trackingService: TrackingService,
-    public brandingService: BrandingService
-  ) { }
+    public brandingService: BrandingService,
+  ) {}
 
   connectQbdDirect() {
     this.isQbdConnectionInProgress = true;
-    this.workspaceService.updateWorkspaceOnboardingState({"onboarding_state": QbdDirectOnboardingState.CONFIRM_PRE_REQUISITES}).subscribe((workspaceResponse: QbdDirectWorkspace) => {
-      this.workspaceService.setOnboardingState(workspaceResponse.onboarding_state);
-      this.isQbdConnectionInProgress = false;
-      this.router.navigate([`/integrations/qbd_direct/onboarding/pre_requisite/`]);
-    });
+    this.workspaceService
+      .updateWorkspaceOnboardingState({ onboarding_state: QbdDirectOnboardingState.CONFIRM_PRE_REQUISITES })
+      .subscribe((workspaceResponse: QbdDirectWorkspace) => {
+        this.workspaceService.setOnboardingState(workspaceResponse.onboarding_state);
+        this.isQbdConnectionInProgress = false;
+        this.router.navigate([`/integrations/qbd_direct/onboarding/pre_requisite/`]);
+      });
   }
 
   ngOnInit(): void {
@@ -55,11 +55,10 @@ export class QbdDirectOnboardingLandingComponent implements OnInit {
       if (workspaces.length && workspaces[0]?.onboarding_state !== QbdDirectOnboardingState.YET_TO_START) {
         this.router.navigate([`/integrations/qbd_direct`]);
       } else {
-        if (workspaces.length && workspaces[0].assisted_setup_requested_at){
+        if (workspaces.length && workspaces[0].assisted_setup_requested_at) {
           this.isAssistedSetupSlotBooked = true;
         }
       }
     });
   }
-
 }

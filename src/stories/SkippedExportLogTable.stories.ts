@@ -1,4 +1,3 @@
-
 import { CommonModule } from '@angular/common';
 import type { Meta, StoryObj } from '@storybook/angular';
 import { moduleMetadata } from '@storybook/angular';
@@ -10,17 +9,17 @@ const meta: Meta<SkippedExportLogTableComponent> = {
   component: SkippedExportLogTableComponent,
   tags: ['autodocs'],
   render: (args: SkippedExportLogTableComponent) => ({
-    props: { ...args }
+    props: { ...args },
   }),
   decorators: [
     moduleMetadata({
       declarations: [SkippedExportLogTableComponent],
-      imports: [CommonModule, TableModule]
-    })
+      imports: [CommonModule, TableModule],
+    }),
   ],
   argTypes: {
-    ngOnInit: { table: { disable: true } }
-  }
+    ngOnInit: { table: { disable: true } },
+  },
 };
 
 export default meta;
@@ -34,8 +33,8 @@ export const simple: Story = {
         employee: ['Ashwin', 'ashwin.t@fyle.in'],
         expenseType: 'Reimbursable',
         claim_number: 'C/2020/05/28',
-        fyleUrl: 'https://www.fylehq.com'
-      }
-    ]
-  }
+        fyleUrl: 'https://www.fylehq.com',
+      },
+    ],
+  },
 };

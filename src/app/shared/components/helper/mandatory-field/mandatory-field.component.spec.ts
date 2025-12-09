@@ -9,9 +9,8 @@ xdescribe('MandatoryFieldComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ MandatoryFieldComponent ]
-    })
-    .compileComponents();
+      declarations: [MandatoryFieldComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(MandatoryFieldComponent);
     component = fixture.componentInstance;
@@ -23,7 +22,9 @@ xdescribe('MandatoryFieldComponent', () => {
   });
 
   it('Mandatory field check', () => {
-    const mandatorySpan: HTMLElement = fixture.debugElement.query(By.css(".tw-text-mandatory-field-color")).nativeElement;
+    const mandatorySpan: HTMLElement = fixture.debugElement.query(
+      By.css('.tw-text-mandatory-field-color'),
+    ).nativeElement;
     expect(getComputedStyle(mandatorySpan).color).toEqual('rgb(255, 51, 102)');
     const mandatorySpanText = mandatorySpan.innerHTML;
     expect(mandatorySpanText).toEqual('*');

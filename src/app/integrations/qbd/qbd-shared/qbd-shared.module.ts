@@ -6,21 +6,8 @@ import { QbdExportSettingComponent } from './qbd-export-setting/qbd-export-setti
 import { QbdFieldMappingComponent } from './qbd-field-mapping/qbd-field-mapping.component';
 
 @NgModule({
-  declarations: [
-    QbdAdvancedSettingComponent,
-    QbdExportSettingComponent,
-    QbdFieldMappingComponent
-  ],
-  imports: [
-    CommonModule,
-    SharedModule
-  ],
-  exports: [
-    QbdAdvancedSettingComponent,
-    QbdExportSettingComponent,
-    QbdFieldMappingComponent
-  ]
+  declarations: [QbdAdvancedSettingComponent, QbdExportSettingComponent, QbdFieldMappingComponent],
+  imports: [CommonModule, SharedModule],
+  exports: [QbdAdvancedSettingComponent, QbdExportSettingComponent, QbdFieldMappingComponent],
 })
-
-
-export class QbdSharedModule { }
+export class QbdSharedModule {}

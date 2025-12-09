@@ -1,7 +1,14 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { AppName, ConfigurationCta, IntacctField, IntacctOnboardingState, ToastSeverity, TrackingApp } from 'src/app/core/models/enum/enum.model';
+import {
+  AppName,
+  ConfigurationCta,
+  IntacctField,
+  IntacctOnboardingState,
+  ToastSeverity,
+  TrackingApp,
+} from 'src/app/core/models/enum/enum.model';
 import { LocationEntityMapping } from 'src/app/core/models/intacct/db/location-entity-mapping.model';
 import { UserService } from 'src/app/core/services/misc/user.service';
 import { IntacctConnectorService } from 'src/app/core/services/si/si-core/si-connector.service';
@@ -12,18 +19,22 @@ import { IntegrationsToastService } from 'src/app/core/services/common/integrati
 import { LocationEntityPost } from 'src/app/core/models/intacct/intacct-configuration/connector.model';
 import { SiMappingsService } from 'src/app/core/services/si/si-core/si-mappings.service';
 import { IntacctDestinationAttribute } from 'src/app/core/models/intacct/db/destination-attribute.model';
-import { brandingConfig, brandingFeatureConfig, brandingKbArticles, brandingStyle } from 'src/app/branding/branding-config';
+import {
+  brandingConfig,
+  brandingFeatureConfig,
+  brandingKbArticles,
+  brandingStyle,
+} from 'src/app/branding/branding-config';
 import { HelperService } from 'src/app/core/services/common/helper.service';
 import { TranslocoService } from '@jsverse/transloco';
 
 @Component({
-    selector: 'app-intacct-location-entity',
-    templateUrl: './intacct-location-entity.component.html',
-    styleUrls: ['./intacct-location-entity.component.scss'],
-    standalone: false
+  selector: 'app-intacct-location-entity',
+  templateUrl: './intacct-location-entity.component.html',
+  styleUrls: ['./intacct-location-entity.component.scss'],
+  standalone: false,
 })
 export class IntacctLocationEntityComponent implements OnInit {
-
   locationEntityForm: FormGroup;
 
   locationEntityOptions: IntacctDestinationAttribute[];
@@ -67,8 +78,8 @@ export class IntacctLocationEntityComponent implements OnInit {
     private toastService: IntegrationsToastService,
     private trackingService: TrackingService,
     private helperService: HelperService,
-    private translocoService: TranslocoService
-  ) { }
+    private translocoService: TranslocoService,
+  ) {}
 
   patchFormValue(event: any): void {
     this.locationEntityForm.controls.locationEntity.patchValue(event.value);
@@ -90,25 +101,27 @@ export class IntacctLocationEntityComponent implements OnInit {
       () => {
         this.isLoading = false;
         this.saveInProgress = false;
-      }
+      },
     );
   }
 
   private getLocationEntityMappingPayload(locationEntityId: any): LocationEntityPost {
     if (locationEntityId.destination_id !== 'top_level') {
-      const locationEntity = this.locationEntityOptions.filter(entity => entity.destination_id === locationEntityId.destination_id);
+      const locationEntity = this.locationEntityOptions.filter(
+        (entity) => entity.destination_id === locationEntityId.destination_id,
+      );
       return {
         location_entity_name: locationEntity[0].value,
         destination_id: locationEntity[0].destination_id,
         country_name: locationEntity[0].detail?.country ? locationEntity[0].detail.country : null,
-        workspace: this.workspaceId
+        workspace: this.workspaceId,
       };
     }
     return {
       location_entity_name: this.translocoService.translate('intacctLocationEntity.topLevel'),
       destination_id: 'top_level',
       country_name: null,
-      workspace: this.workspaceId
+      workspace: this.workspaceId,
     };
   }
 
@@ -118,7 +131,12 @@ export class IntacctLocationEntityComponent implements OnInit {
 
   private setOnboardingStateAndRedirect(locationEntityMappingPayload: LocationEntityPost): void {
     if (this.workspaceService.getIntacctOnboardingState() === IntacctOnboardingState.CONNECTION) {
-      this.trackingService.integrationsOnboardingCompletion(TrackingApp.INTACCT, IntacctOnboardingState.CONNECTION, 2, locationEntityMappingPayload);
+      this.trackingService.integrationsOnboardingCompletion(
+        TrackingApp.INTACCT,
+        IntacctOnboardingState.CONNECTION,
+        2,
+        locationEntityMappingPayload,
+      );
     }
 
     if (this.isOnboarding) {
@@ -126,7 +144,12 @@ export class IntacctLocationEntityComponent implements OnInit {
       this.router.navigate(['/integrations/intacct/onboarding/export_settings']);
     }
     this.isLoading = false;
-    this.toastService.displayToastMessage(ToastSeverity.SUCCESS, this.translocoService.translate('intacctLocationEntity.locationEntitySuccessToast'), undefined, this.isOnboarding);
+    this.toastService.displayToastMessage(
+      ToastSeverity.SUCCESS,
+      this.translocoService.translate('intacctLocationEntity.locationEntitySuccessToast'),
+      undefined,
+      this.isOnboarding,
+    );
   }
 
   private handleSuccess(locationEntityMappingPayload: LocationEntityPost): void {
@@ -139,50 +162,54 @@ export class IntacctLocationEntityComponent implements OnInit {
       onPollingComplete: () => {
         this.setOnboardingStateAndRedirect(locationEntityMappingPayload);
       },
-      getWorkspacesObserver: () => this.workspaceService.getWorkspaceWithoutCache(fyleOrgId, true)
+      getWorkspacesObserver: () => this.workspaceService.getWorkspaceWithoutCache(fyleOrgId, true),
     });
   }
 
   private setupPage() {
     this.workspaceId = this.storageService.get('workspaceId');
     this.isOnboarding = this.router.url.includes('onboarding');
-    this.mappingsService.getSageIntacctDestinationAttributes(IntacctField.LOCATION_ENTITY).subscribe((locationEntities) => {
-      const topLevelOption = {
-        id: 1,
-        attribute_type: 'LOCATION_ENTITY',
-        display_name: this.translocoService.translate('intacctLocationEntity.locationEntity'),
-        destination_id: 'top_level',
-        value: this.translocoService.translate('intacctLocationEntity.topLevel'),
-        active: true,
-        created_at: new Date(),
-        updated_at: new Date(),
-        workspace: this.workspaceId,
-        detail: {}
-      };
+    this.mappingsService
+      .getSageIntacctDestinationAttributes(IntacctField.LOCATION_ENTITY)
+      .subscribe((locationEntities) => {
+        const topLevelOption = {
+          id: 1,
+          attribute_type: 'LOCATION_ENTITY',
+          display_name: this.translocoService.translate('intacctLocationEntity.locationEntity'),
+          destination_id: 'top_level',
+          value: this.translocoService.translate('intacctLocationEntity.topLevel'),
+          active: true,
+          created_at: new Date(),
+          updated_at: new Date(),
+          workspace: this.workspaceId,
+          detail: {},
+        };
 
-      // Only add top level option if there are multiple location entities
-      this.locationEntityOptions = locationEntities.length > 1
-        ? [topLevelOption].concat(locationEntities)
-        : locationEntities;
+        // Only add top level option if there are multiple location entities
+        this.locationEntityOptions =
+          locationEntities.length > 1 ? [topLevelOption].concat(locationEntities) : locationEntities;
 
-      this.setupLocationEntityMapping();
-    });
+        this.setupLocationEntityMapping();
+      });
   }
 
   private setupLocationEntityMapping() {
-    this.connectorService.getLocationEntityMapping().subscribe(locationEntityMappings => {
-      this.locationEntity = locationEntityMappings;
-      this.locationEntityForm = this.formBuilder.group({
-        locationEntity: [this.locationEntity ? this.locationEntity : '']
-      });
-      this.locationEntityForm.controls.locationEntity.disable();
-      this.isLoading = false;
-    }, () => {
-      this.locationEntityForm = this.formBuilder.group({
-        locationEntity: [null, Validators.required]
-      });
-      this.isLoading = false;
-    });
+    this.connectorService.getLocationEntityMapping().subscribe(
+      (locationEntityMappings) => {
+        this.locationEntity = locationEntityMappings;
+        this.locationEntityForm = this.formBuilder.group({
+          locationEntity: [this.locationEntity ? this.locationEntity : ''],
+        });
+        this.locationEntityForm.controls.locationEntity.disable();
+        this.isLoading = false;
+      },
+      () => {
+        this.locationEntityForm = this.formBuilder.group({
+          locationEntity: [null, Validators.required],
+        });
+        this.isLoading = false;
+      },
+    );
   }
 
   ngOnInit() {

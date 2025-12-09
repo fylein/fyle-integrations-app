@@ -11,19 +11,19 @@ const routes: Routes = [
     children: [
       {
         path: 'complete',
-        component: IntacctCompletedExportLogComponent
+        component: IntacctCompletedExportLogComponent,
       },
       {
         path: 'skipped',
-        component: IntacctSkipExportLogComponent
-      }
-    ]
-  }
+        component: IntacctSkipExportLogComponent,
+      },
+    ],
+  },
 ];
 
 @NgModule({
   declarations: [],
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class ExportLogRoutingModule { }
+export class ExportLogRoutingModule {}

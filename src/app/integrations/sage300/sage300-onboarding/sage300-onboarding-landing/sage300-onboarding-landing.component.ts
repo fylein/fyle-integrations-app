@@ -4,13 +4,12 @@ import { AppName } from 'src/app/core/models/enum/enum.model';
 import { BrandingService } from 'src/app/core/services/common/branding.service';
 
 @Component({
-    selector: 'app-sage300-onboarding-landing',
-    templateUrl: './sage300-onboarding-landing.component.html',
-    styleUrls: ['./sage300-onboarding-landing.component.scss'],
-    standalone: false
+  selector: 'app-sage300-onboarding-landing',
+  templateUrl: './sage300-onboarding-landing.component.html',
+  styleUrls: ['./sage300-onboarding-landing.component.scss'],
+  standalone: false,
 })
 export class Sage300OnboardingLandingComponent implements OnInit {
-
   appName: AppName = AppName.SAGE300;
 
   redirectLink = brandingKbArticles.onboardingArticles.SAGE300.LANDING;
@@ -19,9 +18,7 @@ export class Sage300OnboardingLandingComponent implements OnInit {
 
   readonly brandingConfig = brandingConfig;
 
-  constructor(public brandingService:BrandingService) { }
+  constructor(public brandingService: BrandingService) {}
 
-  ngOnInit(): void {
-  }
-
+  ngOnInit(): void {}
 }

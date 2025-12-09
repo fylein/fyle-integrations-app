@@ -5,14 +5,13 @@ import { ApiService } from './api.service';
 import { WorkspaceService } from './workspace.service';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ConfigurationService {
-
   constructor(
     private apiService: ApiService,
-    private workspaceService: WorkspaceService
-  ) { }
+    private workspaceService: WorkspaceService,
+  ) {}
 
   getAdditionalEmails(): Observable<EmailOption[]> {
     return this.apiService.get(`/workspaces/${this.workspaceService.getWorkspaceId()}/admins/`, {});

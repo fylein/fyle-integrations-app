@@ -7,13 +7,12 @@ import { AccountingExportService } from 'src/app/core/services/common/accounting
 import { TranslocoService } from '@jsverse/transloco';
 
 @Component({
-    selector: 'app-business-central-main',
-    templateUrl: './business-central-main.component.html',
-    styleUrls: ['./business-central-main.component.scss'],
-    standalone: false
+  selector: 'app-business-central-main',
+  templateUrl: './business-central-main.component.html',
+  styleUrls: ['./business-central-main.component.scss'],
+  standalone: false,
 })
 export class BusinessCentralMainComponent {
-
   appName: AppName = AppName.BUSINESS_CENTRAL;
 
   modules: TabMenuItem[];
@@ -21,13 +20,29 @@ export class BusinessCentralMainComponent {
   constructor(
     private accountingExportService: AccountingExportService,
     private helperService: BusinessCentralHelperService,
-    private translocoService: TranslocoService
+    private translocoService: TranslocoService,
   ) {
     this.modules = [
-      { label: this.translocoService.translate('businessCentralMain.dashboard'), routerLink: '/integrations/business_central/main/dashboard', value: 'dashboard' },
-      { label: this.translocoService.translate('businessCentralMain.exportLog'), routerLink: '/integrations/business_central/main/export_log', value: 'export_log' },
-      { label: this.translocoService.translate('businessCentralMain.mapping'), routerLink: '/integrations/business_central/main/mapping', value: 'mapping' },
-      { label: this.translocoService.translate('businessCentralMain.configuration'), routerLink: '/integrations/business_central/main/configuration/export_settings', value: 'configuration' }
+      {
+        label: this.translocoService.translate('businessCentralMain.dashboard'),
+        routerLink: '/integrations/business_central/main/dashboard',
+        value: 'dashboard',
+      },
+      {
+        label: this.translocoService.translate('businessCentralMain.exportLog'),
+        routerLink: '/integrations/business_central/main/export_log',
+        value: 'export_log',
+      },
+      {
+        label: this.translocoService.translate('businessCentralMain.mapping'),
+        routerLink: '/integrations/business_central/main/mapping',
+        value: 'mapping',
+      },
+      {
+        label: this.translocoService.translate('businessCentralMain.configuration'),
+        routerLink: '/integrations/business_central/main/configuration/export_settings',
+        value: 'configuration',
+      },
     ];
   }
 

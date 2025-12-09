@@ -1,4 +1,4 @@
-import {  Injectable } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, Router, RouterStateSnapshot, UrlTree } from '@angular/router';
 import { Observable, catchError, map, throwError, of } from 'rxjs';
 import { WorkspaceService } from '../services/common/workspace.service';
@@ -9,55 +9,56 @@ import { AppUrl, QBOOnboardingState, ToastSeverity } from '../models/enum/enum.m
 import { HelperService } from '../services/common/helper.service';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
-export class QboTokenGuard  {
-
+export class QboTokenGuard {
   constructor(
     private qboConnectorService: QboConnectorService,
     private router: Router,
     private toastService: IntegrationsToastService,
     private workspaceService: WorkspaceService,
-    private helperService: HelperService
-  ) { }
+    private helperService: HelperService,
+  ) {}
 
   canActivate(
     route: ActivatedRouteSnapshot,
-    state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-      this.helperService.setBaseApiURL(AppUrl.QBO);
-      const workspaceId = this.workspaceService.getWorkspaceId();
+    state: RouterStateSnapshot,
+  ): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
+    this.helperService.setBaseApiURL(AppUrl.QBO);
+    const workspaceId = this.workspaceService.getWorkspaceId();
 
-      if (!workspaceId) {
-        return this.router.navigateByUrl(`workspaces`);
-      }
+    if (!workspaceId) {
+      return this.router.navigateByUrl(`workspaces`);
+    }
 
-      return this.qboConnectorService.checkQBOTokenHealth().pipe(
-        map(() => true),
-        catchError(error => {
-          if (error.status === 400) {
-            globalCacheBusterNotifier.next();
+    return this.qboConnectorService.checkQBOTokenHealth().pipe(
+      map(() => true),
+      catchError((error) => {
+        if (error.status === 400) {
+          globalCacheBusterNotifier.next();
 
-            const onboardingState: QBOOnboardingState = this.workspaceService.getOnboardingState();
-            if (onboardingState !== QBOOnboardingState.COMPLETE) {
-              this.toastService.displayToastMessage(ToastSeverity.ERROR, 'Oops! your QuickBooks Online connection expired, please connect again');
-              return this.router.navigateByUrl('integrations/qbo/onboarding/connector');
-            }
+          const onboardingState: QBOOnboardingState = this.workspaceService.getOnboardingState();
+          if (onboardingState !== QBOOnboardingState.COMPLETE) {
+            this.toastService.displayToastMessage(
+              ToastSeverity.ERROR,
+              'Oops! your QuickBooks Online connection expired, please connect again',
+            );
+            return this.router.navigateByUrl('integrations/qbo/onboarding/connector');
+          }
 
-            if (error.error.message === "Quickbooks Online connection expired") {
-              return this.router.navigateByUrl('integrations/qbo/token_expired/dashboard');
-            }
+          if (error.error.message === 'Quickbooks Online connection expired') {
+            return this.router.navigateByUrl('integrations/qbo/token_expired/dashboard');
+          }
 
-            if (error.error.message === "Quickbooks Online disconnected") {
-              return this.router.navigateByUrl('integrations/qbo/disconnect/dashboard');
-            }
-
-            return of(true);
+          if (error.error.message === 'Quickbooks Online disconnected') {
+            return this.router.navigateByUrl('integrations/qbo/disconnect/dashboard');
           }
 
           return of(true);
-        })
-      );
+        }
 
+        return of(true);
+      }),
+    );
   }
-
 }

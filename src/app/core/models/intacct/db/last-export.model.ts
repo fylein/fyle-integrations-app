@@ -1,4 +1,4 @@
-import { ExportMode } from "../../enum/enum.model";
+import { ExportMode } from '../../enum/enum.model';
 
 export type LastExport = {
   id: number;

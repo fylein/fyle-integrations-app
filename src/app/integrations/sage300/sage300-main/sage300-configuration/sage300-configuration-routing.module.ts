@@ -13,26 +13,23 @@ const routes: Routes = [
     children: [
       {
         path: 'export_settings',
-        component: Sage300ExportSettingsComponent
+        component: Sage300ExportSettingsComponent,
       },
       {
         path: 'import_settings',
-        component: Sage300ImportSettingsComponent
+        component: Sage300ImportSettingsComponent,
       },
       {
         path: 'advanced_settings',
-        component: Sage300AdvancedSettingsComponent
-      }
-    ]
-  }
+        component: Sage300AdvancedSettingsComponent,
+      },
+    ],
+  },
 ];
 
 @NgModule({
   declarations: [],
-  imports: [
-    CommonModule,
-    RouterModule.forChild(routes)
-  ],
-  exports: [RouterModule]
+  imports: [CommonModule, RouterModule.forChild(routes)],
+  exports: [RouterModule],
 })
-export class Sage300ConfigurationRoutingModule { }
+export class Sage300ConfigurationRoutingModule {}

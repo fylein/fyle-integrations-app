@@ -1,20 +1,9 @@
-import {
-  AccountingExportSummary
-} from 'src/app/core/models/db/accounting-export-summary.model';
-import {
-  DestinationFieldMap
-} from 'src/app/core/models/db/dashboard.model';
-import {
-  AccountingGroupedErrors,
-  AccountingGroupedErrorStat
-} from 'src/app/core/models/db/error.model';
-import {
-  ReimbursableImportState,
-  CCCImportState
-} from 'src/app/core/models/enum/enum.model';
+import { AccountingExportSummary } from 'src/app/core/models/db/accounting-export-summary.model';
+import { DestinationFieldMap } from 'src/app/core/models/db/dashboard.model';
+import { AccountingGroupedErrors, AccountingGroupedErrorStat } from 'src/app/core/models/db/error.model';
+import { ReimbursableImportState, CCCImportState } from 'src/app/core/models/enum/enum.model';
 
 export class QbdDirectDashboardComponentFixture {
-
   /**
    * Creates fixture data for component initialization
    */
@@ -36,7 +25,7 @@ export class QbdDirectDashboardComponentFixture {
       reimbursableImportState: ReimbursableImportState.PROCESSING,
       cccImportState: CCCImportState.APPROVED,
       importCodeFields: ['field1', 'field2'],
-      chartOfAccounts: ['Account 1', 'Account 2']
+      chartOfAccounts: ['Account 1', 'Account 2'],
     };
   }
 
@@ -60,7 +49,7 @@ export class QbdDirectDashboardComponentFixture {
       repurposed_failed_count: 2,
       created_at: new Date().toISOString(),
       updated_at: new Date().toISOString(),
-      workspace: 1
+      workspace: 1,
     };
   }
 
@@ -84,7 +73,7 @@ export class QbdDirectDashboardComponentFixture {
       repurposed_failed_count: 0,
       created_at: new Date().toISOString(),
       updated_at: new Date().toISOString(),
-      workspace: 1
+      workspace: 1,
     };
   }
 
@@ -95,7 +84,7 @@ export class QbdDirectDashboardComponentFixture {
     return {
       EMPLOYEE_MAPPING: [],
       CATEGORY_MAPPING: [],
-      ACCOUNTING_ERROR: []
+      ACCOUNTING_ERROR: [],
     };
   }
 
@@ -120,7 +109,7 @@ export class QbdDirectDashboardComponentFixture {
       reimbursableImportState: ReimbursableImportState.PROCESSING,
       cccImportState: CCCImportState.APPROVED,
       importCodeFields: ['field1', 'field2'],
-      chartOfAccounts: ['Account 1', 'Account 2']
+      chartOfAccounts: ['Account 1', 'Account 2'],
     };
   }
 
@@ -145,7 +134,7 @@ export class QbdDirectDashboardComponentFixture {
       reimbursableImportState: ReimbursableImportState.PROCESSING,
       cccImportState: CCCImportState.APPROVED,
       importCodeFields: ['field1', 'field2'],
-      chartOfAccounts: ['Account 1', 'Account 2']
+      chartOfAccounts: ['Account 1', 'Account 2'],
     };
   }
 
@@ -170,7 +159,7 @@ export class QbdDirectDashboardComponentFixture {
       reimbursableImportState: ReimbursableImportState.PROCESSING,
       cccImportState: CCCImportState.APPROVED,
       importCodeFields: ['field1', 'field2'],
-      chartOfAccounts: ['Account 1', 'Account 2']
+      chartOfAccounts: ['Account 1', 'Account 2'],
     };
   }
 
@@ -194,7 +183,7 @@ export class QbdDirectDashboardComponentFixture {
             detail: null,
             created_at: new Date(),
             updated_at: new Date(),
-            workspace: 1
+            workspace: 1,
           } as any,
           expense_group: {
             id: 101,
@@ -202,7 +191,7 @@ export class QbdDirectDashboardComponentFixture {
             description: {
               report_id: 'RPT_001',
               employee_name: 'John Doe',
-              employee_email: 'john.doe@company.com'
+              employee_email: 'john.doe@company.com',
             } as any,
             status: 'FAILED' as any,
             mapping_errors: [],
@@ -213,7 +202,7 @@ export class QbdDirectDashboardComponentFixture {
             fund_source: null,
             created_at: new Date(),
             updated_at: new Date(),
-            workspace: 1
+            workspace: 1,
           } as any,
           type: 'EMPLOYEE_MAPPING' as any,
           article_link: 'https://help.fylehq.com/articles/employee-mapping-errors',
@@ -222,7 +211,7 @@ export class QbdDirectDashboardComponentFixture {
           error_detail: 'Employee "John Doe" not found in QuickBooks Desktop',
           created_at: new Date(),
           updated_at: new Date(),
-          workspace: 1
+          workspace: 1,
         },
         {
           id: 4,
@@ -238,7 +227,7 @@ export class QbdDirectDashboardComponentFixture {
             detail: null,
             created_at: new Date(),
             updated_at: new Date(),
-            workspace: 1
+            workspace: 1,
           } as any,
           expense_group: {
             id: 104,
@@ -246,7 +235,7 @@ export class QbdDirectDashboardComponentFixture {
             description: {
               report_id: 'RPT_004',
               employee_name: 'Sarah Wilson',
-              employee_email: 'sarah.wilson@company.com'
+              employee_email: 'sarah.wilson@company.com',
             } as any,
             status: 'FAILED' as any,
             mapping_errors: [],
@@ -257,7 +246,7 @@ export class QbdDirectDashboardComponentFixture {
             fund_source: null,
             created_at: new Date(),
             updated_at: new Date(),
-            workspace: 1
+            workspace: 1,
           } as any,
           type: 'EMPLOYEE_MAPPING' as any,
           article_link: 'https://help.fylehq.com/articles/employee-mapping-errors',
@@ -266,8 +255,8 @@ export class QbdDirectDashboardComponentFixture {
           error_detail: 'Employee "Sarah Wilson" has invalid QuickBooks Desktop ID',
           created_at: new Date(),
           updated_at: new Date(),
-          workspace: 1
-        }
+          workspace: 1,
+        },
       ],
       CATEGORY_MAPPING: [
         {
@@ -284,7 +273,7 @@ export class QbdDirectDashboardComponentFixture {
             detail: null,
             created_at: new Date(),
             updated_at: new Date(),
-            workspace: 1
+            workspace: 1,
           } as any,
           expense_group: {
             id: 102,
@@ -292,7 +281,7 @@ export class QbdDirectDashboardComponentFixture {
             description: {
               report_id: 'RPT_002',
               category_name: 'Travel',
-              category_code: 'TRAVEL'
+              category_code: 'TRAVEL',
             } as any,
             status: 'FAILED' as any,
             mapping_errors: [],
@@ -303,7 +292,7 @@ export class QbdDirectDashboardComponentFixture {
             fund_source: null,
             created_at: new Date(),
             updated_at: new Date(),
-            workspace: 1
+            workspace: 1,
           } as any,
           type: 'CATEGORY_MAPPING' as any,
           article_link: 'https://help.fylehq.com/articles/category-mapping-errors',
@@ -312,7 +301,7 @@ export class QbdDirectDashboardComponentFixture {
           error_detail: 'Category "Travel" not found in QuickBooks Desktop chart of accounts',
           created_at: new Date(),
           updated_at: new Date(),
-          workspace: 1
+          workspace: 1,
         },
         {
           id: 5,
@@ -328,7 +317,7 @@ export class QbdDirectDashboardComponentFixture {
             detail: null,
             created_at: new Date(),
             updated_at: new Date(),
-            workspace: 1
+            workspace: 1,
           } as any,
           expense_group: {
             id: 105,
@@ -336,7 +325,7 @@ export class QbdDirectDashboardComponentFixture {
             description: {
               report_id: 'RPT_005',
               category_name: 'Meals & Entertainment',
-              category_code: 'MEALS'
+              category_code: 'MEALS',
             } as any,
             status: 'FAILED' as any,
             mapping_errors: [],
@@ -347,7 +336,7 @@ export class QbdDirectDashboardComponentFixture {
             fund_source: null,
             created_at: new Date(),
             updated_at: new Date(),
-            workspace: 1
+            workspace: 1,
           } as any,
           type: 'CATEGORY_MAPPING' as any,
           article_link: 'https://help.fylehq.com/articles/category-mapping-errors',
@@ -356,8 +345,8 @@ export class QbdDirectDashboardComponentFixture {
           error_detail: 'Category "Meals & Entertainment" account is inactive in QuickBooks Desktop',
           created_at: new Date(),
           updated_at: new Date(),
-          workspace: 1
-        }
+          workspace: 1,
+        },
       ],
       ACCOUNTING_ERROR: [
         {
@@ -374,15 +363,15 @@ export class QbdDirectDashboardComponentFixture {
             detail: null,
             created_at: new Date(),
             updated_at: new Date(),
-            workspace: 1
+            workspace: 1,
           } as any,
           expense_group: {
             id: 103,
             type: 'REPORT',
             description: {
               report_id: 'RPT_003',
-              total_amount: 150.00,
-              currency: 'USD'
+              total_amount: 150.0,
+              currency: 'USD',
             } as any,
             status: 'FAILED' as any,
             mapping_errors: [],
@@ -393,7 +382,7 @@ export class QbdDirectDashboardComponentFixture {
             fund_source: null,
             created_at: new Date(),
             updated_at: new Date(),
-            workspace: 1
+            workspace: 1,
           } as any,
           type: 'ACCOUNTING_ERROR' as any,
           article_link: 'https://help.fylehq.com/articles/accounting-errors',
@@ -402,7 +391,7 @@ export class QbdDirectDashboardComponentFixture {
           error_detail: 'QuickBooks Desktop connection timeout during export',
           created_at: new Date(),
           updated_at: new Date(),
-          workspace: 1
+          workspace: 1,
         },
         {
           id: 6,
@@ -418,7 +407,7 @@ export class QbdDirectDashboardComponentFixture {
             detail: null,
             created_at: new Date(),
             updated_at: new Date(),
-            workspace: 1
+            workspace: 1,
           } as any,
           expense_group: {
             id: 106,
@@ -426,8 +415,8 @@ export class QbdDirectDashboardComponentFixture {
             description: {
               report_id: 'RPT_006',
               vendor_name: 'ABC Hotel',
-              total_amount: 250.00,
-              currency: 'USD'
+              total_amount: 250.0,
+              currency: 'USD',
             } as any,
             status: 'FAILED' as any,
             mapping_errors: [],
@@ -438,7 +427,7 @@ export class QbdDirectDashboardComponentFixture {
             fund_source: null,
             created_at: new Date(),
             updated_at: new Date(),
-            workspace: 1
+            workspace: 1,
           } as any,
           type: 'ACCOUNTING_ERROR' as any,
           article_link: 'https://help.fylehq.com/articles/accounting-errors',
@@ -447,7 +436,7 @@ export class QbdDirectDashboardComponentFixture {
           error_detail: 'Vendor "ABC Hotel" has invalid tax settings in QuickBooks Desktop',
           created_at: new Date(),
           updated_at: new Date(),
-          workspace: 1
+          workspace: 1,
         },
         {
           id: 7,
@@ -463,7 +452,7 @@ export class QbdDirectDashboardComponentFixture {
             detail: null,
             created_at: new Date(),
             updated_at: new Date(),
-            workspace: 1
+            workspace: 1,
           } as any,
           expense_group: {
             id: 107,
@@ -471,8 +460,8 @@ export class QbdDirectDashboardComponentFixture {
             description: {
               report_id: 'RPT_007',
               project_name: 'Project Alpha',
-              total_amount: 500.00,
-              currency: 'USD'
+              total_amount: 500.0,
+              currency: 'USD',
             } as any,
             status: 'FAILED' as any,
             mapping_errors: [],
@@ -483,7 +472,7 @@ export class QbdDirectDashboardComponentFixture {
             fund_source: null,
             created_at: new Date(),
             updated_at: new Date(),
-            workspace: 1
+            workspace: 1,
           } as any,
           type: 'ACCOUNTING_ERROR' as any,
           article_link: 'https://help.fylehq.com/articles/accounting-errors',
@@ -492,9 +481,9 @@ export class QbdDirectDashboardComponentFixture {
           error_detail: 'Insufficient permissions to create journal entry in QuickBooks Desktop',
           created_at: new Date(),
           updated_at: new Date(),
-          workspace: 1
-        }
-      ]
+          workspace: 1,
+        },
+      ],
     };
   }
 
@@ -505,12 +494,12 @@ export class QbdDirectDashboardComponentFixture {
     return {
       EMPLOYEE_MAPPING: {
         resolvedCount: 0,
-        totalCount: 2
+        totalCount: 2,
       },
       CATEGORY_MAPPING: {
         resolvedCount: 0,
-        totalCount: 2
-      }
+        totalCount: 2,
+      },
     };
   }
 
@@ -520,7 +509,7 @@ export class QbdDirectDashboardComponentFixture {
   private static createDestinationFieldMap(): DestinationFieldMap {
     return {
       EMPLOYEE: 'VENDOR',
-      CATEGORY: 'ACCOUNT'
+      CATEGORY: 'ACCOUNT',
     };
   }
 
@@ -530,7 +519,7 @@ export class QbdDirectDashboardComponentFixture {
   private static createGroupedErrorStat(): AccountingGroupedErrorStat {
     return {
       EMPLOYEE_MAPPING: null,
-      CATEGORY_MAPPING: null
+      CATEGORY_MAPPING: null,
     };
   }
 
@@ -554,7 +543,7 @@ export class QbdDirectDashboardComponentFixture {
       repurposed_failed_count: 15,
       created_at: new Date().toISOString(),
       updated_at: new Date().toISOString(),
-      workspace: 1
+      workspace: 1,
     };
   }
 
@@ -578,7 +567,7 @@ export class QbdDirectDashboardComponentFixture {
             detail: null,
             created_at: new Date(),
             updated_at: new Date(),
-            workspace: 1
+            workspace: 1,
           } as any,
           expense_group: {
             id: 108,
@@ -586,7 +575,7 @@ export class QbdDirectDashboardComponentFixture {
             description: {
               report_id: 'RPT_008',
               employee_name: 'Michael Brown',
-              employee_email: 'michael.brown@company.com'
+              employee_email: 'michael.brown@company.com',
             } as any,
             status: 'FAILED' as any,
             mapping_errors: [],
@@ -597,7 +586,7 @@ export class QbdDirectDashboardComponentFixture {
             fund_source: null,
             created_at: new Date(),
             updated_at: new Date(),
-            workspace: 1
+            workspace: 1,
           } as any,
           type: 'EMPLOYEE_MAPPING' as any,
           article_link: 'https://help.fylehq.com/articles/employee-mapping-errors',
@@ -606,8 +595,8 @@ export class QbdDirectDashboardComponentFixture {
           error_detail: 'Employee "Michael Brown" is deactivated in QuickBooks Desktop',
           created_at: new Date(),
           updated_at: new Date(),
-          workspace: 1
-        }
+          workspace: 1,
+        },
       ],
       CATEGORY_MAPPING: [
         {
@@ -624,7 +613,7 @@ export class QbdDirectDashboardComponentFixture {
             detail: null,
             created_at: new Date(),
             updated_at: new Date(),
-            workspace: 1
+            workspace: 1,
           } as any,
           expense_group: {
             id: 109,
@@ -632,7 +621,7 @@ export class QbdDirectDashboardComponentFixture {
             description: {
               report_id: 'RPT_009',
               category_name: 'Software Licenses',
-              category_code: 'SOFTWARE'
+              category_code: 'SOFTWARE',
             } as any,
             status: 'FAILED' as any,
             mapping_errors: [],
@@ -643,7 +632,7 @@ export class QbdDirectDashboardComponentFixture {
             fund_source: null,
             created_at: new Date(),
             updated_at: new Date(),
-            workspace: 1
+            workspace: 1,
           } as any,
           type: 'CATEGORY_MAPPING' as any,
           article_link: 'https://help.fylehq.com/articles/category-mapping-errors',
@@ -652,8 +641,8 @@ export class QbdDirectDashboardComponentFixture {
           error_detail: 'Category "Software Licenses" requires approval in QuickBooks Desktop',
           created_at: new Date(),
           updated_at: new Date(),
-          workspace: 1
-        }
+          workspace: 1,
+        },
       ],
       ACCOUNTING_ERROR: [
         {
@@ -670,7 +659,7 @@ export class QbdDirectDashboardComponentFixture {
             detail: null,
             created_at: new Date(),
             updated_at: new Date(),
-            workspace: 1
+            workspace: 1,
           } as any,
           expense_group: {
             id: 110,
@@ -678,7 +667,7 @@ export class QbdDirectDashboardComponentFixture {
             description: {
               report_id: 'RPT_010',
               currency: 'EUR',
-              total_amount: 1000.00
+              total_amount: 1000.0,
             } as any,
             status: 'FAILED' as any,
             mapping_errors: [],
@@ -689,7 +678,7 @@ export class QbdDirectDashboardComponentFixture {
             fund_source: null,
             created_at: new Date(),
             updated_at: new Date(),
-            workspace: 1
+            workspace: 1,
           } as any,
           type: 'ACCOUNTING_ERROR' as any,
           article_link: 'https://help.fylehq.com/articles/accounting-errors',
@@ -698,9 +687,9 @@ export class QbdDirectDashboardComponentFixture {
           error_detail: 'Currency "EUR" is not supported in QuickBooks Desktop configuration',
           created_at: new Date(),
           updated_at: new Date(),
-          workspace: 1
-        }
-      ]
+          workspace: 1,
+        },
+      ],
     };
   }
 
@@ -711,12 +700,12 @@ export class QbdDirectDashboardComponentFixture {
     return {
       EMPLOYEE_MAPPING: {
         resolvedCount: 0,
-        totalCount: 3
+        totalCount: 3,
       },
       CATEGORY_MAPPING: {
         resolvedCount: 0,
-        totalCount: 3
-      }
+        totalCount: 3,
+      },
     };
   }
 }

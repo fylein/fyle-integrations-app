@@ -21,17 +21,17 @@ describe('QboOnboardingLandingComponent', () => {
 
   beforeEach(async () => {
     const helperSpy = jasmine.createSpyObj('HelperService', ['oauthHandler'], {
-      oauthCallbackUrl: new EventEmitter<string>()
+      oauthCallbackUrl: new EventEmitter<string>(),
     });
     const qboConnectorSpy = jasmine.createSpyObj('QboConnectorService', ['connectQBO']);
     const toastSpy = jasmine.createSpyObj('IntegrationsToastService', ['displayToastMessage']);
     const workspaceSpy = jasmine.createSpyObj('WorkspaceService', ['getOnboardingState']);
     const translocoServiceSpy = jasmine.createSpyObj('TranslocoService', ['translate'], {
       config: {
-        reRenderOnLangChange: true
+        reRenderOnLangChange: true,
       },
       langChanges$: of('en'),
-      _loadDependencies: () => Promise.resolve()
+      _loadDependencies: () => Promise.resolve(),
     });
 
     await TestBed.configureTestingModule({
@@ -42,8 +42,8 @@ describe('QboOnboardingLandingComponent', () => {
         { provide: QboConnectorService, useValue: qboConnectorSpy },
         { provide: IntegrationsToastService, useValue: toastSpy },
         { provide: WorkspaceService, useValue: workspaceSpy },
-        { provide: TranslocoService, useValue: translocoServiceSpy }
-      ]
+        { provide: TranslocoService, useValue: translocoServiceSpy },
+      ],
     }).compileComponents();
 
     helperServiceSpy = TestBed.inject(HelperService) as jasmine.SpyObj<HelperService>;

@@ -4,14 +4,8 @@ import { CommonModule } from '@angular/common';
 import { QboRoutingModule } from './qbo-routing.module';
 import { QboComponent } from './qbo.component';
 
-
 @NgModule({
-  declarations: [
-    QboComponent
-  ],
-  imports: [
-    CommonModule,
-    QboRoutingModule
-  ]
+  declarations: [QboComponent],
+  imports: [CommonModule, QboRoutingModule],
 })
-export class QboModule { }
+export class QboModule {}

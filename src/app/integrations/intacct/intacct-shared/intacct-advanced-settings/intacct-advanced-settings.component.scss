@@ -1,3 +1,4 @@
-:host ::ng-deep .p-disabled .p-select-dropdown, :host ::ng-deep .hideClearIcon .p-select-dropdown{
-    @apply tw-hidden #{!important};
+:host ::ng-deep .p-disabled .p-select-dropdown,
+:host ::ng-deep .hideClearIcon .p-select-dropdown {
+  @apply tw-hidden #{!important};
 }

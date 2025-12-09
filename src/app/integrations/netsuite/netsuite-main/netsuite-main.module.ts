@@ -10,24 +10,19 @@ import { NetsuiteSkippedExportLogComponent } from './netsuite-export-log/netsuit
 import { NetsuiteMappingComponent } from './netsuite-mapping/netsuite-mapping.component';
 import { NetsuiteBaseMappingComponent } from './netsuite-mapping/netsuite-base-mapping/netsuite-base-mapping.component';
 import { NetsuiteConfigurationComponent } from './netsuite-configuration/netsuite-configuration.component';
-import { SharedModule } from "../../../shared/shared.module";
-
+import { SharedModule } from '../../../shared/shared.module';
 
 @NgModule({
-    declarations: [
-        NetsuiteMainComponent,
-        NetsuiteDashboardComponent,
-        NetsuiteExportLogComponent,
-        NetsuiteCompleteExportLogsComponent,
-        NetsuiteSkippedExportLogComponent,
-        NetsuiteMappingComponent,
-        NetsuiteBaseMappingComponent,
-        NetsuiteConfigurationComponent
-    ],
-    imports: [
-        CommonModule,
-        NetsuiteMainRoutingModule,
-        SharedModule
-    ]
+  declarations: [
+    NetsuiteMainComponent,
+    NetsuiteDashboardComponent,
+    NetsuiteExportLogComponent,
+    NetsuiteCompleteExportLogsComponent,
+    NetsuiteSkippedExportLogComponent,
+    NetsuiteMappingComponent,
+    NetsuiteBaseMappingComponent,
+    NetsuiteConfigurationComponent,
+  ],
+  imports: [CommonModule, NetsuiteMainRoutingModule, SharedModule],
 })
-export class NetsuiteMainModule { }
+export class NetsuiteMainModule {}

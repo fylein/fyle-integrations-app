@@ -15,20 +15,19 @@ describe('QbdOnboardingDoneComponent', () => {
   beforeEach(async () => {
     const translocoServiceSpy = jasmine.createSpyObj('TranslocoService', ['translate'], {
       config: {
-        reRenderOnLangChange: true
+        reRenderOnLangChange: true,
       },
       langChanges$: of('en'),
-      _loadDependencies: () => Promise.resolve()
+      _loadDependencies: () => Promise.resolve(),
     });
     await TestBed.configureTestingModule({
       imports: [TranslocoModule],
-      declarations: [ QbdOnboardingDoneComponent ],
+      declarations: [QbdOnboardingDoneComponent],
       providers: [
         { provide: TranslocoService, useValue: translocoServiceSpy },
-        { provide: Router, useValue: routerSpy }
-      ]
-    })
-    .compileComponents();
+        { provide: Router, useValue: routerSpy },
+      ],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(QbdOnboardingDoneComponent);
     component = fixture.componentInstance;

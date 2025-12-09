@@ -5,12 +5,12 @@ import { QbdDashboardComponent } from './qbd-dashboard.component';
 const routes: Routes = [
   {
     path: '',
-    component: QbdDashboardComponent
-  }
+    component: QbdDashboardComponent,
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class QbdDashboardRoutingModule { }
+export class QbdDashboardRoutingModule {}

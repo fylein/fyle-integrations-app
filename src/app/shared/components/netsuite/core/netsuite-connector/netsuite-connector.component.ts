@@ -8,13 +8,12 @@ import { HelperService } from 'src/app/core/services/common/helper.service';
 import { NetsuiteConnectorService } from 'src/app/core/services/netsuite/netsuite-core/netsuite-connector.service';
 
 @Component({
-    selector: 'app-netsuite-connector',
-    templateUrl: './netsuite-connector.component.html',
-    styleUrls: ['./netsuite-connector.component.scss'],
-    standalone: false
+  selector: 'app-netsuite-connector',
+  templateUrl: './netsuite-connector.component.html',
+  styleUrls: ['./netsuite-connector.component.scss'],
+  standalone: false,
 })
 export class NetsuiteConnectorComponent implements OnInit {
-
   isLoading: boolean = true;
 
   connectNetsuiteForm: FormGroup;
@@ -41,19 +40,20 @@ export class NetsuiteConnectorComponent implements OnInit {
     private router: Router,
     @Inject(FormBuilder) private formBuilder: FormBuilder,
     private connectorService: NetsuiteConnectorService,
-    public helper: HelperService
-  ) { }
+    public helper: HelperService,
+  ) {}
 
   save() {
     this.isLoading = true;
-    this.connectorService.connectNetsuite(this.connectNetsuiteForm)
-    .subscribe(({ netsuiteSetupForm, isNetsuiteConnected }) => {
-      this.connectNetsuiteForm = netsuiteSetupForm;
-      this.setupConnectionStatus.emit(isNetsuiteConnected);
-      if (!isNetsuiteConnected){
-        this.isLoading = false;
-      }
-    });
+    this.connectorService
+      .connectNetsuite(this.connectNetsuiteForm)
+      .subscribe(({ netsuiteSetupForm, isNetsuiteConnected }) => {
+        this.connectNetsuiteForm = netsuiteSetupForm;
+        this.setupConnectionStatus.emit(isNetsuiteConnected);
+        if (!isNetsuiteConnected) {
+          this.isLoading = false;
+        }
+      });
   }
 
   private setupPage(): void {

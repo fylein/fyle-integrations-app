@@ -1,36 +1,54 @@
-<p-dialog [(visible)]="isDialogOpen" [position]="'topright'" [modal]="true" [draggable]="false" [dismissableMask]="false" [closable]="false" (onHide)="handleDialogClose()" [style]="{ width: '50vw', height: '100vh' }">
-    <ng-template #header pTemplate="header">
-        <div class="tw-flex tw-items-start tw-justify-between tw-min-w-full">
-            <div class="tw-flex tw-flex-col">
-                <p [ngClass]="brandingStyle.common.dialogHeaderText">{{'exportLogChildTableDialog.dialogHeader' | transloco}}</p>
-            </div>
-            <div class="tw-flex tw-self-center">
-                <app-svg-icon [svgSource]="'cross'" class="tw-cursor-pointer" (click)="handleDialogClose()" [width]="'20px'" [height]="'20px'"></app-svg-icon>
-            </div>
-        </div>
-    </ng-template>
-    <div [ngClass]="brandingStyle.common.dialogSubDescriptionContainer">
+<p-dialog
+  [(visible)]="isDialogOpen"
+  [position]="'topright'"
+  [modal]="true"
+  [draggable]="false"
+  [dismissableMask]="false"
+  [closable]="false"
+  (onHide)="handleDialogClose()"
+  [style]="{ width: '50vw', height: '100vh' }"
+>
+  <ng-template #header pTemplate="header">
+    <div class="tw-flex tw-items-start tw-justify-between tw-min-w-full">
+      <div class="tw-flex tw-flex-col">
+        <p [ngClass]="brandingStyle.common.dialogHeaderText">
+          {{ 'exportLogChildTableDialog.dialogHeader' | transloco }}
+        </p>
+      </div>
+      <div class="tw-flex tw-self-center">
+        <app-svg-icon
+          [svgSource]="'cross'"
+          class="tw-cursor-pointer"
+          (click)="handleDialogClose()"
+          [width]="'20px'"
+          [height]="'20px'"
+        ></app-svg-icon>
+      </div>
     </div>
-    <div class="tw-bg-white">
-        <p-table #dt2 [value]="expenses">
-            <ng-template pTemplate="header">
-                <tr>
-                    <th>{{ 'exportLogChildTableDialog.expenseIdHeader' | transloco }}</th>
-                    <th>{{ 'exportLogChildTableDialog.claimNumberHeader' | transloco }}</th>
-                    <th>{{ 'exportLogChildTableDialog.merchantHeader' | transloco }}</th>
-                    <th>{{ 'exportLogChildTableDialog.categoryHeader' | transloco }}</th>
-                    <th>{{ 'exportLogChildTableDialog.amountHeader' | transloco }}</th>
-                </tr>
-            </ng-template>
-            <ng-template pTemplate="body" let-expense>
-                <tr>
-                    <td class="tw-underline tw-cursor-pointer" (click)="openExpenseinFyle(expense.expense_id, expense.org_id)">{{ expense.expense_number ? expense.expense_number : '-' }}</td>
-                    <td>{{ expense.claim_number ? expense.claim_number : '-' }}</td>
-                    <td>{{ expense.vendor ? expense.vendor : '-' }}</td>
-                    <td>{{ expense.category }}</td>
-                    <td>{{ expense.amount }}</td>
-                </tr>
-            </ng-template>
-        </p-table>
-    </div>
+  </ng-template>
+  <div [ngClass]="brandingStyle.common.dialogSubDescriptionContainer"></div>
+  <div class="tw-bg-white">
+    <p-table #dt2 [value]="expenses">
+      <ng-template pTemplate="header">
+        <tr>
+          <th>{{ 'exportLogChildTableDialog.expenseIdHeader' | transloco }}</th>
+          <th>{{ 'exportLogChildTableDialog.claimNumberHeader' | transloco }}</th>
+          <th>{{ 'exportLogChildTableDialog.merchantHeader' | transloco }}</th>
+          <th>{{ 'exportLogChildTableDialog.categoryHeader' | transloco }}</th>
+          <th>{{ 'exportLogChildTableDialog.amountHeader' | transloco }}</th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-expense>
+        <tr>
+          <td class="tw-underline tw-cursor-pointer" (click)="openExpenseinFyle(expense.expense_id, expense.org_id)">
+            {{ expense.expense_number ? expense.expense_number : '-' }}
+          </td>
+          <td>{{ expense.claim_number ? expense.claim_number : '-' }}</td>
+          <td>{{ expense.vendor ? expense.vendor : '-' }}</td>
+          <td>{{ expense.category }}</td>
+          <td>{{ expense.amount }}</td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
 </p-dialog>

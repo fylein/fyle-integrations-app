@@ -3,13 +3,12 @@ import { brandingConfig, brandingStyle } from 'src/app/branding/branding-config'
 import { PaginatorPage } from 'src/app/core/models/enum/enum.model';
 
 @Component({
-    selector: 'app-paginator',
-    templateUrl: './paginator.component.html',
-    styleUrls: ['./paginator.component.scss'],
-    standalone: false
+  selector: 'app-paginator',
+  templateUrl: './paginator.component.html',
+  styleUrls: ['./paginator.component.scss'],
+  standalone: false,
 })
 export class PaginatorComponent implements OnInit {
-
   pageNumbers: number[] = [10, 50, 100, 200];
 
   @Input() page: number;
@@ -20,7 +19,7 @@ export class PaginatorComponent implements OnInit {
 
   @Input() totalCount: number;
 
-  @Input() pageType:  PaginatorPage;
+  @Input() pageType: PaginatorPage;
 
   @Input() dropDownValue: number = 10;
 
@@ -32,7 +31,7 @@ export class PaginatorComponent implements OnInit {
 
   PaginatorPage = PaginatorPage;
 
-  constructor() { }
+  constructor() {}
 
   navigateToPage(targetPage: number) {
     if (targetPage === 1) {
@@ -40,13 +39,13 @@ export class PaginatorComponent implements OnInit {
       this.pageOffsetChangeEvent.emit(0);
     } else {
       this.page = targetPage;
-      const offsetValue = (targetPage-1) * this.dropDownValue;
+      const offsetValue = (targetPage - 1) * this.dropDownValue;
       this.pageOffsetChangeEvent.emit(offsetValue);
     }
   }
 
-  pageSizeChanges(event:any) {
-    this.totalPages = Math.ceil(this.totalCount/this.dropDownValue);
+  pageSizeChanges(event: any) {
+    this.totalPages = Math.ceil(this.totalCount / this.dropDownValue);
     this.pageSizeChangeEvent.emit(event.value);
   }
 
@@ -63,7 +62,6 @@ export class PaginatorComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.totalPages = Math.ceil(this.totalCount/this.dropDownValue);
+    this.totalPages = Math.ceil(this.totalCount / this.dropDownValue);
   }
-
 }

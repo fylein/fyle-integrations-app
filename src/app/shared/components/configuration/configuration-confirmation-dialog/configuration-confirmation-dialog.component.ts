@@ -1,18 +1,22 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { TranslocoService } from '@jsverse/transloco';
-import { brandingConfig, brandingFeatureConfig, brandingKbArticles, brandingStyle } from 'src/app/branding/branding-config';
+import {
+  brandingConfig,
+  brandingFeatureConfig,
+  brandingKbArticles,
+  brandingStyle,
+} from 'src/app/branding/branding-config';
 import { AppName, ButtonSize, ButtonType, ConfigurationWarningEvent } from 'src/app/core/models/enum/enum.model';
 import { ConfigurationWarningOut } from 'src/app/core/models/misc/configuration-warning.model';
 import { WindowService } from 'src/app/core/services/common/window.service';
 
 @Component({
-    selector: 'app-configuration-confirmation-dialog',
-    templateUrl: './configuration-confirmation-dialog.component.html',
-    styleUrls: ['./configuration-confirmation-dialog.component.scss'],
-    standalone: false
+  selector: 'app-configuration-confirmation-dialog',
+  templateUrl: './configuration-confirmation-dialog.component.html',
+  styleUrls: ['./configuration-confirmation-dialog.component.scss'],
+  standalone: false,
 })
 export class ConfigurationConfirmationDialogComponent implements OnInit {
-
   @Input() isWarningVisible: boolean;
 
   @Input() headerText: string;
@@ -55,11 +59,11 @@ export class ConfigurationConfirmationDialogComponent implements OnInit {
 
   constructor(
     private windowService: WindowService,
-    private translocoService: TranslocoService
-  ) { }
+    private translocoService: TranslocoService,
+  ) {}
 
   acceptWarning(isWarningAccepted: boolean) {
-    this.warningAccepted.emit({hasAccepted: isWarningAccepted, event: this.event});
+    this.warningAccepted.emit({ hasAccepted: isWarningAccepted, event: this.event });
   }
 
   redirect() {
@@ -69,8 +73,9 @@ export class ConfigurationConfirmationDialogComponent implements OnInit {
   ngOnInit(): void {
     this.brandIcon = `assets/${brandingConfig.brandId}/favicon.png`;
     if (!this.confirmationPromptText) {
-      this.confirmationPromptText = this.translocoService.translate('configurationConfirmationDialog.areYouSureToContinue');
+      this.confirmationPromptText = this.translocoService.translate(
+        'configurationConfirmationDialog.areYouSureToContinue',
+      );
     }
   }
-
 }

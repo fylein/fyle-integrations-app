@@ -8,9 +8,8 @@ xdescribe('DashboardIntacctErrorsComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ DashboardIntacctErrorsComponent ]
-    })
-    .compileComponents();
+      declarations: [DashboardIntacctErrorsComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(DashboardIntacctErrorsComponent);
     component = fixture.componentInstance;

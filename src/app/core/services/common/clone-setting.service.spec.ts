@@ -14,9 +14,9 @@ xdescribe('CloneSettingsService', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-    imports: [],
-    providers: [provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting()]
-});
+      imports: [],
+      providers: [provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting()],
+    });
     injector = getTestBed();
     service = TestBed.inject(CloneSettingsService);
     httpMock = injector.inject(HttpTestingController);

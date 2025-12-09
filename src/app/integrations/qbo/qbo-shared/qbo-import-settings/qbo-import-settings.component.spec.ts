@@ -20,7 +20,7 @@ import {
   mockImportCodeFieldConfig,
   mockWorkspaceGeneralSettings,
   mockQBOCredential,
-  mockImportCodeSelectorOptions
+  mockImportCodeSelectorOptions,
 } from 'src/app/integrations/qbo/qbo.fixture';
 import { DefaultImportFields, QBOOnboardingState, ToastSeverity } from 'src/app/core/models/enum/enum.model';
 import { TranslocoService } from '@jsverse/transloco';
@@ -40,17 +40,30 @@ describe('QboImportSettingsComponent', () => {
   beforeEach(async () => {
     const qboHelperServiceSpyObj = jasmine.createSpyObj('QboHelperService', ['refreshQBODimensions']);
     const helperServiceSpyObj = jasmine.createSpyObj('HelperService', ['markControllerAsRequired']);
-    const importSettingServiceSpyObj = jasmine.createSpyObj('QboImportSettingsService', ['getImportSettings', 'postImportSettings', 'getQBOFields', 'getImportCodeFieldConfig', 'getImportCodeField', 'constructPayload', 'getCustomFieldOption', 'getChartOfAccountTypesList', 'mapAPIResponseToFormGroup']);
+    const importSettingServiceSpyObj = jasmine.createSpyObj('QboImportSettingsService', [
+      'getImportSettings',
+      'postImportSettings',
+      'getQBOFields',
+      'getImportCodeFieldConfig',
+      'getImportCodeField',
+      'constructPayload',
+      'getCustomFieldOption',
+      'getChartOfAccountTypesList',
+      'mapAPIResponseToFormGroup',
+    ]);
     const qboConnectorServiceSpyObj = jasmine.createSpyObj('QboConnectorService', ['getQBOCredentials']);
     const mappingServiceSpyObj = jasmine.createSpyObj('MappingService', ['getFyleFields', 'getDestinationAttributes']);
     const routerSpyObj = jasmine.createSpyObj('Router', ['navigate']);
     const toastServiceSpyObj = jasmine.createSpyObj('IntegrationsToastService', ['displayToastMessage']);
-    const workspaceServiceSpyObj = jasmine.createSpyObj('WorkspaceService', ['getWorkspaceGeneralSettings', 'setOnboardingState']);
+    const workspaceServiceSpyObj = jasmine.createSpyObj('WorkspaceService', [
+      'getWorkspaceGeneralSettings',
+      'setOnboardingState',
+    ]);
     const translocoServiceSpy = jasmine.createSpyObj('TranslocoService', ['translate']);
 
     await TestBed.configureTestingModule({
-      declarations: [ QboImportSettingsComponent ],
-      imports: [ ReactiveFormsModule ],
+      declarations: [QboImportSettingsComponent],
+      imports: [ReactiveFormsModule],
       providers: [
         FormBuilder,
         { provide: QboHelperService, useValue: qboHelperServiceSpyObj },
@@ -61,8 +74,8 @@ describe('QboImportSettingsComponent', () => {
         { provide: IntegrationsToastService, useValue: toastServiceSpyObj },
         { provide: WorkspaceService, useValue: workspaceServiceSpyObj },
         { provide: HelperService, useValue: helperServiceSpyObj },
-        { provide: TranslocoService, useValue: translocoServiceSpy }
-      ]
+        { provide: TranslocoService, useValue: translocoServiceSpy },
+      ],
     }).compileComponents();
 
     qboHelperServiceSpy = TestBed.inject(QboHelperService) as jasmine.SpyObj<QboHelperService>;
@@ -87,13 +100,13 @@ describe('QboImportSettingsComponent', () => {
       defaultTaxCode: [''],
       chartOfAccountTypes: [['Expense', 'Other Expense']],
       importCategoryCode: [''],
-      expenseFields: new FormArray([])
+      expenseFields: new FormArray([]),
     });
 
     component.customFieldForm = new FormBuilder().group({
       attribute_type: [''],
       display_name: [''],
-      source_placeholder: ['']
+      source_placeholder: [''],
     });
   });
 
@@ -145,7 +158,7 @@ describe('QboImportSettingsComponent', () => {
   describe('save', () => {
     beforeEach(() => {
       component.qboImportCodeFieldCodeConfig = {
-        [DefaultImportFields.ACCOUNT]: false
+        [DefaultImportFields.ACCOUNT]: false,
       };
       importSettingServiceSpy.constructPayload.and.returnValue({} as any);
     });
@@ -156,7 +169,10 @@ describe('QboImportSettingsComponent', () => {
       component.isOnboarding = true;
       component.save();
       expect(component.isSaveInProgress).toBeFalse();
-      expect(toastServiceSpy.displayToastMessage).toHaveBeenCalledWith(ToastSeverity.SUCCESS, 'Import settings saved successfully');
+      expect(toastServiceSpy.displayToastMessage).toHaveBeenCalledWith(
+        ToastSeverity.SUCCESS,
+        'Import settings saved successfully',
+      );
       expect(workspaceServiceSpy.setOnboardingState).toHaveBeenCalledWith(QBOOnboardingState.ADVANCED_CONFIGURATION);
       expect(routerSpy.navigate).toHaveBeenCalledWith(['/integrations/qbo/onboarding/advanced_settings']);
     });
@@ -166,7 +182,10 @@ describe('QboImportSettingsComponent', () => {
       importSettingServiceSpy.postImportSettings.and.returnValue(throwError('Error'));
       component.save();
       expect(component.isSaveInProgress).toBeFalse();
-      expect(toastServiceSpy.displayToastMessage).toHaveBeenCalledWith(ToastSeverity.ERROR, 'Error saving import settings, please try again later');
+      expect(toastServiceSpy.displayToastMessage).toHaveBeenCalledWith(
+        ToastSeverity.ERROR,
+        'Error saving import settings, please try again later',
+      );
     });
   });
 
@@ -174,7 +193,7 @@ describe('QboImportSettingsComponent', () => {
     beforeEach(() => {
       component.customFieldForm.patchValue({
         attribute_type: 'TEST_FIELD',
-        source_placeholder: 'Test Placeholder'
+        source_placeholder: 'Test Placeholder',
       });
       component.fyleFields = [];
       component.importSettingForm = new FormBuilder().group({
@@ -183,21 +202,23 @@ describe('QboImportSettingsComponent', () => {
             source_field: [''],
             destination_field: ['TEST_DESTINATION'],
             import_to_fyle: [true],
-            is_custom: [true]
-          })
-        ])
+            is_custom: [true],
+          }),
+        ]),
       });
     });
 
-      it('should save custom Fyle expense field', () => {
-        component.customFieldOption = [{ attribute_type: 'custom_field', display_name: 'Test Field', source_placeholder: null, is_dependent: false }];
+    it('should save custom Fyle expense field', () => {
+      component.customFieldOption = [
+        { attribute_type: 'custom_field', display_name: 'Test Field', source_placeholder: null, is_dependent: false },
+      ];
 
-        component.customFieldControl = (component.importSettingForm.get('expenseFields') as FormArray).at(0) as FormGroup;
-        component.saveFyleExpenseField();
-        expect(component.fyleFields.length).toBe(2);
-        expect(component.showCustomFieldDialog).toBeFalse();
-          });
-        });
+      component.customFieldControl = (component.importSettingForm.get('expenseFields') as FormArray).at(0) as FormGroup;
+      component.saveFyleExpenseField();
+      expect(component.fyleFields.length).toBe(2);
+      expect(component.showCustomFieldDialog).toBeFalse();
+    });
+  });
 
   describe('refreshDimensions', () => {
     it('should call refreshQBODimensions', () => {
@@ -236,7 +257,7 @@ describe('QboImportSettingsComponent', () => {
     beforeEach(() => {
       component.customFieldForm.patchValue({
         attribute_type: 'EMPLOYEE',
-        source_placeholder: 'Anish'
+        source_placeholder: 'Anish',
       });
       component.showCustomFieldDialog = true;
     });
@@ -286,7 +307,7 @@ describe('QboImportSettingsComponent', () => {
       const accountOptions = component.getImportCodeSelectorOptions('ACCOUNT');
       expect(accountOptions).toEqual([
         { label: 'Import Codes + Names', value: true, subLabel: '4567 Meals & Entertainment' },
-        { label: 'Import Names only', value: false, subLabel: 'Meals & Entertainment' }
+        { label: 'Import Names only', value: false, subLabel: 'Meals & Entertainment' },
       ]);
     });
   });
@@ -295,10 +316,10 @@ describe('QboImportSettingsComponent', () => {
     beforeEach(() => {
       component.importSettingForm.patchValue({
         importCategories: true,
-        importCodeFields: []
+        importCodeFields: [],
       });
       component.qboImportCodeFieldCodeConfig = {
-        [DefaultImportFields.ACCOUNT]: true
+        [DefaultImportFields.ACCOUNT]: true,
       };
     });
 
@@ -327,7 +348,7 @@ describe('QboImportSettingsComponent', () => {
       component.customFieldForm.patchValue({
         attribute_type: 'TEST_TYPE',
         display_name: 'Test Display Name',
-        source_placeholder: 'Test Placeholder'
+        source_placeholder: 'Test Placeholder',
       });
       component.showCustomFieldDialog = false;
     });
@@ -355,7 +376,7 @@ describe('QboImportSettingsComponent', () => {
     beforeEach(() => {
       component.importSettingForm.patchValue({
         taxCode: false,
-        defaultTaxCode: ''
+        defaultTaxCode: '',
       });
       component['createTaxCodeWatcher']();
     });
@@ -380,7 +401,7 @@ describe('QboImportSettingsComponent', () => {
       component.importSettingForm.patchValue({
         importCategories: true,
         chartOfAccountTypes: ['Expense', 'Other Expense'],
-        importCategoryCode: ''
+        importCategoryCode: '',
       });
       component.importSettings = mockImportSettings;
       component.qboImportCodeFieldCodeConfig = mockImportCodeFieldConfig;
@@ -410,7 +431,7 @@ describe('QboImportSettingsComponent', () => {
     beforeEach(() => {
       component.importSettingForm.patchValue({
         importCategories: true,
-        importCategoryCode: false
+        importCategoryCode: false,
       });
       spyOn(component, 'updateImportCodeFields');
       component['importCategroyCodeWatcher']();
@@ -452,7 +473,7 @@ describe('QboImportSettingsComponent', () => {
         destination_field: [''],
         import_to_fyle: [false],
         is_custom: [false],
-        source_placeholder: ['']
+        source_placeholder: [''],
       });
 
       (component.importSettingForm.get('expenseFields') as FormArray).push(mockControl);

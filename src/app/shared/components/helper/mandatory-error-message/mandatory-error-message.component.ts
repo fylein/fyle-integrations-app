@@ -3,13 +3,12 @@ import { brandingConfig, brandingFeatureConfig } from 'src/app/branding/branding
 import { TranslocoService } from '@jsverse/transloco';
 
 @Component({
-    selector: 'app-mandatory-error-message',
-    templateUrl: './mandatory-error-message.component.html',
-    styleUrls: ['./mandatory-error-message.component.scss'],
-    standalone: false
+  selector: 'app-mandatory-error-message',
+  templateUrl: './mandatory-error-message.component.html',
+  styleUrls: ['./mandatory-error-message.component.scss'],
+  standalone: false,
 })
 export class MandatoryErrorMessageComponent implements OnInit {
-
   @Input() listName: string;
 
   @Input() customErrorMessage: string;
@@ -18,7 +17,7 @@ export class MandatoryErrorMessageComponent implements OnInit {
 
   readonly brandingFeatureConfig = brandingFeatureConfig;
 
-  constructor(private translocoService: TranslocoService) { }
+  constructor(private translocoService: TranslocoService) {}
 
   ngOnInit(): void {
     if (this.listName) {
@@ -32,5 +31,4 @@ export class MandatoryErrorMessageComponent implements OnInit {
       }
     }
   }
-
 }

@@ -12,18 +12,17 @@ describe('QbdDirectAssistedSetupComponent', () => {
   beforeEach(async () => {
     const translocoServiceSpy = jasmine.createSpyObj('TranslocoService', ['translate'], {
       config: {
-        reRenderOnLangChange: true
+        reRenderOnLangChange: true,
       },
       langChanges$: of('en'),
-      _loadDependencies: () => Promise.resolve()
+      _loadDependencies: () => Promise.resolve(),
     });
 
     await TestBed.configureTestingModule({
-      declarations: [ QbdDirectAssistedSetupComponent ],
+      declarations: [QbdDirectAssistedSetupComponent],
       imports: [HttpClientModule, TranslocoModule],
-      providers: [MessageService, { provide: TranslocoService, useValue: translocoServiceSpy }]
-    })
-    .compileComponents();
+      providers: [MessageService, { provide: TranslocoService, useValue: translocoServiceSpy }],
+    }).compileComponents();
   });
 
   beforeEach(() => {

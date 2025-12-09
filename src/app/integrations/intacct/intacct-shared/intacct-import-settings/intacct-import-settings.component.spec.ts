@@ -13,8 +13,34 @@ import { TrackingService } from 'src/app/core/services/integration/tracking.serv
 import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
 import { StorageService } from 'src/app/core/services/common/storage.service';
 import { SiWorkspaceService } from 'src/app/core/services/si/si-core/si-workspace.service';
-import { blankMapping, configuration, costCodeFieldValue, costTypeFieldValue, customField, customFieldValue, fyleFields, groupedDestinationAttributes, importSettings, importSettingsWithProjectMapping, intacctImportCodeConfig, locationEntityMapping, sageIntacctFields, sageIntacctFieldsSortedByPriority, settingsWithDependentFields } from '../../intacct.fixture';
-import { IntacctCategoryDestination, IntacctOnboardingState, IntacctUpdateEvent, MappingSourceField, Page, ProgressPhase, SageIntacctField, ToastSeverity, TrackingApp } from 'src/app/core/models/enum/enum.model';
+import {
+  blankMapping,
+  configuration,
+  costCodeFieldValue,
+  costTypeFieldValue,
+  customField,
+  customFieldValue,
+  fyleFields,
+  groupedDestinationAttributes,
+  importSettings,
+  importSettingsWithProjectMapping,
+  intacctImportCodeConfig,
+  locationEntityMapping,
+  sageIntacctFields,
+  sageIntacctFieldsSortedByPriority,
+  settingsWithDependentFields,
+} from '../../intacct.fixture';
+import {
+  IntacctCategoryDestination,
+  IntacctOnboardingState,
+  IntacctUpdateEvent,
+  MappingSourceField,
+  Page,
+  ProgressPhase,
+  SageIntacctField,
+  ToastSeverity,
+  TrackingApp,
+} from 'src/app/core/models/enum/enum.model';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { Org } from 'src/app/core/models/org/org.model';
 import { provideHttpClientTesting } from '@angular/common/http/testing';
@@ -40,25 +66,43 @@ describe('IntacctImportSettingsComponent', () => {
   let translocoService: jasmine.SpyObj<TranslocoService>;
 
   beforeEach(async () => {
-    const siImportSettingServiceSpy = jasmine.createSpyObj('SiImportSettingsService', ['getImportSettings', 'postImportSettings', 'getImportCodeFieldConfig']);
-    const siMappingsServiceSpy = jasmine.createSpyObj('SiMappingsService', ['getSageIntacctFields', 'getFyleFields', 'getGroupedDestinationAttributes', 'getConfiguration', 'refreshSageIntacctDimensions', 'refreshFyleDimensions']);
+    const siImportSettingServiceSpy = jasmine.createSpyObj('SiImportSettingsService', [
+      'getImportSettings',
+      'postImportSettings',
+      'getImportCodeFieldConfig',
+    ]);
+    const siMappingsServiceSpy = jasmine.createSpyObj('SiMappingsService', [
+      'getSageIntacctFields',
+      'getFyleFields',
+      'getGroupedDestinationAttributes',
+      'getConfiguration',
+      'refreshSageIntacctDimensions',
+      'refreshFyleDimensions',
+    ]);
     const intacctConnectorServiceSpy = jasmine.createSpyObj('IntacctConnectorService', ['getLocationEntityMapping']);
     const orgServiceSpy = jasmine.createSpyObj('OrgService', ['getCachedOrg']);
-    const trackingServiceSpy = jasmine.createSpyObj('TrackingService', ['integrationsOnboardingCompletion', 'intacctUpdateEvent', 'trackTimeSpent']);
+    const trackingServiceSpy = jasmine.createSpyObj('TrackingService', [
+      'integrationsOnboardingCompletion',
+      'intacctUpdateEvent',
+      'trackTimeSpent',
+    ]);
     const toastServiceSpy = jasmine.createSpyObj('IntegrationsToastService', ['displayToastMessage']);
     const storageServiceSpy = jasmine.createSpyObj('StorageService', ['get']);
-    const siWorkspaceServiceSpy = jasmine.createSpyObj('SiWorkspaceService', ['getIntacctOnboardingState', 'setIntacctOnboardingState']);
+    const siWorkspaceServiceSpy = jasmine.createSpyObj('SiWorkspaceService', [
+      'getIntacctOnboardingState',
+      'setIntacctOnboardingState',
+    ]);
     const translocoServiceSpy = jasmine.createSpyObj('TranslocoService', ['translate'], {
       config: {
-        reRenderOnLangChange: true
+        reRenderOnLangChange: true,
       },
-      langChanges$: of('en')
+      langChanges$: of('en'),
     });
 
     await TestBed.configureTestingModule({
-    declarations: [IntacctImportSettingsComponent],
-    imports: [SharedModule, IntacctSharedModule, ReactiveFormsModule, RouterModule.forRoot([])],
-    providers: [
+      declarations: [IntacctImportSettingsComponent],
+      imports: [SharedModule, IntacctSharedModule, ReactiveFormsModule, RouterModule.forRoot([])],
+      providers: [
         FormBuilder,
         { provide: SiImportSettingsService, useValue: siImportSettingServiceSpy },
         { provide: SiMappingsService, useValue: siMappingsServiceSpy },
@@ -71,10 +115,9 @@ describe('IntacctImportSettingsComponent', () => {
         { provide: TranslocoService, useValue: translocoServiceSpy },
         provideRouter([]),
         provideHttpClient(withInterceptorsFromDi()),
-        provideHttpClientTesting()
-    ]
-})
-      .compileComponents();
+        provideHttpClientTesting(),
+      ],
+    }).compileComponents();
 
     siImportSettingService = TestBed.inject(SiImportSettingsService) as jasmine.SpyObj<SiImportSettingsService>;
     siMappingsService = TestBed.inject(SiMappingsService) as jasmine.SpyObj<SiMappingsService>;
@@ -104,7 +147,6 @@ describe('IntacctImportSettingsComponent', () => {
 
     fixture = TestBed.createComponent(IntacctImportSettingsComponent);
     component = fixture.componentInstance;
-
   });
 
   it('should create', () => {
@@ -142,7 +184,7 @@ describe('IntacctImportSettingsComponent', () => {
     it('should set intacctCategoryDestination based on configuration', () => {
       expect(component.intacctCategoryDestination).toEqual(IntacctCategoryDestination.GL_ACCOUNT);
 
-      const updatedConfig = {...configuration, reimbursable_expenses_object: 'EXPENSE_REPORT'};
+      const updatedConfig = { ...configuration, reimbursable_expenses_object: 'EXPENSE_REPORT' };
       siMappingsService.getConfiguration.and.returnValue(of(updatedConfig as IntacctConfiguration));
 
       component.ngOnInit();
@@ -170,13 +212,21 @@ describe('IntacctImportSettingsComponent', () => {
       });
 
       it('should initialize form with correct values', () => {
-        expect(component.importSettingsForm.get('importVendorAsMerchant')?.value).toEqual(importSettings.configurations.import_vendors_as_merchants || null || null);
-        expect(component.importSettingsForm.get('importCategories')?.value).toEqual(importSettings.configurations.import_categories || null);
-        expect(component.importSettingsForm.get('importTaxCodes')?.value).toEqual(importSettings.configurations.import_tax_codes || null);
+        expect(component.importSettingsForm.get('importVendorAsMerchant')?.value).toEqual(
+          importSettings.configurations.import_vendors_as_merchants || null || null,
+        );
+        expect(component.importSettingsForm.get('importCategories')?.value).toEqual(
+          importSettings.configurations.import_categories || null,
+        );
+        expect(component.importSettingsForm.get('importTaxCodes')?.value).toEqual(
+          importSettings.configurations.import_tax_codes || null,
+        );
         expect(component.importSettingsForm.get('workspaceId')?.value).toEqual(366);
         expect(component.importSettingsForm.get('isDependentImportEnabled')?.value).toBeFalsy();
         expect(component.importSettingsForm.get('searchOption')?.value).toEqual('');
-        expect(component.importSettingsForm.get('importCodeField')?.value).toEqual(importSettings.configurations.import_code_fields);
+        expect(component.importSettingsForm.get('importCodeField')?.value).toEqual(
+          importSettings.configurations.import_code_fields,
+        );
       });
 
       it('should initialize expenseFields FormArray correctly', () => {
@@ -218,7 +268,6 @@ describe('IntacctImportSettingsComponent', () => {
     });
   });
 
-
   describe('Save', () => {
     it('should successfully save import settings during onboarding', fakeAsync(() => {
       siWorkspaceService.getIntacctOnboardingState.and.returnValue(IntacctOnboardingState.IMPORT_SETTINGS);
@@ -233,14 +282,19 @@ describe('IntacctImportSettingsComponent', () => {
       tick();
 
       expect(siImportSettingService.postImportSettings).toHaveBeenCalled();
-      expect(toastService.displayToastMessage).toHaveBeenCalledWith(ToastSeverity.SUCCESS, 'Import settings saved successfully');
+      expect(toastService.displayToastMessage).toHaveBeenCalledWith(
+        ToastSeverity.SUCCESS,
+        'Import settings saved successfully',
+      );
       expect(trackingService.integrationsOnboardingCompletion).toHaveBeenCalledWith(
         TrackingApp.INTACCT,
         IntacctOnboardingState.IMPORT_SETTINGS,
         3,
-        jasmine.any(Object)
+        jasmine.any(Object),
       );
-      expect(siWorkspaceService.setIntacctOnboardingState).toHaveBeenCalledWith(IntacctOnboardingState.ADVANCED_CONFIGURATION);
+      expect(siWorkspaceService.setIntacctOnboardingState).toHaveBeenCalledWith(
+        IntacctOnboardingState.ADVANCED_CONFIGURATION,
+      );
       expect(router.navigate).toHaveBeenCalledWith(['/integrations/intacct/onboarding/advanced_settings']);
       expect(component.saveInProgress).toBeFalse();
     }));
@@ -257,15 +311,15 @@ describe('IntacctImportSettingsComponent', () => {
       tick();
 
       expect(siImportSettingService.postImportSettings).toHaveBeenCalled();
-      expect(toastService.displayToastMessage).toHaveBeenCalledWith(ToastSeverity.SUCCESS, 'Import settings saved successfully');
-      expect(trackingService.intacctUpdateEvent).toHaveBeenCalledWith(
-        IntacctUpdateEvent.ADVANCED_SETTINGS_INTACCT,
-        {
-          phase: ProgressPhase.POST_ONBOARDING,
-          oldState: component.importSettings,
-          newState: importSettings
-        }
+      expect(toastService.displayToastMessage).toHaveBeenCalledWith(
+        ToastSeverity.SUCCESS,
+        'Import settings saved successfully',
       );
+      expect(trackingService.intacctUpdateEvent).toHaveBeenCalledWith(IntacctUpdateEvent.ADVANCED_SETTINGS_INTACCT, {
+        phase: ProgressPhase.POST_ONBOARDING,
+        oldState: component.importSettings,
+        newState: importSettings,
+      });
       expect(router.navigate).not.toHaveBeenCalled();
       expect(component.saveInProgress).toBeFalse();
     }));
@@ -282,7 +336,7 @@ describe('IntacctImportSettingsComponent', () => {
       expect(siImportSettingService.postImportSettings).toHaveBeenCalled();
       expect(toastService.displayToastMessage).toHaveBeenCalledWith(
         ToastSeverity.ERROR,
-        'Error saving import settings, please try again later'
+        'Error saving import settings, please try again later',
       );
       expect(component.saveInProgress).toBeFalse();
     }));
@@ -301,7 +355,7 @@ describe('IntacctImportSettingsComponent', () => {
       expect(trackingService.trackTimeSpent).toHaveBeenCalledWith(
         TrackingApp.INTACCT,
         Page.IMPORT_SETTINGS_INTACCT,
-        mockStartTime
+        mockStartTime,
       );
     }));
   });
@@ -321,7 +375,7 @@ describe('IntacctImportSettingsComponent', () => {
         firstControl.patchValue({
           source_field: 'custom_field',
           destination_field: 'TEST_FIELD',
-          import_to_fyle: true
+          import_to_fyle: true,
         });
 
         expect(component['addCustomField']).toHaveBeenCalled();
@@ -333,12 +387,12 @@ describe('IntacctImportSettingsComponent', () => {
         const taxCodesControl = component.importSettingsForm.get('sageIntacctTaxCodes');
 
         component.importSettingsForm.patchValue({
-          importTaxCodes: true
+          importTaxCodes: true,
         });
         expect(taxCodesControl?.hasValidator(Validators.required)).toBeTrue();
 
         component.importSettingsForm.patchValue({
-          importTaxCodes: false
+          importTaxCodes: false,
         });
         expect(taxCodesControl?.hasValidator(Validators.required)).toBeFalse();
       });
@@ -354,7 +408,7 @@ describe('IntacctImportSettingsComponent', () => {
         const costTypesControl = component.importSettingsForm.get('costTypes');
 
         component.importSettingsForm.patchValue({
-          isDependentImportEnabled: true
+          isDependentImportEnabled: true,
         });
 
         expect(costCodesControl?.enabled).toBeTrue();
@@ -362,7 +416,7 @@ describe('IntacctImportSettingsComponent', () => {
         expect(costCodesControl?.hasValidator(Validators.required)).toBeTrue();
 
         component.importSettingsForm.patchValue({
-          isDependentImportEnabled: false
+          isDependentImportEnabled: false,
         });
 
         expect(costCodesControl?.enabled).toBeTrue();
@@ -376,8 +430,8 @@ describe('IntacctImportSettingsComponent', () => {
         component.importSettingsForm.patchValue({
           costCodes: {
             attribute_type: 'custom_field',
-            source_field: 'custom_field'
-          }
+            source_field: 'custom_field',
+          },
         });
 
         expect(component['addCustomField']).toHaveBeenCalled();
@@ -392,8 +446,8 @@ describe('IntacctImportSettingsComponent', () => {
         component.importSettingsForm.patchValue({
           costTypes: {
             attribute_type: 'custom_field',
-            source_field: 'custom_field'
-          }
+            source_field: 'custom_field',
+          },
         });
 
         expect(component['addCustomField']).toHaveBeenCalled();
@@ -425,7 +479,7 @@ describe('IntacctImportSettingsComponent', () => {
 
     it('getFormGroup should return FormGroup', () => {
       const formGroup = component['formBuilder'].group({
-        test: ['value']
+        test: ['value'],
       });
       expect(component.getFormGroup(formGroup) instanceof FormGroup).toBeTrue();
     });
@@ -446,7 +500,7 @@ describe('IntacctImportSettingsComponent', () => {
       expect(siMappingsService.refreshFyleDimensions).toHaveBeenCalled();
       expect(toastService.displayToastMessage).toHaveBeenCalledWith(
         ToastSeverity.SUCCESS,
-        'Syncing data dimensions from Sage Intacct'
+        'Syncing data dimensions from Sage Intacct',
       );
     }));
 
@@ -454,7 +508,7 @@ describe('IntacctImportSettingsComponent', () => {
       const formGroup = component['formBuilder'].group({
         source_field: ['test'],
         import_to_fyle: [true],
-        destination_field: ['ACCOUNT']
+        destination_field: ['ACCOUNT'],
       });
       spyOn(component, 'addImportCodeField');
 
@@ -462,15 +516,12 @@ describe('IntacctImportSettingsComponent', () => {
 
       expect(formGroup.get('source_field')?.value).toBe('');
       expect(formGroup.get('import_to_fyle')?.value).toBeFalse();
-      expect(component.addImportCodeField).toHaveBeenCalledWith(
-        { checked: false },
-        'ACCOUNT'
-      );
+      expect(component.addImportCodeField).toHaveBeenCalledWith({ checked: false }, 'ACCOUNT');
     });
 
     it('hasDuplicateOption should check control validity', () => {
       const formGroup = component['formBuilder'].group({
-        testControl: ['value']
+        testControl: ['value'],
       });
       expect(component.hasDuplicateOption(formGroup, 0, 'testControl')).toBeTrue();
     });
@@ -501,7 +552,7 @@ describe('IntacctImportSettingsComponent', () => {
 
     it('closeModel should close the dialog and reset the form and the source field', () => {
       component.customFieldForm = component['formBuilder'].group({
-        testField: ['value']
+        testField: ['value'],
       });
       component.customFieldControl = component['createFormGroup'](blankMapping);
       component.showDialog = true;
@@ -514,12 +565,11 @@ describe('IntacctImportSettingsComponent', () => {
     });
 
     describe('saveCustomField', () => {
-
       it('should handle dependent field creation', () => {
         component.customFieldForDependentField = true;
         component.customFieldForm = component['formBuilder'].group({
           attribute_type: ['Test Field'],
-          source_placeholder: ['Test Placeholder']
+          source_placeholder: ['Test Placeholder'],
         });
         component['isCostCodeFieldSelected'] = true;
         component.customFieldControl = component.importSettingsForm.get('costCodes') as AbstractControl;
@@ -534,7 +584,7 @@ describe('IntacctImportSettingsComponent', () => {
         component.customFieldForDependentField = false;
         component.customFieldForm = component['formBuilder'].group({
           attribute_type: ['Test Field'],
-          source_placeholder: ['Test Placeholder']
+          source_placeholder: ['Test Placeholder'],
         });
         spyOn(component.customFieldForm, 'reset').and.callThrough();
         component.customFieldControl = component['createFormGroup'](customFieldValue);
@@ -550,7 +600,7 @@ describe('IntacctImportSettingsComponent', () => {
 
     it('updateDependentField should handle dependent field updates', () => {
       component.importSettingsForm.patchValue({
-        isDependentImportEnabled: true
+        isDependentImportEnabled: true,
       });
 
       component.updateDependentField('DEPARTMENT', true);
@@ -562,15 +612,19 @@ describe('IntacctImportSettingsComponent', () => {
 
     it('onDropdownChange should handle dependent fields', () => {
       const expenseFieldsArray = component.importSettingsForm.get('expenseFields') as FormArray;
-      expenseFieldsArray.push(component['formBuilder'].group({
-        import_to_fyle: [true],
-        destination_field: ['TEST_FIELD']
-      }));
+      expenseFieldsArray.push(
+        component['formBuilder'].group({
+          import_to_fyle: [true],
+          destination_field: ['TEST_FIELD'],
+        }),
+      );
 
-      component.fyleFields = [{
-        attribute_type: 'DEPENDENT_FIELD',
-        is_dependent: true
-      } as ExpenseField];
+      component.fyleFields = [
+        {
+          attribute_type: 'DEPENDENT_FIELD',
+          is_dependent: true,
+        } as ExpenseField,
+      ];
 
       component.onDropdownChange({ value: 'DEPENDENT_FIELD' }, 0);
 
@@ -584,7 +638,7 @@ describe('IntacctImportSettingsComponent', () => {
         source_field: [MappingSourceField.PROJECT],
         destination_field: ['TEST_FIELD'],
         import_to_fyle: [false],
-        is_custom: [false]
+        is_custom: [false],
       });
       expenseFieldsArray.push(newExpenseField);
 
@@ -599,7 +653,7 @@ describe('IntacctImportSettingsComponent', () => {
     it('showWarningForDependentFields should show warning dialog', () => {
       const formGroup = component['formBuilder'].group({
         source_field: [MappingSourceField.PROJECT],
-        destination_field: ['TEST_FIELD']
+        destination_field: ['TEST_FIELD'],
       });
 
       component.costCodeFieldOption = [{ attribute_type: 'existing_field' } as ExpenseField];

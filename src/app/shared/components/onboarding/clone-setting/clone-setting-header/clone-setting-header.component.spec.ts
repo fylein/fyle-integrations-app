@@ -8,9 +8,8 @@ xdescribe('CloneSettingHeaderComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ CloneSettingHeaderComponent ]
-    })
-    .compileComponents();
+      declarations: [CloneSettingHeaderComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(CloneSettingHeaderComponent);
     component = fixture.componentInstance;

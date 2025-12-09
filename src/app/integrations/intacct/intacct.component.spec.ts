@@ -34,7 +34,12 @@ describe('IntacctComponent', () => {
 
   beforeEach(async () => {
     const userSpy = jasmine.createSpyObj('UserService', ['getUserProfile']);
-    const workspaceSpy = jasmine.createSpyObj('SiWorkspaceService', ['getWorkspace', 'postWorkspace', 'syncFyleDimensions', 'syncIntacctDimensions']);
+    const workspaceSpy = jasmine.createSpyObj('SiWorkspaceService', [
+      'getWorkspace',
+      'postWorkspace',
+      'syncFyleDimensions',
+      'syncIntacctDimensions',
+    ]);
     const helperSpy = jasmine.createSpyObj('HelperService', ['setBaseApiURL']);
     const storageSpy = jasmine.createSpyObj('StorageService', ['set']);
     const authSpy = jasmine.createSpyObj('AuthService', ['updateUserTokens']);
@@ -45,20 +50,20 @@ describe('IntacctComponent', () => {
       get nativeWindow() {
         return {
           location: {
-            pathname: '/integrations/intacct'
-          }
+            pathname: '/integrations/intacct',
+          },
         } as Window;
-      }
+      },
     };
 
     activatedRouteMock = {
-      queryParams: of({})
+      queryParams: of({}),
     };
 
     await TestBed.configureTestingModule({
-    declarations: [IntacctComponent],
-    imports: [SharedModule],
-    providers: [
+      declarations: [IntacctComponent],
+      imports: [SharedModule],
+      providers: [
         { provide: HelperService, useValue: helperSpy },
         { provide: StorageService, useValue: storageSpy },
         { provide: UserService, useValue: userSpy },
@@ -71,9 +76,9 @@ describe('IntacctComponent', () => {
         MessageService,
         provideRouter([]),
         provideHttpClient(withInterceptorsFromDi()),
-        provideHttpClientTesting()
-    ]
-}).compileComponents();
+        provideHttpClientTesting(),
+      ],
+    }).compileComponents();
 
     userServiceSpy = TestBed.inject(UserService) as jasmine.SpyObj<UserService>;
     workspaceServiceSpy = TestBed.inject(SiWorkspaceService) as jasmine.SpyObj<SiWorkspaceService>;
@@ -100,7 +105,7 @@ describe('IntacctComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should update the user\'s tokens', () => {
+  it("should update the user's tokens", () => {
     fixture.detectChanges();
     expect(authServiceSpy.updateUserTokens).toHaveBeenCalledOnceWith('INTACCT');
   });
@@ -140,10 +145,13 @@ describe('IntacctComponent', () => {
     for (const [state, route] of Object.entries(testOnboardingState)) {
       (router.navigateByUrl as jasmine.Spy).calls.reset();
 
-      const testWorkspace: IntacctWorkspace = { ...workspaceResponse[0], onboarding_state: state as IntacctOnboardingState };
+      const testWorkspace: IntacctWorkspace = {
+        ...workspaceResponse[0],
+        onboarding_state: state as IntacctOnboardingState,
+      };
       workspaceServiceSpy.getWorkspace.and.returnValue(of([testWorkspace]));
 
-    fixture = TestBed.createComponent(IntacctComponent);
+      fixture = TestBed.createComponent(IntacctComponent);
       component = fixture.componentInstance;
 
       fixture.detectChanges();
@@ -160,5 +168,4 @@ describe('IntacctComponent', () => {
 
     expect(router.navigateByUrl).not.toHaveBeenCalled();
   });
-
 });

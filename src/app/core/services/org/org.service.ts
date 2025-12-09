@@ -11,18 +11,17 @@ import { HelperService } from '../common/helper.service';
 import { environment } from 'src/environments/environment';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class OrgService {
-
   constructor(
     private sanitizer: DomSanitizer,
     private apiService: ApiService,
     private storageService: StorageService,
-    private helper: HelperService
+    private helper: HelperService,
   ) {
     helper.setBaseApiURL(AppUrl.INTEGRATION);
-   }
+  }
 
   getOrgId(): string {
     return this.storageService.get('orgId');
@@ -36,7 +35,7 @@ export class OrgService {
   getOrgs(orgId: string | undefined): Observable<Org> {
     this.helper.setBaseApiURL(AppUrl.INTEGRATION);
     return this.apiService.get(`/orgs/`, {
-      org_id: orgId
+      org_id: orgId,
     });
   }
 
@@ -49,7 +48,7 @@ export class OrgService {
   }
 
   connectFyle(appName?: AppName): Observable<{}> {
-    const payload: {app_name?: AppName} = {};
+    const payload: { app_name?: AppName } = {};
 
     if (appName) {
       payload.app_name = appName;
@@ -59,7 +58,7 @@ export class OrgService {
   }
 
   getAdditionalEmails(): Observable<EmailOption[]> {
-    const baseApiUrl = `${this.helper.apiBaseUrl}/${environment.production ? 'integrations-api/': ''}api`;
+    const baseApiUrl = `${this.helper.apiBaseUrl}/${environment.production ? 'integrations-api/' : ''}api`;
     return this.apiService.get(`/orgs/${this.getOrgId()}/admins/`, {}, baseApiUrl);
   }
 
@@ -73,7 +72,7 @@ export class OrgService {
 
   generateToken(managedUserId: string): Observable<GeneratedToken> {
     return this.apiService.get(`/orgs/${this.getOrgId()}/generate_token/`, {
-      managed_user_id: managedUserId
+      managed_user_id: managedUserId,
     });
   }
 }

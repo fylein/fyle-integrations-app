@@ -14,24 +14,23 @@ describe('QbdMappingHeaderSectionComponent', () => {
   beforeEach(async () => {
     const translocoServiceSpy = jasmine.createSpyObj('TranslocoService', ['translate'], {
       config: {
-        reRenderOnLangChange: true
+        reRenderOnLangChange: true,
       },
       langChanges$: of('en'),
-      _loadDependencies: () => Promise.resolve()
+      _loadDependencies: () => Promise.resolve(),
     });
     const service1 = {
-      mappingStat: () => of()
+      mappingStat: () => of(),
     };
 
     await TestBed.configureTestingModule({
       imports: [TranslocoModule],
-      declarations: [ QbdMappingHeaderSectionComponent, SnakeCaseToSpaceCasePipe ],
+      declarations: [QbdMappingHeaderSectionComponent, SnakeCaseToSpaceCasePipe],
       providers: [
         { provide: QbdMappingService, useValue: service1 },
-        { provide: TranslocoService, useValue: translocoServiceSpy }
-      ]
-    })
-    .compileComponents();
+        { provide: TranslocoService, useValue: translocoServiceSpy },
+      ],
+    }).compileComponents();
 
     translocoService = TestBed.inject(TranslocoService) as jasmine.SpyObj<TranslocoService>;
 
@@ -39,7 +38,7 @@ describe('QbdMappingHeaderSectionComponent', () => {
     component = fixture.componentInstance;
     component.mappingStats = {
       all_attributes_count: 10,
-      unmapped_attributes_count: 10
+      unmapped_attributes_count: 10,
     };
     fixture.detectChanges();
   });

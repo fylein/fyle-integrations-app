@@ -1,27 +1,26 @@
 <div class="tw-flex tw-justify-around tw-items-center tw-h-240-px">
   <div class="tw-text-center tw-px-60-px tw-items-center">
     <h5 class="tw-text-14-px tw-text-text-tertiary tw-font-500 tw-pb-18-px">
-      {{ (brandingConfig.brandId === 'co') ? brandingConfig.brandName : brandingConfig.brandName | uppercase }}
-
+      {{ brandingConfig.brandId === 'co' ? brandingConfig.brandName : (brandingConfig.brandName | uppercase) }}
     </h5>
     <h3 class="tw-text-18-px tw-text-text-primary tw-font-500 tw-pb-16-px">
       {{ fyleOrgName }}
     </h3>
   </div>
-  <div [ngClass]="{'tw-flex tw-h-[100%]': !brandingFeatureConfig.illustrationsAllowed}">
+  <div [ngClass]="{ 'tw-flex tw-h-[100%]': !brandingFeatureConfig.illustrationsAllowed }">
     @if (brandingFeatureConfig.illustrationsAllowed) {
-      <img src="assets/illustrations/vertical-divider.svg"/>
+      <img src="assets/illustrations/vertical-divider.svg" />
     }
     @if (!brandingFeatureConfig.illustrationsAllowed) {
       <p class="tw-border-l-divider-border-color tw-border-solid tw-border-l-1-px"></p>
     }
   </div>
   <div class="tw-px-60-px tw-items-center">
-    <h5 class="tw-text-14-px tw-text-text-tertiary tw-font-500 tw-pb-18-px tw-text-center ">
-      {{  (brandingConfig.brandId === 'co') ? accountingAppTitle : accountingAppTitle | uppercase  }}
+    <h5 class="tw-text-14-px tw-text-text-tertiary tw-font-500 tw-pb-18-px tw-text-center">
+      {{ brandingConfig.brandId === 'co' ? accountingAppTitle : (accountingAppTitle | uppercase) }}
     </h5>
     @if (!accountingCompanyConnectionInProgress && accountingCompanyName) {
-      <h3 class="tw-text-18-px tw-text-text-primary tw-font-500 tw-pb-16-px tw-text-center ">
+      <h3 class="tw-text-18-px tw-text-text-primary tw-font-500 tw-pb-16-px tw-text-center">
         {{ accountingCompanyName }}
       </h3>
     }
@@ -29,13 +28,24 @@
       <div class="tw-flex tw-items-center tw-justify-center">
         <div>
           <div class="tw-flex tw-items-center tw-justify-center">
-            <p-select appendTo="body" [options]="accountingCompanyList" [optionLabel]="'value'"
-              [(ngModel)]="companyName" (onChange)="connect()"
-              [placeholder]="placeholder">
+            <p-select
+              appendTo="body"
+              [options]="accountingCompanyList"
+              [optionLabel]="'value'"
+              [(ngModel)]="companyName"
+              (onChange)="connect()"
+              [placeholder]="placeholder"
+            >
               <ng-template let-option pTemplate="item">
                 <div
-                  [ngStyle]="{'white-space': 'nowrap', 'overflow': 'hidden', 'text-overflow': 'ellipsis', 'max-width': '16rem'}">
-                  {{option.value}}
+                  [ngStyle]="{
+                    'white-space': 'nowrap',
+                    overflow: 'hidden',
+                    'text-overflow': 'ellipsis',
+                    'max-width': '16rem',
+                  }"
+                >
+                  {{ option.value }}
                 </div>
               </ng-template>
               <ng-template pTemplate="selectedItem" let-item>
@@ -49,7 +59,7 @@
           </div>
           @if (!accountingCompanyConnectionInProgress) {
             <div class="tw-w-300-px tw-text-pretty tw-text-center tw-py-16-px">
-              <span class="tw-text-14-px tw-text-normal-text-color tw-font-500 tw-text-center">{{subLabel}}</span>
+              <span class="tw-text-14-px tw-text-normal-text-color tw-font-500 tw-text-center">{{ subLabel }}</span>
             </div>
           }
         </div>
@@ -58,21 +68,27 @@
     @if (accountingCompanyConnectionInProgress) {
       <div class="tw-pb-8-px tw-text-center">
         @if (accountingCompanyName && brandingFeatureConfig.featureFlags.contentVersion === 'v2') {
-          <h3 class="tw-text-18-px tw-text-text-primary tw-font-500 tw-text-center ">
+          <h3 class="tw-text-18-px tw-text-text-primary tw-font-500 tw-text-center">
             {{ accountingCompanyName }}
           </h3>
         }
         @if (brandingFeatureConfig.featureFlags.contentVersion === 'v2') {
           <p class="tw-text-14-px tw-py-16-px tw-w-300-px tw-text-text-muted tw-text-center">
-          {{ 'configurationConnector.fetchingData' | transloco: { appName: appName } }}</p>
+            {{ 'configurationConnector.fetchingData' | transloco: { appName: appName } }}
+          </p>
         }
-        <div [ngClass]="{'tw-mt-16-px': brandingFeatureConfig.featureFlags.contentVersion === 'v1'}">
+        <div [ngClass]="{ 'tw-mt-16-px': brandingFeatureConfig.featureFlags.contentVersion === 'v1' }">
           <app-loader [showSpinnerLabel]="false" [styleClass]="'!tw-w-16-px !tw-h-16-px spinner-default'"></app-loader>
         </div>
       </div>
     }
     <div class="tw-text-14-px tw-font-500 tw-text-center">
-      @if (!accountingCompanyConnectionInProgress && !accountingCompanyTokenExpired && showDisconnect && accountingCompanyName) {
+      @if (
+        !accountingCompanyConnectionInProgress &&
+        !accountingCompanyTokenExpired &&
+        showDisconnect &&
+        accountingCompanyName
+      ) {
         <p class="tw-text-text-muted tw-mb-4-px">
           {{ 'configurationConnector.notTheCompany' | transloco }}
         </p>
@@ -89,14 +105,20 @@
       }
       @if (!accountingCompanyConnectionInProgress && accountingCompanyTokenExpired) {
         <div class="tw-h-60-px">
-          <span (click)="connect()" class="tw-inline-block btn-text-primary tw-py-10-px ">
+          <span (click)="connect()" class="tw-inline-block btn-text-primary tw-py-10-px">
             {{ 'configurationConnector.reconnectToApp' | transloco: { accountingAppTitle: accountingAppTitle } }}
           </span>
         </div>
       }
-      @if (!accountingCompanyConnectionInProgress && !accountingCompanyTokenExpired && !accountingCompanyName && isDisconnectClicked && appName === AppName.XERO) {
+      @if (
+        !accountingCompanyConnectionInProgress &&
+        !accountingCompanyTokenExpired &&
+        !accountingCompanyName &&
+        isDisconnectClicked &&
+        appName === AppName.XERO
+      ) {
         <div class="tw-h-60-px">
-          <span (click)="connect()" class="tw-inline-block btn-text-primary tw-py-10-px ">
+          <span (click)="connect()" class="tw-inline-block btn-text-primary tw-py-10-px">
             {{ 'configurationConnector.connectToApp' | transloco: { accountingAppTitle: accountingAppTitle } }}
           </span>
         </div>
@@ -111,4 +133,3 @@
     </div>
   </div>
 </div>
-

@@ -13,12 +13,11 @@ import { Sage300ConnectorService } from 'src/app/core/services/sage300/sage300-c
 import { QboAuthService } from 'src/app/core/services/qbo/qbo-core/qbo-auth.service';
 import { XeroAuthService } from 'src/app/core/services/xero/xero-core/xero-auth.service';
 
-
 @Component({
-    selector: 'app-dashboard-token-expired',
-    templateUrl: './dashboard-token-expired.component.html',
-    styleUrl: './dashboard-token-expired.component.scss',
-    standalone: false
+  selector: 'app-dashboard-token-expired',
+  templateUrl: './dashboard-token-expired.component.html',
+  styleUrl: './dashboard-token-expired.component.scss',
+  standalone: false,
 })
 export class DashboardTokenExpiredComponent implements OnInit, OnDestroy {
   AppName = AppName;
@@ -61,7 +60,7 @@ export class DashboardTokenExpiredComponent implements OnInit, OnDestroy {
     private windowService: WindowService,
     private netsuiteConnector: NetsuiteConnectorService,
     private intacctConnector: IntacctConnectorService,
-    private sage300Connector: Sage300ConnectorService
+    private sage300Connector: Sage300ConnectorService,
   ) {}
 
   acceptWarning(data: ConfigurationWarningOut): void {
@@ -70,78 +69,80 @@ export class DashboardTokenExpiredComponent implements OnInit, OnDestroy {
     }
   }
 
-  openCredentialGenerationGuide(): void{
-    if (this.appName === AppName.NETSUITE){
+  openCredentialGenerationGuide(): void {
+    if (this.appName === AppName.NETSUITE) {
       this.windowService.openInNewTab(brandingKbArticles.onboardingArticles.NETSUITE.CONNECTOR);
     }
 
-    if (this.appName === AppName.INTACCT){
+    if (this.appName === AppName.INTACCT) {
       this.windowService.openInNewTab(brandingKbArticles.onboardingArticles.INTACCT.CONNECTOR);
     }
 
-    if (this.appName === AppName.SAGE300){
+    if (this.appName === AppName.SAGE300) {
       this.windowService.openInNewTab(brandingKbArticles.onboardingArticles.SAGE300.LANDING);
     }
   }
 
-  toggleIntegrationReconnectDialog(){
+  toggleIntegrationReconnectDialog() {
     this.isIntegrationReconnectDialogVisible = !this.isIntegrationReconnectDialogVisible;
   }
 
-  initiateOAuth(): void{
-    if (this.appName === AppName.QBO){
-    this.qboAuthService.connectQbo();
+  initiateOAuth(): void {
+    if (this.appName === AppName.QBO) {
+      this.qboAuthService.connectQbo();
     }
-    if (this.appName === AppName.XERO){
-    this.xeroAuthService.connectXero();
+    if (this.appName === AppName.XERO) {
+      this.xeroAuthService.connectXero();
     }
   }
 
-  reconnectToIntegration(): void{
+  reconnectToIntegration(): void {
     this.isIntegrationReconnectDialogVisible = false;
     this.isConnectionInProgress = true;
 
     if (this.appName === AppName.NETSUITE) {
-      this.netsuiteConnector.connectNetsuite(this.integrationSetupForm, true)
-      .subscribe(({ netsuiteSetupForm, isNetsuiteConnected }) => {
-        this.integrationSetupForm = netsuiteSetupForm;
-        this.isConnectionInProgress = false;
-        if (isNetsuiteConnected){
-          this.router.navigate(['integrations/netsuite/main/dashboard']);
-        }
-      });
+      this.netsuiteConnector
+        .connectNetsuite(this.integrationSetupForm, true)
+        .subscribe(({ netsuiteSetupForm, isNetsuiteConnected }) => {
+          this.integrationSetupForm = netsuiteSetupForm;
+          this.isConnectionInProgress = false;
+          if (isNetsuiteConnected) {
+            this.router.navigate(['integrations/netsuite/main/dashboard']);
+          }
+        });
     }
 
     if (this.appName === AppName.INTACCT) {
-      this.intacctConnector.connectSageIntacct(this.integrationSetupForm, true)
-      .subscribe(({ intacctSetupForm, isIntacctConnected }) => {
-        this.integrationSetupForm = intacctSetupForm;
-        this.isConnectionInProgress = false;
-        if (isIntacctConnected){
-          this.router.navigate(['integrations/intacct/main/dashboard']);
-        }
-      });
+      this.intacctConnector
+        .connectSageIntacct(this.integrationSetupForm, true)
+        .subscribe(({ intacctSetupForm, isIntacctConnected }) => {
+          this.integrationSetupForm = intacctSetupForm;
+          this.isConnectionInProgress = false;
+          if (isIntacctConnected) {
+            this.router.navigate(['integrations/intacct/main/dashboard']);
+          }
+        });
     }
 
     if (this.appName === AppName.SAGE300) {
-      this.sage300Connector.connectSage300(this.integrationSetupForm, true)
-      .subscribe(({ sage300SetupForm, isSage300Connected }) => {
-        this.integrationSetupForm = sage300SetupForm;
-        this.isConnectionInProgress = false;
-        if (isSage300Connected){
-          this.router.navigate(['integrations/sage300/main/dashboard']);
-        }
-      });
+      this.sage300Connector
+        .connectSage300(this.integrationSetupForm, true)
+        .subscribe(({ sage300SetupForm, isSage300Connected }) => {
+          this.integrationSetupForm = sage300SetupForm;
+          this.isConnectionInProgress = false;
+          if (isSage300Connected) {
+            this.router.navigate(['integrations/sage300/main/dashboard']);
+          }
+        });
     }
   }
 
-  setupPage(): void{
-
-    if (this.router.url.includes("/disconnect/")){
+  setupPage(): void {
+    if (this.router.url.includes('/disconnect/')) {
       this.isIntegrationDisconnected = true;
     }
 
-    if (this.appName === AppName.NETSUITE){
+    if (this.appName === AppName.NETSUITE) {
       this.isTokenBasedAuthApp = true;
       this.helperService.setBaseApiURL(AppUrl.NETSUITE);
 
@@ -150,7 +151,7 @@ export class DashboardTokenExpiredComponent implements OnInit, OnDestroy {
       });
     }
 
-    if (this.appName === AppName.INTACCT){
+    if (this.appName === AppName.INTACCT) {
       this.isTokenBasedAuthApp = true;
       this.helperService.setBaseApiURL(AppUrl.INTACCT);
 
@@ -159,7 +160,7 @@ export class DashboardTokenExpiredComponent implements OnInit, OnDestroy {
       });
     }
 
-    if (this.appName === AppName.SAGE300){
+    if (this.appName === AppName.SAGE300) {
       this.isTokenBasedAuthApp = true;
       this.helperService.setBaseApiURL(AppUrl.SAGE300);
 
@@ -168,36 +169,28 @@ export class DashboardTokenExpiredComponent implements OnInit, OnDestroy {
       });
     }
 
-    if (this.appName === AppName.QBO){
-    this.helperService.setBaseApiURL(AppUrl.QBO);
+    if (this.appName === AppName.QBO) {
+      this.helperService.setBaseApiURL(AppUrl.QBO);
 
-    this.qboAuthService.isIncorrectAccountSelected$
-    .pipe(takeUntil(this.destroy$))
-    .subscribe((status: boolean) => {
-     this.isIncorrectAccountSelected = status;
-     });
+      this.qboAuthService.isIncorrectAccountSelected$.pipe(takeUntil(this.destroy$)).subscribe((status: boolean) => {
+        this.isIncorrectAccountSelected = status;
+      });
 
-     this.qboAuthService.qboConnectionInProgress$
-     .pipe(takeUntil(this.destroy$))
-     .subscribe((status: boolean) => {
-      this.isConnectionInProgress = status;
-     });
+      this.qboAuthService.qboConnectionInProgress$.pipe(takeUntil(this.destroy$)).subscribe((status: boolean) => {
+        this.isConnectionInProgress = status;
+      });
     }
 
-    if (this.appName === AppName.XERO){
-    this.helperService.setBaseApiURL(AppUrl.XERO);
+    if (this.appName === AppName.XERO) {
+      this.helperService.setBaseApiURL(AppUrl.XERO);
 
-    this.xeroAuthService.isIncorrectAccountSelected$
-    .pipe(takeUntil(this.destroy$))
-    .subscribe((status: boolean) => {
-     this.isIncorrectAccountSelected = status;
-    });
+      this.xeroAuthService.isIncorrectAccountSelected$.pipe(takeUntil(this.destroy$)).subscribe((status: boolean) => {
+        this.isIncorrectAccountSelected = status;
+      });
 
-    this.xeroAuthService.xeroConnectionInProgress$
-    .pipe(takeUntil(this.destroy$))
-    .subscribe((status: boolean) => {
-     this.isConnectionInProgress = status;
-     });
+      this.xeroAuthService.xeroConnectionInProgress$.pipe(takeUntil(this.destroy$)).subscribe((status: boolean) => {
+        this.isConnectionInProgress = status;
+      });
     }
   }
 

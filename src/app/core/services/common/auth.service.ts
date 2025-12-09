@@ -12,16 +12,15 @@ import { brandingFeatureConfig } from 'src/app/branding/branding-config';
 import { IframeOriginStorageService } from '../misc/iframe-origin-storage.service';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AuthService {
-
   constructor(
     private apiService: ApiService,
     private storageService: StorageService,
     private userService: UserService,
-    private iframeOriginStorageService: IframeOriginStorageService
-  ) { }
+    private iframeOriginStorageService: IframeOriginStorageService,
+  ) {}
 
   isLoggedIn(): boolean | null {
     return this.userService.getUserProfile() !== null;
@@ -48,7 +47,7 @@ export class AuthService {
     if (integrationTokens) {
       integrationTokens[appKey] = tokens;
     } else {
-      integrationTokens = {[appKey]: tokens};
+      integrationTokens = { [appKey]: tokens };
     }
 
     this.storageService.set('integration-tokens', integrationTokens);

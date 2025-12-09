@@ -4,11 +4,14 @@ import { SkippedAccountingExportModel } from 'src/app/core/models/db/accounting-
 import { PaginatorPage, TrackingApp } from 'src/app/core/models/enum/enum.model';
 import { Paginator } from 'src/app/core/models/misc/paginator.model';
 import { DateFilter, SelectedDateFilter } from 'src/app/core/models/qbd/misc/qbd-date-filter.model';
-import { SkipExportList, SkipExportLog, SkipExportLogResponse } from 'src/app/core/models/intacct/db/expense-group.model';
+import {
+  SkipExportList,
+  SkipExportLog,
+  SkipExportLogResponse,
+} from 'src/app/core/models/intacct/db/expense-group.model';
 import { ExportLogService } from 'src/app/core/services/common/export-log.service';
 import { PaginatorService } from 'src/app/core/services/common/paginator.service';
 import { TrackingService } from 'src/app/core/services/integration/tracking.service';
-
 
 import { debounceTime } from 'rxjs/operators';
 import { Subject } from 'rxjs';
@@ -16,13 +19,12 @@ import { UserService } from 'src/app/core/services/misc/user.service';
 import { AccountingExportService } from 'src/app/core/services/common/accounting-export.service';
 
 @Component({
-    selector: 'app-business-central-skipped-export-log',
-    templateUrl: './business-central-skipped-export-log.component.html',
-    styleUrls: ['./business-central-skipped-export-log.component.scss'],
-    standalone: false
+  selector: 'app-business-central-skipped-export-log',
+  templateUrl: './business-central-skipped-export-log.component.html',
+  styleUrls: ['./business-central-skipped-export-log.component.scss'],
+  standalone: false,
 })
 export class BusinessCentralSkippedExportLogComponent implements OnInit {
-
   isLoading: boolean;
 
   totalCount: number = 0;
@@ -57,12 +59,10 @@ export class BusinessCentralSkippedExportLogComponent implements OnInit {
     private trackingService: TrackingService,
     private exportLogService: ExportLogService,
     private paginatorService: PaginatorService,
-    private accountingExportService: AccountingExportService
+    private accountingExportService: AccountingExportService,
   ) {
     this.dateOptions = this.accountingExportService.getDateOptionsV2();
-    this.searchQuerySubject.pipe(
-      debounceTime(1000)
-    ).subscribe((query: string) => {
+    this.searchQuerySubject.pipe(debounceTime(1000)).subscribe((query: string) => {
       this.searchQuery = query;
       this.offset = 0;
       this.currentPage = Math.ceil(this.offset / this.limit) + 1;
@@ -82,18 +82,21 @@ export class BusinessCentralSkippedExportLogComponent implements OnInit {
       this.paginatorService.storePageSize(PaginatorPage.EXPORT_LOG, limit);
     }
 
-    return this.exportLogService.getSkippedExpenses(limit, offset, this.selectedDateFilter, null).subscribe((skippedExpenses: SkipExportLogResponse) => {
+    return this.exportLogService
+      .getSkippedExpenses(limit, offset, this.selectedDateFilter, null)
+      .subscribe((skippedExpenses: SkipExportLogResponse) => {
+        this.totalCount = skippedExpenses.count;
+        const orgId = this.userService.getUserProfile().org_id;
+        skippedExpenses.results.forEach((skippedExpense: SkipExportLog) => {
+          skippedExpenseGroup.push(
+            SkippedAccountingExportModel.parseAPIResponseToSkipExportList(skippedExpense, orgId),
+          );
+        });
 
-      this.totalCount = skippedExpenses.count;
-      const orgId = this.userService.getUserProfile().org_id;
-      skippedExpenses.results.forEach((skippedExpense: SkipExportLog) => {
-        skippedExpenseGroup.push(SkippedAccountingExportModel.parseAPIResponseToSkipExportList(skippedExpense, orgId));
+        this.filteredExpenses = skippedExpenseGroup;
+        this.expenses = [...this.filteredExpenses];
+        this.isLoading = false;
       });
-
-      this.filteredExpenses = skippedExpenseGroup;
-      this.expenses = [...this.filteredExpenses];
-      this.isLoading = false;
-    });
   }
 
   pageSizeChanges(limit: number): void {
@@ -115,7 +118,7 @@ export class BusinessCentralSkippedExportLogComponent implements OnInit {
       searchOption: [''],
       dateRange: [null],
       start: [''],
-      end: ['']
+      end: [''],
     });
 
     this.skipExportLogForm.controls.start.valueChanges.subscribe((dateRange) => {
@@ -129,7 +132,7 @@ export class BusinessCentralSkippedExportLogComponent implements OnInit {
         this.hideCalendar = true;
         this.selectedDateFilter = {
           startDate: dateRange[0],
-          endDate: dateRange[1]
+          endDate: dateRange[1],
         };
 
         this.isDateSelected = true;
@@ -156,7 +159,7 @@ export class BusinessCentralSkippedExportLogComponent implements OnInit {
   private trackDateFilter(filterType: 'existing' | 'custom', selectedDateFilter: SelectedDateFilter): void {
     const trackingProperty = {
       filterType,
-      ...selectedDateFilter
+      ...selectedDateFilter,
     };
     this.trackingService.onDateFilter(TrackingApp.BUSINESS_CENTRAL, trackingProperty);
   }
@@ -164,5 +167,4 @@ export class BusinessCentralSkippedExportLogComponent implements OnInit {
   ngOnInit(): void {
     this.getSkippedExpensesAndSetupPage();
   }
-
 }

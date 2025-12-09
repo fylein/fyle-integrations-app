@@ -8,9 +8,8 @@ xdescribe('ConfigurationConfirmationDialogComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ConfigurationConfirmationDialogComponent ]
-    })
-    .compileComponents();
+      declarations: [ConfigurationConfirmationDialogComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(ConfigurationConfirmationDialogComponent);
     component = fixture.componentInstance;

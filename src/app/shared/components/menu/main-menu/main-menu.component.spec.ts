@@ -8,9 +8,8 @@ xdescribe('MainMenuComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ MainMenuComponent ]
-    })
-    .compileComponents();
+      declarations: [MainMenuComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(MainMenuComponent);
     component = fixture.componentInstance;

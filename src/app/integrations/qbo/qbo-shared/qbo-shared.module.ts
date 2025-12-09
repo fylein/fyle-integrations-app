@@ -10,25 +10,9 @@ import { QboImportSettingsComponent } from './qbo-import-settings/qbo-import-set
 import { QboAdvancedSettingsComponent } from './qbo-advanced-settings/qbo-advanced-settings.component';
 import { SharedModule } from 'src/app/shared/shared.module';
 
-
-
 @NgModule({
-  declarations: [
-    QboExportSettingsComponent,
-    QboImportSettingsComponent,
-    QboAdvancedSettingsComponent
-  ],
-  imports: [
-    CommonModule,
-    SharedModule,
-    FormsModule,
-    ReactiveFormsModule,
-    MultiSelectModule
-  ],
-  exports: [
-    QboExportSettingsComponent,
-    QboImportSettingsComponent,
-    QboAdvancedSettingsComponent
-  ]
+  declarations: [QboExportSettingsComponent, QboImportSettingsComponent, QboAdvancedSettingsComponent],
+  imports: [CommonModule, SharedModule, FormsModule, ReactiveFormsModule, MultiSelectModule],
+  exports: [QboExportSettingsComponent, QboImportSettingsComponent, QboAdvancedSettingsComponent],
 })
-export class QboSharedModule { }
+export class QboSharedModule {}

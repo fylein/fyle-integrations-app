@@ -16,13 +16,12 @@ import { TranslocoService } from '@jsverse/transloco';
 import { BrandingService } from 'src/app/core/services/common/branding.service';
 
 @Component({
-    selector: 'app-xero-onboarding-landing',
-    templateUrl: './xero-onboarding-landing.component.html',
-    styleUrls: ['./xero-onboarding-landing.component.scss'],
-    standalone: false
+  selector: 'app-xero-onboarding-landing',
+  templateUrl: './xero-onboarding-landing.component.html',
+  styleUrls: ['./xero-onboarding-landing.component.scss'],
+  standalone: false,
 })
 export class XeroOnboardingLandingComponent implements OnInit, OnDestroy {
-
   isIncorrectXeroConnectedDialogVisible: boolean = false;
 
   appName: string = AppName.XERO;
@@ -50,8 +49,8 @@ export class XeroOnboardingLandingComponent implements OnInit, OnDestroy {
     private toastService: IntegrationsToastService,
     private xeroAuthService: XeroAuthService,
     private translocoService: TranslocoService,
-    public brandingService: BrandingService
-  ) { }
+    public brandingService: BrandingService,
+  ) {}
 
   acceptWarning(data: ConfigurationWarningOut): void {
     this.isIncorrectXeroConnectedDialogVisible = false;
@@ -61,21 +60,27 @@ export class XeroOnboardingLandingComponent implements OnInit, OnDestroy {
   }
 
   private postXeroCredentials(code: string): void {
-    this.xeroConnectorService.connectXero(this.workspaceService.getWorkspaceId(), code).subscribe((xeroCredentials: XeroCredentials) => {
-      this.isIntegrationConnected = true;
-      this.xeroConnectionInProgress = false;
-      this.checkProgressAndRedirect();
-    }, (error) => {
-      const errorMessage = 'message' in error.error ? error.error.message : this.translocoService.translate('xeroOnboardingLanding.connectionFailedMessage');
-      if (errorMessage === 'Please choose the correct Xero account') {
-        this.isIntegrationConnected = false;
+    this.xeroConnectorService.connectXero(this.workspaceService.getWorkspaceId(), code).subscribe(
+      (xeroCredentials: XeroCredentials) => {
+        this.isIntegrationConnected = true;
         this.xeroConnectionInProgress = false;
-        this.isIncorrectXeroConnectedDialogVisible = true;
-      } else {
-        this.toastService.displayToastMessage(ToastSeverity.ERROR, errorMessage);
-        this.router.navigate([`/integrations/xero/onboarding/landing`]);
-      }
-    });
+        this.checkProgressAndRedirect();
+      },
+      (error) => {
+        const errorMessage =
+          'message' in error.error
+            ? error.error.message
+            : this.translocoService.translate('xeroOnboardingLanding.connectionFailedMessage');
+        if (errorMessage === 'Please choose the correct Xero account') {
+          this.isIntegrationConnected = false;
+          this.xeroConnectionInProgress = false;
+          this.isIncorrectXeroConnectedDialogVisible = true;
+        } else {
+          this.toastService.displayToastMessage(ToastSeverity.ERROR, errorMessage);
+          this.router.navigate([`/integrations/xero/onboarding/landing`]);
+        }
+      },
+    );
   }
 
   private checkProgressAndRedirect(): void {
@@ -95,21 +100,15 @@ export class XeroOnboardingLandingComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.xeroAuthService.xeroConnectionInProgress$
-    .pipe(takeUntil(this.destroy$))
-    .subscribe((status: boolean) => {
+    this.xeroAuthService.xeroConnectionInProgress$.pipe(takeUntil(this.destroy$)).subscribe((status: boolean) => {
       this.xeroConnectionInProgress = status;
     });
 
-    this.xeroAuthService.isIncorrectAccountSelected$
-    .pipe(takeUntil(this.destroy$))
-    .subscribe((status: boolean) => {
+    this.xeroAuthService.isIncorrectAccountSelected$.pipe(takeUntil(this.destroy$)).subscribe((status: boolean) => {
       this.isIncorrectXeroConnectedDialogVisible = status;
     });
 
-    this.xeroAuthService.isIntegrationConnected$
-    .pipe(takeUntil(this.destroy$))
-    .subscribe((status: boolean) => {
+    this.xeroAuthService.isIntegrationConnected$.pipe(takeUntil(this.destroy$)).subscribe((status: boolean) => {
       this.isIntegrationConnected = status;
     });
   }
@@ -121,5 +120,4 @@ export class XeroOnboardingLandingComponent implements OnInit, OnDestroy {
       this.oauthCallbackSubscription.unsubscribe();
     }
   }
-
 }

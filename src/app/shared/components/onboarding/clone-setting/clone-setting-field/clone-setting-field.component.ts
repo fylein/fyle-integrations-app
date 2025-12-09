@@ -3,13 +3,12 @@ import { FormGroup } from '@angular/forms';
 import { InputType } from 'src/app/core/models/enum/enum.model';
 
 @Component({
-    selector: 'app-clone-setting-field',
-    templateUrl: './clone-setting-field.component.html',
-    styleUrls: ['./clone-setting-field.component.scss'],
-    standalone: false
+  selector: 'app-clone-setting-field',
+  templateUrl: './clone-setting-field.component.html',
+  styleUrls: ['./clone-setting-field.component.scss'],
+  standalone: false,
 })
 export class CloneSettingFieldComponent implements OnInit, OnChanges {
-
   @Input() label: string;
 
   @Input() iconSource: string;
@@ -40,7 +39,7 @@ export class CloneSettingFieldComponent implements OnInit, OnChanges {
 
   InputType = InputType;
 
-  constructor() { }
+  constructor() {}
 
   ngOnInit() {
     if (this.isDisabled) {
@@ -55,5 +54,4 @@ export class CloneSettingFieldComponent implements OnInit, OnChanges {
       this.form.get(this.formControllerName)?.enable();
     }
   }
-
 }

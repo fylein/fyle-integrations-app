@@ -1,20 +1,20 @@
 .container {
-    @apply tw-justify-center;
+  @apply tw-justify-center;
 }
 
 .inside-container {
-    max-width: auto;
+  max-width: auto;
 }
 
 .sub-text-container {
-    @apply tw-flex-col tw-items-start tw-gap-4;
-    max-width: auto;
+  @apply tw-flex-col tw-items-start tw-gap-4;
+  max-width: auto;
 }
 
 .flex-wrapper {
-    @apply tw-flex tw-items-center tw-justify-center;
+  @apply tw-flex tw-items-center tw-justify-center;
 }
 
-:host  ::ng-deep .p-dialog {
-    @apply tw-max-h-full tw-m-0 #{!important};
-  }
+:host ::ng-deep .p-dialog {
+  @apply tw-max-h-full tw-m-0 #{!important};
+}

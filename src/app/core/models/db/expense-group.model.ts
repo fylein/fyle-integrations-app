@@ -1,5 +1,5 @@
-import { Expense } from "../intacct/db/expense.model";
-import { PaginatedResponse } from "./paginated-response.model";
+import { Expense } from '../intacct/db/expense.model';
+import { PaginatedResponse } from './paginated-response.model';
 
 export type ExpenseGroupDescription = {
   claim_number: string;
@@ -45,7 +45,7 @@ export type ExpenseGroupParam = {
   expenses__employee_name?: string;
   expenses__employee_email?: string;
   expenses__claim_number?: string;
-}
+};
 
 export type SkipExportParam = {
   limit: number;
@@ -58,4 +58,4 @@ export type SkipExportParam = {
   employee_name?: string;
   employee_email?: string;
   claim_number?: string;
-}
+};

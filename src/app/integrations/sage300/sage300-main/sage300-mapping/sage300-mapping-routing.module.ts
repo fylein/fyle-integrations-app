@@ -10,14 +10,14 @@ const routes: Routes = [
     children: [
       {
         path: ':source_field',
-        component: Sage300BaseMappingComponent
-      }
-    ]
-  }
+        component: Sage300BaseMappingComponent,
+      },
+    ],
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class Sage300MappingRoutingModule { }
+export class Sage300MappingRoutingModule {}

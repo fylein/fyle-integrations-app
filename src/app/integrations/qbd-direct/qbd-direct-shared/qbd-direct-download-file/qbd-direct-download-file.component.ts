@@ -1,8 +1,14 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { SharedModule } from "../../../../shared/shared.module";
+import { SharedModule } from '../../../../shared/shared.module';
 import { QbdDirectSharedComponent } from '../qbd-direct-shared.component';
 import { CardModule } from 'primeng/card';
-import { AppName, ButtonSize, ButtonType, ConfigurationCta, QBDDirectInteractionType } from 'src/app/core/models/enum/enum.model';
+import {
+  AppName,
+  ButtonSize,
+  ButtonType,
+  ConfigurationCta,
+  QBDDirectInteractionType,
+} from 'src/app/core/models/enum/enum.model';
 import { CommonModule } from '@angular/common';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { TranslocoModule } from '@jsverse/transloco';
@@ -10,20 +16,19 @@ import { brandingConfig, brandingFeatureConfig, brandingStyle } from 'src/app/br
 import { ButtonModule } from 'primeng/button';
 
 @Component({
-    selector: 'app-qbd-direct-download-file',
-    imports: [SharedModule, CardModule, CommonModule, ProgressSpinnerModule, TranslocoModule, ButtonModule],
-    templateUrl: './qbd-direct-download-file.component.html',
-    styleUrl: './qbd-direct-download-file.component.scss'
+  selector: 'app-qbd-direct-download-file',
+  imports: [SharedModule, CardModule, CommonModule, ProgressSpinnerModule, TranslocoModule, ButtonModule],
+  templateUrl: './qbd-direct-download-file.component.html',
+  styleUrl: './qbd-direct-download-file.component.scss',
 })
 export class QbdDirectDownloadFileComponent {
+  @Input({ required: true }) isLoading: boolean;
 
-  @Input({required: true}) isLoading: boolean;
+  @Input({ required: true }) showDownloadLink: boolean;
 
-  @Input({required: true}) showDownloadLink: boolean;
+  @Input({ required: true }) isStepCompleted: boolean;
 
-  @Input({required: true}) isStepCompleted: boolean;
-
-  @Input({required: true}) isCompanyPathInvalid: boolean;
+  @Input({ required: true }) isCompanyPathInvalid: boolean;
 
   @Output() nextStep = new EventEmitter();
 
@@ -66,5 +71,4 @@ export class QbdDirectDownloadFileComponent {
   onRetryClick() {
     this.retryClick.emit();
   }
-
 }

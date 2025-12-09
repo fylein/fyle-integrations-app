@@ -11,18 +11,18 @@ const routes: Routes = [
     children: [
       {
         path: 'complete_export_log',
-        component: BusinessCentralCompleteExportLogComponent
+        component: BusinessCentralCompleteExportLogComponent,
       },
       {
         path: 'skip_export_log',
-        component: BusinessCentralSkippedExportLogComponent
-      }
-    ]
-  }
+        component: BusinessCentralSkippedExportLogComponent,
+      },
+    ],
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class BusinessCentralExportLogRoutingModule { }
+export class BusinessCentralExportLogRoutingModule {}

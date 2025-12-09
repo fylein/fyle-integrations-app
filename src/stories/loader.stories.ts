@@ -1,4 +1,3 @@
-
 import { CommonModule } from '@angular/common';
 import type { Meta, StoryObj } from '@storybook/angular';
 import { moduleMetadata } from '@storybook/angular';
@@ -10,17 +9,17 @@ const meta: Meta<LoaderComponent> = {
   component: LoaderComponent,
   tags: ['autodocs'],
   render: (args: LoaderComponent) => ({
-    props: { ...args }
+    props: { ...args },
   }),
   decorators: [
     moduleMetadata({
       declarations: [LoaderComponent],
-      imports: [CommonModule, ProgressSpinnerModule]
-    })
+      imports: [CommonModule, ProgressSpinnerModule],
+    }),
   ],
   argTypes: {
-    ngOnInit: { table: { disable: true } }
-  }
+    ngOnInit: { table: { disable: true } },
+  },
 };
 
 export default meta;
@@ -30,6 +29,6 @@ export const simple: Story = {};
 
 export const smallLoader: Story = {
   args: {
-    styleClass: "!tw-w-16-px !tw-h-16-px spinner-default"
-  }
+    styleClass: '!tw-w-16-px !tw-h-16-px spinner-default',
+  },
 };

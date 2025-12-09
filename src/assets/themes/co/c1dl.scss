@@ -3,10 +3,10 @@
 // You can view all the list of tokens by clicking on Local Variables button on right side menu, you need edit access to view this.
 // Don't add any token which is not in figma common element library's token list, few exceptions are for gradients as they are not supported by figma yet.
 
-@use "./primitives_variables.scss" as *;
+@use './primitives_variables.scss' as *;
 
 @layer base {
-  [data-theme="co"] {
+  [data-theme='co'] {
     // Colors
     --white: #{$white};
     --placeholder: #{$grey-40};
@@ -926,8 +926,7 @@
     --toggle-border: none;
     --toggle-border-width: 0px;
 
-
     // Font family
-    --font-primary: "Optimist";
+    --font-primary: 'Optimist';
   }
 }

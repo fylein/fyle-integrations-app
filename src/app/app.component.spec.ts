@@ -9,13 +9,9 @@ xdescribe('AppComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [
-        RouterTestingModule
-      ],
-      declarations: [
-        AppComponent
-      ],
-      providers: [ MessageService ]
+      imports: [RouterTestingModule],
+      declarations: [AppComponent],
+      providers: [MessageService],
     }).compileComponents();
 
     fixture = TestBed.createComponent(AppComponent);
@@ -29,7 +25,7 @@ xdescribe('AppComponent', () => {
     expect(app).toBeTruthy();
   });
 
-  it('close toast function check', () =>  {
+  it('close toast function check', () => {
     expect(component.closeToast()).toBeUndefined();
   });
 });

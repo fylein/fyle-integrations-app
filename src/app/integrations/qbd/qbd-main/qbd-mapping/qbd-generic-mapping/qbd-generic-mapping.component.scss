@@ -1,20 +1,22 @@
-:host ::ng-deep .prevBtn:disabled > .pi-chevron-left,:host ::ng-deep .nextBtn:disabled > .pi-chevron-right,
-:host ::ng-deep .prevBtn:disabled > .pi-minus, :host ::ng-deep .nextBtn:disabled > .pi-minus {
-    @apply tw-text-placeholder #{!important};
+:host ::ng-deep .prevBtn:disabled > .pi-chevron-left,
+:host ::ng-deep .nextBtn:disabled > .pi-chevron-right,
+:host ::ng-deep .prevBtn:disabled > .pi-minus,
+:host ::ng-deep .nextBtn:disabled > .pi-minus {
+  @apply tw-text-placeholder #{!important};
 }
 
 :host ::ng-deep .mappingFilterDropdown .p-select {
-    @apply tw-w-200-px #{!important}
+  @apply tw-w-200-px #{!important};
 }
 
-:host ::ng-deep .selectedItem  .p-select-dropdown {
-    @apply tw-hidden #{!important};
+:host ::ng-deep .selectedItem .p-select-dropdown {
+  @apply tw-hidden #{!important};
 }
 
-:host ::ng-deep .filterDropdown  .p-select-dropdown {
-    @apply tw-block #{!important};
+:host ::ng-deep .filterDropdown .p-select-dropdown {
+  @apply tw-block #{!important};
 }
 
 :host ::ng-deep .textbox {
-    @apply tw-border-r-0 #{!important}
+  @apply tw-border-r-0 #{!important};
 }

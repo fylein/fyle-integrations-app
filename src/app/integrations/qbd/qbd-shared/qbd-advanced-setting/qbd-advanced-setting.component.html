@@ -4,11 +4,15 @@
   </div>
 }
 @if (!isLoading) {
-  <div class="configuration--contents tw-border-separator tw-mt-6" [ngClass]="brandingStyle.common.configurationContents">
+  <div
+    class="configuration--contents tw-border-separator tw-mt-6"
+    [ngClass]="brandingStyle.common.configurationContents"
+  >
     <div>
       <app-configuration-step-header
         [headerText]="'qbdAdvancedSetting.title' | transloco"
-      [contentText]="'qbdAdvancedSetting.description' | transloco"></app-configuration-step-header>
+        [contentText]="'qbdAdvancedSetting.description' | transloco"
+      ></app-configuration-step-header>
     </div>
     <div>
       <form [formGroup]="advancedSettingsForm">
@@ -17,8 +21,11 @@
             <app-configuration-toggle-field
               [form]="advancedSettingsForm"
               [label]="'qbdAdvancedSetting.scheduleExportLabel' | transloco"
-              [subLabel]="'qbdAdvancedSetting.scheduleExportSubLabel' | transloco: { brandName: brandingConfig.brandName }"
-              [formControllerName]="'exportSchedule'">
+              [subLabel]="
+                'qbdAdvancedSetting.scheduleExportSubLabel' | transloco: { brandName: brandingConfig.brandName }
+              "
+              [formControllerName]="'exportSchedule'"
+            >
             </app-configuration-toggle-field>
           </div>
           @if (advancedSettingsForm.get('exportSchedule')?.value) {
@@ -33,12 +40,13 @@
                   [options]="frequencyOption"
                   [iconPath]="'arrow-rotate'"
                   [placeholder]="'qbdAdvancedSetting.selectFrequencyPlaceholder' | transloco"
-                [formControllerName]="'frequency'"></app-configuration-select-field>
+                  [formControllerName]="'frequency'"
+                ></app-configuration-select-field>
                 @if (advancedSettingsForm.get('frequency')?.value) {
                   <div>
                     <div class="tw-pl-22-px">
                       @if (advancedSettingsForm.get('frequency')?.value === QBDScheduleFrequency.DAILY) {
-                        <div >
+                        <div>
                           <app-configuration-select-field
                             [form]="advancedSettingsForm"
                             [isFieldMandatory]="true"
@@ -46,11 +54,12 @@
                             [label]="'qbdAdvancedSetting.timeOfDayLabel' | transloco"
                             [subLabel]="'qbdAdvancedSetting.frequencySubLabel' | transloco"
                             [options]="weeklyOptions"
-                          [formControllerName]="'timeOfDay'"></app-configuration-select-field>
+                            [formControllerName]="'timeOfDay'"
+                          ></app-configuration-select-field>
                         </div>
                       }
                       @if (advancedSettingsForm.get('frequency')?.value === QBDScheduleFrequency.WEEKLY) {
-                        <div >
+                        <div>
                           <app-configuration-select-field
                             [form]="advancedSettingsForm"
                             [isFieldMandatory]="true"
@@ -59,11 +68,12 @@
                             [subLabel]="'qbdAdvancedSetting.frequencySubLabel' | transloco"
                             [options]="weeklyOptions"
                             [placeholder]="'qbdAdvancedSetting.weeklyFrequencyPlaceholder' | transloco"
-                          [formControllerName]="'dayOfWeek'"></app-configuration-select-field>
+                            [formControllerName]="'dayOfWeek'"
+                          ></app-configuration-select-field>
                         </div>
                       }
                       @if (advancedSettingsForm.get('frequency')?.value === QBDScheduleFrequency.MONTHLY) {
-                        <div >
+                        <div>
                           <app-configuration-select-field
                             [form]="advancedSettingsForm"
                             [isFieldMandatory]="true"
@@ -72,7 +82,8 @@
                             [subLabel]="'qbdAdvancedSetting.frequencySubLabel' | transloco"
                             [options]="frequencyIntervals"
                             [placeholder]="'qbdAdvancedSetting.monthlyFrequencyPlaceholder' | transloco"
-                          [formControllerName]="'dayOfMonth'"></app-configuration-select-field>
+                            [formControllerName]="'dayOfMonth'"
+                          ></app-configuration-select-field>
                         </div>
                       }
                     </div>
@@ -90,7 +101,8 @@
                   [options]="adminEmails"
                   [iconPath]="'list'"
                   [placeholder]="'qbdAdvancedSetting.emailSelectPlaceholder' | transloco"
-                  [formControllerName]="'email'">
+                  [formControllerName]="'email'"
+                >
                 </app-email-multi-select-field>
               </div>
             </div>
@@ -105,7 +117,8 @@
               [simpleOptions]="defaultTopMemoOptions"
               [iconPath]="'list'"
               [placeholder]="'qbdAdvancedSetting.topMemoPlaceholder' | transloco"
-            [formControllerName]="'topMemoStructure'"></app-configuration-select-field>
+              [formControllerName]="'topMemoStructure'"
+            ></app-configuration-select-field>
           </div>
           <div class="tw-mt-12-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
             <app-configuration-multi-select
@@ -113,20 +126,35 @@
               [isFieldMandatory]="true"
               [customErrorMessage]="'qbdAdvancedSetting.memoErrorMessage' | transloco"
               [label]="'qbdAdvancedSetting.lineItemMemoLabel' | transloco"
-              [subLabel]="'qbdAdvancedSetting.lineItemMemoSubLabel' | transloco: { brandName: brandingConfig.brandName }"
+              [subLabel]="
+                'qbdAdvancedSetting.lineItemMemoSubLabel' | transloco: { brandName: brandingConfig.brandName }
+              "
               [options]="defaultMemoFields"
               [iconPath]="'list'"
               [placeholder]="'qbdAdvancedSetting.memoTypesPlaceholder' | transloco"
-            [formControllerName]="'expenseMemoStructure'"></app-configuration-multi-select>
+              [formControllerName]="'expenseMemoStructure'"
+            ></app-configuration-multi-select>
             <div class="tw-p-24-px">
-              <div class="tw-bg-input-read-only-bg tw-rounded-4-px tw-text-14-px tw-py-8-px tw-px-8-px tw-border-input-read-only-border tw-border-solid">
+              <div
+                class="tw-bg-input-read-only-bg tw-rounded-4-px tw-text-14-px tw-py-8-px tw-px-8-px tw-border-input-read-only-border tw-border-solid"
+              >
                 <span>{{ memoPreviewText }}</span>
               </div>
             </div>
           </div>
         </div>
         @if (isOnboarding) {
-          <app-configuration-step-footer [ctaText]="!saveInProgress ? (isOnboarding ? ConfigurationCtaText.SAVE_AND_CONTINUE : ConfigurationCtaText.SAVE) : ConfigurationCtaText.SAVING" [isButtonDisabled]="!advancedSettingsForm.valid || saveInProgress" (save)="save()"></app-configuration-step-footer>
+          <app-configuration-step-footer
+            [ctaText]="
+              !saveInProgress
+                ? isOnboarding
+                  ? ConfigurationCtaText.SAVE_AND_CONTINUE
+                  : ConfigurationCtaText.SAVE
+                : ConfigurationCtaText.SAVING
+            "
+            [isButtonDisabled]="!advancedSettingsForm.valid || saveInProgress"
+            (save)="save()"
+          ></app-configuration-step-footer>
         }
       </form>
     </div>
@@ -135,6 +163,16 @@
 
 @if (!isLoading && !isOnboarding) {
   <div class="tw-sticky tw-top-0 tw-bottom-0 tw-left-0 tw-right-0 tw-bg-white">
-    <app-configuration-step-footer [ctaText]="!saveInProgress ? (isOnboarding ? ConfigurationCtaText.SAVE_AND_CONTINUE : ConfigurationCtaText.SAVE) : ConfigurationCtaText.SAVING" [isButtonDisabled]="!advancedSettingsForm.valid || saveInProgress" (save)="save()"></app-configuration-step-footer>
+    <app-configuration-step-footer
+      [ctaText]="
+        !saveInProgress
+          ? isOnboarding
+            ? ConfigurationCtaText.SAVE_AND_CONTINUE
+            : ConfigurationCtaText.SAVE
+          : ConfigurationCtaText.SAVING
+      "
+      [isButtonDisabled]="!advancedSettingsForm.valid || saveInProgress"
+      (save)="save()"
+    ></app-configuration-step-footer>
   </div>
 }

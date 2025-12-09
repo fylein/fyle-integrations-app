@@ -30,14 +30,18 @@ describe('QboCompleteExportLogComponent', () => {
     const windowServiceSpy = jasmine.createSpyObj('WindowService', ['openInNewTab']);
     const userServiceSpy = jasmine.createSpyObj('UserService', ['getUserProfile']);
     const translocoServiceSpy = jasmine.createSpyObj('TranslocoService', ['translate']);
-    const accountingExportServiceSpy = jasmine.createSpyObj('AccountingExportService', ['getFyleExpenseUrl', 'getDateOptionsV2', 'parseExpenseGroupAPIResponseToExportLog']);
+    const accountingExportServiceSpy = jasmine.createSpyObj('AccountingExportService', [
+      'getFyleExpenseUrl',
+      'getDateOptionsV2',
+      'parseExpenseGroupAPIResponseToExportLog',
+    ]);
 
     accountingExportServiceSpy.getDateOptionsV2.and.returnValue(of([]));
     accountingExportServiceSpy.parseExpenseGroupAPIResponseToExportLog.and.callFake((response: any) => response);
 
     await TestBed.configureTestingModule({
-      declarations: [ QboCompleteExportLogComponent ],
-      imports: [ ReactiveFormsModule ],
+      declarations: [QboCompleteExportLogComponent],
+      imports: [ReactiveFormsModule],
       providers: [
         FormBuilder,
         { provide: ExportLogService, useValue: exportLogServiceSpy },
@@ -45,9 +49,9 @@ describe('QboCompleteExportLogComponent', () => {
         { provide: WindowService, useValue: windowServiceSpy },
         { provide: UserService, useValue: userServiceSpy },
         { provide: TranslocoService, useValue: translocoServiceSpy },
-        { provide: AccountingExportService, useValue: accountingExportServiceSpy }
+        { provide: AccountingExportService, useValue: accountingExportServiceSpy },
       ],
-      schemas: [CUSTOM_ELEMENTS_SCHEMA]
+      schemas: [CUSTOM_ELEMENTS_SCHEMA],
     }).compileComponents();
 
     exportLogService = TestBed.inject(ExportLogService) as jasmine.SpyObj<ExportLogService>;
@@ -84,9 +88,7 @@ describe('QboCompleteExportLogComponent', () => {
   it('should open expense in Fyle', () => {
     const expenseId = 'txGDE32dCf';
     component.openExpenseinFyle(expenseId);
-    expect(windowService.openInNewTab).toHaveBeenCalledWith(
-      AccountingExportService.getFyleExpenseUrl(expenseId)
-    );
+    expect(windowService.openInNewTab).toHaveBeenCalledWith(AccountingExportService.getFyleExpenseUrl(expenseId));
   });
 
   it('should handle simple search', fakeAsync(() => {

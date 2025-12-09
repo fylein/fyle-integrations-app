@@ -1,10 +1,28 @@
 @if (!isIncorrectQBOConnectedDialogVisible) {
   <div>
     <div>
-      <app-landing-page-header [showQBOButton]="true" [iconPath]="'assets/logos/qbo.png'" [appName]="'qboOnboardingLanding.appName' | transloco" [appDescription]="'landing.contentText' | transloco: {brandName: brandingConfig.brandName}" [isLoading]="false" [isIntegrationSetupInProgress]="qboConnectionInProgress" [isIntegrationConnected]="false" [redirectLink]="redirectLink" (connectIntegration)="connectQbo()" [logoStyleClasses]="'tw-p-16-px'"></app-landing-page-header>
+      <app-landing-page-header
+        [showQBOButton]="true"
+        [iconPath]="'assets/logos/qbo.png'"
+        [appName]="'qboOnboardingLanding.appName' | transloco"
+        [appDescription]="'landing.contentText' | transloco: { brandName: brandingConfig.brandName }"
+        [isLoading]="false"
+        [isIntegrationSetupInProgress]="qboConnectionInProgress"
+        [isIntegrationConnected]="false"
+        [redirectLink]="redirectLink"
+        (connectIntegration)="connectQbo()"
+        [logoStyleClasses]="'tw-p-16-px'"
+      ></app-landing-page-header>
     </div>
     <div>
-      <app-landing-page-body [headlineText]="'landing.guideHeaderText' | transloco" [headerText]="'qboOnboardingLanding.guideHeader' | transloco" [embedVideo]="embedVideoLink" [embedImage]="'assets/co/coQBOLanding.svg'" [svgPath]="'assets/flow-charts/' + brandingService.getAssetsBrandId() +'-qbo-data-flow.svg'" [appName]="appName"></app-landing-page-body>
+      <app-landing-page-body
+        [headlineText]="'landing.guideHeaderText' | transloco"
+        [headerText]="'qboOnboardingLanding.guideHeader' | transloco"
+        [embedVideo]="embedVideoLink"
+        [embedImage]="'assets/co/coQBOLanding.svg'"
+        [svgPath]="'assets/flow-charts/' + brandingService.getAssetsBrandId() + '-qbo-data-flow.svg'"
+        [appName]="appName"
+      ></app-landing-page-body>
     </div>
   </div>
 }
@@ -15,6 +33,7 @@
     [headerText]="'qboOnboardingLanding.incorrectAccountTitle' | transloco"
     [contextText]="'qboOnboardingLanding.incorrectAccountContext' | transloco"
     [confirmBtnText]="'qboOnboardingLanding.reconnectButton' | transloco"
-    [showSecondaryCTA]="false">
+    [showSecondaryCTA]="false"
+  >
   </app-configuration-confirmation-dialog>
 }

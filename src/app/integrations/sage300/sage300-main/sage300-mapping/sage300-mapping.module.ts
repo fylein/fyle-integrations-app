@@ -6,16 +6,8 @@ import { Sage300MappingComponent } from './sage300-mapping.component';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { Sage300BaseMappingComponent } from './sage300-base-mapping/sage300-base-mapping.component';
 
-
 @NgModule({
-  declarations: [
-    Sage300MappingComponent,
-    Sage300BaseMappingComponent
-  ],
-  imports: [
-    CommonModule,
-    SharedModule,
-    Sage300MappingRoutingModule
-  ]
+  declarations: [Sage300MappingComponent, Sage300BaseMappingComponent],
+  imports: [CommonModule, SharedModule, Sage300MappingRoutingModule],
 })
-export class Sage300MappingModule { }
+export class Sage300MappingModule {}

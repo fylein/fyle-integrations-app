@@ -9,13 +9,12 @@ import { Sage300ConnectorService } from 'src/app/core/services/sage300/sage300-c
 import { Sage300OnboardingService } from 'src/app/core/services/sage300/sage300-configuration/sage300-onboarding.service';
 
 @Component({
-    selector: 'app-sage300-onboarding-connector',
-    templateUrl: './sage300-onboarding-connector.component.html',
-    styleUrls: ['./sage300-onboarding-connector.component.scss'],
-    standalone: false
+  selector: 'app-sage300-onboarding-connector',
+  templateUrl: './sage300-onboarding-connector.component.html',
+  styleUrls: ['./sage300-onboarding-connector.component.scss'],
+  standalone: false,
 })
 export class Sage300OnboardingConnectorComponent implements OnInit {
-
   isLoading: boolean = true;
 
   isSage300CredentialsValid: boolean = false;
@@ -39,16 +38,18 @@ export class Sage300OnboardingConnectorComponent implements OnInit {
     private router: Router,
     private workspaceService: WorkspaceService,
     @Inject(FormBuilder) private formBuilder: FormBuilder,
-    private connectorService: Sage300ConnectorService
-  ) { }
+    private connectorService: Sage300ConnectorService,
+  ) {}
 
   connectSage300() {
     this.isLoading = true;
-    this.connectorService.connectSage300(this.connectSage300Form).subscribe(({sage300SetupForm, isSage300Connected}) => {
+    this.connectorService
+      .connectSage300(this.connectSage300Form)
+      .subscribe(({ sage300SetupForm, isSage300Connected }) => {
         this.connectSage300Form = sage300SetupForm;
-        if (isSage300Connected === true){
-        this.workspaceService.setOnboardingState(Sage300OnboardingState.EXPORT_SETTINGS);
-        this.router.navigate([this.onboardingSteps[1].route]);
+        if (isSage300Connected === true) {
+          this.workspaceService.setOnboardingState(Sage300OnboardingState.EXPORT_SETTINGS);
+          this.router.navigate([this.onboardingSteps[1].route]);
         } else {
           this.isLoading = false;
         }
@@ -61,14 +62,12 @@ export class Sage300OnboardingConnectorComponent implements OnInit {
       this.isLoading = false;
     });
 
-    this.connectorService.getSage300TokenHealthStatus(true)
-    .subscribe(isSage300CredentialsValid => {
+    this.connectorService.getSage300TokenHealthStatus(true).subscribe((isSage300CredentialsValid) => {
       this.isSage300CredentialsValid = isSage300CredentialsValid;
     });
   }
 
-ngOnInit(): void {
-  this.setupPage();
-}
-
+  ngOnInit(): void {
+    this.setupPage();
+  }
 }

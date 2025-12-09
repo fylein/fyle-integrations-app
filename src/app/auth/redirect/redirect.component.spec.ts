@@ -11,31 +11,30 @@ describe('RedirectComponent', () => {
   const routerSpy = { navigate: jasmine.createSpy('navigate'), url: '/integrations/travelperk' };
 
   const service1 = {
-    redirect: () => undefined
+    redirect: () => undefined,
   };
 
   let routerMock = {
     snapshot: {
       queryParams: {
         state: 'travelperk_local_redirect',
-        code: 'hehe'
-      }
-    }
+        code: 'hehe',
+      },
+    },
   };
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ RedirectComponent ],
+      declarations: [RedirectComponent],
       providers: [
         {
           provide: ActivatedRoute,
-          useValue: routerMock
+          useValue: routerMock,
         },
         { provide: WindowService, useValue: service1 },
-        { provide: Router, useValue: routerSpy }
-      ]
-    })
-    .compileComponents();
+        { provide: Router, useValue: routerSpy },
+      ],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(RedirectComponent);
     component = fixture.componentInstance;
@@ -55,9 +54,9 @@ describe('RedirectComponent', () => {
       snapshot: {
         queryParams: {
           state: 'hehe',
-          code: 'heheasd'
-        }
-      }
+          code: 'heheasd',
+        },
+      },
     };
     expect(component.ngOnInit()).toBeUndefined();
   });

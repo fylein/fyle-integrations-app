@@ -14,13 +14,12 @@ import { debounceTime } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 
 @Component({
-    selector: 'app-generic-mapping-v2',
-    templateUrl: './generic-mapping-v2.component.html',
-    styleUrls: ['./generic-mapping-v2.component.scss'],
-    standalone: false
+  selector: 'app-generic-mapping-v2',
+  templateUrl: './generic-mapping-v2.component.html',
+  styleUrls: ['./generic-mapping-v2.component.scss'],
+  standalone: false,
 })
 export class GenericMappingV2Component implements OnInit {
-
   @Input() isLoading: boolean;
 
   @Input() sourceField: string;
@@ -94,11 +93,9 @@ export class GenericMappingV2Component implements OnInit {
   constructor(
     private mappingService: MappingService,
     private paginatorService: PaginatorService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
   ) {
-    this.searchQuerySubject.pipe(
-      debounceTime(1000)
-    ).subscribe((query: string) => {
+    this.searchQuerySubject.pipe(debounceTime(1000)).subscribe((query: string) => {
       this.searchQuery = query;
       this.pageSizeChanges(this.limit);
     });
@@ -115,12 +112,25 @@ export class GenericMappingV2Component implements OnInit {
       appName = [this.appName];
       isEmployeeAndVendorAllowed = [this.isEmployeeAndVendorAllowed];
     }
-    this.mappingService.getGenericMappingsV2(this.limit, this.offset, this.destinationField, this.selectedMappingFilter, this.alphabetFilter, this.sourceField, this.isCategoryMappingGeneric, this.searchQuery, ...appName, ...isEmployeeAndVendorAllowed).subscribe((mappingResponse: GenericMappingResponse) => {
-      this.filteredMappings = mappingResponse.results.concat();
-      this.filteredMappingCount = this.filteredMappings.length;
-      this.totalCount = mappingResponse.count;
-      this.isLoading = false;
-    });
+    this.mappingService
+      .getGenericMappingsV2(
+        this.limit,
+        this.offset,
+        this.destinationField,
+        this.selectedMappingFilter,
+        this.alphabetFilter,
+        this.sourceField,
+        this.isCategoryMappingGeneric,
+        this.searchQuery,
+        ...appName,
+        ...isEmployeeAndVendorAllowed,
+      )
+      .subscribe((mappingResponse: GenericMappingResponse) => {
+        this.filteredMappings = mappingResponse.results.concat();
+        this.filteredMappingCount = this.filteredMappings.length;
+        this.totalCount = mappingResponse.count;
+        this.isLoading = false;
+      });
   }
 
   pageSizeChanges(limit: number): void {
@@ -137,7 +147,7 @@ export class GenericMappingV2Component implements OnInit {
   pageOffsetChanges(offset: number): void {
     this.isLoading = true;
     this.offset = offset;
-    this.currentPage = Math.ceil(this.offset / this.limit)+1;
+    this.currentPage = Math.ceil(this.offset / this.limit) + 1;
     this.getFilteredMappings();
   }
 
@@ -176,25 +186,38 @@ export class GenericMappingV2Component implements OnInit {
       isEmployeeAndVendorAllowed = [this.isEmployeeAndVendorAllowed];
     }
     forkJoin([
-      this.mappingService.getGenericMappingsV2(this.limit, 0, this.destinationField, this.selectedMappingFilter, this.alphabetFilter, this.sourceField, this.isCategoryMappingGeneric, null, ...appName, ...isEmployeeAndVendorAllowed),
-      this.mappingService.getMappingStats(this.sourceField, this.destinationField, this.appName, this.isEmployeeAndVendorAllowed)
-    ]).subscribe(
-      ([mappingResponse, mappingStat]) => {
-        this.totalCount = mappingResponse.count;
-        if (!this.isInitialSetupComplete) {
-          this.filteredMappingCount = mappingResponse.count;
-        }
-        this.mappings = mappingResponse.results;
-        this.mappingStats = mappingStat;
-        this.filteredMappings = this.mappings.concat();
-        this.isInitialSetupComplete = true;
-        this.isLoading = false;
+      this.mappingService.getGenericMappingsV2(
+        this.limit,
+        0,
+        this.destinationField,
+        this.selectedMappingFilter,
+        this.alphabetFilter,
+        this.sourceField,
+        this.isCategoryMappingGeneric,
+        null,
+        ...appName,
+        ...isEmployeeAndVendorAllowed,
+      ),
+      this.mappingService.getMappingStats(
+        this.sourceField,
+        this.destinationField,
+        this.appName,
+        this.isEmployeeAndVendorAllowed,
+      ),
+    ]).subscribe(([mappingResponse, mappingStat]) => {
+      this.totalCount = mappingResponse.count;
+      if (!this.isInitialSetupComplete) {
+        this.filteredMappingCount = mappingResponse.count;
       }
-    );
+      this.mappings = mappingResponse.results;
+      this.mappingStats = mappingStat;
+      this.filteredMappings = this.mappings.concat();
+      this.isInitialSetupComplete = true;
+      this.isLoading = false;
+    });
   }
 
   ngOnInit(): void {
     this.setupPage();
   }
-
 }

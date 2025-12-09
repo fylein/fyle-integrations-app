@@ -9,13 +9,12 @@ import { NetsuiteHelperService } from 'src/app/core/services/netsuite/netsuite-c
 import { TranslocoService } from '@jsverse/transloco';
 
 @Component({
-    selector: 'app-netsuite-main',
-    templateUrl: './netsuite-main.component.html',
-    styleUrls: ['./netsuite-main.component.scss'],
-    standalone: false
+  selector: 'app-netsuite-main',
+  templateUrl: './netsuite-main.component.html',
+  styleUrls: ['./netsuite-main.component.scss'],
+  standalone: false,
 })
 export class NetsuiteMainComponent {
-
   appName: AppName = AppName.NETSUITE;
 
   modules: TabMenuItem[];
@@ -26,13 +25,29 @@ export class NetsuiteMainComponent {
     private accountingExportService: AccountingExportService,
     private netsuiteHelperService: NetsuiteHelperService,
     private toastService: IntegrationsToastService,
-    private translocoService: TranslocoService
+    private translocoService: TranslocoService,
   ) {
     this.modules = [
-      { label: this.translocoService.translate('netsuiteMain.dashboardTab'), routerLink: '/integrations/netsuite/main/dashboard', value: 'dashboard' },
-      { label: this.translocoService.translate('common.exportLogTabName'), routerLink: '/integrations/netsuite/main/export_log', value: 'export_log' },
-      { label: this.translocoService.translate('netsuiteMain.mappingTab'), routerLink: '/integrations/netsuite/main/mapping', value: 'mapping' },
-      { label: this.translocoService.translate('netsuiteMain.configurationTab'), routerLink: '/integrations/netsuite/main/configuration', value: 'configuration' }
+      {
+        label: this.translocoService.translate('netsuiteMain.dashboardTab'),
+        routerLink: '/integrations/netsuite/main/dashboard',
+        value: 'dashboard',
+      },
+      {
+        label: this.translocoService.translate('common.exportLogTabName'),
+        routerLink: '/integrations/netsuite/main/export_log',
+        value: 'export_log',
+      },
+      {
+        label: this.translocoService.translate('netsuiteMain.mappingTab'),
+        routerLink: '/integrations/netsuite/main/mapping',
+        value: 'mapping',
+      },
+      {
+        label: this.translocoService.translate('netsuiteMain.configurationTab'),
+        routerLink: '/integrations/netsuite/main/configuration',
+        value: 'configuration',
+      },
     ];
   }
 
@@ -40,6 +55,9 @@ export class NetsuiteMainComponent {
     this.netsuiteHelperService.refreshNetsuiteDimensions().subscribe();
     this.netsuiteHelperService.refreshFyleDimensions().subscribe();
     this.accountingExportService.importExpensesFromFyle('v1').subscribe();
-    this.toastService.displayToastMessage(ToastSeverity.SUCCESS, this.translocoService.translate('netsuiteMain.syncDataDimensionsToast'));
+    this.toastService.displayToastMessage(
+      ToastSeverity.SUCCESS,
+      this.translocoService.translate('netsuiteMain.syncDataDimensionsToast'),
+    );
   }
 }

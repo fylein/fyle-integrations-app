@@ -4,7 +4,13 @@
   </div>
 }
 @if (!isLoading) {
-  <div [ngClass]="[brandingStyle.configuration.settingsContainer, isOnboarding ? brandingStyle.common.configurationContents : brandingStyle.common.configurationContentsDashboard, isOnboarding ? 'configuration--contents' : '']">
+  <div
+    [ngClass]="[
+      brandingStyle.configuration.settingsContainer,
+      isOnboarding ? brandingStyle.common.configurationContents : brandingStyle.common.configurationContentsDashboard,
+      isOnboarding ? 'configuration--contents' : '',
+    ]"
+  >
     <div>
       <app-configuration-step-header
         [headerText]="'netsuite.configuration.advancedSettings.stepName' | transloco"
@@ -12,7 +18,8 @@
         [redirectLink]="supportArticleLink"
         [showSyncButton]="isOnboarding"
         [appName]="appName"
-        (refreshDimension)="refreshDimensions()">
+        (refreshDimension)="refreshDimensions()"
+      >
       </app-configuration-step-header>
     </div>
     <form [formGroup]="advancedSettingForm">
@@ -20,7 +27,11 @@
         <div [ngClass]="brandingStyle.configuration.configurationAdvancedSettingAutomationCardHeader">
           <app-configuration-step-sub-header
             [label]="'netsuiteAdvancedSettings.automation' | transloco"
-            [subLabel]="'netsuite.configuration.advancedSettings.automationSubLabel' | transloco: {brandName: brandingConfig.brandName}">
+            [subLabel]="
+              'netsuite.configuration.advancedSettings.automationSubLabel'
+                | transloco: { brandName: brandingConfig.brandName }
+            "
+          >
           </app-configuration-step-sub-header>
         </div>
         <div class="tw-mb-16-px">
@@ -28,9 +39,13 @@
             <app-configuration-toggle-field
               [form]="advancedSettingForm"
               [label]="'netsuiteAdvancedSettings.scheduleAutomaticExport' | transloco"
-              [subLabel]="'netsuite.configuration.advancedSettings.scheduleSubLabel' | transloco: {brandName: brandingConfig.brandName}"
+              [subLabel]="
+                'netsuite.configuration.advancedSettings.scheduleSubLabel'
+                  | transloco: { brandName: brandingConfig.brandName }
+              "
               [formControllerName]="'exportSchedule'"
-              [iconPath]="'calendar'">
+              [iconPath]="'calendar'"
+            >
             </app-configuration-toggle-field>
             @if (advancedSettingForm.get('exportSchedule')?.value) {
               <div>
@@ -40,11 +55,17 @@
                   [isFieldMandatory]="false"
                   [mandatoryErrorListName]="'netsuiteAdvancedSettings.automaticExportMethod' | transloco"
                   [label]="'netsuiteAdvancedSettings.setupExportFrequency' | transloco"
-                  [subLabel]="'netsuite.configuration.advancedSettings.frequencySubLabel' | transloco: {brandName: brandingConfig.brandName}"
+                  [subLabel]="
+                    'netsuite.configuration.advancedSettings.frequencySubLabel'
+                      | transloco: { brandName: brandingConfig.brandName }
+                  "
                   [options]="hours"
-                  [isEmailPresent]="brandingFeatureConfig.featureFlags.advancedSettings.emailNotification ? true: false"
+                  [isEmailPresent]="
+                    brandingFeatureConfig.featureFlags.advancedSettings.emailNotification ? true : false
+                  "
                   [formControllerName]="'exportScheduleFrequency'"
-                  [adminEmails]="adminEmails">
+                  [adminEmails]="adminEmails"
+                >
                 </app-configuration-schedule-export>
               </div>
             }
@@ -56,12 +77,19 @@
                 [options]="paymentSyncOptions"
                 [iconPath]="'arrow-rotate'"
                 [label]="'netsuite.configuration.advancedSettings.paymentSyncLabel' | transloco"
-                [subLabel]="'netsuiteAdvancedSettings.paymentSyncSubLabel' | transloco: { brandName: brandingConfig.brandName }"
+                [subLabel]="
+                  'netsuiteAdvancedSettings.paymentSyncSubLabel' | transloco: { brandName: brandingConfig.brandName }
+                "
                 [placeholder]="'netsuiteAdvancedSettings.selectPaymentSyncPlaceholder' | transloco"
                 [formControllerName]="'paymentSync'"
-                [appName]="appName">
+                [appName]="appName"
+              >
               </app-configuration-select-field>
-              @if (this.advancedSettingForm.controls.paymentSync.value === 'fyle_to_netsuite' && isPaymentSyncFieldVisible() && brandingFeatureConfig.featureFlags.advancedSettings.paymentsSync) {
+              @if (
+                this.advancedSettingForm.controls.paymentSync.value === 'fyle_to_netsuite' &&
+                isPaymentSyncFieldVisible() &&
+                brandingFeatureConfig.featureFlags.advancedSettings.paymentsSync
+              ) {
                 <app-configuration-select-field
                   [form]="advancedSettingForm"
                   [destinationAttributes]="paymentAccounts"
@@ -70,9 +98,13 @@
                   [optionLabel]="'name'"
                   [iconPath]="'arrow-rotate'"
                   [label]="'netsuite.configuration.advancedSettings.defaultPaymentAccount' | transloco"
-                  [subLabel]="'netsuiteAdvancedSettings.defaultPaymentAccountSubLabel' | transloco: { brandName: brandingConfig.brandName }"
+                  [subLabel]="
+                    'netsuiteAdvancedSettings.defaultPaymentAccountSubLabel'
+                      | transloco: { brandName: brandingConfig.brandName }
+                  "
                   [placeholder]="'netsuiteAdvancedSettings.selectPaymentAccountPlaceholder' | transloco"
-                  [formControllerName]="'paymentAccount'">
+                  [formControllerName]="'paymentAccount'"
+                >
                 </app-configuration-select-field>
               }
             </div>
@@ -81,7 +113,11 @@
         <div [ngClass]="brandingStyle.configuration.configurationAdvancedSettingAutomationCardHeader">
           <app-configuration-step-sub-header
             [label]="'netsuite.configuration.advancedSettings.preferenceLabel' | transloco"
-            [subLabel]="'netsuite.configuration.advancedSettings.preferenceSubLabel' | transloco: {brandName: brandingConfig.brandName}">
+            [subLabel]="
+              'netsuite.configuration.advancedSettings.preferenceSubLabel'
+                | transloco: { brandName: brandingConfig.brandName }
+            "
+          >
           </app-configuration-step-sub-header>
         </div>
         <div [ngClass]="brandingStyle.configuration.configurationAdvancedSettingNetsuiteCardBody">
@@ -89,41 +125,74 @@
             [form]="advancedSettingForm"
             [iconPath]="'calendar'"
             [label]="'netsuite.configuration.advancedSettings.postEntriesCurrentPeriod' | transloco"
-            [subLabel]="'netsuite.configuration.advancedSettings.changeAccountingPeriodSubLabel' | transloco: {brandName: brandingConfig.brandName}"
-            [formControllerName]="'changeAccountingPeriod'">
+            [subLabel]="
+              'netsuite.configuration.advancedSettings.changeAccountingPeriodSubLabel'
+                | transloco: { brandName: brandingConfig.brandName }
+            "
+            [formControllerName]="'changeAccountingPeriod'"
+          >
           </app-configuration-toggle-field>
-          @if (isAutoCreateVendorsFieldVisible() && brandingFeatureConfig.featureFlags.advancedSettings.autoCreateVendors) {
+          @if (
+            isAutoCreateVendorsFieldVisible() && brandingFeatureConfig.featureFlags.advancedSettings.autoCreateVendors
+          ) {
             <app-configuration-toggle-field
               [form]="advancedSettingForm"
               [iconPath]="'user-plus'"
-              [label]="('netsuite.configuration.advancedSettings.autoCreateVendorsLabel' | transloco) + getCreateVendorLabel() "
-              [subLabel]="'netsuiteAdvancedSettings.autoCreateVendorsSubLabel' | transloco: { brandName: brandingConfig.brandName, vendorType: getCreateVendorLabel().toLowerCase() }"
-              [formControllerName]="'autoCreateVendors'">
+              [label]="
+                ('netsuite.configuration.advancedSettings.autoCreateVendorsLabel' | transloco) + getCreateVendorLabel()
+              "
+              [subLabel]="
+                'netsuiteAdvancedSettings.autoCreateVendorsSubLabel'
+                  | transloco: { brandName: brandingConfig.brandName, vendorType: getCreateVendorLabel().toLowerCase() }
+              "
+              [formControllerName]="'autoCreateVendors'"
+            >
             </app-configuration-toggle-field>
           }
-          @if (isAutoCreateMerchantsFieldVisible() && brandingFeatureConfig.featureFlags.advancedSettings.autoCreateMerchants) {
+          @if (
+            isAutoCreateMerchantsFieldVisible() &&
+            brandingFeatureConfig.featureFlags.advancedSettings.autoCreateMerchants
+          ) {
             <app-configuration-toggle-field
               [form]="advancedSettingForm"
               [iconPath]="'user-plus'"
-              [label]="('netsuite.configuration.advancedSettings.autoCreateVendorsLabel' | transloco) + getCreateMerchantLabel()"
-              [subLabel]="'netsuiteAdvancedSettings.autoCreateMerchantsSubLabel' | transloco: { brandName: brandingConfig.brandName }"
-              [formControllerName]="'autoCreateMerchants'">
+              [label]="
+                ('netsuite.configuration.advancedSettings.autoCreateVendorsLabel' | transloco) +
+                getCreateMerchantLabel()
+              "
+              [subLabel]="
+                'netsuiteAdvancedSettings.autoCreateMerchantsSubLabel'
+                  | transloco: { brandName: brandingConfig.brandName }
+              "
+              [formControllerName]="'autoCreateMerchants'"
+            >
             </app-configuration-toggle-field>
           }
-          @if (isSingleCreditLineJEFieldVisible() && brandingFeatureConfig.featureFlags.advancedSettings.singleCreditLineJE && brandingFeatureConfig.featureFlags.importSettings.tax && !isTaxGroupSyncAllowed) {
-            <app-configuration-toggle-field class="tw-pt-0"
+          @if (
+            isSingleCreditLineJEFieldVisible() &&
+            brandingFeatureConfig.featureFlags.advancedSettings.singleCreditLineJE &&
+            brandingFeatureConfig.featureFlags.importSettings.tax &&
+            !isTaxGroupSyncAllowed
+          ) {
+            <app-configuration-toggle-field
+              class="tw-pt-0"
               [form]="advancedSettingForm"
               [iconPath]="'list'"
               [label]="'netsuite.configuration.advancedSettings.singleCreditLineJELabel' | transloco"
               [subLabel]="'netsuite.configuration.advancedSettings.singleCreditLineJESubLabel' | transloco"
-              [formControllerName]="'singleCreditLineJE'">
+              [formControllerName]="'singleCreditLineJE'"
+            >
             </app-configuration-toggle-field>
           }
         </div>
         <div [ngClass]="brandingStyle.configuration.configurationAdvancedSettingAutomationCardHeader">
           <app-configuration-step-sub-header
             [label]="'netsuiteAdvancedSettings.customization' | transloco"
-            [subLabel]="'netsuite.configuration.advancedSettings.customizationSubLabel' | transloco: {brandName: brandingConfig.brandName}">
+            [subLabel]="
+              'netsuite.configuration.advancedSettings.customizationSubLabel'
+                | transloco: { brandName: brandingConfig.brandName }
+            "
+          >
           </app-configuration-step-sub-header>
         </div>
         <div [ngClass]="brandingStyle.configuration.configurationAdvancedSettingNetsuiteCardBody">
@@ -132,16 +201,20 @@
             [isFieldMandatory]="false"
             [mandatoryErrorListName]="'netsuiteAdvancedSettings.itemLevelDescription' | transloco"
             [label]="'netsuite.configuration.advancedSettings.memoStructureLabel' | transloco"
-            [subLabel]="'netsuite.configuration.advancedSettings.memoStructureSubLabel' | transloco: {brandName: brandingConfig.brandName}"
+            [subLabel]="
+              'netsuite.configuration.advancedSettings.memoStructureSubLabel'
+                | transloco: { brandName: brandingConfig.brandName }
+            "
             [options]="defaultMemoOptions"
             [iconPath]="'list'"
             [placeholder]="'netsuiteAdvancedSettings.setDescriptionPlaceholder' | transloco"
             [formControllerName]="'memoStructure'"
-            (changeInMultiSelect)="onMultiSelectChange()">
+            (changeInMultiSelect)="onMultiSelectChange()"
+          >
           </app-configuration-multi-select>
           <div class="preview-text">
             <div class="preview-box">
-              {{memoPreviewText}}
+              {{ memoPreviewText }}
             </div>
           </div>
         </div>
@@ -150,10 +223,13 @@
             <app-configuration-toggle-field
               [form]="advancedSettingForm"
               [label]="'netsuiteAdvancedSettings.skipExportLabel' | transloco: { brandName: brandingConfig.brandName }"
-              [subLabel]="'netsuiteAdvancedSettings.skipExportSubLabel' | transloco: { brandName: brandingConfig.brandName }"
+              [subLabel]="
+                'netsuiteAdvancedSettings.skipExportSubLabel' | transloco: { brandName: brandingConfig.brandName }
+              "
               [formControllerName]="'skipExport'"
               [iconPath]="'list'"
-              [redirectLink]="skipExportRedirectLink">
+              [redirectLink]="skipExportRedirectLink"
+            >
             </app-configuration-toggle-field>
             @if (advancedSettingForm.get('skipExport')?.value) {
               <div>
@@ -163,7 +239,8 @@
                   [expenseFilter]="expenseFilters"
                   [conditionFieldOptions]="conditionFieldOptions"
                   (deleteSkipExportForm)="deleteExpenseFilter($event)"
-                  (invalidSkipExportForm)="invalidSkipExportForm($event)">
+                  (invalidSkipExportForm)="invalidSkipExportForm($event)"
+                >
                 </app-configuration-skip-export>
               </div>
             }
@@ -174,24 +251,35 @@
             [label]="'netsuite.configuration.advancedSettings.dfvLabel' | transloco"
             [subLabel]="'netsuite.configuration.advancedSettings.dfvSubLabel' | transloco"
             [readMoreLink]="dfvReadMoreLink"
-            [readMoreLinkText]="'netsuite.configuration.advancedSettings.dfvReadMoreLinkText' | transloco">
+            [readMoreLinkText]="'netsuite.configuration.advancedSettings.dfvReadMoreLinkText' | transloco"
+          >
           </app-configuration-step-sub-header>
         </div>
         <div [ngClass]="brandingStyle.configuration.configurationAdvancedSettingDefaultFieldCard">
-          <div class="tw-flex tw-items-center tw-p-24-px ">
+          <div class="tw-flex tw-items-center tw-p-24-px">
             <app-configuration-select-field
               [form]="advancedSettingForm"
               [isDefaultFields]="true"
               [destinationAttributes]="netsuiteLocations"
-              [label]="helper.sentenseCaseConversion(('netsuiteAdvancedSettings.defaultLocation' | transloco)) + isOptional()"
-              [placeholder]="helper.sentenseCaseConversion(('netsuiteAdvancedSettings.chooseDefaultNetsuiteLocation' | transloco))"
+              [label]="
+                helper.sentenseCaseConversion('netsuiteAdvancedSettings.defaultLocation' | transloco) + isOptional()
+              "
+              [placeholder]="
+                helper.sentenseCaseConversion('netsuiteAdvancedSettings.chooseDefaultNetsuiteLocation' | transloco)
+              "
               [showClearIcon]="true"
-              [formControllerName]="'netsuiteLocation'">
+              [formControllerName]="'netsuiteLocation'"
+            >
             </app-configuration-select-field>
-            @if (brandingFeatureConfig.featureFlags.advancedSettings.useEmployeeAttributes && workspaceGeneralSettings.employee_field_mapping === 'EMPLOYEE') {
+            @if (
+              brandingFeatureConfig.featureFlags.advancedSettings.useEmployeeAttributes &&
+              workspaceGeneralSettings.employee_field_mapping === 'EMPLOYEE'
+            ) {
               <div class="tw-pl-24-px tw-mt-30-px">
                 <input formControlName="useEmployeeLocation" type="checkbox" />
-                <label class="tw-pl-8-px" for="checkbox">{{helper.sentenseCaseConversion(('netsuiteAdvancedSettings.useEmployeeLocation' | transloco))}}</label>
+                <label class="tw-pl-8-px" for="checkbox">{{
+                  helper.sentenseCaseConversion('netsuiteAdvancedSettings.useEmployeeLocation' | transloco)
+                }}</label>
               </div>
             }
           </div>
@@ -200,9 +288,15 @@
               [form]="advancedSettingForm"
               [destinationAttributes]="netsuiteLocationLevels"
               [isDefaultFields]="true"
-              [label]="helper.sentenseCaseConversion(('netsuiteAdvancedSettings.netsuiteLocationLevel' | transloco)) + isOptional()"
-              [placeholder]="helper.sentenseCaseConversion(('netsuiteAdvancedSettings.chooseNetsuiteLocationLevel' | transloco))"
-              [formControllerName]="'netsuiteLocationLevel'">
+              [label]="
+                helper.sentenseCaseConversion('netsuiteAdvancedSettings.netsuiteLocationLevel' | transloco) +
+                isOptional()
+              "
+              [placeholder]="
+                helper.sentenseCaseConversion('netsuiteAdvancedSettings.chooseNetsuiteLocationLevel' | transloco)
+              "
+              [formControllerName]="'netsuiteLocationLevel'"
+            >
             </app-configuration-select-field>
           </div>
           <div class="tw-flex tw-items-center tw-p-24-px">
@@ -210,15 +304,25 @@
               [form]="advancedSettingForm"
               [isDefaultFields]="true"
               [destinationAttributes]="netsuiteDepartments"
-              [label]="helper.sentenseCaseConversion(('netsuiteAdvancedSettings.defaultDepartment' | transloco)) + isOptional()"
-              [placeholder]="helper.sentenseCaseConversion(('netsuiteAdvancedSettings.chooseDefaultNetsuiteDepartment' | transloco))"
+              [label]="
+                helper.sentenseCaseConversion('netsuiteAdvancedSettings.defaultDepartment' | transloco) + isOptional()
+              "
+              [placeholder]="
+                helper.sentenseCaseConversion('netsuiteAdvancedSettings.chooseDefaultNetsuiteDepartment' | transloco)
+              "
               [showClearIcon]="true"
-              [formControllerName]="'netsuiteDepartment'">
+              [formControllerName]="'netsuiteDepartment'"
+            >
             </app-configuration-select-field>
-            @if (brandingFeatureConfig.featureFlags.advancedSettings.useEmployeeAttributes && workspaceGeneralSettings.employee_field_mapping === 'EMPLOYEE') {
+            @if (
+              brandingFeatureConfig.featureFlags.advancedSettings.useEmployeeAttributes &&
+              workspaceGeneralSettings.employee_field_mapping === 'EMPLOYEE'
+            ) {
               <div class="tw-pl-24-px tw-mt-30-px">
                 <input formControlName="useEmployeeDepartment" type="checkbox" />
-                <label class="tw-pl-8-px" for="checkbox">{{helper.sentenseCaseConversion(('netsuiteAdvancedSettings.useEmployeeDepartment' | transloco))}}</label>
+                <label class="tw-pl-8-px" for="checkbox">{{
+                  helper.sentenseCaseConversion('netsuiteAdvancedSettings.useEmployeeDepartment' | transloco)
+                }}</label>
               </div>
             }
           </div>
@@ -227,25 +331,41 @@
               [form]="advancedSettingForm"
               [destinationAttributes]="netsuiteDepartmentLevels"
               [isDefaultFields]="true"
-              [label]="helper.sentenseCaseConversion(('netsuiteAdvancedSettings.netsuiteDepartmentLevel' | transloco)) + isOptional()"
-              [placeholder]="helper.sentenseCaseConversion(('netsuiteAdvancedSettings.chooseNetsuiteDepartmentLevel' | transloco))"
-              [formControllerName]="'netsuiteDepartmentLevel'">
+              [label]="
+                helper.sentenseCaseConversion('netsuiteAdvancedSettings.netsuiteDepartmentLevel' | transloco) +
+                isOptional()
+              "
+              [placeholder]="
+                helper.sentenseCaseConversion('netsuiteAdvancedSettings.chooseNetsuiteDepartmentLevel' | transloco)
+              "
+              [formControllerName]="'netsuiteDepartmentLevel'"
+            >
             </app-configuration-select-field>
           </div>
-          <div class="tw-flex tw-items-center tw-p-24-px ">
+          <div class="tw-flex tw-items-center tw-p-24-px">
             <app-configuration-select-field
               [form]="advancedSettingForm"
               [isDefaultFields]="true"
               [destinationAttributes]="netsuiteClasses"
-              [label]="helper.sentenseCaseConversion(('netsuiteAdvancedSettings.defaultClass' | transloco)) + isOptional()"
-              [placeholder]="helper.sentenseCaseConversion(('netsuiteAdvancedSettings.chooseDefaultNetsuiteClass' | transloco))"
+              [label]="
+                helper.sentenseCaseConversion('netsuiteAdvancedSettings.defaultClass' | transloco) + isOptional()
+              "
+              [placeholder]="
+                helper.sentenseCaseConversion('netsuiteAdvancedSettings.chooseDefaultNetsuiteClass' | transloco)
+              "
               [showClearIcon]="true"
-              [formControllerName]="'netsuiteClass'">
+              [formControllerName]="'netsuiteClass'"
+            >
             </app-configuration-select-field>
-            @if (brandingFeatureConfig.featureFlags.advancedSettings.useEmployeeAttributes && workspaceGeneralSettings.employee_field_mapping === 'EMPLOYEE') {
+            @if (
+              brandingFeatureConfig.featureFlags.advancedSettings.useEmployeeAttributes &&
+              workspaceGeneralSettings.employee_field_mapping === 'EMPLOYEE'
+            ) {
               <div class="tw-pl-24-px tw-mt-30-px">
                 <input formControlName="useEmployeeClass" type="checkbox" />
-                <label class="tw-pl-8-px" for="checkbox">{{helper.sentenseCaseConversion(('netsuiteAdvancedSettings.useEmployeeClass' | transloco))}}</label>
+                <label class="tw-pl-8-px" for="checkbox">{{
+                  helper.sentenseCaseConversion('netsuiteAdvancedSettings.useEmployeeClass' | transloco)
+                }}</label>
               </div>
             }
           </div>
@@ -254,20 +374,32 @@
               [form]="advancedSettingForm"
               [destinationAttributes]="netsuiteClassLevels"
               [isDefaultFields]="true"
-              [label]="helper.sentenseCaseConversion(('netsuiteAdvancedSettings.netsuiteClassLevel' | transloco)) + isOptional()"
-              [placeholder]="helper.sentenseCaseConversion(('netsuiteAdvancedSettings.chooseNetsuiteClassLevel' | transloco))"
-              [formControllerName]="'netsuiteClassLevel'">
+              [label]="
+                helper.sentenseCaseConversion('netsuiteAdvancedSettings.netsuiteClassLevel' | transloco) + isOptional()
+              "
+              [placeholder]="
+                helper.sentenseCaseConversion('netsuiteAdvancedSettings.chooseNetsuiteClassLevel' | transloco)
+              "
+              [formControllerName]="'netsuiteClassLevel'"
+            >
             </app-configuration-select-field>
           </div>
         </div>
       </div>
       @if (isOnboarding) {
         <app-configuration-step-footer
-          [ctaText] = "!isSaveInProgress ? (isOnboarding ? ConfigurationCtaText.SAVE_AND_CONTINUE : ConfigurationCtaText.SAVE) : ConfigurationCtaText.SAVING"
+          [ctaText]="
+            !isSaveInProgress
+              ? isOnboarding
+                ? ConfigurationCtaText.SAVE_AND_CONTINUE
+                : ConfigurationCtaText.SAVE
+              : ConfigurationCtaText.SAVING
+          "
           [isButtonDisabled]="!advancedSettingForm.valid || isSkipExportFormInvalid"
           [showBackButton]="isOnboarding ? true : false"
           (save)="save()"
-          (navigateToPreviousStep)="navigateToPreviousStep()">
+          (navigateToPreviousStep)="navigateToPreviousStep()"
+        >
         </app-configuration-step-footer>
       }
     </form>
@@ -277,11 +409,18 @@
 @if (!isLoading && !isOnboarding) {
   <div class="tw-sticky tw-top-0 tw-bottom-0 tw-left-0 tw-right-0 tw-bg-white">
     <app-configuration-step-footer
-      [ctaText] = "!isSaveInProgress ? (isOnboarding ? ConfigurationCtaText.SAVE_AND_CONTINUE : ConfigurationCtaText.SAVE) : ConfigurationCtaText.SAVING"
+      [ctaText]="
+        !isSaveInProgress
+          ? isOnboarding
+            ? ConfigurationCtaText.SAVE_AND_CONTINUE
+            : ConfigurationCtaText.SAVE
+          : ConfigurationCtaText.SAVING
+      "
       [isButtonDisabled]="!advancedSettingForm.valid || isSkipExportFormInvalid"
       [showBackButton]="isOnboarding ? true : false"
       (save)="save()"
-      (navigateToPreviousStep)="navigateToPreviousStep()">
+      (navigateToPreviousStep)="navigateToPreviousStep()"
+    >
     </app-configuration-step-footer>
   </div>
 }

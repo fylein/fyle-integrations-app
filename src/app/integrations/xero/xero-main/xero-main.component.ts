@@ -9,13 +9,12 @@ import { XeroHelperService } from 'src/app/core/services/xero/xero-core/xero-hel
 import { TranslocoService } from '@jsverse/transloco';
 
 @Component({
-    selector: 'app-xero-main',
-    templateUrl: './xero-main.component.html',
-    styleUrls: ['./xero-main.component.scss'],
-    standalone: false
+  selector: 'app-xero-main',
+  templateUrl: './xero-main.component.html',
+  styleUrls: ['./xero-main.component.scss'],
+  standalone: false,
 })
 export class XeroMainComponent {
-
   appName: AppName = AppName.XERO;
 
   readonly disconnectButton = brandingFeatureConfig.featureFlags.dashboard.disconnectButton;
@@ -31,13 +30,29 @@ export class XeroMainComponent {
     private xeroHelperService: XeroHelperService,
     private router: Router,
     private toastService: IntegrationsToastService,
-    private translocoService: TranslocoService
+    private translocoService: TranslocoService,
   ) {
     this.modules = [
-      { label: this.translocoService.translate('xeroMain.dashboard'), routerLink: '/integrations/xero/main/dashboard', value: 'dashboard' },
-      { label: this.translocoService.translate('common.exportLogTabName'), routerLink: '/integrations/xero/main/export_log', value: 'export_log' },
-      { label: this.translocoService.translate('xeroMain.mapping'), routerLink: '/integrations/xero/main/mapping', value: 'mapping' },
-      { label: this.translocoService.translate('xeroMain.configuration'), routerLink: '/integrations/xero/main/configuration', value: 'configuration' }
+      {
+        label: this.translocoService.translate('xeroMain.dashboard'),
+        routerLink: '/integrations/xero/main/dashboard',
+        value: 'dashboard',
+      },
+      {
+        label: this.translocoService.translate('common.exportLogTabName'),
+        routerLink: '/integrations/xero/main/export_log',
+        value: 'export_log',
+      },
+      {
+        label: this.translocoService.translate('xeroMain.mapping'),
+        routerLink: '/integrations/xero/main/mapping',
+        value: 'mapping',
+      },
+      {
+        label: this.translocoService.translate('xeroMain.configuration'),
+        routerLink: '/integrations/xero/main/configuration',
+        value: 'configuration',
+      },
     ];
   }
 
@@ -45,7 +60,10 @@ export class XeroMainComponent {
     if (!this.isConnectionInProgress) {
       this.xeroHelperService.disconnect().subscribe(() => {
         this.isConnectionInProgress = false;
-        this.toastService.displayToastMessage(ToastSeverity.SUCCESS, this.translocoService.translate('xeroMain.disconnectSuccess'));
+        this.toastService.displayToastMessage(
+          ToastSeverity.SUCCESS,
+          this.translocoService.translate('xeroMain.disconnectSuccess'),
+        );
         this.router.navigate(['/integrations/xero/disconnect/dashboard']);
       });
     }

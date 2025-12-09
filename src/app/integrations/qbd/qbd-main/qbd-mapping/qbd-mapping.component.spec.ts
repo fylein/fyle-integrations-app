@@ -12,12 +12,9 @@ describe('QbdMappingComponent', () => {
     translocoService = jasmine.createSpyObj('TranslocoService', ['translate']);
 
     await TestBed.configureTestingModule({
-      declarations: [ QbdMappingComponent ],
-      providers: [
-        { provide: TranslocoService, useValue: translocoService }
-      ]
-    })
-    .compileComponents();
+      declarations: [QbdMappingComponent],
+      providers: [{ provide: TranslocoService, useValue: translocoService }],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(QbdMappingComponent);
     component = fixture.componentInstance;

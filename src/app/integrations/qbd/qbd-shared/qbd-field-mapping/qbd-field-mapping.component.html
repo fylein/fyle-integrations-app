@@ -4,12 +4,16 @@
   </div>
 }
 @if (!isLoading) {
-  <div class="configuration--contents tw-border-separator tw-mt-6" [ngClass]="brandingStyle.common.configurationContents">
+  <div
+    class="configuration--contents tw-border-separator tw-mt-6"
+    [ngClass]="brandingStyle.common.configurationContents"
+  >
     <div>
       <app-configuration-step-header
         [headerText]="'qbdFieldMapping.headerText' | transloco"
-        [contentText]="'qbdFieldMapping.contentText' | transloco:{ brandName: brandingConfig.brandName }"
-      [redirectLink]="redirectLink"></app-configuration-step-header>
+        [contentText]="'qbdFieldMapping.contentText' | transloco: { brandName: brandingConfig.brandName }"
+        [redirectLink]="redirectLink"
+      ></app-configuration-step-header>
     </div>
     <div>
       <form [formGroup]="fieldMappingForm">
@@ -18,37 +22,52 @@
             <div class="tw-mt-12-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
               <app-configuration-select-field
                 [form]="fieldMappingForm"
-                [label]="'qbdFieldMapping.mapCustomerJobLabel' | transloco:{ brandName: brandingConfig.brandName }"
-                [subLabel]="'qbdFieldMapping.mapCustomerJobSubLabel' | transloco:{ brandName: brandingConfig.brandName }"
+                [label]="'qbdFieldMapping.mapCustomerJobLabel' | transloco: { brandName: brandingConfig.brandName }"
+                [subLabel]="
+                  'qbdFieldMapping.mapCustomerJobSubLabel' | transloco: { brandName: brandingConfig.brandName }
+                "
                 [options]="mappingFieldFormOptionsFunction('classType', 'itemType')"
                 [iconPath]="'user-two'"
                 [placeholder]="'qbdFieldMapping.selectRepresentationPlaceholder' | transloco"
-              [formControllerName]="'customerType'"></app-configuration-select-field>
+                [formControllerName]="'customerType'"
+              ></app-configuration-select-field>
             </div>
             <div class="tw-mt-12-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
               <app-configuration-select-field
                 [form]="fieldMappingForm"
-                [label]="'qbdFieldMapping.mapClassLabel' | transloco:{ brandName: brandingConfig.brandName }"
-                [subLabel]="'qbdFieldMapping.mapClassSubLabel' | transloco:{ brandName: brandingConfig.brandName }"
+                [label]="'qbdFieldMapping.mapClassLabel' | transloco: { brandName: brandingConfig.brandName }"
+                [subLabel]="'qbdFieldMapping.mapClassSubLabel' | transloco: { brandName: brandingConfig.brandName }"
                 [options]="mappingFieldFormOptionsFunction('customerType', 'itemType')"
                 [iconPath]="'list'"
                 [placeholder]="'qbdFieldMapping.selectRepresentationPlaceholder' | transloco"
-              [formControllerName]="'classType'"></app-configuration-select-field>
+                [formControllerName]="'classType'"
+              ></app-configuration-select-field>
             </div>
             <div class="tw-mt-12-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
               <app-configuration-select-field
                 [form]="fieldMappingForm"
-                [label]="'qbdFieldMapping.mapItemsLabel' | transloco:{ brandName: brandingConfig.brandName }"
-                [subLabel]="'qbdFieldMapping.mapItemsSubLabel' | transloco:{ brandName: brandingConfig.brandName }"
+                [label]="'qbdFieldMapping.mapItemsLabel' | transloco: { brandName: brandingConfig.brandName }"
+                [subLabel]="'qbdFieldMapping.mapItemsSubLabel' | transloco: { brandName: brandingConfig.brandName }"
                 [options]="mappingFieldFormOptionsFunction('customerType', 'classType')"
                 [iconPath]="'list'"
                 [placeholder]="'qbdFieldMapping.selectRepresentationPlaceholder' | transloco"
-              [formControllerName]="'itemType'"></app-configuration-select-field>
+                [formControllerName]="'itemType'"
+              ></app-configuration-select-field>
             </div>
           </div>
         </div>
         @if (isOnboarding) {
-          <app-configuration-step-footer [ctaText]="!saveInProgress ? (isOnboarding ? ConfigurationCtaText.SAVE_AND_CONTINUE : ConfigurationCtaText.SAVE) : ConfigurationCtaText.SAVING" [isButtonDisabled]="!fieldMappingForm.valid || saveInProgress" (save)="save()"></app-configuration-step-footer>
+          <app-configuration-step-footer
+            [ctaText]="
+              !saveInProgress
+                ? isOnboarding
+                  ? ConfigurationCtaText.SAVE_AND_CONTINUE
+                  : ConfigurationCtaText.SAVE
+                : ConfigurationCtaText.SAVING
+            "
+            [isButtonDisabled]="!fieldMappingForm.valid || saveInProgress"
+            (save)="save()"
+          ></app-configuration-step-footer>
         }
       </form>
     </div>
@@ -57,6 +76,16 @@
 
 @if (!isLoading && !isOnboarding) {
   <div class="tw-sticky tw-top-0 tw-bottom-0 tw-left-0 tw-right-0 tw-bg-white">
-    <app-configuration-step-footer [ctaText]="!saveInProgress ? (isOnboarding ? ConfigurationCtaText.SAVE_AND_CONTINUE : ConfigurationCtaText.SAVE) : ConfigurationCtaText.SAVING" [isButtonDisabled]="!fieldMappingForm.valid || saveInProgress" (save)="save()"></app-configuration-step-footer>
+    <app-configuration-step-footer
+      [ctaText]="
+        !saveInProgress
+          ? isOnboarding
+            ? ConfigurationCtaText.SAVE_AND_CONTINUE
+            : ConfigurationCtaText.SAVE
+          : ConfigurationCtaText.SAVING
+      "
+      [isButtonDisabled]="!fieldMappingForm.valid || saveInProgress"
+      (save)="save()"
+    ></app-configuration-step-footer>
   </div>
 }

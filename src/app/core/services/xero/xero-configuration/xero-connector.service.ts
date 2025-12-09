@@ -10,33 +10,35 @@ import { DestinationAttribute } from 'src/app/core/models/db/destination-attribu
 
 const xeroCredentialsCache = new Subject<void>();
 
-
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class XeroConnectorService {
   constructor(
     private apiService: ApiService,
-    private workspaceService: WorkspaceService
-  ) { }
+    private workspaceService: WorkspaceService,
+  ) {}
 
   @CacheBuster({
-    cacheBusterNotifier: xeroCredentialsCache
+    cacheBusterNotifier: xeroCredentialsCache,
   })
-  connectXero(workspaceId: string, code:string): Observable<XeroCredentials> {
+  connectXero(workspaceId: string, code: string): Observable<XeroCredentials> {
     globalCacheBusterNotifier.next();
-    return this.apiService.post(`/workspaces/${workspaceId}/connect_xero/authorization_code/`, {code: code, redirect_uri: environment.xero_oauth_redirect_uri});
+    return this.apiService.post(`/workspaces/${workspaceId}/connect_xero/authorization_code/`, {
+      code: code,
+      redirect_uri: environment.xero_oauth_redirect_uri,
+    });
   }
 
   @Cacheable({
-    cacheBusterObserver: xeroCredentialsCache
+    cacheBusterObserver: xeroCredentialsCache,
   })
   getXeroCredentials(workspaceId: string): Observable<XeroCredentials> {
     return this.apiService.get(`/workspaces/${workspaceId}/credentials/xero/`, {});
   }
 
   @CacheBuster({
-    cacheBusterNotifier: xeroCredentialsCache
+    cacheBusterNotifier: xeroCredentialsCache,
   })
   revokeXeroConnection(workspaceId: string) {
     return this.apiService.post(`/workspaces/${workspaceId}/connection/xero/revoke/`, {});
@@ -48,7 +50,9 @@ export class XeroConnectorService {
   }
 
   getXeroTenants(): Observable<DestinationAttribute[]> {
-    return this.apiService.get(`/workspaces/${this.workspaceService.getWorkspaceId()}/xero/tenants/`, {attribute_type__exact: 'TENANT'});
+    return this.apiService.get(`/workspaces/${this.workspaceService.getWorkspaceId()}/xero/tenants/`, {
+      attribute_type__exact: 'TENANT',
+    });
   }
 
   postXeroTenants(): Observable<DestinationAttribute[]> {
@@ -60,12 +64,13 @@ export class XeroConnectorService {
   getTenantMappings(): Observable<TenantMapping> {
     const workspaceId = this.workspaceService.getWorkspaceId();
 
-    return this.apiService.get(`/workspaces/${workspaceId}/mappings/tenant/`, {}
-    );
+    return this.apiService.get(`/workspaces/${workspaceId}/mappings/tenant/`, {});
   }
 
   postTenantMapping(tenantMappingPayload: TenantMappingPost): Observable<TenantMapping> {
-    return this.apiService.post(`/workspaces/${this.workspaceService.getWorkspaceId()}/mappings/tenant/`, tenantMappingPayload);
+    return this.apiService.post(
+      `/workspaces/${this.workspaceService.getWorkspaceId()}/mappings/tenant/`,
+      tenantMappingPayload,
+    );
   }
-
 }

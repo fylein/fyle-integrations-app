@@ -1,9 +1,30 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subject, catchError, debounceTime, filter, forkJoin, of } from 'rxjs';
-import { BusinessCentralExportSettingFormOption, BusinessCentralExportSettingGet } from 'src/app/core/models/business-central/business-central-configuration/business-central-export-setting.model';
-import { ExportModuleRule, ExportSettingOptionSearch, ExportSettingValidatorRule } from 'src/app/core/models/common/export-settings.model';
-import { AppName, BCExportSettingDestinationOptionKey, BusinessCentralExportType, BusinessCentralField, BusinessCentralOnboardingState, BusinessCentralUpdateEvent, ConfigurationCta, ExpenseGroupedBy, ExportDateType, FyleField, Page, ToastSeverity, TrackingApp } from 'src/app/core/models/enum/enum.model';
+import {
+  BusinessCentralExportSettingFormOption,
+  BusinessCentralExportSettingGet,
+} from 'src/app/core/models/business-central/business-central-configuration/business-central-export-setting.model';
+import {
+  ExportModuleRule,
+  ExportSettingOptionSearch,
+  ExportSettingValidatorRule,
+} from 'src/app/core/models/common/export-settings.model';
+import {
+  AppName,
+  BCExportSettingDestinationOptionKey,
+  BusinessCentralExportType,
+  BusinessCentralField,
+  BusinessCentralOnboardingState,
+  BusinessCentralUpdateEvent,
+  ConfigurationCta,
+  ExpenseGroupedBy,
+  ExportDateType,
+  FyleField,
+  Page,
+  ToastSeverity,
+  TrackingApp,
+} from 'src/app/core/models/enum/enum.model';
 import { BusinessCentralExportSettingsService } from 'src/app/core/services/business-central/business-central-configuration/business-central-export-settings.service';
 import { HelperService } from 'src/app/core/services/common/helper.service';
 import { MappingService } from 'src/app/core/services/common/mapping.service';
@@ -20,13 +41,12 @@ import { ExportSettingsService } from 'src/app/core/services/common/export-setti
 import { BrandingService } from 'src/app/core/services/common/branding.service';
 
 @Component({
-    selector: 'app-business-central-export-settings',
-    templateUrl: './business-central-export-settings.component.html',
-    styleUrls: ['./business-central-export-settings.component.scss'],
-    standalone: false
+  selector: 'app-business-central-export-settings',
+  templateUrl: './business-central-export-settings.component.html',
+  styleUrls: ['./business-central-export-settings.component.scss'],
+  standalone: false,
 })
 export class BusinessCentralExportSettingsComponent implements OnInit {
-
   isOnboarding: boolean;
 
   exportSettings: BusinessCentralExportSettingGet | null;
@@ -41,12 +61,12 @@ export class BusinessCentralExportSettingsComponent implements OnInit {
 
   previewImagePaths = [
     {
-      'PURCHASE_INVOICE': 'assets/illustrations/ms-dynamics/purchase-invoice.png',
-      'JOURNAL_ENTRY': 'assets/illustrations/ms-dynamics/journal-entry.png'
+      PURCHASE_INVOICE: 'assets/illustrations/ms-dynamics/purchase-invoice.png',
+      JOURNAL_ENTRY: 'assets/illustrations/ms-dynamics/journal-entry.png',
     },
     {
-      'JOURNAL_ENTRY': 'assets/illustrations/ms-dynamics/journal-entry.png'
-    }
+      JOURNAL_ENTRY: 'assets/illustrations/ms-dynamics/journal-entry.png',
+    },
   ];
 
   readonly brandingConfig = brandingConfig;
@@ -104,12 +124,14 @@ export class BusinessCentralExportSettingsComponent implements OnInit {
     private translocoService: TranslocoService,
     private businessCentralExportSettingsService: BusinessCentralExportSettingsService,
     private exportSettingsService: ExportSettingsService,
-    public brandingService: BrandingService
+    public brandingService: BrandingService,
   ) {
-    this.reimbursableExpenseGroupingDateOptions = this.businessCentralExportSettingsService.getReimbursableExpenseGroupingDateOptions();
+    this.reimbursableExpenseGroupingDateOptions =
+      this.businessCentralExportSettingsService.getReimbursableExpenseGroupingDateOptions();
     this.cccExpenseGroupingDateOptions = this.businessCentralExportSettingsService.getCCCExpenseGroupingDateOptions();
     this.expenseGroupByOptions = this.businessCentralExportSettingsService.getExpenseGroupByOptions();
-    this.reimbursableExpensesExportTypeOptions = this.businessCentralExportSettingsService.getReimbursableExpensesExportTypeOptions();
+    this.reimbursableExpensesExportTypeOptions =
+      this.businessCentralExportSettingsService.getReimbursableExpensesExportTypeOptions();
     this.cccExpensesExportTypeOptions = this.businessCentralExportSettingsService.getCCCExpensesExportTypeOptions();
     this.reimbursableExpenseState = this.businessCentralExportSettingsService.getReimbursableExpenseState();
     this.cccExpenseState = this.businessCentralExportSettingsService.getCCCExpenseState();
@@ -119,35 +141,53 @@ export class BusinessCentralExportSettingsComponent implements OnInit {
 
   private constructPayloadAndSave(): void {
     this.isSaveInProgress = true;
-    const exportSettingPayload = BusinessCentralExportSettingsService.createExportSettingPayload(this.exportSettingForm);
-    this.exportSettingService.postExportSettings(exportSettingPayload).subscribe((exportSettingResponse: BusinessCentralExportSettingGet) => {
-      this.isSaveInProgress = false;
-      this.toastService.displayToastMessage(ToastSeverity.SUCCESS, this.translocoService.translate('businessCentralExportSettings.saveSuccess'));
-      this.trackingService.trackTimeSpent(TrackingApp.BUSINESS_CENTRAL, Page.EXPORT_SETTING_BUSINESS_CENTRAL, this.sessionStartTime);
-      if (this.workspaceService.getOnboardingState() === BusinessCentralOnboardingState.EXPORT_SETTINGS) {
-        this.trackingService.onOnboardingStepCompletion(TrackingApp.BUSINESS_CENTRAL, BusinessCentralOnboardingState.EXPORT_SETTINGS, 2, exportSettingPayload);
-      } else {
-        this.trackingService.onUpdateEvent(
-          TrackingApp.BUSINESS_CENTRAL,
-          BusinessCentralUpdateEvent.ADVANCED_SETTINGS_BUSINESS_CENTRAL,
-          {
-            phase: this.helper.getPhase(this.isOnboarding),
-            oldState: this.exportSettings,
-            newState: exportSettingResponse
-          }
+    const exportSettingPayload = BusinessCentralExportSettingsService.createExportSettingPayload(
+      this.exportSettingForm,
+    );
+    this.exportSettingService.postExportSettings(exportSettingPayload).subscribe(
+      (exportSettingResponse: BusinessCentralExportSettingGet) => {
+        this.isSaveInProgress = false;
+        this.toastService.displayToastMessage(
+          ToastSeverity.SUCCESS,
+          this.translocoService.translate('businessCentralExportSettings.saveSuccess'),
         );
-      }
+        this.trackingService.trackTimeSpent(
+          TrackingApp.BUSINESS_CENTRAL,
+          Page.EXPORT_SETTING_BUSINESS_CENTRAL,
+          this.sessionStartTime,
+        );
+        if (this.workspaceService.getOnboardingState() === BusinessCentralOnboardingState.EXPORT_SETTINGS) {
+          this.trackingService.onOnboardingStepCompletion(
+            TrackingApp.BUSINESS_CENTRAL,
+            BusinessCentralOnboardingState.EXPORT_SETTINGS,
+            2,
+            exportSettingPayload,
+          );
+        } else {
+          this.trackingService.onUpdateEvent(
+            TrackingApp.BUSINESS_CENTRAL,
+            BusinessCentralUpdateEvent.ADVANCED_SETTINGS_BUSINESS_CENTRAL,
+            {
+              phase: this.helper.getPhase(this.isOnboarding),
+              oldState: this.exportSettings,
+              newState: exportSettingResponse,
+            },
+          );
+        }
 
-      if (this.isOnboarding) {
-        this.workspaceService.setOnboardingState(BusinessCentralOnboardingState.IMPORT_SETTINGS);
-        this.router.navigate([`/integrations/business_central/onboarding/import_settings`]);
-      }
-
-
-    }, () => {
-      this.isSaveInProgress = false;
-      this.toastService.displayToastMessage(ToastSeverity.ERROR, this.translocoService.translate('businessCentralExportSettings.saveError'));
-      });
+        if (this.isOnboarding) {
+          this.workspaceService.setOnboardingState(BusinessCentralOnboardingState.IMPORT_SETTINGS);
+          this.router.navigate([`/integrations/business_central/onboarding/import_settings`]);
+        }
+      },
+      () => {
+        this.isSaveInProgress = false;
+        this.toastService.displayToastMessage(
+          ToastSeverity.ERROR,
+          this.translocoService.translate('businessCentralExportSettings.saveError'),
+        );
+      },
+    );
   }
 
   save(): void {
@@ -156,7 +196,7 @@ export class BusinessCentralExportSettingsComponent implements OnInit {
     }
   }
 
-  refreshDimensions(isRefresh: boolean): void{
+  refreshDimensions(isRefresh: boolean): void {
     this.businessCentralHelperService.importAttributes(isRefresh);
   }
 
@@ -175,46 +215,58 @@ export class BusinessCentralExportSettingsComponent implements OnInit {
       this.reimbursableExpenseGroupingDateOptions = this.exportSettingsService.constructExportDateOptions(
         false,
         reimbursableExportGroup,
-        this.exportSettingForm.controls.reimbursableExportDate.value
+        this.exportSettingForm.controls.reimbursableExportDate.value,
       );
 
       this.exportSettingsService.clearInvalidDateOption(
         this.exportSettingForm.get('reimbursableExportDate'),
-        this.reimbursableExpenseGroupingDateOptions
+        this.reimbursableExpenseGroupingDateOptions,
       );
     });
 
     this.exportSettingForm.controls.cccExportGroup.valueChanges.subscribe((cccExportGroup) => {
-      this.cccExpenseGroupingDateOptions = this.exportSettingsService.constructExportDateOptions(true, cccExportGroup, this.exportSettingForm.controls.cccExportDate.value);
+      this.cccExpenseGroupingDateOptions = this.exportSettingsService.constructExportDateOptions(
+        true,
+        cccExportGroup,
+        this.exportSettingForm.controls.cccExportDate.value,
+      );
 
       this.exportSettingsService.clearInvalidDateOption(
         this.exportSettingForm.get('cccExportDate'),
-        this.cccExpenseGroupingDateOptions
+        this.cccExpenseGroupingDateOptions,
       );
     });
 
-    this.exportSettingForm.get('reimbursableExportType')?.valueChanges.subscribe(() => this.updateExpenseGroupingValues());
+    this.exportSettingForm
+      .get('reimbursableExportType')
+      ?.valueChanges.subscribe(() => this.updateExpenseGroupingValues());
     this.exportSettingForm.get('cccExportType')?.valueChanges.subscribe(() => this.updateExpenseGroupingValues());
   }
 
   private optionSearchWatcher(): void {
-    this.optionSearchUpdate.pipe(
-      debounceTime(1000)
-    ).subscribe((event: ExportSettingOptionSearch) => {
-
+    this.optionSearchUpdate.pipe(debounceTime(1000)).subscribe((event: ExportSettingOptionSearch) => {
       if (event.destinationOptionKey === BCExportSettingDestinationOptionKey.BANK_ACCOUNT) {
         const observables = [
           this.mappingService.getPaginatedDestinationAttributes('BANK_ACCOUNT', event.searchTerm),
           this.mappingService.getPaginatedDestinationAttributes(
-            'ACCOUNT', event.searchTerm, undefined, undefined, undefined, ['Assets', 'Liabilities']
-          )
+            'ACCOUNT',
+            event.searchTerm,
+            undefined,
+            undefined,
+            undefined,
+            ['Assets', 'Liabilities'],
+          ),
         ];
 
         forkJoin(observables).subscribe(([bankAccounts, accounts]) => {
           // Insert new options (if any) to existing options, and sort them
           const newOptions = [...bankAccounts.results, ...accounts.results];
           newOptions.forEach((newOption) => {
-            if (!this.bankAccountOptions.find((existingOption) => existingOption.destination_id === newOption.destination_id)) {
+            if (
+              !this.bankAccountOptions.find(
+                (existingOption) => existingOption.destination_id === newOption.destination_id,
+              )
+            ) {
               this.bankAccountOptions.push(newOption);
             }
           });
@@ -222,9 +274,7 @@ export class BusinessCentralExportSettingsComponent implements OnInit {
           this.bankAccountOptions.sort((a, b) => (a.value || '').localeCompare(b.value || ''));
           this.isOptionSearchInProgress = false;
         });
-
       } else {
-
         let existingOptions: DestinationAttribute[];
         switch (event.destinationOptionKey) {
           case BCExportSettingDestinationOptionKey.VENDOR:
@@ -232,25 +282,25 @@ export class BusinessCentralExportSettingsComponent implements OnInit {
             break;
         }
 
-        this.mappingService.getPaginatedDestinationAttributes(event.destinationOptionKey, event.searchTerm).subscribe((response) => {
+        this.mappingService
+          .getPaginatedDestinationAttributes(event.destinationOptionKey, event.searchTerm)
+          .subscribe((response) => {
+            // Insert new options to existing options
+            response.results.forEach((option) => {
+              if (!existingOptions.find((existingOption) => existingOption.destination_id === option.destination_id)) {
+                existingOptions.push(option);
+              }
+            });
 
-          // Insert new options to existing options
-          response.results.forEach((option) => {
-            if (!existingOptions.find((existingOption) => existingOption.destination_id === option.destination_id)) {
-              existingOptions.push(option);
+            switch (event.destinationOptionKey) {
+              case BCExportSettingDestinationOptionKey.VENDOR:
+                this.vendorOptions = existingOptions.concat();
+                this.vendorOptions.sort((a, b) => (a.value || '').localeCompare(b.value || ''));
+                break;
             }
+
+            this.isOptionSearchInProgress = false;
           });
-
-
-          switch (event.destinationOptionKey) {
-            case BCExportSettingDestinationOptionKey.VENDOR:
-              this.vendorOptions = existingOptions.concat();
-              this.vendorOptions.sort((a, b) => (a.value || '').localeCompare(b.value || ''));
-              break;
-          }
-
-          this.isOptionSearchInProgress = false;
-        });
       }
     });
   }
@@ -269,18 +319,18 @@ export class BusinessCentralExportSettingsComponent implements OnInit {
       this.helperService.addDestinationAttributeIfNotExists({
         options: this.bankAccountOptions,
         value: this.exportSettings.default_ccc_bank_account_name,
-        destination_id: this.exportSettings.default_ccc_bank_account_id
+        destination_id: this.exportSettings.default_ccc_bank_account_id,
       });
       this.helperService.addDestinationAttributeIfNotExists({
         options: this.bankAccountOptions,
         value: this.exportSettings.default_bank_account_name,
-        destination_id: this.exportSettings.default_bank_account_id
+        destination_id: this.exportSettings.default_bank_account_id,
       });
 
       this.helperService.addDestinationAttributeIfNotExists({
         options: this.vendorOptions,
         value: this.exportSettings.default_vendor_name,
-        destination_id: this.exportSettings.default_vendor_id
+        destination_id: this.exportSettings.default_vendor_id,
       });
     }
   }
@@ -288,44 +338,52 @@ export class BusinessCentralExportSettingsComponent implements OnInit {
   private setupPage(): void {
     this.isOnboarding = this.router.url.includes('onboarding');
     const exportSettingValidatorRule: ExportSettingValidatorRule = {
-      'reimbursableExpense': ['reimbursableExportType', 'reimbursableExportGroup', 'reimbursableExportDate', 'reimbursableExpenseState'],
-      'creditCardExpense': ['cccExportType', 'cccExportGroup', 'cccExportDate', 'cccExpenseState']
+      reimbursableExpense: [
+        'reimbursableExportType',
+        'reimbursableExportGroup',
+        'reimbursableExportDate',
+        'reimbursableExpenseState',
+      ],
+      creditCardExpense: ['cccExportType', 'cccExportGroup', 'cccExportDate', 'cccExpenseState'],
     };
 
     const exportModuleRule: ExportModuleRule[] = [
       {
-        'formController': 'reimbursableExportType',
-        'requiredValue': {
-          'JOURNAL_ENTRY': ['defaultBankName']
-        }
+        formController: 'reimbursableExportType',
+        requiredValue: {
+          JOURNAL_ENTRY: ['defaultBankName'],
+        },
       },
       {
-        'formController': 'cccExportType',
-        'requiredValue': {
-          'JOURNAL_ENTRY': ['cccDefaultBankName', 'journalEntryNamePreference']
-        }
-      }
+        formController: 'cccExportType',
+        requiredValue: {
+          JOURNAL_ENTRY: ['cccDefaultBankName', 'journalEntryNamePreference'],
+        },
+      },
     ];
     const commonFormFields: string[] = [];
 
     const destinationAttributes = [BusinessCentralField.ACCOUNT, FyleField.VENDOR];
 
-    const groupedAttributes = destinationAttributes.map(destinationAttribute =>
-      this.mappingService.getPaginatedDestinationAttributes(destinationAttribute).pipe(filter(response => !!response))
+    const groupedAttributes = destinationAttributes.map((destinationAttribute) =>
+      this.mappingService
+        .getPaginatedDestinationAttributes(destinationAttribute)
+        .pipe(filter((response) => !!response)),
     );
 
     // For reimbursable default bank account options
     const reimbursableBankAccountAttributes = [
       this.mappingService.getPaginatedDestinationAttributes('BANK_ACCOUNT'),
-      this.mappingService.getPaginatedDestinationAttributes(
-        'ACCOUNT', undefined, undefined, undefined, undefined, ['Assets', 'Liabilities']
-      )
+      this.mappingService.getPaginatedDestinationAttributes('ACCOUNT', undefined, undefined, undefined, undefined, [
+        'Assets',
+        'Liabilities',
+      ]),
     ];
 
     forkJoin([
       this.exportSettingService.getExportSettings().pipe(catchError(() => of(null))),
       ...groupedAttributes,
-      ...reimbursableBankAccountAttributes
+      ...reimbursableBankAccountAttributes,
     ]).subscribe(([exportSettingsResponse, accounts, vendors, reimbursableBankAccounts, reimbursableAccounts]) => {
       this.exportSettings = exportSettingsResponse;
 
@@ -333,13 +391,13 @@ export class BusinessCentralExportSettingsComponent implements OnInit {
         this.helperService.addDestinationAttributeIfNotExists({
           options: accounts.results,
           value: exportSettingsResponse?.default_bank_account_name,
-          destination_id: exportSettingsResponse?.default_bank_account_id
+          destination_id: exportSettingsResponse?.default_bank_account_id,
         });
 
         this.helperService.addDestinationAttributeIfNotExists({
           options: vendors.results,
           value: exportSettingsResponse?.default_vendor_name,
-          destination_id: exportSettingsResponse?.default_vendor_id
+          destination_id: exportSettingsResponse?.default_vendor_id,
         });
       }
 
@@ -347,7 +405,11 @@ export class BusinessCentralExportSettingsComponent implements OnInit {
       this.bankAccountOptions = [...reimbursableBankAccounts.results, ...reimbursableAccounts.results];
       this.bankAccountOptions.sort((a, b) => (a.value || '').localeCompare(b.value || ''));
       this.addMissingOptions();
-      this.exportSettingForm = BusinessCentralExportSettingsService.mapAPIResponseToFormGroup(this.exportSettings, this.bankAccountOptions, vendors.results);
+      this.exportSettingForm = BusinessCentralExportSettingsService.mapAPIResponseToFormGroup(
+        this.exportSettings,
+        this.bankAccountOptions,
+        vendors.results,
+      );
 
       this.helperService.addExportSettingFormValidator(this.exportSettingForm);
       this.helper.setConfigurationSettingValidatorsAndWatchers(exportSettingValidatorRule, this.exportSettingForm);
@@ -366,5 +428,4 @@ export class BusinessCentralExportSettingsComponent implements OnInit {
   navigateBack(): void {
     this.router.navigate([`/integrations/business_central/onboarding/connector`]);
   }
-
 }

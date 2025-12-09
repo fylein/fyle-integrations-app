@@ -1,7 +1,8 @@
-::ng-deep .day-dropdown, ::ng-deep .time-dropdown {
-    @apply tw-w-[170px] #{!important};
+::ng-deep .day-dropdown,
+::ng-deep .time-dropdown {
+  @apply tw-w-[170px] #{!important};
 }
 
 ::ng-deep .meridiem-dropdown {
-    @apply tw-w-[100px] #{!important};
+  @apply tw-w-[100px] #{!important};
 }

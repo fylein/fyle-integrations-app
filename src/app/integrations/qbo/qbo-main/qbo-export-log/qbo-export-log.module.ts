@@ -3,12 +3,8 @@ import { CommonModule } from '@angular/common';
 
 import { QboExportLogRoutingModule } from './qbo-export-log-routing.module';
 
-
 @NgModule({
   declarations: [],
-  imports: [
-    CommonModule,
-    QboExportLogRoutingModule
-  ]
+  imports: [CommonModule, QboExportLogRoutingModule],
 })
-export class QboExportLogModule { }
+export class QboExportLogModule {}

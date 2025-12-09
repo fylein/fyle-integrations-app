@@ -2,7 +2,7 @@ export type NetsuiteConnector = {
   ns_account_id: string;
   ns_token_id: string;
   ns_token_secret: string;
-}
+};
 
 export interface NetsuiteConnectorGet extends NetsuiteConnector {
   workspace_id: number;
@@ -14,8 +14,8 @@ export interface NetsuiteConnectorGet extends NetsuiteConnector {
 export interface NetsuiteConnectorPost extends NetsuiteConnector {}
 
 export type NetsuiteSubsidiaryMappingPost = {
-  country_name: string | null,
-  internal_id: string,
-  subsidiary_name: string,
-  workspace: number
-}
+  country_name: string | null;
+  internal_id: string;
+  subsidiary_name: string;
+  workspace: number;
+};

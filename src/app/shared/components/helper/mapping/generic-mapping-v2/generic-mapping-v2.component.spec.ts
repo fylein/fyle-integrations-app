@@ -8,9 +8,8 @@ xdescribe('GenericMappingV2Component', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ GenericMappingV2Component ]
-    })
-    .compileComponents();
+      declarations: [GenericMappingV2Component],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(GenericMappingV2Component);
     component = fixture.componentInstance;

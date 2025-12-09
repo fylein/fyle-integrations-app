@@ -1,5 +1,4 @@
-import { MappingIntacct } from "./mapping.model";
-
+import { MappingIntacct } from './mapping.model';
 
 export type ExpenseAttributeDetail = {
   location: string;
@@ -25,7 +24,7 @@ export type ExpenseAttribute = {
 };
 
 export type MinimalExpenseAttribute = {
-  id: number
+  id: number;
 };
 
 export interface ExtendedExpenseAttribute extends ExpenseAttribute {

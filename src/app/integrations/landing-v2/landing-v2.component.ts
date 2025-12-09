@@ -1,6 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { AccountingIntegrationApp, ClickEvent, InAppIntegration, IntegrationAppKey, IntegrationView, ThemeOption, TrackingApp } from 'src/app/core/models/enum/enum.model';
+import {
+  AccountingIntegrationApp,
+  ClickEvent,
+  InAppIntegration,
+  IntegrationAppKey,
+  IntegrationView,
+  ThemeOption,
+  TrackingApp,
+} from 'src/app/core/models/enum/enum.model';
 import { integrationCallbackUrlMap, IntegrationsView } from 'src/app/core/models/integrations/integrations.model';
 import { EventsService } from 'src/app/core/services/common/events.service';
 import { OrgService } from 'src/app/core/services/org/org.service';
@@ -13,13 +21,12 @@ import { IntegrationsService } from 'src/app/core/services/common/integrations.s
 import { TrackingService } from 'src/app/core/services/integration/tracking.service';
 
 @Component({
-    selector: 'app-landing-v2',
-    templateUrl: './landing-v2.component.html',
-    styleUrl: './landing-v2.component.scss',
-    standalone: false
+  selector: 'app-landing-v2',
+  templateUrl: './landing-v2.component.html',
+  styleUrl: './landing-v2.component.scss',
+  standalone: false,
 })
 export class LandingV2Component implements OnInit {
-
   IntegrationsView = IntegrationView;
 
   AccountingIntegrationApp = AccountingIntegrationApp;
@@ -36,28 +43,30 @@ export class LandingV2Component implements OnInit {
     [IntegrationView.ACCOUNTING]: false,
     [IntegrationView.HRMS]: false,
     [IntegrationView.ALL]: false,
-    [IntegrationView.TRAVEL]: false
+    [IntegrationView.TRAVEL]: false,
   };
 
   integrationTabs: IntegrationsView = {
     [IntegrationView.ACCOUNTING]: false,
     [IntegrationView.HRMS]: false,
     [IntegrationView.ALL]: true,
-    [IntegrationView.TRAVEL]: false
+    [IntegrationView.TRAVEL]: false,
   };
 
   private readonly accountingIntegrationUrlMap = {
     [AccountingIntegrationApp.NETSUITE]: '/integrations/netsuite',
     [AccountingIntegrationApp.SAGE_INTACCT]: '/integrations/intacct',
     [AccountingIntegrationApp.QBO]: '/integrations/qbo',
-    [AccountingIntegrationApp.XERO]: '/integrations/xero'
+    [AccountingIntegrationApp.XERO]: '/integrations/xero',
   };
 
   readonly brandingConfig = brandingConfig;
 
   readonly isINCluster = this.storageService.get('cluster-domain')?.includes('in1');
 
-  readonly exposeApps = !this.isINCluster ? exposeAppConfig[brandingConfig.brandId][brandingConfig.envId] : exposeAppConfig[brandingConfig.brandId]['production-1-in'];
+  readonly exposeApps = !this.isINCluster
+    ? exposeAppConfig[brandingConfig.brandId][brandingConfig.envId]
+    : exposeAppConfig[brandingConfig.brandId]['production-1-in'];
 
   readonly showQBDIIFIntegration = new Date(this.org.created_at) < new Date('2025-01-17T00:00:00Z');
 
@@ -74,7 +83,7 @@ export class LandingV2Component implements OnInit {
     [InAppIntegration.INTACCT]: TrackingApp.INTACCT,
     [InAppIntegration.NETSUITE]: TrackingApp.NETSUITE,
     [InAppIntegration.XERO]: TrackingApp.XERO,
-    [InAppIntegration.QBO]: TrackingApp.QBO
+    [InAppIntegration.QBO]: TrackingApp.QBO,
   };
 
   constructor(
@@ -83,9 +92,8 @@ export class LandingV2Component implements OnInit {
     private storageService: StorageService,
     private orgService: OrgService,
     private integrationService: IntegrationsService,
-    private trackingService: TrackingService
-  ) { }
-
+    private trackingService: TrackingService,
+  ) {}
 
   switchView(clickedView: IntegrationView): void {
     const initialState = Object.create(this.integrationTabsInitialState);
@@ -136,7 +144,6 @@ export class LandingV2Component implements OnInit {
   }
 
   openAccountingIntegrationApp(accountingIntegrationApp: AccountingIntegrationApp): void {
-
     // For local dev, we perform auth via loginWithRefreshToken on Fyle login redirect (/auth/redirect)
     // So we can simply redirect to the integration page.
     if (!environment.production) {
@@ -146,7 +153,7 @@ export class LandingV2Component implements OnInit {
 
     const payload = {
       callbackUrl: integrationCallbackUrlMap[accountingIntegrationApp][0],
-      clientId: integrationCallbackUrlMap[accountingIntegrationApp][1]
+      clientId: integrationCallbackUrlMap[accountingIntegrationApp][1],
     };
 
     this.eventsService.postEvent(payload);
@@ -158,13 +165,11 @@ export class LandingV2Component implements OnInit {
   }
 
   private storeConnectedApps() {
-    this.integrationService.getIntegrations().subscribe(integrations => {
-      const tpaNames = integrations.map(integration => integration.tpa_name);
+    this.integrationService.getIntegrations().subscribe((integrations) => {
+      const tpaNames = integrations.map((integration) => integration.tpa_name);
       const connectedApps = tpaNames
-        .map(tpaName =>
-          this.integrationService.getIntegrationKey(tpaName)
-        )
-        .filter(key => key !== null);
+        .map((tpaName) => this.integrationService.getIntegrationKey(tpaName))
+        .filter((key) => key !== null);
 
       this.connectedApps = connectedApps as IntegrationAppKey[];
     });

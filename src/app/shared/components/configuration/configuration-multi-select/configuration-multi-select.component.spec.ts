@@ -10,10 +10,9 @@ xdescribe('ConfigurationMultiSelectComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ConfigurationMultiSelectComponent ],
-      providers: [FormBuilder]
-    })
-    .compileComponents();
+      declarations: [ConfigurationMultiSelectComponent],
+      providers: [FormBuilder],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(ConfigurationMultiSelectComponent);
     component = fixture.componentInstance;
@@ -21,7 +20,7 @@ xdescribe('ConfigurationMultiSelectComponent', () => {
     component.formControllerName = 'expenseMemoStructure';
     component.form = formbuilder.group({
       classType: ['CLASS'],
-      expenseMemoStructure: ['PROJECT']
+      expenseMemoStructure: ['PROJECT'],
     });
     fixture.detectChanges();
   });

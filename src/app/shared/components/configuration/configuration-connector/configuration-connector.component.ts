@@ -4,13 +4,12 @@ import { DestinationAttribute } from 'src/app/core/models/db/destination-attribu
 import { AppName } from 'src/app/core/models/enum/enum.model';
 
 @Component({
-    selector: 'app-configuration-connector',
-    templateUrl: './configuration-connector.component.html',
-    styleUrls: ['./configuration-connector.component.scss'],
-    standalone: false
+  selector: 'app-configuration-connector',
+  templateUrl: './configuration-connector.component.html',
+  styleUrls: ['./configuration-connector.component.scss'],
+  standalone: false,
 })
 export class ConfigurationConnectorComponent implements OnInit {
-
   @Input() fyleOrgName: string;
 
   @Input() accountingAppTitle: string;
@@ -49,7 +48,7 @@ export class ConfigurationConnectorComponent implements OnInit {
 
   companyName: DestinationAttribute;
 
-  constructor() { }
+  constructor() {}
 
   disconnect() {
     this.switchCompany.emit();
@@ -59,7 +58,5 @@ export class ConfigurationConnectorComponent implements OnInit {
     this.connectCompany.emit(this.companyName);
   }
 
-  ngOnInit(): void {
-  }
-
+  ngOnInit(): void {}
 }

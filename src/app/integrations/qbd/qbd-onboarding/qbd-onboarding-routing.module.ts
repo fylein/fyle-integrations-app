@@ -14,30 +14,30 @@ const routes: Routes = [
     children: [
       {
         path: 'landing',
-        component: QbdLandingComponent
+        component: QbdLandingComponent,
       },
       {
         path: 'export_settings',
-        component: QbdOnboardingExportSettingComponent
+        component: QbdOnboardingExportSettingComponent,
       },
       {
         path: 'field_mappings',
-        component: QbdOnboardingFieldSettingComponent
+        component: QbdOnboardingFieldSettingComponent,
       },
       {
         path: 'advanced_settings',
-        component: QbdOnboardingAdvancedSettingComponent
+        component: QbdOnboardingAdvancedSettingComponent,
       },
       {
         path: 'done',
-        component: QbdOnboardingDoneComponent
-      }
-    ]
-  }
+        component: QbdOnboardingDoneComponent,
+      },
+    ],
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class OnboardingRoutingModule { }
+export class OnboardingRoutingModule {}

@@ -11,8 +11,8 @@ describe('UsiUadvancedUsettingsService', () => {
       providers: [
         UsiUadvancedUsettingsService,
         provideHttpClient(withInterceptorsFromDi()),
-        provideHttpClientTesting()
-      ]
+        provideHttpClientTesting(),
+      ],
     });
     service = TestBed.inject(UsiUadvancedUsettingsService);
   });

@@ -1,8 +1,8 @@
 .inside-container {
-    @apply tw-flex-col tw-items-start tw-gap-4;
-    max-width: auto;
+  @apply tw-flex-col tw-items-start tw-gap-4;
+  max-width: auto;
 }
 
 .pointer {
-    @apply tw-cursor-pointer;
+  @apply tw-cursor-pointer;
 }

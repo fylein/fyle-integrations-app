@@ -1,21 +1,21 @@
 .step {
-  @apply tw-w-48-px tw-h-48-px tw-rounded-full tw-box-border tw-flex tw-items-center ; 
+  @apply tw-w-48-px tw-h-48-px tw-rounded-full tw-box-border tw-flex tw-items-center;
 }
 
 .step-state {
-  @apply tw-bg-white tw-border ;
+  @apply tw-bg-white tw-border;
 }
 
 .icon {
-  @apply tw-w-20-px tw-h-20-px ;
+  @apply tw-w-20-px tw-h-20-px;
 }
 
 .line-active {
-  @apply tw-border-t-2-px tw-border-dashed tw-border-line-inactive tw-w-40 tw-h-2-px ;
+  @apply tw-border-t-2-px tw-border-dashed tw-border-line-inactive tw-w-40 tw-h-2-px;
 }
 
 .line-inactive {
-  @apply tw-border-t-2-px tw-border-solid tw-border-success-toast tw-w-40 tw-h-2-px ;
+  @apply tw-border-t-2-px tw-border-solid tw-border-success-toast tw-w-40 tw-h-2-px;
 }
 
 .step-name-export {

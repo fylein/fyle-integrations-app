@@ -4,7 +4,17 @@ import { Router } from '@angular/router';
 import { catchError, of } from 'rxjs';
 import { forkJoin } from 'rxjs/internal/observable/forkJoin';
 import { BusinessCentralImportSettingsGet } from 'src/app/core/models/business-central/business-central-configuration/business-central-import-settings.model';
-import { AppName, AppNameInService, BusinessCentralOnboardingState, BusinessCentralUpdateEvent, ConfigurationCta, DefaultImportFields, Page, ToastSeverity, TrackingApp } from 'src/app/core/models/enum/enum.model';
+import {
+  AppName,
+  AppNameInService,
+  BusinessCentralOnboardingState,
+  BusinessCentralUpdateEvent,
+  ConfigurationCta,
+  DefaultImportFields,
+  Page,
+  ToastSeverity,
+  TrackingApp,
+} from 'src/app/core/models/enum/enum.model';
 import { BusinessCentralImportSettingsService } from 'src/app/core/services/business-central/business-central-configuration/business-central-import-settings.service';
 import { BusinessCentralHelperService } from 'src/app/core/services/business-central/business-central-core/business-central-helper.service';
 import { HelperService } from 'src/app/core/services/common/helper.service';
@@ -20,13 +30,12 @@ import { TranslocoService } from '@jsverse/transloco';
 import { BrandingService } from 'src/app/core/services/common/branding.service';
 
 @Component({
-    selector: 'app-business-central-import-settings',
-    templateUrl: './business-central-import-settings.component.html',
-    styleUrls: ['./business-central-import-settings.component.scss'],
-    standalone: false
+  selector: 'app-business-central-import-settings',
+  templateUrl: './business-central-import-settings.component.html',
+  styleUrls: ['./business-central-import-settings.component.scss'],
+  standalone: false,
 })
 export class BusinessCentralImportSettingsComponent implements OnInit {
-
   isOnboarding: boolean;
 
   importSettings: BusinessCentralImportSettingsGet | null;
@@ -81,7 +90,7 @@ export class BusinessCentralImportSettingsComponent implements OnInit {
     private workspaceService: WorkspaceService,
     private translocoService: TranslocoService,
     private businessCentralImportSettingsService: BusinessCentralImportSettingsService,
-    public brandingService: BrandingService
+    public brandingService: BrandingService,
   ) {
     this.chartOfAccountTypesList = this.businessCentralImportSettingsService.getChartOfAccountTypesList();
   }
@@ -112,7 +121,7 @@ export class BusinessCentralImportSettingsComponent implements OnInit {
       attribute_type: this.customFieldForm.get('attribute_type')?.value.split(' ').join('_').toUpperCase(),
       display_name: this.customFieldForm.get('attribute_type')?.value,
       source_placeholder: this.customFieldForm.get('source_placeholder')?.value,
-      is_dependent: false
+      is_dependent: false,
     };
 
     if (this.customFieldControl) {
@@ -124,9 +133,13 @@ export class BusinessCentralImportSettingsComponent implements OnInit {
         destination_field: this.customFieldControl.get('destination_field')?.value,
         import_to_fyle: true,
         is_custom: true,
-        source_placeholder: this.customField.source_placeholder
+        source_placeholder: this.customField.source_placeholder,
       };
-      (this.importSettingForm.get('expenseFields') as FormArray).controls.filter(field => field.get('destination_field')?.value === this.customFieldControl.get('destination_field')?.value)[0].patchValue(expenseField);
+      (this.importSettingForm.get('expenseFields') as FormArray).controls
+        .filter(
+          (field) => field.get('destination_field')?.value === this.customFieldControl.get('destination_field')?.value,
+        )[0]
+        .patchValue(expenseField);
       this.customFieldForm.reset();
       this.showCustomFieldDialog = false;
     }
@@ -136,15 +149,15 @@ export class BusinessCentralImportSettingsComponent implements OnInit {
     this.customFieldForm = this.formBuilder.group({
       attribute_type: ['', Validators.required],
       display_name: [''],
-      source_placeholder: ['', Validators.required]
+      source_placeholder: ['', Validators.required],
     });
     this.showCustomFieldDialog = shouldShowDialog;
   }
 
   private importSettingWatcher(): void {
     const expenseFieldArray = this.importSettingForm.get('expenseFields') as FormArray;
-    expenseFieldArray.controls.forEach((control:any) => {
-      control.valueChanges.subscribe((value: { source_field: string; destination_field: string; }) => {
+    expenseFieldArray.controls.forEach((control: any) => {
+      control.valueChanges.subscribe((value: { source_field: string; destination_field: string }) => {
         if (value.source_field === 'custom_field') {
           this.initializeCustomFieldForm(true);
           this.customFieldType = '';
@@ -154,7 +167,7 @@ export class BusinessCentralImportSettingsComponent implements OnInit {
             destination_field: control.get('destination_field')?.value,
             import_to_fyle: control.get('import_to_fyle')?.value,
             is_custom: control.get('is_custom')?.value,
-            source_placeholder: null
+            source_placeholder: null,
           });
         }
       });
@@ -167,35 +180,53 @@ export class BusinessCentralImportSettingsComponent implements OnInit {
 
   private constructPayloadAndSave() {
     this.isSaveInProgress = true;
-    const importSettingPayload = this.businessCentralImportSettingsService.createImportSettingPayload(this.importSettingForm);
-    this.importSettingService.postBusinessCentralImportSettings(importSettingPayload).subscribe((importSettingsResponse: BusinessCentralImportSettingsGet) => {
-      this.isSaveInProgress = false;
-      this.toastService.displayToastMessage(ToastSeverity.SUCCESS, this.translocoService.translate('businessCentralImportSettings.saveSuccessToast'));
-      this.trackingService.trackTimeSpent(TrackingApp.BUSINESS_CENTRAL, Page.IMPORT_SETTINGS_BUSINESS_CENTRAL, this.sessionStartTime);
-      if (this.workspaceService.getOnboardingState() === BusinessCentralOnboardingState.IMPORT_SETTINGS) {
-        this.trackingService.onOnboardingStepCompletion(TrackingApp.BUSINESS_CENTRAL, BusinessCentralOnboardingState.IMPORT_SETTINGS, 3, importSettingPayload);
-      } else {
-        this.trackingService.onUpdateEvent(
-          TrackingApp.BUSINESS_CENTRAL,
-          BusinessCentralUpdateEvent.ADVANCED_SETTINGS_BUSINESS_CENTRAL,
-          {
-            phase: this.helper.getPhase(this.isOnboarding),
-            oldState: this.importSettings,
-            newState: importSettingsResponse
-          }
+    const importSettingPayload = this.businessCentralImportSettingsService.createImportSettingPayload(
+      this.importSettingForm,
+    );
+    this.importSettingService.postBusinessCentralImportSettings(importSettingPayload).subscribe(
+      (importSettingsResponse: BusinessCentralImportSettingsGet) => {
+        this.isSaveInProgress = false;
+        this.toastService.displayToastMessage(
+          ToastSeverity.SUCCESS,
+          this.translocoService.translate('businessCentralImportSettings.saveSuccessToast'),
         );
-      }
+        this.trackingService.trackTimeSpent(
+          TrackingApp.BUSINESS_CENTRAL,
+          Page.IMPORT_SETTINGS_BUSINESS_CENTRAL,
+          this.sessionStartTime,
+        );
+        if (this.workspaceService.getOnboardingState() === BusinessCentralOnboardingState.IMPORT_SETTINGS) {
+          this.trackingService.onOnboardingStepCompletion(
+            TrackingApp.BUSINESS_CENTRAL,
+            BusinessCentralOnboardingState.IMPORT_SETTINGS,
+            3,
+            importSettingPayload,
+          );
+        } else {
+          this.trackingService.onUpdateEvent(
+            TrackingApp.BUSINESS_CENTRAL,
+            BusinessCentralUpdateEvent.ADVANCED_SETTINGS_BUSINESS_CENTRAL,
+            {
+              phase: this.helper.getPhase(this.isOnboarding),
+              oldState: this.importSettings,
+              newState: importSettingsResponse,
+            },
+          );
+        }
 
-      if (this.isOnboarding) {
-        this.workspaceService.setOnboardingState(BusinessCentralOnboardingState.ADVANCED_SETTINGS);
-        this.router.navigate([`/integrations/business_central/onboarding/advanced_settings`]);
-      }
-
-
-    }, () => {
-      this.isSaveInProgress = false;
-      this.toastService.displayToastMessage(ToastSeverity.ERROR, this.translocoService.translate('businessCentralImportSettings.saveErrorToast'));
-      });
+        if (this.isOnboarding) {
+          this.workspaceService.setOnboardingState(BusinessCentralOnboardingState.ADVANCED_SETTINGS);
+          this.router.navigate([`/integrations/business_central/onboarding/advanced_settings`]);
+        }
+      },
+      () => {
+        this.isSaveInProgress = false;
+        this.toastService.displayToastMessage(
+          ToastSeverity.ERROR,
+          this.translocoService.translate('businessCentralImportSettings.saveErrorToast'),
+        );
+      },
+    );
   }
 
   save(): void {
@@ -204,19 +235,25 @@ export class BusinessCentralImportSettingsComponent implements OnInit {
     }
   }
 
-
   private setupPage(): void {
     this.isOnboarding = this.router.url.includes('onboarding');
     forkJoin([
       this.importSettingService.getBusinessCentralImportSettings().pipe(catchError(() => of(null))),
       this.mappingService.getFyleFields(),
-      this.mappingService.getIntegrationsFields(AppNameInService.BUSINESS_CENTRAL)
+      this.mappingService.getIntegrationsFields(AppNameInService.BUSINESS_CENTRAL),
     ]).subscribe(([importSettingsResponse, fyleFieldsResponse, businessCentralFieldsResponse]) => {
       this.importSettings = importSettingsResponse;
-      this.importSettingForm = this.businessCentralImportSettingsService.mapAPIResponseToFormGroup(this.importSettings, businessCentralFieldsResponse);
+      this.importSettingForm = this.businessCentralImportSettingsService.mapAPIResponseToFormGroup(
+        this.importSettings,
+        businessCentralFieldsResponse,
+      );
       this.fyleFields = fyleFieldsResponse;
       this.businessCentralFields = businessCentralFieldsResponse;
-      this.fyleFields.push({ attribute_type: 'custom_field', display_name: this.translocoService.translate('businessCentralImportSettings.createCustomField'), is_dependent: false });
+      this.fyleFields.push({
+        attribute_type: 'custom_field',
+        display_name: this.translocoService.translate('businessCentralImportSettings.createCustomField'),
+        is_dependent: false,
+      });
       this.setupFormWatchers();
       this.initializeCustomFieldForm(false);
       this.isLoading = false;
@@ -224,12 +261,18 @@ export class BusinessCentralImportSettingsComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.customFieldOption = [{ attribute_type: 'custom_field', display_name: this.translocoService.translate('businessCentralImportSettings.createCustomField'), source_placeholder: null, is_dependent: false }];
+    this.customFieldOption = [
+      {
+        attribute_type: 'custom_field',
+        display_name: this.translocoService.translate('businessCentralImportSettings.createCustomField'),
+        source_placeholder: null,
+        is_dependent: false,
+      },
+    ];
     this.setupPage();
   }
 
   navigateBack(): void {
     this.router.navigate([`/integrations/business_central/onboarding/export_settings`]);
   }
-
 }

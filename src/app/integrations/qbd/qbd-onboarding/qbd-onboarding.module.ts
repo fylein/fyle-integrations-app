@@ -9,20 +9,14 @@ import { QbdOnboardingAdvancedSettingComponent } from './qbd-onboarding-advanced
 import { QbdLandingComponent } from './qbd-onboarding-landing/qbd-landing.component';
 import { QbdSharedModule } from '../qbd-shared/qbd-shared.module';
 
-
 @NgModule({
   declarations: [
     QbdOnboardingDoneComponent,
     QbdOnboardingExportSettingComponent,
     QbdOnboardingFieldSettingComponent,
     QbdOnboardingAdvancedSettingComponent,
-    QbdLandingComponent
+    QbdLandingComponent,
   ],
-  imports: [
-    CommonModule,
-    OnboardingRoutingModule,
-    SharedModule,
-    QbdSharedModule
-  ]
+  imports: [CommonModule, OnboardingRoutingModule, SharedModule, QbdSharedModule],
 })
-export class QbdOnboardingModule { }
+export class QbdOnboardingModule {}

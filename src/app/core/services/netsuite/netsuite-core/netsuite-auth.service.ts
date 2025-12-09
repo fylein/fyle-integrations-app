@@ -6,13 +6,12 @@ import { HelperService } from '../../common/helper.service';
 import { AppUrl } from 'src/app/core/models/enum/enum.model';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class NetsuiteAuthService {
-
   constructor(
     private apiService: ApiService,
-    private helperService: HelperService
+    private helperService: HelperService,
   ) {}
 
   loginWithRefreshToken(refresh_token: string): Observable<Token> {

@@ -1,5 +1,8 @@
-import { CSVImportAttributesInvalidResponse, CSVImportAttributesValidResponse } from "../../db/csv-import-attributes.model";
-import { Sage50AttributeType } from "../../enum/enum.model";
+import {
+  CSVImportAttributesInvalidResponse,
+  CSVImportAttributesValidResponse,
+} from '../../db/csv-import-attributes.model';
+import { Sage50AttributeType } from '../../enum/enum.model';
 
 export interface Sage50AccountingImportDetail {
   attribute_type: Sage50AttributeType;
@@ -14,9 +17,9 @@ export interface Sage50ImportAttributesValidResponse extends CSVImportAttributes
 
 export interface Sage50ImportAttributesInvalidResponse extends CSVImportAttributesInvalidResponse {
   error_type:
-    | "LIMIT_EXCEEDED"
-    | "NO_DATA_PROVIDED"
-    | "INVALID_DIMENSION"
-    | "ROW_VALIDATION_ERROR"
-    | "MISSING_REQUIRED_COLUMN";
+    | 'LIMIT_EXCEEDED'
+    | 'NO_DATA_PROVIDED'
+    | 'INVALID_DIMENSION'
+    | 'ROW_VALIDATION_ERROR'
+    | 'MISSING_REQUIRED_COLUMN';
 }

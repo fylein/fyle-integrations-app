@@ -9,7 +9,6 @@ import { IntacctOnboardingComponent } from './intacct-onboarding.component';
 import { RouterModule, Routes } from '@angular/router';
 import { IntacctOnboardingConnectorComponent } from './intacct-onboarding-connector/intacct-onboarding-connector.component';
 
-
 const routes: Routes = [
   {
     path: '',
@@ -17,34 +16,34 @@ const routes: Routes = [
     children: [
       {
         path: 'landing',
-        component: IntacctOnboardingLandingComponent
+        component: IntacctOnboardingLandingComponent,
       },
       {
         path: 'connector',
-        component: IntacctOnboardingConnectorComponent
+        component: IntacctOnboardingConnectorComponent,
       },
       {
         path: 'export_settings',
-        component: IntacctOnboardingExportSettingComponent
+        component: IntacctOnboardingExportSettingComponent,
       },
       {
         path: 'import_settings',
-        component: IntacctOnboardingImportSettingComponent
+        component: IntacctOnboardingImportSettingComponent,
       },
       {
         path: 'advanced_settings',
-        component: IntacctOnboardingAdvancedSettingComponent
+        component: IntacctOnboardingAdvancedSettingComponent,
       },
       {
         path: 'done',
-        component: IntacctOnboardingDoneComponent
-      }
-    ]
-  }
+        component: IntacctOnboardingDoneComponent,
+      },
+    ],
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class OnboardingRoutingModule { }
+export class OnboardingRoutingModule {}

@@ -5,36 +5,49 @@
         {{ 'landingV2.integrationsList' | transloco }}
       </h3>
 
-      <p class="landing-v2--section-caption" [innerHTML]="'landingV2.integrationsDescription' | transloco:{ brandName: brandingConfig.brandName }">
-      </p>
+      <p
+        class="landing-v2--section-caption"
+        [innerHTML]="'landingV2.integrationsDescription' | transloco: { brandName: brandingConfig.brandName }"
+      ></p>
     </header>
     @if (!exposeC1Apps) {
       <div class="tw-flex tw-text-14-px tw-border-y tw-border-separator">
-        <div class="landing-v2--tab" [ngClass]="{'tw-text-menu-inactive-text-color': !integrationTabs.ALL}"
-          (click)="switchView(IntegrationsView.ALL)">
+        <div
+          class="landing-v2--tab"
+          [ngClass]="{ 'tw-text-menu-inactive-text-color': !integrationTabs.ALL }"
+          (click)="switchView(IntegrationsView.ALL)"
+        >
           {{ 'landingV2.tabAll' | transloco }}
           @if (integrationTabs.ALL) {
             <p class="landing-v2--active-tag"></p>
           }
         </div>
-        <div class="landing-v2--tab" [ngClass]="{'tw-text-menu-inactive-text-color': !integrationTabs.ACCOUNTING}"
-          (click)="switchView(IntegrationsView.ACCOUNTING)">
+        <div
+          class="landing-v2--tab"
+          [ngClass]="{ 'tw-text-menu-inactive-text-color': !integrationTabs.ACCOUNTING }"
+          (click)="switchView(IntegrationsView.ACCOUNTING)"
+        >
           {{ 'landingV2.tabAccounting' | transloco }}
           @if (integrationTabs.ACCOUNTING) {
             <p class="landing-v2--active-tag"></p>
           }
         </div>
-        <div class="landing-v2--tab" [ngClass]="{'tw-text-menu-inactive-text-color': !integrationTabs.HRMS}"
-          (click)="switchView(IntegrationsView.HRMS)">
+        <div
+          class="landing-v2--tab"
+          [ngClass]="{ 'tw-text-menu-inactive-text-color': !integrationTabs.HRMS }"
+          (click)="switchView(IntegrationsView.HRMS)"
+        >
           {{ 'landingV2.tabHRMS' | transloco }}
           @if (integrationTabs.HRMS) {
             <p class="landing-v2--active-tag"></p>
           }
         </div>
         @if (org.allow_travelperk) {
-          <div class="landing-v2--tab"
-            [ngClass]="{'tw-text-menu-inactive-text-color': !integrationTabs.TRAVEL}"
-            (click)="switchView(IntegrationsView.TRAVEL)">
+          <div
+            class="landing-v2--tab"
+            [ngClass]="{ 'tw-text-menu-inactive-text-color': !integrationTabs.TRAVEL }"
+            (click)="switchView(IntegrationsView.TRAVEL)"
+          >
             {{ 'landingV2.tabTravel' | transloco }}
             @if (integrationTabs.TRAVEL) {
               <p class="landing-v2--active-tag"></p>
@@ -45,10 +58,13 @@
     }
 
     <div
-      class="tw-grid tw-grid-cols-2 md:tw-grid-cols-3 lg:tw-grid-cols-4 xl:tw-grid-cols-5 tw-gap-4 tw-justify-items-stretch">
+      class="tw-grid tw-grid-cols-2 md:tw-grid-cols-3 lg:tw-grid-cols-4 xl:tw-grid-cols-5 tw-gap-4 tw-justify-items-stretch"
+    >
       @if (isAppShown('INTACCT')) {
-        <div class="landing-v2--accounting-app"
-          (click)="openAccountingIntegrationApp(AccountingIntegrationApp.SAGE_INTACCT)">
+        <div
+          class="landing-v2--accounting-app"
+          (click)="openAccountingIntegrationApp(AccountingIntegrationApp.SAGE_INTACCT)"
+        >
           <div class="tw-flex tw-justify-between tw-items-center">
             <img src="assets/logos/intacct-logo-new.png" />
             @if (isAppConnected('INTACCT')) {
@@ -69,8 +85,7 @@
       }
 
       @if (isAppShown('SAGE300')) {
-        <div class="landing-v2--accounting-app"
-          (click)="openInAppIntegration(InAppIntegration.SAGE300)">
+        <div class="landing-v2--accounting-app" (click)="openInAppIntegration(InAppIntegration.SAGE300)">
           <div class="tw-flex tw-justify-between tw-items-center">
             <img src="assets/logos/sage300-logo.png" class="tw-py-[5px]" />
             @if (isAppConnected('SAGE300')) {
@@ -89,8 +104,7 @@
       }
 
       @if (isAppShown('SAGE50')) {
-        <div class="landing-v2--accounting-app"
-          (click)="openInAppIntegration(InAppIntegration.SAGE50)">
+        <div class="landing-v2--accounting-app" (click)="openInAppIntegration(InAppIntegration.SAGE50)">
           <div class="tw-flex tw-justify-between tw-items-center">
             <img src="assets/logos/sage50-logo.svg" />
             @if (isAppConnected('SAGE50')) {
@@ -112,8 +126,7 @@
       }
 
       @if (isAppShown('BUSINESS_CENTRAL')) {
-        <div class="landing-v2--accounting-app"
-          (click)="openInAppIntegration(InAppIntegration.BUSINESS_CENTRAL)">
+        <div class="landing-v2--accounting-app" (click)="openInAppIntegration(InAppIntegration.BUSINESS_CENTRAL)">
           <div class="tw-flex tw-justify-between tw-items-center">
             <img src="assets/logos/BusinessCentral-logo.svg" />
           </div>
@@ -127,8 +140,10 @@
       }
       @if (isAppShown('NETSUITE')) {
         <div>
-          <div class="landing-v2--accounting-app"
-            (click)="openAccountingIntegrationApp(AccountingIntegrationApp.NETSUITE)">
+          <div
+            class="landing-v2--accounting-app"
+            (click)="openAccountingIntegrationApp(AccountingIntegrationApp.NETSUITE)"
+          >
             <div class="tw-flex tw-justify-between tw-items-center">
               <img src="assets/logos/netsuite-logo-new.png" />
               @if (isAppConnected('NETSUITE')) {
@@ -149,8 +164,7 @@
         </div>
       }
       @if (isAppShown('QBD')) {
-        <div class="landing-v2--accounting-app"
-          (click)="openInAppIntegration(InAppIntegration.QBD)">
+        <div class="landing-v2--accounting-app" (click)="openInAppIntegration(InAppIntegration.QBD)">
           <div class="tw-flex tw-justify-between tw-items-center">
             <img src="assets/logos/quickbooks-logo.png" class="!tw-h-[30.7px]" />
             @if (isAppConnected('QBD')) {
@@ -171,8 +185,7 @@
       }
       <!-- Direct -->
       @if (isAppShown('QBD_DIRECT')) {
-        <div class="landing-v2--accounting-app"
-          (click)="openInAppIntegration(InAppIntegration.QBD_DIRECT)">
+        <div class="landing-v2--accounting-app" (click)="openInAppIntegration(InAppIntegration.QBD_DIRECT)">
           <div class="tw-flex tw-justify-between tw-items-center">
             <img src="assets/logos/quickbooks-logo.png" class="!tw-h-[30.7px]" />
             @if (isAppConnected('QBD_DIRECT')) {
@@ -190,8 +203,7 @@
         </div>
       }
       @if (isAppShown('QBO')) {
-        <div class="landing-v2--accounting-app"
-          (click)="openAccountingIntegrationApp(AccountingIntegrationApp.QBO)">
+        <div class="landing-v2--accounting-app" (click)="openAccountingIntegrationApp(AccountingIntegrationApp.QBO)">
           <div class="tw-flex tw-justify-between tw-items-center">
             <img src="assets/logos/quickbooks-logo.png" class="!tw-h-[30.7px]" />
             @if (isAppConnected('QBO')) {
@@ -211,8 +223,7 @@
         </div>
       }
       @if (isAppShown('XERO')) {
-        <div class="landing-v2--accounting-app"
-          (click)="openAccountingIntegrationApp(AccountingIntegrationApp.XERO)">
+        <div class="landing-v2--accounting-app" (click)="openAccountingIntegrationApp(AccountingIntegrationApp.XERO)">
           <div class="tw-flex tw-justify-between tw-items-center">
             <img src="assets/logos/xero-logo-new.png" />
             @if (isAppConnected('XERO')) {

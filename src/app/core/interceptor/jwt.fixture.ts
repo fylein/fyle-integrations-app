@@ -1,11 +1,11 @@
-import { MinimalUser } from "../models/db/user.model";
-import { Token } from "../models/misc/token.model";
+import { MinimalUser } from '../models/db/user.model';
+import { Token } from '../models/misc/token.model';
 
 export const tokenResponse = {
   access_token: 'fylee',
   expires_in: 3600,
   refresh_token: 'ffff',
-  token_type: 'Bearer'
+  token_type: 'Bearer',
 };
 
 export const loginResponse: Token = {
@@ -26,16 +26,16 @@ export const loginResponse: Token = {
     id: 1,
     last_login: null,
     password: '',
-    staff: true
-  }
+    staff: true,
+  },
 };
 
 export const dummyErrorResponse = {
   status: 401,
   statusText: 'Login Failed',
   error: {
-    message: 'Reason for failure . . .'
-  }
+    message: 'Reason for failure . . .',
+  },
 };
 
 export const minimalUser: MinimalUser = {
@@ -45,5 +45,5 @@ export const minimalUser: MinimalUser = {
   org_id: 'orHVw3ikkCxJ',
   org_name: 'Anagha Org',
   refresh_token: 'y.y.y',
-  user_id: 'usqywo0f3nBY'
+  user_id: 'usqywo0f3nBY',
 };

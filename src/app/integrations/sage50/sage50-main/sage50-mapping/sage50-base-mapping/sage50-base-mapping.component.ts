@@ -13,15 +13,13 @@ import { Sage50ImportSettingsService } from 'src/app/core/services/sage50/sage50
 import { Sage50ExportSettingsService } from 'src/app/core/services/sage50/sage50-configuration/sage50-export-settings.service';
 import { Sage50ImportableField } from 'src/app/core/models/sage50/sage50-configuration/sage50-import-settings.model';
 
-
 @Component({
-    selector: 'app-sage50-base-mapping',
-    imports: [SharedModule],
-    templateUrl: './sage50-base-mapping.component.html',
-    styleUrls: ['./sage50-base-mapping.component.scss']
+  selector: 'app-sage50-base-mapping',
+  imports: [SharedModule],
+  templateUrl: './sage50-base-mapping.component.html',
+  styleUrls: ['./sage50-base-mapping.component.scss'],
 })
 export class Sage50BaseMappingComponent implements OnInit {
-
   isLoading: boolean = true;
 
   destinationOptions: DestinationAttribute[];
@@ -46,15 +44,14 @@ export class Sage50BaseMappingComponent implements OnInit {
     private route: ActivatedRoute,
     private mappingService: MappingService,
     private importSettingsService: Sage50ImportSettingsService,
-    private exportSettingsService: Sage50ExportSettingsService
-    ) { }
+    private exportSettingsService: Sage50ExportSettingsService,
+  ) {}
 
   private getDestinationField(): string {
     if (this.sourceField === FyleField.EMPLOYEE) {
       return Sage50AttributeType.VENDOR;
     }
-      return Sage50AttributeType.ACCOUNT;
-
+    return Sage50AttributeType.ACCOUNT;
   }
 
   private setupPage(): void {
@@ -68,18 +65,22 @@ export class Sage50BaseMappingComponent implements OnInit {
     forkJoin([
       this.mappingService.getMappingSettings(),
       this.exportSettingsService.getExportSettings(),
-      this.importSettingsService.getSage50ImportSettings()
+      this.importSettingsService.getSage50ImportSettings(),
     ]).subscribe((responses) => {
       this.employeeFieldMapping = FyleField.VENDOR;
       this.destinationField = this.getDestinationField();
       this.destinationAttributes = this.destinationField;
 
-      this.isMultiLineOption = responses[2]?.import_settings?.import_code_fields?.includes(this.destinationField as Sage50ImportableField) || false;
+      this.isMultiLineOption =
+        responses[2]?.import_settings?.import_code_fields?.includes(this.destinationField as Sage50ImportableField) ||
+        false;
 
-      this.mappingService.getPaginatedDestinationAttributes(this.destinationAttributes, undefined, undefined).subscribe((responses) => {
-        this.destinationOptions = responses.results;
-        this.isLoading = false;
-      });
+      this.mappingService
+        .getPaginatedDestinationAttributes(this.destinationAttributes, undefined, undefined)
+        .subscribe((responses) => {
+          this.destinationOptions = responses.results;
+          this.isLoading = false;
+        });
     });
   }
 
@@ -89,6 +90,4 @@ export class Sage50BaseMappingComponent implements OnInit {
       this.setupPage();
     });
   }
-
 }
-

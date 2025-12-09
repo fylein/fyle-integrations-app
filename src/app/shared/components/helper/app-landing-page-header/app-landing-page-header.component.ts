@@ -3,18 +3,24 @@ import { SafeResourceUrl } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { TranslocoService } from '@jsverse/transloco';
 import { brandingConfig, brandingFeatureConfig, brandingStyle } from 'src/app/branding/branding-config';
-import { AppName, ButtonSize, ButtonType, ClickEvent, QBDDirectInteractionType, TrackingApp } from 'src/app/core/models/enum/enum.model';
+import {
+  AppName,
+  ButtonSize,
+  ButtonType,
+  ClickEvent,
+  QBDDirectInteractionType,
+  TrackingApp,
+} from 'src/app/core/models/enum/enum.model';
 import { WindowService } from 'src/app/core/services/common/window.service';
 import { TrackingService } from 'src/app/core/services/integration/tracking.service';
 
 @Component({
-    selector: 'app-landing-page-header',
-    templateUrl: './app-landing-page-header.component.html',
-    styleUrls: ['./app-landing-page-header.component.scss'],
-    standalone: false
+  selector: 'app-landing-page-header',
+  templateUrl: './app-landing-page-header.component.html',
+  styleUrls: ['./app-landing-page-header.component.scss'],
+  standalone: false,
 })
 export class AppLandingPageHeaderComponent implements OnInit {
-
   AppName = AppName;
 
   QBDDirectInteractionType = QBDDirectInteractionType;
@@ -89,8 +95,8 @@ export class AppLandingPageHeaderComponent implements OnInit {
     private router: Router,
     private trackingService: TrackingService,
     public windowService: WindowService,
-    private translocoService: TranslocoService
-  ) { }
+    private translocoService: TranslocoService,
+  ) {}
 
   syncData(): void {
     this.syncEmployees.emit();
@@ -105,7 +111,13 @@ export class AppLandingPageHeaderComponent implements OnInit {
   }
 
   connect(): void {
-    if (this.appName === AppName.TRAVELPERK || this.appName === AppName.BUSINESS_CENTRAL || this.appName === AppName.BAMBOO_HR || this.appName === AppName.XERO || this.appName.includes('QuickBooks Desktop ')) {
+    if (
+      this.appName === AppName.TRAVELPERK ||
+      this.appName === AppName.BUSINESS_CENTRAL ||
+      this.appName === AppName.BAMBOO_HR ||
+      this.appName === AppName.XERO ||
+      this.appName.includes('QuickBooks Desktop ')
+    ) {
       this.initiateOAuth();
       return;
     } else if (this.postConnectionRoute === 'qbd/onboarding/export_settings') {
@@ -124,5 +136,4 @@ export class AppLandingPageHeaderComponent implements OnInit {
   ngOnInit(): void {
     this.uiExposedAppName ||= this.appName === AppName.QBD_DIRECT ? AppName.QBD : this.appName;
   }
-
 }

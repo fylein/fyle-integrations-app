@@ -5,19 +5,20 @@ import { Observable } from 'rxjs';
 import { HelperService } from '../../common/helper.service';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class Sage300MappingService {
-
   constructor(
     private apiService: ApiService,
     private workspaceService: WorkspaceService,
-    helper: HelperService
+    helper: HelperService,
   ) {
     helper.setBaseApiURL();
   }
 
   importSage300Attributes(refresh: boolean): Observable<{}> {
-    return this.apiService.post(`/workspaces/${this.workspaceService.getWorkspaceId()}/sage300/import_attributes/`, {refresh});
+    return this.apiService.post(`/workspaces/${this.workspaceService.getWorkspaceId()}/sage300/import_attributes/`, {
+      refresh,
+    });
   }
 }

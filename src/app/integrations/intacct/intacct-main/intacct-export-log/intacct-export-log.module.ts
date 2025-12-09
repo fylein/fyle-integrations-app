@@ -9,20 +9,8 @@ import { DialogModule } from 'primeng/dialog';
 import { IntacctSkipExportLogComponent } from './intacct-skip-export-log/intacct-skip-export-log.component';
 import { IntacctCompletedExportLogComponent } from './intacct-completed-export-log/intacct-completed-export-log.component';
 
-
 @NgModule({
-  declarations: [
-    IntacctExportLogComponent,
-    IntacctSkipExportLogComponent,
-    IntacctCompletedExportLogComponent
-  ],
-  imports: [
-
-    DialogModule,
-    SharedModule,
-    CommonModule,
-    ExportLogRoutingModule,
-    TableModule
-  ]
+  declarations: [IntacctExportLogComponent, IntacctSkipExportLogComponent, IntacctCompletedExportLogComponent],
+  imports: [DialogModule, SharedModule, CommonModule, ExportLogRoutingModule, TableModule],
 })
-export class IntacctExportLogModule { }
+export class IntacctExportLogModule {}

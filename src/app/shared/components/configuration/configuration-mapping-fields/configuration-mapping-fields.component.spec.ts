@@ -8,9 +8,8 @@ xdescribe('ConfigurationMappingFieldsComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ConfigurationMappingFieldsComponent ]
-    })
-    .compileComponents();
+      declarations: [ConfigurationMappingFieldsComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(ConfigurationMappingFieldsComponent);
     component = fixture.componentInstance;

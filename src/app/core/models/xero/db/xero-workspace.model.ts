@@ -1,5 +1,5 @@
-import { Workspace } from "../../db/workspaces.model";
-import { XeroOnboardingState } from "../../enum/enum.model";
+import { Workspace } from '../../db/workspaces.model';
+import { XeroOnboardingState } from '../../enum/enum.model';
 
 export interface XeroWorkspace extends Workspace {
   onboarding_state: XeroOnboardingState;

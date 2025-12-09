@@ -5,14 +5,13 @@ import { WorkspaceService } from '../../common/workspace.service';
 import { Cacheable } from 'ts-cacheable';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class NetsuiteHelperService {
-
   constructor(
     private apiService: ApiService,
-    private workspaceService: WorkspaceService
-  ) { }
+    private workspaceService: WorkspaceService,
+  ) {}
 
   @Cacheable()
   syncFyleDimensions() {
@@ -29,6 +28,9 @@ export class NetsuiteHelperService {
   }
 
   refreshNetsuiteDimensions(): Observable<{}> {
-    return this.apiService.post(`/workspaces/${this.workspaceService.getWorkspaceId()}/netsuite/refresh_dimensions/`, {});
+    return this.apiService.post(
+      `/workspaces/${this.workspaceService.getWorkspaceId()}/netsuite/refresh_dimensions/`,
+      {},
+    );
   }
 }

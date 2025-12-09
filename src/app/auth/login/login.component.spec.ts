@@ -18,28 +18,27 @@ xdescribe('LoginComponent', () => {
   const service1 = {
     checkLoginStatusAndLogout: () => undefined,
     login: () => of(loginResponse),
-    logout: () => undefined
+    logout: () => undefined,
   };
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-    declarations: [LoginComponent],
-    imports: [RouterTestingModule],
-    providers: [
+      declarations: [LoginComponent],
+      imports: [RouterTestingModule],
+      providers: [
         {
-            provide: ActivatedRoute,
-            useValue: {
-                queryParams: of({
-                    code: 'dummy-auth-code'
-                })
-            }
+          provide: ActivatedRoute,
+          useValue: {
+            queryParams: of({
+              code: 'dummy-auth-code',
+            }),
+          },
         },
         { provide: AuthService, useValue: service1 },
         { provide: Router, useValue: routerSpy },
-        provideHttpClient(withInterceptorsFromDi())
-    ]
-})
-    .compileComponents();
+        provideHttpClient(withInterceptorsFromDi()),
+      ],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(LoginComponent);
     component = fixture.componentInstance;

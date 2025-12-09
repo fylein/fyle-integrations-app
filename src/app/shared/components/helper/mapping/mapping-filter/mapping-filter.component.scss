@@ -1,7 +1,7 @@
 :host ::ng-deep .p-select {
-    @apply tw-h-40-px tw-w-200-px tw-py-0 tw-px-12-px #{!important};
+  @apply tw-h-40-px tw-w-200-px tw-py-0 tw-px-12-px #{!important};
 }
 
 :host ::ng-deep .p-select .p-select-label {
-    @apply tw-p-5-px #{!important};
+  @apply tw-p-5-px #{!important};
 }

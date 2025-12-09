@@ -3,14 +3,20 @@
     <app-loader></app-loader>
   </div>
 } @else {
-  <div class="configuration--contents tw-border-separator tw-mt-6" [ngClass]="brandingStyle.common.configurationContents">
+  <div
+    class="configuration--contents tw-border-separator tw-mt-6"
+    [ngClass]="brandingStyle.common.configurationContents"
+  >
     <div>
       <app-configuration-step-header
         [headerText]="'sage50ExportSettings.headerText' | transloco"
-        [contentText]="'sage50ExportSettings.contentText' | transloco: { brandName: brandingService.getBrandFullName() }"
+        [contentText]="
+          'sage50ExportSettings.contentText' | transloco: { brandName: brandingService.getBrandFullName() }
+        "
         [redirectLink]="redirectLink"
         [showSyncButton]="false"
-        [appName]="appName">
+        [appName]="appName"
+      >
       </app-configuration-step-header>
     </div>
     <form [formGroup]="exportSettingsForm" class="tw-p-24-px tw-flex tw-flex-col tw-gap-[16px]">
@@ -21,7 +27,8 @@
             [form]="exportSettingsForm"
             [label]="'sage50ExportSettings.exportReimbursableExpensesLabel' | transloco"
             [formControllerName]="'reimbursableExpenses'"
-            [isSectionHeader]="true">
+            [isSectionHeader]="true"
+          >
           </app-configuration-toggle-field>
         </div>
       }
@@ -41,7 +48,6 @@
             [exportTypeIconPathArray]="previewImagePaths"
             (dropdownChange)="onExportTypeDropdownChange($event)"
           ></app-configuration-select-field>
-
 
           @if (showField('reimbursableDefaultCreditLineAccount')) {
             <app-configuration-select-field
@@ -83,7 +89,6 @@
             ></app-configuration-select-field>
 
             <ng-container *ngTemplateOutlet="noValidAccountsAlert"></ng-container>
-
           }
 
           @if (isPerDiemEnabled && showField('defaultPerDiemAccount')) {
@@ -172,10 +177,14 @@
             <app-configuration-select-field
               [form]="exportSettingsForm"
               [label]="'sage50ExportSettings.reimbursableExportDateLabel' | transloco"
-                        [subLabel]="'sage50ExportSettings.reimbursableExportDateSubLabel' | transloco: {
-                            selectedDateOption: getSelectedLabel('reimbursableExportDate') ?? 'date',
-                            brandName: brandingConfig.brandName
-                        }"
+              [subLabel]="
+                'sage50ExportSettings.reimbursableExportDateSubLabel'
+                  | transloco
+                    : {
+                        selectedDateOption: getSelectedLabel('reimbursableExportDate') ?? 'date',
+                        brandName: brandingConfig.brandName,
+                      }
+              "
               [formControllerName]="'reimbursableExportDate'"
               [options]="reimbursableDateOptions"
               [isFieldMandatory]="true"
@@ -195,7 +204,8 @@
             [form]="exportSettingsForm"
             [label]="'sage50ExportSettings.exportCCCExpensesLabel' | transloco"
             [formControllerName]="'cccExpenses'"
-            [isSectionHeader]="true">
+            [isSectionHeader]="true"
+          >
           </app-configuration-toggle-field>
         </div>
       }
@@ -280,7 +290,9 @@
             <app-configuration-select-field
               [form]="exportSettingsForm"
               [label]="'sage50ExportSettings.cccDefaultVendorLabel' | transloco"
-              [subLabel]="'sage50ExportSettings.cccDefaultVendorSubLabel' | transloco: { brandName: brandingConfig.brandName }"
+              [subLabel]="
+                'sage50ExportSettings.cccDefaultVendorSubLabel' | transloco: { brandName: brandingConfig.brandName }
+              "
               [formControllerName]="'defaultVendor'"
               [destinationAttributes]="vendors"
               [destinationOptionKey]="Sage50ExportSettingDestinationOptionKey.VENDOR"
@@ -307,19 +319,28 @@
               [isFieldMandatory]="true"
               [formControllerName]="'defaultPaymentMethod'"
               [placeholder]="'sage50ExportSettings.cccDefaultPaymentMethodPlaceholder' | transloco"
-              >
+            >
               <div slot="subLabel">
                 <span>
-                  {{ 'sage50ExportSettings.cccDefaultPaymentMethodSubLabel' | transloco: { brandName: brandingConfig.brandName } }}
+                  {{
+                    'sage50ExportSettings.cccDefaultPaymentMethodSubLabel'
+                      | transloco: { brandName: brandingConfig.brandName }
+                  }}
                 </span>
-                <a class="link" (click)="showPaymentMethodPreview()">{{ 'sage50ExportSettings.preview' | transloco }}</a>
+                <a class="link" (click)="showPaymentMethodPreview()">{{
+                  'sage50ExportSettings.preview' | transloco
+                }}</a>
                 <span>
                   {{ 'sage50ExportSettings.forDetails' | transloco: { brandName: brandingConfig.brandName } }}
                 </span>
               </div>
               <div slot="inputHint">
                 <div class="tw-flex tw-gap-[4px] tw-pt-[4px]">
-                  <img src="assets/icons/warning-filled.svg" alt="Warning icon" class="tw-w-12-px tw-h-12-px tw-relative tw-top-[3px]">
+                  <img
+                    src="assets/icons/warning-filled.svg"
+                    alt="Warning icon"
+                    class="tw-w-12-px tw-h-12-px tw-relative tw-top-[3px]"
+                  />
                   <span>
                     {{ 'sage50ExportSettings.cccDefaultPaymentMethodInputHint' | transloco }}
                   </span>
@@ -380,11 +401,18 @@
     </form>
     @if (isOnboarding) {
       <app-configuration-step-footer
-        [ctaText] = "!isSaveInProgress ? (isOnboarding ? ConfigurationCtaText.SAVE_AND_CONTINUE : ConfigurationCtaText.SAVE) : ConfigurationCtaText.SAVING"
-        [showBackButton] = "isOnboarding"
+        [ctaText]="
+          !isSaveInProgress
+            ? isOnboarding
+              ? ConfigurationCtaText.SAVE_AND_CONTINUE
+              : ConfigurationCtaText.SAVE
+            : ConfigurationCtaText.SAVING
+        "
+        [showBackButton]="isOnboarding"
         [isButtonDisabled]="!exportSettingsForm.valid"
         (navigateToPreviousStep)="onBackButtonClick()"
-        (save)="onSave()">
+        (save)="onSave()"
+      >
       </app-configuration-step-footer>
     }
   </div>
@@ -392,11 +420,18 @@
   @if (!isOnboarding) {
     <div class="tw-sticky tw-top-0 tw-bottom-0 tw-left-0 tw-right-0 tw-bg-white">
       <app-configuration-step-footer
-        [ctaText] = "!isSaveInProgress ? (isOnboarding ? ConfigurationCtaText.SAVE_AND_CONTINUE : ConfigurationCtaText.SAVE) : ConfigurationCtaText.SAVING"
-        [showBackButton] = "isOnboarding"
+        [ctaText]="
+          !isSaveInProgress
+            ? isOnboarding
+              ? ConfigurationCtaText.SAVE_AND_CONTINUE
+              : ConfigurationCtaText.SAVE
+            : ConfigurationCtaText.SAVING
+        "
+        [showBackButton]="isOnboarding"
         [isButtonDisabled]="!exportSettingsForm.valid"
         (navigateToPreviousStep)="onBackButtonClick()"
-        (save)="onSave()">
+        (save)="onSave()"
+      >
       </app-configuration-step-footer>
     </div>
   }
@@ -415,20 +450,21 @@
   (warningAccepted)="acceptPurchasesExportWarning($event)"
   [isWarningVisible]="showPurchasesExportWarning"
   [headerText]="'sage50ExportSettings.purchasesExportWarningHeader' | transloco"
-  [contextText]="'sage50ExportSettings.purchasesExportWarningContext' | transloco: { brandName: brandingConfig.brandName, exportType: selectedExportTypeName }"
+  [contextText]="
+    'sage50ExportSettings.purchasesExportWarningContext'
+      | transloco: { brandName: brandingConfig.brandName, exportType: selectedExportTypeName }
+  "
   [confirmBtnText]="'sage50ExportSettings.purchasesExportWarningConfirmButton' | transloco"
   [appName]="appName"
   [dialogWidth]="'770px'"
-  [event]="ConfigurationWarningEvent.SAGE50_PURCHASES_EXPORT_TYPE">
+  [event]="ConfigurationWarningEvent.SAGE50_PURCHASES_EXPORT_TYPE"
+>
 </app-configuration-confirmation-dialog>
 
 <ng-template #noValidAccountsAlert>
   @if (!this.accounts || this.accounts.length === 0) {
     <div class="tw-p-24-px tw-pt-0">
-      <app-alert
-        [type]="'danger'"
-        [title]="'sage50ExportSettings.noValidAccountsAlertTitle' | transloco"
-        >
+      <app-alert [type]="'danger'" [title]="'sage50ExportSettings.noValidAccountsAlertTitle' | transloco">
         <p>{{ 'sage50ExportSettings.noValidAccountsAlertMessage' | transloco }}</p>
         <p>{{ 'sage50ExportSettings.noValidAccountsAlertTip' | transloco }}</p>
       </app-alert>
@@ -439,10 +475,7 @@
 <ng-template #noVendorsAlert>
   @if (!this.vendors || this.vendors.length === 0) {
     <div class="tw-p-24-px tw-pt-0">
-      <app-alert
-        [type]="'danger'"
-        [title]="'sage50ExportSettings.noVendorsAlertTitle' | transloco"
-        >
+      <app-alert [type]="'danger'" [title]="'sage50ExportSettings.noVendorsAlertTitle' | transloco">
         <p>{{ 'sage50ExportSettings.noVendorsAlertMessage' | transloco }}</p>
         <p>{{ 'sage50ExportSettings.noVendorsAlertTip' | transloco }}</p>
       </app-alert>

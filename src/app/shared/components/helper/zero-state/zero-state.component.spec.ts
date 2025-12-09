@@ -8,9 +8,8 @@ xdescribe('ZeroStateComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ZeroStateComponent ]
-    })
-    .compileComponents();
+      declarations: [ZeroStateComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(ZeroStateComponent);
     component = fixture.componentInstance;

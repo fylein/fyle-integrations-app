@@ -10,14 +10,14 @@ const routes: Routes = [
     children: [
       {
         path: 'complete',
-        component: XeroCompleteExportLogComponent
-      }
-    ]
-  }
+        component: XeroCompleteExportLogComponent,
+      },
+    ],
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class XeroExportLogRoutingModule { }
+export class XeroExportLogRoutingModule {}

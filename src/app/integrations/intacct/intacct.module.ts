@@ -10,21 +10,8 @@ import { MainComponent } from './intacct-main/intacct-main.component';
 import { DialogModule } from 'primeng/dialog';
 import { IntacctSharedModule } from './intacct-shared/intacct-shared.module';
 
-
 @NgModule({
-    declarations: [
-        IntacctComponent,
-        MainComponent
-    ],
-    imports: [
-        DialogModule,
-        TableModule,
-        CommonModule,
-        SiRoutingModule,
-        SharedModule,
-
-        SelectModule,
-        IntacctSharedModule
-    ]
+  declarations: [IntacctComponent, MainComponent],
+  imports: [DialogModule, TableModule, CommonModule, SiRoutingModule, SharedModule, SelectModule, IntacctSharedModule],
 })
-export class IntacctModule { }
+export class IntacctModule {}

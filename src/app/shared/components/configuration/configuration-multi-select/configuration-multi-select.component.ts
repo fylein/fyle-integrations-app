@@ -6,13 +6,12 @@ import { SnakeCaseToSpaceCasePipe } from 'src/app/shared/pipes/snake-case-to-spa
 import { TranslocoService } from '@jsverse/transloco';
 
 @Component({
-    selector: 'app-configuration-multi-select',
-    templateUrl: './configuration-multi-select.component.html',
-    styleUrls: ['./configuration-multi-select.component.scss'],
-    standalone: false
+  selector: 'app-configuration-multi-select',
+  templateUrl: './configuration-multi-select.component.html',
+  styleUrls: ['./configuration-multi-select.component.scss'],
+  standalone: false,
 })
 export class ConfigurationMultiSelectComponent implements OnInit {
-
   @Input() options: string[];
 
   @Input() form: FormGroup;
@@ -53,8 +52,8 @@ export class ConfigurationMultiSelectComponent implements OnInit {
 
   constructor(
     @Inject(FormBuilder) private formBuilder: FormBuilder,
-    private translocoService: TranslocoService
-  ) { }
+    private translocoService: TranslocoService,
+  ) {}
 
   onMultiSelectChange() {
     const selectedValues = this.form.get(this.formControllerName)?.value;
@@ -106,36 +105,34 @@ export class ConfigurationMultiSelectComponent implements OnInit {
     return value.map((name: string) => this.getMemo(name)).join(', ');
   }
 
-//   DragStart(memo: string) {
-//     This.currentlyDragging = memo;
-// }
-// // On Drag End
-// DragEnd() {
-//     This.currentlyDragging = null;
-// }
+  //   DragStart(memo: string) {
+  //     This.currentlyDragging = memo;
+  // }
+  // // On Drag End
+  // DragEnd() {
+  //     This.currentlyDragging = null;
+  // }
 
-// // On Drop of Item to droppable area
-// Drop() {
-//     If (this.currentlyDragging) {
-//         Let currentlyDraggingIndex = this.options.indexOf(this.currentlyDragging)
-//         This.selected =
-//             [...this.selected, this.currentlyDragging];
-//         This.options =
-//             This.options.filter((val, i) => i !=
-//                 CurrentlyDraggingIndex);
-//         This.currentlyDragging = null;
-//     }
-// }
-// OnDragStart(index: number) {
-//   This.startIndex = index;
-// }
+  // // On Drop of Item to droppable area
+  // Drop() {
+  //     If (this.currentlyDragging) {
+  //         Let currentlyDraggingIndex = this.options.indexOf(this.currentlyDragging)
+  //         This.selected =
+  //             [...this.selected, this.currentlyDragging];
+  //         This.options =
+  //             This.options.filter((val, i) => i !=
+  //                 CurrentlyDraggingIndex);
+  //         This.currentlyDragging = null;
+  //     }
+  // }
+  // OnDragStart(index: number) {
+  //   This.startIndex = index;
+  // }
 
-// OnDrop(dropIndex: number) {
-//   Const general = this.options[this.startIndex]; // get element
-//   This.options.splice(this.startIndex, 1);       // delete from old position
-//   This.options.splice(dropIndex, 0, general);    // add to new position
-// }
-  ngOnInit(): void {
-  }
-
+  // OnDrop(dropIndex: number) {
+  //   Const general = this.options[this.startIndex]; // get element
+  //   This.options.splice(this.startIndex, 1);       // delete from old position
+  //   This.options.splice(dropIndex, 0, general);    // add to new position
+  // }
+  ngOnInit(): void {}
 }

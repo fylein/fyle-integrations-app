@@ -16,39 +16,38 @@ const routes: Routes = [
     children: [
       {
         path: 'landing',
-        component: QbdDirectOnboardingLandingComponent
+        component: QbdDirectOnboardingLandingComponent,
       },
       {
         path: 'pre_requisite',
-        component: QbdDirectOnboardingPreRequisiteComponent
+        component: QbdDirectOnboardingPreRequisiteComponent,
       },
       {
         path: 'connector',
-        component: QbdDirectOnboardingConnectorComponent
+        component: QbdDirectOnboardingConnectorComponent,
       },
       {
         path: 'export_settings',
-        component: QbdDirectOnboardingExportSettingsComponent
+        component: QbdDirectOnboardingExportSettingsComponent,
       },
       {
         path: 'import_settings',
-        component: QbdDirectOnboardingImportSettingsComponent
+        component: QbdDirectOnboardingImportSettingsComponent,
       },
       {
         path: 'advanced_settings',
-        component: QbdDirectOnboardingAdvancedSettingsComponent
+        component: QbdDirectOnboardingAdvancedSettingsComponent,
       },
       {
         path: 'done',
-        component: QbdDirectOnboardingDoneComponent
-      }
-    ]
-  }
+        component: QbdDirectOnboardingDoneComponent,
+      },
+    ],
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-
-export class QbdDirectOnboardingRoutingModule { }
+export class QbdDirectOnboardingRoutingModule {}

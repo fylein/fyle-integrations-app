@@ -1,4 +1,3 @@
-
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, RouterModule } from '@angular/router';
 import type { Meta, StoryObj } from '@storybook/angular';
@@ -11,22 +10,23 @@ const meta: Meta<SubMenuComponent> = {
   component: SubMenuComponent,
   tags: ['autodocs'],
   render: (args: SubMenuComponent) => ({
-    props: { ...args }
+    props: { ...args },
   }),
   decorators: [
     moduleMetadata({
       declarations: [],
       imports: [CommonModule, RouterModule],
-      providers: [{
-        provide: ActivatedRoute,
-        useValue: {
-        }
-      }]
-    })
+      providers: [
+        {
+          provide: ActivatedRoute,
+          useValue: {},
+        },
+      ],
+    }),
   ],
   argTypes: {
-    ngOnInit: { table: { disable: true } }
-  }
+    ngOnInit: { table: { disable: true } },
+  },
 };
 
 export default meta;
@@ -35,10 +35,10 @@ type Story = StoryObj<SubMenuComponent>;
 export const simple: Story = {
   args: {
     modules: [
-      {label: 'Export Settings', routerLink: '/integrations/qbo/main/configuration/export_settings'},
-      {label: 'Import Settings', routerLink: '/integrations/qbo/main/configuration/import_settings'},
-      {label: 'Advanced Settings', routerLink: '/integrations/qbo/main/configuration/advanced_settings'}
+      { label: 'Export Settings', routerLink: '/integrations/qbo/main/configuration/export_settings' },
+      { label: 'Import Settings', routerLink: '/integrations/qbo/main/configuration/import_settings' },
+      { label: 'Advanced Settings', routerLink: '/integrations/qbo/main/configuration/advanced_settings' },
     ],
-    activeModule: {label: 'Export Settings', routerLink: '/integrations/qbo/main/configuration/export_settings'}
-  }
+    activeModule: { label: 'Export Settings', routerLink: '/integrations/qbo/main/configuration/export_settings' },
+  },
 };

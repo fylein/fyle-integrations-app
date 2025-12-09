@@ -1,9 +1,16 @@
-<app-dialog [type]="config.data.type" [header]="config.data.header" [buttonText]="config.data.buttonText" (closeDialog)="closeDialog()">
-    <div class="tw-min-w-[515px] tw-text-14-px tw-p-24-px tw-text-text-secondary tw-border-t tw-border-b tw-border-border-tertiary">
-        @if (config.data.message) {
-            <p>{{ config.data.message }}</p>
-        } @else {
-            <ng-content></ng-content>
-        }
-    </div>
+<app-dialog
+  [type]="config.data.type"
+  [header]="config.data.header"
+  [buttonText]="config.data.buttonText"
+  (closeDialog)="closeDialog()"
+>
+  <div
+    class="tw-min-w-[515px] tw-text-14-px tw-p-24-px tw-text-text-secondary tw-border-t tw-border-b tw-border-border-tertiary"
+  >
+    @if (config.data.message) {
+      <p>{{ config.data.message }}</p>
+    } @else {
+      <ng-content></ng-content>
+    }
+  </div>
 </app-dialog>

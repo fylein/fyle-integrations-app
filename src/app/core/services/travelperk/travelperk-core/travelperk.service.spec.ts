@@ -2,7 +2,12 @@ import { HttpTestingController, provideHttpClientTesting } from '@angular/common
 import { getTestBed, TestBed } from '@angular/core/testing';
 import { environment } from 'src/environments/environment';
 import { OrgService } from '../../org/org.service';
-import { travelperkMockData, connectTravelperkMockData, connectAwsS3MockData, travelperkConfigurationMockData } from '../travelperk.fixture';
+import {
+  travelperkMockData,
+  connectTravelperkMockData,
+  connectAwsS3MockData,
+  travelperkConfigurationMockData,
+} from '../travelperk.fixture';
 
 import { TravelperkService } from './travelperk.service';
 import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
@@ -14,18 +19,18 @@ xdescribe('TravelperkService', () => {
   let orgService: OrgService;
   const API_BASE_URL = environment.cluster_domain_api_url;
   const service1 = {
-    getOrgId: () => 1
+    getOrgId: () => 1,
   };
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-    imports: [],
-    providers: [
+      imports: [],
+      providers: [
         { provide: OrgService, useValue: service1 },
         provideHttpClient(withInterceptorsFromDi()),
-        provideHttpClientTesting()
-    ]
-});
+        provideHttpClientTesting(),
+      ],
+    });
     injector = getTestBed();
     service = TestBed.inject(TravelperkService);
     orgService = injector.inject(OrgService);
@@ -43,7 +48,7 @@ xdescribe('TravelperkService', () => {
 
     const req = httpMock.expectOne({
       method: 'GET',
-      url: `${API_BASE_URL}/orgs/1/travelperk/`
+      url: `${API_BASE_URL}/orgs/1/travelperk/`,
     });
 
     req.flush(travelperkMockData);
@@ -56,7 +61,7 @@ xdescribe('TravelperkService', () => {
 
     const req = httpMock.expectOne({
       method: 'POST',
-      url: `${API_BASE_URL}/orgs/1/travelperk/folder/`
+      url: `${API_BASE_URL}/orgs/1/travelperk/folder/`,
     });
 
     req.flush({});
@@ -69,7 +74,7 @@ xdescribe('TravelperkService', () => {
 
     const req = httpMock.expectOne({
       method: 'POST',
-      url: `${API_BASE_URL}/orgs/1/travelperk/packages/`
+      url: `${API_BASE_URL}/orgs/1/travelperk/packages/`,
     });
 
     req.flush({});
@@ -82,7 +87,7 @@ xdescribe('TravelperkService', () => {
 
     const req = httpMock.expectOne({
       method: 'POST',
-      url: `${API_BASE_URL}/orgs/1/travelperk/travelperk_connection/`
+      url: `${API_BASE_URL}/orgs/1/travelperk/travelperk_connection/`,
     });
 
     req.flush(connectTravelperkMockData);
@@ -95,7 +100,7 @@ xdescribe('TravelperkService', () => {
 
     const req = httpMock.expectOne({
       method: 'POST',
-      url: `${API_BASE_URL}/orgs/1/travelperk/s3_connection/`
+      url: `${API_BASE_URL}/orgs/1/travelperk/s3_connection/`,
     });
 
     req.flush(connectAwsS3MockData);
@@ -108,7 +113,7 @@ xdescribe('TravelperkService', () => {
 
     const req = httpMock.expectOne({
       method: 'GET',
-      url: `${API_BASE_URL}/orgs/1/travelperk/configurations/?org_id=1`
+      url: `${API_BASE_URL}/orgs/1/travelperk/configurations/?org_id=1`,
     });
 
     req.flush(travelperkConfigurationMockData);
@@ -121,7 +126,7 @@ xdescribe('TravelperkService', () => {
 
     const req = httpMock.expectOne({
       method: 'POST',
-      url: `${API_BASE_URL}/orgs/1/travelperk/configurations/`
+      url: `${API_BASE_URL}/orgs/1/travelperk/configurations/`,
     });
 
     req.flush(travelperkConfigurationMockData);
@@ -134,7 +139,7 @@ xdescribe('TravelperkService', () => {
 
     const req = httpMock.expectOne({
       method: 'PATCH',
-      url: `${API_BASE_URL}/orgs/1/travelperk/recipe_status/`
+      url: `${API_BASE_URL}/orgs/1/travelperk/recipe_status/`,
     });
 
     req.flush(travelperkConfigurationMockData);
@@ -147,7 +152,7 @@ xdescribe('TravelperkService', () => {
 
     const req = httpMock.expectOne({
       method: 'POST',
-      url: `${API_BASE_URL}/orgs/1/travelperk/connect/`
+      url: `${API_BASE_URL}/orgs/1/travelperk/connect/`,
     });
 
     req.flush({});

@@ -9,18 +9,18 @@ const routes: Routes = [
     children: [
       {
         path: 'onboarding',
-        loadChildren: () => import('./qbd-onboarding/qbd-onboarding.module').then(m => m.QbdOnboardingModule)
+        loadChildren: () => import('./qbd-onboarding/qbd-onboarding.module').then((m) => m.QbdOnboardingModule),
       },
       {
         path: 'main',
-        loadChildren: () => import('./qbd-main/qbd-main.module').then(m => m.QbdMainModule)
-      }
-    ]
-  }
+        loadChildren: () => import('./qbd-main/qbd-main.module').then((m) => m.QbdMainModule),
+      },
+    ],
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class QbdRoutingModule { }
+export class QbdRoutingModule {}

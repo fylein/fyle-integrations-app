@@ -3,12 +3,8 @@ import { CommonModule } from '@angular/common';
 
 import { NetsuiteExportLogRoutingModule } from './netsuite-export-log-routing.module';
 
-
 @NgModule({
   declarations: [],
-  imports: [
-    CommonModule,
-    NetsuiteExportLogRoutingModule
-  ]
+  imports: [CommonModule, NetsuiteExportLogRoutingModule],
 })
-export class NetsuiteExportLogModule { }
+export class NetsuiteExportLogModule {}

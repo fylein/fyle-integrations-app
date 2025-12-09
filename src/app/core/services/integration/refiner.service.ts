@@ -4,15 +4,12 @@ import { AppName, RefinerSurveyType } from '../../models/enum/enum.model';
 import { UserService } from '../misc/user.service';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class RefinerService {
-
   private readonly user: MinimalUser = this.userService.getUserProfile();
 
-  constructor(
-    private userService: UserService
-  ) { }
+  constructor(private userService: UserService) {}
 
   get refiner() {
     return (window as any)._refiner;
@@ -23,11 +20,11 @@ export class RefinerService {
       this.refiner('identifyUser', {
         id: this.user.org_id,
         account: {
-          org_id: this.user.org_id
+          org_id: this.user.org_id,
         },
         source: 'Fyle Integration Settings',
         action_name: actionName,
-        'App Name': appName
+        'App Name': appName,
       });
       this.refiner('showForm', surveyID);
     }

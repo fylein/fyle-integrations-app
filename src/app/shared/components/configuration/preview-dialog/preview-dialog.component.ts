@@ -4,13 +4,12 @@ import { ButtonType, ButtonSize } from 'src/app/core/models/enum/enum.model';
 import { HelperService } from 'src/app/core/services/common/helper.service';
 
 @Component({
-    selector: 'app-preview-dialog',
-    templateUrl: './preview-dialog.component.html',
-    styleUrls: ['./preview-dialog.component.scss'],
-    standalone: false
+  selector: 'app-preview-dialog',
+  templateUrl: './preview-dialog.component.html',
+  styleUrls: ['./preview-dialog.component.scss'],
+  standalone: false,
 })
 export class PreviewDialogComponent implements OnInit {
-
   @Input() isPreviewDialogVisible: boolean;
 
   @Input() iconPath: string;
@@ -41,9 +40,7 @@ export class PreviewDialogComponent implements OnInit {
 
   readonly brandingStyle = brandingStyle;
 
-  constructor(
-    public helper: HelperService
-  ) { }
+  constructor(public helper: HelperService) {}
 
   close() {
     this.closeDialog.emit();
@@ -53,7 +50,5 @@ export class PreviewDialogComponent implements OnInit {
     this.navigatePreview.emit(direction);
   }
 
-  ngOnInit(): void {
-  }
-
+  ngOnInit(): void {}
 }

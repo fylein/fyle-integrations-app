@@ -1,15 +1,30 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { brandingConfig, brandingFeatureConfig, brandingKbArticles, brandingStyle } from 'src/app/branding/branding-config';
+import {
+  brandingConfig,
+  brandingFeatureConfig,
+  brandingKbArticles,
+  brandingStyle,
+} from 'src/app/branding/branding-config';
 import { BrandingConfiguration } from 'src/app/core/models/branding/branding-configuration.model';
 import { CloneSettingExist } from 'src/app/core/models/common/clone-setting.model';
 import { DestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
-import { AppName, ConfigurationCta, ConfigurationWarningEvent, ToastSeverity, XeroOnboardingState } from 'src/app/core/models/enum/enum.model';
+import {
+  AppName,
+  ConfigurationCta,
+  ConfigurationWarningEvent,
+  ToastSeverity,
+  XeroOnboardingState,
+} from 'src/app/core/models/enum/enum.model';
 import { ConfigurationWarningOut } from 'src/app/core/models/misc/configuration-warning.model';
 import { OnboardingStepper } from 'src/app/core/models/misc/onboarding-stepper.model';
 import { XeroCredentials } from 'src/app/core/models/xero/db/xero-credential.model';
-import { TenantMapping, TenantMappingModel, TenantMappingPost } from 'src/app/core/models/xero/db/xero-tenant-mapping.model';
+import {
+  TenantMapping,
+  TenantMappingModel,
+  TenantMappingPost,
+} from 'src/app/core/models/xero/db/xero-tenant-mapping.model';
 import { XeroExportSettingGet } from 'src/app/core/models/xero/xero-configuration/xero-export-settings.model';
 import { CloneSettingsService } from 'src/app/core/services/common/clone-settings.service';
 import { HelperService } from 'src/app/core/services/common/helper.service';
@@ -25,13 +40,12 @@ import { environment } from 'src/environments/environment';
 import { TranslocoService } from '@jsverse/transloco';
 
 @Component({
-    selector: 'app-xero-onboarding-connector',
-    templateUrl: './xero-onboarding-connector.component.html',
-    styleUrls: ['./xero-onboarding-connector.component.scss'],
-    standalone: false
+  selector: 'app-xero-onboarding-connector',
+  templateUrl: './xero-onboarding-connector.component.html',
+  styleUrls: ['./xero-onboarding-connector.component.scss'],
+  standalone: false,
 })
 export class XeroOnboardingConnectorComponent implements OnInit {
-
   onboardingSteps: OnboardingStepper[] = [];
 
   isLoading: boolean = true;
@@ -96,14 +110,16 @@ export class XeroOnboardingConnectorComponent implements OnInit {
     private xeroHelperService: XeroHelperService,
     private storageService: StorageService,
     private translocoService: TranslocoService,
-    private xeroOnboardingService: XeroOnboardingService
-  ) { }
+    private xeroOnboardingService: XeroOnboardingService,
+  ) {}
 
   private checkCloneSettingsAvailablity(): void {
     this.cloneSettingService.checkCloneSettingsExists().subscribe((response: CloneSettingExist) => {
       if (response.is_available && brandingFeatureConfig.featureFlags.cloneSettings) {
         this.warningHeaderText = this.translocoService.translate('xeroOnboardingConnector.warningHeader');
-        this.warningContextText = this.translocoService.translate('xeroOnboardingConnector.warningContext', { workspaceName: response.workspace_name });
+        this.warningContextText = this.translocoService.translate('xeroOnboardingConnector.warningContext', {
+          workspaceName: response.workspace_name,
+        });
         this.primaryButtonText = this.translocoService.translate('xeroOnboardingConnector.continueButton');
         this.warningEvent = ConfigurationWarningEvent.CLONE_SETTINGS;
         this.isWarningDialogVisible = true;
@@ -124,41 +140,50 @@ export class XeroOnboardingConnectorComponent implements OnInit {
       this.isXeroConnected = false;
       this.isContinueDisabled = true;
       this.isDisconnectClicked = true;
-      this.xeroConnectorService.getXeroCredentials(this.workspaceService.getWorkspaceId()).subscribe((xeroCredentials: XeroCredentials) => {
-        this.showOrHideDisconnectXero();
-      }, (error) => {
-        // Token expired
-        if ('id' in error.error) {
-          // We have a Xero row present in DB
-          this.xeroTokenExpired = error.error.is_expired;
-          if (this.xeroTokenExpired) {
-            this.xeroCompanyName = error.error.company_name;
+      this.xeroConnectorService.getXeroCredentials(this.workspaceService.getWorkspaceId()).subscribe(
+        (xeroCredentials: XeroCredentials) => {
+          this.showOrHideDisconnectXero();
+        },
+        (error) => {
+          // Token expired
+          if ('id' in error.error) {
+            // We have a Xero row present in DB
+            this.xeroTokenExpired = error.error.is_expired;
+            if (this.xeroTokenExpired) {
+              this.xeroCompanyName = error.error.company_name;
+            }
           }
-        }
-        this.isContinueDisabled = true;
-        this.isXeroConnected = false;
-        this.isLoading = false;
-      });
+          this.isContinueDisabled = true;
+          this.isXeroConnected = false;
+          this.isLoading = false;
+        },
+      );
     });
   }
 
   private postXeroCredentials(code: string): void {
-    this.xeroConnectorService.connectXero(this.workspaceService.getWorkspaceId(), code).subscribe((xeroCredentials: XeroCredentials) => {
-      this.xeroConnectorService.postXeroTenants().subscribe(() => {
-        this.isXeroConnected = true;
-        this.xeroConnectionInProgress = false;
-        this.isDisconnectClicked = false;
-      });
-    }, (error) => {
-      const errorMessage = 'message' in error.error ? error.error.message : this.translocoService.translate('xeroOnboardingConnector.failedToConnect');
-      if (errorMessage === 'Please choose the correct Xero Tenten') {
-        this.isXeroConnected = false;
-        this.xeroConnectionInProgress = false;
-      } else {
-        this.toastService.displayToastMessage(ToastSeverity.ERROR, errorMessage);
-        this.router.navigate([`/integrations/xero/onboarding/landing`]);
-      }
-    });
+    this.xeroConnectorService.connectXero(this.workspaceService.getWorkspaceId(), code).subscribe(
+      (xeroCredentials: XeroCredentials) => {
+        this.xeroConnectorService.postXeroTenants().subscribe(() => {
+          this.isXeroConnected = true;
+          this.xeroConnectionInProgress = false;
+          this.isDisconnectClicked = false;
+        });
+      },
+      (error) => {
+        const errorMessage =
+          'message' in error.error
+            ? error.error.message
+            : this.translocoService.translate('xeroOnboardingConnector.failedToConnect');
+        if (errorMessage === 'Please choose the correct Xero Tenten') {
+          this.isXeroConnected = false;
+          this.xeroConnectionInProgress = false;
+        } else {
+          this.toastService.displayToastMessage(ToastSeverity.ERROR, errorMessage);
+          this.router.navigate([`/integrations/xero/onboarding/landing`]);
+        }
+      },
+    );
   }
 
   connectXero(companyDetails: DestinationAttribute): void {
@@ -197,7 +222,7 @@ export class XeroOnboardingConnectorComponent implements OnInit {
       this.isContinueDisabled = true;
       this.xeroCompanyName = this.xeroTenantselected.value;
       const tenantMappingPayload: TenantMappingPost = TenantMappingModel.constructPayload(this.xeroTenantselected);
-      this.xeroConnectorService.postTenantMapping(tenantMappingPayload).subscribe((response:TenantMapping) => {
+      this.xeroConnectorService.postTenantMapping(tenantMappingPayload).subscribe((response: TenantMapping) => {
         this.xeroHelperService.refreshXeroDimensions().subscribe();
 
         const fyleOrgId = this.storageService.get('org').fyle_org_id;
@@ -211,9 +236,8 @@ export class XeroOnboardingConnectorComponent implements OnInit {
             this.showOrHideDisconnectXero();
             this.checkCloneSettingsAvailablity();
           },
-          getWorkspacesObserver: () => this.workspaceService.getWorkspace(fyleOrgId)
+          getWorkspacesObserver: () => this.workspaceService.getWorkspace(fyleOrgId),
         });
-
       });
     } else {
       return;
@@ -238,39 +262,51 @@ export class XeroOnboardingConnectorComponent implements OnInit {
   }
 
   private showOrHideDisconnectXero(): void {
-    this.exportSettingService.getExportSettings().subscribe((exportSettings: XeroExportSettingGet) => {
-      // Do nothing
-      this.isLoading = false;
+    this.exportSettingService.getExportSettings().subscribe(
+      (exportSettings: XeroExportSettingGet) => {
+        // Do nothing
+        this.isLoading = false;
 
-      if (!(exportSettings.workspace_general_settings?.reimbursable_expenses_object || exportSettings.workspace_general_settings?.corporate_credit_card_expenses_object)) {
+        if (
+          !(
+            exportSettings.workspace_general_settings?.reimbursable_expenses_object ||
+            exportSettings.workspace_general_settings?.corporate_credit_card_expenses_object
+          )
+        ) {
+          this.showDisconnectXero = true;
+        }
+      },
+      () => {
+        // Showing Disconnect Xero button since the customer didn't set up the next step
         this.showDisconnectXero = true;
-      }
-    }, () => {
-      // Showing Disconnect Xero button since the customer didn't set up the next step
-      this.showDisconnectXero = true;
-      this.isLoading = false;
-    });
+        this.isLoading = false;
+      },
+    );
   }
 
   private setupPage() {
-    this.xeroConnectorService.getTenantMappings().subscribe((tenant: TenantMapping) => {
-      this.xeroCompanyName = tenant.tenant_name;
-      this.isXeroConnected = true;
-      this.isContinueDisabled = false;
-      this.xeroConnectionInProgress = false;
-      this.getTenant();
-    },
-    () => {
-      this.isXeroConnected = false;
-      this.isContinueDisabled = true;
-      this.xeroConnectionInProgress = false;
-      this.getTenant();
-    });
+    this.xeroConnectorService.getTenantMappings().subscribe(
+      (tenant: TenantMapping) => {
+        this.xeroCompanyName = tenant.tenant_name;
+        this.isXeroConnected = true;
+        this.isContinueDisabled = false;
+        this.xeroConnectionInProgress = false;
+        this.getTenant();
+      },
+      () => {
+        this.isXeroConnected = false;
+        this.isContinueDisabled = true;
+        this.xeroConnectionInProgress = false;
+        this.getTenant();
+      },
+    );
   }
 
   ngOnInit(): void {
-    this.onboardingSteps = this.xeroOnboardingService.getOnboardingSteps(this.translocoService.translate('xero.configuration.connector.stepName'), this.workspaceService.getOnboardingState());
+    this.onboardingSteps = this.xeroOnboardingService.getOnboardingSteps(
+      this.translocoService.translate('xero.configuration.connector.stepName'),
+      this.workspaceService.getOnboardingState(),
+    );
     this.setupPage();
   }
-
 }

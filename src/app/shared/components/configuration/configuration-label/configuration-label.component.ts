@@ -3,13 +3,12 @@ import { FormGroup } from '@angular/forms';
 import { QBDExportSettingFormOption } from 'src/app/core/models/qbd/qbd-configuration/qbd-export-setting.model';
 
 @Component({
-    selector: 'app-configuration-label',
-    templateUrl: './configuration-label.component.html',
-    styleUrls: ['./configuration-label.component.scss'],
-    standalone: false
+  selector: 'app-configuration-label',
+  templateUrl: './configuration-label.component.html',
+  styleUrls: ['./configuration-label.component.scss'],
+  standalone: false,
 })
 export class ConfigurationLabelComponent implements OnInit {
-
   @Input() labelValue: QBDExportSettingFormOption;
 
   @Input() iconPath: string;
@@ -20,9 +19,7 @@ export class ConfigurationLabelComponent implements OnInit {
 
   @Input() placeholder: string;
 
-  constructor() { }
+  constructor() {}
 
-  ngOnInit(): void {
-  }
-
+  ngOnInit(): void {}
 }

@@ -1,4 +1,4 @@
-import { ExpenseAttributeDetail } from "./expense-attribute-detail.model";
+import { ExpenseAttributeDetail } from './expense-attribute-detail.model';
 
 export type MappingSource = {
   id: number;

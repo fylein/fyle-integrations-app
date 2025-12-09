@@ -30,7 +30,7 @@ export class QBDMappingModel {
       attribute_type: mapping.attribute_type,
       source_value: mapping.source_value,
       source_id: mapping.source_id.toString(),
-      destination_value: mapping.destination_value
+      destination_value: mapping.destination_value,
     };
   }
 }

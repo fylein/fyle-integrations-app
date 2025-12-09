@@ -9,17 +9,15 @@ xdescribe('ConfigurationLabelComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ConfigurationLabelComponent ]
-    })
-    .compileComponents();
+      declarations: [ConfigurationLabelComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(ConfigurationLabelComponent);
     component = fixture.componentInstance;
-    component.labelValue =
-      {
-        label: 'Spend Date',
-        value: QBDExportDateType.SPENT_AT
-      };
+    component.labelValue = {
+      label: 'Spend Date',
+      value: QBDExportDateType.SPENT_AT,
+    };
     fixture.detectChanges();
   });
 

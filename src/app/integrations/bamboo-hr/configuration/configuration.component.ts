@@ -2,20 +2,24 @@ import { Component, EventEmitter, Inject, Input, OnInit, Output } from '@angular
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { SelectFilterOptions } from 'primeng/select';
 import { brandingConfig } from 'src/app/branding/branding-config';
-import { BambooHRConfiguration, BambooHRConfigurationPost, BambooHrModel, EmailOption } from 'src/app/core/models/bamboo-hr/bamboo-hr.model';
+import {
+  BambooHRConfiguration,
+  BambooHRConfigurationPost,
+  BambooHrModel,
+  EmailOption,
+} from 'src/app/core/models/bamboo-hr/bamboo-hr.model';
 import { AppName, ButtonSize, ButtonType, ClickEvent, TrackingApp } from 'src/app/core/models/enum/enum.model';
 import { Org } from 'src/app/core/models/org/org.model';
 import { TrackingService } from 'src/app/core/services/integration/tracking.service';
 import { OrgService } from 'src/app/core/services/org/org.service';
 
 @Component({
-    selector: 'app-configuration',
-    templateUrl: './configuration.component.html',
-    styleUrls: ['./configuration.component.scss'],
-    standalone: false
+  selector: 'app-configuration',
+  templateUrl: './configuration.component.html',
+  styleUrls: ['./configuration.component.scss'],
+  standalone: false,
 })
 export class ConfigurationComponent implements OnInit {
-
   @Input() bambooHrConfiguration: BambooHRConfiguration;
 
   @Input() additionalEmails: EmailOption[];
@@ -36,7 +40,7 @@ export class ConfigurationComponent implements OnInit {
 
   addEmailForm: FormGroup = this.formBuilder.group({
     email: [null, Validators.compose([Validators.email, Validators.required])],
-    name: [null, Validators.required]
+    name: [null, Validators.required],
   });
 
   showDialog: boolean;
@@ -50,8 +54,8 @@ export class ConfigurationComponent implements OnInit {
   constructor(
     @Inject(FormBuilder) private formBuilder: FormBuilder,
     private orgService: OrgService,
-    private trackingService: TrackingService
-  ) { }
+    private trackingService: TrackingService,
+  ) {}
 
   clearSearch(options: SelectFilterOptions): void {
     if (options.reset) {
@@ -65,7 +69,9 @@ export class ConfigurationComponent implements OnInit {
     selectedEmails.splice(0, 1);
 
     this.cofigurationForm.controls.emails.patchValue(selectedEmails);
-    this.selectedEmail = this.cofigurationForm.get('emails')?.value.length ? this.cofigurationForm.get('emails')?.value[0].email : null;
+    this.selectedEmail = this.cofigurationForm.get('emails')?.value.length
+      ? this.cofigurationForm.get('emails')?.value[0].email
+      : null;
   }
 
   addEmail(): void {
@@ -108,17 +114,25 @@ export class ConfigurationComponent implements OnInit {
 
   private getEmailOptions(additionalEmails: EmailOption[], adminEmails: EmailOption[]): EmailOption[] {
     return additionalEmails.concat(adminEmails).filter((email: EmailOption, index: number, self: EmailOption[]) => {
-      return index === self.findIndex((e: EmailOption) => {
-        return e.email === email.email;
-      });
+      return (
+        index ===
+        self.findIndex((e: EmailOption) => {
+          return e.email === email.email;
+        })
+      );
     });
   }
 
   private setupPage(): void {
     this.cofigurationForm = this.formBuilder.group({
-      additionalEmails: [this.bambooHrConfiguration?.additional_email_options ? this.bambooHrConfiguration.additional_email_options : []],
-      email: [this.bambooHrConfiguration?.emails_selected ? this.bambooHrConfiguration?.emails_selected : [], Validators.required],
-      search: []
+      additionalEmails: [
+        this.bambooHrConfiguration?.additional_email_options ? this.bambooHrConfiguration.additional_email_options : [],
+      ],
+      email: [
+        this.bambooHrConfiguration?.emails_selected ? this.bambooHrConfiguration?.emails_selected : [],
+        Validators.required,
+      ],
+      search: [],
     });
 
     this.emails = this.getEmailOptions(this.cofigurationForm.get('additionalEmails')?.value, this.additionalEmails);
@@ -133,5 +147,4 @@ export class ConfigurationComponent implements OnInit {
   ngOnInit(): void {
     this.setupPage();
   }
-
 }

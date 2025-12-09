@@ -8,9 +8,8 @@ xdescribe('QboExportLogComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ QboExportLogComponent ]
-    })
-    .compileComponents();
+      declarations: [QboExportLogComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(QboExportLogComponent);
     component = fixture.componentInstance;

@@ -10,23 +10,24 @@ const routes: Routes = [
     children: [
       {
         path: 'onboarding',
-        loadChildren: () => import('./intacct-onboarding/intacct-onboarding.module').then(m => m.IntacctOnboardingModule)
+        loadChildren: () =>
+          import('./intacct-onboarding/intacct-onboarding.module').then((m) => m.IntacctOnboardingModule),
       },
       {
         path: 'main',
-        loadChildren: () => import('./intacct-main/main.module').then(m => m.MainModule),
-        canActivate: [IntacctTokenGuard]
+        loadChildren: () => import('./intacct-main/main.module').then((m) => m.MainModule),
+        canActivate: [IntacctTokenGuard],
       },
       {
         path: 'token_expired',
-        loadChildren: () => import('./intacct-main/main.module').then(m => m.MainModule)
-      }
-    ]
-  }
+        loadChildren: () => import('./intacct-main/main.module').then((m) => m.MainModule),
+      },
+    ],
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class SiRoutingModule { }
+export class SiRoutingModule {}

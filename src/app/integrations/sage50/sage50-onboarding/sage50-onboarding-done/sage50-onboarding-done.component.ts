@@ -7,23 +7,25 @@ import { SharedModule } from 'src/app/shared/shared.module';
 import { environment } from 'src/environments/environment';
 
 @Component({
-    selector: 'app-sage50-onboarding-done',
-    imports: [SharedModule],
-    templateUrl: './sage50-onboarding-done.component.html',
-    styleUrl: './sage50-onboarding-done.component.scss'
+  selector: 'app-sage50-onboarding-done',
+  imports: [SharedModule],
+  templateUrl: './sage50-onboarding-done.component.html',
+  styleUrl: './sage50-onboarding-done.component.scss',
 })
 export class Sage50OnboardingDoneComponent {
   constructor(
     private router: Router,
     private trackingService: TrackingService,
-    private refinerService: RefinerService
+    private refinerService: RefinerService,
   ) {}
 
   navigateToDashboard() {
     this.trackingService.onClickEvent(TrackingApp.SAGE50, ClickEvent.LAUNCH_INTEGRATION);
     this.router.navigate([`/integrations/sage50/main/dashboard`]);
     this.refinerService.triggerSurvey(
-      AppName.SAGE50, environment.refiner_survey.sage50.onboarding_done_survery_id, RefinerSurveyType.ONBOARDING_DONE
+      AppName.SAGE50,
+      environment.refiner_survey.sage50.onboarding_done_survery_id,
+      RefinerSurveyType.ONBOARDING_DONE,
     );
   }
 }

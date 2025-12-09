@@ -8,11 +8,7 @@ describe('Usage50UonboardingService', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [
-        Usage50UonboardingService,
-        provideHttpClient(withInterceptorsFromDi()),
-        provideHttpClientTesting()
-      ]
+      providers: [Usage50UonboardingService, provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting()],
     });
     service = TestBed.inject(Usage50UonboardingService);
   });

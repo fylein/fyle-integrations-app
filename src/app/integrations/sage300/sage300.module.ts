@@ -6,17 +6,8 @@ import { Sage300MainComponent } from './sage300-main/sage300-main.component';
 import { Sage300SharedModule } from './sage300-shared/sage300-shared.module';
 import { SharedModule } from 'src/app/shared/shared.module';
 
-
 @NgModule({
-  declarations: [
-    Sage300OnboardingComponent,
-    Sage300MainComponent
-  ],
-  imports: [
-    CommonModule,
-    Sage300SharedModule,
-    SharedModule,
-    Sage300RoutingModule
-  ]
+  declarations: [Sage300OnboardingComponent, Sage300MainComponent],
+  imports: [CommonModule, Sage300SharedModule, SharedModule, Sage300RoutingModule],
 })
-export class Sage300Module { }
+export class Sage300Module {}

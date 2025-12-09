@@ -5,13 +5,12 @@ import { AppName, IntacctOnboardingState, QBDOnboardingState } from 'src/app/cor
 import { OnboardingStepper } from 'src/app/core/models/misc/onboarding-stepper.model';
 
 @Component({
-    selector: 'app-onboarding-steppers',
-    templateUrl: './onboarding-stepper.component.html',
-    styleUrls: ['./onboarding-stepper.component.scss'],
-    standalone: false
+  selector: 'app-onboarding-steppers',
+  templateUrl: './onboarding-stepper.component.html',
+  styleUrls: ['./onboarding-stepper.component.scss'],
+  standalone: false,
 })
 export class OnboardingSteppersComponent implements OnInit {
-
   @Input() onboardingSteps: OnboardingStepper[];
 
   @Input() isCloneSettingView: boolean;
@@ -22,16 +21,17 @@ export class OnboardingSteppersComponent implements OnInit {
 
   readonly isGradientAllowed: boolean = brandingFeatureConfig.isGradientAllowed;
 
-  constructor(
-    private router: Router
-  ) { }
+  constructor(private router: Router) {}
 
   getViewBox(onboardingStep: OnboardingStepper) {
     return onboardingStep.icon === 'upload' ? '0 0 16 16' : '';
   }
 
   shouldDisableConfigurationSteps(index: number): boolean {
-    return ([1, 2, 3].includes(index) && this.disableConfigurationStepsIfTokenInvalid) || ([0, 1].includes(index) && this.disableConnectionStepsIfCompleted);
+    return (
+      ([1, 2, 3].includes(index) && this.disableConfigurationStepsIfTokenInvalid) ||
+      ([0, 1].includes(index) && this.disableConnectionStepsIfCompleted)
+    );
   }
 
   navigate(index: number, canNavigate: boolean, route: string): void {
@@ -44,7 +44,7 @@ export class OnboardingSteppersComponent implements OnInit {
       return;
     }
 
-    if (this.disableConfigurationStepsIfTokenInvalid){
+    if (this.disableConfigurationStepsIfTokenInvalid) {
       return;
     }
 
@@ -53,7 +53,5 @@ export class OnboardingSteppersComponent implements OnInit {
     }
   }
 
-  ngOnInit(): void {
-  }
-
+  ngOnInit(): void {}
 }

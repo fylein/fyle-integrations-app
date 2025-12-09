@@ -12,22 +12,22 @@ const routes: Routes = [
     children: [
       {
         path: 'export_settings',
-        component: QbdConfigurationExportSettingComponent
+        component: QbdConfigurationExportSettingComponent,
       },
       {
         path: 'field_mapping',
-        component: QbdConfigurationFieldSettingComponent
+        component: QbdConfigurationFieldSettingComponent,
       },
       {
         path: 'advanced_settings',
-        component: QbdConfigurationAdvancedSettingComponent
-      }
-    ]
-  }
+        component: QbdConfigurationAdvancedSettingComponent,
+      },
+    ],
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class ConfigurationRoutingModule { }
+export class ConfigurationRoutingModule {}

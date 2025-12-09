@@ -1,4 +1,7 @@
-<app-onboarding-steppers [onboardingSteps]="onboardingSteps" [disableConfigurationStepsIfTokenInvalid]="!isIntacctCredentialsValid"></app-onboarding-steppers>
+<app-onboarding-steppers
+  [onboardingSteps]="onboardingSteps"
+  [disableConfigurationStepsIfTokenInvalid]="!isIntacctCredentialsValid"
+></app-onboarding-steppers>
 @if (!isIntacctCredentialsValid) {
   <app-intacct-connector (setupConnectionStatus)="setupConnectionStatus($event)"></app-intacct-connector>
 }

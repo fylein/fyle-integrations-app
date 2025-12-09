@@ -8,9 +8,8 @@ xdescribe('ConfigurationStepSubHeaderComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ConfigurationStepSubHeaderComponent ]
-    })
-    .compileComponents();
+      declarations: [ConfigurationStepSubHeaderComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(ConfigurationStepSubHeaderComponent);
     component = fixture.componentInstance;

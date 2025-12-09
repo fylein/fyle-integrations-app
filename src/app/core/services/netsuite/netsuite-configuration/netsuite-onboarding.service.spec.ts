@@ -8,11 +8,7 @@ describe('UnetsuiteUonboardingService', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [
-        UnetsuiteUonboardingService,
-        provideHttpClient(withInterceptorsFromDi()),
-        provideHttpClientTesting()
-      ]
+      providers: [UnetsuiteUonboardingService, provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting()],
     });
     service = TestBed.inject(UnetsuiteUonboardingService);
   });

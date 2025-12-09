@@ -1,4 +1,10 @@
-import { AutoMapEmployeeOptions, EmployeeFieldMapping, NameInJournalEntry, NetSuiteCorporateCreditCardExpensesObject, NetsuiteReimbursableExpensesObject } from "../../enum/enum.model";
+import {
+  AutoMapEmployeeOptions,
+  EmployeeFieldMapping,
+  NameInJournalEntry,
+  NetSuiteCorporateCreditCardExpensesObject,
+  NetsuiteReimbursableExpensesObject,
+} from '../../enum/enum.model';
 
 export type NetsuiteConfiguration = {
   id: number;
@@ -18,7 +24,7 @@ export type NetsuiteConfiguration = {
   sync_fyle_to_netsuite_payments: boolean;
   sync_netsuite_to_fyle_payments: boolean;
   auto_create_destination_entity: boolean;
-  auto_create_merchants_as_vendors: boolean,
+  auto_create_merchants_as_vendors: boolean;
   je_single_credit_line: boolean;
   change_accounting_period: boolean;
   memo_structure: string[];

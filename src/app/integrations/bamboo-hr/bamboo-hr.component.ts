@@ -3,8 +3,23 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MessageService } from 'primeng/api';
 import { catchError, concat, merge, of, toArray } from 'rxjs';
 import { brandingConfig, brandingKbArticles, brandingStyle } from 'src/app/branding/branding-config';
-import { BambooHr, BambooHRConfiguration, BambooHRConfigurationPost, BambooHrModel, EmailOption } from 'src/app/core/models/bamboo-hr/bamboo-hr.model';
-import { AppName, AppUrl, ButtonSize, ButtonType, ClickEvent, Page, ToastSeverity, TrackingApp } from 'src/app/core/models/enum/enum.model';
+import {
+  BambooHr,
+  BambooHRConfiguration,
+  BambooHRConfigurationPost,
+  BambooHrModel,
+  EmailOption,
+} from 'src/app/core/models/bamboo-hr/bamboo-hr.model';
+import {
+  AppName,
+  AppUrl,
+  ButtonSize,
+  ButtonType,
+  ClickEvent,
+  Page,
+  ToastSeverity,
+  TrackingApp,
+} from 'src/app/core/models/enum/enum.model';
 import { Org } from 'src/app/core/models/org/org.model';
 import { BambooHrService } from 'src/app/core/services/bamboo-hr/bamboo-hr.service';
 import { AuthService } from 'src/app/core/services/common/auth.service';
@@ -16,13 +31,12 @@ import { IntegrationsToastService } from 'src/app/core/services/common/integrati
 import { BrandingService } from 'src/app/core/services/common/branding.service';
 
 @Component({
-    selector: 'app-bamboo-hr',
-    templateUrl: './bamboo-hr.component.html',
-    styleUrls: ['./bamboo-hr.component.scss'],
-    standalone: false
+  selector: 'app-bamboo-hr',
+  templateUrl: './bamboo-hr.component.html',
+  styleUrls: ['./bamboo-hr.component.scss'],
+  standalone: false,
 })
 export class BambooHrComponent implements OnInit {
-
   showDialog: boolean;
 
   isBambooConnected: boolean;
@@ -55,7 +69,7 @@ export class BambooHrComponent implements OnInit {
 
   bambooConnectionForm: FormGroup = this.formBuilder.group({
     apiToken: [null, Validators.required],
-    subDomain: [null, Validators.required]
+    subDomain: [null, Validators.required],
   });
 
   bambooHrConfiguration: BambooHRConfiguration;
@@ -76,8 +90,8 @@ export class BambooHrComponent implements OnInit {
     private authService: AuthService,
     private translocoService: TranslocoService,
     private toastService: IntegrationsToastService,
-    public brandingService: BrandingService
-  ) { }
+    public brandingService: BrandingService,
+  ) {}
 
   openDialog(): void {
     this.trackingService.onClickEvent(TrackingApp.BAMBOO_HR, ClickEvent.CONNECT_BAMBOO_HR);
@@ -87,17 +101,27 @@ export class BambooHrComponent implements OnInit {
   connectBambooHR(): void {
     this.isBambooConnectionInProgress = true;
     const bambooConnectionPayload = BambooHrModel.constructBambooConnectionPayload(this.bambooConnectionForm);
-    this.bambooHrService.connectBambooHR(bambooConnectionPayload).subscribe(() => {
-      this.isBambooConnected = true;
-      this.isBambooConnectionInProgress = false;
-      this.showDialog = false;
-      this.toastService.displayToastMessage(ToastSeverity.SUCCESS, this.translocoService.translate('bambooHr.connectionSuccessMessage'));
-      this.trackingService.trackTimeSpent(TrackingApp.BAMBOO_HR, Page.BAMBOO_HR_LANDING, this.sessionStartTime);
-      this.sessionStartTime = new Date();
-    }, () => {
-      this.toastService.displayToastMessage(ToastSeverity.ERROR, this.translocoService.translate('bambooHr.connectionFailedMessage'), 5000);
-      this.isBambooConnectionInProgress = false;
-    });
+    this.bambooHrService.connectBambooHR(bambooConnectionPayload).subscribe(
+      () => {
+        this.isBambooConnected = true;
+        this.isBambooConnectionInProgress = false;
+        this.showDialog = false;
+        this.toastService.displayToastMessage(
+          ToastSeverity.SUCCESS,
+          this.translocoService.translate('bambooHr.connectionSuccessMessage'),
+        );
+        this.trackingService.trackTimeSpent(TrackingApp.BAMBOO_HR, Page.BAMBOO_HR_LANDING, this.sessionStartTime);
+        this.sessionStartTime = new Date();
+      },
+      () => {
+        this.toastService.displayToastMessage(
+          ToastSeverity.ERROR,
+          this.translocoService.translate('bambooHr.connectionFailedMessage'),
+          5000,
+        );
+        this.isBambooConnectionInProgress = false;
+      },
+    );
   }
 
   closeToast(): void {
@@ -111,7 +135,10 @@ export class BambooHrComponent implements OnInit {
       this.bambooHrConfiguration = updatedConfiguration;
       this.hideRefreshIcon = false;
       this.isConfigurationSaveInProgress = false;
-      this.toastService.displayToastMessage(ToastSeverity.SUCCESS, this.translocoService.translate('bambooHr.configurationSuccessMessage'));
+      this.toastService.displayToastMessage(
+        ToastSeverity.SUCCESS,
+        this.translocoService.translate('bambooHr.configurationSuccessMessage'),
+      );
       this.trackingService.trackTimeSpent(TrackingApp.BAMBOO_HR, Page.CONFIGURE_BAMBOO_HR, this.sessionStartTime);
     });
   }
@@ -119,7 +146,10 @@ export class BambooHrComponent implements OnInit {
   syncEmployees(): void {
     this.trackingService.onClickEvent(TrackingApp.BAMBOO_HR, ClickEvent.SYNC_BAMBOO_HR_EMPLOYEES);
     this.hideRefreshIcon = true;
-    this.toastService.displayToastMessage(ToastSeverity.SUCCESS, this.translocoService.translate('bambooHr.syncStartMessage'));
+    this.toastService.displayToastMessage(
+      ToastSeverity.SUCCESS,
+      this.translocoService.translate('bambooHr.syncStartMessage'),
+    );
     this.bambooHrService.syncEmployees().subscribe(() => {
       this.hideRefreshIcon = false;
     });
@@ -129,17 +159,19 @@ export class BambooHrComponent implements OnInit {
     this.trackingService.onClickEvent(TrackingApp.BAMBOO_HR, ClickEvent.DISCONNECT_BAMBOO_HR);
     this.isLoading = true;
     this.bambooHrService.disconnectBambooHr().subscribe(() => {
-      this.toastService.displayToastMessage(ToastSeverity.SUCCESS, this.translocoService.translate('bambooHr.disconnectSuccessMessage'));
+      this.toastService.displayToastMessage(
+        ToastSeverity.SUCCESS,
+        this.translocoService.translate('bambooHr.disconnectSuccessMessage'),
+      );
       this.isBambooConnected = false;
       this.isLoading = false;
     });
   }
 
-
   private getBambooHrConfiguration(): void {
     const data = merge(
       this.orgService.getAdditionalEmails(),
-      this.bambooHrService.getConfigurations().pipe(catchError(() => of(null)))
+      this.bambooHrService.getConfigurations().pipe(catchError(() => of(null))),
     );
 
     data.pipe(toArray()).subscribe((responses) => {
@@ -152,7 +184,6 @@ export class BambooHrComponent implements OnInit {
         }
       });
       this.isLoading = false;
-
     });
   }
 
@@ -162,34 +193,42 @@ export class BambooHrComponent implements OnInit {
   }
 
   private loadBambooHR(isBambooTokenExpired: boolean): void {
-    this.bambooHrService.getBambooHRData().subscribe((bambooHrData: BambooHr) => {
-      this.isBambooConnected = bambooHrData.sub_domain && bambooHrData.api_token ? true : false;
-      this.getBambooHrConfiguration();
+    this.bambooHrService.getBambooHRData().subscribe(
+      (bambooHrData: BambooHr) => {
+        this.isBambooConnected = bambooHrData.sub_domain && bambooHrData.api_token ? true : false;
+        this.getBambooHrConfiguration();
 
-      if (this.isBambooConnected && isBambooTokenExpired === false){
-        this.bambooHrData = bambooHrData;
-      } else if (this.isBambooConnected) {
+        if (this.isBambooConnected && isBambooTokenExpired === false) {
+          this.bambooHrData = bambooHrData;
+        } else if (this.isBambooConnected) {
+          this.isBambooConnected = false;
+          this.toastService.displayToastMessage(
+            ToastSeverity.ERROR,
+            this.translocoService.translate('bambooHr.tokenExpiredMessage'),
+            6000,
+          );
+        }
+      },
+      () => {
         this.isBambooConnected = false;
-        this.toastService.displayToastMessage(ToastSeverity.ERROR, this.translocoService.translate('bambooHr.tokenExpiredMessage'), 6000);
-      }
-
-    }, () => {
-      this.isBambooConnected = false;
-      this.getBambooHrConfiguration();
-    });
+        this.getBambooHrConfiguration();
+      },
+    );
   }
 
-  private checkTokenHealth(): void{
-    this.bambooHrService.checkHealth().subscribe(() => {
-      this.loadBambooHR(false);
-    }, () => {
-      this.loadBambooHR(true);
-    });
+  private checkTokenHealth(): void {
+    this.bambooHrService.checkHealth().subscribe(
+      () => {
+        this.loadBambooHR(false);
+      },
+      () => {
+        this.loadBambooHR(true);
+      },
+    );
   }
 
   ngOnInit(): void {
     this.authService.updateUserTokens('BAMBOO_HR');
     this.setupPage();
   }
-
 }

@@ -9,21 +9,20 @@ import { SharedModule } from 'src/app/shared/shared.module';
 import { Observable, of } from 'rxjs';
 
 @Component({
-    selector: 'app-sage50',
-    imports: [RouterOutlet, SharedModule],
-    templateUrl: './sage50.component.html',
-    styleUrl: './sage50.component.scss'
+  selector: 'app-sage50',
+  imports: [RouterOutlet, SharedModule],
+  templateUrl: './sage50.component.html',
+  styleUrl: './sage50.component.scss',
 })
 export class Sage50Component implements OnInit {
-
   isLoading: boolean = true;
 
   constructor(
     private router: Router,
     private userService: IntegrationsUserService,
     private workspaceService: WorkspaceService,
-    private helperService: HelperService
-  ) { }
+    private helperService: HelperService,
+  ) {}
 
   private navigate(): void {
     if (this.router.url === '/integrations/sage50') {
@@ -33,7 +32,7 @@ export class Sage50Component implements OnInit {
         [Sage50OnboardingState.EXPORT_SETTINGS]: '/integrations/sage50/onboarding/export_settings',
         [Sage50OnboardingState.IMPORT_SETTINGS]: '/integrations/sage50/onboarding/import_settings',
         [Sage50OnboardingState.ADVANCED_SETTINGS]: '/integrations/sage50/onboarding/advanced_settings',
-        [Sage50OnboardingState.COMPLETE]: '/integrations/sage50/main/dashboard'
+        [Sage50OnboardingState.COMPLETE]: '/integrations/sage50/main/dashboard',
       };
 
       const onboardingState = this.workspaceService.getOnboardingState() as Sage50OnboardingState;
@@ -76,12 +75,11 @@ export class Sage50Component implements OnInit {
       },
       error: () => {
         this.createWorkspaceAndNavigate();
-      }
+      },
     });
   }
 
   ngOnInit(): void {
     this.setupWorkspace();
   }
-
 }

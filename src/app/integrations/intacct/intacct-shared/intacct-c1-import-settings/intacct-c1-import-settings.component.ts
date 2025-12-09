@@ -4,9 +4,27 @@ import { Router } from '@angular/router';
 import { RxwebValidators } from '@rxweb/reactive-form-validators';
 import { forkJoin } from 'rxjs';
 import { brandingConfig, brandingKbArticles, brandingStyle } from 'src/app/branding/branding-config';
-import { IntacctCategoryDestination, ConfigurationCta, IntacctOnboardingState, IntacctUpdateEvent, Page, ProgressPhase, ToastSeverity, MappingSourceField, AppName, TrackingApp, FyleField } from 'src/app/core/models/enum/enum.model';
+import {
+  IntacctCategoryDestination,
+  ConfigurationCta,
+  IntacctOnboardingState,
+  IntacctUpdateEvent,
+  Page,
+  ProgressPhase,
+  ToastSeverity,
+  MappingSourceField,
+  AppName,
+  TrackingApp,
+  FyleField,
+} from 'src/app/core/models/enum/enum.model';
 import { ExpenseField } from 'src/app/core/models/intacct/db/expense-field.model';
-import { ImportSettingGet, ImportSettingPost, ImportSettings, IntacctDependentImportFields, MappingSetting } from 'src/app/core/models/intacct/intacct-configuration/import-settings.model';
+import {
+  ImportSettingGet,
+  ImportSettingPost,
+  ImportSettings,
+  IntacctDependentImportFields,
+  MappingSetting,
+} from 'src/app/core/models/intacct/intacct-configuration/import-settings.model';
 import { ConfigurationWarningOut } from 'src/app/core/models/misc/configuration-warning.model';
 import { HelperService } from 'src/app/core/services/common/helper.service';
 import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
@@ -19,13 +37,12 @@ import { SiWorkspaceService } from 'src/app/core/services/si/si-core/si-workspac
 import { TranslocoService } from '@jsverse/transloco';
 
 @Component({
-    selector: 'app-intacct-c1-import-settings',
-    templateUrl: './intacct-c1-import-settings.component.html',
-    styleUrls: ['./intacct-c1-import-settings.component.scss'],
-    standalone: false
+  selector: 'app-intacct-c1-import-settings',
+  templateUrl: './intacct-c1-import-settings.component.html',
+  styleUrls: ['./intacct-c1-import-settings.component.scss'],
+  standalone: false,
 })
 export class IntacctC1ImportSettingsComponent implements OnInit {
-
   isLoading: boolean = true;
 
   appName = AppName.INTACCT;
@@ -35,7 +52,7 @@ export class IntacctC1ImportSettingsComponent implements OnInit {
   customFieldForm: FormGroup = this.formBuilder.group({
     attribute_type: ['', Validators.required],
     display_name: [''],
-    source_placeholder: ['', Validators.required]
+    source_placeholder: ['', Validators.required],
   });
 
   expenseFields: FormArray;
@@ -76,7 +93,52 @@ export class IntacctC1ImportSettingsComponent implements OnInit {
 
   isDialogVisible: boolean = false;
 
-  existingFields: string[] = ['employee id', 'organisation name', 'employee name', 'employee email', 'expense date', 'expense date', 'expense id', 'report id', 'employee id', 'department', 'state', 'reporter', 'report', 'purpose', 'vendor', 'category', 'category code', 'mileage distance', 'mileage unit', 'flight from city', 'flight to city', 'flight from date', 'flight to date', 'flight from class', 'flight to class', 'hotel checkin', 'hotel checkout', 'hotel location', 'hotel breakfast', 'currency', 'amount', 'foreign currency', 'foreign amount', 'tax', 'approver', 'project', 'billable', 'cost center', 'cost center code', 'approved on', 'reimbursable', 'receipts', 'paid date', 'expense created date'];
+  existingFields: string[] = [
+    'employee id',
+    'organisation name',
+    'employee name',
+    'employee email',
+    'expense date',
+    'expense date',
+    'expense id',
+    'report id',
+    'employee id',
+    'department',
+    'state',
+    'reporter',
+    'report',
+    'purpose',
+    'vendor',
+    'category',
+    'category code',
+    'mileage distance',
+    'mileage unit',
+    'flight from city',
+    'flight to city',
+    'flight from date',
+    'flight to date',
+    'flight from class',
+    'flight to class',
+    'hotel checkin',
+    'hotel checkout',
+    'hotel location',
+    'hotel breakfast',
+    'currency',
+    'amount',
+    'foreign currency',
+    'foreign amount',
+    'tax',
+    'approver',
+    'project',
+    'billable',
+    'cost center',
+    'cost center code',
+    'approved on',
+    'reimbursable',
+    'receipts',
+    'paid date',
+    'expense created date',
+  ];
 
   readonly brandingConfig = brandingConfig;
 
@@ -101,26 +163,47 @@ export class IntacctC1ImportSettingsComponent implements OnInit {
     private storageService: StorageService,
     private workspaceService: SiWorkspaceService,
     private helper: HelperService,
-    private translocoService: TranslocoService
-  ) { }
+    private translocoService: TranslocoService,
+  ) {}
 
   private setupDependentAndCustomFields(): void {
-    this.costCodeFieldOption = [{ attribute_type: 'custom_field', display_name: this.translocoService.translate('intacctC1ImportSettings.createCustomField'), source_placeholder: null, is_dependent: true }];
-    this.costCategoryOption = [{ attribute_type: 'custom_field', display_name: this.translocoService.translate('intacctC1ImportSettings.createCustomField'), source_placeholder: null, is_dependent: true }];
-    this.customFieldOption = [{ attribute_type: 'custom_field', display_name: this.translocoService.translate('intacctC1ImportSettings.createCustomField'), source_placeholder: null, is_dependent: false }];
+    this.costCodeFieldOption = [
+      {
+        attribute_type: 'custom_field',
+        display_name: this.translocoService.translate('intacctC1ImportSettings.createCustomField'),
+        source_placeholder: null,
+        is_dependent: true,
+      },
+    ];
+    this.costCategoryOption = [
+      {
+        attribute_type: 'custom_field',
+        display_name: this.translocoService.translate('intacctC1ImportSettings.createCustomField'),
+        source_placeholder: null,
+        is_dependent: true,
+      },
+    ];
+    this.customFieldOption = [
+      {
+        attribute_type: 'custom_field',
+        display_name: this.translocoService.translate('intacctC1ImportSettings.createCustomField'),
+        source_placeholder: null,
+        is_dependent: false,
+      },
+    ];
     const dependentImportFields: IntacctDependentImportFields[] = [
       {
         source_field: this.translocoService.translate('intacctC1ImportSettings.costCode'),
         options: this.costCodeFieldOption,
         formController: 'costCodes',
-        isDisabled: false
+        isDisabled: false,
       },
       {
         source_field: this.translocoService.translate('intacctC1ImportSettings.costType'),
         options: this.costCategoryOption,
         formController: 'costTypes',
-        isDisabled: false
-      }
+        isDisabled: false,
+      },
     ];
     this.dependentImportFields = dependentImportFields;
   }
@@ -136,7 +219,10 @@ export class IntacctC1ImportSettingsComponent implements OnInit {
   refreshDimensions() {
     this.mappingService.refreshSageIntacctDimensions().subscribe();
     this.mappingService.refreshFyleDimensions().subscribe();
-    this.toastService.displayToastMessage(ToastSeverity.SUCCESS, this.translocoService.translate('intacctC1ImportSettings.syncingDataDimensions'));
+    this.toastService.displayToastMessage(
+      ToastSeverity.SUCCESS,
+      this.translocoService.translate('intacctC1ImportSettings.syncingDataDimensions'),
+    );
   }
 
   removeFilter(expenseField: AbstractControl) {
@@ -174,7 +260,7 @@ export class IntacctC1ImportSettingsComponent implements OnInit {
             destination_field: control.get('destination_field')?.value,
             import_to_fyle: true,
             is_custom: control.get('is_custom')?.value,
-            source_placeholder: control.value.source_placeholder
+            source_placeholder: control.value.source_placeholder,
           });
           this.importSettingsForm.controls.isDependentImportEnabled.setValue(true);
           this.importSettingsForm.controls.costCodes.disable();
@@ -191,7 +277,7 @@ export class IntacctC1ImportSettingsComponent implements OnInit {
       destination_field: '',
       import_to_fyle: true,
       is_custom: false,
-      source_placeholder: null
+      source_placeholder: null,
     };
     this.expenseFields.push(this.createFormGroup(defaultFieldData));
     this.importSettingWatcher();
@@ -200,7 +286,7 @@ export class IntacctC1ImportSettingsComponent implements OnInit {
 
   closeModel() {
     this.customFieldControl.patchValue({
-      source_field: null
+      source_field: null,
     });
     this.customFieldForm.reset();
     this.showDialog = false;
@@ -223,7 +309,7 @@ export class IntacctC1ImportSettingsComponent implements OnInit {
         this.customFieldControl = this.importSettingsForm.controls[formControllerName];
         if (value.source_field === 'custom_field') {
           this.importSettingsForm.controls[formControllerName].patchValue({
-            source_field: null
+            source_field: null,
           });
         }
       } else if (value?.attribute_type && formControllerName === 'costCodes') {
@@ -272,7 +358,7 @@ export class IntacctC1ImportSettingsComponent implements OnInit {
       display_name: this.customFieldForm.get('attribute_type')?.value,
       source_placeholder: this.customFieldForm.get('source_placeholder')?.value,
       is_dependent: true,
-      is_custom: true
+      is_custom: true,
     };
     if (this.customFieldControl) {
       if (this.customFieldType === 'costCodes') {
@@ -294,7 +380,7 @@ export class IntacctC1ImportSettingsComponent implements OnInit {
       attribute_type: this.customFieldForm.get('attribute_type')?.value.split(' ').join('_').toUpperCase(),
       display_name: this.customFieldForm.get('attribute_type')?.value,
       source_placeholder: this.customFieldForm.get('source_placeholder')?.value,
-      is_dependent: false
+      is_dependent: false,
     };
 
     if (this.customFieldControl) {
@@ -306,9 +392,13 @@ export class IntacctC1ImportSettingsComponent implements OnInit {
         destination_field: this.customFieldControl.get('destination_field')?.value,
         import_to_fyle: true,
         is_custom: true,
-        source_placeholder: this.customField.source_placeholder
+        source_placeholder: this.customField.source_placeholder,
       };
-      (this.importSettingsForm.get('expenseFields') as FormArray).controls.filter(field => field.get('destination_field')?.value === this.customFieldControl.get('destination_field')?.value)[0].patchValue(expenseField);
+      (this.importSettingsForm.get('expenseFields') as FormArray).controls
+        .filter(
+          (field) => field.get('destination_field')?.value === this.customFieldControl.get('destination_field')?.value,
+        )[0]
+        .patchValue(expenseField);
       this.customFieldForm.reset();
       this.showDialog = false;
     }
@@ -318,7 +408,7 @@ export class IntacctC1ImportSettingsComponent implements OnInit {
     this.customFieldForm = this.formBuilder.group({
       attribute_type: [null, Validators.required],
       display_name: [null],
-      source_placeholder: [null, Validators.required]
+      source_placeholder: [null, Validators.required],
     });
     this.showDialog = true;
   }
@@ -326,16 +416,16 @@ export class IntacctC1ImportSettingsComponent implements OnInit {
   private importSettingWatcher(): void {
     const expenseFieldArray = this.importSettingsForm.get('expenseFields') as FormArray;
     expenseFieldArray.controls.forEach((control) => {
-      control.valueChanges.subscribe(value => {
+      control.valueChanges.subscribe((value) => {
         if (value.source_field === 'custom_field') {
-         this.addCustomField();
-         this.customFieldControl = control;
-         this.customFieldControl.patchValue({
+          this.addCustomField();
+          this.customFieldControl = control;
+          this.customFieldControl.patchValue({
             source_field: '',
             destination_field: control.get('destination_field')?.value,
             import_to_fyle: control.get('import_to_fyle')?.value,
             is_custom: control.get('is_custom')?.value,
-            source_placeholder: null
+            source_placeholder: null,
           });
         }
       });
@@ -348,7 +438,7 @@ export class IntacctC1ImportSettingsComponent implements OnInit {
       destination_field: [data.destination_field || '', RxwebValidators.unique()],
       import_to_fyle: [data.import_to_fyle || false],
       is_custom: [data.is_custom || false],
-      source_placeholder: [data.source_placeholder || null]
+      source_placeholder: [data.source_placeholder || null],
     });
   }
 
@@ -361,7 +451,7 @@ export class IntacctC1ImportSettingsComponent implements OnInit {
     // First loop to populate mappedFieldMap
     this.sageIntacctFields.forEach((sageIntacctField) => {
       const mappingSetting = this.importSettings?.mapping_settings.find(
-        (setting) => setting.destination_field === sageIntacctField.attribute_type
+        (setting) => setting.destination_field === sageIntacctField.attribute_type,
       );
 
       const fieldData = mappingSetting || {
@@ -369,34 +459,47 @@ export class IntacctC1ImportSettingsComponent implements OnInit {
         import_to_fyle: false,
         is_custom: false,
         source_field: '',
-        source_placeholder: null
+        source_placeholder: null,
       };
       if (mappingSetting) {
         mappedFieldMap.set(sageIntacctField.attribute_type, fieldData);
       } else {
         unmappedFieldMap.set(sageIntacctField.attribute_type, fieldData);
       }
-
     });
 
     const topPriorityFields = ['PROJECT', 'DEPARTMENT', 'LOCATION'];
 
     // Sort sageIntacctFields so that topPriorityFields come first
     this.sageIntacctFields.sort((a, b) => {
-      return (topPriorityFields.includes(b.attribute_type) ? 1 : 0) - (topPriorityFields.includes(a.attribute_type) ? 1 : 0);
+      return (
+        (topPriorityFields.includes(b.attribute_type) ? 1 : 0) - (topPriorityFields.includes(a.attribute_type) ? 1 : 0)
+      );
     });
 
-    expenseFieldFormArray.push(this.createFormGroup({
-      source_field: FyleField.CATEGORY,
-      destination_field: 'GENERAL_LEDGER_ACCOUNT',
-      import_to_fyle: this.importSettings?.configurations.import_categories || false,
-      is_custom: false,
-      source_placeholder: null
-    }));
+    expenseFieldFormArray.push(
+      this.createFormGroup({
+        source_field: FyleField.CATEGORY,
+        destination_field: 'GENERAL_LEDGER_ACCOUNT',
+        import_to_fyle: this.importSettings?.configurations.import_categories || false,
+        is_custom: false,
+        source_placeholder: null,
+      }),
+    );
 
-    this.sageIntacctFields.push({ attribute_type: 'GENERAL_LEDGER_ACCOUNT', display_name: this.translocoService.translate('intacctC1ImportSettings.generalLedgerAccount'), source_placeholder: '', is_dependent: false });
+    this.sageIntacctFields.push({
+      attribute_type: 'GENERAL_LEDGER_ACCOUNT',
+      display_name: this.translocoService.translate('intacctC1ImportSettings.generalLedgerAccount'),
+      source_placeholder: '',
+      is_dependent: false,
+    });
     this.fyleFields.pop();
-    this.fyleFields.push({ attribute_type: FyleField.CATEGORY, display_name: this.translocoService.translate('intacctC1ImportSettings.category'), source_placeholder: '', is_dependent: false });
+    this.fyleFields.push({
+      attribute_type: FyleField.CATEGORY,
+      display_name: this.translocoService.translate('intacctC1ImportSettings.category'),
+      source_placeholder: '',
+      is_dependent: false,
+    });
     this.fyleFields.push(this.customFieldOption[0]);
 
     // Handle only mapped fields
@@ -423,7 +526,7 @@ export class IntacctC1ImportSettingsComponent implements OnInit {
       display_name: fieldName,
       source_placeholder: placeholder,
       is_dependent: true,
-      is_custom: true
+      is_custom: true,
     };
 
     if (formfield === 'costCodes') {
@@ -442,17 +545,33 @@ export class IntacctC1ImportSettingsComponent implements OnInit {
       importVendorAsMerchant: [importSettings.configurations.import_vendors_as_merchants || null],
       importCategories: [importSettings.configurations.import_categories || null],
       importTaxCodes: [importSettings.configurations.import_tax_codes || false],
-      costCodes: [importSettings.dependent_field_settings?.cost_code_field_name ? this.dependentFieldFormValue(importSettings.dependent_field_settings.cost_code_field_name, importSettings.dependent_field_settings.cost_code_placeholder, 'costCodes') : null],
+      costCodes: [
+        importSettings.dependent_field_settings?.cost_code_field_name
+          ? this.dependentFieldFormValue(
+              importSettings.dependent_field_settings.cost_code_field_name,
+              importSettings.dependent_field_settings.cost_code_placeholder,
+              'costCodes',
+            )
+          : null,
+      ],
       costCodesImportToggle: [true],
       sImportToggle: [true],
       workspaceId: this.storageService.get('workspaceId'),
-      costTypes: [importSettings.dependent_field_settings?.cost_type_field_name ? this.dependentFieldFormValue(importSettings.dependent_field_settings.cost_type_field_name, importSettings.dependent_field_settings.cost_type_placeholder, 'costTypes') : null],
+      costTypes: [
+        importSettings.dependent_field_settings?.cost_type_field_name
+          ? this.dependentFieldFormValue(
+              importSettings.dependent_field_settings.cost_type_field_name,
+              importSettings.dependent_field_settings.cost_type_placeholder,
+              'costTypes',
+            )
+          : null,
+      ],
       costTypesImportToggle: [!!importSettings.dependent_field_settings?.is_cost_type_import_enabled],
       isDependentImportEnabled: [importSettings.dependent_field_settings?.is_import_enabled || false],
       sageIntacctTaxCodes: [importSettings.general_mappings.default_tax_code.id || null],
       expenseFields: this.formBuilder.array(this.constructFormArray()),
       importCodeField: [importSettings.configurations.import_code_fields],
-      importCodeFields: this.formBuilder.array([])
+      importCodeFields: this.formBuilder.array([]),
     });
 
     this.importSettingWatcher();
@@ -476,27 +595,25 @@ export class IntacctC1ImportSettingsComponent implements OnInit {
       fyleFieldsObservable,
       importSettingsObservable,
       configuration,
-      locationEntity
-    ]).subscribe(
-      ([sageIntacctFields, fyleFields, importSettings, configuration, locationEntity]) => {
-        this.sageIntacctFields = sageIntacctFields.map(field => {
-          return {
-            ...field,
-            display_name: field.display_name
-          };
-        });
-        this.fyleFields = fyleFields;
-        this.fyleFields.push(this.customFieldOption[0]);
-        this.importSettings = importSettings;
+      locationEntity,
+    ]).subscribe(([sageIntacctFields, fyleFields, importSettings, configuration, locationEntity]) => {
+      this.sageIntacctFields = sageIntacctFields.map((field) => {
+        return {
+          ...field,
+          display_name: field.display_name,
+        };
+      });
+      this.fyleFields = fyleFields;
+      this.fyleFields.push(this.customFieldOption[0]);
+      this.importSettings = importSettings;
 
-        if (configuration.employee_field_mapping==='EMPLOYEE') {
-          this.intacctCategoryDestination = IntacctCategoryDestination.EXPENSE_TYPE;
-        } else {
-          this.intacctCategoryDestination = IntacctCategoryDestination.GL_ACCOUNT;
-        }
-        this.initializeForm(importSettings);
+      if (configuration.employee_field_mapping === 'EMPLOYEE') {
+        this.intacctCategoryDestination = IntacctCategoryDestination.EXPENSE_TYPE;
+      } else {
+        this.intacctCategoryDestination = IntacctCategoryDestination.GL_ACCOUNT;
       }
-    );
+      this.initializeForm(importSettings);
+    });
   }
 
   private getPhase(): ProgressPhase {
@@ -505,35 +622,50 @@ export class IntacctC1ImportSettingsComponent implements OnInit {
 
   save(): void {
     this.saveInProgress = true;
-    const importSettingPayload = ImportSettings.constructPayload(this.importSettingsForm, this.importSettings!.dependent_field_settings);
-    this.importSettingService.postImportSettings(importSettingPayload).subscribe((response: ImportSettingPost) => {
-      this.toastService.displayToastMessage(ToastSeverity.SUCCESS, this.translocoService.translate('intacctC1ImportSettings.importSettingsSuccess'), undefined, this.isOnboarding);
-      this.trackingService.trackTimeSpent(TrackingApp.INTACCT, Page.IMPORT_SETTINGS_INTACCT, this.sessionStartTime);
-      if (this.workspaceService.getIntacctOnboardingState() === IntacctOnboardingState.IMPORT_SETTINGS) {
-        this.trackingService.integrationsOnboardingCompletion(TrackingApp.INTACCT, IntacctOnboardingState.IMPORT_SETTINGS, 3, importSettingPayload);
-      } else {
-        this.trackingService.intacctUpdateEvent(
-          IntacctUpdateEvent.ADVANCED_SETTINGS_INTACCT,
-          {
+    const importSettingPayload = ImportSettings.constructPayload(
+      this.importSettingsForm,
+      this.importSettings!.dependent_field_settings,
+    );
+    this.importSettingService.postImportSettings(importSettingPayload).subscribe(
+      (response: ImportSettingPost) => {
+        this.toastService.displayToastMessage(
+          ToastSeverity.SUCCESS,
+          this.translocoService.translate('intacctC1ImportSettings.importSettingsSuccess'),
+          undefined,
+          this.isOnboarding,
+        );
+        this.trackingService.trackTimeSpent(TrackingApp.INTACCT, Page.IMPORT_SETTINGS_INTACCT, this.sessionStartTime);
+        if (this.workspaceService.getIntacctOnboardingState() === IntacctOnboardingState.IMPORT_SETTINGS) {
+          this.trackingService.integrationsOnboardingCompletion(
+            TrackingApp.INTACCT,
+            IntacctOnboardingState.IMPORT_SETTINGS,
+            3,
+            importSettingPayload,
+          );
+        } else {
+          this.trackingService.intacctUpdateEvent(IntacctUpdateEvent.ADVANCED_SETTINGS_INTACCT, {
             phase: this.getPhase(),
             oldState: this.importSettings,
-            newState: response
-          }
+            newState: response,
+          });
+        }
+        this.saveInProgress = false;
+        if (this.isOnboarding) {
+          this.workspaceService.setIntacctOnboardingState(IntacctOnboardingState.ADVANCED_CONFIGURATION);
+          this.router.navigate([`/integrations/intacct/onboarding/advanced_settings`]);
+        }
+      },
+      () => {
+        this.saveInProgress = false;
+        this.toastService.displayToastMessage(
+          ToastSeverity.ERROR,
+          this.translocoService.translate('intacctC1ImportSettings.importSettingsError'),
         );
-      }
-      this.saveInProgress = false;
-      if (this.isOnboarding) {
-        this.workspaceService.setIntacctOnboardingState(IntacctOnboardingState.ADVANCED_CONFIGURATION);
-        this.router.navigate([`/integrations/intacct/onboarding/advanced_settings`]);
-      }
-    }, () => {
-      this.saveInProgress = false;
-      this.toastService.displayToastMessage(ToastSeverity.ERROR, this.translocoService.translate('intacctC1ImportSettings.importSettingsError'));
-      });
+      },
+    );
   }
 
   ngOnInit(): void {
     this.getSettingsAndSetupForm();
   }
-
 }

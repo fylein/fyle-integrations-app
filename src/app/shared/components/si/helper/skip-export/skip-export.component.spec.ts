@@ -11,11 +11,10 @@ xdescribe('SkipExportComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-    declarations: [SkipExportComponent],
-    imports: [],
-    providers: [FormBuilder, provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting()]
-})
-    .compileComponents();
+      declarations: [SkipExportComponent],
+      imports: [],
+      providers: [FormBuilder, provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting()],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(SkipExportComponent);
     component = fixture.componentInstance;

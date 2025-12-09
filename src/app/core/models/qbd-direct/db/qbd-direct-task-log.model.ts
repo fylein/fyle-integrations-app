@@ -1,6 +1,6 @@
-import { PaginatedResponse } from "../../db/paginated-response.model";
-import { TaskLog } from "../../db/task-log.model";
-import { QbdDirectTaskLogType } from "../../enum/enum.model";
+import { PaginatedResponse } from '../../db/paginated-response.model';
+import { TaskLog } from '../../db/task-log.model';
+import { QbdDirectTaskLogType } from '../../enum/enum.model';
 
 export type QuickbooksError = {
   expense_group_id: number;
@@ -11,7 +11,7 @@ export type QuickbooksError = {
 
 export interface QbdDirectTaskLog extends TaskLog {
   quickbooks_errors: QuickbooksError[];
-  type: QbdDirectTaskLogType ;
+  type: QbdDirectTaskLogType;
 }
 
 export interface QbdDirectTaskResponse extends PaginatedResponse {

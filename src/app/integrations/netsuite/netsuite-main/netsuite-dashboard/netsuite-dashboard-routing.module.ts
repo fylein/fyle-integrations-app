@@ -5,12 +5,12 @@ import { NetsuiteDashboardComponent } from './netsuite-dashboard.component';
 const routes: Routes = [
   {
     path: '',
-    component: NetsuiteDashboardComponent
-  }
+    component: NetsuiteDashboardComponent,
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class NetsuiteDashboardRoutingModule { }
+export class NetsuiteDashboardRoutingModule {}

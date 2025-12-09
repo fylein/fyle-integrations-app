@@ -1,7 +1,15 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { brandingConfig, brandingKbArticles, brandingStyle } from 'src/app/branding/branding-config';
-import { ToastSeverity, TrackingApp, Page, TravelPerkOnboardingState, TravelperkUpdateEvent, AppName, ConfigurationCta } from 'src/app/core/models/enum/enum.model';
+import {
+  ToastSeverity,
+  TrackingApp,
+  Page,
+  TravelPerkOnboardingState,
+  TravelperkUpdateEvent,
+  AppName,
+  ConfigurationCta,
+} from 'src/app/core/models/enum/enum.model';
 import { TravelperkAdvancedSettingGet } from 'src/app/core/models/travelperk/travelperk-configuration/travelperk-advanced-settings.model';
 import { HelperService } from 'src/app/core/services/common/helper.service';
 import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
@@ -16,13 +24,12 @@ import { TranslocoService } from '@jsverse/transloco';
 import { TravelperkAdvancedSettingsService } from 'src/app/core/services/travelperk/travelperk-configuration/travelperk-advanced-settings.service';
 
 @Component({
-    selector: 'app-travelperk-advanced-settings',
-    templateUrl: './travelperk-advanced-settings.component.html',
-    styleUrls: ['./travelperk-advanced-settings.component.scss'],
-    standalone: false
+  selector: 'app-travelperk-advanced-settings',
+  templateUrl: './travelperk-advanced-settings.component.html',
+  styleUrls: ['./travelperk-advanced-settings.component.scss'],
+  standalone: false,
 })
 export class TravelperkAdvancedSettingsComponent implements OnInit {
-
   appName: string = AppName.TRAVELPERK;
 
   isOnboarding: boolean;
@@ -55,12 +62,12 @@ export class TravelperkAdvancedSettingsComponent implements OnInit {
 
   destinationAttributeNames: SelectFormLabel = {
     label: 'label',
-    value: ''
+    value: '',
   };
 
   sourceAttributeNames: SelectFormLabel = {
     label: 'value',
-    value: ''
+    value: '',
   };
 
   lineItems: SelectFormOption[];
@@ -75,7 +82,7 @@ export class TravelperkAdvancedSettingsComponent implements OnInit {
     private trackingService: TrackingService,
     private workspaceService: WorkspaceService,
     private translocoService: TranslocoService,
-    private travelperkAdvancedSettingService: TravelperkAdvancedSettingsService
+    private travelperkAdvancedSettingService: TravelperkAdvancedSettingsService,
   ) {
     this.destinationFieldOptions = this.travelperkAdvancedSettingService.getDefaultCategory();
     this.lineItems = this.travelperkAdvancedSettingService.getExpenseGroup();
@@ -87,7 +94,7 @@ export class TravelperkAdvancedSettingsComponent implements OnInit {
       trip_name: 'Flight to West Lisaville, Jan 30 - Jan 31',
       traveler_name: 'Jane Doe',
       merchant_name: 'American Airlines',
-      trip_id: '9788'
+      trip_id: '9788',
     };
     this.memoPreviewText = '';
     const memo: string[] = [];
@@ -120,35 +127,53 @@ export class TravelperkAdvancedSettingsComponent implements OnInit {
 
   constructPayloadAndSave() {
     this.isSaveInProgress = true;
-    const advancedSettingsPayload = this.travelperkAdvancedSettingService.createAdvancedSettingPayload(this.advancedSettingsForm);
-    this.travelperkService.postTravelperkAdvancedSettings(advancedSettingsPayload).subscribe((travelperkAdvancedSettingsResponse: TravelperkAdvancedSettingGet) => {
-      this.isSaveInProgress = false;
-      this.toastService.displayToastMessage(ToastSeverity.SUCCESS, this.translocoService.translate('travelperkAdvancedSettings.advancedSettingsSuccess'));
-      this.trackingService.trackTimeSpent(TrackingApp.TRAVELPERK, Page.ADVANCED_SETTINGS_TRAVELPERK, this.sessionStartTime);
-      if (this.workspaceService.getOnboardingState() === TravelPerkOnboardingState.ADVANCED_SETTINGS) {
-        this.trackingService.onOnboardingStepCompletion(TrackingApp.TRAVELPERK, TravelPerkOnboardingState.ADVANCED_SETTINGS, 3, advancedSettingsPayload);
-      } else {
-        this.trackingService.onUpdateEvent(
-          TrackingApp.TRAVELPERK,
-          TravelperkUpdateEvent.ADVANCED_SETTINGS_TRAVELPERK,
-          {
-            phase: this.helper.getPhase(this.isOnboarding),
-            oldState: this.advancedSettings,
-            newState: travelperkAdvancedSettingsResponse
-          }
+    const advancedSettingsPayload = this.travelperkAdvancedSettingService.createAdvancedSettingPayload(
+      this.advancedSettingsForm,
+    );
+    this.travelperkService.postTravelperkAdvancedSettings(advancedSettingsPayload).subscribe(
+      (travelperkAdvancedSettingsResponse: TravelperkAdvancedSettingGet) => {
+        this.isSaveInProgress = false;
+        this.toastService.displayToastMessage(
+          ToastSeverity.SUCCESS,
+          this.translocoService.translate('travelperkAdvancedSettings.advancedSettingsSuccess'),
         );
-      }
+        this.trackingService.trackTimeSpent(
+          TrackingApp.TRAVELPERK,
+          Page.ADVANCED_SETTINGS_TRAVELPERK,
+          this.sessionStartTime,
+        );
+        if (this.workspaceService.getOnboardingState() === TravelPerkOnboardingState.ADVANCED_SETTINGS) {
+          this.trackingService.onOnboardingStepCompletion(
+            TrackingApp.TRAVELPERK,
+            TravelPerkOnboardingState.ADVANCED_SETTINGS,
+            3,
+            advancedSettingsPayload,
+          );
+        } else {
+          this.trackingService.onUpdateEvent(
+            TrackingApp.TRAVELPERK,
+            TravelperkUpdateEvent.ADVANCED_SETTINGS_TRAVELPERK,
+            {
+              phase: this.helper.getPhase(this.isOnboarding),
+              oldState: this.advancedSettings,
+              newState: travelperkAdvancedSettingsResponse,
+            },
+          );
+        }
 
-      if (this.isOnboarding) {
-        this.workspaceService.setOnboardingState(TravelPerkOnboardingState.COMPLETE);
-        this.router.navigate([`/integrations/travelperk/onboarding/done`]);
-      }
-
-
-    }, () => {
-      this.isSaveInProgress = false;
-      this.toastService.displayToastMessage(ToastSeverity.ERROR, this.translocoService.translate('travelperkAdvancedSettings.advancedSettingsError'));
-    });
+        if (this.isOnboarding) {
+          this.workspaceService.setOnboardingState(TravelPerkOnboardingState.COMPLETE);
+          this.router.navigate([`/integrations/travelperk/onboarding/done`]);
+        }
+      },
+      () => {
+        this.isSaveInProgress = false;
+        this.toastService.displayToastMessage(
+          ToastSeverity.ERROR,
+          this.translocoService.translate('travelperkAdvancedSettings.advancedSettingsError'),
+        );
+      },
+    );
   }
 
   save(): void {
@@ -161,11 +186,14 @@ export class TravelperkAdvancedSettingsComponent implements OnInit {
     this.isOnboarding = this.router.url.includes('onboarding');
     forkJoin([
       this.travelperkService.getTravelperkAdvancedSettings().pipe(catchError(() => of(null))),
-      this.travelperkService.getCategories()
+      this.travelperkService.getCategories(),
     ]).subscribe(([travelperkAdvancedSettingsResponse, travelperkDestinationAttribute]) => {
       this.advancedSettings = travelperkAdvancedSettingsResponse;
       this.defaultCategories = travelperkDestinationAttribute;
-      this.advancedSettingsForm = this.travelperkAdvancedSettingService.mapAPIResponseToFormGroup(this.advancedSettings, travelperkDestinationAttribute);
+      this.advancedSettingsForm = this.travelperkAdvancedSettingService.mapAPIResponseToFormGroup(
+        this.advancedSettings,
+        travelperkDestinationAttribute,
+      );
       this.createMemoStructureWatcher();
       this.isLoading = false;
     });
@@ -174,5 +202,4 @@ export class TravelperkAdvancedSettingsComponent implements OnInit {
   ngOnInit(): void {
     this.setupPage();
   }
-
 }

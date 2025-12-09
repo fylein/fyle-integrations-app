@@ -6,11 +6,6 @@ import { TooltipModule } from 'primeng/tooltip';
 
 @NgModule({
   declarations: [],
-  imports: [
-    CommonModule,
-    QbdDashboardRoutingModule,
-    SharedModule,
-    TooltipModule
-  ]
+  imports: [CommonModule, QbdDashboardRoutingModule, SharedModule, TooltipModule],
 })
-export class QbdDashboardModule { }
+export class QbdDashboardModule {}

@@ -8,9 +8,8 @@ xdescribe('PaginatorComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ PaginatorComponent ]
-    })
-    .compileComponents();
+      declarations: [PaginatorComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(PaginatorComponent);
     component = fixture.componentInstance;
@@ -26,7 +25,7 @@ xdescribe('PaginatorComponent', () => {
 
   it('pageSizeChanges function change', () => {
     spyOn(component.pageSizeChangeEvent, 'emit');
-    expect(component.pageSizeChanges({value: 10})).toBeUndefined();
+    expect(component.pageSizeChanges({ value: 10 })).toBeUndefined();
     expect(component.pageSizeChangeEvent.emit).toHaveBeenCalled();
   });
 

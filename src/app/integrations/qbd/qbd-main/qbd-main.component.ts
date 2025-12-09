@@ -8,13 +8,12 @@ import { QbdMappingService } from 'src/app/core/services/qbd/qbd-core/qbd-mappin
 import { TranslocoService } from '@jsverse/transloco';
 
 @Component({
-    selector: 'app-main',
-    templateUrl: './qbd-main.component.html',
-    styleUrls: ['./qbd-main.component.scss'],
-    standalone: false
+  selector: 'app-main',
+  templateUrl: './qbd-main.component.html',
+  styleUrls: ['./qbd-main.component.scss'],
+  standalone: false,
 })
 export class QbdMainComponent implements OnInit {
-
   modules: TabMenuItem[];
 
   activeModules: TabMenuItem[];
@@ -24,13 +23,15 @@ export class QbdMainComponent implements OnInit {
   constructor(
     private mappingService: QbdMappingService,
     private qbdservice: QbdExportSettingsService,
-    private translocoService: TranslocoService
+    private translocoService: TranslocoService,
   ) {
     this.mappingService.getMappingPagesForSideNavBar.subscribe((showMapping: Boolean) => {
       if (showMapping) {
         this.activeModules = this.modules;
       } else {
-        const module = this.modules.filter(item => item.label !== this.translocoService.translate('qbdMain.mappingLabel'));
+        const module = this.modules.filter(
+          (item) => item.label !== this.translocoService.translate('qbdMain.mappingLabel'),
+        );
         this.activeModules = module;
       }
     });
@@ -38,9 +39,21 @@ export class QbdMainComponent implements OnInit {
 
   ngOnInit(): void {
     this.modules = [
-      { label: this.translocoService.translate('qbdMain.dashboardLabel'), routerLink: '/integrations/qbd/main/dashboard', value: 'dashboard' },
-      { label: this.translocoService.translate('qbdMain.configurationLabel'), routerLink: '/integrations/qbd/main/configuration', value: 'configuration' },
-      { label: this.translocoService.translate('qbdMain.mappingLabel'), routerLink: '/integrations/qbd/main/mapping', value: 'mapping' }
+      {
+        label: this.translocoService.translate('qbdMain.dashboardLabel'),
+        routerLink: '/integrations/qbd/main/dashboard',
+        value: 'dashboard',
+      },
+      {
+        label: this.translocoService.translate('qbdMain.configurationLabel'),
+        routerLink: '/integrations/qbd/main/configuration',
+        value: 'configuration',
+      },
+      {
+        label: this.translocoService.translate('qbdMain.mappingLabel'),
+        routerLink: '/integrations/qbd/main/mapping',
+        value: 'mapping',
+      },
     ];
     this.qbdservice.getQbdExportSettings().subscribe((exportSetting: QBDExportSettingGet) => {
       if (exportSetting.credit_card_expense_state) {
@@ -50,5 +63,4 @@ export class QbdMainComponent implements OnInit {
       }
     });
   }
-
 }

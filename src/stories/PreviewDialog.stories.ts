@@ -1,4 +1,3 @@
-
 import { CommonModule } from '@angular/common';
 import type { Meta, StoryObj } from '@storybook/angular';
 import { moduleMetadata } from '@storybook/angular';
@@ -9,17 +8,17 @@ const meta: Meta<PreviewDialogComponent> = {
   component: PreviewDialogComponent,
   tags: ['autodocs'],
   render: (args: PreviewDialogComponent) => ({
-    props: { ...args }
+    props: { ...args },
   }),
   decorators: [
     moduleMetadata({
       declarations: [PreviewDialogComponent],
-      imports: [CommonModule]
-    })
+      imports: [CommonModule],
+    }),
   ],
   argTypes: {
-    ngOnInit: { table: { disable: true } }
-  }
+    ngOnInit: { table: { disable: true } },
+  },
 };
 
 export default meta;
@@ -29,6 +28,6 @@ export const simple: Story = {
   args: {
     isPreviewDialogVisible: true,
     iconPath: 'assets/illustrations/sageIntacct/IntacctImportSettings.png',
-    header: 'Preview'
-  }
+    header: 'Preview',
+  },
 };

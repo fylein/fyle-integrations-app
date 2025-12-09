@@ -8,9 +8,8 @@ xdescribe('ConfigurationTextFieldComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ConfigurationTextFieldComponent ]
-    })
-    .compileComponents();
+      declarations: [ConfigurationTextFieldComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(ConfigurationTextFieldComponent);
     component = fixture.componentInstance;

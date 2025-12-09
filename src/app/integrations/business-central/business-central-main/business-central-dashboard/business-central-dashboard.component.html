@@ -24,20 +24,23 @@
       [accountingExportSummary]="accountingExportSummary"
       [processedCount]="processedCount"
       [reimbursableImportState]="reimbursableImportState"
-      [cccImportState]="cccImportState">
+      [cccImportState]="cccImportState"
+    >
     </app-dashboard-export-section>
     @if (!accountingExportSummary && !exportableAccountingExportIds.length) {
       <app-zero-state
         [zeroStateImageURL]="'assets/illustrations/dashboard-illustration.svg'"
         [headerText]="'businessCentralDashboard.zeroStateHeaderText' | transloco"
-        [subHeaderText]="'businessCentralDashboard.zeroStateSubHeaderText' | transloco">
+        [subHeaderText]="'businessCentralDashboard.zeroStateSubHeaderText' | transloco"
+      >
       </app-zero-state>
     }
     @if (exportableAccountingExportIds.length || accountingExportSummary) {
       <app-dashboard-export-summary-section
         [appName]="appName"
         [accountingExportType]="accountingExportType"
-        [accountingExportSummary]="accountingExportSummary">
+        [accountingExportSummary]="accountingExportSummary"
+      >
       </app-dashboard-export-summary-section>
     }
     @if (errors) {
@@ -50,7 +53,8 @@
             [destinationFieldMap]="destinationFieldMap"
             [exportKey]="'accounting_export'"
             [exportableExpenseGroupIds]="exportableAccountingExportIds"
-            [accountingExportSummary]="accountingExportSummary">
+            [accountingExportSummary]="accountingExportSummary"
+          >
           </app-dashboard-error-section>
         }
       </div>

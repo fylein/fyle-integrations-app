@@ -8,9 +8,8 @@ xdescribe('TravelperkOnboardingDoneComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ TravelperkOnboardingDoneComponent ]
-    })
-    .compileComponents();
+      declarations: [TravelperkOnboardingDoneComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(TravelperkOnboardingDoneComponent);
     component = fixture.componentInstance;
