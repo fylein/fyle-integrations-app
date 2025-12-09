@@ -1,8 +1,8 @@
 <div [formGroup]="form">
     <div *ngIf="!isDestinationFixedImport && !isCloneSettingView" class="fields-header" fxLayout="row" fxLayoutAlign="start center">
-        <div class="fields-header-text tw-pl-48-px tw-w-450-px">{{ 'configurationImportField.dimensionsHeader' | transloco: { appName: uiExposedAppName } }}</div>
-        <div class="fields-header-text tw-w-30-vw">{{ 'configurationImportField.brandNameFieldsHeader' | transloco: { brandName: brandingConfig.brandName } }}</div>
-        <div class="fields-header-text tw-flex tw-w-[10vw] tw-whitespace-nowrap">
+        <div class="fields-header-text tw-pl-48-px tw-w-450-px tw-wrap-normal">{{ 'configurationImportField.dimensionsHeader' | transloco: { appName: uiExposedAppName } }}</div>
+        <div class="fields-header-text tw-w-30-vw tw-wrap-normal">{{ 'configurationImportField.brandNameFieldsHeader' | transloco: { brandName: brandingConfig.brandName } }}</div>
+        <div class="fields-header-text tw-flex tw-w-[10vw] tw-wrap-normal">
             {{ 'configurationImportField.importToBrandNameHeader' | transloco: { brandName: brandingConfig.brandName } }}
             <app-svg-icon [svgSource]="'info-circle-fill'" [width]="'16px'" [height]="'16px'" [styleClasses]="'tw-text-text-muted tw-pl-6-px'" [tooltipPosition]="'top'"
                 [tooltipText]="'configurationImportField.importDimensionTooltip' | transloco: { appName: uiExposedAppName, brandName: brandingConfig.brandName }">
@@ -15,7 +15,7 @@
                 <div>
                     <input type="text" class="tw-text-14-px tw-text-text-secondary !tw-font-500 tw-w-300-px !tw-px-14-px !tw-py-10-px tw-border tw-border-solid !tw-border-border-tertiary tw-rounded-4-px" value="{{ defaultField.destination_field | snakeCaseToSpaceCase | sentenceCase }}" disabled>
                 </div>
-                <div class="tw-pt-[17px]">
+                <div class="tw-pt-[5px]">
                     <app-svg-icon [isTextColorAllowed]="true" [svgSource]="'arrow-line'" [height]="'30px'" [width]="'100px'" [styleClasses]="'!tw-ml-0 tw-self-center tw-text-border-secondary'"></app-svg-icon>
                 </div>
                 <div class="tw-w-30-vw">
@@ -83,7 +83,7 @@
                     <div [ngClass]="brandingStyle.configuration.importSvgPadding">
                         <app-svg-icon [isTextColorAllowed]="true" [svgSource]="'arrow-line'" [height]="'10px'" [width]="'100px'" [styleClasses]="'tw-self-center tw-text-border-secondary'"></app-svg-icon>
                     </div>
-                    <div class="xl:tw-w-30-vw sm:tw-w-28-vw">
+                    <div class="tw-w-30-vw">
                         <p-dropdown (onChange)="onDropdownChange($event, i)" appendTo="body" [options]="getOptions(expenseField) | excludeSelectedOptions:expenseFieldsGetter:i:'source_field'" [placeholder]="'configurationImportField.chooseExpenseFieldPlaceholder' | transloco: { brandName: brandingConfig.brandName }" formControlName="source_field"
                         optionLabel="display_name" optionValue="attribute_type" [ngClass]="{'selectedItem': expenseField.get('source_field')?.value, 'selectedAccItem !tw-text-text-secondary': (expenseField.get('source_field')?.value === 'CATEGORY') || (expenseField.get('destination_field')?.value === 'CUSTOMER' && this.uiExposedAppName === AppName.XERO), 'filterDropdown': !expenseField.get('source_field')?.value}" [dropdownIcon]="'pi pi-chevron-down ' + brandingConfig.brandId">
                             <ng-template let-option pTemplate="item">
@@ -105,7 +105,7 @@
                         {{ 'configurationImportField.uniqueBrandNameFieldsError' | transloco: { brandName: brandingConfig.brandName } }}
                       </p>
                     </div>
-                <p-inputSwitch *ngIf="!isDestinationFixedImport" (onChange)="onSwitchChanged($event, expenseField)" [pTooltip]="isExpenseFieldDependent(expenseField.value) ? ('configurationImportField.dependentFieldsWarning' | transloco) : '' " (click)="updateDependentField(expenseField.get('source_field')?.value,expenseField.get('import_to_fyle')?.value)" formControlName="import_to_fyle" class="input-toggle-section tw-pl-4-px tw-pt-10-px"></p-inputSwitch>
+                <p-inputSwitch *ngIf="!isDestinationFixedImport" (onChange)="onSwitchChanged($event, expenseField)" [pTooltip]="isExpenseFieldDependent(expenseField.value) ? ('configurationImportField.dependentFieldsWarning' | transloco) : '' " (click)="updateDependentField(expenseField.get('source_field')?.value,expenseField.get('import_to_fyle')?.value)" formControlName="import_to_fyle" class="input-toggle-section tw-pt-10-px tw-w-10-vw"></p-inputSwitch>
             </div>
             <div class="tw-pt-26-px" [ngClass]="brandingStyle.configuration.importFieldDependentField" *ngIf="brandingFeatureConfig.featureFlags.importSettings.dependentField && expenseField.get('source_field')?.value==='PROJECT' && expenseField.get('import_to_fyle')?.value && expenseField.get('destination_field')?.value === dependentDestinationValue" [formGroup]="form">
                 <div class="tw-flex" [ngClass]="brandingStyle.common.configurationBrandingClass">
@@ -152,8 +152,6 @@
                         </div>
                         @if (uiExposedAppName === AppName.INTACCT) {
                             <p-inputSwitch class="input-toggle-section tw-pt-24-px" [formControlName]="dependentField.formController + 'ImportToggle'"></p-inputSwitch>
-                        } @else {
-                            <p-inputSwitch class="input-toggle-section tw-pt-24-px" formControlName="dependentFieldImportToggle"></p-inputSwitch>
                         }
                     </div>
                     <div *ngIf="uiExposedAppName === AppName.SAGE300" class="tw-flex tw-mt-24-px" [ngClass]="brandingStyle.common.configurationBrandingClass">
