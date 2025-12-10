@@ -89,7 +89,7 @@ export class SiAuthService {
       );
     }
 
-    const url = `${environment.intacct_authorize_uri}?response_type=code&client_id=${environment.intacct_oauth_client_id}&redirect_uri=${environment.intacct_oauth_redirect_uri}&state=travelperk_local_redirect&scope=offline_access`;
+    const url = `${environment.intacct_authorize_uri}?response_type=code&client_id=${environment.intacct_oauth_client_id}&redirect_uri=${environment.intacct_oauth_redirect_uri}&state=intacct_local_redirect&scope=offline_access`;
     this.helperService.oauthHandler(url);
     return this.oauthInProgress$;
   }
