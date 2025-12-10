@@ -4,14 +4,14 @@ import { Sage50OnboardingService } from 'src/app/core/services/sage50/sage50-con
 import { AppName, Sage50AttributeType } from 'src/app/core/models/enum/enum.model';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { WorkspaceService } from 'src/app/core/services/common/workspace.service';
-import { CommonModule } from '@angular/common';
+
 import { brandingConfig, brandingDemoVideoLinks, brandingKbArticles, brandingStyle } from 'src/app/branding/branding-config';
 import { NavigationEnd, Router, RouterOutlet } from '@angular/router';
 import { OnboardingStepper } from 'src/app/core/models/misc/onboarding-stepper.model';
 
 @Component({
     selector: 'app-sage50-onboarding',
-    imports: [SharedModule, CommonModule, RouterOutlet],
+    imports: [SharedModule, RouterOutlet],
     templateUrl: './sage50-onboarding.component.html',
     styleUrl: './sage50-onboarding.component.scss'
 })

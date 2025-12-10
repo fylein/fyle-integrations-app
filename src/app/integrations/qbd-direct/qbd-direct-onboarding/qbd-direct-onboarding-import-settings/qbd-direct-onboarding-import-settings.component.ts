@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+
 import { Component, OnInit } from '@angular/core';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { QbdDirectSharedModule } from '../../qbd-direct-shared/qbd-direct-shared.module';
@@ -9,7 +9,7 @@ import { QbdDirectOnboardingService } from 'src/app/core/services/qbd-direct/qbd
 
 @Component({
     selector: 'app-qbd-direct-onboarding-import-settings',
-    imports: [QbdDirectSharedModule, SharedModule, CommonModule],
+    imports: [QbdDirectSharedModule, SharedModule],
     templateUrl: './qbd-direct-onboarding-import-settings.component.html',
     styleUrl: './qbd-direct-onboarding-import-settings.component.scss'
 })

@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { TranslocoModule } from '@jsverse/transloco';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { ButtonSize, ButtonType } from 'src/app/core/models/enum/enum.model';
@@ -7,7 +7,7 @@ import { TooltipModule } from 'primeng/tooltip';
 
 @Component({
     selector: 'app-csv-upload-button',
-    imports: [CommonModule, TranslocoModule, SharedModule, TooltipModule],
+    imports: [TranslocoModule, SharedModule, TooltipModule],
     standalone: true,
     templateUrl: './csv-upload-button.component.html',
     styleUrl: './csv-upload-button.component.scss'

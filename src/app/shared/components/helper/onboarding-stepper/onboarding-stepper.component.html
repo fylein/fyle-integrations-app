@@ -1,41 +1,63 @@
-<div *ngIf="isGradientAllowed" class="tw-absolute tw-bg-header-1 tw-bg-no-repeat tw-h-168-px tw-w-[100%] tw-z-[-1]"></div>
-<div *ngIf="isGradientAllowed" class="tw-absolute tw-bg-header-2 tw-h-168-px tw-w-[100%] tw-z-[-1]"></div>
+@if (isGradientAllowed) {
+  <div class="tw-absolute tw-bg-header-1 tw-bg-no-repeat tw-h-168-px tw-w-[100%] tw-z-[-1]"></div>
+}
+@if (isGradientAllowed) {
+  <div class="tw-absolute tw-bg-header-2 tw-h-168-px tw-w-[100%] tw-z-[-1]"></div>
+}
 
 <div class="tw-py-60-px tw-text-text-primary">
-    <div>
-        <div class="tw-text-center tw-pb-40-px">
-            <p class="tw-font-500">
-                <span *ngIf="!isCloneSettingView">
-                    {{ 'onboardingStepper.configureSettingsDescription' | transloco }}
-                </span>
-                <span *ngIf="isCloneSettingView">
-                    {{ 'onboardingStepper.cloneSettingsDescription' | transloco }}
-                </span>
-            </p>
-        </div>
-        <div class="tw-flex tw-justify-center">
-            <div *ngFor="let onboardingStep of onboardingSteps; let i = index">
-                <div class="tw-grip tw-grid-cols-1">
-                    <div class="tw-flex tw-items-center">
-                        <div class="tw-flex tw-justify-center step" (click)="navigate(i, onboardingStep.completed, onboardingStep.route)" [ngClass]="[onboardingStep.active && !onboardingStep.completed ? 'step-state tw-border-border-success tw-text-text-success tw-cursor-pointer' : 'step-state tw-cursor-not-allowed', onboardingStep.completed ? '!tw-bg-bg-success tw-border-none tw-text-white' : '', shouldDisableConfigurationSteps(i) ? '' : '!tw-cursor-pointer']">
-                            <app-svg-icon *ngIf="onboardingStep.completed" [svgSource]="i === 0 && disableConfigurationStepsIfTokenInvalid ? 'link-vertical-medium' : 'check-medium'" [width]="'20px'" [height]="'20px'" [styleClasses]="'tw-text-white'" [isTextColorAllowed]="true"></app-svg-icon>
-                            <app-svg-icon *ngIf="!onboardingStep.completed && onboardingStep.active" [svgSource]="onboardingStep.icon" [width]="'20px'" [height]="'20px'" [viewBox]="getViewBox(onboardingStep)" [styleClasses]="'tw-text-text-success'"></app-svg-icon>
-                            <app-svg-icon *ngIf="!onboardingStep.active && !onboardingStep.completed" [svgSource]="onboardingStep.icon" [width]="'20px'" [height]="'20px'" [viewBox]="getViewBox(onboardingStep)" [styleClasses]="'tw-text-placeholder'"></app-svg-icon>
-                        </div>
-                        <div *ngIf="i + 1 < onboardingSteps.length">
-                            <div *ngIf="!onboardingStep.completed">
-                                <hr class="line-active">
-                            </div>
-                            <div *ngIf="onboardingStep.completed">
-                                <hr class="line-inactive">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="tw-text-14-px tw-pt-10-px tw-font-nav-link-font-weight" [ngClass]="onboardingStep.styleClasses ? onboardingStep.styleClasses[0] : ''">
-                        {{ onboardingStep.step }}
-                    </div>
-                </div>
-            </div>
-        </div>
+  <div>
+    <div class="tw-text-center tw-pb-40-px">
+      <p class="tw-font-500">
+        @if (!isCloneSettingView) {
+          <span>
+            {{ 'onboardingStepper.configureSettingsDescription' | transloco }}
+          </span>
+        }
+        @if (isCloneSettingView) {
+          <span>
+            {{ 'onboardingStepper.cloneSettingsDescription' | transloco }}
+          </span>
+        }
+      </p>
     </div>
+    <div class="tw-flex tw-justify-center">
+      @for (onboardingStep of onboardingSteps; track onboardingStep; let i = $index) {
+        <div>
+          <div class="tw-grip tw-grid-cols-1">
+            <div class="tw-flex tw-items-center">
+              <div class="tw-flex tw-justify-center step" (click)="navigate(i, onboardingStep.completed, onboardingStep.route)" [ngClass]="[onboardingStep.active && !onboardingStep.completed ? 'step-state tw-border-border-success tw-text-text-success tw-cursor-pointer' : 'step-state tw-cursor-not-allowed', onboardingStep.completed ? '!tw-bg-bg-success tw-border-none tw-text-white' : '', shouldDisableConfigurationSteps(i) ? '' : '!tw-cursor-pointer']">
+                @if (onboardingStep.completed) {
+                  <app-svg-icon [svgSource]="i === 0 && disableConfigurationStepsIfTokenInvalid ? 'link-vertical-medium' : 'check-medium'" [width]="'20px'" [height]="'20px'" [styleClasses]="'tw-text-white'" [isTextColorAllowed]="true"></app-svg-icon>
+                }
+                @if (!onboardingStep.completed && onboardingStep.active) {
+                  <app-svg-icon [svgSource]="onboardingStep.icon" [width]="'20px'" [height]="'20px'" [viewBox]="getViewBox(onboardingStep)" [styleClasses]="'tw-text-text-success'"></app-svg-icon>
+                }
+                @if (!onboardingStep.active && !onboardingStep.completed) {
+                  <app-svg-icon [svgSource]="onboardingStep.icon" [width]="'20px'" [height]="'20px'" [viewBox]="getViewBox(onboardingStep)" [styleClasses]="'tw-text-placeholder'"></app-svg-icon>
+                }
+              </div>
+              @if (i + 1 < onboardingSteps.length) {
+                <div>
+                  @if (!onboardingStep.completed) {
+                    <div>
+                      <hr class="line-active">
+                    </div>
+                  }
+                  @if (onboardingStep.completed) {
+                    <div>
+                      <hr class="line-inactive">
+                    </div>
+                  }
+                </div>
+              }
+            </div>
+            <div class="tw-text-14-px tw-pt-10-px tw-font-nav-link-font-weight" [ngClass]="onboardingStep.styleClasses ? onboardingStep.styleClasses[0] : ''">
+              {{ onboardingStep.step }}
+            </div>
+          </div>
+        </div>
+      }
+    </div>
+  </div>
 </div>

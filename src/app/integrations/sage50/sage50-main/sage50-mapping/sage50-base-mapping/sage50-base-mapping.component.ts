@@ -12,11 +12,11 @@ import { SharedModule } from 'src/app/shared/shared.module';
 import { Sage50ImportSettingsService } from 'src/app/core/services/sage50/sage50-configuration/sage50-import-settings.service';
 import { Sage50ExportSettingsService } from 'src/app/core/services/sage50/sage50-configuration/sage50-export-settings.service';
 import { Sage50ImportableField } from 'src/app/core/models/sage50/sage50-configuration/sage50-import-settings.model';
-import { CommonModule } from '@angular/common';
+
 
 @Component({
     selector: 'app-sage50-base-mapping',
-    imports: [SharedModule, CommonModule],
+    imports: [SharedModule],
     templateUrl: './sage50-base-mapping.component.html',
     styleUrls: ['./sage50-base-mapping.component.scss']
 })

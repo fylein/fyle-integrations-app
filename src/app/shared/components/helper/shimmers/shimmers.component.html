@@ -1,24 +1,40 @@
 <!-- Dashboard Import Shimmers -->
-<div class="tw-p-24-px" *ngIf="isDashboardImportInProgress">
+@if (isDashboardImportInProgress) {
+  <div class="tw-p-24-px">
     <div class="tw-flex tw-justify-between tw-items-center ">
-        <div class="tw-w-3/5">
-            <div class="tw-mb-10-px"><p-skeleton width="250px" height="16px" shape="rectangle" ></p-skeleton></div>
-            <div class="tw-mb-10-px"><p-skeleton width="500px" height="16px" shape="rectangle"></p-skeleton></div>
-            <div class="tw-mb-10-px"><p-skeleton width="300px" height="16px" shape="rectangle"></p-skeleton></div>
-        </div>
-        <div class="tw-flex tw-items-end tw-justify-end">
-            <p-skeleton width="120px" height="50px" shape="rectangle" ></p-skeleton>
-        </div>
+      <div class="tw-w-3/5">
+        <div class="tw-mb-10-px"><p-skeleton width="250px" height="16px" shape="rectangle" ></p-skeleton></div>
+        <div class="tw-mb-10-px"><p-skeleton width="500px" height="16px" shape="rectangle"></p-skeleton></div>
+        <div class="tw-mb-10-px"><p-skeleton width="300px" height="16px" shape="rectangle"></p-skeleton></div>
+      </div>
+      <div class="tw-flex tw-items-end tw-justify-end">
+        <p-skeleton width="120px" height="50px" shape="rectangle" ></p-skeleton>
+      </div>
     </div>
-</div>
+  </div>
+}
 
 <!-- Export Log Dashboard View -->
-<div *ngIf="isExportLogFetchInProgress && exportLogHeader">
-    <tr *ngFor="let _ of [0,1,2,3,4,5,6]">
-        <td *ngIf="isExportLogFetchInProgress"><p-skeleton width="50px" height="28px" shape="rectangle"></p-skeleton></td>
-        <td *ngIf="isExportLogFetchInProgress"><p-skeleton width="100px" height="28px" shape="rectangle"></p-skeleton></td>
-        <td *ngIf="isExportLogFetchInProgress"><p-skeleton width="100px" height="28px" shape="rectangle"></p-skeleton></td>
-        <td *ngIf="isExportLogFetchInProgress && exportLogHeader==='Successful'"><p-skeleton width="50px" height="28px" shape="rectangle"></p-skeleton></td>
-        <td *ngIf="isExportLogFetchInProgress && exportLogHeader==='Successful'"><p-skeleton width="50px" height="28px" shape="rectangle"></p-skeleton></td>
-    </tr>
-</div>
+@if (isExportLogFetchInProgress && exportLogHeader) {
+  <div>
+    @for (_ of [0,1,2,3,4,5,6]; track _) {
+      <tr>
+        @if (isExportLogFetchInProgress) {
+          <td><p-skeleton width="50px" height="28px" shape="rectangle"></p-skeleton></td>
+        }
+        @if (isExportLogFetchInProgress) {
+          <td><p-skeleton width="100px" height="28px" shape="rectangle"></p-skeleton></td>
+        }
+        @if (isExportLogFetchInProgress) {
+          <td><p-skeleton width="100px" height="28px" shape="rectangle"></p-skeleton></td>
+        }
+        @if (isExportLogFetchInProgress && exportLogHeader==='Successful') {
+          <td><p-skeleton width="50px" height="28px" shape="rectangle"></p-skeleton></td>
+        }
+        @if (isExportLogFetchInProgress && exportLogHeader==='Successful') {
+          <td><p-skeleton width="50px" height="28px" shape="rectangle"></p-skeleton></td>
+        }
+      </tr>
+    }
+  </div>
+}

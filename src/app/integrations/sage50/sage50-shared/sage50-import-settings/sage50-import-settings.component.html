@@ -1,146 +1,149 @@
 @if (isLoading) {
-<div class="tw-flex tw-justify-center tw-items-center tw-h-full">
+  <div class="tw-flex tw-justify-center tw-items-center tw-h-full">
     <app-loader></app-loader>
-</div>
+  </div>
 } @else {
-<div class="configuration--contents tw-border-separator tw-mt-6 tw-overflow-x-hidden" [ngClass]="brandingStyle.common.configurationContents">
+  <div class="configuration--contents tw-border-separator tw-mt-6 tw-overflow-x-hidden" [ngClass]="brandingStyle.common.configurationContents">
     <div>
-        <app-configuration-step-header
-            [headerText]="'sage50ImportSettings.headerText' | transloco"
-            [contentText]="'sage50ImportSettings.contentText' | transloco: { brandName: brandingService.getBrandFullName() }"
-            [redirectLink]="redirectLink"
-            [showSyncButton]="false"
-            [appName]="appName">
-        </app-configuration-step-header>
+      <app-configuration-step-header
+        [headerText]="'sage50ImportSettings.headerText' | transloco"
+        [contentText]="'sage50ImportSettings.contentText' | transloco: { brandName: brandingService.getBrandFullName() }"
+        [redirectLink]="redirectLink"
+        [showSyncButton]="false"
+        [appName]="appName">
+      </app-configuration-step-header>
     </div>
     <form [formGroup]="importSettingsForm" class="tw-p-24-px tw-flex tw-flex-col tw-gap-[24px]">
-        <app-configuration-csv-import-field
-            [formGroupName]="'ACCOUNT'"
+      <app-configuration-csv-import-field
+        [formGroupName]="'ACCOUNT'"
+        [isMandatory]="true"
+        [fieldNumber]="1"
+        [label]="'sage50ImportSettings.accountLabel' | transloco"
+        [subLabel]="'sage50ImportSettings.accountSubLabel' | transloco"
+        [sourceField]="Sage50FyleField.CATEGORY"
+        [destinationField]="Sage50ImportableField.ACCOUNT"
+        [appResourceKey]="'SAGE50'"
+        [appDisplayName]="'sage50ImportSettings.appDisplayName' | transloco"
+        [hasBeenImported]="importStatuses[Sage50ImportableField.ACCOUNT]"
+        [previewImagePath]="'assets/pngs/preview-screens/sage50-category-field.png'"
+        [uploadData]="uploadData.bind(this)"
+        >
+        <ng-container slot="additionalFields">
+          <app-configuration-field-container
+            [label]="'sage50ImportSettings.accountTypesLabel' | transloco"
+            [subLabel]="'sage50ImportSettings.accountTypesSubLabel' | transloco"
+            [iconPath]="'list'"
             [isMandatory]="true"
-            [fieldNumber]="1"
-            [label]="'sage50ImportSettings.accountLabel' | transloco"
-            [subLabel]="'sage50ImportSettings.accountSubLabel' | transloco"
-            [sourceField]="Sage50FyleField.CATEGORY"
-            [destinationField]="Sage50ImportableField.ACCOUNT"
-            [appResourceKey]="'SAGE50'"
-            [appDisplayName]="'sage50ImportSettings.appDisplayName' | transloco"
-            [hasBeenImported]="importStatuses[Sage50ImportableField.ACCOUNT]"
-            [previewImagePath]="'assets/pngs/preview-screens/sage50-category-field.png'"
-            [uploadData]="uploadData.bind(this)"
-        >
-            <ng-container slot="additionalFields">
-                <app-configuration-field-container
-                    [label]="'sage50ImportSettings.accountTypesLabel' | transloco"
-                    [subLabel]="'sage50ImportSettings.accountTypesSubLabel' | transloco"
-                    [iconPath]="'list'"
-                    [isMandatory]="true"
-                    [hint]="'sage50ImportSettings.accountTypesSubtext' | transloco "
-                >
-                    <p-multiselect
-                        [options]="importableCOAOptions"
-                        [placeholder]="'sage50ImportSettings.accountTypesPlaceholder' | transloco"
-                        [formControlName]="'accountTypes'"
-                    >
-                        <!-- Show the items' values (without counts), not labels -->
-                        <ng-template let-selectedItems pTemplate="selectedItems">
-                            {{ selectedItems?.join(', ') }}
-                        </ng-template>
-                    </p-multiselect>
-                </app-configuration-field-container>
-            </ng-container>
-        </app-configuration-csv-import-field>
+            [hint]="'sage50ImportSettings.accountTypesSubtext' | transloco "
+            >
+            <p-multiselect
+              [options]="importableCOAOptions"
+              [placeholder]="'sage50ImportSettings.accountTypesPlaceholder' | transloco"
+              [formControlName]="'accountTypes'"
+              >
+              <!-- Show the items' values (without counts), not labels -->
+              <ng-template let-selectedItems pTemplate="selectedItems">
+                {{ selectedItems?.join(', ') }}
+              </ng-template>
+            </p-multiselect>
+          </app-configuration-field-container>
+        </ng-container>
+      </app-configuration-csv-import-field>
 
-        <app-configuration-csv-import-field
-            [formGroupName]="'VENDOR'"
-            [isMandatory]="false"
-            [fieldNumber]="2"
-            [label]="'sage50ImportSettings.vendorLabel' | transloco"
-            [subLabel]="'sage50ImportSettings.vendorSubLabel' | transloco"
-            [sourceField]="Sage50FyleField.MERCHANT"
-            [destinationField]="Sage50ImportableField.VENDOR"
-            [appResourceKey]="'SAGE50'"
-            [appDisplayName]="'sage50ImportSettings.appDisplayName' | transloco"
-            [infoText]="'sage50ImportSettings.vendorInfoText' | transloco"
-            [hasBeenImported]="importStatuses[Sage50ImportableField.VENDOR]"
-            [previewImagePath]="'assets/pngs/preview-screens/sage50-merchant-field.png'"
-            [uploadData]="uploadData.bind(this)"
-        ></app-configuration-csv-import-field>
+      <app-configuration-csv-import-field
+        [formGroupName]="'VENDOR'"
+        [isMandatory]="false"
+        [fieldNumber]="2"
+        [label]="'sage50ImportSettings.vendorLabel' | transloco"
+        [subLabel]="'sage50ImportSettings.vendorSubLabel' | transloco"
+        [sourceField]="Sage50FyleField.MERCHANT"
+        [destinationField]="Sage50ImportableField.VENDOR"
+        [appResourceKey]="'SAGE50'"
+        [appDisplayName]="'sage50ImportSettings.appDisplayName' | transloco"
+        [infoText]="'sage50ImportSettings.vendorInfoText' | transloco"
+        [hasBeenImported]="importStatuses[Sage50ImportableField.VENDOR]"
+        [previewImagePath]="'assets/pngs/preview-screens/sage50-merchant-field.png'"
+        [uploadData]="uploadData.bind(this)"
+      ></app-configuration-csv-import-field>
 
-        <app-configuration-csv-import-field
-            [formGroupName]="'JOB'"
+      <app-configuration-csv-import-field
+        [formGroupName]="'JOB'"
+        [isMandatory]="false"
+        [fieldNumber]="3"
+        [label]="'sage50ImportSettings.jobLabel' | transloco"
+        [subLabel]="'sage50ImportSettings.jobSubLabel' | transloco"
+        [sourceField]="Sage50FyleField.PROJECT"
+        [destinationField]="Sage50ImportableField.JOB"
+        [appResourceKey]="'SAGE50'"
+        [appDisplayName]="'sage50ImportSettings.appDisplayName' | transloco"
+        [hasBeenImported]="importStatuses[Sage50ImportableField.JOB]"
+        [previewImagePath]="'assets/pngs/preview-screens/sage50-project-field.png'"
+        [uploadData]="uploadData.bind(this)"
+        >
+        <ng-container slot="subfield" [formGroup]="importSettingsForm">
+          <!-- PHASE: subfield of JOB -->
+          <app-configuration-csv-import-field
+            [formGroupName]="'PHASE'"
             [isMandatory]="false"
-            [fieldNumber]="3"
-            [label]="'sage50ImportSettings.jobLabel' | transloco"
-            [subLabel]="'sage50ImportSettings.jobSubLabel' | transloco"
-            [sourceField]="Sage50FyleField.PROJECT"
-            [destinationField]="Sage50ImportableField.JOB"
+            [label]="'sage50ImportSettings.phaseLabel' | transloco"
+            [subLabel]="'sage50ImportSettings.phaseSubLabel' | transloco"
+            [destinationField]="Sage50ImportableField.PHASE"
+            [sourceFieldOptions]="getSourceFieldOptions(Sage50ImportableField.PHASE)"
+            (addSourceFieldOption)="addSourceFieldOption($event)"
             [appResourceKey]="'SAGE50'"
             [appDisplayName]="'sage50ImportSettings.appDisplayName' | transloco"
-            [hasBeenImported]="importStatuses[Sage50ImportableField.JOB]"
-            [previewImagePath]="'assets/pngs/preview-screens/sage50-project-field.png'"
+            [hasBeenImported]="importStatuses[Sage50ImportableField.PHASE]"
             [uploadData]="uploadData.bind(this)"
-        >
+            [previewImagePath]="'assets/pngs/preview-screens/sage50-cost-center-field.png'"
+            [isSubfield]="true"
+            >
             <ng-container slot="subfield" [formGroup]="importSettingsForm">
-                <!-- PHASE: subfield of JOB -->
-                <app-configuration-csv-import-field
-                    [formGroupName]="'PHASE'"
-                    [isMandatory]="false"
-                    [label]="'sage50ImportSettings.phaseLabel' | transloco"
-                    [subLabel]="'sage50ImportSettings.phaseSubLabel' | transloco"
-                    [destinationField]="Sage50ImportableField.PHASE"
-                    [sourceFieldOptions]="getSourceFieldOptions(Sage50ImportableField.PHASE)"
-                    (addSourceFieldOption)="addSourceFieldOption($event)"
-                    [appResourceKey]="'SAGE50'"
-                    [appDisplayName]="'sage50ImportSettings.appDisplayName' | transloco"
-                    [hasBeenImported]="importStatuses[Sage50ImportableField.PHASE]"
-                    [uploadData]="uploadData.bind(this)"
-                    [previewImagePath]="'assets/pngs/preview-screens/sage50-cost-center-field.png'"
-                    [isSubfield]="true"
-                >
-                    <ng-container slot="subfield" [formGroup]="importSettingsForm">
-                        <!-- COST_CODE: subfield of PHASE -->
-                        <app-configuration-csv-import-field
-                            [formGroupName]="'COST_CODE'"
-                            [isMandatory]="false"
-                            [label]="'sage50ImportSettings.costCodeLabel' | transloco"
-                            [subLabel]="'sage50ImportSettings.costCodeSubLabel' | transloco"
-                            [destinationField]="Sage50ImportableField.COST_CODE"
-                            [sourceFieldOptions]="getSourceFieldOptions(Sage50ImportableField.COST_CODE)"
-                            (addSourceFieldOption)="addSourceFieldOption($event)"
-                            [appResourceKey]="'SAGE50'"
-                            [appDisplayName]="'sage50ImportSettings.appDisplayName' | transloco"
-                            [hasBeenImported]="importStatuses[Sage50ImportableField.COST_CODE]"
-                            [previewImagePath]="'assets/pngs/preview-screens/sage50-cost-code-custom-field.png'"
-                            [uploadData]="uploadData.bind(this)"
-                            [isSubfield]="true"
-                        ></app-configuration-csv-import-field>
-                    </ng-container>
-                </app-configuration-csv-import-field>
+              <!-- COST_CODE: subfield of PHASE -->
+              <app-configuration-csv-import-field
+                [formGroupName]="'COST_CODE'"
+                [isMandatory]="false"
+                [label]="'sage50ImportSettings.costCodeLabel' | transloco"
+                [subLabel]="'sage50ImportSettings.costCodeSubLabel' | transloco"
+                [destinationField]="Sage50ImportableField.COST_CODE"
+                [sourceFieldOptions]="getSourceFieldOptions(Sage50ImportableField.COST_CODE)"
+                (addSourceFieldOption)="addSourceFieldOption($event)"
+                [appResourceKey]="'SAGE50'"
+                [appDisplayName]="'sage50ImportSettings.appDisplayName' | transloco"
+                [hasBeenImported]="importStatuses[Sage50ImportableField.COST_CODE]"
+                [previewImagePath]="'assets/pngs/preview-screens/sage50-cost-code-custom-field.png'"
+                [uploadData]="uploadData.bind(this)"
+                [isSubfield]="true"
+              ></app-configuration-csv-import-field>
             </ng-container>
-        </app-configuration-csv-import-field>
+          </app-configuration-csv-import-field>
+        </ng-container>
+      </app-configuration-csv-import-field>
     </form>
 
-    <app-configuration-step-footer
-        *ngIf="isOnboarding"
+    @if (isOnboarding) {
+      <app-configuration-step-footer
         [ctaText]="!isSaveInProgress ? (isOnboarding ? ConfigurationCtaText.SAVE_AND_CONTINUE : ConfigurationCtaText.SAVE) : ConfigurationCtaText.SAVING"
         [showBackButton]="isOnboarding"
         [isButtonDisabled]="!importSettingsForm.valid"
         (navigateToPreviousStep)="onBackButtonClick()"
         (save)="onSave()">
-    </app-configuration-step-footer>
-</div>
+      </app-configuration-step-footer>
+    }
+  </div>
 
-<div *ngIf="!isOnboarding" class="tw-sticky tw-top-0 tw-bottom-0 tw-left-0 tw-right-0 tw-bg-white">
-    <app-configuration-step-footer
+  @if (!isOnboarding) {
+    <div class="tw-sticky tw-top-0 tw-bottom-0 tw-left-0 tw-right-0 tw-bg-white">
+      <app-configuration-step-footer
         [ctaText]="!isSaveInProgress ? (isOnboarding ? ConfigurationCtaText.SAVE_AND_CONTINUE : ConfigurationCtaText.SAVE) : ConfigurationCtaText.SAVING"
         [showBackButton]="isOnboarding"
         [isButtonDisabled]="!importSettingsForm.valid"
         (navigateToPreviousStep)="onBackButtonClick()"
         (save)="onSave()">
-    </app-configuration-step-footer>
-</div>
+      </app-configuration-step-footer>
+    </div>
+  }
 
-<app-configuration-confirmation-dialog
+  <app-configuration-confirmation-dialog
     (warningAccepted)="acceptTurnOffImportWarning($event)"
     [isWarningVisible]="showTurnOffImportWarning"
     [headerText]="'configurationCsvImportField.turnOffImportWarningHeader' | transloco"
@@ -148,9 +151,9 @@
     [confirmBtnText]="'configurationCsvImportField.continue' | transloco"
     [appName]="AppName.SAGE50"
     [event]="ConfigurationWarningEvent.SAGE50_TURN_OFF_IMPORT">
-</app-configuration-confirmation-dialog>
+  </app-configuration-confirmation-dialog>
 
-<app-configuration-confirmation-dialog
+  <app-configuration-confirmation-dialog
     (warningAccepted)="acceptChangeMappingWarning($event)"
     [isWarningVisible]="showChangeMappingWarning"
     [headerText]="'configurationCsvImportField.changeMappingWarningHeader' | transloco"
@@ -158,5 +161,5 @@
     [confirmBtnText]="'configurationCsvImportField.continue' | transloco"
     [appName]="AppName.SAGE50"
     [event]="ConfigurationWarningEvent.SAGE50_CHANGE_FIELD_MAPPING">
-</app-configuration-confirmation-dialog>
+  </app-configuration-confirmation-dialog>
 }

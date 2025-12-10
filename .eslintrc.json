@@ -59,13 +59,15 @@
           "error",
           {
             "type": "attribute",
-            "prefix": "app"
+            "prefix": "app",
+            "style": "camelCase"
           }
         ],
         "indent": "off",
         "semi": "error",
         "no-underscore-dangle": "off",
         "@angular-eslint/template/no-negated-async": "off",
+        "@angular-eslint/template/prefer-control-flow": "off",
         "@typescript-eslint/prefer-for-of": "off",
         "prefer-arrow/prefer-arrow-functions": "off",
         "@typescript-eslint/ban-types": "off",
@@ -151,6 +153,7 @@
         "plugin:@angular-eslint/template/recommended"
       ],
       "rules": {
+        "@angular-eslint/template/prefer-control-flow": "off",
         "@fyle/i18n-key-naming-convention": [
           "warn",
           {
