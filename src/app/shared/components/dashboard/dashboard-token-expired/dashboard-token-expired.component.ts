@@ -1,7 +1,7 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
-import { Subject, takeUntil } from 'rxjs';
+import { forkJoin, Subject, take, takeUntil } from 'rxjs';
 import { brandingConfig, brandingFeatureConfig, brandingKbArticles } from 'src/app/branding/branding-config';
 import { AppName, AppUrl, ButtonSize, ButtonType } from 'src/app/core/models/enum/enum.model';
 import { ConfigurationWarningOut } from 'src/app/core/models/misc/configuration-warning.model';
@@ -12,6 +12,8 @@ import { IntacctConnectorService } from 'src/app/core/services/si/si-core/si-con
 import { Sage300ConnectorService } from 'src/app/core/services/sage300/sage300-configuration/sage300-connector.service';
 import { QboAuthService } from 'src/app/core/services/qbo/qbo-core/qbo-auth.service';
 import { XeroAuthService } from 'src/app/core/services/xero/xero-core/xero-auth.service';
+import { SiWorkspaceService } from 'src/app/core/services/si/si-core/si-workspace.service';
+import { SiAuthService } from 'src/app/core/services/si/si-core/si-auth.service';
 
 
 @Component({
@@ -48,6 +50,8 @@ export class DashboardTokenExpiredComponent implements OnInit, OnDestroy {
 
   isTokenBasedAuthApp: boolean;
 
+  private migratedToRestApi: boolean = false;
+
   private destroy$ = new Subject<void>();
 
   integrationSetupForm: FormGroup;
@@ -60,7 +64,9 @@ export class DashboardTokenExpiredComponent implements OnInit, OnDestroy {
     private windowService: WindowService,
     private netsuiteConnector: NetsuiteConnectorService,
     private intacctConnector: IntacctConnectorService,
-    private sage300Connector: Sage300ConnectorService
+    private sage300Connector: Sage300ConnectorService,
+    private siWorkspaceService: SiWorkspaceService,
+    private siAuthService: SiAuthService
   ) {}
 
   acceptWarning(data: ConfigurationWarningOut): void {
@@ -87,12 +93,31 @@ export class DashboardTokenExpiredComponent implements OnInit, OnDestroy {
     this.isIntegrationReconnectDialogVisible = !this.isIntegrationReconnectDialogVisible;
   }
 
+  handleReconnect() {
+    if (this.appName === AppName.QBO || this.appName === AppName.XERO) {
+      this.initiateOAuth();
+    }
+    if (this.appName === AppName.INTACCT) {
+      if (this.migratedToRestApi) {
+        this.initiateOAuth();
+      } else {
+        this.toggleIntegrationReconnectDialog();
+      }
+    }
+    if (this.appName === AppName.NETSUITE || this.appName === AppName.SAGE300) {
+      this.toggleIntegrationReconnectDialog();
+    }
+  }
+
   initiateOAuth(): void{
     if (this.appName === AppName.QBO){
-    this.qboAuthService.connectQbo();
+      this.qboAuthService.connectQbo();
     }
     if (this.appName === AppName.XERO){
-    this.xeroAuthService.connectXero();
+      this.xeroAuthService.connectXero();
+    }
+    if (this.appName === AppName.INTACCT) {
+      this.siAuthService.connectIntacct().pipe(take(1)).subscribe();
     }
   }
 
@@ -153,8 +178,12 @@ export class DashboardTokenExpiredComponent implements OnInit, OnDestroy {
       this.isTokenBasedAuthApp = true;
       this.helperService.setBaseApiURL(AppUrl.INTACCT);
 
-      this.intacctConnector.getIntacctFormGroup().subscribe(({ intacctSetupForm }) => {
+      forkJoin([
+        this.intacctConnector.getIntacctFormGroup(),
+        this.siWorkspaceService.getFeatureConfigs()
+      ]).subscribe(([{ intacctSetupForm }, featureConfigs]) => {
         this.integrationSetupForm = intacctSetupForm;
+        this.migratedToRestApi = featureConfigs?.migrated_to_rest_api ?? false;
       });
     }
 

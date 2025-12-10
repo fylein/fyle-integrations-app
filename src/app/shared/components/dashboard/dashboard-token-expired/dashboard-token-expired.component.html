@@ -35,7 +35,7 @@
 
   @if (appName === AppName.QBO) {
   <div class="tw-cursor-pointer">
-    <img [src]="qboConnectButtonSource" (click)="initiateOAuth()"
+    <img [src]="qboConnectButtonSource" (click)="handleReconnect()"
       (mouseover)="qboConnectButtonSource = 'assets/buttons/connect-to-qbo-active.svg'"
       (mouseout)="qboConnectButtonSource = 'assets/buttons/connect-to-qbo.svg'">
   </div>
@@ -43,13 +43,18 @@
 
   @if (appName === AppName.XERO) {
     <div class="tw-cursor-pointer">
-      <img [src]="xeroConnectButtonSource" (click)="initiateOAuth()">
+      <img [src]="xeroConnectButtonSource" (click)="handleReconnect()">
     </div>
   }
 
   @if (appName === AppName.NETSUITE || appName === AppName.INTACCT || appName === AppName.SAGE300) {
       <div class="tw-cursor-pointer">
-        <app-button  [buttonSize]="ButtonSize.MEDIUM" [buttonType]="ButtonType.PRIMARY" [buttonText]="'dashboardTokenExpired.reconnectIntegrationButtonText' | transloco" (buttonClick)="toggleIntegrationReconnectDialog()"></app-button>
+        <app-button
+          [buttonSize]="ButtonSize.MEDIUM"
+          [buttonType]="ButtonType.PRIMARY"
+          [buttonText]="'dashboardTokenExpired.reconnectIntegrationButtonText' | transloco"
+          (buttonClick)="handleReconnect()"
+        ></app-button>
       </div>
   }
 }
