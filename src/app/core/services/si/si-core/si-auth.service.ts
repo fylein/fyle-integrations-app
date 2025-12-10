@@ -1,18 +1,18 @@
 import { Injectable } from '@angular/core';
-import { catchError, concat, concatMap, finalize, forkJoin, ignoreElements, map, Observable, of, tap, toArray } from 'rxjs';
+import { catchError, concat, concatMap, map, Observable, of, tap, toArray } from 'rxjs';
 import { Token } from 'src/app/core/models/misc/token.model';
 import { ApiService } from '../../common/api.service';
 import { HelperService } from '../../common/helper.service';
 import { AppUrl, IntacctOnboardingState, ToastSeverity } from 'src/app/core/models/enum/enum.model';
 import { environment } from 'src/environments/environment';
 import { WorkspaceService } from '../../common/workspace.service';
-import { NavigationExtras, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { IntacctConnectorService } from './si-connector.service';
-import { SageIntacctCredential } from 'src/app/core/models/intacct/db/sage-credentials.model';
 import { IntacctAuthorizationCodePayload } from 'src/app/core/models/intacct/intacct-configuration/connector.model';
 import { TranslocoService } from '@jsverse/transloco';
 import { SiMappingsService } from './si-mappings.service';
 import { IntegrationsToastService } from '../../common/integrations-toast.service';
+import { onboardingStateComponentMap } from 'src/app/core/models/intacct/misc/onboarding-state-map';
 
 @Injectable({
   providedIn: 'root'
@@ -48,7 +48,7 @@ export class SiAuthService {
   }
 
   private checkProgressAndRedirect(code: string): Observable<null> {
-    const onboardingState = this.workspaceService.getOnboardingState();
+    const onboardingState: IntacctOnboardingState = this.workspaceService.getOnboardingState();
     const isReconnecting = onboardingState === IntacctOnboardingState.COMPLETE;
 
     const payload: IntacctAuthorizationCodePayload = { code, redirect_uri: environment.intacct_oauth_redirect_uri };
@@ -63,11 +63,7 @@ export class SiAuthService {
       toArray(),
 
       tap(() => {
-        if (isReconnecting) {
-          this.router.navigate(['integrations/intacct/main/dashboard']);
-        } else {
-          this.router.navigate(['integrations/intacct/onboarding/connector']);
-        }
+        this.router.navigateByUrl(onboardingStateComponentMap[onboardingState]);
       }),
       map(() => null),
 

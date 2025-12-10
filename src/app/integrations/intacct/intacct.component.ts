@@ -1,17 +1,18 @@
-import { Component, Inject, OnInit } from '@angular/core';
-import { NavigationEnd, Router, ActivatedRoute } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { Router, ActivatedRoute } from '@angular/router';
 import { MinimalUser } from 'src/app/core/models/db/user.model';
-import { AppName, AppUrl, IntacctOnboardingState } from 'src/app/core/models/enum/enum.model';
+import { AppUrl, IntacctOnboardingState } from 'src/app/core/models/enum/enum.model';
 import { IntacctWorkspace } from 'src/app/core/models/intacct/db/workspaces.model';
 import { HelperService } from 'src/app/core/services/common/helper.service';
 import { StorageService } from 'src/app/core/services/common/storage.service';
 import { WindowService } from 'src/app/core/services/common/window.service';
-import { AppcuesService } from 'src/app/core/services/integration/appcues.service';
 import { UserService } from 'src/app/core/services/misc/user.service';
 import { SiWorkspaceService } from 'src/app/core/services/si/si-core/si-workspace.service';
 import { SiAuthService } from 'src/app/core/services/si/si-core/si-auth.service';
 import { AuthService } from 'src/app/core/services/common/auth.service';
 import { IntacctConnectorService } from 'src/app/core/services/si/si-core/si-connector.service';
+import { catchError, forkJoin, of } from 'rxjs';
+import { onboardingStateComponentMap } from 'src/app/core/models/intacct/misc/onboarding-state-map';
 
 @Component({
   selector: 'app-intacct',
@@ -43,26 +44,29 @@ export class IntacctComponent implements OnInit {
     this.windowReference = this.windowService.nativeWindow;
   }
 
-  private navigate(isIntacctTokenValid?: boolean): void {
+  private navigate(isIntacctTokenValid: boolean, migratedToRestApi: boolean): void {
     const pathName = this.windowReference.location.pathname;
     if (pathName === '/integrations/intacct') {
-      const onboardingStateComponentMap = {
-        [IntacctOnboardingState.CONNECTION]: '/integrations/intacct/onboarding/landing',
-        [IntacctOnboardingState.LOCATION_ENTITY]: '/integrations/intacct/onboarding/connector',
-        [IntacctOnboardingState.EXPORT_SETTINGS]: '/integrations/intacct/onboarding/export_settings',
-        [IntacctOnboardingState.IMPORT_SETTINGS]: '/integrations/intacct/onboarding/import_settings',
-        [IntacctOnboardingState.ADVANCED_CONFIGURATION]: '/integrations/intacct/onboarding/advanced_settings',
-        [IntacctOnboardingState.COMPLETE]: '/integrations/intacct/main/dashboard'
-      };
+      if (migratedToRestApi) {
+        const landingPageRoute = onboardingStateComponentMap[IntacctOnboardingState.CONNECTION];
+        this.router.navigateByUrl(isIntacctTokenValid ? onboardingStateComponentMap[this.workspace.onboarding_state] : landingPageRoute);
+      } else {
+        const shouldGoToConnector =
+          isIntacctTokenValid === false &&
+          ![IntacctOnboardingState.CONNECTION, IntacctOnboardingState.COMPLETE].includes(this.workspace.onboarding_state);
+        const connectorRoute = onboardingStateComponentMap[IntacctOnboardingState.LOCATION_ENTITY];
 
-      this.router.navigateByUrl(isIntacctTokenValid === false && ![IntacctOnboardingState.CONNECTION, IntacctOnboardingState.COMPLETE].includes(this.workspace.onboarding_state) ?  onboardingStateComponentMap[IntacctOnboardingState.LOCATION_ENTITY] : onboardingStateComponentMap[this.workspace.onboarding_state]);
+        this.router.navigateByUrl(shouldGoToConnector ? connectorRoute : onboardingStateComponentMap[this.workspace.onboarding_state]);
+      }
     }
   }
 
   private routeBasedOnTokenStatus(): void {
-    this.intacctConnector.getIntacctTokenHealthStatus()
-    .subscribe(isIntacctCredentialsValid => {
-      this.navigate(isIntacctCredentialsValid);
+    forkJoin([
+      this.intacctConnector.getIntacctTokenHealthStatus(),
+      this.workspaceService.getFeatureConfigs().pipe(catchError(() => of(null)))
+    ]).subscribe(([isIntacctCredentialsValid, featureConfigs]) => {
+      this.navigate(isIntacctCredentialsValid ?? false, featureConfigs?.migrated_to_rest_api ?? false);
     });
   }
 
