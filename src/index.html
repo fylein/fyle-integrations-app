@@ -25,34 +25,6 @@
     }
   </script>
 
-<script>
-  function showVersionBadgeAlways(text = "version 1.0") {
-  const el = document.createElement("div");
-  el.textContent = text;
-
-  Object.assign(el.style, {
-    position: "fixed",
-    left: "50%",
-    bottom: "5vh",
-    transform: "translateX(-50%)",
-    padding: "8px 16px",
-    background: "rgba(15,23,42,0.95)",
-    color: "#fff",
-    borderRadius: "999px",
-    fontWeight: "600",
-    fontFamily: "system-ui, sans-serif",
-    letterSpacing: "0.3px",
-    zIndex: "99999",
-  });
-
-  document.body.appendChild(el);
-}
-
-document.addEventListener("DOMContentLoaded", () => {
-  showVersionBadgeAlways("version 3");
-});
-  </script>
-
    <!-- appcues -->
    <script type="text/javascript">
     window.AppcuesSettings = {
