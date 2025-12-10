@@ -51,35 +51,18 @@ export class SiAuthService {
     const onboardingState = this.workspaceService.getOnboardingState();
     const isReconnecting = onboardingState === IntacctOnboardingState.COMPLETE;
 
-
-    const parallelObservables = {
-      tokenHealthStatus: this.intacctConnectorService.getIntacctTokenHealthStatus(),
-      refreshDimensions: of(null)
-    };
-
-    if (!isReconnecting) {
-      parallelObservables.refreshDimensions = this.mappingsService.refreshSageIntacctDimensions(['location_entities']);
-    }
-
-
     const payload: IntacctAuthorizationCodePayload = { code, redirect_uri: environment.intacct_oauth_redirect_uri };
     const intacctConnectionSequence = [
       this.intacctConnectorService.postAuthCode(payload),
-      forkJoin(parallelObservables)
+      // Refresh location entities only while onboarding
+      ...(!isReconnecting ? [this.mappingsService.refreshSageIntacctDimensions(['location_entities'])] : [])
     ];
 
     return concat(...intacctConnectionSequence).pipe(
       // Waits for all observables in concat sequence to complete
       toArray(),
 
-      tap((res) => {
-
-        // If connection failed, throw error to trigger catchError
-        const {tokenHealthStatus} = res[1] as { tokenHealthStatus: boolean };
-        if (tokenHealthStatus === false) {
-          throw new Error('Token health check failed');
-        }
-
+      tap(() => {
         if (isReconnecting) {
           this.router.navigate(['integrations/intacct/main/dashboard']);
         } else {
