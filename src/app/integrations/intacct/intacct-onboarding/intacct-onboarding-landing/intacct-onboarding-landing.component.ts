@@ -4,7 +4,7 @@ import { AppName } from 'src/app/core/models/enum/enum.model';
 import { BrandingService } from 'src/app/core/services/common/branding.service';
 import { SiAuthService } from 'src/app/core/services/si/si-core/si-auth.service';
 import { SiWorkspaceService } from 'src/app/core/services/si/si-core/si-workspace.service';
-import { catchError, of } from 'rxjs';
+import { catchError, of, take } from 'rxjs';
 import { FeatureConfig } from 'src/app/core/models/intacct/db/feature-config.model';
 
 @Component({
@@ -57,8 +57,10 @@ export class IntacctOnboardingLandingComponent implements OnInit {
       return;
     }
     this._isIntacctConnectionInProgress = true;
-    this.siAuthService.connectIntacct().subscribe(() => {
-      this._isIntacctConnectionInProgress = false;
-    });
+    this.siAuthService.connectIntacct()
+      .pipe(take(1))
+      .subscribe(() => {
+        this._isIntacctConnectionInProgress = false;
+      });
   }
 }
