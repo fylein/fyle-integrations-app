@@ -134,6 +134,121 @@
                     [conditionFieldOptions]="conditionFieldOptions"
                     (deleteSkipExportForm)="deleteExpenseFilter($event)">
                   </app-configuration-skip-export>
+                <div [ngClass]="brandingStyle.configuration.configurationAdvancedSettingAutomationCardHeader">
+                    <app-configuration-step-sub-header
+                        [label]="'qbd_direct.configuration.advancedSettings.automationLabel' | transloco"
+                        [subLabel]="'qbd_direct.configuration.advancedSettings.automationSubLabel' | transloco">
+                    </app-configuration-step-sub-header>
+                </div>
+                <div [ngClass]="brandingStyle.configuration.configurationAdvancedSettingAutomationCardBody">
+                    <app-configuration-toggle-field
+                        [form]="advancedSettingsForm"
+                        [label]="'qbd_direct.configuration.advancedSettings.scheduleAutoExportLabel' | transloco"
+                        [subLabel]="'qbd_direct.configuration.advancedSettings.scheduleAutoExportSubLabel' | transloco: {brandName: brandingConfig.brandName}"
+                        [iconPath]="'calendar'"
+                        [formControllerName]="'exportSchedule'">
+                    </app-configuration-toggle-field>
+
+                    <div *ngIf="advancedSettingsForm.value.exportSchedule">
+                        <app-configuration-schedule-export
+                            [form]="advancedSettingsForm"
+                            [appName]="appName.QBD_DIRECT"
+                            [isFieldMandatory]="false"
+                            [mandatoryErrorListName]="'qbdDirectAdvancedSettings.automaticExportMethod' | transloco"
+                            [label]="'qbd_direct.configuration.advancedSettings.autoExportfrequencyLabel' | transloco"
+                            [subLabel]="'qbd_direct.configuration.advancedSettings.autoExportfrequencySubLabel' | transloco : {brandName: brandingConfig.brandName}"
+                            [options]="hours"
+                            [isEmailPresent]="false"
+                            [formControllerName]="'exportScheduleFrequency'">
+                        </app-configuration-schedule-export>
+                    </div>
+                </div>
+
+                <div [ngClass]="brandingStyle.configuration.configurationAdvancedSettingAutomationCardHeader">
+                    <app-configuration-step-sub-header
+                        [label]="'qbd_direct.configuration.advancedSettings.otherPreferencesLabel' | transloco"
+                        [subLabel]="'qbd_direct.configuration.advancedSettings.otherPreferencesSubLabel' | transloco: {brandName: brandingConfig.brandName}">
+                    </app-configuration-step-sub-header>
+                </div>
+
+                <div [ngClass]="brandingStyle.configuration.configurationAdvancedSettingCustomizationCardBody" *ngIf="isReimbursableExportTypePresent || isAutoCreateMerchantsAsVendorsFieldVisible()">
+
+                    <app-configuration-toggle-field *ngIf="isReimbursableExportTypePresent"
+                        [form]="advancedSettingsForm"
+                        [label]="('qbd_direct.configuration.advancedSettings.autoCreateReimbursableEnitityLabel' | transloco) + (employeeMapping | snakeCaseToSpaceCase | lowercase) + ('qbdDirectAdvancedSettings.entityPluralInQuickbooksDesktop' | transloco)"
+                        [iconPath]="'user-plus'"
+                        [subLabel]="('qbd_direct.configuration.advancedSettings.autoCreateReimbursableEnititySubLabel' | transloco) + (employeeMapping | snakeCaseToSpaceCase | lowercase) + ('qbdDirectAdvancedSettings.entityRecordSubLabel' | transloco)"
+                        [formControllerName]="'autoCreateReimbursableEnitity'">
+                    </app-configuration-toggle-field>
+
+                    <app-configuration-toggle-field *ngIf="isAutoCreateMerchantsAsVendorsFieldVisible()"
+                        [form]="advancedSettingsForm"
+                        [iconPath]="'user-plus'"
+                        [label]="'qbd_direct.configuration.advancedSettings.autoCreateMerchantsAsVendorsLabel' | transloco"
+                        [subLabel]="'qbd_direct.configuration.advancedSettings.autoCreateMerchantsAsVendorsSubLabel' | transloco: {brandName: brandingConfig.brandName}"
+                        [formControllerName]="'autoCreateMerchantsAsVendors'">
+                    </app-configuration-toggle-field>
+                </div>
+
+                <div [ngClass]="brandingStyle.configuration.configurationAdvancedSettingCustomizationCardHeader">
+                    <app-configuration-step-sub-header
+                        [label]="'qbd_direct.configuration.advancedSettings.customizeSectionLabel' | transloco"
+                        [subLabel]="'qbd_direct.configuration.advancedSettings.customizeSectionSubLabel' | transloco : {brandName: brandingConfig.brandName}">
+                    </app-configuration-step-sub-header>
+                </div>
+                <div class="tw-bg-white" [ngClass]="brandingStyle.configuration.configurationAdvancedSettingCustomizationCardBody">
+                    <app-configuration-multi-select
+                        [form]="advancedSettingsForm"
+                        [label]="'qbd_direct.configuration.advancedSettings.topLevelMemoStructureLabel' | transloco"
+                        [subLabel]="'qbd_direct.configuration.advancedSettings.topLevelMemoStructureSubLabel' | transloco : {brandName: brandingConfig.brandName}"
+                        [isFieldMandatory]="true"
+                        [mandatoryErrorListName]="'qbdDirectAdvancedSettings.topLevelMemo' | transloco"
+                        [options]="defaultTopMemoOptions"
+                        [iconPath]="'list'"
+                        [placeholder]="'qbdDirectAdvancedSettings.selectTopMemoTypePlaceholder' | transloco"
+                        [formControllerName]="'topMemoStructure'">
+                    </app-configuration-multi-select>
+                    <div class="tw-p-24-px">
+                        <div class="tw-bg-input-read-only-bg tw-rounded-4-px tw-text-14-px tw-py-8-px tw-px-8-px tw-border-input-read-only-border tw-border-solid">
+                            <span>{{ topMemoPreviewText }}</span>
+                        </div>
+                    </div>
+
+                    <app-configuration-multi-select
+                        [form]="advancedSettingsForm"
+                        [isFieldMandatory]="true"
+                        [customErrorMessage]="'qbdDirectAdvancedSettings.selectAtleastOneMemoError' | transloco"
+                        [label]="'qbd_direct.configuration.advancedSettings.memoStructureLabel' | transloco"
+                        [subLabel]="'qbd_direct.configuration.advancedSettings.memoStructureSubLabel' | transloco : {brandName: brandingConfig.brandName}"
+                        [options]="defaultMemoFields"
+                        [iconPath]="'list'"
+                        [placeholder]="'qbdDirectAdvancedSettings.selectMemoTypesPlaceholder' | transloco"
+                        [formControllerName]="'expenseMemoStructure'">
+                    </app-configuration-multi-select>
+                    <div class="tw-p-24-px">
+                        <div class="tw-bg-input-read-only-bg tw-rounded-4-px tw-text-14-px tw-py-8-px tw-px-8-px tw-border-input-read-only-border tw-border-solid">
+                            <span>{{ memoPreviewText }}</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tw-bg-white tw-my-16-px" [ngClass]="brandingStyle.configuration.configurationAdvancedSettingSingleCard" *ngIf="brandingFeatureConfig.featureFlags.advancedSettings.skipExport">
+                    <app-configuration-toggle-field
+                        [form]="advancedSettingsForm"
+                        [label]="'qbd_direct.configuration.advancedSettings.skipExportLabel' | transloco: {brandName: brandingConfig.brandName}"
+                        [subLabel]="'qbd_direct.configuration.advancedSettings.skipExportSubLabel' | transloco: {brandName: brandingConfig.brandName}"
+                        [formControllerName]="'skipExport'"
+                        [iconPath]="'list'">
+                    </app-configuration-toggle-field>
+                    <div *ngIf="advancedSettingsForm.value.skipExport">
+                        <app-configuration-skip-export
+                        [enableSkipExport]="advancedSettingsForm.value.skipExport"
+                        [skipExportForm]="skipExportForm"
+                        [expenseFilter]="expenseFilters"
+                        [conditionFieldOptions]="conditionFieldOptions"
+                        (deleteSkipExportForm)="deleteExpenseFilter($event)">
+                        </app-configuration-skip-export>
+                    </div>
                 </div>
               }
             </div>
