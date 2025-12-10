@@ -330,7 +330,7 @@ export class ConfigurationSkipExportComponent implements OnInit {
     this.setOperatorFieldOptions(response, conditionArray);
     this.setSkippedConditions(response, conditionArray);
     this.conditionFieldWatcher();
-    this.normalizeChipFieldValues();
+    this.helper.normalizeChipFieldValues(this.skipExportForm, ['value1', 'value2']);
     this.isLoading = false;
   }
 
@@ -368,21 +368,5 @@ export class ConfigurationSkipExportComponent implements OnInit {
       this.skipExportForm.get(formControlName)?.setValue(newValues);
       inputElement.value = ''; // Clear input after adding
     }
-  }
-
-  private normalizeChipFieldValues(): void {
-    ['value1', 'value2'].forEach(controlName => {
-      const control = this.skipExportForm.get(controlName);
-      if (control) {
-        const currentValue = control.value;
-        if (!Array.isArray(currentValue)) {
-          if (currentValue === null || currentValue === undefined || currentValue === '') {
-            control.setValue([], { emitEvent: false });
-          } else {
-            control.setValue([currentValue], { emitEvent: false });
-          }
-        }
-      }
-    });
   }
 }

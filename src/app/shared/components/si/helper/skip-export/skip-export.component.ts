@@ -6,6 +6,7 @@ import { ConditionField, CustomOperatorOption, ExpenseFilterResponse, JoinOption
 import { SiAdvancedSettingsService } from 'src/app/core/services/si/si-configuration/si-advanced-settings.service';
 import { RxwebValidators } from '@rxweb/reactive-form-validators';
 import { TranslocoService } from '@jsverse/transloco';
+import { HelperService } from 'src/app/core/services/common/helper.service';
 
 @Component({
     selector: 'app-skip-export',
@@ -64,7 +65,8 @@ export class SkipExportComponent implements OnInit {
   constructor(
     @Inject(FormBuilder) private formBuilder: FormBuilder,
     private advancedSettingsService: SiAdvancedSettingsService,
-    private translocoService: TranslocoService
+    private translocoService: TranslocoService,
+    private helper: HelperService
   ) {
     this.customOperatorOptions = [
       {
@@ -592,25 +594,8 @@ export class SkipExportComponent implements OnInit {
       }
     }
     this.fieldWatcher();
-    this.normalizeChipFieldValues();
+    this.helper.normalizeChipFieldValues(this.skipExportForm, ['value1', 'value2']);
     this.isLoading = false;
-  }
-
-
-  private normalizeChipFieldValues(): void {
-    ['value1', 'value2'].forEach(controlName => {
-      const control = this.skipExportForm.get(controlName);
-      if (control) {
-        const currentValue = control.value;
-        if (!Array.isArray(currentValue)) {
-          if (currentValue === null || currentValue === undefined || currentValue === '') {
-            control.setValue([], { emitEvent: false });
-          } else {
-            control.setValue([currentValue], { emitEvent: false });
-          }
-        }
-      }
-    });
   }
 
   private getSettingsAndSetupForm(): void {
