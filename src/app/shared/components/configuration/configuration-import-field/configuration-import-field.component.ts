@@ -238,9 +238,8 @@ export class ConfigurationImportFieldComponent implements OnInit {
       if (!event.checked && formGroup.value.source_field === MappingSourceField.PROJECT && this.costCodeFieldOption[0]?.attribute_type !== 'custom_field' && this.costCodeFieldOption[0]?.attribute_type !== 'custom_field') {
         this.showWarningForDependentFields.emit();
       }
-    } else {
-      this.importCodeEnabled.emit([event.checked, this.getDestinationField(formGroup.get('destination_field')?.value), index]);
     }
+    this.importCodeEnabled.emit([event.checked, this.getDestinationField(formGroup.get('destination_field')?.value), index]);
   }
 
   isExpenseFieldDependent(expenseField: MappingSetting): boolean {
