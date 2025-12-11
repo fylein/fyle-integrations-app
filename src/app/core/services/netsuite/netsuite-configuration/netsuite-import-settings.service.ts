@@ -4,7 +4,7 @@ import { ApiService } from '../../common/api.service';
 import { WorkspaceService } from '../../common/workspace.service';
 import { IntegrationField } from 'src/app/core/models/db/mapping.model';
 import { CacheBuster, Cacheable } from 'ts-cacheable';
-import { CustomSegment, NetsuiteImportSettingGet, NetsuiteImportSettingPost } from 'src/app/core/models/netsuite/netsuite-configuration/netsuite-import-setting.model';
+import { CustomSegment, NetsuiteImportFieldsAttributeCounts, NetsuiteImportSettingGet, NetsuiteImportSettingPost } from 'src/app/core/models/netsuite/netsuite-configuration/netsuite-import-setting.model';
 import { NetsuiteExportSettingsService } from './netsuite-export-settings.service';
 import { FormArray, FormControl, FormGroup } from '@angular/forms';
 import { DestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
@@ -107,5 +107,9 @@ export class NetsuiteImportSettingsService extends ImportSettingsService {
 
   postNetsuiteCustomSegments(customSegmentsPayload: CustomSegment): Observable<CustomSegment> {
     return this.apiService.post(`/workspaces/${this.workspaceService.getWorkspaceId()}/netsuite/custom_segments/`, customSegmentsPayload);
+  }
+
+  getImportFieldsAttributeCounts(): Observable<NetsuiteImportFieldsAttributeCounts> {
+    return this.apiService.get(`/workspaces/${this.workspaceService.getWorkspaceId()}/netsuite/attributes_count/`, {});
   }
 }

@@ -1842,7 +1842,8 @@
     "taxCode": "tax code",
     "defaultTaxCodeSubLabel": "If an expense from {{brandName}} does not contain any tax group information during export, the default tax code will be used.",
     "selectTaxCodePlaceholder": "Select tax code",
-    "previewHeader": "Preview"
+    "previewHeader": "Preview",
+    "autoImportEnabledInfo": "{{destinationField}} cannot be imported because there are {{currentDestinationCount}} active values in {{appName}} , which exceeds our 30,000 import limit. To resolve this, please remove or disable any unused values from {{appName}} and try syncing again."
   },
   "netsuiteCustomSegmentDialog": {
     "chooseCustomFieldType": "Choose custom field type",
