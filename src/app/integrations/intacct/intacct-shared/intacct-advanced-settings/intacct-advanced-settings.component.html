@@ -100,6 +100,7 @@
                     class="tw-pt-0"
                     *ngIf="isAutoCreateMerchantsFieldVisible() && brandingFeatureConfig.featureFlags.advancedSettings.autoCreateMerchants"
                     [form]="advancedSettingsForm"
+                    [iconPath]="'user-plus'"
                     [label]="'intacct.configuration.advancedSettings.autoCreateMerchantsAsVendorsLabel' | transloco"
                     [subLabel]="'intacctAdvancedSettings.autoCreateMerchantsSubLabel' | transloco: { brandName: brandingConfig.brandName }"
                     [formControllerName]="'autoCreateMerchants'">
