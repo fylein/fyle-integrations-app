@@ -3,9 +3,10 @@ import { brandingConfig, brandingFeatureConfig } from 'src/app/branding/branding
 import { TranslocoService } from '@jsverse/transloco';
 
 @Component({
-  selector: 'app-mandatory-error-message',
-  templateUrl: './mandatory-error-message.component.html',
-  styleUrls: ['./mandatory-error-message.component.scss']
+    selector: 'app-mandatory-error-message',
+    templateUrl: './mandatory-error-message.component.html',
+    styleUrls: ['./mandatory-error-message.component.scss'],
+    standalone: false
 })
 export class MandatoryErrorMessageComponent implements OnInit {
 

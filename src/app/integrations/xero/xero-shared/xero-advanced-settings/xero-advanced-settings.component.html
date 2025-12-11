@@ -1,148 +1,160 @@
-<div *ngIf="isLoading" class="tw-flex tw-justify-center tw-items-center tw-h-[75vh]">
+@if (isLoading) {
+  <div class="tw-flex tw-justify-center tw-items-center tw-h-[75vh]">
     <app-loader></app-loader>
-</div>
-<div *ngIf="!isLoading" [ngClass]="[brandingStyle.configuration.settingsContainer, isOnboarding ? brandingStyle.common.configurationContents : brandingStyle.common.configurationContentsDashboard, isOnboarding ? 'configuration--contents' : '']">
+  </div>
+}
+@if (!isLoading) {
+  <div [ngClass]="[brandingStyle.configuration.settingsContainer, isOnboarding ? brandingStyle.common.configurationContents : brandingStyle.common.configurationContentsDashboard, isOnboarding ? 'configuration--contents' : '']">
     <div>
-        <app-configuration-step-header
-            [headerText]="'xero.configuration.advancedSettings.stepName' | transloco"
-            [contentText]="'xero.configuration.advancedSettings.contentText' | transloco"
-            [redirectLink]="supportArticleLink"
-            [showSyncButton]="isOnboarding"
-            [appName]="appName"
-            (refreshDimension)="refreshDimensions()">
-        </app-configuration-step-header>
+      <app-configuration-step-header
+        [headerText]="'xero.configuration.advancedSettings.stepName' | transloco"
+        [contentText]="'xero.configuration.advancedSettings.contentText' | transloco"
+        [redirectLink]="supportArticleLink"
+        [showSyncButton]="isOnboarding"
+        [appName]="appName"
+        (refreshDimension)="refreshDimensions()">
+      </app-configuration-step-header>
     </div>
     <form [formGroup]="advancedSettingForm">
-        <div class="tw-p-24-px">
-            <div  [ngClass]="brandingStyle.configuration.configurationAdvancedSettingAutomationCardHeader">
-                <app-configuration-step-sub-header
-                    [label]="'xeroAdvancedSettings.automationLabel' | transloco"
-                    [subLabel]="'xero.configuration.advancedSettings.automationSubLabel' | transloco">
-                </app-configuration-step-sub-header>
-            </div>
-            <div class="tw-mb-16-px">
-                <div  [ngClass]="brandingStyle.configuration.configurationAdvancedSettingAutomationCardBody">
-                    <app-configuration-toggle-field
-                        [form]="advancedSettingForm"
-                        [label]="'xeroAdvancedSettings.scheduleExportLabel' | transloco"
-                        [subLabel]="'xero.configuration.advancedSettings.scheduleSubLabel' | transloco: {brandName: brandingConfig.brandName}"
-                        [formControllerName]="'exportSchedule'"
-                        [iconPath]="'calendar'">
-                    </app-configuration-toggle-field>
-
-                    <div *ngIf="advancedSettingForm.get('exportSchedule')?.value">
-                        <app-configuration-schedule-export
-                            [form]="advancedSettingForm"
-                            [appName]="appName"
-                            [isFieldMandatory]="false"
-                            [mandatoryErrorListName]="'xeroAdvancedSettings.automaticExportMethodError' | transloco"
-                            [label]="'xeroAdvancedSettings.exportFrequencyLabel' | transloco"
-                            [subLabel]="'xero.configuration.advancedSettings.frequencySubLabel' | transloco: {brandName: brandingConfig.brandName}"
-                            [options]="hours"
-                            [isEmailPresent]="brandingFeatureConfig.featureFlags.advancedSettings.emailNotification ? true: false"
-                            [formControllerName]="'exportScheduleFrequency'"
-                            [adminEmails]="adminEmails">
-                        </app-configuration-schedule-export>
-                    </div>
-                </div>
-            </div>
-
-            <div [ngClass]="brandingStyle.configuration.configurationAdvancedSettingAutomationCardHeader">
-                <app-configuration-step-sub-header
-                    [label]="'xero.configuration.advancedSettings.customPreferencesLabel' | transloco"
-                    [subLabel]="'xero.configuration.advancedSettings.customPreferencesSubLabel' | transloco: {brandName: brandingConfig.brandName}">
-                </app-configuration-step-sub-header>
-            </div>
-            <div  [ngClass]="brandingStyle.configuration.configurationAdvancedSettingAutomationCardBody">
-                <app-configuration-toggle-field
-                    [form]="advancedSettingForm"
-                    [iconPath]="'calendar'"
-                    [label]="'xero.configuration.advancedSettings.postEntriesCurrentPeriod' | transloco"
-                    [subLabel]="'xero.configuration.advancedSettings.accountingPeriodSubLabel' | transloco"
-                    [formControllerName]="'changeAccountingPeriod'">
-                </app-configuration-toggle-field>
-
-                <app-configuration-toggle-field *ngIf="workspaceGeneralSettings.reimbursable_expenses_object"
-                    [form]="advancedSettingForm"
-                    [iconPath]="'list'"
-                    [label]="'xero.configuration.advancedSettings.autoCreateVendorsLabel' | transloco"
-                    [subLabel]="'xero.configuration.advancedSettings.autoCreateVendorsSubLabel' | transloco"
-                    [formControllerName]="'autoCreateVendors'">
-                </app-configuration-toggle-field>
-
-                <app-configuration-select-field *ngIf="brandingFeatureConfig.featureFlags.advancedSettings.paymentsSync && workspaceGeneralSettings.reimbursable_expenses_object"
-                    [form]="advancedSettingForm"
-                    [options]="paymentSyncOptions"
-                    [iconPath]="'arrow-rotate'"
-                    [showClearIcon]="true"
-                    [label]="'xero.configuration.advancedSettings.paymentSyncLabel' | transloco"
-                    [subLabel]="'xeroAdvancedSettings.paymentSyncSubLabel' | transloco: { brandName: brandingConfig.brandName }"
-                    [placeholder]="'xeroAdvancedSettings.paymentSyncPlaceholder' | transloco"
-                    [formControllerName]="'paymentSync'">
-                </app-configuration-select-field>
-
-                <app-configuration-select-field *ngIf="advancedSettingForm.get('paymentSync')?.value && advancedSettingForm.get('paymentSync')?.value === 'fyle_to_xero' && workspaceGeneralSettings.reimbursable_expenses_object"
-                    [form]="advancedSettingForm"
-                    [destinationAttributes]="billPaymentAccounts"
-                    [optionLabel]="'value'"
-                    [isFieldMandatory]="true"
-                    [mandatoryErrorListName]="'xeroAdvancedSettings.paymentAccountError' | transloco"
-                    [label]="'xero.configuration.advancedSettings.billPaymentAccountLabel' | transloco"
-                    [subLabel]="'xeroAdvancedSettings.billPaymentAccountSubLabel' | transloco: { brandName: brandingConfig.brandName, subLabel: 'xero.configuration.advancedSettings.billPaymentAccountSubLabel' | transloco }"
-                    [placeholder]="'xeroAdvancedSettings.billPaymentAccountPlaceholder' | transloco"
-                    [formControllerName]="'billPaymentAccount'">
-                </app-configuration-select-field>
-                <app-configuration-toggle-field *ngIf="workspaceGeneralSettings.corporate_credit_card_expenses_object && !workspaceGeneralSettings.import_suppliers_as_merchants"
-                    [form]="advancedSettingForm"
-                    [iconPath]="'user-plus'"
-                    [label]="'xero.configuration.advancedSettings.autoCreateMerchantsAsVendorsLabel' | transloco: {brandName: brandingConfig.brandName}"
-                    [subLabel]="'xeroAdvancedSettings.autoCreateMerchantSubLabel' | transloco: { brandName: brandingConfig.brandName }"
-                    [formControllerName]="'autoCreateMerchantDestinationEntity'">
-                </app-configuration-toggle-field>
-            </div>
-            <div [ngClass]="brandingStyle.configuration.configurationAdvancedSettingAutomationCardHeader">
-                <app-configuration-step-sub-header
-                    [label]="'xeroAdvancedSettings.customizationLabel' | transloco"
-                    [subLabel]="'xero.configuration.advancedSettings.customizeSectionSubLabel' | transloco: {brandName: brandingConfig.brandName}">
-                </app-configuration-step-sub-header>
-            </div>
-            <div [ngClass]="brandingStyle.configuration.configurationAdvancedSettingAutomationCardBody">
-                <app-configuration-multi-select
-                    [form]="advancedSettingForm"
-                    [isFieldMandatory]="false"
-                    [mandatoryErrorListName]="'xeroAdvancedSettings.itemLevelDescriptionError' | transloco"
-                    [label]="'xero.configuration.advancedSettings.memoStructureLabel' | transloco"
-                    [subLabel]="'xero.configuration.advancedSettings.memoStructureSubLabel' | transloco: {brandName: brandingConfig.brandName}"
-                    [options]="defaultMemoFields"
-                    [iconPath]="'list'"
-                    [placeholder]="'xeroAdvancedSettings.setDescriptionPlaceholder' | transloco"
-                    [formControllerName]="'memoStructure'"
-                    (changeInMultiSelect)="onMultiSelectChange()">
-                </app-configuration-multi-select>
-                <div class="preview-text">
-                    <div class="preview-box">
-                        {{memoPreviewText}}
-                    </div>
-                </div>
-            </div>
+      <div class="tw-p-24-px">
+        <div  [ngClass]="brandingStyle.configuration.configurationAdvancedSettingAutomationCardHeader">
+          <app-configuration-step-sub-header
+            [label]="'xeroAdvancedSettings.automationLabel' | transloco"
+            [subLabel]="'xero.configuration.advancedSettings.automationSubLabel' | transloco">
+          </app-configuration-step-sub-header>
         </div>
+        <div class="tw-mb-16-px">
+          <div  [ngClass]="brandingStyle.configuration.configurationAdvancedSettingAutomationCardBody">
+            <app-configuration-toggle-field
+              [form]="advancedSettingForm"
+              [label]="'xeroAdvancedSettings.scheduleExportLabel' | transloco"
+              [subLabel]="'xero.configuration.advancedSettings.scheduleSubLabel' | transloco: {brandName: brandingConfig.brandName}"
+              [formControllerName]="'exportSchedule'"
+              [iconPath]="'calendar'">
+            </app-configuration-toggle-field>
+            @if (advancedSettingForm.get('exportSchedule')?.value) {
+              <div>
+                <app-configuration-schedule-export
+                  [form]="advancedSettingForm"
+                  [appName]="appName"
+                  [isFieldMandatory]="false"
+                  [mandatoryErrorListName]="'xeroAdvancedSettings.automaticExportMethodError' | transloco"
+                  [label]="'xeroAdvancedSettings.exportFrequencyLabel' | transloco"
+                  [subLabel]="'xero.configuration.advancedSettings.frequencySubLabel' | transloco: {brandName: brandingConfig.brandName}"
+                  [options]="hours"
+                  [isEmailPresent]="brandingFeatureConfig.featureFlags.advancedSettings.emailNotification ? true: false"
+                  [formControllerName]="'exportScheduleFrequency'"
+                  [adminEmails]="adminEmails">
+                </app-configuration-schedule-export>
+              </div>
+            }
+          </div>
+        </div>
+        <div [ngClass]="brandingStyle.configuration.configurationAdvancedSettingAutomationCardHeader">
+          <app-configuration-step-sub-header
+            [label]="'xero.configuration.advancedSettings.customPreferencesLabel' | transloco"
+            [subLabel]="'xero.configuration.advancedSettings.customPreferencesSubLabel' | transloco: {brandName: brandingConfig.brandName}">
+          </app-configuration-step-sub-header>
+        </div>
+        <div  [ngClass]="brandingStyle.configuration.configurationAdvancedSettingAutomationCardBody">
+          <app-configuration-toggle-field
+            [form]="advancedSettingForm"
+            [iconPath]="'calendar'"
+            [label]="'xero.configuration.advancedSettings.postEntriesCurrentPeriod' | transloco"
+            [subLabel]="'xero.configuration.advancedSettings.accountingPeriodSubLabel' | transloco"
+            [formControllerName]="'changeAccountingPeriod'">
+          </app-configuration-toggle-field>
+          @if (workspaceGeneralSettings.reimbursable_expenses_object) {
+            <app-configuration-toggle-field
+              [form]="advancedSettingForm"
+              [iconPath]="'list'"
+              [label]="'xero.configuration.advancedSettings.autoCreateVendorsLabel' | transloco"
+              [subLabel]="'xero.configuration.advancedSettings.autoCreateVendorsSubLabel' | transloco"
+              [formControllerName]="'autoCreateVendors'">
+            </app-configuration-toggle-field>
+          }
+          @if (brandingFeatureConfig.featureFlags.advancedSettings.paymentsSync && workspaceGeneralSettings.reimbursable_expenses_object) {
+            <app-configuration-select-field
+              [form]="advancedSettingForm"
+              [options]="paymentSyncOptions"
+              [iconPath]="'arrow-rotate'"
+              [showClearIcon]="true"
+              [label]="'xero.configuration.advancedSettings.paymentSyncLabel' | transloco"
+              [subLabel]="'xeroAdvancedSettings.paymentSyncSubLabel' | transloco: { brandName: brandingConfig.brandName }"
+              [placeholder]="'xeroAdvancedSettings.paymentSyncPlaceholder' | transloco"
+              [formControllerName]="'paymentSync'">
+            </app-configuration-select-field>
+          }
+          @if (advancedSettingForm.get('paymentSync')?.value && advancedSettingForm.get('paymentSync')?.value === 'fyle_to_xero' && workspaceGeneralSettings.reimbursable_expenses_object) {
+            <app-configuration-select-field
+              [form]="advancedSettingForm"
+              [destinationAttributes]="billPaymentAccounts"
+              [optionLabel]="'value'"
+              [isFieldMandatory]="true"
+              [mandatoryErrorListName]="'xeroAdvancedSettings.paymentAccountError' | transloco"
+              [label]="'xero.configuration.advancedSettings.billPaymentAccountLabel' | transloco"
+              [subLabel]="'xeroAdvancedSettings.billPaymentAccountSubLabel' | transloco: { brandName: brandingConfig.brandName, subLabel: 'xero.configuration.advancedSettings.billPaymentAccountSubLabel' | transloco }"
+              [placeholder]="'xeroAdvancedSettings.billPaymentAccountPlaceholder' | transloco"
+              [formControllerName]="'billPaymentAccount'">
+            </app-configuration-select-field>
+          }
+          @if (workspaceGeneralSettings.corporate_credit_card_expenses_object && !workspaceGeneralSettings.import_suppliers_as_merchants) {
+            <app-configuration-toggle-field
+              [form]="advancedSettingForm"
+              [iconPath]="'user-plus'"
+              [label]="'xero.configuration.advancedSettings.autoCreateMerchantsAsVendorsLabel' | transloco: {brandName: brandingConfig.brandName}"
+              [subLabel]="'xeroAdvancedSettings.autoCreateMerchantSubLabel' | transloco: { brandName: brandingConfig.brandName }"
+              [formControllerName]="'autoCreateMerchantDestinationEntity'">
+            </app-configuration-toggle-field>
+          }
+        </div>
+        <div [ngClass]="brandingStyle.configuration.configurationAdvancedSettingAutomationCardHeader">
+          <app-configuration-step-sub-header
+            [label]="'xeroAdvancedSettings.customizationLabel' | transloco"
+            [subLabel]="'xero.configuration.advancedSettings.customizeSectionSubLabel' | transloco: {brandName: brandingConfig.brandName}">
+          </app-configuration-step-sub-header>
+        </div>
+        <div [ngClass]="brandingStyle.configuration.configurationAdvancedSettingAutomationCardBody">
+          <app-configuration-multi-select
+            [form]="advancedSettingForm"
+            [isFieldMandatory]="false"
+            [mandatoryErrorListName]="'xeroAdvancedSettings.itemLevelDescriptionError' | transloco"
+            [label]="'xero.configuration.advancedSettings.memoStructureLabel' | transloco"
+            [subLabel]="'xero.configuration.advancedSettings.memoStructureSubLabel' | transloco: {brandName: brandingConfig.brandName}"
+            [options]="defaultMemoFields"
+            [iconPath]="'list'"
+            [placeholder]="'xeroAdvancedSettings.setDescriptionPlaceholder' | transloco"
+            [formControllerName]="'memoStructure'"
+            (changeInMultiSelect)="onMultiSelectChange()">
+          </app-configuration-multi-select>
+          <div class="preview-text">
+            <div class="preview-box">
+              {{memoPreviewText}}
+            </div>
+          </div>
+        </div>
+      </div>
+      @if (isOnboarding) {
         <app-configuration-step-footer
-            *ngIf="isOnboarding"
-            [ctaText] = "!isSaveInProgress ? (isOnboarding ? ConfigurationCtaText.SAVE_AND_CONTINUE : ConfigurationCtaText.SAVE) : ConfigurationCtaText.SAVING"
-            [isButtonDisabled]="!advancedSettingForm.valid"
-            [showBackButton]="isOnboarding ? true : false"
-            (save)="save()"
-            (navigateToPreviousStep)="navigateToPreviousStep()">
+          [ctaText] = "!isSaveInProgress ? (isOnboarding ? ConfigurationCtaText.SAVE_AND_CONTINUE : ConfigurationCtaText.SAVE) : ConfigurationCtaText.SAVING"
+          [isButtonDisabled]="!advancedSettingForm.valid"
+          [showBackButton]="isOnboarding ? true : false"
+          (save)="save()"
+          (navigateToPreviousStep)="navigateToPreviousStep()">
         </app-configuration-step-footer>
+      }
     </form>
-</div>
+  </div>
+}
 
-<div *ngIf="!isLoading && !isOnboarding" class="tw-sticky tw-top-0 tw-bottom-0 tw-left-0 tw-right-0 tw-bg-white">
+@if (!isLoading && !isOnboarding) {
+  <div class="tw-sticky tw-top-0 tw-bottom-0 tw-left-0 tw-right-0 tw-bg-white">
     <app-configuration-step-footer
-        [ctaText] = "!isSaveInProgress ? (isOnboarding ? ConfigurationCtaText.SAVE_AND_CONTINUE : ConfigurationCtaText.SAVE) : ConfigurationCtaText.SAVING"
-        [isButtonDisabled]="!advancedSettingForm.valid"
-        [showBackButton]="isOnboarding ? true : false"
-        (save)="save()"
-        (navigateToPreviousStep)="navigateToPreviousStep()">
+      [ctaText] = "!isSaveInProgress ? (isOnboarding ? ConfigurationCtaText.SAVE_AND_CONTINUE : ConfigurationCtaText.SAVE) : ConfigurationCtaText.SAVING"
+      [isButtonDisabled]="!advancedSettingForm.valid"
+      [showBackButton]="isOnboarding ? true : false"
+      (save)="save()"
+      (navigateToPreviousStep)="navigateToPreviousStep()">
     </app-configuration-step-footer>
-</div>
+  </div>
+}

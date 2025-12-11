@@ -2424,6 +2424,9 @@
     },
     "qbdDirectMapping": {
       "employeeOrVendorLabel": "Employee/Vendor"
+    },
+    "siAuth": {
+      "failedToConnect": "Failed to connect to Sage Intacct. Please try again"
     }
   },
   "pipes": {

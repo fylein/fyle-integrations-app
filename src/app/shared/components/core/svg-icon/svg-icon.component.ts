@@ -76,9 +76,10 @@ const ICON_MAPPING = {
 };
 
 @Component({
-  selector: 'app-svg-icon',
-  templateUrl: './svg-icon.component.html',
-  styleUrls: ['./svg-icon.component.scss']
+    selector: 'app-svg-icon',
+    templateUrl: './svg-icon.component.html',
+    styleUrls: ['./svg-icon.component.scss'],
+    standalone: false
 })
 export class SvgIconComponent implements OnInit {
 
@@ -102,6 +103,12 @@ export class SvgIconComponent implements OnInit {
 
   @Output() iconClick = new EventEmitter();
 
+  // Path to the SVG sprite file
+  private readonly spritePath = 'assets/sprites/sprite.svg';
+
+  // Computed sprite URL with icon reference
+  spriteUrl: string = '';
+
   constructor() { }
 
   iconClickEvent() {
@@ -124,6 +131,9 @@ export class SvgIconComponent implements OnInit {
         this.styleClasses += ' tw-text-icon-primary';
       }
     }
+
+    // Build the sprite URL: path#iconName
+    this.spriteUrl = `${this.spritePath}#${this.svgSource}`;
   }
 
   ngOnInit(): void {

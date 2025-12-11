@@ -1,136 +1,149 @@
-<div *ngIf="isLoading" class="tw-flex tw-justify-center tw-items-center tw-h-[75vh]">
+@if (isLoading) {
+  <div class="tw-flex tw-justify-center tw-items-center tw-h-[75vh]">
     <app-loader></app-loader>
-</div>
-<div *ngIf="!isLoading" [ngClass]="[brandingStyle.configuration.settingsContainer, isOnboarding ? brandingStyle.common.configurationContents : brandingStyle.common.configurationContentsDashboard, isOnboarding ? 'configuration--contents' : '']">
+  </div>
+}
+@if (!isLoading) {
+  <div [ngClass]="[brandingStyle.configuration.settingsContainer, isOnboarding ? brandingStyle.common.configurationContents : brandingStyle.common.configurationContentsDashboard, isOnboarding ? 'configuration--contents' : '']">
     <div>
-        <app-configuration-step-header [headerText]="'xero.configuration.importSetting.stepName' | transloco"
-            [contentText]="'xero.configuration.importSetting.contentText' | transloco: {brandName: brandingService.getBrandFullName()}"
-            [redirectLink]="supportArticleLink" [showSyncButton]="isOnboarding" [appName]="appName"
-            (refreshDimension)="refreshDimensions()">
-        </app-configuration-step-header>
+      <app-configuration-step-header [headerText]="'xero.configuration.importSetting.stepName' | transloco"
+        [contentText]="'xero.configuration.importSetting.contentText' | transloco: {brandName: brandingService.getBrandFullName()}"
+        [redirectLink]="supportArticleLink" [showSyncButton]="isOnboarding" [appName]="appName"
+        (refreshDimension)="refreshDimensions()">
+      </app-configuration-step-header>
     </div>
     <div>
-        <form [formGroup]="importSettingsForm">
-            <div class="tw-p-24-px">
-                <div class="tw-rounded-lg tw-border-border-tertiary tw-border">
-                    <app-configuration-toggle-field
-                        [form]="importSettingsForm"
-                        [label]="'xero.configuration.importSetting.importCategoriesLabel' | transloco: {brandName: brandingConfig.brandName}"
-                        [subLabel]="'xero.configuration.importSetting.importCategoriesSubLabel' | transloco: {brandName: brandingConfig.brandName}"
-                        [formControllerName]="'importCategories'"
-                        [isSectionHeader]="false"
-                        [iconPath]="'arrow-tail-down'">
-                    </app-configuration-toggle-field>
-
-                    <div class="tw-pl-24-px tw-pt-0" *ngIf="importSettingsForm.get('importCategories')?.value">
-                        <app-configuration-multi-select
-                            [form]="importSettingsForm"
-                            [options]="chartOfAccountTypesList"
-                            [formControllerName]="'chartOfAccountTypes'"
-                            [label]="'xero.configuration.importSetting.chartOfAccountsLabel' | transloco: {brandName: brandingConfig.brandName}"
-                            [placeholder]="'xeroImportSettings.selectChartOfAccountsPlaceholder' | transloco"
-                            [subLabel]="'xero.configuration.importSetting.chartOfAccountsSubLabel' | transloco: {brandName: brandingConfig.brandName}">
-                        </app-configuration-multi-select>
-                    </div>
-                </div>
-
-                <div class="tw-rounded-lg tw-border-border-tertiary tw-border tw-mt-24-px" *ngIf="brandingConfig.brandId !== 'co' && isCustomerPresent">
-                    <app-configuration-toggle-field
-                      [form]="importSettingsForm"
-                      [label]="'xero.configuration.importSetting.importCustomersLabel' | transloco"
-                      [subLabel]="'xero.configuration.importSetting.importCustomersSubLabel' | transloco: {brandName: brandingConfig.brandName}"
-                      [formControllerName]="'importCustomers'"
-                      [disabled]="isProjectMapped"
-                      [appName]="appName"
-                      [iconPath]="'arrow-tail-down'">
-                    </app-configuration-toggle-field>
-                    <div class="!tw-text-text-muted tw-text-14-px !tw-font-400 !tw-leading-4 tw-text-pretty tw-pb-24-px tw-pl-64-px tw-pr-12-px">
-                        {{ 'xero.configuration.importSetting.notes' | transloco: {brandName: brandingConfig.brandName} }}
-                    </div>
-                </div>
-
-                <div
-                    class="tw-rounded-lg tw-border-border-tertiary tw-border tw-mt-24-px"
-                    *ngIf="brandingFeatureConfig.featureFlags.importSettings.importVendorsAsMerchants
-                        && workspaceGeneralSettings.corporate_credit_card_expenses_object
-                        && !workspaceGeneralSettings.auto_create_merchant_destination_entity">
-                    <app-configuration-toggle-field
-                        [form]="importSettingsForm"
-                        [label]="'xero.configuration.importSetting.importSuppliersAsMerchantsLabel' | transloco"
-                        [subLabel]="'xero.configuration.importSetting.importSuppliersAsMerchantsSubLabel' | transloco: {brandName: brandingConfig.brandName}"
-                        [formControllerName]="'importSuppliersAsMerchants'"
-                        [iconPath]="'arrow-tail-down'">
-                    </app-configuration-toggle-field>
-                </div>
-
-                <div>
-                    <app-configuration-import-field
-                        [form]="importSettingsForm"
-                        [appName]="appName"
-                        [accountingFieldOptions]="xeroExpenseFields"
-                        [fyleFieldOptions]="fyleExpenseFields"
-                        [isDestinationFixedImport]="true"
-                        (xeroProjectMapping)="updateCustomerImportAvailability($event)">
-                    </app-configuration-import-field>
-                </div>
-
-                <div class="tw-rounded-lg tw-border-border-tertiary tw-border tw-mt-24-px" *ngIf="brandingFeatureConfig.featureFlags.importSettings.tax && isTaxGroupSyncAllowed">
-                    <app-configuration-toggle-field
-                      [form]="importSettingsForm"
-                      [label]="'xero.configuration.importSetting.taxCodeLabel' | transloco"
-                      [subLabel]="('xero.configuration.importSetting.taxCodeSubLabel' | transloco) + brandingConfig.brandName + ('xeroImportSettings.selectableFieldNote' | transloco)"
-                      [formControllerName]="'taxCode'"
-                      [iconPath]="'arrow-tail-down'"
-                      [hasDependentFields]="true">
-                    </app-configuration-toggle-field>
-
-                    <app-configuration-select-field *ngIf="importSettingsForm.get('taxCode')?.value"
-                        [form]="importSettingsForm"
-                        [isFieldMandatory]="true"
-                        [mandatoryErrorListName]="'xeroImportSettings.taxCode' | transloco"
-                        [label]="'xero.configuration.importSetting.defaultTaxCodeLabel' | transloco"
-                        [subLabel]="'xeroImportSettings.defaultTaxCodeSubLabel' | transloco: { brandName: brandingConfig.brandName }"
-                        [destinationAttributes]="taxCodes"
-                        [optionLabel]="'value'"
-                        [placeholder]="'xeroImportSettings.selectTaxCodePlaceholder' | transloco"
-                        [formControllerName]="'defaultTaxCode'">
-                    </app-configuration-select-field>
-                </div>
+      <form [formGroup]="importSettingsForm">
+        <div class="tw-p-24-px">
+          <div class="tw-rounded-lg tw-border-border-tertiary tw-border">
+            <app-configuration-toggle-field
+              [form]="importSettingsForm"
+              [label]="'xero.configuration.importSetting.importCategoriesLabel' | transloco: {brandName: brandingConfig.brandName}"
+              [subLabel]="'xero.configuration.importSetting.importCategoriesSubLabel' | transloco: {brandName: brandingConfig.brandName}"
+              [formControllerName]="'importCategories'"
+              [isSectionHeader]="false"
+              [iconPath]="'arrow-tail-down'">
+            </app-configuration-toggle-field>
+            @if (importSettingsForm.get('importCategories')?.value) {
+              <div class="tw-pl-24-px tw-pt-0">
+                <app-configuration-multi-select
+                  [form]="importSettingsForm"
+                  [options]="chartOfAccountTypesList"
+                  [formControllerName]="'chartOfAccountTypes'"
+                  [label]="'xero.configuration.importSetting.chartOfAccountsLabel' | transloco: {brandName: brandingConfig.brandName}"
+                  [placeholder]="'xeroImportSettings.selectChartOfAccountsPlaceholder' | transloco"
+                  [subLabel]="'xero.configuration.importSetting.chartOfAccountsSubLabel' | transloco: {brandName: brandingConfig.brandName}">
+                </app-configuration-multi-select>
+              </div>
+            }
+          </div>
+          @if (brandingConfig.brandId !== 'co' && isCustomerPresent) {
+            <div class="tw-rounded-lg tw-border-border-tertiary tw-border tw-mt-24-px">
+              <app-configuration-toggle-field
+                [form]="importSettingsForm"
+                [label]="'xero.configuration.importSetting.importCustomersLabel' | transloco"
+                [subLabel]="'xero.configuration.importSetting.importCustomersSubLabel' | transloco: {brandName: brandingConfig.brandName}"
+                [formControllerName]="'importCustomers'"
+                [disabled]="isProjectMapped"
+                [appName]="appName"
+                [iconPath]="'arrow-tail-down'">
+              </app-configuration-toggle-field>
+              <div class="!tw-text-text-muted tw-text-14-px !tw-font-400 !tw-leading-4 tw-text-pretty tw-pb-24-px tw-pl-64-px tw-pr-12-px">
+                {{ 'xero.configuration.importSetting.notes' | transloco: {brandName: brandingConfig.brandName} }}
+              </div>
             </div>
-            <app-configuration-step-footer
-                *ngIf="isOnboarding"
-                [ctaText] = "!isSaveInProgress ? (isOnboarding ? ConfigurationCtaText.SAVE_AND_CONTINUE : ConfigurationCtaText.SAVE) : ConfigurationCtaText.SAVING"
-                [isButtonDisabled]="!importSettingsForm.valid"
-                [showBackButton]="isOnboarding ? true : false"
-                (save)="save()"
-                (navigateToPreviousStep)="navigateToPreviousStep()">
-            </app-configuration-step-footer>
-        </form>
+          }
+          @if (brandingFeatureConfig.featureFlags.importSettings.importVendorsAsMerchants
+            && workspaceGeneralSettings.corporate_credit_card_expenses_object
+            && !workspaceGeneralSettings.auto_create_merchant_destination_entity) {
+            <div
+              class="tw-rounded-lg tw-border-border-tertiary tw-border tw-mt-24-px"
+              >
+              <app-configuration-toggle-field
+                [form]="importSettingsForm"
+                [label]="'xero.configuration.importSetting.importSuppliersAsMerchantsLabel' | transloco"
+                [subLabel]="'xero.configuration.importSetting.importSuppliersAsMerchantsSubLabel' | transloco: {brandName: brandingConfig.brandName}"
+                [formControllerName]="'importSuppliersAsMerchants'"
+                [iconPath]="'arrow-tail-down'">
+              </app-configuration-toggle-field>
+            </div>
+          }
+          <div>
+            <app-configuration-import-field
+              [form]="importSettingsForm"
+              [appName]="appName"
+              [accountingFieldOptions]="xeroExpenseFields"
+              [fyleFieldOptions]="fyleExpenseFields"
+              [isDestinationFixedImport]="true"
+              (xeroProjectMapping)="updateCustomerImportAvailability($event)">
+            </app-configuration-import-field>
+          </div>
+          @if (brandingFeatureConfig.featureFlags.importSettings.tax && isTaxGroupSyncAllowed) {
+            <div class="tw-rounded-lg tw-border-border-tertiary tw-border tw-mt-24-px">
+              <app-configuration-toggle-field
+                [form]="importSettingsForm"
+                [label]="'xero.configuration.importSetting.taxCodeLabel' | transloco"
+                [subLabel]="('xero.configuration.importSetting.taxCodeSubLabel' | transloco) + brandingConfig.brandName + ('xeroImportSettings.selectableFieldNote' | transloco)"
+                [formControllerName]="'taxCode'"
+                [iconPath]="'arrow-tail-down'"
+                [hasDependentFields]="true">
+              </app-configuration-toggle-field>
+              @if (importSettingsForm.get('taxCode')?.value) {
+                <app-configuration-select-field
+                  [form]="importSettingsForm"
+                  [isFieldMandatory]="true"
+                  [mandatoryErrorListName]="'xeroImportSettings.taxCode' | transloco"
+                  [label]="'xero.configuration.importSetting.defaultTaxCodeLabel' | transloco"
+                  [subLabel]="'xeroImportSettings.defaultTaxCodeSubLabel' | transloco: { brandName: brandingConfig.brandName }"
+                  [destinationAttributes]="taxCodes"
+                  [optionLabel]="'value'"
+                  [placeholder]="'xeroImportSettings.selectTaxCodePlaceholder' | transloco"
+                  [formControllerName]="'defaultTaxCode'">
+                </app-configuration-select-field>
+              }
+            </div>
+          }
+        </div>
+        @if (isOnboarding) {
+          <app-configuration-step-footer
+            [ctaText] = "!isSaveInProgress ? (isOnboarding ? ConfigurationCtaText.SAVE_AND_CONTINUE : ConfigurationCtaText.SAVE) : ConfigurationCtaText.SAVING"
+            [isButtonDisabled]="!importSettingsForm.valid"
+            [showBackButton]="isOnboarding ? true : false"
+            (save)="save()"
+            (navigateToPreviousStep)="navigateToPreviousStep()">
+          </app-configuration-step-footer>
+        }
+      </form>
     </div>
-</div>
+  </div>
+}
 
-<div *ngIf="!isLoading && !isOnboarding" class="tw-sticky tw-top-0 tw-bottom-0 tw-left-0 tw-right-0 tw-bg-white">
+@if (!isLoading && !isOnboarding) {
+  <div class="tw-sticky tw-top-0 tw-bottom-0 tw-left-0 tw-right-0 tw-bg-white">
     <app-configuration-step-footer
-        [ctaText] = "!isSaveInProgress ? (isOnboarding ? ConfigurationCtaText.SAVE_AND_CONTINUE : ConfigurationCtaText.SAVE) : ConfigurationCtaText.SAVING"
-        [isButtonDisabled]="!importSettingsForm.valid"
-        [showBackButton]="isOnboarding ? true : false"
-        (save)="save()"
-        (navigateToPreviousStep)="navigateToPreviousStep()">
+      [ctaText] = "!isSaveInProgress ? (isOnboarding ? ConfigurationCtaText.SAVE_AND_CONTINUE : ConfigurationCtaText.SAVE) : ConfigurationCtaText.SAVING"
+      [isButtonDisabled]="!importSettingsForm.valid"
+      [showBackButton]="isOnboarding ? true : false"
+      (save)="save()"
+      (navigateToPreviousStep)="navigateToPreviousStep()">
     </app-configuration-step-footer>
-</div>
+  </div>
+}
 
 <div>
-    <app-configuration-custom-field-creation-dialog
-        [customFieldForm]="customFieldForm"
-        [showCustomFieldCreationDialog]="showCustomFieldDialog"
-        (saveCustomFieldFn)="saveFyleExpenseField()"
-        (closeModelFn)="closeModel()">
-    </app-configuration-custom-field-creation-dialog>
+  <app-configuration-custom-field-creation-dialog
+    [customFieldForm]="customFieldForm"
+    [showCustomFieldCreationDialog]="showCustomFieldDialog"
+    (saveCustomFieldFn)="saveFyleExpenseField()"
+    (closeModelFn)="closeModel()">
+  </app-configuration-custom-field-creation-dialog>
 </div>
-<div *ngIf="isPreviewDialogVisible">
+@if (isPreviewDialogVisible) {
+  <div>
     <app-preview-dialog
-        [isPreviewDialogVisible]="true"
-        [iconPath]="'assets/illustrations/sageIntacct/IntacctImportSettings.png'" (closeDialog)="closeDialog()"
-        [header]="'xeroImportSettings.previewHeader' | transloco">
+      [isPreviewDialogVisible]="true"
+      [iconPath]="'assets/illustrations/sageIntacct/IntacctImportSettings.png'" (closeDialog)="closeDialog()"
+      [header]="'xeroImportSettings.previewHeader' | transloco">
     </app-preview-dialog>
-</div>
+  </div>
+}

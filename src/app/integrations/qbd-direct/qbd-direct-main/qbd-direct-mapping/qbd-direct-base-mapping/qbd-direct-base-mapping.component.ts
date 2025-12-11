@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { brandingConfig } from 'src/app/branding/branding-config';
@@ -7,11 +7,10 @@ import { QbdDirectMappingService } from 'src/app/core/services/qbd-direct/qbd-di
 import { SharedModule } from 'src/app/shared/shared.module';
 
 @Component({
-  selector: 'app-qbd-direct-base-mapping',
-  standalone: true,
-  imports: [CommonModule, SharedModule],
-  templateUrl: './qbd-direct-base-mapping.component.html',
-  styleUrl: './qbd-direct-base-mapping.component.scss'
+    selector: 'app-qbd-direct-base-mapping',
+    imports: [SharedModule],
+    templateUrl: './qbd-direct-base-mapping.component.html',
+    styleUrl: './qbd-direct-base-mapping.component.scss'
 })
 export class QbdDirectBaseMappingComponent implements OnInit {
 

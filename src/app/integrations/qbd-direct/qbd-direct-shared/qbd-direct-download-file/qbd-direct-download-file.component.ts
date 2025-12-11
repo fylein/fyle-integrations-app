@@ -7,13 +7,13 @@ import { CommonModule } from '@angular/common';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { TranslocoModule } from '@jsverse/transloco';
 import { brandingConfig, brandingFeatureConfig, brandingStyle } from 'src/app/branding/branding-config';
+import { ButtonModule } from 'primeng/button';
 
 @Component({
-  selector: 'app-qbd-direct-download-file',
-  standalone: true,
-  imports: [SharedModule, CardModule, CommonModule, ProgressSpinnerModule, TranslocoModule],
-  templateUrl: './qbd-direct-download-file.component.html',
-  styleUrl: './qbd-direct-download-file.component.scss'
+    selector: 'app-qbd-direct-download-file',
+    imports: [SharedModule, CardModule, CommonModule, ProgressSpinnerModule, TranslocoModule, ButtonModule],
+    templateUrl: './qbd-direct-download-file.component.html',
+    styleUrl: './qbd-direct-download-file.component.scss'
 })
 export class QbdDirectDownloadFileComponent {
 

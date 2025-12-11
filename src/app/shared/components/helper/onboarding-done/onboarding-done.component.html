@@ -1,5 +1,9 @@
-<div *ngIf="isGradientAllowed" class="tw-absolute tw-bg-header-1 tw-bg-no-repeat tw-h-110-px tw-w-[100%] tw-z-[-1]"></div>
-<div *ngIf="isGradientAllowed" class="tw-absolute tw-bg-header-2 tw-h-110-px tw-w-[100%] tw-z-[-1]"></div>
+@if (isGradientAllowed) {
+  <div class="tw-absolute tw-bg-header-1 tw-bg-no-repeat tw-h-110-px tw-w-[100%] tw-z-[-1]"></div>
+}
+@if (isGradientAllowed) {
+  <div class="tw-absolute tw-bg-header-2 tw-h-110-px tw-w-[100%] tw-z-[-1]"></div>
+}
 <div class="tw-flex tw-justify-center tw-pr-74-px tw-pl-74-px tw-pt-24 tw-pb-20">
   <div class="onboarding-done--contents" [ngClass]="brandingStyle.common.mainComponentShadow">
     <div class="tw-pt-34-px tw-flex tw-justify-center" [ngClass]="brandingFeatureConfig.featureFlags.contentVersion === 'v1' ? 'tw-mb-30-px' : 'tw-mb-20-px'">
@@ -7,9 +11,11 @@
     </div>
     <div class="tw-text-center">
       <h2 class="tw-text-text-primary !tw-text-18-px" [ngClass]="brandingStyle.qbd_direct.onboarding.configurationDoneHeader">
-        <span *ngIf="brandingFeatureConfig.featureFlags.contentVersion === 'v1'">
-          {{ 'onboardingDone.congratulationsText' | transloco }}
-        </span>
+        @if (brandingFeatureConfig.featureFlags.contentVersion === 'v1') {
+          <span>
+            {{ 'onboardingDone.congratulationsText' | transloco }}
+          </span>
+        }
         <span>
           {{ 'configuration.done.doneHeaderText' | transloco }}
         </span>

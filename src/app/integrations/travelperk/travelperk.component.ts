@@ -8,9 +8,10 @@ import { TravelperkService } from 'src/app/core/services/travelperk/travelperk-c
 import { AuthService } from 'src/app/core/services/common/auth.service';
 
 @Component({
-  selector: 'app-travelperk',
-  templateUrl: './travelperk.component.html',
-  styleUrls: ['./travelperk.component.scss']
+    selector: 'app-travelperk',
+    templateUrl: './travelperk.component.html',
+    styleUrls: ['./travelperk.component.scss'],
+    standalone: false
 })
 export class TravelperkComponent implements OnInit {
 

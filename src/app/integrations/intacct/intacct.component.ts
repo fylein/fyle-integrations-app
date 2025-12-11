@@ -14,9 +14,10 @@ import { AuthService } from 'src/app/core/services/common/auth.service';
 import { IntacctConnectorService } from 'src/app/core/services/si/si-core/si-connector.service';
 
 @Component({
-  selector: 'app-intacct',
-  templateUrl: './intacct.component.html',
-  styleUrls: ['./intacct.component.scss']
+    selector: 'app-intacct',
+    templateUrl: './intacct.component.html',
+    styleUrls: ['./intacct.component.scss'],
+    standalone: false
 })
 export class IntacctComponent implements OnInit {
 

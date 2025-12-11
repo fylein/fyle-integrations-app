@@ -3,7 +3,7 @@ import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angul
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import type { Meta, StoryObj } from '@storybook/angular';
 import { moduleMetadata } from '@storybook/angular';
-import { DropdownModule } from 'primeng/dropdown';
+import { SelectModule } from 'primeng/select';
 import { RippleModule } from 'primeng/ripple';
 import { TooltipModule } from 'primeng/tooltip';
 import { DropdownComponent } from 'src/app/shared/components/input/dropdown/dropdown.component';
@@ -23,7 +23,7 @@ const meta: Meta<DropdownComponent> = {
   decorators: [
     moduleMetadata({
       declarations: [DropdownComponent],
-      imports: [CommonModule, BrowserAnimationsModule, FormsModule, ReactiveFormsModule, DropdownModule, TooltipModule, RippleModule]
+      imports: [CommonModule, BrowserAnimationsModule, FormsModule, ReactiveFormsModule, SelectModule, TooltipModule, RippleModule]
     })
   ],
   argTypes: {}

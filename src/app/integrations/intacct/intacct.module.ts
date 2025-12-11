@@ -2,9 +2,8 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { IntacctComponent } from './intacct.component';
 import { SharedModule } from 'src/app/shared/shared.module';
-import { IconSpriteModule } from 'ng-svg-icon-sprite';
-import { TabMenuModule } from 'primeng/tabmenu';
-import { DropdownModule } from 'primeng/dropdown';
+
+import { SelectModule } from 'primeng/select';
 import { TableModule } from 'primeng/table';
 import { SiRoutingModule } from './intacct-routing.module';
 import { MainComponent } from './intacct-main/intacct-main.component';
@@ -23,9 +22,8 @@ import { IntacctSharedModule } from './intacct-shared/intacct-shared.module';
         CommonModule,
         SiRoutingModule,
         SharedModule,
-        TabMenuModule,
-        DropdownModule,
-        IconSpriteModule.forRoot({ path: 'assets/sprites/sprite.svg' }),
+
+        SelectModule,
         IntacctSharedModule
     ]
 })
