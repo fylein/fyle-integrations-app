@@ -25,15 +25,15 @@ const routes: Routes = [
       },
       {
         path: 'export_settings',
-        component: IntacctOnboardingExportSettingComponent,
+        component: IntacctOnboardingExportSettingComponent
       },
       {
         path: 'import_settings',
-        component: IntacctOnboardingImportSettingComponent,
+        component: IntacctOnboardingImportSettingComponent
       },
       {
         path: 'advanced_settings',
-        component: IntacctOnboardingAdvancedSettingComponent,
+        component: IntacctOnboardingAdvancedSettingComponent
       },
       {
         path: 'done',

@@ -1,7 +1,7 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
-import { forkJoin, Subject, take, takeUntil } from 'rxjs';
+import { catchError, forkJoin, of, Subject, take, takeUntil } from 'rxjs';
 import { brandingConfig, brandingFeatureConfig, brandingKbArticles } from 'src/app/branding/branding-config';
 import { AppName, AppUrl, ButtonSize, ButtonType } from 'src/app/core/models/enum/enum.model';
 import { ConfigurationWarningOut } from 'src/app/core/models/misc/configuration-warning.model';
@@ -180,7 +180,7 @@ export class DashboardTokenExpiredComponent implements OnInit, OnDestroy {
 
       forkJoin([
         this.intacctConnector.getIntacctFormGroup(),
-        this.siWorkspaceService.getFeatureConfigs()
+        this.siWorkspaceService.getFeatureConfigs().pipe(catchError(() => of(null)))
       ]).subscribe(([{ intacctSetupForm }, featureConfigs]) => {
         this.integrationSetupForm = intacctSetupForm;
         this.migratedToRestApi = featureConfigs?.migrated_to_rest_api ?? false;
