@@ -27,6 +27,7 @@ export const fyleStyles = {
         settingsHeader: 'tw-p-24-px',
         infoLabelBackground: 'tw-bg-bg-tertiary-lighter tw-border-separate',
         infoLabelIcon: 'tw-text-info',
+        autoSyncPaymentPreviewInfoLabelIcon: 'tw-text-muted',
         infoLabelText: 'tw-text-14-px tw-font-400 tw-self-stretch tw-text-text-secondary',
         infoLabelWarningBackground: 'tw-bg-bg-warning-lighter',
         infoLabelWarningIcon: 'tw-text-icon-warning',
