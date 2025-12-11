@@ -1,93 +1,112 @@
-<div *ngIf="isGradientAllowed" class="tw-absolute tw-bg-header-1 tw-bg-no-repeat tw-h-110-px tw-w-[100%] tw-z-[-1]"></div>
-<div *ngIf="isGradientAllowed" class="tw-absolute tw-bg-header-2 tw-h-110-px tw-w-[100%] tw-z-[-1]"></div>
+@if (isGradientAllowed) {
+  <div class="tw-absolute tw-bg-header-1 tw-bg-no-repeat tw-h-110-px tw-w-[100%] tw-z-[-1]"></div>
+}
+@if (isGradientAllowed) {
+  <div class="tw-absolute tw-bg-header-2 tw-h-110-px tw-w-[100%] tw-z-[-1]"></div>
+}
 
 <div class="tw-p-24-px tw-text-slightly-normal-text-color" [ngClass]="brandingStyle.qbd_direct.onboarding.headerStyle">
-    <div class="tw-h-68-px tw-flex tw-justify-between">
-            <div class="tw-flex">
-                <div class="tw-flex tw-justify-center" [ngClass]="logoSectionStyleClasses + ' tw-shrink-0'">
-                    <img src="{{ iconPath }}" width="logoWidth" height="44px" [ngClass]="logoStyleClasses" />
-                </div>
-                <div class="tw-pl-16-px tw-flex tw-flex-col tw-justify-center" [ngClass]="brandingStyle.qbd_direct.onboarding.headerCenterContent">
-                    <div class="tw-flex tw-items-center tw-pt-6-px">
-                        <p class="tw-text-text-primary" [ngClass]="brandingStyle.qbd_direct.onboarding.headerTopText">{{ uiExposedAppName }}</p>
-                        <div>
-                            <app-svg-icon *ngIf="isIntegrationConnected && !isLoading && !hideRefreshIcon" [tooltipText]="'appLandingPageHeader.syncDataTooltip' | transloco" [tooltipPosition]="'right'" [svgSource]="'arrow-rotate-sync'" [width]="'14px'" [height]="'14px'" [styleClasses]="'tw-cursor-pointer tw-ml-10-px tw-text-faded-text-color'" (iconClick)="syncData()"></app-svg-icon>
-                        </div>
-                    </div>
-                    <p *ngIf="!isIntegrationSetupInProgress" class="tw-text-text-tertiary tw-pt-4-px tw-font-400 tw-text-pretty" [ngClass]="brandingStyle.qbd_direct.onboarding.headerDescriptionText">
-                        {{ appDescription }}
-                        <a *ngIf="redirectLink"
-                            class="link tw-w-fit tw-inline-flex tw-items-center tw-pl-2-px"
-                            (click)="windowService.openInNewTab(redirectLink)">
-                            {{ 'common.readMoreText' | transloco}}
-                            <app-svg-icon *ngIf="brandingFeatureConfig.isIconsInsideButtonAllowed" [svgSource]="'open-in-new-tab'" [width]="'16px'" [height]="'16px'"
-                                class="tw-text-link-primary tw-pl-2-px tw-w-fit">
-                            </app-svg-icon>
-                        </a>
-                    </p>
-                    <div *ngIf="isIntegrationSetupInProgress" class="tw-flex tw-items-center tw-text-slightly-normal-text-color tw-text-14-px tw-pt-4-px tw-pb-18-px">
-                        <p>{{ 'appLandingPageHeader.syncingDataMessage' | transloco: { brandName: brandingConfig.brandName, appName: uiExposedAppName } }}</p>
-                    </div>
-                </div>
-            </div>
-            <div *ngIf="!isIntegrationSetupInProgress && !isLoading && !showErrorScreen " class="tw-flex tw-items-center tw-shrink-0">
-                @if(!isIntegrationConnected && (appName === AppName.BAMBOO_HR || appName === AppName.TRAVELPERK)){
-                    <app-button  [buttonSize]="ButtonSize.MEDIUM" [buttonType]="ButtonType.PRIMARY" [disabled]="isConnectionInProgress" [svgSource]="!isConnectionInProgress ? 'arrow-tail-right-medium' : ''" [isLoading]="isConnectionInProgress"  [buttonText]="(isConnectionInProgress ? 'appLandingPageHeader.connectingButton' : 'appLandingPageHeader.connectButton') | transloco"  (buttonClick)="connect()"></app-button>
+  <div class="tw-h-68-px tw-flex tw-justify-between">
+    <div class="tw-flex">
+      <div class="tw-flex tw-justify-center" [ngClass]="logoSectionStyleClasses + ' tw-shrink-0'">
+        <img src="{{ iconPath }}" width="logoWidth" height="44px" [ngClass]="logoStyleClasses" />
+      </div>
+      <div class="tw-pl-16-px tw-flex tw-flex-col tw-justify-center" [ngClass]="brandingStyle.qbd_direct.onboarding.headerCenterContent">
+        <div class="tw-flex tw-items-center tw-pt-6-px">
+          <p class="tw-text-text-primary" [ngClass]="brandingStyle.qbd_direct.onboarding.headerTopText">{{ uiExposedAppName }}</p>
+          <div>
+            @if (isIntegrationConnected && !isLoading && !hideRefreshIcon) {
+              <app-svg-icon [tooltipText]="'appLandingPageHeader.syncDataTooltip' | transloco" [tooltipPosition]="'right'" [svgSource]="'arrow-rotate-sync'" [width]="'14px'" [height]="'14px'" [styleClasses]="'tw-cursor-pointer tw-ml-10-px tw-text-faded-text-color'" (iconClick)="syncData()"></app-svg-icon>
+            }
+          </div>
+        </div>
+        @if (!isIntegrationSetupInProgress) {
+          <p class="tw-text-text-tertiary tw-pt-4-px tw-font-400 tw-text-pretty" [ngClass]="brandingStyle.qbd_direct.onboarding.headerDescriptionText">
+            {{ appDescription }}
+            @if (redirectLink) {
+              <a
+                class="link tw-w-fit tw-inline-flex tw-items-center tw-pl-2-px"
+                (click)="windowService.openInNewTab(redirectLink)">
+                {{ 'common.readMoreText' | transloco}}
+                @if (brandingFeatureConfig.isIconsInsideButtonAllowed) {
+                  <app-svg-icon [svgSource]="'open-in-new-tab'" [width]="'16px'" [height]="'16px'"
+                    class="tw-text-link-primary tw-pl-2-px tw-w-fit">
+                  </app-svg-icon>
                 }
-
-                @if(isIntegrationConnected && (appName === AppName.BAMBOO_HR || appName === AppName.TRAVELPERK)){
-                <app-button  [buttonSize]="ButtonSize.MEDIUM" [buttonType]="ButtonType.PRIMARY" [isLoading]="isConnectionInProgress"  [buttonText]="(isConnectionInProgress ? 'appLandingPageHeader.disconnectingButton' : 'appLandingPageHeader.disconnectButton') | transloco"  (buttonClick)="disconnect()"></app-button>
-                }
-
-                <div class="tw-flex tw-flex-row tw-gap-4 tw-justify-between">
-                    @if (appName.includes('QuickBooks Desktop ')) {
-                        @if(brandingFeatureConfig.hasAssistedSetupSupport){
-                        <app-qbd-direct-assisted-setup class="tw-ml-60-px" [isAssistedSetupSlotBooked]="isAssistedSetupSlotBooked" [interactionType]="QBDDirectInteractionType.BOOK_SLOT"/>
-                        }
-
-                        @if(brandingFeatureConfig.isDashboardButtonOutlined) {
-                         <app-button [styleClasses]="'tw-text-14-px'" [buttonSize]="ButtonSize.MEDIUM" [buttonType]="ButtonType.SECONDARY" [buttonText]="buttonText" [svgSource]="'arrow-tail-right-medium'" (buttonClick)="connect()"/>
-                        } @else {
-                            <app-button [styleClasses]="'tw-text-14-px'" [buttonSize]="ButtonSize.MEDIUM" [buttonType]="ButtonType.PRIMARY" [buttonText]="buttonText" [svgSource]="'arrow-tail-right-medium'" (buttonClick)="connect()"/>
-                        }
-                    }
-
-                    @if(!isIntegrationConnected && (appName === AppName.QBD || appName === AppName.NETSUITE || appName === AppName.INTACCT || appName === AppName.SAGE300 || appName === AppName.BUSINESS_CENTRAL || appName === AppName.SAGE50)){
-                    <app-button  [buttonSize]="ButtonSize.MEDIUM" [buttonType]="ButtonType.PRIMARY" (buttonClick)="connect()" [isLoading]="isConnectionInProgress"  [buttonText]="buttonText" [svgSource]="(appName === AppName.QBD || appName.includes('QuickBooks Desktop ')) ? 'arrow-tail-right-medium' : ''"></app-button>
-                    }
-                </div>
-                <iframe *ngIf="iframeSourceUrl && (appName === AppName.TRAVELPERK)" scrolling="no" [src]="iframeSourceUrl" class="tw-mt-40-px tw-w-270-px tw-h-84-px" allowfullscreen></iframe>
-                <div *ngIf="showQBOButton" class="tw-cursor-pointer">
-                    <img
-                        [src]="qboConnectButtonSource"
-                        (click)="initiateOAuth()"
-                        (mouseover)="qboConnectButtonSource = 'assets/buttons/connect-to-qbo-active.svg'"
-                        (mouseout)="qboConnectButtonSource = 'assets/buttons/connect-to-qbo.svg'">
-                </div>
-                <div *ngIf="showXeroButton" class="tw-cursor-pointer">
-                    <img
-                        [src]="xeroConnectButtonSource"
-                        (click)="initiateOAuth()">
-                </div>
+              </a>
+            }
+          </p>
+        }
+        @if (isIntegrationSetupInProgress) {
+          <div class="tw-flex tw-items-center tw-text-slightly-normal-text-color tw-text-14-px tw-pt-4-px tw-pb-18-px">
+            <p>{{ 'appLandingPageHeader.syncingDataMessage' | transloco: { brandName: brandingConfig.brandName, appName: uiExposedAppName } }}</p>
+          </div>
+        }
+      </div>
+    </div>
+    @if (!isIntegrationSetupInProgress && !isLoading && !showErrorScreen ) {
+      <div class="tw-flex tw-items-center tw-shrink-0">
+        @if(!isIntegrationConnected && (appName === AppName.BAMBOO_HR || appName === AppName.TRAVELPERK)){
+          <app-button  [buttonSize]="ButtonSize.MEDIUM" [buttonType]="ButtonType.PRIMARY" [disabled]="isConnectionInProgress" [svgSource]="!isConnectionInProgress ? 'arrow-tail-right-medium' : ''" [isLoading]="isConnectionInProgress"  [buttonText]="(isConnectionInProgress ? 'appLandingPageHeader.connectingButton' : 'appLandingPageHeader.connectButton') | transloco"  (buttonClick)="connect()"></app-button>
+        }
+        @if(isIntegrationConnected && (appName === AppName.BAMBOO_HR || appName === AppName.TRAVELPERK)){
+          <app-button  [buttonSize]="ButtonSize.MEDIUM" [buttonType]="ButtonType.PRIMARY" [isLoading]="isConnectionInProgress"  [buttonText]="(isConnectionInProgress ? 'appLandingPageHeader.disconnectingButton' : 'appLandingPageHeader.disconnectButton') | transloco"  (buttonClick)="disconnect()"></app-button>
+        }
+        <div class="tw-flex tw-flex-row tw-gap-4 tw-justify-between">
+          @if (appName.includes('QuickBooks Desktop ')) {
+            @if(brandingFeatureConfig.hasAssistedSetupSupport){
+              <app-qbd-direct-assisted-setup class="tw-ml-60-px" [isAssistedSetupSlotBooked]="isAssistedSetupSlotBooked" [interactionType]="QBDDirectInteractionType.BOOK_SLOT"/>
+            }
+            @if(brandingFeatureConfig.isDashboardButtonOutlined) {
+              <app-button [styleClasses]="'tw-text-14-px'" [buttonSize]="ButtonSize.MEDIUM" [buttonType]="ButtonType.SECONDARY" [buttonText]="buttonText" [svgSource]="'arrow-tail-right-medium'" (buttonClick)="connect()"/>
+            } @else {
+              <app-button [styleClasses]="'tw-text-14-px'" [buttonSize]="ButtonSize.MEDIUM" [buttonType]="ButtonType.PRIMARY" [buttonText]="buttonText" [svgSource]="'arrow-tail-right-medium'" (buttonClick)="connect()"/>
+            }
+          }
+          @if(!isIntegrationConnected && (appName === AppName.QBD || appName === AppName.NETSUITE || appName === AppName.INTACCT || appName === AppName.SAGE300 || appName === AppName.BUSINESS_CENTRAL || appName === AppName.SAGE50)){
+            <app-button  [buttonSize]="ButtonSize.MEDIUM" [buttonType]="ButtonType.PRIMARY" (buttonClick)="connect()" [isLoading]="isConnectionInProgress"  [buttonText]="buttonText" [svgSource]="(appName === AppName.QBD || appName.includes('QuickBooks Desktop ')) ? 'arrow-tail-right-medium' : ''"></app-button>
+          }
+        </div>
+        @if (iframeSourceUrl && (appName === AppName.TRAVELPERK)) {
+          <iframe scrolling="no" [src]="iframeSourceUrl" class="tw-mt-40-px tw-w-270-px tw-h-84-px" allowfullscreen></iframe>
+        }
+        @if (showQBOButton) {
+          <div class="tw-cursor-pointer">
+            <img
+              [src]="qboConnectButtonSource"
+              (click)="initiateOAuth()"
+              (mouseover)="qboConnectButtonSource = 'assets/buttons/connect-to-qbo-active.svg'"
+              (mouseout)="qboConnectButtonSource = 'assets/buttons/connect-to-qbo.svg'">
             </div>
-
-            <div *ngIf="isIntegrationSetupInProgress" class="tw-flex tw-items-center">
-              <div
-                class="tw-flex tw-items-center tw-h-48-px tw-px-8 tw-rounded-4-px tw-gap-2 tw-text-18-px tw-opacity-70 tw-pointer-events-none tw-cursor-not-allowed tw-select-none"
+          }
+          @if (showXeroButton) {
+            <div class="tw-cursor-pointer">
+              <img
+                [src]="xeroConnectButtonSource"
+                (click)="initiateOAuth()">
+            </div>
+          }
+        </div>
+      }
+      @if (isIntegrationSetupInProgress) {
+        <div class="tw-flex tw-items-center">
+          <div
+            class="tw-flex tw-items-center tw-h-48-px tw-px-8 tw-rounded-4-px tw-text-white tw-gap-2 tw-text-18-px tw-opacity-70 tw-pointer-events-none tw-cursor-not-allowed tw-select-none"
                 [ngClass]="
                   showQBOButton ? 'tw-bg-bg-qbo-btn tw-text-white' :
                   showXeroButton ? 'tw-bg-bg-xero-btn tw-text-white' :
                   brandingStyle.buttons.primary.progress
                 "
-                role="status"
-                aria-live="polite"
-                aria-busy="true"
-              >
-                <p class="tw-m-0">{{'appLandingPageHeader.connectingButton' | transloco}}</p>
-                <app-loader [variant]='showQBOButton ? "neutral" : "action"' size="horizontal-sm" [showSpinnerLabel]="false" [styleClass]="'spinner-16 tw-top-2-px'"></app-loader>
-              </div>
-            </div>
+            role="status"
+            aria-live="polite"
+            aria-busy="true"
+            >
+            <p class="tw-m-0">{{'appLandingPageHeader.connectingButton' | transloco}}</p>
+            <app-loader [variant]='showQBOButton ? "neutral" : "action"' size="horizontal-sm" [showSpinnerLabel]="false" [styleClass]="'spinner-16 tw-top-2-px'"></app-loader>
+          </div>
         </div>
-</div>
+      }
+    </div>
+  </div>
 
-<p class="tw-h-1-px tw-w-[100%] tw-bg-separator"></p>
+  <p class="tw-h-1-px tw-w-[100%] tw-bg-separator"></p>

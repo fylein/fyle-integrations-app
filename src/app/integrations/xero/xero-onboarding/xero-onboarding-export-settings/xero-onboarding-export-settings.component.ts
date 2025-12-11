@@ -5,9 +5,10 @@ import { TranslocoService } from '@jsverse/transloco';
 import { XeroOnboardingService } from 'src/app/core/services/xero/xero-configuration/xero-onboarding.service';
 
 @Component({
-  selector: 'app-xero-onboarding-export-settings',
-  templateUrl: './xero-onboarding-export-settings.component.html',
-  styleUrls: ['./xero-onboarding-export-settings.component.scss']
+    selector: 'app-xero-onboarding-export-settings',
+    templateUrl: './xero-onboarding-export-settings.component.html',
+    styleUrls: ['./xero-onboarding-export-settings.component.scss'],
+    standalone: false
 })
 export class XeroOnboardingExportSettingsComponent implements OnInit {
 

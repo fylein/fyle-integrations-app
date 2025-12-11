@@ -8,9 +8,10 @@ import { catchError, of, take } from 'rxjs';
 import { FeatureConfig } from 'src/app/core/models/intacct/db/feature-config.model';
 
 @Component({
-  selector: 'app-intacct-onboarding-landing',
-  templateUrl: './intacct-onboarding-landing.component.html',
-  styleUrls: ['./intacct-onboarding-landing.component.scss']
+    selector: 'app-intacct-onboarding-landing',
+    templateUrl: './intacct-onboarding-landing.component.html',
+    styleUrls: ['./intacct-onboarding-landing.component.scss'],
+    standalone: false
 })
 export class IntacctOnboardingLandingComponent implements OnInit {
 

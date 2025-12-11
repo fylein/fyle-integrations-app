@@ -14,9 +14,10 @@ import { SiMappingsService } from 'src/app/core/services/si/si-core/si-mappings.
 import { TranslocoService } from '@jsverse/transloco';
 
 @Component({
-  selector: 'app-intacct-base-mapping',
-  templateUrl: './intacct-base-mapping.component.html',
-  styleUrls: ['./intacct-base-mapping.component.scss']
+    selector: 'app-intacct-base-mapping',
+    templateUrl: './intacct-base-mapping.component.html',
+    styleUrls: ['./intacct-base-mapping.component.scss'],
+    standalone: false
 })
 export class IntacctBaseMappingComponent implements OnInit {
 

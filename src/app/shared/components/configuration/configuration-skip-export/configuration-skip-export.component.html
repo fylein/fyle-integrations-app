@@ -1,151 +1,240 @@
-<div *ngIf="isLoading">
-</div>
-<div *ngIf="enableSkipExport && !isLoading">
+@if (isLoading) {
+  <div>
+  </div>
+}
+@if (enableSkipExport && !isLoading) {
+  <div>
     <div class="tw-flex tw-flex-col">
       <form [formGroup]="skipExportForm" class="tw-flex tw-flex-col tw-pl-24-px">
-            <div class="tw-flex">
-                <div class="tw-ml-120-px tw-w-200-px tw-mr-6-px fields-header">
-                    {{ 'configurationSkipExport.conditionHeader' | transloco }}
-                    <span *ngIf="isAsterikAllowed" class="tw-text-text-danger-dark">*</span>
-                </div>
-                  <div class="tw-w-180-px tw-mr-24-px fields-header">
-                    {{ 'configurationSkipExport.operatorHeader' | transloco }}
-                    <span *ngIf="isAsterikAllowed" class="tw-text-text-danger-dark">*</span>
-                </div>
-                <div class="tw-w-296-px fields-header" *ngIf="showValueHeader(1)">
-                  {{ 'configurationSkipExport.valueHeader' | transloco }}
-                  <span *ngIf="isAsterikAllowed" class="tw-text-text-danger-dark">*</span>
-                </div>
-            </div>
-            <div class="tw-flex dropdown-row tw-pb-24-px">
-              <p class="tw-text-14-px tw-text-form-label-text-color">{{ 'configurationSkipExport.whereLabel' | transloco }}</p>
-              <div class="tw-ml-80-px tw-mr-24-px">
-                <p-dropdown appendTo="body" [options]="conditionFieldOptions" formControlName="condition1" [placeholder]="'configurationSkipExport.selectConditionPlaceholder' | transloco">
-                  For options
-                  <ng-template let-option pTemplate="item">
-                    <span *ngIf="option.field_name !== 'claim_number'">
-                      {{ (option.field_name === 'report_title' ? 'report_name' : option.field_name) | snakeCaseToSpaceCase | sentenceCase }}
-                    </span>
-                    <span *ngIf="option.field_name === 'claim_number'">
-                      {{ 'configurationSkipExport.reportNumber' | transloco }}
-                    </span>
-                  </ng-template>
-                  For selected option
-                  <ng-template let-selectedOption pTemplate="selectedItem">
-                    <span *ngIf="selectedOption.field_name !== 'claim_number'">
-                      {{ (selectedOption.field_name === 'report_title' ? 'report_name' : selectedOption.field_name) | snakeCaseToSpaceCase | sentenceCase }}
-                    </span>
-                    <span *ngIf="selectedOption.field_name === 'claim_number'">
-                      {{ 'configurationSkipExport.reportNumber' | transloco }}
-                    </span>
-                  </ng-template>
-                </p-dropdown>
-                <app-mandatory-error-message *ngIf="skipExportForm.controls.condition1.touched && !skipExportForm.controls.condition1.valid"
-                [customErrorMessage]="'configurationSkipExport.selectConditionError' | transloco"></app-mandatory-error-message>
-              </div>
-              <div class="tw-mr-24-px">
-                <p-dropdown appendTo="body" [options]="operatorFieldOptions1" formControlName="operator1" [placeholder]="'configurationSkipExport.selectOperatorPlaceholder' | transloco"></p-dropdown>
-                <app-mandatory-error-message *ngIf="skipExportForm.controls.operator1.touched && !skipExportForm.controls.operator1.valid"
-                [customErrorMessage]="'configurationSkipExport.selectOperatorError' | transloco"></app-mandatory-error-message>
-              </div>
-              <div class="tw-w-296-px" *ngIf="showInputField(1)">
-                <input type="text" formControlName="value1" class="value-input-field" [placeholder]="'configurationSkipExport.enterValuePlaceholder' | transloco">
-              </div>
-              <div class="tw-w-296-px" *ngIf="showDateField(1)">
-                <p-calendar formControlName="value1" [readonlyInput]="true" [placeholder]="'configurationSkipExport.selectDatePlaceholder' | transloco"></p-calendar>
-              </div>
-              <div class="tw-w-296-px" *ngIf="showChipField(1)">
-                <p-chips [addOnBlur]="true" styleClass="tw-w-[296px]" formControlName="value1" separator="," [placeholder]="'configurationSkipExport.enterValuePlaceholder' | transloco"></p-chips>
-                <small class="chip-hint"><br>{{ 'configurationSkipExport.chipHint' | transloco }}</small>
-              </div>
-              <div class="tw-w-296-px" *ngIf="showBooleanField(1)">
-                <p-dropdown appendTo="body" formControlName="value1" [placeholder]="'configurationSkipExport.selectValuePlaceholder' | transloco" [options]="customCheckBoxValueOptions">
-                </p-dropdown>
-              </div>
-        </div>
-
-        <div *ngIf="showAdditionalCondition" class="tw-pb-24-px">
-          <div class="tw-flex tw-ml-120-px">
-              <div class="tw-w-200-px tw-mr-6-px fields-header">
-                  {{ 'configurationSkipExport.conditionHeader' | transloco }}
-                  <span *ngIf="isAsterikAllowed" class="tw-text-text-danger-dark">*</span>
-              </div>
-                <div class="tw-w-180-px fields-header tw-mr-24-px">
-                  {{ 'configurationSkipExport.operatorHeader' | transloco }}
-                <span *ngIf="isAsterikAllowed" class="tw-text-text-danger-dark">*</span>
-              </div>
-              <div class="tw-w-296-px fields-header" *ngIf="showValueHeader(2)">
-                {{ 'configurationSkipExport.valueHeader' | transloco }}
-                <span *ngIf="isAsterikAllowed" class="tw-text-text-danger-dark">*</span>
-              </div>
+        <div class="tw-flex">
+          <div class="tw-ml-120-px tw-w-200-px tw-mr-6-px fields-header">
+            {{ 'configurationSkipExport.conditionHeader' | transloco }}
+            @if (isAsterikAllowed) {
+              <span class="tw-text-text-danger-dark">*</span>
+            }
           </div>
-          <div class="tw-flex">
-            <div class="joinby-field">
-              <p-dropdown appendTo="body" class="joinby-field" [options]="joinByOptions" formControlName="join_by" [placeholder]="'configurationSkipExport.joinByPlaceholder' | transloco">
-                <ng-template let-selectedValue pTemplate="selectedItem" >
-                  {{ selectedValue.value }}
-                </ng-template>
-                <ng-template let-value pTemplate="item">
-                  {{ value.value }}
-                </ng-template>
-              </p-dropdown>
+          <div class="tw-w-180-px tw-mr-24-px fields-header">
+            {{ 'configurationSkipExport.operatorHeader' | transloco }}
+            @if (isAsterikAllowed) {
+              <span class="tw-text-text-danger-dark">*</span>
+            }
+          </div>
+          @if (showValueHeader(1)) {
+            <div class="tw-w-296-px fields-header">
+              {{ 'configurationSkipExport.valueHeader' | transloco }}
+              @if (isAsterikAllowed) {
+                <span class="tw-text-text-danger-dark">*</span>
+              }
             </div>
-            <div class="tw-ml-24-px tw-mr-24-px">
-              <p-dropdown appendTo="body" [options]="conditionFieldOptions" formControlName="condition2" [placeholder]="'configurationSkipExport.selectConditionPlaceholder' | transloco">
-                <!-- For options -->
-                <ng-template let-option pTemplate="item">
-                  <span *ngIf="option.field_name !== 'claim_number'">
-                    {{ option.field_name | snakeCaseToSpaceCase | sentenceCase }}
+          }
+        </div>
+        <div class="tw-flex dropdown-row tw-pb-24-px">
+          <p class="tw-text-14-px tw-text-form-label-text-color">{{ 'configurationSkipExport.whereLabel' | transloco }}</p>
+          <div class="tw-ml-80-px tw-mr-24-px">
+            <p-select appendTo="body" [options]="conditionFieldOptions" formControlName="condition1" [placeholder]="'configurationSkipExport.selectConditionPlaceholder' | transloco">
+              For options
+              <ng-template let-option pTemplate="item">
+                @if (option.field_name !== 'claim_number') {
+                  <span>
+                    {{ (option.field_name === 'report_title' ? 'report_name' : option.field_name) | snakeCaseToSpaceCase | sentenceCase }}
                   </span>
-                  <span *ngIf="option.field_name === 'claim_number'">
+                }
+                @if (option.field_name === 'claim_number') {
+                  <span>
                     {{ 'configurationSkipExport.reportNumber' | transloco }}
                   </span>
-                </ng-template>
-                <!-- For selected option -->
-                <ng-template let-selectedOption pTemplate="selectedItem">
-                  <span *ngIf="selectedOption.field_name !== 'claim_number'">
-                    {{ selectedOption.field_name | snakeCaseToSpaceCase | sentenceCase }}
+                }
+              </ng-template>
+              For selected option
+              <ng-template let-selectedOption pTemplate="selectedItem">
+                @if (selectedOption.field_name !== 'claim_number') {
+                  <span>
+                    {{ (selectedOption.field_name === 'report_title' ? 'report_name' : selectedOption.field_name) | snakeCaseToSpaceCase | sentenceCase }}
                   </span>
-                  <span *ngIf="selectedOption.field_name === 'claim_number'">
+                }
+                @if (selectedOption.field_name === 'claim_number') {
+                  <span>
                     {{ 'configurationSkipExport.reportNumber' | transloco }}
                   </span>
-                </ng-template>
-              </p-dropdown>
-              <app-mandatory-error-message *ngIf="skipExportForm.controls.condition2.touched && !skipExportForm.controls.condition2.valid"
+                }
+              </ng-template>
+            </p-select>
+            @if (skipExportForm.controls.condition1.touched && !skipExportForm.controls.condition1.valid) {
+              <app-mandatory-error-message
               [customErrorMessage]="'configurationSkipExport.selectConditionError' | transloco"></app-mandatory-error-message>
-              <app-mandatory-error-message *ngIf="checkValidationCondition()"
-              [customErrorMessage]="'configurationSkipExport.distinctConditionError' | transloco"></app-mandatory-error-message>
-            </div>
-            <div class="tw-mr-24-px">
-              <p-dropdown appendTo="body" [options]="operatorFieldOptions2" formControlName="operator2" [placeholder]="'configurationSkipExport.selectOperatorPlaceholder' | transloco"></p-dropdown>
-              <app-mandatory-error-message *ngIf="skipExportForm.controls.operator2.touched && !skipExportForm.controls.operator2.valid"
+            }
+          </div>
+          <div class="tw-mr-24-px">
+            <p-select appendTo="body" [options]="operatorFieldOptions1" formControlName="operator1" [placeholder]="'configurationSkipExport.selectOperatorPlaceholder' | transloco"></p-select>
+            @if (skipExportForm.controls.operator1.touched && !skipExportForm.controls.operator1.valid) {
+              <app-mandatory-error-message
               [customErrorMessage]="'configurationSkipExport.selectOperatorError' | transloco"></app-mandatory-error-message>
+            }
+          </div>
+          @if (showInputField(1)) {
+            <div class="tw-w-296-px">
+              <input type="text" formControlName="value1" class="value-input-field" [placeholder]="'configurationSkipExport.enterValuePlaceholder' | transloco">
             </div>
-            <div *ngIf="showInputField(2)" class="tw-w-296-px">
-              <input type="text" formControlName="value2" [placeholder]="'configurationSkipExport.enterAValuePlaceholder' | transloco" class="border p-2 rounded value-input-field">
+          }
+          @if (showDateField(1)) {
+            <div class="tw-w-296-px">
+              <p-datepicker formControlName="value1" [readonlyInput]="true" [placeholder]="'configurationSkipExport.selectDatePlaceholder' | transloco"></p-datepicker>
             </div>
-            <div *ngIf="showChipField(2)" class="tw-w-296-px">
-              <p-chips [addOnBlur]="true" styleClass="tw-w-[296px]" formControlName="value2" separator="," [placeholder]="'configurationSkipExport.enterValuePlaceholder' | transloco"></p-chips>
+          }
+          @if (showChipField(1)) {
+            <div class="tw-w-296-px">
+              <p-autocomplete
+                [multiple]="true"
+                [typeahead]="false"
+                [forceSelection]="false"
+                separator=","
+                styleClass="tw-w-[296px]"
+                formControlName="value1"
+                [placeholder]="'configurationSkipExport.enterValuePlaceholder' | transloco"
+                [suggestions]="[]"
+                (onKeyDown)="onKeyDown($event, 1)"
+                (onBlur)="onBlur($event, 1)">
+              </p-autocomplete>
               <small class="chip-hint"><br>{{ 'configurationSkipExport.chipHint' | transloco }}</small>
             </div>
-            <div class="tw-w-296-px" *ngIf="showBooleanField(2)">
-              <p-dropdown appendTo="body" formControlName="value2" [placeholder]="'configurationSkipExport.selectValuePlaceholder' | transloco" [options]="customCheckBoxValueOptions">
-              </p-dropdown>
+          }
+          @if (showBooleanField(1)) {
+            <div class="tw-w-296-px">
+              <p-select appendTo="body" formControlName="value1" [placeholder]="'configurationSkipExport.selectValuePlaceholder' | transloco" [options]="customCheckBoxValueOptions">
+              </p-select>
             </div>
-            <div *ngIf="showDateField(2)" class="tw-w-296-px">
-              <p-calendar formControlName="value2" [readonlyInput]="true" [placeholder]="'configurationSkipExport.selectDatePlaceholder' | transloco"></p-calendar>
+          }
+        </div>
+        @if (showAdditionalCondition) {
+          <div class="tw-pb-24-px">
+            <div class="tw-flex tw-ml-120-px">
+              <div class="tw-w-200-px tw-mr-6-px fields-header">
+                {{ 'configurationSkipExport.conditionHeader' | transloco }}
+                @if (isAsterikAllowed) {
+                  <span class="tw-text-text-danger-dark">*</span>
+                }
+              </div>
+              <div class="tw-w-180-px fields-header tw-mr-24-px">
+                {{ 'configurationSkipExport.operatorHeader' | transloco }}
+                @if (isAsterikAllowed) {
+                  <span class="tw-text-text-danger-dark">*</span>
+                }
+              </div>
+              @if (showValueHeader(2)) {
+                <div class="tw-w-296-px fields-header">
+                  {{ 'configurationSkipExport.valueHeader' | transloco }}
+                  @if (isAsterikAllowed) {
+                    <span class="tw-text-text-danger-dark">*</span>
+                  }
+                </div>
+              }
             </div>
-            <div class="tw-ml-26-px tw-pt-6-px tw-max-h-20-px tw-max-w-20-px">
-              <app-svg-icon [svgSource]="'bin'" [width]="'24px'" [height]="'24px'" [styleClasses]="'tw-text-text-tertiary tw-text-center tw-cursor-pointer'" [tooltipText]="'configurationSkipExport.removeConditionTooltip' | transloco" (iconClick)="remCondition()"></app-svg-icon>
+            <div class="tw-flex">
+              <div class="joinby-field">
+                <p-select appendTo="body" class="joinby-field" [options]="joinByOptions" formControlName="join_by" [placeholder]="'configurationSkipExport.joinByPlaceholder' | transloco">
+                  <ng-template let-selectedValue pTemplate="selectedItem" >
+                    {{ selectedValue.value }}
+                  </ng-template>
+                  <ng-template let-value pTemplate="item">
+                    {{ value.value }}
+                  </ng-template>
+                </p-select>
+              </div>
+              <div class="tw-ml-24-px tw-mr-24-px">
+                <p-select appendTo="body" [options]="conditionFieldOptions" formControlName="condition2" [placeholder]="'configurationSkipExport.selectConditionPlaceholder' | transloco">
+                  <!-- For options -->
+                  <ng-template let-option pTemplate="item">
+                    @if (option.field_name !== 'claim_number') {
+                      <span>
+                        {{ option.field_name | snakeCaseToSpaceCase | sentenceCase }}
+                      </span>
+                    }
+                    @if (option.field_name === 'claim_number') {
+                      <span>
+                        {{ 'configurationSkipExport.reportNumber' | transloco }}
+                      </span>
+                    }
+                  </ng-template>
+                  <!-- For selected option -->
+                  <ng-template let-selectedOption pTemplate="selectedItem">
+                    @if (selectedOption.field_name !== 'claim_number') {
+                      <span>
+                        {{ selectedOption.field_name | snakeCaseToSpaceCase | sentenceCase }}
+                      </span>
+                    }
+                    @if (selectedOption.field_name === 'claim_number') {
+                      <span>
+                        {{ 'configurationSkipExport.reportNumber' | transloco }}
+                      </span>
+                    }
+                  </ng-template>
+                </p-select>
+                @if (skipExportForm.controls.condition2.touched && !skipExportForm.controls.condition2.valid) {
+                  <app-mandatory-error-message
+                  [customErrorMessage]="'configurationSkipExport.selectConditionError' | transloco"></app-mandatory-error-message>
+                }
+                @if (checkValidationCondition()) {
+                  <app-mandatory-error-message
+                  [customErrorMessage]="'configurationSkipExport.distinctConditionError' | transloco"></app-mandatory-error-message>
+                }
+              </div>
+              <div class="tw-mr-24-px">
+                <p-select appendTo="body" [options]="operatorFieldOptions2" formControlName="operator2" [placeholder]="'configurationSkipExport.selectOperatorPlaceholder' | transloco"></p-select>
+                @if (skipExportForm.controls.operator2.touched && !skipExportForm.controls.operator2.valid) {
+                  <app-mandatory-error-message
+                  [customErrorMessage]="'configurationSkipExport.selectOperatorError' | transloco"></app-mandatory-error-message>
+                }
+              </div>
+              @if (showInputField(2)) {
+                <div class="tw-w-296-px">
+                  <input type="text" formControlName="value2" [placeholder]="'configurationSkipExport.enterAValuePlaceholder' | transloco" class="value-input-field">
+                </div>
+              }
+              @if (showChipField(2)) {
+                <div class="tw-w-296-px">
+                  <p-autocomplete
+                    [multiple]="true"
+                    [typeahead]="false"
+                    [forceSelection]="false"
+                    separator=","
+                    styleClass="tw-w-[296px]"
+                    formControlName="value2"
+                    [placeholder]="'configurationSkipExport.enterValuePlaceholder' | transloco"
+                    [suggestions]="[]"
+                    (onKeyDown)="onKeyDown($event, 2)"
+                    (onBlur)="onBlur($event, 2)">
+                  </p-autocomplete>
+                  <small class="chip-hint"><br>{{ 'configurationSkipExport.chipHint' | transloco }}</small>
+                </div>
+              }
+              @if (showBooleanField(2)) {
+                <div class="tw-w-296-px">
+                  <p-select appendTo="body" formControlName="value2" [placeholder]="'configurationSkipExport.selectValuePlaceholder' | transloco" [options]="customCheckBoxValueOptions">
+                  </p-select>
+                </div>
+              }
+              @if (showDateField(2)) {
+                <div class="tw-w-296-px">
+                  <p-datepicker formControlName="value2" [readonlyInput]="true" [placeholder]="'configurationSkipExport.selectDatePlaceholder' | transloco"></p-datepicker>
+                </div>
+              }
+              <div class="tw-ml-26-px tw-pt-6-px tw-max-h-20-px tw-max-w-20-px">
+                <app-svg-icon [svgSource]="'bin'" [width]="'24px'" [height]="'24px'" [styleClasses]="'tw-text-text-tertiary tw-text-center tw-cursor-pointer'" [tooltipText]="'configurationSkipExport.removeConditionTooltip' | transloco" (iconClick)="remCondition()"></app-svg-icon>
+              </div>
             </div>
           </div>
-        </div>
-        <div class="tw-flex items-center tw-text-mandatory-field-color tw-pb-24-px" *ngIf="showAddButton">
-          <app-svg-icon *ngIf="brandingFeatureConfig.illustrationsAllowed" [svgSource]="'plus-square-medium'" [width]="'18px'" [height]="'18px'" (iconClick)="updateAdditionalFilterVisibility(true)" [styleClasses]="'tw-pr-8-px'"></app-svg-icon>
-          <a class="btn-text-primary tw-inline-block" (click)="updateAdditionalFilterVisibility(true)">
-            {{ 'configurationSkipExport.addMoreFieldsButton' | transloco }}
-          </a>
-        </div>
+        }
+        @if (showAddButton) {
+          <div class="tw-flex items-center tw-text-mandatory-field-color tw-pb-24-px">
+            @if (brandingFeatureConfig.illustrationsAllowed) {
+              <app-svg-icon [svgSource]="'plus-square-medium'" [width]="'18px'" [height]="'18px'" (iconClick)="updateAdditionalFilterVisibility(true)" [styleClasses]="'tw-pr-8-px'"></app-svg-icon>
+            }
+            <a class="btn-text-primary tw-inline-block" (click)="updateAdditionalFilterVisibility(true)">
+              {{ 'configurationSkipExport.addMoreFieldsButton' | transloco }}
+            </a>
+          </div>
+        }
       </form>
     </div>
-</div>
+  </div>
+}

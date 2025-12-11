@@ -2,7 +2,6 @@
 import { CommonModule } from '@angular/common';
 import type { Meta, StoryObj } from '@storybook/angular';
 import { moduleMetadata } from '@storybook/angular';
-import { IconSpriteModule } from 'ng-svg-icon-sprite';
 import { MessageService } from 'primeng/api';
 import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
 import { ErrorComponent } from 'src/app/shared/components/core/error/error.component';
@@ -17,7 +16,7 @@ const meta: Meta<ErrorComponent> = {
   decorators: [
     moduleMetadata({
       declarations: [],
-      imports: [CommonModule, IconSpriteModule.forRoot({ path: 'assets/sprites/sprite.svg' })],
+      imports: [CommonModule ],
       providers: [MessageService, IntegrationsToastService]
     })
   ],

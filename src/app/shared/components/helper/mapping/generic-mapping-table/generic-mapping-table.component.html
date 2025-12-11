@@ -1,73 +1,99 @@
 <p-table [value]="filteredMappings" [tableStyle]="{ 'min-width': '50rem'}">
-    <ng-template pTemplate="header">
-        <tr>
-        <th class="!tw-pl-40-px">{{ sourceFieldDisplayName ?? (sourceField | snakeCaseToSpaceCase | sentenceCase) }}{{'genericMappingTable.inText' | transloco}}{{brandingConfig.brandName}}</th>
-        <th>{{ destinationFieldDisplayName ?? (destinationField | snakeCaseToSpaceCase | sentenceCase) }}{{'genericMappingTable.inText' | transloco}}{{uiExposedAppName}}</th>
-        <th *ngIf="!isDashboardMappingResolve">{{'genericMappingTable.status' | transloco}}</th>
-        </tr>
-    </ng-template>
-    <ng-template pTemplate="body" let-mapping>
-        <tr *ngIf="!isLoading" [ngClass]="{'tw-h-70-px': isDashboardMappingResolve}">
-            <td>
-                <div class="tw-flex tw-items-center">
-                    <app-svg-icon *ngIf="mapping.auto_mapped && !isDashboardMappingResolve" [tooltipText]="'genericMappingTable.autoMappedTooltip' | transloco" [tooltipPosition]="'top'" [svgSource]="'flash-on'" [width]="'12px'" [height]="'12px'" [styleClasses]="'tw-mr-12-px tw-text-placeholder'"></app-svg-icon>
-                    <span class="tw-text-text-secondary" [ngClass]="{'tw-pl-24-px': !mapping.auto_mapped && !isDashboardMappingResolve}">{{ mapping.value }}</span>
+  <ng-template pTemplate="header">
+    <tr>
+      <th class="!tw-pl-40-px">{{ sourceFieldDisplayName ?? (sourceField | snakeCaseToSpaceCase | sentenceCase) }}{{'genericMappingTable.inText' | transloco}}{{brandingConfig.brandName}}</th>
+      <th>{{ destinationFieldDisplayName ?? (destinationField | snakeCaseToSpaceCase | sentenceCase) }}{{'genericMappingTable.inText' | transloco}}{{uiExposedAppName}}</th>
+      @if (!isDashboardMappingResolve) {
+        <th>{{'genericMappingTable.status' | transloco}}</th>
+      }
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-mapping>
+    @if (!isLoading) {
+      <tr [ngClass]="{'tw-h-70-px': isDashboardMappingResolve}">
+        <td>
+          <div class="tw-flex tw-items-center">
+            @if (mapping.auto_mapped && !isDashboardMappingResolve) {
+              <app-svg-icon [tooltipText]="'genericMappingTable.autoMappedTooltip' | transloco" [tooltipPosition]="'top'" [svgSource]="'flash-on'" [width]="'12px'" [height]="'12px'" [styleClasses]="'tw-mr-12-px tw-text-placeholder'"></app-svg-icon>
+            }
+            <span class="tw-text-text-secondary" [ngClass]="{'tw-pl-24-px': !mapping.auto_mapped && !isDashboardMappingResolve}">{{ mapping.value }}</span>
+          </div>
+        </td>
+        <td>
+          <p-select #destinationAttributes
+            appendTo="body"
+            (onShow)="tableDropdownWidth()"
+            [ngModel]="getDropdownValue(mapping)"
+            [options]="destinationOptions"
+            optionLabel="value"
+            [placeholder]="'genericMappingTable.selectAnOption' | transloco"
+            (onChange)="save(mapping, $event); getDropdownValue(mapping)"
+            [filter]="true"
+            [filterFields]="isMultiLineOption ? ['value', 'code'] : ['value']"
+            (onFocus)="destinationAttributes.resetFilter()"
+            [emptyFilterMessage]="isSearching ? ('genericMappingTable.searching' | transloco) : ('genericMappingTable.noResultsFound' | transloco)"
+            (onFilter)="searchOptions($event)">
+            <ng-template let-value pTemplate="selectedItem">
+              @if (value) {
+                <div #textElement
+                  [ngStyle]="{'white-space': 'nowrap', 'overflow': 'hidden', 'text-overflow': 'ellipsis', 'max-width': '16rem'}"
+                  [pTooltip]="isOverflowing(textElement, value)" tooltipPosition="top">
+                  <p>
+                    @if (value?.code && isMultiLineOption && brandingFeatureConfig.featureFlags.importSettings.allowImportCode) {
+                      <span>{{ value?.code }}: </span>
+                    }
+                    {{ value?.value }}
+                  </p>
                 </div>
-            </td>
-            <td>
-                <p-dropdown #destinationAttributes
-                    appendTo="body"
-                    (onShow)="tableDropdownWidth()"
-                    [ngModel]="getDropdownValue(mapping)"
-                    [options]="destinationOptions"
-                    optionLabel="value"
-                    [placeholder]="'genericMappingTable.selectAnOption' | transloco"
-                    (onChange)="save(mapping, $event); getDropdownValue(mapping)"
-                    [filter]="true"
-                    [filterFields]="isMultiLineOption ? ['value', 'code'] : ['value']"
-                    (onFocus)="destinationAttributes.resetFilter()"
-                    [emptyFilterMessage]="isSearching ? ('genericMappingTable.searching' | transloco) : ('genericMappingTable.noResultsFound' | transloco)"
-                    (onFilter)="searchOptions($event)">
-                    <ng-template let-value pTemplate="selectedItem">
-                        <div *ngIf="value" #textElement
-                        [ngStyle]="{'white-space': 'nowrap', 'overflow': 'hidden', 'text-overflow': 'ellipsis', 'max-width': '16rem'}"
-                        [pTooltip]="isOverflowing(textElement, value)" tooltipPosition="top">
-                            <p>
-                                <span *ngIf="value?.code && isMultiLineOption && brandingFeatureConfig.featureFlags.importSettings.allowImportCode">{{ value?.code }}: </span>
-                                {{ value?.value }}
-                            </p>
-                        </div>
-                        <div *ngIf="!value" class="tw-text-placeholder">
-                            {{'genericMappingTable.selectAnOption' | transloco}}
-                        </div>
-                    </ng-template>
-                    <ng-template let-options pTemplate="item">
-                        <div #textElement
-                        [ngStyle]="{'white-space': 'nowrap', 'overflow': 'hidden', 'text-overflow': 'ellipsis', 'max-width': '16rem'}"
-                        [pTooltip]="isOverflowing(textElement, options)" tooltipPosition="top">
-                            <span>
-                            {{options.value}}
-                            </span>
-                            <p *ngIf="isMultiLineOption" class="tw-text-text-muted tw-text-12-px">{{ options.code ? options.code : '--'}}</p>
-                        </div>
-                    </ng-template>
-                    <ng-template pTemplate="filtericon">
-                        <app-svg-icon [svgSource]="'search-medium'" [width]="'18px'" [height]="'18px'" [styleClasses]="brandingStyle.configuration.searchIconFocus" [isTextColorAllowed]="true"></app-svg-icon>
-                    </ng-template>
-                </p-dropdown>
-            </td>
-            <td *ngIf="!isDashboardMappingResolve">
-              <p *ngIf="getDropdownValue(mapping)" class="mapped">{{ ('genericMappingTable.mappedStatusLower' | transloco)}}</p>
-              <p *ngIf="!getDropdownValue(mapping)" class="unmapped">{{ ('genericMappingTable.unmappedStatusLower' | transloco)}}</p>
-            </td>
-        </tr>
-        <ng-container *ngTemplateOutlet="shimmers"></ng-container>
-    </ng-template>
+              }
+              @if (!value) {
+                <div class="tw-text-placeholder">
+                  {{'genericMappingTable.selectAnOption' | transloco}}
+                </div>
+              }
+            </ng-template>
+            <ng-template let-options pTemplate="item">
+              <div #textElement
+                [ngStyle]="{'white-space': 'nowrap', 'overflow': 'hidden', 'text-overflow': 'ellipsis', 'max-width': '16rem'}"
+                [pTooltip]="isOverflowing(textElement, options)" tooltipPosition="top">
+                <span>
+                  {{options.value}}
+                </span>
+                @if (isMultiLineOption) {
+                  <p class="tw-text-text-muted tw-text-12-px">{{ options.code ? options.code : '--'}}</p>
+                }
+              </div>
+            </ng-template>
+            <ng-template pTemplate="filtericon">
+              <app-svg-icon [svgSource]="'search-medium'" [width]="'18px'" [height]="'18px'" [styleClasses]="brandingStyle.configuration.searchIconFocus" [isTextColorAllowed]="true"></app-svg-icon>
+            </ng-template>
+          </p-select>
+        </td>
+        @if (!isDashboardMappingResolve) {
+          <td>
+            @if (getDropdownValue(mapping)) {
+              <p class="mapped">{{ ('genericMappingTable.mappedStatusLower' | transloco)}}</p>
+            }
+            @if (!getDropdownValue(mapping)) {
+              <p class="unmapped">{{ ('genericMappingTable.unmappedStatusLower' | transloco)}}</p>
+            }
+          </td>
+        }
+      </tr>
+    }
+    <ng-container *ngTemplateOutlet="shimmers"></ng-container>
+  </ng-template>
 </p-table>
 
 <ng-template #shimmers>
-    <tr *ngFor="let _ of [0,1,2,3,4,5,6]">
-        <td *ngIf="isLoading"><p-skeleton width="150px" height="28px" shape="rectangle"></p-skeleton></td>
-        <td *ngIf="isLoading"><p-skeleton width="250px" height="28px" shape="rectangle"></p-skeleton></td>
+  @for (_ of [0,1,2,3,4,5,6]; track _) {
+    <tr>
+      @if (isLoading) {
+        <td><p-skeleton width="150px" height="28px" shape="rectangle"></p-skeleton></td>
+      }
+      @if (isLoading) {
+        <td><p-skeleton width="250px" height="28px" shape="rectangle"></p-skeleton></td>
+      }
     </tr>
+  }
 </ng-template>

@@ -1,42 +1,53 @@
-<div *ngIf="!accountingExports" class="tw-flex tw-justify-center tw-items-center tw-h-[75vh]">
+@if (!accountingExports) {
+  <div class="tw-flex tw-justify-center tw-items-center tw-h-[75vh]">
     <app-loader></app-loader>
-</div>
+  </div>
+}
 
 <div class="tw-rounded-8-px tw-bg-white tw-border-1-px tw-border-border-tertiary" [ngClass]="brandingStyle.common.mainComponentShadow">
-    <div>
-        <app-export-log-filter *ngIf="totalCount > 0 || (isDateSelected || searchQuery)"
-            [exportLogForm]="exportLogForm"
-            [dateOptions]="dateOptions"
-            [hideCalendar]="hideCalendar"
-            (handleSimpleSearch)="handleSimpleSearch($event)">
-        </app-export-log-filter>
+  <div>
+    @if (totalCount > 0 || (isDateSelected || searchQuery)) {
+      <app-export-log-filter
+        [exportLogForm]="exportLogForm"
+        [dateOptions]="dateOptions"
+        [hideCalendar]="hideCalendar"
+        (handleSimpleSearch)="handleSimpleSearch($event)">
+      </app-export-log-filter>
+    }
 
-        <app-export-log-table
-            *ngIf="!isLoading"
-            [filteredExpenseGroups]="filteredAccountingExports"
-            [appName]="appName"
-            [isExportLogTable]="true"
-            [isDashboardFailed]="false">
-        </app-export-log-table>
+    @if (!isLoading) {
+      <app-export-log-table
+        [filteredExpenseGroups]="filteredAccountingExports"
+        [appName]="appName"
+        [isExportLogTable]="true"
+        [isDashboardFailed]="false">
+      </app-export-log-table>
+    }
 
-        <div *ngIf="totalCount > 0 && !isLoading" class="tw-p-24-px tw-border-t-1-px">
-            <app-paginator
-                [dropDownValue]="limit"
-                [page]="currentPage"
-                [totalCount]="totalCount"
-                (pageSizeChangeEvent)="pageSizeChanges($event)"
-                (pageOffsetChangeEvent)="pageChanges($event)">
-            </app-paginator>
-        </div>
+    @if (totalCount > 0 && !isLoading) {
+      <div class="tw-p-24-px tw-border-t-1-px">
+        <app-paginator
+          [dropDownValue]="limit"
+          [page]="currentPage"
+          [totalCount]="totalCount"
+          (pageSizeChangeEvent)="pageSizeChanges($event)"
+          (pageOffsetChangeEvent)="pageChanges($event)">
+        </app-paginator>
+      </div>
+    }
 
-        <app-zero-state-with-illustration *ngIf="(isDateSelected || searchQuery) && totalCount === 0 && !isLoading"
-            [mainText]="'exportLog.completeExportLogZeroStateHeaderText' | transloco"
-            [subText]="'exportLog.completeExportLogZeroStateSubHeaderText' | transloco">
-        </app-zero-state-with-illustration>
-    </div>
+    @if ((isDateSelected || searchQuery) && totalCount === 0 && !isLoading) {
+      <app-zero-state-with-illustration
+        [mainText]="'exportLog.completeExportLogZeroStateHeaderText' | transloco"
+        [subText]="'exportLog.completeExportLogZeroStateSubHeaderText' | transloco">
+      </app-zero-state-with-illustration>
+    }
+  </div>
 
-    <app-zero-state-with-illustration *ngIf="totalCount === 0 && (!isDateSelected && !searchQuery) && !isLoading"
-        [mainText]="(brandingConfig.brandId === 'co' && appName === AppName.QBD_DIRECT ? 'qbd_direct.exportLog.completeExportLogCountZeroStateHeaderText' : 'exportLog.completeExportLogCountZeroStateHeaderText') | transloco"
-        [subText]="(brandingConfig.brandId === 'co' && appName === AppName.QBD_DIRECT ? 'qbd_direct.exportLog.completeExportLogCountZeroStateSubHeaderText' : 'exportLog.completeExportLogCountZeroStateSubHeaderText') | transloco">
+  @if (totalCount === 0 && (!isDateSelected && !searchQuery) && !isLoading) {
+    <app-zero-state-with-illustration
+      [mainText]="(brandingConfig.brandId === 'co' && appName === AppName.QBD_DIRECT ? 'qbd_direct.exportLog.completeExportLogCountZeroStateHeaderText' : 'exportLog.completeExportLogCountZeroStateHeaderText') | transloco"
+      [subText]="(brandingConfig.brandId === 'co' && appName === AppName.QBD_DIRECT ? 'qbd_direct.exportLog.completeExportLogCountZeroStateSubHeaderText' : 'exportLog.completeExportLogCountZeroStateSubHeaderText') | transloco">
     </app-zero-state-with-illustration>
+  }
 </div>

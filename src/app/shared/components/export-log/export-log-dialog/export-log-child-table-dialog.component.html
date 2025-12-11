@@ -1,7 +1,14 @@
-<p-dialog [(visible)]="isDialogOpen" [position]="'topright'" [modal]="true" [draggable]="false" [dismissableMask]="true" (onHide)="handleDialogClose()" [style]="{ width: '50vw', height: '100vh' }">
-    <p-header>
-        <p [ngClass]="brandingStyle.common.dialogHeaderText">{{'exportLogChildTableDialog.dialogHeader' | transloco}}</p>
-    </p-header>
+<p-dialog [(visible)]="isDialogOpen" [position]="'topright'" [modal]="true" [draggable]="false" [dismissableMask]="false" [closable]="false" (onHide)="handleDialogClose()" [style]="{ width: '50vw', height: '100vh' }">
+    <ng-template #header pTemplate="header">
+        <div class="tw-flex tw-items-start tw-justify-between tw-min-w-full">
+            <div class="tw-flex tw-flex-col">
+                <p [ngClass]="brandingStyle.common.dialogHeaderText">{{'exportLogChildTableDialog.dialogHeader' | transloco}}</p>
+            </div>
+            <div class="tw-flex tw-self-center">
+                <app-svg-icon [svgSource]="'cross'" class="tw-cursor-pointer" (click)="handleDialogClose()" [width]="'20px'" [height]="'20px'"></app-svg-icon>
+            </div>
+        </div>
+    </ng-template>
     <div [ngClass]="brandingStyle.common.dialogSubDescriptionContainer">
     </div>
     <div class="tw-bg-white">

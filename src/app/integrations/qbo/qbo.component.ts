@@ -13,9 +13,10 @@ import { QboAuthService } from 'src/app/core/services/qbo/qbo-core/qbo-auth.serv
 import { AuthService } from 'src/app/core/services/common/auth.service';
 
 @Component({
-  selector: 'app-qbo',
-  templateUrl: './qbo.component.html',
-  styleUrls: ['./qbo.component.scss']
+    selector: 'app-qbo',
+    templateUrl: './qbo.component.html',
+    styleUrls: ['./qbo.component.scss'],
+    standalone: false
 })
 export class QboComponent implements OnInit {
 

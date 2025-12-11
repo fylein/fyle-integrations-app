@@ -5,7 +5,7 @@
         </div>
         <div class="tw-border-border-tertiary tw-border-t-1-px tw-pb-24-px">
             <div class="tw-mt-10-px tw-rounded-6-px tw-bg-white">
-                <div *ngIf="errors.EMPLOYEE_MAPPING?.length || groupedErrorStat.EMPLOYEE_MAPPING || errors.CATEGORY_MAPPING.length || groupedErrorStat.CATEGORY_MAPPING" class="tw-pl-24-px tw-pr-24-px tw-pt-24-px">
+                <div *ngIf="errors.EMPLOYEE_MAPPING.length || groupedErrorStat.EMPLOYEE_MAPPING || errors.CATEGORY_MAPPING.length || groupedErrorStat.CATEGORY_MAPPING" class="tw-pl-24-px tw-pr-24-px tw-pt-24-px">
                     <div class="container">
                         <div class="sub-text-container" [ngClass]="brandingStyle.dashboard.exportErrorSubTextContainer">
                             <h4 class="tw-text-text-primary" [ngClass]="brandingStyle.dashboard.exportErrorSubTextHeader">{{ (brandingConfig.brandId === 'co' && appName === AppName.QBD_DIRECT ? 'qbd_direct.dashboard.integrationErrorHeader' : 'dashboard.integrationErrorHeader') | transloco}}</h4>
@@ -20,7 +20,7 @@
                     </div>
                 </div>
 
-                <div *ngIf="errors?.EMPLOYEE_MAPPING?.length || groupedErrorStat.EMPLOYEE_MAPPING" class="tw-pl-24-px tw-pr-24-px tw-mt-24-px">
+                <div *ngIf="errors.EMPLOYEE_MAPPING.length || groupedErrorStat.EMPLOYEE_MAPPING" class="tw-pl-24-px tw-pr-24-px tw-mt-24-px">
                     <div class="container">
                         <div class="inside-container" [ngClass]="brandingStyle.dashboard.exportErrorCard">
                             <div>
@@ -44,7 +44,7 @@
                     </div>
                 </div>
 
-                <div *ngIf="errors?.CATEGORY_MAPPING?.length || (groupedErrorStat && groupedErrorStat.CATEGORY_MAPPING)" class="tw-pl-24-px tw-pr-24-px tw-pt-16-px">
+                <div *ngIf="errors.CATEGORY_MAPPING.length || (groupedErrorStat && groupedErrorStat.CATEGORY_MAPPING)" class="tw-pl-24-px tw-pr-24-px tw-pt-16-px">
                     <div class="container">
                         <div class="inside-container" [ngClass]="brandingStyle.dashboard.exportErrorCard">
                             <div>
@@ -68,7 +68,7 @@
                     </div>
                 </div>
 
-                <div *ngIf="errors?.ACCOUNTING_ERROR?.length" class="tw-pl-24-px tw-pr-24-px tw-pt-16-px">
+                <div *ngIf="errors.ACCOUNTING_ERROR.length" class="tw-pl-24-px tw-pr-24-px tw-pt-16-px">
                     <div class="container">
                         <div class="sub-text-container" [ngClass]="brandingStyle.dashboard.exportErrorSubTextContainer">
                             <h4 class="tw-text-text-primary" [ngClass]="brandingStyle.dashboard.exportErrorSubTextHeader">{{uiExposedAppName}} {{'dashboard.qboErrorText' | transloco}}</h4>
@@ -77,7 +77,7 @@
                     </div>
                 </div>
 
-                <div *ngFor="let error of errors?.ACCOUNTING_ERROR" class="tw-pl-24-px tw-pr-24-px tw-pt-16-px">
+                <div *ngFor="let error of errors.ACCOUNTING_ERROR" class="tw-pl-24-px tw-pr-24-px tw-pt-16-px">
                     <div class="container">
                         <div class="inside-container" [ngClass]="brandingStyle.dashboard.exportErrorCard">
                             <div>
@@ -108,21 +108,28 @@
 </div>
 <!-- Integration Specific Errors -->
 <div *ngIf="isAccountingErrorDialogVisible">
-    <p-dialog [dismissableMask]="true" [modal]="true" [(visible)]="isAccountingErrorDialogVisible" [position]="'topright'" [style]="{ width: 'fit-content', height: '100vh' }" [maximizable]="false" [draggable]="false" [resizable]="false" [breakpoints]="{ '960px': '75vw' }">
-        <p-header>
-            <p [ngClass]="brandingStyle.common.dialogHeaderText">{{uiExposedAppName}} {{'dashboard.qboErrorDialogHeaderText' | transloco}}</p>
-            <h3 [ngClass]="brandingStyle.common.dialogDescriptionText">
-                <p>{{ errorDetail }}.
-                    <a *ngIf="errorArticle && brandingFeatureConfig.allowIntacctHelperDoc" class="link tw-pr-4-px tw-w-fit tw-inline-flex tw-items-center"
-                        (click)="windowService.openInNewTab(errorArticle)">
-                        {{ helper.sentenseCaseConversion('Read More') }}
-                        <app-svg-icon *ngIf="brandingFeatureConfig.isIconsInsideButtonAllowed" [svgSource]="'open-in-new-tab'" [width]="'16px'" [height]="'16px'"
-                            class="tw-text-link-primary tw-pl-2-px tw-w-fit">
-                        </app-svg-icon>
-                    </a>
-                </p>
-            </h3>
-        </p-header>
+    <p-dialog [dismissableMask]="false" [closable]="false" [modal]="true" [(visible)]="isAccountingErrorDialogVisible" [position]="'topright'" [style]="{ width: 'fit-content', height: '100vh' }" [maximizable]="false" [draggable]="false" [resizable]="false" [breakpoints]="{ '960px': '75vw' }">
+        <ng-template #header>
+            <div class="tw-flex tw-items-start tw-justify-between tw-min-w-full">
+                <div class="tw-flex tw-flex-col">
+                    <p [ngClass]="brandingStyle.common.dialogHeaderText">{{uiExposedAppName}} {{'dashboard.qboErrorDialogHeaderText' | transloco}}</p>
+                    <h3 [ngClass]="brandingStyle.common.dialogDescriptionText">
+                        <p>{{ errorDetail }}.
+                            <a *ngIf="errorArticle && brandingFeatureConfig.allowIntacctHelperDoc" class="link tw-pr-4-px tw-w-fit tw-inline-flex tw-items-center"
+                                (click)="windowService.openInNewTab(errorArticle)">
+                                {{ helper.sentenseCaseConversion('Read More') }}
+                                <app-svg-icon *ngIf="brandingFeatureConfig.isIconsInsideButtonAllowed" [svgSource]="'open-in-new-tab'" [width]="'16px'" [height]="'16px'"
+                                    class="tw-text-link-primary tw-pl-2-px tw-w-fit">
+                                </app-svg-icon>
+                            </a>
+                        </p>
+                    </h3>
+                </div>
+                <div class="tw-flex tw-self-center">
+                    <app-svg-icon [svgSource]="'cross'" class="tw-cursor-pointer" (click)="closeAccountingErrorDialog()" [width]="'20px'" [height]="'20px'"></app-svg-icon>
+                </div>
+            </div>
+        </ng-template>
         <div [ngClass]="brandingStyle.common.dialogSubDescriptionContainer">
             <h3 [ngClass]="brandingStyle.common.dialogSubDescriptionText">
                 <p>{{ errorDetail }}.
@@ -147,11 +154,18 @@
 
 <!-- Mapping Errors -->
 <div>
-    <p-dialog [dismissableMask]="true" [(visible)]="isMappingResolveVisible" [modal]="true" [position]="'topright'" [style]="{ width: 'fit-content', height: '100vh' }" [maximizable]="false" [draggable]="false" [resizable]="false" [breakpoints]="{ '960px': '75vw' }" (onHide)="handleResolvedMappingStat()">
-        <p-header>
-            <p [ngClass]="brandingStyle.common.dialogHeaderText">{{errorType | snakeCaseToSpaceCase | sentenceCase}} {{'common.errors' | transloco}}</p>
-            <p [ngClass]="brandingStyle.common.dialogDescriptionText">{{ 'dashboardErrorSection.resolveMappingErrorDescription' | transloco: { appName: uiExposedAppName } }}</p>
-        </p-header>
+    <p-dialog [dismissableMask]="false" [closable]="false" [(visible)]="isMappingResolveVisible" [modal]="true" [position]="'topright'" [style]="{ width: 'fit-content', height: '100vh' }" [maximizable]="false" [draggable]="false" [resizable]="false" [breakpoints]="{ '960px': '75vw' }" (onHide)="handleResolvedMappingStat()">
+        <ng-template #header pTemplate="header">
+            <div class="tw-flex tw-items-start tw-justify-between tw-min-w-full">
+                <div class="tw-flex tw-flex-col">
+                    <p [ngClass]="brandingStyle.common.dialogHeaderText">{{errorType | snakeCaseToSpaceCase | sentenceCase}} {{'common.errors' | transloco}}</p>
+                    <p [ngClass]="brandingStyle.common.dialogDescriptionText">{{ 'dashboardErrorSection.resolveMappingErrorDescription' | transloco: { appName: uiExposedAppName } }}</p>
+                </div>
+                <div class="tw-flex tw-self-center">
+                    <app-svg-icon [svgSource]="'cross'" class="tw-cursor-pointer" (click)="closeMappingResolveDialog()" [width]="'20px'" [height]="'20px'"></app-svg-icon>
+                </div>
+            </div>
+        </ng-template>
         <div [ngClass]="brandingStyle.common.dialogSubDescriptionContainer">
             <p [ngClass]="brandingStyle.common.dialogSubDescriptionText">{{ 'dashboardErrorSection.resolveMappingErrorDescription' | transloco: { appName: uiExposedAppName } }}</p>
         </div>

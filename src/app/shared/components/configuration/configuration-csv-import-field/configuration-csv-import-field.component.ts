@@ -2,7 +2,7 @@ import { CommonModule, LowerCasePipe } from '@angular/common';
 import { ChangeDetectorRef, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormGroupDirective, ControlContainer, ReactiveFormsModule, FormGroup, FormControl, Validators } from '@angular/forms';
 import { TranslocoService } from '@jsverse/transloco';
-import { brandingConfig, brandingDemoVideoLinks, brandingKbArticles } from 'src/app/branding/branding-config';
+import { brandingConfig, brandingDemoVideoLinks, brandingKbArticles, brandingStyle } from 'src/app/branding/branding-config';
 import { CSVImportAttributesService } from 'src/app/core/models/db/csv-import-attributes.model';
 import { sage50AttributeDisplayNames } from 'src/app/core/models/sage50/sage50-configuration/attribute-display-names';
 import { Sage50FyleField, Sage50ImportableField } from 'src/app/core/models/sage50/sage50-configuration/sage50-import-settings.model';
@@ -17,13 +17,12 @@ import { TrackingService } from 'src/app/core/services/integration/tracking.serv
 import { ClickEvent, TrackingApp } from 'src/app/core/models/enum/enum.model';
 
 @Component({
-  selector: 'app-configuration-csv-import-field',
-  standalone: true,
-  imports: [ReactiveFormsModule, SharedModule, LowerCasePipe, CsvUploadButtonComponent, CommonModule],
-  templateUrl: './configuration-csv-import-field.component.html',
-  styleUrl: './configuration-csv-import-field.component.scss',
-  viewProviders: [{ provide: ControlContainer, useExisting: FormGroupDirective }],
-  providers: [DialogService]
+    selector: 'app-configuration-csv-import-field',
+    imports: [ReactiveFormsModule, SharedModule, LowerCasePipe, CsvUploadButtonComponent, CommonModule],
+    templateUrl: './configuration-csv-import-field.component.html',
+    styleUrl: './configuration-csv-import-field.component.scss',
+    viewProviders: [{ provide: ControlContainer, useExisting: FormGroupDirective }],
+    providers: [DialogService]
 })
 export class ConfigurationCsvImportFieldComponent implements OnInit {
 
@@ -58,6 +57,8 @@ export class ConfigurationCsvImportFieldComponent implements OnInit {
   @Input() previewImagePath: string;
 
   @Input() uploadData: CSVImportAttributesService['importAttributes'];
+
+  readonly brandingStyle = brandingStyle;
 
   readonly brandingConfig = brandingConfig;
 
@@ -129,7 +130,7 @@ export class ConfigurationCsvImportFieldComponent implements OnInit {
       }
     });
 
-    ref.onClose.subscribe((newFile?: UploadedCSVFile) => {
+    ref?.onClose.subscribe((newFile?: UploadedCSVFile) => {
       if (newFile?.name) {
         if (this.isOnboarding) {
           // During onboarding, update the 'Values ready to import' field
