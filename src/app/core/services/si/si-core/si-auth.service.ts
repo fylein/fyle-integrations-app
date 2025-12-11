@@ -63,7 +63,13 @@ export class SiAuthService {
       toArray(),
 
       tap(() => {
-        this.router.navigateByUrl(onboardingStateComponentMap[onboardingState]);
+        if (onboardingState === IntacctOnboardingState.CONNECTION) {
+          // If onboarding for the first time, proceed to location entity mapping
+          this.router.navigateByUrl(onboardingStateComponentMap[IntacctOnboardingState.LOCATION_ENTITY]);
+        } else {
+          // Otherwise, return to the page you were on before
+          this.router.navigateByUrl(onboardingStateComponentMap[onboardingState]);
+        }
       }),
       map(() => null),
 
