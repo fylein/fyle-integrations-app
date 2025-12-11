@@ -13,9 +13,10 @@ import { PaginatorService } from 'src/app/core/services/common/paginator.service
 import { UserService } from 'src/app/core/services/misc/user.service';
 
 @Component({
-  selector: 'app-netsuite-skipped-export-log',
-  templateUrl: './netsuite-skipped-export-log.component.html',
-  styleUrls: ['./netsuite-skipped-export-log.component.scss']
+    selector: 'app-netsuite-skipped-export-log',
+    templateUrl: './netsuite-skipped-export-log.component.html',
+    styleUrls: ['./netsuite-skipped-export-log.component.scss'],
+    standalone: false
 })
 export class NetsuiteSkippedExportLogComponent implements OnInit {
 

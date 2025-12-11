@@ -1,7 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { MenuItem } from 'primeng/api';
 import { brandingFeatureConfig } from 'src/app/branding/branding-config';
+import { TabMenuItem } from 'src/app/core/models/common/tab-menu.model';
 import { AppName, ToastSeverity } from 'src/app/core/models/enum/enum.model';
 import { AccountingExportService } from 'src/app/core/services/common/accounting-export.service';
 import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
@@ -9,15 +9,16 @@ import { QboHelperService } from 'src/app/core/services/qbo/qbo-core/qbo-helper.
 import { TranslocoService } from '@jsverse/transloco';
 
 @Component({
-  selector: 'app-qbo-main',
-  templateUrl: './qbo-main.component.html',
-  styleUrls: ['./qbo-main.component.scss']
+    selector: 'app-qbo-main',
+    templateUrl: './qbo-main.component.html',
+    styleUrls: ['./qbo-main.component.scss'],
+    standalone: false
 })
 export class QboMainComponent implements OnInit {
 
   appName: AppName = AppName.QBO;
 
-  modules: MenuItem[];
+  modules: TabMenuItem[];
 
   isConnectionInProgress: boolean;
 
@@ -35,10 +36,10 @@ export class QboMainComponent implements OnInit {
 
   ngOnInit(): void {
     this.modules = [
-      {label: this.translocoService.translate('qboMain.dashboardLabel'), routerLink: '/integrations/qbo/main/dashboard'},
-      {label: this.translocoService.translate('common.exportLogTabName'), routerLink: '/integrations/qbo/main/export_log'},
-      {label: this.translocoService.translate('qboMain.mappingLabel'), routerLink: '/integrations/qbo/main/mapping'},
-      {label: this.translocoService.translate('qboMain.configurationLabel'), routerLink: '/integrations/qbo/main/configuration'}
+      { label: this.translocoService.translate('qboMain.dashboardLabel'), routerLink: '/integrations/qbo/main/dashboard', value: 'dashboard' },
+      { label: this.translocoService.translate('common.exportLogTabName'), routerLink: '/integrations/qbo/main/export_log', value: 'export_log' },
+      { label: this.translocoService.translate('qboMain.mappingLabel'), routerLink: '/integrations/qbo/main/mapping', value: 'mapping' },
+      { label: this.translocoService.translate('qboMain.configurationLabel'), routerLink: '/integrations/qbo/main/configuration', value: 'configuration' }
     ];
   }
 

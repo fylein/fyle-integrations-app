@@ -2,7 +2,6 @@
 import { CommonModule } from '@angular/common';
 import type { Meta, StoryObj } from '@storybook/angular';
 import { moduleMetadata } from '@storybook/angular';
-import { IconSpriteModule } from 'ng-svg-icon-sprite';
 import { TooltipModule } from 'primeng/tooltip';
 import { AppName } from 'src/app/core/models/enum/enum.model';
 import { ConfigurationStepHeaderComponent } from 'src/app/shared/components/configuration/configuration-step-header/configuration-step-header.component';
@@ -17,7 +16,7 @@ const meta: Meta<ConfigurationStepHeaderComponent> = {
   decorators: [
     moduleMetadata({
       declarations: [ConfigurationStepHeaderComponent],
-      imports: [CommonModule, TooltipModule, IconSpriteModule.forRoot({ path: 'assets/sprites/sprite.svg' })]
+      imports: [CommonModule, TooltipModule ]
     })
   ],
   argTypes: {

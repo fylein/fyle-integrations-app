@@ -1,4 +1,6 @@
 <router-outlet></router-outlet>
-<div *ngIf="isLoading" class="tw-flex tw-justify-center tw-items-center tw-h-full">
+@if (isLoading) {
+  <div class="tw-flex tw-justify-center tw-items-center tw-h-full">
     <app-loader></app-loader>
-</div>
+  </div>
+}

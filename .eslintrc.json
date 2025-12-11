@@ -11,6 +11,7 @@
       "files": [
         "*.ts"
       ],
+      "parser": "@typescript-eslint/parser",
       "parserOptions": {
         "project": [
           "tsconfig.json"
@@ -19,9 +20,20 @@
       },
       "extends": [
         "plugin:@angular-eslint/recommended",
-        "plugin:@angular-eslint/template/process-inline-templates"
+        "plugin:@angular-eslint/template/process-inline-templates",
+        "plugin:@typescript-eslint/recommended"
       ],
       "rules": {
+        "@angular-eslint/prefer-standalone": "off",
+        "@angular-eslint/prefer-inject": "off",
+        "@typescript-eslint/no-unused-expressions": "off",
+        "@typescript-eslint/ban-ts-comment": "off",
+        "@typescript-eslint/no-empty-object-type": "off",
+        "@typescript-eslint/no-duplicate-enum-values": "off",
+        "@typescript-eslint/no-this-alias": "off",
+        "@typescript-eslint/no-wrapper-object-types": "off",
+        "@typescript-eslint/no-require-imports": "off",
+        "@typescript-eslint/no-non-null-asserted-optional-chain": "off",
         "@angular-eslint/component-class-suffix": [
           "error",
           {
@@ -47,13 +59,15 @@
           "error",
           {
             "type": "attribute",
-            "prefix": "app"
+            "prefix": "app",
+            "style": "camelCase"
           }
         ],
         "indent": "off",
         "semi": "error",
         "no-underscore-dangle": "off",
         "@angular-eslint/template/no-negated-async": "off",
+        "@angular-eslint/template/prefer-control-flow": "off",
         "@typescript-eslint/prefer-for-of": "off",
         "prefer-arrow/prefer-arrow-functions": "off",
         "@typescript-eslint/ban-types": "off",
@@ -78,6 +92,9 @@
         "no-debugger": "warn",
         "@typescript-eslint/no-inferrable-types": "off",
         "@typescript-eslint/no-namespace": "off",
+        "@typescript-eslint/no-explicit-any": "off",
+        "@typescript-eslint/no-unused-vars": "off",
+        "@typescript-eslint/no-empty-function": "off",
         "max-nested-callbacks": [2,4],
         "prefer-const": ["error"],
         "no-use-before-define": ["error"],
@@ -120,9 +137,9 @@
         "computed-property-spacing": ["error"],
         "switch-colon-spacing": ["error"],
         "@fyle/i18n-key-naming-convention": [
-          "error",
+          "warn",
           {
-            "ignoredPrefixes": ["qbd_direct.", "netsuite.", "xero.", "intacct.", "configuration.", "dashboard.", "exportLog.", "mapping.", "landing.", "common."]
+            "ignoredPrefixes": ["qbd_direct.", "netsuite.", "xero.", "intacct.", "configuration.", "dashboard.", "dashboardTokenExpired.", "exportLog.", "mapping.", "landing.", "common.", "integrations.", "pipes."]
           }
         ],
         "@fyle/no-hardcoded-strings": "warn"
@@ -136,13 +153,24 @@
         "plugin:@angular-eslint/template/recommended"
       ],
       "rules": {
+        "@angular-eslint/template/prefer-control-flow": "off",
         "@fyle/i18n-key-naming-convention": [
-          "error",
+          "warn",
           {
-            "ignoredPrefixes": ["qbd_direct.", "netsuite.", "xero.", "intacct.", "configuration.", "dashboard.", "exportLog.", "mapping.", "landing.", "common."]
+            "ignoredPrefixes": ["qbd_direct.", "netsuite.", "xero.", "intacct.", "configuration.", "dashboard.", "dashboardTokenExpired.", "exportLog.", "mapping.", "landing.", "common.", "integrations.", "pipes."]
           }
         ],
         "@fyle/no-hardcoded-strings": "warn"
+      }
+    },
+    {
+      "files": [
+        "src/stories/**/*.ts"
+      ],
+      "rules": {
+        "@typescript-eslint/consistent-type-imports": "off",
+        "@fyle/i18n-key-naming-convention": "off",
+        "@fyle/no-hardcoded-strings": "off"
       }
     }
   ]

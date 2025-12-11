@@ -1,9 +1,9 @@
 import { Component, EventEmitter, Input, OnInit, Output, viewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { TranslocoService } from '@jsverse/transloco';
-import { MenuItem } from 'primeng/api';
-import { Dropdown } from 'primeng/dropdown';
+import { Select } from 'primeng/select';
 import { brandingConfig, brandingFeatureConfig, brandingStyle } from 'src/app/branding/branding-config';
+import { TabMenuItem } from 'src/app/core/models/common/tab-menu.model';
 import { AppName, ButtonSize, ButtonType, IframeOrigin, InAppIntegration } from 'src/app/core/models/enum/enum.model';
 import { Integration } from 'src/app/core/models/integrations/integrations.model';
 import { MainMenuDropdownGroup } from 'src/app/core/models/misc/main-menu-dropdown-options';
@@ -14,15 +14,16 @@ import { TrackingService } from 'src/app/core/services/integration/tracking.serv
 import { IframeOriginStorageService } from 'src/app/core/services/misc/iframe-origin-storage.service';
 
 @Component({
-  selector: 'app-main-menu',
-  templateUrl: './main-menu.component.html',
-  styleUrls: ['./main-menu.component.scss']
+    selector: 'app-main-menu',
+    templateUrl: './main-menu.component.html',
+    styleUrls: ['./main-menu.component.scss'],
+    standalone: false
 })
 export class MainMenuComponent implements OnInit {
 
-  @Input() modules: MenuItem[];
+  @Input() modules: TabMenuItem[];
 
-  @Input() activeItem: MenuItem;
+  @Input() activeItem: string;
 
   @Input() dropdownValue = null;
 
@@ -46,7 +47,7 @@ export class MainMenuComponent implements OnInit {
 
   @Output() disconnectClick = new EventEmitter();
 
-  private pDropdown = viewChild(Dropdown);
+  private pDropdown = viewChild(Select);
 
   ButtonType = ButtonType;
 
@@ -77,6 +78,18 @@ export class MainMenuComponent implements OnInit {
     this.showMoreDropdown =
       this.brandingFeatureConfig.showMoreDropdownInMainMenu &&
       this.iframeOriginStorageService.get() === IframeOrigin.ADMIN_DASHBOARD;
+  }
+
+  onTabChange(value: string | number | undefined){
+    if (!value) {
+      return;
+    }
+    const stringValue = String(value);
+    this.activeItem = stringValue;
+    const selectedModule = this.modules.find(m => m.value === stringValue);
+    if (selectedModule?.routerLink) {
+      this.router.navigate([selectedModule.routerLink]);
+    }
   }
 
   handleDropdownChange(event: any) {
@@ -184,14 +197,12 @@ export class MainMenuComponent implements OnInit {
       this.toolTipText = this.translocoService.translate('mainMenu.syncTooltip', { appName: this.appName, brandName: brandingConfig.brandName });
     }
 
+    const activeModule = this.modules.find(module => this.router.url.includes(module.routerLink || ''));
+    this.activeItem = activeModule ? activeModule.value : this.modules[0].value;
+
     if (this.router.url.includes("/token_expired/") || this.router.url.includes("/disconnect/")){
       this.isMenuDisabled = true;
       this.isDisconnectRequired = false;
-      this.modules = this.modules.map(item => ({
-        ...item,
-        disabled: item.disabled !== undefined ? item.disabled : this.isMenuDisabled
-      }));
-
     }
   }
 }

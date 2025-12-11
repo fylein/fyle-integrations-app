@@ -5,9 +5,7 @@ import { QbdRoutingModule } from './qbd-routing.module';
 import { QbdMainComponent } from './qbd-main/qbd-main.component';
 import { QbdOnboardingComponent } from './qbd-onboarding/qbd-onboarding.component';
 import { SharedModule } from 'src/app/shared/shared.module';
-import { IconSpriteModule } from 'ng-svg-icon-sprite';
-import { TabMenuModule } from 'primeng/tabmenu';
-import { DropdownModule } from 'primeng/dropdown';
+import { SelectModule } from 'primeng/select';
 import { TableModule } from 'primeng/table';
 import { QbdSharedModule } from './qbd-shared/qbd-shared.module';
 
@@ -21,10 +19,8 @@ import { QbdSharedModule } from './qbd-shared/qbd-shared.module';
     CommonModule,
     QbdRoutingModule,
     SharedModule,
-    TabMenuModule,
-    DropdownModule,
+    SelectModule,
     TableModule,
-    IconSpriteModule.forRoot({ path: 'assets/sprites/sprite.svg' }),
     QbdSharedModule
   ]
 })

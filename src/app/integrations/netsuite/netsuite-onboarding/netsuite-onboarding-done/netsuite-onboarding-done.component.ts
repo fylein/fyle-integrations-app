@@ -2,9 +2,10 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-netsuite-onboarding-done',
-  templateUrl: './netsuite-onboarding-done.component.html',
-  styleUrls: ['./netsuite-onboarding-done.component.scss']
+    selector: 'app-netsuite-onboarding-done',
+    templateUrl: './netsuite-onboarding-done.component.html',
+    styleUrls: ['./netsuite-onboarding-done.component.scss'],
+    standalone: false
 })
 export class NetsuiteOnboardingDoneComponent implements OnInit {
 

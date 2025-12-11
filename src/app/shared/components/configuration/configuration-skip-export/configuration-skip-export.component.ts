@@ -8,9 +8,10 @@ import { HelperService } from 'src/app/core/services/common/helper.service';
 import { TranslocoService } from '@jsverse/transloco';
 
 @Component({
-  selector: 'app-configuration-skip-export',
-  templateUrl: './configuration-skip-export.component.html',
-  styleUrls: ['./configuration-skip-export.component.scss']
+    selector: 'app-configuration-skip-export',
+    templateUrl: './configuration-skip-export.component.html',
+    styleUrls: ['./configuration-skip-export.component.scss'],
+    standalone: false
 })
 export class ConfigurationSkipExportComponent implements OnInit {
 
@@ -127,16 +128,15 @@ export class ConfigurationSkipExportComponent implements OnInit {
   resetAdditionalFilter() {
     this.skipExportForm.controls.join_by.reset();
     this.skipExportForm.controls.condition2.reset();
-    this.skipExportForm.controls.value2.reset();
+    this.skipExportForm.controls.value2.setValue([]);
   }
 
   resetFields(operator: AbstractControl, value: AbstractControl, conditionSelected: ConditionField, rank: number) {
     operator.reset();
-    value.reset();
     if (rank === 1) {
-      this.skipExportForm.controls.value1.reset();
+      this.skipExportForm.controls.value1.setValue([]);
     } else if (rank === 2) {
-      this.skipExportForm.controls.value2.reset();
+      this.skipExportForm.controls.value2.setValue([]);
     }
     if (conditionSelected) {
       if (conditionSelected.is_custom) {
@@ -330,11 +330,43 @@ export class ConfigurationSkipExportComponent implements OnInit {
     this.setOperatorFieldOptions(response, conditionArray);
     this.setSkippedConditions(response, conditionArray);
     this.conditionFieldWatcher();
+    this.helper.normalizeChipFieldValues(this.skipExportForm, ['value1', 'value2']);
     this.isLoading = false;
   }
 
   ngOnInit(): void {
     this.setupComponentOptions();
     this.setupSkipExportForm(this.expenseFilter, []);
+  }
+
+  // Methods for p-autocomplete functionality (replacing p-autocomplete)
+  onKeyDown(event: any, fieldNumber: number): void {
+    const keyboardEvent = event as KeyboardEvent;
+    const target = keyboardEvent.target as HTMLInputElement;
+    // Handle comma and Enter key to add chips (replaces separator="," functionality)
+    if ((keyboardEvent.key === ',' || keyboardEvent.key === 'Enter') && target.value.trim()) {
+      keyboardEvent.preventDefault();
+      this.addChip(target.value.trim(), target, fieldNumber);
+    }
+  }
+
+  onBlur(event: any, fieldNumber: number): void {
+    const target = event.target as HTMLInputElement;
+    // Replaces [addOnBlur]="true" functionality
+    if (target.value.trim()) {
+      this.addChip(target.value.trim(), target, fieldNumber);
+    }
+  }
+
+  private addChip(value: string, inputElement: HTMLInputElement, fieldNumber: number): void {
+    const formControlName = fieldNumber === 1 ? 'value1' : 'value2';
+    const currentValues = this.skipExportForm.get(formControlName)?.value || [];
+
+    // Avoid duplicates
+    if (!currentValues.includes(value)) {
+      const newValues = [...currentValues, value];
+      this.skipExportForm.get(formControlName)?.setValue(newValues);
+      inputElement.value = ''; // Clear input after adding
+    }
   }
 }

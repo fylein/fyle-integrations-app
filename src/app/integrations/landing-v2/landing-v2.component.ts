@@ -13,9 +13,10 @@ import { IntegrationsService } from 'src/app/core/services/common/integrations.s
 import { TrackingService } from 'src/app/core/services/integration/tracking.service';
 
 @Component({
-  selector: 'app-landing-v2',
-  templateUrl: './landing-v2.component.html',
-  styleUrl: './landing-v2.component.scss'
+    selector: 'app-landing-v2',
+    templateUrl: './landing-v2.component.html',
+    styleUrl: './landing-v2.component.scss',
+    standalone: false
 })
 export class LandingV2Component implements OnInit {
 

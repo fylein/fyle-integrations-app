@@ -1,90 +1,103 @@
-<div *ngIf="isLoading" class="tw-flex tw-justify-center tw-items-center tw-h-full">
+@if (isLoading) {
+  <div class="tw-flex tw-justify-center tw-items-center tw-h-full">
     <app-loader></app-loader>
-</div>
-<div *ngIf="!isLoading" class="configuration--contents tw-border-separator tw-mt-6" [ngClass]="brandingStyle.common.configurationContents">
+  </div>
+}
+@if (!isLoading) {
+  <div class="configuration--contents tw-border-separator tw-mt-6" [ngClass]="brandingStyle.common.configurationContents">
     <div>
-        <app-configuration-step-header [headerText]="'businessCentralImportSettings.headerText' | transloco"
-            [contentText]="'businessCentralImportSettings.contentText' | transloco:{ brandName: brandingService.getBrandFullName() }"
-            [redirectLink]="supportArticleLink" [showSyncButton]="isOnboarding" [appName]="appName"
-            (refreshDimension)="refreshDimensions($event)">
-        </app-configuration-step-header>
+      <app-configuration-step-header [headerText]="'businessCentralImportSettings.headerText' | transloco"
+        [contentText]="'businessCentralImportSettings.contentText' | transloco:{ brandName: brandingService.getBrandFullName() }"
+        [redirectLink]="supportArticleLink" [showSyncButton]="isOnboarding" [appName]="appName"
+        (refreshDimension)="refreshDimensions($event)">
+      </app-configuration-step-header>
     </div>
     <div>
-        <form [formGroup]="importSettingForm">
-            <div class="tw-p-24-px">
-                <div class="tw-rounded-lg tw-border-separator tw-border">
-                    <app-configuration-toggle-field
-                        [form]="importSettingForm"
-                        [label]="'businessCentralImportSettings.importChartOfAccountsLabel' | transloco:{ brandName: brandingConfig.brandName }"
-                        [subLabel]="'businessCentralImportSettings.importChartOfAccountsSubLabel' | transloco:{ brandName: brandingConfig.brandName }"
-                        [formControllerName]="'importCategories'"
-                        [isSectionHeader]="false"
-                        [iconPath]="'arrow-tail-down'">
-                    </app-configuration-toggle-field>
-
-                    <div class="tw-pr-24-px tw-pl-64-px tw-py-0 tw-pb-24-px" *ngIf="importSettingForm.get('importCategories')?.value">
-                        <div class="tw-flex tw-justify-between tw-items-center">
-                            <h5 class="lg:tw-w-3/5 md:tw-w-1/2 tw-text-slightly-normal-text-color tw-text-14-px !tw-font-500">
-                                {{ 'businessCentralImportSettings.selectAccountsLabel' | transloco:{ appName: appName, brandName: brandingConfig.brandName } }}
-                                <p class="tw-text-text-muted" [ngClass]="brandingStyle.common.inputLabelTextStyle">
-                                    {{ 'businessCentralImportSettings.selectAccountsDescription' | transloco }}
-                                </p>
-                            </h5>
-                            <div class="p-field-checkbox tw-pl-34-px">
-                                <p-multiSelect [optionDisabled]="'Expense'" [placeholder]="'businessCentralImportSettings.selectChartOfAccountsPlaceholder' | transloco" [options]="chartOfAccountTypesList" styleClass="tw-z-2 tw-py-8-px tw-px-12-px" [formControlName]="'chartOfAccountTypes'">
-                                    <ng-template let-value pTemplate="selectedItems">
-                                        <div class="tw-inline-flex tw-align-items-center" *ngFor="let option of value; let i = index">
-                                            <div>{{ option | sentenceCase }}<span *ngIf="i !== value?.length-1">,&nbsp;</span></div>
-                                        </div>
-                                        <div *ngIf="!value || value.length === 0">{{helper.sentenseCaseConversion(('businessCentralImportSettings.selectChartOfAccountsPlaceholder' | transloco))}}</div>
-                                    </ng-template>
-                                </p-multiSelect>
-                            </div>
-                        </div>
-                    </div>
+      <form [formGroup]="importSettingForm">
+        <div class="tw-p-24-px">
+          <div class="tw-rounded-lg tw-border-separator tw-border">
+            <app-configuration-toggle-field
+              [form]="importSettingForm"
+              [label]="'businessCentralImportSettings.importChartOfAccountsLabel' | transloco:{ brandName: brandingConfig.brandName }"
+              [subLabel]="'businessCentralImportSettings.importChartOfAccountsSubLabel' | transloco:{ brandName: brandingConfig.brandName }"
+              [formControllerName]="'importCategories'"
+              [isSectionHeader]="false"
+              [iconPath]="'arrow-tail-down'">
+            </app-configuration-toggle-field>
+            @if (importSettingForm.get('importCategories')?.value) {
+              <div class="tw-pr-24-px tw-pl-64-px tw-py-0 tw-pb-24-px">
+                <div class="tw-flex tw-justify-between tw-items-center">
+                  <h5 class="lg:tw-w-3/5 md:tw-w-1/2 tw-text-slightly-normal-text-color tw-text-14-px !tw-font-500">
+                    {{ 'businessCentralImportSettings.selectAccountsLabel' | transloco:{ appName: appName, brandName: brandingConfig.brandName } }}
+                    <p class="tw-text-text-muted" [ngClass]="brandingStyle.common.inputLabelTextStyle">
+                      {{ 'businessCentralImportSettings.selectAccountsDescription' | transloco }}
+                    </p>
+                  </h5>
+                  <div class="p-field-checkbox tw-pl-34-px">
+                    <p-multiselect [optionDisabled]="'Expense'" [placeholder]="'businessCentralImportSettings.selectChartOfAccountsPlaceholder' | transloco" [options]="chartOfAccountTypesList" styleClass="tw-z-2 tw-py-8-px tw-px-12-px" [formControlName]="'chartOfAccountTypes'">
+                      <ng-template let-value pTemplate="selectedItems">
+                        @for (option of value; track option; let i = $index) {
+                          <div class="tw-inline-flex tw-align-items-center">
+                            <div>{{ option | sentenceCase }}@if (i !== value?.length-1) {
+                              <span>,&nbsp;</span>
+                            }</div>
+                          </div>
+                        }
+                        @if (!value || value.length === 0) {
+                          <div>{{helper.sentenseCaseConversion(('businessCentralImportSettings.selectChartOfAccountsPlaceholder' | transloco))}}</div>
+                        }
+                      </ng-template>
+                    </p-multiselect>
+                  </div>
                 </div>
-                <div class="tw-rounded-lg tw-border-separator tw-border tw-mt-16-px">
-                    <app-configuration-toggle-field
-                        [form]="importSettingForm"
-                        [label]="'businessCentralImportSettings.importVendorLabel' | transloco:{ brandName: brandingConfig.brandName }"
-                        [subLabel]="'businessCentralImportSettings.importVendorSubLabel' | transloco:{ brandName: brandingConfig.brandName }"
-                        [formControllerName]="'importVendorAsMerchant'"
-                        [isSectionHeader]="false"
-                        [iconPath]="'arrow-tail-down'">
-                    </app-configuration-toggle-field>
-                </div>
-                <div>
-                    <app-configuration-import-field
-                        [form]="importSettingForm"
-                        [appName]="appName"
-                        [accountingFieldOptions]="businessCentralFields"
-                        [fyleFieldOptions]="fyleFields"
-                        [isDestinationFixedImport]="true">
-                    </app-configuration-import-field>
-                </div>
-            </div>
-            <app-configuration-step-footer
-                [ctaText] = "!isSaveInProgress ? (isOnboarding ? ConfigurationCtaText.SAVE_AND_CONTINUE : ConfigurationCtaText.SAVE) : ConfigurationCtaText.SAVING"
-                [showBackButton] = "isOnboarding"
-                [isButtonDisabled]="!importSettingForm.valid"
-                (navigateToPreviousStep)="navigateBack()"
-                (save)="save()">
-            </app-configuration-step-footer>
-        </form>
+              </div>
+            }
+          </div>
+          <div class="tw-rounded-lg tw-border-separator tw-border tw-mt-16-px">
+            <app-configuration-toggle-field
+              [form]="importSettingForm"
+              [label]="'businessCentralImportSettings.importVendorLabel' | transloco:{ brandName: brandingConfig.brandName }"
+              [subLabel]="'businessCentralImportSettings.importVendorSubLabel' | transloco:{ brandName: brandingConfig.brandName }"
+              [formControllerName]="'importVendorAsMerchant'"
+              [isSectionHeader]="false"
+              [iconPath]="'arrow-tail-down'">
+            </app-configuration-toggle-field>
+          </div>
+          <div>
+            <app-configuration-import-field
+              [form]="importSettingForm"
+              [appName]="appName"
+              [accountingFieldOptions]="businessCentralFields"
+              [fyleFieldOptions]="fyleFields"
+              [isDestinationFixedImport]="true">
+            </app-configuration-import-field>
+          </div>
+        </div>
+        <app-configuration-step-footer
+          [ctaText] = "!isSaveInProgress ? (isOnboarding ? ConfigurationCtaText.SAVE_AND_CONTINUE : ConfigurationCtaText.SAVE) : ConfigurationCtaText.SAVING"
+          [showBackButton] = "isOnboarding"
+          [isButtonDisabled]="!importSettingForm.valid"
+          (navigateToPreviousStep)="navigateBack()"
+          (save)="save()">
+        </app-configuration-step-footer>
+      </form>
     </div>
     <div>
-        <app-configuration-custom-field-creation-dialog
-            [customFieldForm]="customFieldForm"
-            [showCustomFieldCreationDialog]="showCustomFieldDialog"
-            (saveCustomFieldFn)="saveFyleExpenseField()"
-            (closeModelFn)="closeModel()">
-        </app-configuration-custom-field-creation-dialog>
+      <app-configuration-custom-field-creation-dialog
+        [customFieldForm]="customFieldForm"
+        [showCustomFieldCreationDialog]="showCustomFieldDialog"
+        (saveCustomFieldFn)="saveFyleExpenseField()"
+        (closeModelFn)="closeModel()">
+      </app-configuration-custom-field-creation-dialog>
     </div>
-</div>
-<div *ngIf="isPreviewDialogVisible">
+  </div>
+}
+@if (isPreviewDialogVisible) {
+  <div>
     <app-preview-dialog
-        [isPreviewDialogVisible]="true"
-        [iconPath]="'assets/illustrations/sageIntacct/IntacctImportSettings.png'" (closeDialog)="closeDialog()"
-        [header]="'businessCentralImportSettings.previewHeader' | transloco">
+      [isPreviewDialogVisible]="true"
+      [iconPath]="'assets/illustrations/sageIntacct/IntacctImportSettings.png'" (closeDialog)="closeDialog()"
+      [header]="'businessCentralImportSettings.previewHeader' | transloco">
     </app-preview-dialog>
-</div>
+  </div>
+}

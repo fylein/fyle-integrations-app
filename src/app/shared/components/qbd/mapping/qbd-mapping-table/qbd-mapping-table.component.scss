@@ -6,12 +6,20 @@ td {
     @apply tw-text-14-px tw-text-sub-text-color tw-px-24-px tw-font-400 #{!important};
 }
 
+.p-input-icon-right {
+    @apply tw-relative tw-inline-block #{!important};
+}
+
+.p-input-icon-right > i {
+    @apply tw-absolute tw-right-12-px tw-top-1/2 tw-transform tw--translate-y-1/2 tw-z-10 #{!important};
+}
+
 .pi-check:before {
     @apply tw-text-14-px tw-cursor-pointer tw-text-text-muted #{!important};
 }
 
 .p-inputtext {
-    @apply tw-w-220-px tw-h-40-px tw-py-10-px tw-text-slightly-normal-text-color tw-border tw-pl-12-px #{!important}
+    @apply tw-w-220-px tw-h-40-px tw-py-10-px tw-text-slightly-normal-text-color tw-border tw-pl-12-px tw-pr-40-px #{!important}
 }
 
 :host ::ng-deep .tooltip-main {

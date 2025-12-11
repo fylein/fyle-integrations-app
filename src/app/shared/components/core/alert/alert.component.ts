@@ -5,9 +5,10 @@ type AlertType = 'info' | 'danger';
 type AlertVariant = 'standard' | 'subtle' | 'subtle-bordered';
 
 @Component({
-  selector: 'app-alert',
-  templateUrl: './alert.component.html',
-  styleUrl: './alert.component.scss'
+    selector: 'app-alert',
+    templateUrl: './alert.component.html',
+    styleUrl: './alert.component.scss',
+    standalone: false
 })
 export class AlertComponent {
   @Input() type: AlertType = 'info';

@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { AppName, RefinerSurveyType } from 'src/app/core/models/enum/enum.model';
@@ -7,11 +7,10 @@ import { SharedModule } from 'src/app/shared/shared.module';
 import { environment } from 'src/environments/environment';
 
 @Component({
-  selector: 'app-qbd-direct-onboarding-done',
-  standalone: true,
-  imports: [SharedModule, CommonModule],
-  templateUrl: './qbd-direct-onboarding-done.component.html',
-  styleUrl: './qbd-direct-onboarding-done.component.scss'
+    selector: 'app-qbd-direct-onboarding-done',
+    imports: [SharedModule],
+    templateUrl: './qbd-direct-onboarding-done.component.html',
+    styleUrl: './qbd-direct-onboarding-done.component.scss'
 })
 export class QbdDirectOnboardingDoneComponent {
 

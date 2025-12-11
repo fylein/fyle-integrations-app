@@ -15,9 +15,10 @@ import { catchError, forkJoin, of } from 'rxjs';
 import { onboardingStateComponentMap } from 'src/app/core/models/intacct/misc/onboarding-state-map';
 
 @Component({
-  selector: 'app-intacct',
-  templateUrl: './intacct.component.html',
-  styleUrls: ['./intacct.component.scss']
+    selector: 'app-intacct',
+    templateUrl: './intacct.component.html',
+    styleUrls: ['./intacct.component.scss'],
+    standalone: false
 })
 export class IntacctComponent implements OnInit {
 

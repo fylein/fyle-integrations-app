@@ -1,73 +1,82 @@
-<div *ngIf="isLoading" class="tw-flex tw-justify-center tw-items-center tw-h-[75vh]">
+@if (isLoading) {
+  <div class="tw-flex tw-justify-center tw-items-center tw-h-[75vh]">
     <app-loader></app-loader>
-</div>
-<div *ngIf="!isLoading" [ngClass]="[brandingStyle.configuration.settingsContainer, isOnboarding ? brandingStyle.common.configurationContents : brandingStyle.common.configurationContentsDashboard, isOnboarding ? 'configuration--contents' : '']">
+  </div>
+}
+@if (!isLoading) {
+  <div [ngClass]="[brandingStyle.configuration.settingsContainer, isOnboarding ? brandingStyle.common.configurationContents : brandingStyle.common.configurationContentsDashboard, isOnboarding ? 'configuration--contents' : '']">
     <div>
-        <app-configuration-step-header [headerText]="'intacctC1ImportSettings.header' | transloco"
-            [contentText]="'intacctC1ImportSettings.contentText' | transloco"
-            [redirectLink]="supportArticleLink" [showSyncButton]="isOnboarding" [appName]="appName"
-            (refreshDimension)="refreshDimensions()">
-        </app-configuration-step-header>
+      <app-configuration-step-header [headerText]="'intacctC1ImportSettings.header' | transloco"
+        [contentText]="'intacctC1ImportSettings.contentText' | transloco"
+        [redirectLink]="supportArticleLink" [showSyncButton]="isOnboarding" [appName]="appName"
+        (refreshDimension)="refreshDimensions()">
+      </app-configuration-step-header>
     </div>
     <div>
-        <form [formGroup]="importSettingsForm">
-            <div class="tw-p-24-px tw-pt-0">
-                <div>
-                    <app-configuration-import-field
-                        [form]="importSettingsForm"
-                        [appName]="appName"
-                        [accountingFieldOptions]="sageIntacctFields"
-                        [fyleFieldOptions]="fyleFields"
-                        [costCategoryOption]="costCategoryOption"
-                        [costCodeFieldOption]="costCodeFieldOption"
-                        [dependentImportFields]="dependentImportFields"
-                        [dependentDestinationValue]="'PROJECT'"
-                        [isDestinationFixedImport]="true"
-                        (showWarningForDependentFields)="showWarningForDependentFields()">
-                    </app-configuration-import-field>
-                </div>
-            </div>
-            <app-configuration-step-footer
-                *ngIf="isOnboarding"
-                [ctaText] = "!saveInProgress ? (isOnboarding ? ConfigurationCtaText.SAVE_AND_CONTINUE : ConfigurationCtaText.SAVE) : ConfigurationCtaText.SAVING"
-                [isButtonDisabled]="!importSettingsForm.valid"
-                [showBackButton]="isOnboarding ? true : false"
-                (save)="save()"
-                (navigateToPreviousStep)="navigateToPreviousStep()">
-            </app-configuration-step-footer>
-        </form>
+      <form [formGroup]="importSettingsForm">
+        <div class="tw-p-24-px tw-pt-0">
+          <div>
+            <app-configuration-import-field
+              [form]="importSettingsForm"
+              [appName]="appName"
+              [accountingFieldOptions]="sageIntacctFields"
+              [fyleFieldOptions]="fyleFields"
+              [costCategoryOption]="costCategoryOption"
+              [costCodeFieldOption]="costCodeFieldOption"
+              [dependentImportFields]="dependentImportFields"
+              [dependentDestinationValue]="'PROJECT'"
+              [isDestinationFixedImport]="true"
+              (showWarningForDependentFields)="showWarningForDependentFields()">
+            </app-configuration-import-field>
+          </div>
+        </div>
+        @if (isOnboarding) {
+          <app-configuration-step-footer
+            [ctaText] = "!saveInProgress ? (isOnboarding ? ConfigurationCtaText.SAVE_AND_CONTINUE : ConfigurationCtaText.SAVE) : ConfigurationCtaText.SAVING"
+            [isButtonDisabled]="!importSettingsForm.valid"
+            [showBackButton]="isOnboarding ? true : false"
+            (save)="save()"
+            (navigateToPreviousStep)="navigateToPreviousStep()">
+          </app-configuration-step-footer>
+        }
+      </form>
     </div>
     <div>
-        <app-configuration-custom-field-creation-dialog
-            [customFieldForm]="customFieldForm"
-            [showCustomFieldCreationDialog]="showDialog"
-            (saveCustomFieldFn)="saveCustomField()"
-            (closeModelFn)="closeModel()">
-        </app-configuration-custom-field-creation-dialog>
+      <app-configuration-custom-field-creation-dialog
+        [customFieldForm]="customFieldForm"
+        [showCustomFieldCreationDialog]="showDialog"
+        (saveCustomFieldFn)="saveCustomField()"
+        (closeModelFn)="closeModel()">
+      </app-configuration-custom-field-creation-dialog>
     </div>
-</div>
-<div *ngIf="!isLoading && !isOnboarding" class="tw-sticky tw-top-0 tw-bottom-0 tw-left-0 tw-right-0 tw-bg-white">
+  </div>
+}
+@if (!isLoading && !isOnboarding) {
+  <div class="tw-sticky tw-top-0 tw-bottom-0 tw-left-0 tw-right-0 tw-bg-white">
     <app-configuration-step-footer
-        [ctaText] = "!saveInProgress ? (isOnboarding ? ConfigurationCtaText.SAVE_AND_CONTINUE : ConfigurationCtaText.SAVE) : ConfigurationCtaText.SAVING"
-        [isButtonDisabled]="!importSettingsForm.valid"
-        [showBackButton]="isOnboarding ? true : false"
-        (save)="save()"
-        (navigateToPreviousStep)="navigateToPreviousStep()">
+      [ctaText] = "!saveInProgress ? (isOnboarding ? ConfigurationCtaText.SAVE_AND_CONTINUE : ConfigurationCtaText.SAVE) : ConfigurationCtaText.SAVING"
+      [isButtonDisabled]="!importSettingsForm.valid"
+      [showBackButton]="isOnboarding ? true : false"
+      (save)="save()"
+      (navigateToPreviousStep)="navigateToPreviousStep()">
     </app-configuration-step-footer>
-</div>
+  </div>
+}
 <div>
-    <app-configuration-confirmation-dialog
-        (warningAccepted)="acceptDependentFieldWarning($event)"
-        [isWarningVisible]="showDependentFieldWarning"
-        [headerText]="'intacctC1ImportSettings.warningHeader' | transloco"
-        [contextText]="(importSettings?.dependent_field_settings?.cost_type_field_name ? 'intacctC1ImportSettings.warningContextWithCostTypes' : 'intacctC1ImportSettings.warningContext') | transloco: { brandName: brandingConfig.brandName }"
-        [confirmBtnText]="'intacctC1ImportSettings.continue' | transloco">
-    </app-configuration-confirmation-dialog>
+  <app-configuration-confirmation-dialog
+    (warningAccepted)="acceptDependentFieldWarning($event)"
+    [isWarningVisible]="showDependentFieldWarning"
+    [headerText]="'intacctC1ImportSettings.warningHeader' | transloco"
+    [contextText]="(importSettings?.dependent_field_settings?.cost_type_field_name ? 'intacctC1ImportSettings.warningContextWithCostTypes' : 'intacctC1ImportSettings.warningContext') | transloco: { brandName: brandingConfig.brandName }"
+    [confirmBtnText]="'intacctC1ImportSettings.continue' | transloco">
+  </app-configuration-confirmation-dialog>
 </div>
-<div *ngIf="isDialogVisible">
+@if (isDialogVisible) {
+  <div>
     <app-preview-dialog
-        [isPreviewDialogVisible]="true"
-        [iconPath]="'assets/illustrations/sageIntacct/IntacctImportSettings.png'" (closeDialog)="showPreviewDialog(false)"
-        [header]="'intacctC1ImportSettings.preview' | transloco">
+      [isPreviewDialogVisible]="true"
+      [iconPath]="'assets/illustrations/sageIntacct/IntacctImportSettings.png'" (closeDialog)="showPreviewDialog(false)"
+      [header]="'intacctC1ImportSettings.preview' | transloco">
     </app-preview-dialog>
-</div>
+  </div>
+}

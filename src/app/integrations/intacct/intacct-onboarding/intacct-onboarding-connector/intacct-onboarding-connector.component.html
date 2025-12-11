@@ -1,3 +1,7 @@
 <app-onboarding-steppers [onboardingSteps]="onboardingSteps" [disableConfigurationStepsIfTokenInvalid]="!isIntacctCredentialsValid"></app-onboarding-steppers>
-<app-intacct-connector (setupConnectionStatus)="setupConnectionStatus($event)" *ngIf="!isIntacctCredentialsValid"></app-intacct-connector>
-<app-intacct-location-entity *ngIf="isIntacctCredentialsValid"></app-intacct-location-entity>
+@if (!isIntacctCredentialsValid) {
+  <app-intacct-connector (setupConnectionStatus)="setupConnectionStatus($event)"></app-intacct-connector>
+}
+@if (isIntacctCredentialsValid) {
+  <app-intacct-location-entity></app-intacct-location-entity>
+}

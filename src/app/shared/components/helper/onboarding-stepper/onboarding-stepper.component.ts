@@ -5,9 +5,10 @@ import { AppName, IntacctOnboardingState, QBDOnboardingState } from 'src/app/cor
 import { OnboardingStepper } from 'src/app/core/models/misc/onboarding-stepper.model';
 
 @Component({
-  selector: 'app-onboarding-steppers',
-  templateUrl: './onboarding-stepper.component.html',
-  styleUrls: ['./onboarding-stepper.component.scss']
+    selector: 'app-onboarding-steppers',
+    templateUrl: './onboarding-stepper.component.html',
+    styleUrls: ['./onboarding-stepper.component.scss'],
+    standalone: false
 })
 export class OnboardingSteppersComponent implements OnInit {
 
