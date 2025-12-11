@@ -10,10 +10,6 @@
   @apply tw-py-10-px tw-px-16-px tw-border tw-border-box-color tw-bg-white tw-rounded-4-px tw-text-slightly-normal-text-color tw-mr-16-px #{!important};
 }
 
-:host ::ng-deep .p-select {
-  // transform: scale(0.9);
-}
-
 .form-input-disabled {
   @apply tw-px-12-px tw-pt-0 tw-pb-14-px tw-bg-input-read-only-bg tw-border tw-border-input-read-only-border tw-rounded-8-px ;
 }
@@ -115,7 +111,12 @@
 }
 
 /* Hide the browser's default checkbox */
+:host ::ng-deep input[type="checkbox"] {
+  @apply tw-appearance-none tw-w-0 tw-h-0 tw-hidden #{!important};
+}
+
 .container input {
+  @apply tw-absolute  tw-cursor-pointer tw-h-0 tw-w-0 tw-hidden #{!important};
 @apply tw-absolute  tw-cursor-pointer tw-h-0 tw-w-0
 }
 
