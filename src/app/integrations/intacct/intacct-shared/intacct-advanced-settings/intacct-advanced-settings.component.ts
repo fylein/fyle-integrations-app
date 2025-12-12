@@ -400,7 +400,8 @@ export class IntacctAdvancedSettingsComponent implements OnInit {
 
   isAutoCreateMerchantsFieldVisible(): boolean {
     return (this.corporateCreditCardExpense === IntacctCorporateCreditCardExpensesObject.CHARGE_CARD_TRANSACTION && !this.importVendorsAsMerchants) ||
-      (this.corporateCreditCardExpense === IntacctCorporateCreditCardExpensesObject.JOURNAL_ENTRY && !this.importVendorsAsMerchants && this.useMerchantInJournalLine);
+      (this.corporateCreditCardExpense === IntacctCorporateCreditCardExpensesObject.JOURNAL_ENTRY && !this.importVendorsAsMerchants && this.useMerchantInJournalLine) ||
+      (this.corporateCreditCardExpense === IntacctCorporateCreditCardExpensesObject.EXPENSE_REPORT && !this.importVendorsAsMerchants);
   }
 
   ngOnInit(): void {
