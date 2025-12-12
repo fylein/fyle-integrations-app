@@ -191,6 +191,8 @@ export class ConfigurationImportFieldComponent implements OnInit {
       this.isXeroProjectMapped = false;
       this.xeroProjectMapping.emit(this.isXeroProjectMapped);
     }
+
+    this.importCodeEnabled.emit([(this.form.get('expenseFields') as FormArray).at(index)?.get('import_to_fyle')?.value, this.getDestinationField((this.form.get('expenseFields') as FormArray).at(index)?.get('destination_field')?.value).toLowerCase(), index]);
   }
 
   getOptions(expenseField: AbstractControl): FyleField[] {
