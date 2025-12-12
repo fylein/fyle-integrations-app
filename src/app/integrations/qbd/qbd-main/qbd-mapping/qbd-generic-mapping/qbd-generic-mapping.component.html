@@ -1,23 +1,32 @@
-<div *ngIf="isLoading" class="tw-flex tw-justify-center tw-items-center tw-h-full">
+@if (isLoading) {
+  <div class="tw-flex tw-justify-center tw-items-center tw-h-full">
     <app-loader></app-loader>
-</div>
-<div *ngIf="!isLoading" class="tw-py-16-px" [ngClass]="brandingStyle.common.mainComponentPadding">
+  </div>
+}
+@if (!isLoading) {
+  <div class="tw-py-16-px" [ngClass]="brandingStyle.common.mainComponentPadding">
     <div>
-        <app-qbd-mapping-header-section [sourceType]="sourceType" [mappingStats]="mappingStats"></app-qbd-mapping-header-section>
+      <app-qbd-mapping-header-section [sourceType]="sourceType" [mappingStats]="mappingStats"></app-qbd-mapping-header-section>
     </div>
-
     <div class="tw-shadow-app-card tw-rounded-8-px tw-bg-white tw-border-1-px tw-border-separator tw-mt-16-px">
-        <div class="tw-p-24-px">
-            <app-mapping-filter [appName]="AppName.QBD" [mappingFilter]="selectedMappingFilter" (mappingFilterChangeEvent)="mappingStateFilter($event)" (mappingSearchingEvent)="mappingSeachingFilter($event)" [isAlphabetFilterHidden]="true"></app-mapping-filter>
+      <div class="tw-p-24-px">
+        <app-mapping-filter [appName]="AppName.QBD" [mappingFilter]="selectedMappingFilter" (mappingFilterChangeEvent)="mappingStateFilter($event)" (mappingSearchingEvent)="mappingSeachingFilter($event)" [isAlphabetFilterHidden]="true"></app-mapping-filter>
+      </div>
+      @if (totalCount > 0) {
+        <div >
+          <app-qbd-mapping-table [mappings]="filteredMappings" [destinationFieldType]="destinationFieldType.TEXT" [fyleHeaderName]="'qbdGenericMapping.fyleHeaderName' | transloco: { sourceType: sourceType, brandName: brandingConfig.brandName }" [destinationHeaderName]="destinationHeaderName" [operatingSystem]="operationgSystem" (postMapping)="postMapping($event)"></app-qbd-mapping-table>
         </div>
-        <div *ngIf="totalCount > 0" >
-            <app-qbd-mapping-table [mappings]="filteredMappings" [destinationFieldType]="destinationFieldType.TEXT" [fyleHeaderName]="'qbdGenericMapping.fyleHeaderName' | transloco: { sourceType: sourceType, brandName: brandingConfig.brandName }" [destinationHeaderName]="destinationHeaderName" [operatingSystem]="operationgSystem" (postMapping)="postMapping($event)"></app-qbd-mapping-table>
+      }
+      @if (totalCount > 0) {
+        <div class="tw-p-24-px tw-border tw-border-t-separator" >
+          <app-paginator [totalCount]="totalCount" [pageType]="PaginatorPage.MAPPING" [page]="currentPage" [dropDownValue]="limit" (pageSizeChangeEvent)="pageSizeChanges($event)" (pageOffsetChangeEvent)="pageOffsetChanges($event)"></app-paginator>
         </div>
-        <div class="tw-p-24-px tw-border tw-border-t-separator" *ngIf="totalCount > 0" >
-            <app-paginator [totalCount]="totalCount" [pageType]="PaginatorPage.MAPPING" [page]="currentPage" [dropDownValue]="limit" (pageSizeChangeEvent)="pageSizeChanges($event)" (pageOffsetChangeEvent)="pageOffsetChanges($event)"></app-paginator>
+      }
+      @if (totalCount === 0) {
+        <div>
+          <app-zero-state-with-illustration [mainText]="'qbdGenericMapping.noSourceTypeToShow' | transloco: { sourceType: sourceType }" [subText]="'qbdGenericMapping.zeroStateSubText' | transloco: { sourceType: sourceType, brandName: brandingConfig.brandName }"></app-zero-state-with-illustration>
         </div>
-        <div *ngIf="totalCount === 0">
-            <app-zero-state-with-illustration [mainText]="'qbdGenericMapping.noSourceTypeToShow' | transloco: { sourceType: sourceType }" [subText]="'qbdGenericMapping.zeroStateSubText' | transloco: { sourceType: sourceType, brandName: brandingConfig.brandName }"></app-zero-state-with-illustration>
-        </div>
+      }
     </div>
-</div>
+  </div>
+}

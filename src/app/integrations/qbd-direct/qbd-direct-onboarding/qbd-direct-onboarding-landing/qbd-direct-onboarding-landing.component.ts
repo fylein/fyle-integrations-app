@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { brandingConfig, brandingDemoVideoLinks, brandingKbArticles } from 'src/app/branding/branding-config';
@@ -12,11 +12,10 @@ import { SharedModule } from 'src/app/shared/shared.module';
 import { TranslocoModule } from '@jsverse/transloco';
 
 @Component({
-  selector: 'app-qbd-direct-onboarding-landing',
-  standalone: true,
-  imports: [CommonModule, SharedModule, TranslocoModule],
-  templateUrl: './qbd-direct-onboarding-landing.component.html',
-  styleUrl: './qbd-direct-onboarding-landing.component.scss'
+    selector: 'app-qbd-direct-onboarding-landing',
+    imports: [SharedModule, TranslocoModule],
+    templateUrl: './qbd-direct-onboarding-landing.component.html',
+    styleUrl: './qbd-direct-onboarding-landing.component.scss'
 })
 export class QbdDirectOnboardingLandingComponent implements OnInit {
 

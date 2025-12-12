@@ -20,9 +20,10 @@ import { ExportSettingsService } from 'src/app/core/services/common/export-setti
 import { BrandingService } from 'src/app/core/services/common/branding.service';
 
 @Component({
-  selector: 'app-business-central-export-settings',
-  templateUrl: './business-central-export-settings.component.html',
-  styleUrls: ['./business-central-export-settings.component.scss']
+    selector: 'app-business-central-export-settings',
+    templateUrl: './business-central-export-settings.component.html',
+    styleUrls: ['./business-central-export-settings.component.scss'],
+    standalone: false
 })
 export class BusinessCentralExportSettingsComponent implements OnInit {
 

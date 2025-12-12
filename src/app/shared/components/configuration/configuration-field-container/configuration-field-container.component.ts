@@ -2,9 +2,10 @@ import { Component, Input } from '@angular/core';
 import { brandingStyle } from 'src/app/branding/branding-config';
 
 @Component({
-  selector: 'app-configuration-field-container',
-  templateUrl: './configuration-field-container.component.html',
-  styleUrl: './configuration-field-container.component.scss'
+    selector: 'app-configuration-field-container',
+    templateUrl: './configuration-field-container.component.html',
+    styleUrl: './configuration-field-container.component.scss',
+    standalone: false
 })
 export class ConfigurationFieldContainerComponent {
 

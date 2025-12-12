@@ -1,14 +1,10 @@
 :host ::ng-deep .error-box {
     @apply tw-border-border-danger-dark #{!important};
 }
-
+/*
 :host ::ng-deep .normal-box  {
     @apply tw-border-box-color #{!important};
-}
-
-:host ::ng-deep .normal-box :enabled:focus-visible {
-    @apply tw-border-slightly-normal-text-color #{!important};
-}
+} */
 
 .sub-text {
     color: #5A5D72;

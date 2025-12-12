@@ -1,13 +1,17 @@
 <div class="tw-flex tw-flex-row tw-justify-between tw-items-start">
     <div class="info-label" [ngClass]="customBackgroundColorClass">
-        <div *ngIf="showIcon">
-            <app-svg-icon [svgSource]="iconSrc" [width]="'20px'" [height]="'20px'" [isTextColorAllowed]="true" [styleClasses]="customStyleClass"></app-svg-icon>
+      @if (showIcon) {  
+        <div>
+          <app-svg-icon [svgSource]="iconSrc" [width]="'20px'" [height]="'20px'" [isTextColorAllowed]="true" [styleClasses]="customStyleClass"></app-svg-icon>
         </div>
-        <div [ngClass]="brandingStyle.configuration.infoLabelText">
-            <p>{{infoText}}</p>
+      }
+      <div [ngClass]="brandingStyle.configuration.infoLabelText">
+        <p>{{infoText}}</p>
+      </div>
+      @if (showCloseIcon) {
+        <div>
+          <app-svg-icon (iconClick)="clearSearch()" [svgSource]="'cross-medium'" [c1SvgSource]="'grv-cross-filled-medium'" [width]="'18px'" [height]="'18px'" [styleClasses]="'tw-text-icon-muted tw-cursor-pointer'"></app-svg-icon>
         </div>
-        <div *ngIf="showCloseIcon">
-            <app-svg-icon (iconClick)="clearSearch()" [svgSource]="'cross-medium'" [c1SvgSource]="'grv-cross-filled-medium'" [width]="'18px'" [height]="'18px'" [styleClasses]="'tw-text-icon-muted tw-cursor-pointer'"></app-svg-icon>
-        </div>
+      }
     </div>
 </div>

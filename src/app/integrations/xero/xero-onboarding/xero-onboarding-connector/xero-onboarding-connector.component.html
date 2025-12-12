@@ -1,47 +1,50 @@
 <div class="tw-pb-48-px page-layout-container">
-    <app-onboarding-steppers [onboardingSteps]="onboardingSteps"></app-onboarding-steppers>
-    <div class="tw-flex-grow">
-        <div *ngIf="isLoading" class="tw-flex tw-justify-center tw-items-center tw-pt-80-px tw-h-full">
-            <app-loader></app-loader>
+  <app-onboarding-steppers [onboardingSteps]="onboardingSteps"></app-onboarding-steppers>
+  <div class="tw-flex-grow">
+    @if (isLoading) {
+      <div class="tw-flex tw-justify-center tw-items-center tw-pt-80-px tw-h-full">
+        <app-loader></app-loader>
+      </div>
+    }
+    @if (!isLoading) {
+      <div class="configuration--contents tw-border-border-tertiary tw-mt-24-px" [ngClass]="brandingStyle.common.configurationContents">
+        <div>
+          <app-configuration-step-header
+            [headerText]="'xero.configuration.connector.configurationHeaderText' | transloco"
+            [contentText]="'xero.configuration.connector.configurationSubHeaderText' | transloco: {brandName: brandingConfig.brandName}"
+            [redirectLink]="redirectLink">
+          </app-configuration-step-header>
         </div>
-        <div *ngIf="!isLoading" class="configuration--contents tw-border-border-tertiary tw-mt-24-px" [ngClass]="brandingStyle.common.configurationContents">
-            <div>
-                <app-configuration-step-header
-                    [headerText]="'xero.configuration.connector.configurationHeaderText' | transloco"
-                    [contentText]="'xero.configuration.connector.configurationSubHeaderText' | transloco: {brandName: brandingConfig.brandName}"
-                    [redirectLink]="redirectLink">
-                </app-configuration-step-header>
-            </div>
-            <div class="tw-px-24-px">
-                <app-configuration-connector
-                    [accountingAppTitle]="'xeroOnboardingConnector.xeroAppName' | transloco"
-                    [subLabel]="'xeroOnboardingConnector.selectTenantSubLabel' | transloco"
-                    [placeholder]="'xeroOnboardingConnector.selectTenantPlaceholder' | transloco"
-                    [accountingCompanyName]="xeroCompanyName"
-                    [fyleOrgName]="fyleOrgName"
-                    [accountingCompanyTokenExpired]="xeroTokenExpired"
-                    [isAccountingCompanyConnected]="isXeroConnected"
-                    [showDisconnect]="showDisconnectXero"
-                    [accountingCompanyConnectionInProgress]="xeroConnectionInProgress"
-                    [accountingCompanyList]="tenantList"
-                    [switchLinkText]="'xeroOnboardingConnector.disconnectButton' | transloco"
-                    [isDisconnectClicked]="isDisconnectClicked"
-                    [appName]="appName"
-                    (switchCompany)="disconnectXero()"
-                    (connectCompany)="connectXero($event)">
-                </app-configuration-connector>
-
-                <app-configuration-confirmation-dialog
-                    (warningAccepted)="acceptWarning($event)"
-                    [isWarningVisible]="isWarningDialogVisible"
-                    [event]="warningEvent"
-                    [headerText]="warningHeaderText"
-                    [contextText]="warningContextText"
-                    [confirmBtnText]="primaryButtonText"
-                    [showSecondaryCTA]="false">
-                </app-configuration-confirmation-dialog>
-            </div>
-            <app-configuration-step-footer [ctaText]="!saveInProgress ? ConfigurationCtaText.SAVE_AND_CONTINUE : ConfigurationCtaText.SAVING" [isButtonDisabled]="isContinueDisabled" (save)="save()"></app-configuration-step-footer>
+        <div class="tw-px-24-px">
+          <app-configuration-connector
+            [accountingAppTitle]="'xeroOnboardingConnector.xeroAppName' | transloco"
+            [subLabel]="'xeroOnboardingConnector.selectTenantSubLabel' | transloco"
+            [placeholder]="'xeroOnboardingConnector.selectTenantPlaceholder' | transloco"
+            [accountingCompanyName]="xeroCompanyName"
+            [fyleOrgName]="fyleOrgName"
+            [accountingCompanyTokenExpired]="xeroTokenExpired"
+            [isAccountingCompanyConnected]="isXeroConnected"
+            [showDisconnect]="showDisconnectXero"
+            [accountingCompanyConnectionInProgress]="xeroConnectionInProgress"
+            [accountingCompanyList]="tenantList"
+            [switchLinkText]="'xeroOnboardingConnector.disconnectButton' | transloco"
+            [isDisconnectClicked]="isDisconnectClicked"
+            [appName]="appName"
+            (switchCompany)="disconnectXero()"
+            (connectCompany)="connectXero($event)">
+          </app-configuration-connector>
+          <app-configuration-confirmation-dialog
+            (warningAccepted)="acceptWarning($event)"
+            [isWarningVisible]="isWarningDialogVisible"
+            [event]="warningEvent"
+            [headerText]="warningHeaderText"
+            [contextText]="warningContextText"
+            [confirmBtnText]="primaryButtonText"
+            [showSecondaryCTA]="false">
+          </app-configuration-confirmation-dialog>
         </div>
-    </div>
+        <app-configuration-step-footer [ctaText]="!saveInProgress ? ConfigurationCtaText.SAVE_AND_CONTINUE : ConfigurationCtaText.SAVING" [isButtonDisabled]="isContinueDisabled" (save)="save()"></app-configuration-step-footer>
+      </div>
+    }
+  </div>
 </div>

@@ -4,9 +4,10 @@ import { BrandingService } from 'src/app/core/services/common/branding.service';
 
 
 @Component({
-  selector: 'app-netsuite-onboarding-landing',
-  templateUrl: './netsuite-onboarding-landing.component.html',
-  styleUrls: ['./netsuite-onboarding-landing.component.scss']
+    selector: 'app-netsuite-onboarding-landing',
+    templateUrl: './netsuite-onboarding-landing.component.html',
+    styleUrls: ['./netsuite-onboarding-landing.component.scss'],
+    standalone: false
 })
 export class NetsuiteOnboardingLandingComponent implements OnInit {
 

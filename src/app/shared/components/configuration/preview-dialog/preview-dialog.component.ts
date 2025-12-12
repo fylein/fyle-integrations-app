@@ -4,9 +4,10 @@ import { ButtonType, ButtonSize } from 'src/app/core/models/enum/enum.model';
 import { HelperService } from 'src/app/core/services/common/helper.service';
 
 @Component({
-  selector: 'app-preview-dialog',
-  templateUrl: './preview-dialog.component.html',
-  styleUrls: ['./preview-dialog.component.scss']
+    selector: 'app-preview-dialog',
+    templateUrl: './preview-dialog.component.html',
+    styleUrls: ['./preview-dialog.component.scss'],
+    standalone: false
 })
 export class PreviewDialogComponent implements OnInit {
 

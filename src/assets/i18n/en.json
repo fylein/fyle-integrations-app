@@ -1269,7 +1269,7 @@
     "defaultVendorSubLabel": "The integration will create purchase invoices for corporate card expenses, associating them with the vendor selected here.",
     "selectDefaultVendorPlaceholder": "Select default vendor",
     "cccExpenseStateSubLabel": "You can export expenses either when they're awaiting payment after approval (approved) or when the payment has been settled (closed).",
-    "cccExportDateSubLabel": "Expenses will be grouped and posted using the configured date when exporting from {{brandName}} to Sage 300 CRE. Click here for more details.",
+    "cccExportDateSubLabel": "Expenses will be grouped and posted using the configured date when exporting from {{brandName}} to Sage 300 CRE.",
     "selectDatePlaceholder": "Select date"
   },
   "xeroMapping": {
@@ -2426,6 +2426,9 @@
     },
     "qbdDirectMapping": {
       "employeeOrVendorLabel": "Employee/Vendor"
+    },
+    "siAuth": {
+      "failedToConnect": "Failed to connect to Sage Intacct. Please try again"
     }
   },
   "pipes": {

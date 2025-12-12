@@ -2,151 +2,155 @@
     'tw-border tw-border-separator tw-rounded-10-px': !isSubfield,
     'tw-border-t tw-border-separator': isSubfield
 }">
-    <!-- Header -->
-    <div class="tw-p-24-px tw-flex tw-gap-[16px]" [ngClass]="{'tw-px-0': isSubfield}">
-        @if (fieldNumber) {
-            <div class="tw-bg-bg-primary tw-w-20-px tw-h-20-px tw-shrink-0 tw-rounded-4-px tw-flex tw-items-center tw-justify-center tw-text-white tw-font-[system-ui] tw-text-14-px tw-font-500">
-                {{ fieldNumber }}
-            </div>
+  <!-- Header -->
+  <div class="tw-p-24-px tw-flex tw-gap-[16px]" [ngClass]="{'tw-px-0': isSubfield}">
+    @if (fieldNumber) {
+      <div class="tw-bg-bg-primary tw-w-20-px tw-h-20-px tw-shrink-0 tw-rounded-4-px tw-flex tw-items-center tw-justify-center tw-text-white tw-font-[system-ui] tw-text-14-px tw-font-500">
+        {{ fieldNumber }}
+      </div>
+    }
+
+    <div class="tw-max-w-[664px]">
+      <h3 class="tw-text-text-primary tw-text-16-px tw-font-500">
+        <span>{{ label }}</span>
+        @if (isMandatory) {
+          <app-mandatory-field></app-mandatory-field>
         }
-
-        <div class="tw-max-w-[664px]">
-            <h3 class="tw-text-text-primary tw-text-16-px tw-font-500">
-                <span>{{ label }}</span>
-                @if (isMandatory) {
-                    <app-mandatory-field></app-mandatory-field>
-                }
-            </h3>
-            <h5 class="tw-text-text-tertiary tw-text-14-px tw-font-400 tw-pt-4-px">
-                {{ subLabel }}
-                <a (click)="handlePreviewDialog()" class="link">{{ 'configurationCsvImportField.preview' | transloco }}</a>
-                <span>{{ 'configurationCsvImportField.previewText' | transloco: { dimension: destinationField | snakeCaseToSpaceCase | lowercase } }}</span>
-            </h5>
-        </div>
-
-        <div class="tw-grow"></div>
-
-        <!-- If the field is not mandatory, it is toggle-able -->
-        @if (!isMandatory) {
-            <app-toggle
-                [form]="csvImportForm"
-                [formControllerName]="'enabled'"
-                class="tw-self-center"
-            ></app-toggle>
-        }
+      </h3>
+      <h5 class="tw-text-text-tertiary tw-text-14-px tw-font-400 tw-pt-4-px">
+        {{ subLabel }}
+        <a (click)="handlePreviewDialog()" class="link">{{ 'configurationCsvImportField.preview' | transloco }}</a>
+        <span>{{ 'configurationCsvImportField.previewText' | transloco: { dimension: destinationField | snakeCaseToSpaceCase | lowercase } }}</span>
+      </h5>
     </div>
 
-    <!-- Body -->
-    @if (isEnabled) {
+    <div class="tw-grow"></div>
+
+    <!-- If the field is not mandatory, it is toggle-able -->
+    @if (!isMandatory) {
+      <app-toggle
+        [form]="csvImportForm"
+        [formControllerName]="'enabled'"
+        class="tw-self-center"
+      ></app-toggle>
+    }
+  </div>
+
+  <!-- Body -->
+  @if (isEnabled) {
     <div class="tw-flex tw-flex-col tw-gap-[48px] body-container" [ngClass]="{
         'tw-p-24-px tw-border-t tw-border-separator': !isSubfield,
         'tw-pb-24-px': isSubfield
     }">
 
-        <div class="tw-flex tw-flex-col tw-gap-[8px]">
-            <!-- Eg: Sage50 - Dimension | Fyle Field -->
-            <div class="tw-flex tw-font-500 tw-text-14-px tw-text-text-primary">
-                <div class="responsive-field">
-                    {{ appDisplayName }}{{ 'configurationCsvImportField.dimension' | transloco }}
-                </div>
-                <div class="tw-pl-[100px]">
-                    {{ brandingConfig.brandName }}{{ 'configurationCsvImportField.field' | transloco }}
-                </div>
-            </div>
-            <!-- Destination field -> Source field -->
-            <div class="tw-flex">
-                <div>
-                    <input type="text" class="tw-text-14-px tw-text-text-secondary !tw-font-400 responsive-field !tw-px-14-px !tw-py-10-px tw-border-input-disabled-border !tw-border-border-separator tw-rounded-4-px" [value]="dimension" disabled>
-                </div>
-                <div class="tw-pt-[17px]">
-                    <app-svg-icon [isTextColorAllowed]="true" [svgSource]="'arrow-line'" [height]="'30px'" [width]="'100px'" [styleClasses]="'!tw-ml-0 tw-self-center tw-text-border-secondary'"></app-svg-icon>
-                </div>
-                <div class="tw-w-30-vw">
-                    @if (isSourceFieldEditable) {
-                        <p-dropdown appendTo="body" class="tw-w-28-vw responsive-field" formControlName="sourceField" [options]="sourceFieldOptions" [placeholder]="'configurationCsvImportField.selectSourceFieldPlaceholder' | transloco: { brandName: brandingConfig.brandName }">
-                            <ng-template let-option pTemplate="item">
-                                <div [ngClass]="{'custom-option': option.value === 'custom_field'}" class="tw-align-middle">
-                                    <div class="tw-ml-0 tw-mr-6-px ">
-                                        <app-svg-icon *ngIf="option.value === 'custom_field'" [svgSource]="'plus-square-medium'" [width]="'18px'" [height]="'18px'" ></app-svg-icon>
-                                    </div>
-                                    {{ option.label }}
-                                </div>
-                            </ng-template>
-                        </p-dropdown>
-                    }
-                    @else {
-                        <input type="text" class="tw-text-14-px tw-text-text-secondary !tw-font-400 responsive-field !tw-px-14-px !tw-py-10-px tw-border-input-disabled-border !tw-border-border-separator tw-rounded-4-px" [value]="sourceField | snakeCaseToSpaceCase | sentenceCase" disabled>
-                    }
-                </div>
-
-                @if (!uploadedFile) {
-                    <div class="tw-grow"></div>
-                    <app-csv-upload-button
-                        (uploadClicked)="handleUploadClick()"
-                        [isDisabled]="isUploadDisabled"
-                        class="tw-shrink-0"
-                    ></app-csv-upload-button>
-                }
-            </div>
+      <div class="tw-flex tw-flex-col tw-gap-[8px]">
+        <!-- Eg: Sage50 - Dimension | Fyle Field -->
+        <div class="tw-flex tw-font-500 tw-text-14-px tw-text-text-primary">
+          <div class="responsive-field">
+            {{ appDisplayName }}{{ 'configurationCsvImportField.dimension' | transloco }}
+          </div>
+          <div class="tw-pl-[100px]">
+            {{ brandingConfig.brandName }}{{ 'configurationCsvImportField.field' | transloco }}
+          </div>
         </div>
-
-        <!-- Additional Fields -->
-        <ng-content select="[slot='additionalFields']"></ng-content>
-
-        <!-- Show the import code field and uploaded file details only if a file was uploaded -->
-        @if (uploadedFile) {
-            <!-- Import code: show only if not imported yet -->
-            @if (!hasBeenImported) {
-                <app-configuration-select-field
-                    [form]="csvImportForm"
-                    [formControllerName]="'importCode'"
-                    [options]="importFormatOptions"
-                    [isMultiLineOption]="true"
-                    [label]="'configurationCsvImportField.importFormatLabel' | transloco"
-                    [subLabel]="'configurationCsvImportField.importFormatSubLabel' | transloco: { dimension: dimension | lowercase }"
-                    [iconPath]="'question-square-outline'"
-                    [isFieldMandatory]="true"
-                    [placeholder]="'configurationCsvImportField.importFormatPlaceholder' | transloco"
-                    [customClasses]="'!tw-p-0'"
-                    [isOneTimeField]="!hasBeenImported"
-                ></app-configuration-select-field>
+        <!-- Destination field -> Source field -->
+        <div class="tw-flex">
+          <div>
+            <input type="text" class="tw-text-14-px tw-text-text-secondary !tw-font-400 responsive-field !tw-px-14-px !tw-py-10-px tw-border-input-disabled-border !tw-border-border-separator tw-rounded-4-px" [value]="dimension" disabled>
+          </div>
+          <div [ngClass]="brandingStyle.configuration.importSvgPadding">
+            <app-svg-icon [isTextColorAllowed]="true" [svgSource]="'arrow-line'" [height]="'30px'" [width]="'100px'" [styleClasses]="'!tw-ml-0 tw-self-center tw-text-border-secondary'"></app-svg-icon>
+          </div>
+          <div class="tw-w-30-vw">
+            @if (isSourceFieldEditable) {
+              <p-select appendTo="body" class="tw-w-28-vw responsive-field" formControlName="sourceField" [options]="sourceFieldOptions" [placeholder]="'configurationCsvImportField.selectSourceFieldPlaceholder' | transloco: { brandName: brandingConfig.brandName }">
+                <ng-template let-option pTemplate="item">
+                  <div [ngClass]="{'custom-option': option.value === 'custom_field'}" class="tw-align-middle">
+                    <div class="tw-ml-0 tw-mr-6-px ">
+                      @if (option.value === 'custom_field') {
+                        <app-svg-icon [svgSource]="'plus-square-medium'" [width]="'18px'" [height]="'18px'" ></app-svg-icon>
+                      }
+                    </div>
+                    {{ option.label }}
+                  </div>
+                </ng-template>
+              </p-select>
             }
-
-            <div class="tw-flex tw-flex-col tw-gap-[16px]">
-                @if (infoText) {
-                    <app-alert [type]="'info'" [variant]="'subtle'">
-                        <p>{{ infoText }}</p>
-                    </app-alert>
-                }
-                <app-uploaded-file-details
-                    [file]="uploadedFile"
-                    [dimension]="dimension"
-                    [isOnboarding]="isOnboarding"
-                    (reuploadClick)="handleUploadClick()"
-                ></app-uploaded-file-details>
-            </div>
-        }
-    </div>
-    }
-
-    <!-- Subfields -->
-    @if (isEnabled && uploadedFile) {
-        <div [ngClass]="{'tw-px-24-px': !isSubfield}">
-            <ng-content select="[slot='subfield']"></ng-content>
+            @else {
+            <input type="text" class="tw-text-14-px tw-text-text-secondary !tw-font-400 responsive-field !tw-px-14-px !tw-py-10-px tw-border-input-disabled-border !tw-border-border-separator tw-rounded-4-px" [value]="sourceField | snakeCaseToSpaceCase | sentenceCase" disabled>
+          }
         </div>
+
+        @if (!uploadedFile) {
+          <div class="tw-grow"></div>
+          <app-csv-upload-button
+            (uploadClicked)="handleUploadClick()"
+            [isDisabled]="isUploadDisabled"
+            class="tw-shrink-0"
+          ></app-csv-upload-button>
+        }
+      </div>
+    </div>
+
+    <!-- Additional Fields -->
+    <ng-content select="[slot='additionalFields']"></ng-content>
+
+    <!-- Show the import code field and uploaded file details only if a file was uploaded -->
+    @if (uploadedFile) {
+      <!-- Import code: show only if not imported yet -->
+      @if (!hasBeenImported) {
+        <app-configuration-select-field
+          [form]="csvImportForm"
+          [formControllerName]="'importCode'"
+          [options]="importFormatOptions"
+          [isMultiLineOption]="true"
+          [label]="'configurationCsvImportField.importFormatLabel' | transloco"
+          [subLabel]="'configurationCsvImportField.importFormatSubLabel' | transloco: { dimension: dimension | lowercase }"
+          [iconPath]="'question-square-outline'"
+          [isFieldMandatory]="true"
+          [placeholder]="'configurationCsvImportField.importFormatPlaceholder' | transloco"
+          [customClasses]="'!tw-p-0'"
+          [isOneTimeField]="!hasBeenImported"
+        ></app-configuration-select-field>
+      }
+
+      <div class="tw-flex tw-flex-col tw-gap-[16px]">
+        @if (infoText) {
+          <app-alert [type]="'info'" [variant]="'subtle'">
+            <p>{{ infoText }}</p>
+          </app-alert>
+        }
+        <app-uploaded-file-details
+          [file]="uploadedFile"
+          [dimension]="dimension"
+          [isOnboarding]="isOnboarding"
+          (reuploadClick)="handleUploadClick()"
+        ></app-uploaded-file-details>
+      </div>
     }
+  </div>
+}
+
+<!-- Subfields -->
+@if (isEnabled && uploadedFile) {
+  <div [ngClass]="{'tw-px-24-px': !isSubfield}">
+    <ng-content select="[slot='subfield']"></ng-content>
+  </div>
+}
 </div>
 
 <app-configuration-custom-field-creation-dialog
-    [customFieldForm]="customFieldForm"
-    [showCustomFieldCreationDialog]="showCustomFieldDialog"
-    (saveCustomFieldFn)="handleCustomFieldSave()"
-    (closeModelFn)="closeModel()">
+  [customFieldForm]="customFieldForm"
+  [showCustomFieldCreationDialog]="showCustomFieldDialog"
+  (saveCustomFieldFn)="handleCustomFieldSave()"
+  (closeModelFn)="closeModel()">
 </app-configuration-custom-field-creation-dialog>
 
-<app-preview-dialog *ngIf="showPreviewDialog"
+@if (showPreviewDialog) {
+  <app-preview-dialog
     [isPreviewDialogVisible]="true"
     [iconPath]="previewImagePath"
     [header]="'configurationCsvImportField.previewHeader' | transloco: { brandName: brandingConfig.brandName }"
     (closeDialog)="showPreviewDialog = false"
-></app-preview-dialog>
+  ></app-preview-dialog>
+}

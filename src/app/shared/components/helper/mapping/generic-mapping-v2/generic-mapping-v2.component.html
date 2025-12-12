@@ -1,26 +1,34 @@
 @if (!mappings) {
-    <div class="tw-flex tw-justify-center tw-items-center tw-h-[75vh]">
-        <app-loader></app-loader>
-    </div>
+  <div class="tw-flex tw-justify-center tw-items-center tw-h-[75vh]">
+    <app-loader></app-loader>
+  </div>
 } @else {
+  <div>
     <div>
-        <div>
-            <app-card-mapping-header *ngIf="mappings" (triggerAutoMapEmployee)="triggerAutoMapEmployees()" [sourceField]="sourceFieldDisplayName ?? sourceType" [showAutoMapEmployee]="showAutoMapEmployee" [mappingStats]="mappingStats" (triggerAutoMapEmployee)="triggerAutoMapEmployees()"></app-card-mapping-header>
-        </div>
+      @if (mappings) {
+        <app-card-mapping-header (triggerAutoMapEmployee)="triggerAutoMapEmployees()" [sourceField]="sourceFieldDisplayName ?? sourceType" [showAutoMapEmployee]="showAutoMapEmployee" [mappingStats]="mappingStats" (triggerAutoMapEmployee)="triggerAutoMapEmployees()"></app-card-mapping-header>
+      }
+    </div>
 
-        <div class="tw-mt-16-px" [ngClass]="brandingStyle.dashboard.mapping.mainComponentCard">
-            <div class="tw-p-24-px tw-border-b-separator">
-                <app-mapping-filter [appName]="appName" [selectedAlphabeticalFilter]="alphabetFilter" [mappingFilter]="selectedMappingFilter" (mappingFilterChangeEvent)="mappingStateFilter($event)" (mappingSearchingEvent)="mappingSearchFilter($event)" (mappingFilterUpdateHandler)="mappingFilterUpdate($event)" [isAlphabetFilterHidden]="false"></app-mapping-filter>
+    <div class="tw-mt-16-px" [ngClass]="brandingStyle.dashboard.mapping.mainComponentCard">
+      <div class="tw-p-24-px tw-border-b-separator">
+        <app-mapping-filter [appName]="appName" [selectedAlphabeticalFilter]="alphabetFilter" [mappingFilter]="selectedMappingFilter" (mappingFilterChangeEvent)="mappingStateFilter($event)" (mappingSearchingEvent)="mappingSearchFilter($event)" (mappingFilterUpdateHandler)="mappingFilterUpdate($event)" [isAlphabetFilterHidden]="false"></app-mapping-filter>
+      </div>
+      @if (!isLoading) {
+        <div>
+          @if (filteredMappingCount) {
+            <div>
+              <app-generic-mapping-table [isLoading]="isLoading" [appName]="appName" [destinationAttributes]="destinationAttributes" [isDashboardMappingResolve]="false" [destinationField]="destinationField" [destinationFieldDisplayName]="destinationFieldDisplayName" [filteredMappings]="filteredMappings" [sourceField]="sourceField" [sourceFieldDisplayName]="sourceFieldDisplayName" [mappingStats]="mappingStats" [employeeFieldMapping]="employeeFieldMapping" [destinationOptions]="destinationOptions" [displayName]="displayName" [isMultiLineOption]="isMultiLineOption" [detailAccountType]="detailAccountType" [searchHandler]="searchHandler"></app-generic-mapping-table>
             </div>
-            <div *ngIf="!isLoading">
-                <div *ngIf="filteredMappingCount">
-                    <app-generic-mapping-table [isLoading]="isLoading" [appName]="appName" [destinationAttributes]="destinationAttributes" [isDashboardMappingResolve]="false" [destinationField]="destinationField" [destinationFieldDisplayName]="destinationFieldDisplayName" [filteredMappings]="filteredMappings" [sourceField]="sourceField" [sourceFieldDisplayName]="sourceFieldDisplayName" [mappingStats]="mappingStats" [employeeFieldMapping]="employeeFieldMapping" [destinationOptions]="destinationOptions" [displayName]="displayName" [isMultiLineOption]="isMultiLineOption" [detailAccountType]="detailAccountType" [searchHandler]="searchHandler"></app-generic-mapping-table>
-                </div>
-                <div class="tw-p-24-px tw-border-t-separator" *ngIf="filteredMappingCount && !isLoading" >
-                    <app-paginator [totalCount]="totalCount" [pageType]="PaginatorPage.MAPPING" [page]="currentPage" [dropDownValue]="limit" (pageSizeChangeEvent)="pageSizeChanges($event)" (pageOffsetChangeEvent)="pageOffsetChanges($event)"></app-paginator>
-                </div>
-                <div *ngIf="!filteredMappingCount">
-                    <app-zero-state-with-illustration
+          }
+          @if (filteredMappingCount && !isLoading) {
+            <div class="tw-p-24-px tw-border-t-separator" >
+              <app-paginator [totalCount]="totalCount" [pageType]="PaginatorPage.MAPPING" [page]="currentPage" [dropDownValue]="limit" (pageSizeChangeEvent)="pageSizeChanges($event)" (pageOffsetChangeEvent)="pageOffsetChanges($event)"></app-paginator>
+            </div>
+          }
+          @if (!filteredMappingCount) {
+            <div>
+              <app-zero-state-with-illustration
                     [mainText]="brandingConfig.brandId === 'fyle' ?
                         ('mapping.mappingSearchZeroStateHeaderText' | transloco) :
                         ('mapping.mappingSearchZeroStateHeaderText' | transloco) + (sourceFieldDisplayName ?? (this.sourceField | snakeCaseToSpaceCase | lowercase)) + ('genericMappingV2.mappingsSuffixWithPeriod' | transloco)
@@ -29,10 +37,12 @@
                         ('mapping.mappingSearchZeroStateSubHeaderText' | transloco) + (sourceFieldDisplayName ?? (this.sourceField | snakeCaseToSpaceCase | lowercase)) + ('genericMappingV2.mappingsSuffix' | transloco) :
                         ('mapping.mappingSearchZeroStateSubHeaderText' | transloco)
                     ">
-                    </app-zero-state-with-illustration>
-                </div>
+              </app-zero-state-with-illustration>
             </div>
-
+          }
         </div>
+      }
+
     </div>
+  </div>
 }

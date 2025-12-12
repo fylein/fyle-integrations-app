@@ -6,9 +6,10 @@ import { RefinerService } from 'src/app/core/services/integration/refiner.servic
 import { environment } from 'src/environments/environment';
 
 @Component({
-  selector: 'app-intacct-onboarding-done',
-  templateUrl: './intacct-onboarding-done.component.html',
-  styleUrls: ['./intacct-onboarding-done.component.scss']
+    selector: 'app-intacct-onboarding-done',
+    templateUrl: './intacct-onboarding-done.component.html',
+    styleUrls: ['./intacct-onboarding-done.component.scss'],
+    standalone: false
 })
 export class IntacctOnboardingDoneComponent implements OnInit {
 

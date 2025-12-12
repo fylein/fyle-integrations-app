@@ -1,335 +1,392 @@
-<div *ngIf="isLoading" class="tw-flex tw-justify-center tw-items-center tw-h-[75vh]">
+@if (isLoading) {
+  <div class="tw-flex tw-justify-center tw-items-center tw-h-[75vh]">
     <app-loader></app-loader>
-</div>
-<div *ngIf="!isLoading" [ngClass]="[brandingStyle.configuration.settingsContainer, isOnboarding ? brandingStyle.common.configurationContents : brandingStyle.common.configurationContentsDashboard, isOnboarding ? 'configuration--contents' : '']">
+  </div>
+}
+@if (!isLoading) {
+  <div [ngClass]="[brandingStyle.configuration.settingsContainer, isOnboarding ? brandingStyle.common.configurationContents : brandingStyle.common.configurationContentsDashboard, isOnboarding ? 'configuration--contents' : '']">
     <div>
-    <app-configuration-step-header
-    [headerText]="'intacct.configuration.exportSetting.stepName' | transloco"
-    [contentText]="'intacctExportSettings.configureExportDescription' | transloco: { brandName: brandingService.getBrandFullName() }"
-    [redirectLink]="redirectLink"
-    [showSyncButton]="isOnboarding"
-    [appName]="appName"
-    (refreshDimension)="refreshDimensions($event)"></app-configuration-step-header>
+      <app-configuration-step-header
+        [headerText]="'intacct.configuration.exportSetting.stepName' | transloco"
+        [contentText]="'intacctExportSettings.configureExportDescription' | transloco: { brandName: brandingService.getBrandFullName() }"
+        [redirectLink]="redirectLink"
+        [showSyncButton]="isOnboarding"
+        [appName]="appName"
+      (refreshDimension)="refreshDimensions($event)"></app-configuration-step-header>
     </div>
     <form [formGroup]="exportSettingsForm">
-        <div class="tw-p-24-px" [ngClass]="{'tw-pt-0': !brandingFeatureConfig.featureFlags.exportSettings.reimbursableExpenses}">
-            <div *ngIf="brandingFeatureConfig.featureFlags.exportSettings.isReimbursableExpensesAllowed" class="tw-mb-16-px">
-                <div *ngIf="brandingFeatureConfig.featureFlags.exportSettings.reimbursableExpenses" class="tw-rounded-lg tw-border-separator tw-border tw-bg-bg-tertiary-lighter">
-                    <app-configuration-toggle-field
+      <div class="tw-p-24-px" [ngClass]="{'tw-pt-0': !brandingFeatureConfig.featureFlags.exportSettings.reimbursableExpenses}">
+        @if (brandingFeatureConfig.featureFlags.exportSettings.isReimbursableExpensesAllowed) {
+          <div class="tw-mb-16-px">
+            @if (brandingFeatureConfig.featureFlags.exportSettings.reimbursableExpenses) {
+              <div class="tw-rounded-lg tw-border-separator tw-border tw-bg-bg-tertiary-lighter">
+                <app-configuration-toggle-field
+                  [form]="exportSettingsForm"
+                  [label]="'intacctExportSettings.exportReimbursableExpenses' | transloco"
+                  [subLabel]="'intacctExportSettings.exportReimbursableSubLabel' | transloco:{ brandName: brandingConfig.brandName }"
+                  [formControllerName]="'reimbursableExpense'"
+                [isSectionHeader]="true"></app-configuration-toggle-field>
+              </div>
+            }
+            @if (brandingFeatureConfig.featureFlags.exportSettings.reimbursableExpenses && exportSettingsForm.get('reimbursableExpense')?.value) {
+              <div>
+                <div class="tw-mt-16-px" [ngClass]="brandingStyle.configuration.configurationExportCardSecondary">
+                  <app-configuration-select-field
                     [form]="exportSettingsForm"
-                    [label]="'intacctExportSettings.exportReimbursableExpenses' | transloco"
-                    [subLabel]="'intacctExportSettings.exportReimbursableSubLabel' | transloco:{ brandName: brandingConfig.brandName }"
-                    [formControllerName]="'reimbursableExpense'"
-                    [isSectionHeader]="true"></app-configuration-toggle-field>
-                </div>
-                <div *ngIf="brandingFeatureConfig.featureFlags.exportSettings.reimbursableExpenses && exportSettingsForm.get('reimbursableExpense')?.value">
-                    <div class="tw-mt-16-px" [ngClass]="brandingStyle.configuration.configurationExportCardSecondary">
-                        <app-configuration-select-field
-                            [form]="exportSettingsForm"
-                            [isFieldMandatory]="true"
-                            [mandatoryErrorListName]="'intacctExportSettings.exportModule' | transloco"
-                            [label]="'intacctExportSettings.howToExport' | transloco"
-                            [options]="reimbursableExportTypes"
-                            [iconPath]="'list'"
-                            [placeholder]="'intacctExportSettings.selectExportModulePlaceholder' | transloco"
-                            [formControllerName]="'reimbursableExportType'"
-                            [appName]="appName"
-                            [exportConfigurationIconPath]="'assets/flow-charts/intacct-export-module.svg'"
-                            [showExportPreview]="true"
-                            [exportTypeIconPathArray]="previewImagePaths">
-                        </app-configuration-select-field>
-                            <div *ngIf="exportSettingsForm.get('reimbursableExportType')?.value===IntacctReimbursableExpensesObject.JOURNAL_ENTRY">
-                                <app-configuration-select-field
-                                [form]="exportSettingsForm"
-                                [isFieldMandatory]="true"
-                                [mandatoryErrorListName]="'intacctExportSettings.glAccountError' | transloco"
-                                [label]="'intacctExportSettings.creditToGlAccount' | transloco"
-                                [subLabel]="'intacctExportSettings.creditToGlAccountSubLabel' | transloco"
-                                [destinationAttributes]="this.destinationOptions['ACCOUNT']"
-                                [destinationOptionKey]="IntacctExportSettingDestinationOptionKey.ACCOUNT"
-                                [isOptionSearchInProgress]="isOptionSearchInProgress"
-                                [iconPath]="'list'"
-                                [placeholder]="'intacctExportSettings.selectGlAccountPlaceholder' | transloco"
-                                [formControllerName]="'glAccount'"
-                                [isAdvanceSearchEnabled]="true"
-                                [isMultiLineOption]="isMultiLineOption"
-                                (searchOptionsDropdown)="searchOptionsDropdown($event)"></app-configuration-select-field>
-                            </div>
-                            <div *ngIf="exportSettingsForm.get('reimbursableExportType')?.value===IntacctReimbursableExpensesObject.EXPENSE_REPORT">
-                                <app-configuration-select-field
-                                [form]="exportSettingsForm"
-                                [isFieldMandatory]="false"
-                                [mandatoryErrorListName]="'intacctExportSettings.expensePaymentTypeError' | transloco"
-                                [label]="'intacctExportSettings.defaultExpensePaymentType' | transloco"
-                                [subLabel]="'intacctExportSettings.defaultExpensePaymentTypeSubLabel' | transloco:{ brandName: brandingConfig.brandName }"
-                                [destinationAttributes]="this.destinationOptions['EXPENSE_PAYMENT_TYPE']"
-                                [destinationOptionKey]="IntacctExportSettingDestinationOptionKey.EXPENSE_PAYMENT_TYPE"
-                                [isOptionSearchInProgress]="isOptionSearchInProgress"
-                                [iconPath]="'list'"
-                                [placeholder]="'intacctExportSettings.selectExpensePaymentTypePlaceholder' | transloco"
-                                [formControllerName]="'reimbursableExpensePaymentType'"
-                                [isAdvanceSearchEnabled]="true"
-                                (searchOptionsDropdown)="searchOptionsDropdown($event)"></app-configuration-select-field>
-                            </div>
-                    </div>
-                    <div *ngIf="exportSettingsForm.get('reimbursableExportType')?.value" class="tw-mt-16-px" [ngClass]="brandingStyle.configuration.configurationExportCardSecondary">
-                        <ng-container *ngTemplateOutlet="employeeFieldMapping"></ng-container>
-                        <div *ngIf="exportSettingsForm.get('reimbursableExportType')?.value">
-                            <app-configuration-select-field
-                            [form]="exportSettingsForm"
-                            [isFieldMandatory]="false"
-                            [showClearIcon]="true"
-                            [mandatoryErrorListName]="'intacctExportSettings.employeeMappingError' | transloco"
-                            [label]="'intacctExportSettings.employeeMappingLabel' | transloco:{ brandName: brandingConfig.brandName, employeeField: getEmployeeFieldMapping(exportSettingsForm.get('employeeFieldMapping')?.value, exportSettingsForm.get('reimbursableExportType')?.value) }"
-                            [subLabel]="'intacctExportSettings.employeeMappingSubLabel' | transloco:{ brandName: brandingConfig.brandName }"
-                            [options]="autoMapEmployeeOptions"
-                            [iconPath]="'question-square-outline'"
-                            [placeholder]="'intacctExportSettings.selectMappingMethodPlaceholder' | transloco"
-                            [formControllerName]="'autoMapEmployees'"></app-configuration-select-field>
-                        </div>
-                    </div>
-                    <div *ngIf="exportSettingsForm.get('reimbursableExportType')?.value" class="tw-mt-16-px" [ngClass]="brandingStyle.configuration.configurationExportCardSecondary">
-                        <app-configuration-select-field
+                    [isFieldMandatory]="true"
+                    [mandatoryErrorListName]="'intacctExportSettings.exportModule' | transloco"
+                    [label]="'intacctExportSettings.howToExport' | transloco"
+                    [options]="reimbursableExportTypes"
+                    [iconPath]="'list'"
+                    [placeholder]="'intacctExportSettings.selectExportModulePlaceholder' | transloco"
+                    [formControllerName]="'reimbursableExportType'"
+                    [appName]="appName"
+                    [exportConfigurationIconPath]="'assets/flow-charts/intacct-export-module.svg'"
+                    [showExportPreview]="true"
+                    [exportTypeIconPathArray]="previewImagePaths">
+                  </app-configuration-select-field>
+                  @if (exportSettingsForm.get('reimbursableExportType')?.value===IntacctReimbursableExpensesObject.JOURNAL_ENTRY) {
+                    <div>
+                      <app-configuration-select-field
                         [form]="exportSettingsForm"
                         [isFieldMandatory]="true"
-                        [mandatoryErrorListName]="'intacctExportSettings.expenseStateError' | transloco"
-                        [label]="'intacctExportSettings.reimbursableExpenseStateLabel' | transloco:{ brandName: brandingConfig.brandName }"
-                        [subLabel]="'intacctExportSettings.reimbursableExpenseStateSubLabel' | transloco"
-                        [options]="expenseStateOptions"
-                        [iconPath]="'question-square-outline'"
-                        [placeholder]="'intacctExportSettings.selectExportStatePlaceholder' | transloco"
-                        [formControllerName]="'reimbursableExpenseState'"></app-configuration-select-field>
-                    </div>
-                    <div *ngIf="exportSettingsForm.get('reimbursableExportType')?.value" class="tw-mt-16-px" [ngClass]="brandingStyle.configuration.configurationExportCardSecondary">
-                        <app-configuration-select-field
-                        [form]="exportSettingsForm"
-                        [isFieldMandatory]="true"
-                        [mandatoryErrorListName]="'intacctExportSettings.groupingError' | transloco"
-                        [label]="'intacctExportSettings.groupingLabel' | transloco"
-                        [subLabel]="'intacctExportSettings.reimbursableGroupingSubLabel' | transloco"
-                        [options]="expenseGroupingFieldOptions"
-                        [iconPath]="'question-square-outline'"
-                        [placeholder]="'intacctExportSettings.selectGroupingPlaceholder' | transloco"
-                        [formControllerName]="'reimbursableExportGroup'"></app-configuration-select-field>
-                    </div>
-                    <div *ngIf="exportSettingsForm.get('reimbursableExportType')?.value" class="tw-mt-16-px" [ngClass]="brandingStyle.configuration.configurationExportCardSecondary">
-                        <app-configuration-select-field
-                        [form]="exportSettingsForm"
-                        [isFieldMandatory]="true"
-                        [mandatoryErrorListName]="'intacctExportSettings.exportDateError' | transloco"
-                        [label]="'intacctExportSettings.exportDateLabel' | transloco:{ exportType: getExportType(exportSettingsForm.get('reimbursableExportType')?.value ? exportSettingsForm.get('reimbursableExportType')?.value : IntacctReimbursableExpensesObject.EXPENSE_REPORT) }"
-                        [subLabel]="'intacctExportSettings.exportDateSubLabel' | transloco:{ brandName: brandingConfig.brandName }"
-                        [options]="reimbursableExpenseGroupingDateOptions"
-                        [iconPath]="'calendar'"
-                        [placeholder]="'intacctExportSettings.selectDatePlaceholder' | transloco"
-                        [formControllerName]="'reimbursableExportDate'"></app-configuration-select-field>
-                    </div>
-                </div>
-            </div>
-            <div>
-                <div *ngIf="brandingFeatureConfig.featureFlags.exportSettings.reimbursableExpenses" class="tw-rounded-lg tw-border-separator tw-border tw-bg-bg-tertiary-lighter">
-                    <app-configuration-toggle-field
-                    [form]="exportSettingsForm"
-                    [label]="'configuration.exportSetting.headerText' | transloco"
-                    [subLabel]="'intacct.configuration.exportSetting.contentText' | transloco: {brandName: brandingConfig.brandName}"
-                    [formControllerName]="'creditCardExpense'"
-                    [isSectionHeader]="true"></app-configuration-toggle-field>
-                </div>
-                <div *ngIf="exportSettingsForm.get('creditCardExpense')?.value">
-                    <div class="tw-mt-16-px" [ngClass]="brandingStyle.configuration.configurationExportCardSecondary">
-                        <app-configuration-select-field
-                        [form]="exportSettingsForm"
-                        [isFieldMandatory]="true"
-                        [mandatoryErrorListName]="'intacctExportSettings.exportModule' | transloco"
-                        [label]="'intacctExportSettings.howToExport' | transloco"
-                        [options]="creditCardExportTypes"
+                        [mandatoryErrorListName]="'intacctExportSettings.glAccountError' | transloco"
+                        [label]="'intacctExportSettings.creditToGlAccount' | transloco"
+                        [subLabel]="'intacctExportSettings.creditToGlAccountSubLabel' | transloco"
+                        [destinationAttributes]="this.destinationOptions['ACCOUNT']"
+                        [destinationOptionKey]="IntacctExportSettingDestinationOptionKey.ACCOUNT"
+                        [isOptionSearchInProgress]="isOptionSearchInProgress"
                         [iconPath]="'list'"
-                        [placeholder]="'intacctExportSettings.selectExportModulePlaceholder' | transloco"
-                        [formControllerName]="'cccExportType'"
-                        [exportConfigurationIconPath]="'assets/illustrations/sageIntacct/'+brandingConfig.brandId+'CCCExportTypeTable.svg'"
-                        [showExportPreview]="true"
-                        [appName]="appName"
-                        [exportTypeIconPathArray]="brandingConfig.brandId==='fyle' ? previewImagePaths : coPreviewImagePaths"></app-configuration-select-field>
-                        <div *ngIf="exportSettingsForm.get('cccExportType')?.value===IntacctCorporateCreditCardExpensesObject.EXPENSE_REPORT">
-                            <app-configuration-select-field
-                            [form]="exportSettingsForm"
-                            [isFieldMandatory]="true"
-                            [mandatoryErrorListName]="'intacctExportSettings.expensePaymentTypeError' | transloco"
-                            [label]="'intacct.configuration.exportSetting.corporateCard.cccExpensePaymentType' | transloco"
-                            [subLabel]="'intacct.configuration.exportSetting.corporateCard.cccExpensePaymentTypeSubLabel' | transloco: {brandName: brandingConfig.brandName}"
-                            [destinationAttributes]="this.destinationOptions['CCC_EXPENSE_PAYMENT_TYPE']"
-                            [destinationOptionKey]="IntacctExportSettingDestinationOptionKey.CCC_EXPENSE_PAYMENT_TYPE"
-                            [isOptionSearchInProgress]="isOptionSearchInProgress"
-                            [iconPath]="'list'"
-                            [placeholder]="'intacctExportSettings.selectExpensePaymentTypePlaceholder' | transloco"
-                            [formControllerName]="'cccExpensePaymentType'"
-                            [isAdvanceSearchEnabled]="true"
-                            [isMultiLineOption]="isMultiLineOption"
-                            (searchOptionsDropdown)="searchOptionsDropdown($event)"></app-configuration-select-field>
-                        </div>
-                        <div *ngIf="exportSettingsForm.get('cccExportType')?.value===IntacctCorporateCreditCardExpensesObject.BILL">
-                            <app-configuration-select-field
-                            [form]="exportSettingsForm"
-                            [isFieldMandatory]="true"
-                            [mandatoryErrorListName]="'intacctExportSettings.creditCardVendorError' | transloco"
-                            [label]="'intacct.configuration.exportSetting.corporateCard.creditCardVendor' | transloco"
-                            [subLabel]="'intacct.configuration.exportSetting.corporateCard.creditCardVendorSublabel' | transloco"
-                            [destinationAttributes]="this.destinationOptions['VENDOR']"
-                            [destinationOptionKey]="IntacctExportSettingDestinationOptionKey.VENDOR"
-                            [isOptionSearchInProgress]="isOptionSearchInProgress"
-                            [iconPath]="'list'"
-                            [placeholder]="'intacctExportSettings.selectCreditCardVendorPlaceholder' | transloco"
-                            [formControllerName]="'creditCardVendor'"
-                            [isAdvanceSearchEnabled]="true"
-                            (searchOptionsDropdown)="searchOptionsDropdown($event)"></app-configuration-select-field>
-                        </div>
-                        <div *ngIf="exportSettingsForm.get('cccExportType')?.value===IntacctCorporateCreditCardExpensesObject.JOURNAL_ENTRY">
-                            <app-configuration-select-field
-                            [form]="exportSettingsForm"
-                            [isFieldMandatory]="true"
-                            [mandatoryErrorListName]="'intacctExportSettings.glAccountError' | transloco"
-                            [label]="'intacct.configuration.exportSetting.corporateCard.creditCard' | transloco"
-                            [subLabel]="'intacct.configuration.exportSetting.corporateCard.creditCardSubLabel' | transloco"
-                            [destinationAttributes]="this.destinationOptions['ACCOUNT']"
-                            [destinationOptionKey]="IntacctExportSettingDestinationOptionKey.ACCOUNT"
-                            [isOptionSearchInProgress]="isOptionSearchInProgress"
-                            [iconPath]="'list'"
-                            [placeholder]="'intacctExportSettings.selectGlAccountPlaceholder' | transloco"
-                            [formControllerName]="'creditCard'"
-                            [isAdvanceSearchEnabled]="true"
-                            [isMultiLineOption]="isMultiLineOption"
-                            (searchOptionsDropdown)="searchOptionsDropdown($event)"></app-configuration-select-field>
-                        </div>
-                        <div *ngIf="exportSettingsForm.get('cccExportType')?.value === IntacctCorporateCreditCardExpensesObject.JOURNAL_ENTRY && brandingFeatureConfig.featureFlags.exportSettings.useMerchantInJournalLine">
-                            <app-configuration-toggle-field
-                            [form]="exportSettingsForm"
-                            [iconPath]="'list'"
-                            [label]="'intacctExportSettings.exportMerchantToVendor' | transloco"
-                            [subLabel]="'intacctExportSettings.exportMerchantToVendorSubLabel' | transloco"
-                            [formControllerName]="'useMerchantInJournalLine'"></app-configuration-toggle-field>
-                        </div>
-                        <div *ngIf="exportSettingsForm.get('cccExportType')?.value===IntacctCorporateCreditCardExpensesObject.CHARGE_CARD_TRANSACTION">
-                            <app-configuration-select-field
-                            [form]="exportSettingsForm"
-                            [isFieldMandatory]="true"
-                            [mandatoryErrorListName]="'intacctExportSettings.chargeCardError' | transloco"
-                            [label]="'intacct.configuration.exportSetting.corporateCard.chargeCard' | transloco"
-                            [subLabel]="'intacct.configuration.exportSetting.corporateCard.chargeCardSublabel' | transloco: {brandName: brandingConfig.brandName}"
-                            [destinationAttributes]="this.destinationOptions['CHARGE_CARD']"
-                            [destinationOptionKey]="IntacctExportSettingDestinationOptionKey.CHARGE_CARD"
-                            [isOptionSearchInProgress]="isOptionSearchInProgress"
-                            [iconPath]="'list'"
-                            [placeholder]="'intacct.configuration.exportSetting.corporateCard.chargeCardPlaceholder' | transloco"
-                            [formControllerName]="'chargeCard'"
-                            [isAdvanceSearchEnabled]="true"
-                            (searchOptionsDropdown)="searchOptionsDropdown($event)"></app-configuration-select-field>
-                        </div>
+                        [placeholder]="'intacctExportSettings.selectGlAccountPlaceholder' | transloco"
+                        [formControllerName]="'glAccount'"
+                        [isAdvanceSearchEnabled]="true"
+                        [isMultiLineOption]="isMultiLineOption"
+                      (searchOptionsDropdown)="searchOptionsDropdown($event)"></app-configuration-select-field>
                     </div>
-                    <div *ngIf="exportSettingsForm.get('cccExportType')?.value" class="tw-mt-16-px" [ngClass]="brandingStyle.configuration.configurationExportCardSecondary">
-                        <div *ngIf="!exportSettingsForm.get('reimbursableExportType')?.value && exportSettingsForm.get('cccExportType')?.value === IntacctCorporateCreditCardExpensesObject.JOURNAL_ENTRY">
-                            <ng-container *ngTemplateOutlet="employeeFieldMapping"></ng-container>
-                        </div>
-                        <app-configuration-select-field *ngIf="exportSettingsForm.get('cccExportType')?.value"
+                  }
+                  @if (exportSettingsForm.get('reimbursableExportType')?.value===IntacctReimbursableExpensesObject.EXPENSE_REPORT) {
+                    <div>
+                      <app-configuration-select-field
                         [form]="exportSettingsForm"
-                        [isFieldMandatory]="true"
-                        [mandatoryErrorListName]="'intacctExportSettings.expenseStateError' | transloco"
-                        [label]="'intacctExportSettings.cccExpenseStateLabel' | transloco:{ brandName: brandingConfig.brandName }"
-                        [subLabel]="'intacct.configuration.exportSetting.corporateCard.cccExpenseState' | transloco"
-                        [options]="cccExpenseStateOptions"
-                        [iconPath]="'question-square-outline'"
-                        [placeholder]="'intacctExportSettings.selectExportStatePlaceholder' | transloco"
-                        [formControllerName]="'cccExpenseState'"></app-configuration-select-field>
+                        [isFieldMandatory]="false"
+                        [mandatoryErrorListName]="'intacctExportSettings.expensePaymentTypeError' | transloco"
+                        [label]="'intacctExportSettings.defaultExpensePaymentType' | transloco"
+                        [subLabel]="'intacctExportSettings.defaultExpensePaymentTypeSubLabel' | transloco:{ brandName: brandingConfig.brandName }"
+                        [destinationAttributes]="this.destinationOptions['EXPENSE_PAYMENT_TYPE']"
+                        [destinationOptionKey]="IntacctExportSettingDestinationOptionKey.EXPENSE_PAYMENT_TYPE"
+                        [isOptionSearchInProgress]="isOptionSearchInProgress"
+                        [iconPath]="'list'"
+                        [placeholder]="'intacctExportSettings.selectExpensePaymentTypePlaceholder' | transloco"
+                        [formControllerName]="'reimbursableExpensePaymentType'"
+                        [isAdvanceSearchEnabled]="true"
+                      (searchOptionsDropdown)="searchOptionsDropdown($event)"></app-configuration-select-field>
                     </div>
-                    <div *ngIf="exportSettingsForm.get('cccExportType')?.value" class="tw-mt-16-px" [ngClass]="brandingStyle.configuration.configurationExportCardSecondary">
-                        <app-configuration-select-field
-                        [form]="exportSettingsForm"
-                        [isFieldMandatory]="true"
-                        [mandatoryErrorListName]="'intacctExportSettings.groupingError' | transloco"
-                        [label]="'intacctExportSettings.groupingLabel' | transloco"
-                        [subLabel]="'intacct.configuration.exportSetting.corporateCard.cccExportGroup' | transloco"
-                        [options]="expenseGroupingFieldOptions"
-                        [iconPath]="'question-square-outline'"
-                        [placeholder]="'intacctExportSettings.selectGroupingPlaceholder' | transloco"
-                        [isDisabled]="exportSettingsForm.get('cccExportType')?.value === IntacctCorporateCreditCardExpensesObject.CHARGE_CARD_TRANSACTION ? true : false"
-                        [formControllerName]="'cccExportGroup'"></app-configuration-select-field>
-                    </div>
-                    <div *ngIf="exportSettingsForm.get('cccExportType')?.value" class="tw-mt-16-px" [ngClass]="brandingStyle.configuration.configurationExportCardSecondary">
-                        <app-configuration-select-field
-                        [form]="exportSettingsForm"
-                        [isFieldMandatory]="true"
-                        [mandatoryErrorListName]="'intacctExportSettings.exportDateError' | transloco"
-                        [label]="'intacctExportSettings.exportDateLabel' | transloco:{ exportType: getExportType(exportSettingsForm.get('cccExportType')?.value) }"
-                        [subLabel]="'intacctExportSettings.exportDateSubLabel' | transloco:{ brandName: brandingConfig.brandName }"
-                        [options]="cccExpenseGroupingDateOptions"
-                        [iconPath]="'calendar'"
-                        [placeholder]="'intacctExportSettings.selectDatePlaceholder' | transloco"
-                        [formControllerName]="'cccExportDate'"></app-configuration-select-field>
-
-                        <app-configuration-select-field *ngIf="brandingFeatureConfig.featureFlags.exportSettings.splitExpenseGrouping &&
-                        exportSettingsForm.get('cccExportType')?.value === IntacctCorporateCreditCardExpensesObject.CHARGE_CARD_TRANSACTION"
-                        [form]="exportSettingsForm"
-                        [isFieldMandatory]="true"
-                        [showClearIcon]="true"
-                        [mandatoryErrorListName]="'intacctExportSettings.splitGroupingError' | transloco"
-                        [label]="'intacctExportSettings.splitGroupingLabel' | transloco"
-                        [subLabel]="'intacctExportSettings.splitGroupingSubLabel' | transloco"
-                        [options]="splitExpenseGroupingOptions"
-                        [iconPath]="'question-square-outline'"
-                        [placeholder]="'intacctExportSettings.selectSplitGroupingPlaceholder' | transloco"
-                        [formControllerName]="'splitExpenseGrouping'"></app-configuration-select-field>
-                    </div>
+                  }
                 </div>
+                @if (exportSettingsForm.get('reimbursableExportType')?.value) {
+                  <div class="tw-mt-16-px" [ngClass]="brandingStyle.configuration.configurationExportCardSecondary">
+                    <ng-container *ngTemplateOutlet="employeeFieldMapping"></ng-container>
+                    @if (exportSettingsForm.get('reimbursableExportType')?.value) {
+                      <div>
+                        <app-configuration-select-field
+                          [form]="exportSettingsForm"
+                          [isFieldMandatory]="false"
+                          [showClearIcon]="true"
+                          [mandatoryErrorListName]="'intacctExportSettings.employeeMappingError' | transloco"
+                          [label]="'intacctExportSettings.employeeMappingLabel' | transloco:{ brandName: brandingConfig.brandName, employeeField: getEmployeeFieldMapping(exportSettingsForm.get('employeeFieldMapping')?.value, exportSettingsForm.get('reimbursableExportType')?.value) }"
+                          [subLabel]="'intacctExportSettings.employeeMappingSubLabel' | transloco:{ brandName: brandingConfig.brandName }"
+                          [options]="autoMapEmployeeOptions"
+                          [iconPath]="'question-square-outline'"
+                          [placeholder]="'intacctExportSettings.selectMappingMethodPlaceholder' | transloco"
+                        [formControllerName]="'autoMapEmployees'"></app-configuration-select-field>
+                      </div>
+                    }
+                  </div>
+                }
+                @if (exportSettingsForm.get('reimbursableExportType')?.value) {
+                  <div class="tw-mt-16-px" [ngClass]="brandingStyle.configuration.configurationExportCardSecondary">
+                    <app-configuration-select-field
+                      [form]="exportSettingsForm"
+                      [isFieldMandatory]="true"
+                      [mandatoryErrorListName]="'intacctExportSettings.expenseStateError' | transloco"
+                      [label]="'intacctExportSettings.reimbursableExpenseStateLabel' | transloco:{ brandName: brandingConfig.brandName }"
+                      [subLabel]="'intacctExportSettings.reimbursableExpenseStateSubLabel' | transloco"
+                      [options]="expenseStateOptions"
+                      [iconPath]="'question-square-outline'"
+                      [placeholder]="'intacctExportSettings.selectExportStatePlaceholder' | transloco"
+                    [formControllerName]="'reimbursableExpenseState'"></app-configuration-select-field>
+                  </div>
+                }
+                @if (exportSettingsForm.get('reimbursableExportType')?.value) {
+                  <div class="tw-mt-16-px" [ngClass]="brandingStyle.configuration.configurationExportCardSecondary">
+                    <app-configuration-select-field
+                      [form]="exportSettingsForm"
+                      [isFieldMandatory]="true"
+                      [mandatoryErrorListName]="'intacctExportSettings.groupingError' | transloco"
+                      [label]="'intacctExportSettings.groupingLabel' | transloco"
+                      [subLabel]="'intacctExportSettings.reimbursableGroupingSubLabel' | transloco"
+                      [options]="expenseGroupingFieldOptions"
+                      [iconPath]="'question-square-outline'"
+                      [placeholder]="'intacctExportSettings.selectGroupingPlaceholder' | transloco"
+                    [formControllerName]="'reimbursableExportGroup'"></app-configuration-select-field>
+                  </div>
+                }
+                @if (exportSettingsForm.get('reimbursableExportType')?.value) {
+                  <div class="tw-mt-16-px" [ngClass]="brandingStyle.configuration.configurationExportCardSecondary">
+                    <app-configuration-select-field
+                      [form]="exportSettingsForm"
+                      [isFieldMandatory]="true"
+                      [mandatoryErrorListName]="'intacctExportSettings.exportDateError' | transloco"
+                      [label]="'intacctExportSettings.exportDateLabel' | transloco:{ exportType: getExportType(exportSettingsForm.get('reimbursableExportType')?.value ? exportSettingsForm.get('reimbursableExportType')?.value : IntacctReimbursableExpensesObject.EXPENSE_REPORT) }"
+                      [subLabel]="'intacctExportSettings.exportDateSubLabel' | transloco:{ brandName: brandingConfig.brandName }"
+                      [options]="reimbursableExpenseGroupingDateOptions"
+                      [iconPath]="'calendar'"
+                      [placeholder]="'intacctExportSettings.selectDatePlaceholder' | transloco"
+                    [formControllerName]="'reimbursableExportDate'"></app-configuration-select-field>
+                  </div>
+                }
+              </div>
+            }
+          </div>
+        }
+        <div>
+          @if (brandingFeatureConfig.featureFlags.exportSettings.reimbursableExpenses) {
+            <div class="tw-rounded-lg tw-border-separator tw-border tw-bg-bg-tertiary-lighter">
+              <app-configuration-toggle-field
+                [form]="exportSettingsForm"
+                [label]="'configuration.exportSetting.headerText' | transloco"
+                [subLabel]="'intacct.configuration.exportSetting.contentText' | transloco: {brandName: brandingConfig.brandName}"
+                [formControllerName]="'creditCardExpense'"
+              [isSectionHeader]="true"></app-configuration-toggle-field>
             </div>
+          }
+          @if (exportSettingsForm.get('creditCardExpense')?.value) {
+            <div>
+              <div class="tw-mt-16-px" [ngClass]="brandingStyle.configuration.configurationExportCardSecondary">
+                <app-configuration-select-field
+                  [form]="exportSettingsForm"
+                  [isFieldMandatory]="true"
+                  [mandatoryErrorListName]="'intacctExportSettings.exportModule' | transloco"
+                  [label]="'intacctExportSettings.howToExport' | transloco"
+                  [options]="creditCardExportTypes"
+                  [iconPath]="'list'"
+                  [placeholder]="'intacctExportSettings.selectExportModulePlaceholder' | transloco"
+                  [formControllerName]="'cccExportType'"
+                  [exportConfigurationIconPath]="'assets/illustrations/sageIntacct/'+brandingConfig.brandId+'CCCExportTypeTable.svg'"
+                  [showExportPreview]="true"
+                  [appName]="appName"
+                [exportTypeIconPathArray]="brandingConfig.brandId==='fyle' ? previewImagePaths : coPreviewImagePaths"></app-configuration-select-field>
+                @if (exportSettingsForm.get('cccExportType')?.value===IntacctCorporateCreditCardExpensesObject.EXPENSE_REPORT) {
+                  <div>
+                    <app-configuration-select-field
+                      [form]="exportSettingsForm"
+                      [isFieldMandatory]="true"
+                      [mandatoryErrorListName]="'intacctExportSettings.expensePaymentTypeError' | transloco"
+                      [label]="'intacct.configuration.exportSetting.corporateCard.cccExpensePaymentType' | transloco"
+                      [subLabel]="'intacct.configuration.exportSetting.corporateCard.cccExpensePaymentTypeSubLabel' | transloco: {brandName: brandingConfig.brandName}"
+                      [destinationAttributes]="this.destinationOptions['CCC_EXPENSE_PAYMENT_TYPE']"
+                      [destinationOptionKey]="IntacctExportSettingDestinationOptionKey.CCC_EXPENSE_PAYMENT_TYPE"
+                      [isOptionSearchInProgress]="isOptionSearchInProgress"
+                      [iconPath]="'list'"
+                      [placeholder]="'intacctExportSettings.selectExpensePaymentTypePlaceholder' | transloco"
+                      [formControllerName]="'cccExpensePaymentType'"
+                      [isAdvanceSearchEnabled]="true"
+                      [isMultiLineOption]="isMultiLineOption"
+                    (searchOptionsDropdown)="searchOptionsDropdown($event)"></app-configuration-select-field>
+                  </div>
+                }
+                @if (exportSettingsForm.get('cccExportType')?.value===IntacctCorporateCreditCardExpensesObject.BILL) {
+                  <div>
+                    <app-configuration-select-field
+                      [form]="exportSettingsForm"
+                      [isFieldMandatory]="true"
+                      [mandatoryErrorListName]="'intacctExportSettings.creditCardVendorError' | transloco"
+                      [label]="'intacct.configuration.exportSetting.corporateCard.creditCardVendor' | transloco"
+                      [subLabel]="'intacct.configuration.exportSetting.corporateCard.creditCardVendorSublabel' | transloco"
+                      [destinationAttributes]="this.destinationOptions['VENDOR']"
+                      [destinationOptionKey]="IntacctExportSettingDestinationOptionKey.VENDOR"
+                      [isOptionSearchInProgress]="isOptionSearchInProgress"
+                      [iconPath]="'list'"
+                      [placeholder]="'intacctExportSettings.selectCreditCardVendorPlaceholder' | transloco"
+                      [formControllerName]="'creditCardVendor'"
+                      [isAdvanceSearchEnabled]="true"
+                    (searchOptionsDropdown)="searchOptionsDropdown($event)"></app-configuration-select-field>
+                  </div>
+                }
+                @if (exportSettingsForm.get('cccExportType')?.value===IntacctCorporateCreditCardExpensesObject.JOURNAL_ENTRY) {
+                  <div>
+                    <app-configuration-select-field
+                      [form]="exportSettingsForm"
+                      [isFieldMandatory]="true"
+                      [mandatoryErrorListName]="'intacctExportSettings.glAccountError' | transloco"
+                      [label]="'intacct.configuration.exportSetting.corporateCard.creditCard' | transloco"
+                      [subLabel]="'intacct.configuration.exportSetting.corporateCard.creditCardSubLabel' | transloco"
+                      [destinationAttributes]="this.destinationOptions['ACCOUNT']"
+                      [destinationOptionKey]="IntacctExportSettingDestinationOptionKey.ACCOUNT"
+                      [isOptionSearchInProgress]="isOptionSearchInProgress"
+                      [iconPath]="'list'"
+                      [placeholder]="'intacctExportSettings.selectGlAccountPlaceholder' | transloco"
+                      [formControllerName]="'creditCard'"
+                      [isAdvanceSearchEnabled]="true"
+                      [isMultiLineOption]="isMultiLineOption"
+                    (searchOptionsDropdown)="searchOptionsDropdown($event)"></app-configuration-select-field>
+                  </div>
+                }
+                @if (exportSettingsForm.get('cccExportType')?.value === IntacctCorporateCreditCardExpensesObject.JOURNAL_ENTRY && brandingFeatureConfig.featureFlags.exportSettings.useMerchantInJournalLine) {
+                  <div>
+                    <app-configuration-toggle-field
+                      [form]="exportSettingsForm"
+                      [iconPath]="'list'"
+                      [label]="'intacctExportSettings.exportMerchantToVendor' | transloco"
+                      [subLabel]="'intacctExportSettings.exportMerchantToVendorSubLabel' | transloco"
+                    [formControllerName]="'useMerchantInJournalLine'"></app-configuration-toggle-field>
+                  </div>
+                }
+                @if (exportSettingsForm.get('cccExportType')?.value===IntacctCorporateCreditCardExpensesObject.CHARGE_CARD_TRANSACTION) {
+                  <div>
+                    <app-configuration-select-field
+                      [form]="exportSettingsForm"
+                      [isFieldMandatory]="true"
+                      [mandatoryErrorListName]="'intacctExportSettings.chargeCardError' | transloco"
+                      [label]="'intacct.configuration.exportSetting.corporateCard.chargeCard' | transloco"
+                      [subLabel]="'intacct.configuration.exportSetting.corporateCard.chargeCardSublabel' | transloco: {brandName: brandingConfig.brandName}"
+                      [destinationAttributes]="this.destinationOptions['CHARGE_CARD']"
+                      [destinationOptionKey]="IntacctExportSettingDestinationOptionKey.CHARGE_CARD"
+                      [isOptionSearchInProgress]="isOptionSearchInProgress"
+                      [iconPath]="'list'"
+                      [placeholder]="'intacct.configuration.exportSetting.corporateCard.chargeCardPlaceholder' | transloco"
+                      [formControllerName]="'chargeCard'"
+                      [isAdvanceSearchEnabled]="true"
+                    (searchOptionsDropdown)="searchOptionsDropdown($event)"></app-configuration-select-field>
+                  </div>
+                }
+              </div>
+              @if (exportSettingsForm.get('cccExportType')?.value) {
+                <div class="tw-mt-16-px" [ngClass]="brandingStyle.configuration.configurationExportCardSecondary">
+                  @if (!exportSettingsForm.get('reimbursableExportType')?.value && exportSettingsForm.get('cccExportType')?.value === IntacctCorporateCreditCardExpensesObject.JOURNAL_ENTRY) {
+                    <div>
+                      <ng-container *ngTemplateOutlet="employeeFieldMapping"></ng-container>
+                    </div>
+                  }
+                  @if (exportSettingsForm.get('cccExportType')?.value) {
+                    <app-configuration-select-field
+                      [form]="exportSettingsForm"
+                      [isFieldMandatory]="true"
+                      [mandatoryErrorListName]="'intacctExportSettings.expenseStateError' | transloco"
+                      [label]="'intacctExportSettings.cccExpenseStateLabel' | transloco:{ brandName: brandingConfig.brandName }"
+                      [subLabel]="'intacct.configuration.exportSetting.corporateCard.cccExpenseState' | transloco"
+                      [options]="cccExpenseStateOptions"
+                      [iconPath]="'question-square-outline'"
+                      [placeholder]="'intacctExportSettings.selectExportStatePlaceholder' | transloco"
+                    [formControllerName]="'cccExpenseState'"></app-configuration-select-field>
+                  }
+                </div>
+              }
+              @if (exportSettingsForm.get('cccExportType')?.value) {
+                <div class="tw-mt-16-px" [ngClass]="brandingStyle.configuration.configurationExportCardSecondary">
+                  <app-configuration-select-field
+                    [form]="exportSettingsForm"
+                    [isFieldMandatory]="true"
+                    [mandatoryErrorListName]="'intacctExportSettings.groupingError' | transloco"
+                    [label]="'intacctExportSettings.groupingLabel' | transloco"
+                    [subLabel]="'intacct.configuration.exportSetting.corporateCard.cccExportGroup' | transloco"
+                    [options]="expenseGroupingFieldOptions"
+                    [iconPath]="'question-square-outline'"
+                    [placeholder]="'intacctExportSettings.selectGroupingPlaceholder' | transloco"
+                    [isDisabled]="exportSettingsForm.get('cccExportType')?.value === IntacctCorporateCreditCardExpensesObject.CHARGE_CARD_TRANSACTION ? true : false"
+                  [formControllerName]="'cccExportGroup'"></app-configuration-select-field>
+                </div>
+              }
+              @if (exportSettingsForm.get('cccExportType')?.value) {
+                <div class="tw-mt-16-px" [ngClass]="brandingStyle.configuration.configurationExportCardSecondary">
+                  <app-configuration-select-field
+                    [form]="exportSettingsForm"
+                    [isFieldMandatory]="true"
+                    [mandatoryErrorListName]="'intacctExportSettings.exportDateError' | transloco"
+                    [label]="'intacctExportSettings.exportDateLabel' | transloco:{ exportType: getExportType(exportSettingsForm.get('cccExportType')?.value) }"
+                    [subLabel]="'intacctExportSettings.exportDateSubLabel' | transloco:{ brandName: brandingConfig.brandName }"
+                    [options]="cccExpenseGroupingDateOptions"
+                    [iconPath]="'calendar'"
+                    [placeholder]="'intacctExportSettings.selectDatePlaceholder' | transloco"
+                  [formControllerName]="'cccExportDate'"></app-configuration-select-field>
+                  @if (brandingFeatureConfig.featureFlags.exportSettings.splitExpenseGrouping &&
+                    exportSettingsForm.get('cccExportType')?.value === IntacctCorporateCreditCardExpensesObject.CHARGE_CARD_TRANSACTION) {
+                    <app-configuration-select-field
+                      [form]="exportSettingsForm"
+                      [isFieldMandatory]="true"
+                      [showClearIcon]="true"
+                      [mandatoryErrorListName]="'intacctExportSettings.splitGroupingError' | transloco"
+                      [label]="'intacctExportSettings.splitGroupingLabel' | transloco"
+                      [subLabel]="'intacctExportSettings.splitGroupingSubLabel' | transloco"
+                      [options]="splitExpenseGroupingOptions"
+                      [iconPath]="'question-square-outline'"
+                      [placeholder]="'intacctExportSettings.selectSplitGroupingPlaceholder' | transloco"
+                    [formControllerName]="'splitExpenseGrouping'"></app-configuration-select-field>
+                  }
+                </div>
+              }
+            </div>
+          }
         </div>
-        <app-configuration-step-footer *ngIf="isOnboarding" (navigateToPreviousStep)="navigateToPreviousStep()" [ctaText] = "!saveInProgress ? (isOnboarding ? ConfigurationCtaText.SAVE_AND_CONTINUE : ConfigurationCtaText.SAVE) : ConfigurationCtaText.SAVING" (save)="save()" [isButtonDisabled]="!exportSettingsForm.valid" [showBackButton]="isOnboarding ? true : false"></app-configuration-step-footer>
+      </div>
+      @if (isOnboarding) {
+        <app-configuration-step-footer (navigateToPreviousStep)="navigateToPreviousStep()" [ctaText] = "!saveInProgress ? (isOnboarding ? ConfigurationCtaText.SAVE_AND_CONTINUE : ConfigurationCtaText.SAVE) : ConfigurationCtaText.SAVING" (save)="save()" [isButtonDisabled]="!exportSettingsForm.valid" [showBackButton]="isOnboarding ? true : false"></app-configuration-step-footer>
+      }
     </form>
-</div>
+  </div>
+}
 
-<div *ngIf="!isLoading && !isOnboarding" class="tw-sticky tw-top-0 tw-bottom-0 tw-left-0 tw-right-0 tw-bg-white">
-    <app-configuration-step-footer (navigateToPreviousStep)="navigateToPreviousStep()" [ctaText] = "!saveInProgress ? (isOnboarding ? ConfigurationCtaText.SAVE_AND_CONTINUE : ConfigurationCtaText.SAVE) : ConfigurationCtaText.SAVING" (save)="save()" [isButtonDisabled]="!exportSettingsForm.valid" [showBackButton]="isOnboarding ? true : false"></app-configuration-step-footer> 
-</div>
+@if (!isLoading && !isOnboarding) {
+  <div class="tw-sticky tw-top-0 tw-bottom-0 tw-left-0 tw-right-0 tw-bg-white">
+    <app-configuration-step-footer (navigateToPreviousStep)="navigateToPreviousStep()" [ctaText] = "!saveInProgress ? (isOnboarding ? ConfigurationCtaText.SAVE_AND_CONTINUE : ConfigurationCtaText.SAVE) : ConfigurationCtaText.SAVING" (save)="save()" [isButtonDisabled]="!exportSettingsForm.valid" [showBackButton]="isOnboarding ? true : false"></app-configuration-step-footer>
+  </div>
+}
 
 <app-configuration-confirmation-dialog
-    (warningAccepted)="constructPayloadAndSave($event)"
-    [isWarningVisible]="isConfirmationDialogVisible"
-    [headerText]="'intacctExportSettings.configChangeHeader' | transloco"
-    [contextText]="warningDialogText"
-    [confirmBtnText]="'intacctExportSettings.continueButton' | transloco"
-    [showSecondaryCTA]="false">
+  (warningAccepted)="constructPayloadAndSave($event)"
+  [isWarningVisible]="isConfirmationDialogVisible"
+  [headerText]="'intacctExportSettings.configChangeHeader' | transloco"
+  [contextText]="warningDialogText"
+  [confirmBtnText]="'intacctExportSettings.continueButton' | transloco"
+  [showSecondaryCTA]="false">
 </app-configuration-confirmation-dialog>
 
 <ng-template #employeeFieldMapping>
-    <div *ngIf="brandingFeatureConfig.featureFlags.exportSettings.reimbursableExpenses" [formGroup]="exportSettingsForm">
+  @if (brandingFeatureConfig.featureFlags.exportSettings.reimbursableExpenses) {
+    <div [formGroup]="exportSettingsForm">
+      @if (!exportSettingsForm.controls.employeeFieldMapping.disabled) {
         <app-configuration-select-field
-            *ngIf="!exportSettingsForm.controls.employeeFieldMapping.disabled"
-            [form]="exportSettingsForm"
-            [isFieldMandatory]="true"
-            [mandatoryErrorListName]="'intacctExportSettings.employeeFieldError' | transloco"
-            [label]="'intacct.configuration.exportSetting.corporateCard.employeeFieldMapping' | transloco"
-            [subLabel]="'intacctExportSettings.employeeRepresentationSubLabel' | transloco"
-            [options]="employeeFieldOptions"
-            [iconPath]="'user-two'"
-            [placeholder]="'intacctExportSettings.selectRepresentationPlaceholder' | transloco"
-            [formControllerName]="'employeeFieldMapping'"></app-configuration-select-field>
-
-        <div *ngIf="exportSettingsForm.controls.employeeFieldMapping.disabled">
-            <div class="tw-p-24-px tw-flex tw-flex-row tw-justify-between tw-items-center">
-                <div class="tw-flex tw-items-start lg:tw-w-3/5 md:tw-w-1/2">
-                    <div class="tw-mt-4-px">
-                        <app-svg-icon [svgSource]="'list'" [width]="'24px'" [height]="'24px'" [styleClasses]="'tw-text-mandatory-field-color'"></app-svg-icon>
-                    </div>
-                    <div class="tw-pl-16-px">
-                        <h4 class="!tw-text-14-px" [ngClass]="brandingStyle.configuration.configurationFieldHeaderText">{{'intacct.configuration.exportSetting.corporateCard.employeeFieldMapping' | transloco}}<app-mandatory-field></app-mandatory-field></h4>
-                        <h5 class="!tw-text-text-muted !tw-font-400 !tw-text-14-px tw-pt-6-px !tw-leading-4">{{ 'intacctExportSettings.employeeRepresentationSubLabel' | transloco }}</h5>
-                    </div>
-                </div>
-                <div>
-                    <div class="tw-h-input-height tw-flex tw-items-center tw-w-300-px tw-bg-input-disabled-bg tw-border-input-disabled-border tw-border radius">
-                        <div class="tw-text-14-px tw-text-slightly-normal-text-color tw-mx-14-px">{{getEmployeeFieldMapping(exportSettingsForm.get('employeeFieldMapping')?.value, exportSettingsForm.get('reimbursableExportType')?.value) | sentenceCase}}</div>
-                    </div>
-                    <span class="sub-text tw-pt-3-px tw-text-12-px tw-text-sub-text-color">{{ 'intacctExportSettings.autoSelectedEmployeeField' | transloco }}</span>
-                </div>
+          [form]="exportSettingsForm"
+          [isFieldMandatory]="true"
+          [mandatoryErrorListName]="'intacctExportSettings.employeeFieldError' | transloco"
+          [label]="'intacct.configuration.exportSetting.corporateCard.employeeFieldMapping' | transloco"
+          [subLabel]="'intacctExportSettings.employeeRepresentationSubLabel' | transloco"
+          [options]="employeeFieldOptions"
+          [iconPath]="'user-two'"
+          [placeholder]="'intacctExportSettings.selectRepresentationPlaceholder' | transloco"
+        [formControllerName]="'employeeFieldMapping'"></app-configuration-select-field>
+      }
+      @if (exportSettingsForm.controls.employeeFieldMapping.disabled) {
+        <div>
+          <div class="tw-p-24-px tw-flex tw-flex-row tw-justify-between tw-items-center">
+            <div class="tw-flex tw-items-start lg:tw-w-3/5 md:tw-w-1/2">
+              <div class="tw-mt-4-px">
+                <app-svg-icon [svgSource]="'list'" [width]="'24px'" [height]="'24px'" [styleClasses]="'tw-text-mandatory-field-color'"></app-svg-icon>
+              </div>
+              <div class="tw-pl-16-px">
+                <h4 class="!tw-text-14-px" [ngClass]="brandingStyle.configuration.configurationFieldHeaderText">{{'intacct.configuration.exportSetting.corporateCard.employeeFieldMapping' | transloco}}<app-mandatory-field></app-mandatory-field></h4>
+                <h5 class="!tw-text-text-muted !tw-font-400 !tw-text-14-px tw-pt-6-px !tw-leading-4">{{ 'intacctExportSettings.employeeRepresentationSubLabel' | transloco }}</h5>
+              </div>
             </div>
+            <div>
+              <div class="tw-h-input-height tw-flex tw-items-center tw-w-300-px tw-bg-input-disabled-bg tw-border-input-disabled-border tw-border radius">
+                <div class="tw-text-14-px tw-text-slightly-normal-text-color tw-mx-14-px">{{getEmployeeFieldMapping(exportSettingsForm.get('employeeFieldMapping')?.value, exportSettingsForm.get('reimbursableExportType')?.value) | sentenceCase}}</div>
+              </div>
+              <span class="sub-text tw-pt-3-px tw-text-12-px tw-text-sub-text-color">{{ 'intacctExportSettings.autoSelectedEmployeeField' | transloco }}</span>
+            </div>
+          </div>
         </div>
+      }
     </div>
+  }
 </ng-template>

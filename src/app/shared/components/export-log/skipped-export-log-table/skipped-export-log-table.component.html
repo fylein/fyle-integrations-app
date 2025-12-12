@@ -1,29 +1,34 @@
-<p-table *ngIf="filteredExpense.length > 0" #dt1 [value]="filteredExpense">
+@if (filteredExpense.length > 0) {
+  <p-table #dt1 [value]="filteredExpense">
     <ng-template pTemplate="header">
-        <tr>
-            <th>{{ 'exportLog.tableHeaders.exportSkippedOn' | transloco}}</th>
-            <th>{{ 'skippedExportLogTable.employee' | transloco }}</th>
-            <th *ngIf="brandingFeatureConfig.featureFlags.exportLog.expenseType">{{ 'exportLog.tableHeaders.expenseType' | transloco}}</th>
-            <th>{{ 'skippedExportLogTable.referenceID' | transloco }}</th>
-        </tr>
+      <tr>
+        <th>{{ 'exportLog.tableHeaders.exportSkippedOn' | transloco}}</th>
+        <th>{{ 'skippedExportLogTable.employee' | transloco }}</th>
+        @if (brandingFeatureConfig.featureFlags.exportLog.expenseType) {
+          <th>{{ 'exportLog.tableHeaders.expenseType' | transloco}}</th>
+        }
+        <th>{{ 'skippedExportLogTable.referenceID' | transloco }}</th>
+      </tr>
     </ng-template>
-
     <ng-template pTemplate="body" let-rowData>
-        <tr>
-            <td>
-                <p class="tw-font-400 tw-text-text-secondary">{{rowData.updated_at | date}}</p>
-                <span class="tw-font-400 !tw-text-12-px tw-text-text-muted">{{rowData.updated_at | date : "hh:mm a"}}</span>
-            </td>
-            <td>
-                <h4 class="tw-text-14-px tw-font-400 tw-text-text-secondary">
-                    {{rowData.employee[0]}}
-                </h4>
-                <h5 class="tw-font-400 !tw-text-12-px tw-text-text-muted">
-                    {{rowData.employee[1]}}
-                </h5>
-            </td>
-            <td class="tw-text-text-secondary" *ngIf="brandingFeatureConfig.featureFlags.exportLog.expenseType">{{rowData.expenseType | sentenceCase}}</td>
-            <td class="tw-text-text-secondary tw-underline tw-cursor-pointer" (click)="openUrl(rowData.fyleUrl)">{{rowData.claim_number}}</td>
-        </tr>
+      <tr>
+        <td>
+          <p class="tw-font-400 tw-text-text-secondary">{{rowData.updated_at | date}}</p>
+          <span class="tw-font-400 !tw-text-12-px tw-text-text-muted">{{rowData.updated_at | date : "hh:mm a"}}</span>
+        </td>
+        <td>
+          <h4 class="tw-text-14-px tw-font-400 tw-text-text-secondary">
+            {{rowData.employee[0]}}
+          </h4>
+          <h5 class="tw-font-400 !tw-text-12-px tw-text-text-muted">
+            {{rowData.employee[1]}}
+          </h5>
+        </td>
+        @if (brandingFeatureConfig.featureFlags.exportLog.expenseType) {
+          <td class="tw-text-text-secondary">{{rowData.expenseType | sentenceCase}}</td>
+        }
+        <td class="tw-text-text-secondary tw-underline tw-cursor-pointer" (click)="openUrl(rowData.fyleUrl)">{{rowData.claim_number}}</td>
+      </tr>
     </ng-template>
-</p-table>
+  </p-table>
+}

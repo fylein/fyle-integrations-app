@@ -1,23 +1,29 @@
 @if (isLoading) {
-   <div class="tw-flex tw-justify-center tw-items-center tw-h-full">
-      <app-loader></app-loader>
-   </div>
+  <div class="tw-flex tw-justify-center tw-items-center tw-h-full">
+    <app-loader></app-loader>
+  </div>
 } @else {
-   <div  class="configuration--contents tw-border-separator tw-mt-6" [ngClass]="brandingStyle.common.configurationContents">
-      <div>
-         <app-configuration-step-header *ngIf="!isLoading"
-         [headerText]="'intacctConnector.headerText' | transloco"
-         [contentText]="'intacct.configuration.connector.subLabel' | transloco: {brandName: brandingConfig.brandName}"
-         [redirectLink]="redirectLink">
-         </app-configuration-step-header>
-      </div>
-      <div *ngIf="!isLoading" class="tw-px-24-px tw-pb-24-px">
-         <div class="tw-p-24-px">
-         <div class="container">
+  <div  class="configuration--contents tw-border-separator tw-mt-6" [ngClass]="brandingStyle.common.configurationContents">
+    <div>
+      @if (!isLoading) {
+        <app-configuration-step-header
+          [headerText]="'intacctConnector.headerText' | transloco"
+          [contentText]="'intacct.configuration.connector.subLabel' | transloco: {brandName: brandingConfig.brandName}"
+          [redirectLink]="redirectLink">
+        </app-configuration-step-header>
+      }
+    </div>
+    @if (!isLoading) {
+      <div class="tw-px-24-px tw-pb-24-px">
+        <div class="tw-p-24-px">
+          <div class="container">
             <app-intacct-connection-form [connectIntacctForm]="connectSageIntacctForm"></app-intacct-connection-form>
-         </div>
-         </div>
-         <app-configuration-step-footer *ngIf="!isLoading" [ctaText]="!saveInProgress ? (isOnboarding ? ConfigurationCtaText.SAVE_AND_CONTINUE : ConfigurationCtaText.UPDATE) : ConfigurationCtaText.SAVING" (save)="save()" [isButtonDisabled]="!connectSageIntacctForm.valid"></app-configuration-step-footer>
+          </div>
+        </div>
+        @if (!isLoading) {
+          <app-configuration-step-footer [ctaText]="!saveInProgress ? (isOnboarding ? ConfigurationCtaText.SAVE_AND_CONTINUE : ConfigurationCtaText.UPDATE) : ConfigurationCtaText.SAVING" (save)="save()" [isButtonDisabled]="!connectSageIntacctForm.valid"></app-configuration-step-footer>
+        }
       </div>
-   </div>
+    }
+  </div>
 }

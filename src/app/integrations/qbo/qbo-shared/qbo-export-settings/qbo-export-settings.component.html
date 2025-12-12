@@ -1,411 +1,445 @@
 <div class="tw-h-full">
-    <div *ngIf="isLoading" class="tw-flex tw-justify-center tw-items-center tw-pt-80-px tw-h-[75vh]">
-        <app-loader></app-loader>
+  @if (isLoading) {
+    <div class="tw-flex tw-justify-center tw-items-center tw-pt-80-px tw-h-[75vh]">
+      <app-loader></app-loader>
     </div>
-    <div *ngIf="!isLoading" [ngClass]="[brandingStyle.configuration.settingsContainer, isOnboarding ? brandingStyle.common.configurationContents : brandingStyle.common.configurationContentsDashboard, isOnboarding ? 'configuration--contents' : '']">
-        <div>
-            <app-configuration-step-header
-                [headerText]="'configuration.exportSetting.stepName' | transloco"
-                [contentText]="'configuration.exportSetting.contentText' | transloco: {brandName: brandingService.getBrandFullName() }"
-                [redirectLink]="redirectLink"
-                [showSyncButton]="isOnboarding"
-                (refreshDimension)="refreshDimensions()">
-            </app-configuration-step-header>
-        </div>
-        <form [formGroup]="exportSettingForm">
-            <div class="tw-p-24-px" [ngClass]="{'tw-pt-0': !brandingFeatureConfig.featureFlags.exportSettings.reimbursableExpenses}">
-                <div *ngIf="brandingFeatureConfig.featureFlags.exportSettings.reimbursableExpenses" class="tw-mb-16-px">
-                    <div class="tw-rounded-lg tw-border-border-tertiary tw-border tw-bg-bg-tertiary-lighter">
-                        <app-configuration-toggle-field
+  }
+  @if (!isLoading) {
+    <div [ngClass]="[brandingStyle.configuration.settingsContainer, isOnboarding ? brandingStyle.common.configurationContents : brandingStyle.common.configurationContentsDashboard, isOnboarding ? 'configuration--contents' : '']">
+      <div>
+        <app-configuration-step-header
+          [headerText]="'configuration.exportSetting.stepName' | transloco"
+          [contentText]="'configuration.exportSetting.contentText' | transloco: {brandName: brandingService.getBrandFullName() }"
+          [redirectLink]="redirectLink"
+          [showSyncButton]="isOnboarding"
+          (refreshDimension)="refreshDimensions()">
+        </app-configuration-step-header>
+      </div>
+      <form [formGroup]="exportSettingForm">
+        <div class="tw-p-24-px" [ngClass]="{'tw-pt-0': !brandingFeatureConfig.featureFlags.exportSettings.reimbursableExpenses}">
+          @if (brandingFeatureConfig.featureFlags.exportSettings.reimbursableExpenses) {
+            <div class="tw-mb-16-px">
+              <div class="tw-rounded-lg tw-border-border-tertiary tw-border tw-bg-bg-tertiary-lighter">
+                <app-configuration-toggle-field
+                  [form]="exportSettingForm"
+                  [label]="'qboExportSettings.exportReimbursableExpensesLabel' | transloco"
+                  [subLabel]="'qboExportSettings.exportReimbursableExpensesSubLabel' | transloco: { brandName: brandingConfig.brandName }"
+                  [formControllerName]="'reimbursableExpense'" [isSectionHeader]="true">
+                </app-configuration-toggle-field>
+              </div>
+              @if (exportSettingForm.get('reimbursableExpense')?.value) {
+                <div>
+                  <div
+                    class="tw-mt-16-px" [ngClass]="brandingStyle.configuration.configurationExportCardTertiary">
+                    <app-configuration-select-field
+                      [form]="exportSettingForm"
+                      [isFieldMandatory]="true"
+                      [mandatoryErrorListName]="'qboExportSettings.mandatoryErrorExportModule' | transloco"
+                      [label]="'qboExportSettings.exportTypeLabel' | transloco"
+                      [subLabel]="'qboExportSettings.exportTypeSubLabel' | transloco: { brandName: brandingConfig.brandName }"
+                      [options]="getAllReimbursableExportTypeOptions()"
+                      [iconPath]="'list'"
+                      [placeholder]="'qboExportSettings.exportTypePlaceholder' | transloco: { brandName: brandingConfig.brandName }"
+                      [formControllerName]="'reimbursableExportType'"
+                      [appName]="appName"
+                      [showExportPreview]="true"
+                      [exportTypeIconPathArray]="previewImagePaths">
+                    </app-configuration-select-field>
+                    @if (helperService.isFieldRequired(exportSettingForm, 'bankAccount')) {
+                      <div>
+                        @if (exportSettingForm.get('reimbursableExportType')?.value === QBOReimbursableExpensesObject.JOURNAL_ENTRY) {
+                          <app-configuration-select-field
                             [form]="exportSettingForm"
-                            [label]="'qboExportSettings.exportReimbursableExpensesLabel' | transloco"
-                            [subLabel]="'qboExportSettings.exportReimbursableExpensesSubLabel' | transloco: { brandName: brandingConfig.brandName }"
-                            [formControllerName]="'reimbursableExpense'" [isSectionHeader]="true">
-                        </app-configuration-toggle-field>
-                    </div>
-                    <div *ngIf="exportSettingForm.get('reimbursableExpense')?.value">
-                        <div
-                            class="tw-mt-16-px" [ngClass]="brandingStyle.configuration.configurationExportCardTertiary">
-                            <app-configuration-select-field
-                                [form]="exportSettingForm"
-                                [isFieldMandatory]="true"
-                                [mandatoryErrorListName]="'qboExportSettings.mandatoryErrorExportModule' | transloco"
-                                [label]="'qboExportSettings.exportTypeLabel' | transloco"
-                                [subLabel]="'qboExportSettings.exportTypeSubLabel' | transloco: { brandName: brandingConfig.brandName }"
-                                [options]="getAllReimbursableExportTypeOptions()"
-                                [iconPath]="'list'"
-                                [placeholder]="'qboExportSettings.exportTypePlaceholder' | transloco: { brandName: brandingConfig.brandName }"
-                                [formControllerName]="'reimbursableExportType'"
-                                [appName]="appName"
-                                [showExportPreview]="true"
-                                [exportTypeIconPathArray]="previewImagePaths">
-                            </app-configuration-select-field>
-
-                            <div *ngIf="helperService.isFieldRequired(exportSettingForm, 'bankAccount')">
-                                <app-configuration-select-field *ngIf="exportSettingForm.get('reimbursableExportType')?.value === QBOReimbursableExpensesObject.JOURNAL_ENTRY"
-                                    [form]="exportSettingForm"
-                                    [isFieldMandatory]="true"
-                                    [mandatoryErrorListName]="'qboExportSettings.mandatoryErrorBankAccount' | transloco"
-                                    [label]="'qboExportSettings.bankAccountLabel' | transloco: { exportType: (exportSettingForm.get('reimbursableExportType')?.value | snakeCaseToSpaceCase | lowercase) }"
-                                    [subLabel]="'qboExportSettings.bankAccountJournalSubLabel' | transloco: {brandName: brandingConfig.brandName}"
-                                    [destinationAttributes]="bankAndLiabilityAccounts"
-                                    [destinationOptionKey]="QboExportSettingDestinationOptionKey.BANK_ACCOUNT_AND_LIABILITY_ACCOUNT"
-                                    [isOptionSearchInProgress]="isOptionSearchInProgress"
-                                    [isAdvanceSearchEnabled]="true"
-                                    (searchOptionsDropdown)="searchOptionsDropdown($event)"
-                                    [optionLabel]="'name'"
-                                    [iconPath]="'list'"
-                                    [isMultiLineOption]="isMultilineOption"
-                                    [placeholder]="'qboExportSettings.bankAccountPlaceholder' | transloco"
-                                    [formControllerName]="'bankAccount'">
-                                </app-configuration-select-field>
-
-                                <app-configuration-select-field *ngIf="exportSettingForm.get('reimbursableExportType')?.value !== QBOReimbursableExpensesObject.JOURNAL_ENTRY"
-                                    [form]="exportSettingForm"
-                                    [isFieldMandatory]="true"
-                                    [mandatoryErrorListName]="'qboExportSettings.mandatoryErrorBankAccount' | transloco"
-                                    [label]="'qboExportSettings.bankAccountLabel' | transloco: { exportType: (exportSettingForm.get('reimbursableExportType')?.value | snakeCaseToSpaceCase | lowercase) }"
-                                    [subLabel]="'qboExportSettings.bankAccountExportedSubLabel' | transloco: {brandName: brandingConfig.brandName}"
-                                    [destinationAttributes]="bankAccounts"
-                                    [destinationOptionKey]="QboExportSettingDestinationOptionKey.BANK_ACCOUNT"
-                                    [isOptionSearchInProgress]="isOptionSearchInProgress"
-                                    [isAdvanceSearchEnabled]="true"
-                                    (searchOptionsDropdown)="searchOptionsDropdown($event)"
-                                    [optionLabel]="'name'"
-                                    [iconPath]="'list'"
-                                    [isMultiLineOption]="isMultilineOption"
-                                    [placeholder]="'qboExportSettings.bankAccountPlaceholder' | transloco"
-                                    [formControllerName]="'bankAccount'">
-                                </app-configuration-select-field>
-                            </div>
-
-                            <div *ngIf="helperService.isFieldRequired(exportSettingForm, 'qboExpenseAccount')">
-                                <app-configuration-select-field
-                                    [form]="exportSettingForm"
-                                    [isFieldMandatory]="true"
-                                    [mandatoryErrorListName]="'qboExportSettings.mandatoryErrorExpenseAccount' | transloco"
-                                    [label]="'qboExportSettings.expenseAccountLabel' | transloco: { exportType: (exportSettingForm.get('reimbursableExportType')?.value | snakeCaseToSpaceCase | lowercase) }"
-                                    [subLabel]="'qboExportSettings.expenseAccountSubLabel' | transloco"
-                                    [destinationAttributes]="expenseAccounts"
-                                    [destinationOptionKey]="QboExportSettingDestinationOptionKey.EXPENSE_ACCOUNT"
-                                    [isOptionSearchInProgress]="isOptionSearchInProgress"
-                                    [isAdvanceSearchEnabled]="true"
-                                    (searchOptionsDropdown)="searchOptionsDropdown($event)"
-                                    [optionLabel]="'name'"
-                                    [iconPath]="'list'"
-                                    [isMultiLineOption]="isMultilineOption"
-                                    [placeholder]="'qboExportSettings.expenseAccountPlaceholder' | transloco"
-                                    [formControllerName]="'qboExpenseAccount'">
-                                </app-configuration-select-field>
-                            </div>
-
-                            <div *ngIf="(exportSettingForm.controls.reimbursableExportType.value === QBOReimbursableExpensesObject.BILL || (exportSettingForm.controls.reimbursableExportType.value === QBOReimbursableExpensesObject.JOURNAL_ENTRY && employeeSettingForm.get('employeeMapping')?.value === EmployeeFieldMapping.VENDOR))">
-                                <app-configuration-select-field
-                                    [form]="exportSettingForm"
-                                    [destinationAttributes]="accountsPayables"
-                                    [destinationOptionKey]="QboExportSettingDestinationOptionKey.ACCOUNTS_PAYABLE"
-                                    [isOptionSearchInProgress]="isOptionSearchInProgress"
-                                    [isAdvanceSearchEnabled]="true"
-                                    (searchOptionsDropdown)="searchOptionsDropdown($event)"
-                                    [optionLabel]="'name'"
-                                    [isFieldMandatory]="true"
-                                    [mandatoryErrorListName]="'qboExportSettings.mandatoryErrorAccountsPayable' | transloco"
-                                    [label]="'qboExportSettings.accountsPayableLabel' | transloco: { exportType: (exportSettingForm.get('reimbursableExportType')?.value | snakeCaseToSpaceCase | lowercase) }"
-                                    [subLabel]="'qboExportSettings.accountsPayableSubLabel' | transloco: { exportType: (exportSettingForm.get('reimbursableExportType')?.value | snakeCaseToSpaceCase | lowercase) }"
-                                    [iconPath]="'list'"
-                                    [placeholder]="'qboExportSettings.accountsPayablePlaceholder' | transloco"
-                                    [isMultiLineOption]="isMultilineOption"
-                                    [formControllerName]="'accountsPayable'">
-                                </app-configuration-select-field>
-                            </div>
-                        </div>
-
-                        <div *ngIf="brandingFeatureConfig.featureFlags.exportSettings.isReimbursableExpensesAllowed" class="tw-mt-16-px" [ngClass]="brandingStyle.configuration.configurationExportCardTertiary">
-                            <form [formGroup]="employeeSettingForm">
-                                <app-configuration-select-field
-                                    [form]="employeeSettingForm"
-                                    [isFieldMandatory]="true"
-                                    [mandatoryErrorListName]="'qboExportSettings.mandatoryErrorOption' | transloco"
-                                    [label]="'qboExportSettings.employeeRepresentationLabel' | transloco"
-                                    [subLabel]="'qboExportSettings.employeeRepresentationSubLabel' | transloco: { brandName: brandingConfig.brandName }"
-                                    [options]="employeeMappingOptions"
-                                    [iconPath]="'user-two'"
-                                    [placeholder]="'qboExportSettings.employeeRepresentationPlaceholder' | transloco"
-                                    [formControllerName]="'employeeMapping'"
-                                    [isDisabled]="isEmployeeMappingDisabled()">
-                                </app-configuration-select-field>
-                                <app-configuration-select-field
-                                    [form]="employeeSettingForm"
-                                    [isFieldMandatory]="false"
-                                    [mandatoryErrorListName]="'qboExportSettings.mandatoryErrorOption' | transloco"
-                                    [label]="'qboExportSettings.employeeMatchingLabel' | transloco: { brandName: brandingConfig.brandName }"
-                                    [subLabel]="'qboExportSettings.employeeMatchingSubLabel' | transloco: { brandName: brandingConfig.brandName }"
-                                    [options]="autoMapEmployeeOptions"
-                                    [iconPath]="'question-square-outline'"
-                                    [placeholder]="'qboExportSettings.employeeRepresentationPlaceholder' | transloco"
-                                    [formControllerName]="'autoMapEmployee'">
-                                </app-configuration-select-field>
-                              </form>
-                        </div>
-                        <div *ngIf="exportSettingForm.get('reimbursableExportType')?.value"
-                            class="tw-mt-16-px" [ngClass]="brandingStyle.configuration.configurationExportCardTertiary">
-                            <app-configuration-select-field
-                                [form]="exportSettingForm"
-                                [isFieldMandatory]="true"
-                                [mandatoryErrorListName]="'qboExportSettings.mandatoryErrorExpenseState' | transloco"
-                                [label]="'qboExportSettings.expenseStateLabel' | transloco: { brandName: brandingConfig.brandName }"
-                                [subLabel]="'qboExportSettings.expenseStateSubLabel' | transloco"
-                                [options]="expenseStateOptions"
-                                [iconPath]="'list'"
-                                [placeholder]="'qboExportSettings.expenseStatePlaceholder' | transloco"
-                                [formControllerName]="'expenseState'">
-                            </app-configuration-select-field>
-                        </div>
-
-                        <div *ngIf="exportSettingForm.get('reimbursableExportType')?.value"
-                            class="tw-mt-16-px" [ngClass]="brandingStyle.configuration.configurationExportCardTertiary">
-                            <app-configuration-select-field
-                                [form]="exportSettingForm"
-                                [isFieldMandatory]="true"
-                                [mandatoryErrorListName]="'qboExportSettings.mandatoryErrorExpenseGrouping' | transloco"
-                                [label]="'qboExportSettings.expenseGroupingLabel' | transloco"
-                                [subLabel]="'qboExportSettings.expenseGroupingSubLabel' | transloco"
-                                [options]="expenseGroupByOptions"
-                                [iconPath]="'question-square-outline'"
-                                [placeholder]="'qboExportSettings.expenseGroupingPlaceholder' | transloco"
-                                [formControllerName]="'reimbursableExportGroup'">
-                            </app-configuration-select-field>
-                        </div>
-
-                        <div *ngIf="exportSettingForm.get('reimbursableExportType')?.value"
-                            class="tw-mt-16-px" [ngClass]="brandingStyle.configuration.configurationExportCardTertiary">
-                            <app-configuration-select-field
-                                [form]="exportSettingForm"
-                                [isFieldMandatory]="true"
-                                [mandatoryErrorListName]="'qboExportSettings.mandatoryErrorExportDate' | transloco"
-                                [label]="'qboExportSettings.exportDateLabel' | transloco: { exportType: (exportSettingForm.get('reimbursableExportType')?.value | snakeCaseToSpaceCase | lowercase) }"
-                                [subLabel]="'qboExportSettings.exportDateReimbursableSubLabel' | transloco: { brandName: brandingConfig.brandName }"
-                                [options]="reimbursableExpenseGroupingDateOptions"
-                                [placeholder]="'qboExportSettings.exportDatePlaceholder' | transloco: { exportType: (exportSettingForm.get('reimbursableExportType')?.value | snakeCaseToSpaceCase | lowercase) }"
-                                [iconPath]="'calendar'"
-                                [formControllerName]="'reimbursableExportDate'">
-                            </app-configuration-select-field>
-                        </div>
-                    </div>
-                </div>
-
-                <div *ngIf="brandingFeatureConfig.featureFlags.exportSettings.reimbursableExpenses" class="tw-rounded-lg tw-border-border-tertiary tw-border tw-bg-bg-tertiary-lighter">
-                    <app-configuration-toggle-field
-                        [form]="exportSettingForm"
-                        [label]="'configuration.exportSetting.headerText' | transloco"
-                        [subLabel]="'configuration.exportSetting.contentText' | transloco: {brandName: brandingConfig.brandName}"
-                        [formControllerName]="'creditCardExpense'"
-                        [isSectionHeader]="true"
-                        [hideToggle]="!brandingFeatureConfig.featureFlags.exportSettings.reimbursableExpenses">
-                    </app-configuration-toggle-field>
-                </div>
-
-                <div *ngIf="exportSettingForm.get('creditCardExpense')?.value">
+                            [isFieldMandatory]="true"
+                            [mandatoryErrorListName]="'qboExportSettings.mandatoryErrorBankAccount' | transloco"
+                            [label]="'qboExportSettings.bankAccountLabel' | transloco: { exportType: (exportSettingForm.get('reimbursableExportType')?.value | snakeCaseToSpaceCase | lowercase) }"
+                            [subLabel]="'qboExportSettings.bankAccountJournalSubLabel' | transloco: {brandName: brandingConfig.brandName}"
+                            [destinationAttributes]="bankAndLiabilityAccounts"
+                            [destinationOptionKey]="QboExportSettingDestinationOptionKey.BANK_ACCOUNT_AND_LIABILITY_ACCOUNT"
+                            [isOptionSearchInProgress]="isOptionSearchInProgress"
+                            [isAdvanceSearchEnabled]="true"
+                            (searchOptionsDropdown)="searchOptionsDropdown($event)"
+                            [optionLabel]="'name'"
+                            [iconPath]="'list'"
+                            [isMultiLineOption]="isMultilineOption"
+                            [placeholder]="'qboExportSettings.bankAccountPlaceholder' | transloco"
+                            [formControllerName]="'bankAccount'">
+                          </app-configuration-select-field>
+                        }
+                        @if (exportSettingForm.get('reimbursableExportType')?.value !== QBOReimbursableExpensesObject.JOURNAL_ENTRY) {
+                          <app-configuration-select-field
+                            [form]="exportSettingForm"
+                            [isFieldMandatory]="true"
+                            [mandatoryErrorListName]="'qboExportSettings.mandatoryErrorBankAccount' | transloco"
+                            [label]="'qboExportSettings.bankAccountLabel' | transloco: { exportType: (exportSettingForm.get('reimbursableExportType')?.value | snakeCaseToSpaceCase | lowercase) }"
+                            [subLabel]="'qboExportSettings.bankAccountExportedSubLabel' | transloco: {brandName: brandingConfig.brandName}"
+                            [destinationAttributes]="bankAccounts"
+                            [destinationOptionKey]="QboExportSettingDestinationOptionKey.BANK_ACCOUNT"
+                            [isOptionSearchInProgress]="isOptionSearchInProgress"
+                            [isAdvanceSearchEnabled]="true"
+                            (searchOptionsDropdown)="searchOptionsDropdown($event)"
+                            [optionLabel]="'name'"
+                            [iconPath]="'list'"
+                            [isMultiLineOption]="isMultilineOption"
+                            [placeholder]="'qboExportSettings.bankAccountPlaceholder' | transloco"
+                            [formControllerName]="'bankAccount'">
+                          </app-configuration-select-field>
+                        }
+                      </div>
+                    }
+                    @if (helperService.isFieldRequired(exportSettingForm, 'qboExpenseAccount')) {
+                      <div>
+                        <app-configuration-select-field
+                          [form]="exportSettingForm"
+                          [isFieldMandatory]="true"
+                          [mandatoryErrorListName]="'qboExportSettings.mandatoryErrorExpenseAccount' | transloco"
+                          [label]="'qboExportSettings.expenseAccountLabel' | transloco: { exportType: (exportSettingForm.get('reimbursableExportType')?.value | snakeCaseToSpaceCase | lowercase) }"
+                          [subLabel]="'qboExportSettings.expenseAccountSubLabel' | transloco"
+                          [destinationAttributes]="expenseAccounts"
+                          [destinationOptionKey]="QboExportSettingDestinationOptionKey.EXPENSE_ACCOUNT"
+                          [isOptionSearchInProgress]="isOptionSearchInProgress"
+                          [isAdvanceSearchEnabled]="true"
+                          (searchOptionsDropdown)="searchOptionsDropdown($event)"
+                          [optionLabel]="'name'"
+                          [iconPath]="'list'"
+                          [isMultiLineOption]="isMultilineOption"
+                          [placeholder]="'qboExportSettings.expenseAccountPlaceholder' | transloco"
+                          [formControllerName]="'qboExpenseAccount'">
+                        </app-configuration-select-field>
+                      </div>
+                    }
+                    @if ((exportSettingForm.controls.reimbursableExportType.value === QBOReimbursableExpensesObject.BILL || (exportSettingForm.controls.reimbursableExportType.value === QBOReimbursableExpensesObject.JOURNAL_ENTRY && employeeSettingForm.get('employeeMapping')?.value === EmployeeFieldMapping.VENDOR))) {
+                      <div>
+                        <app-configuration-select-field
+                          [form]="exportSettingForm"
+                          [destinationAttributes]="accountsPayables"
+                          [destinationOptionKey]="QboExportSettingDestinationOptionKey.ACCOUNTS_PAYABLE"
+                          [isOptionSearchInProgress]="isOptionSearchInProgress"
+                          [isAdvanceSearchEnabled]="true"
+                          (searchOptionsDropdown)="searchOptionsDropdown($event)"
+                          [optionLabel]="'name'"
+                          [isFieldMandatory]="true"
+                          [mandatoryErrorListName]="'qboExportSettings.mandatoryErrorAccountsPayable' | transloco"
+                          [label]="'qboExportSettings.accountsPayableLabel' | transloco: { exportType: (exportSettingForm.get('reimbursableExportType')?.value | snakeCaseToSpaceCase | lowercase) }"
+                          [subLabel]="'qboExportSettings.accountsPayableSubLabel' | transloco: { exportType: (exportSettingForm.get('reimbursableExportType')?.value | snakeCaseToSpaceCase | lowercase) }"
+                          [iconPath]="'list'"
+                          [placeholder]="'qboExportSettings.accountsPayablePlaceholder' | transloco"
+                          [isMultiLineOption]="isMultilineOption"
+                          [formControllerName]="'accountsPayable'">
+                        </app-configuration-select-field>
+                      </div>
+                    }
+                  </div>
+                  @if (brandingFeatureConfig.featureFlags.exportSettings.isReimbursableExpensesAllowed) {
                     <div class="tw-mt-16-px" [ngClass]="brandingStyle.configuration.configurationExportCardTertiary">
+                      <form [formGroup]="employeeSettingForm">
                         <app-configuration-select-field
-                            [form]="exportSettingForm"
-                            [isFieldMandatory]="true"
-                            [mandatoryErrorListName]="'qboExportSettings.mandatoryErrorExportModule' | transloco"
-                            [label]="'qboExportSettings.exportTypeLabel' | transloco"
-                            [subLabel]="'configuration.exportSetting.corporateCard.creditCardExportTypeSubLabel' | transloco"
-                            [options]="creditCardExportTypes"
-                            [iconPath]="'list'"
-                            [placeholder]="'qboExportSettings.cccExportTypePlaceholder' | transloco"
-                            [formControllerName]="'creditCardExportType'"
-                            [appName]="appName"
-                            [showExportPreview]="true"
-                            [exportTypeIconPathArray]="previewImagePaths">
+                          [form]="employeeSettingForm"
+                          [isFieldMandatory]="true"
+                          [mandatoryErrorListName]="'qboExportSettings.mandatoryErrorOption' | transloco"
+                          [label]="'qboExportSettings.employeeRepresentationLabel' | transloco"
+                          [subLabel]="'qboExportSettings.employeeRepresentationSubLabel' | transloco: { brandName: brandingConfig.brandName }"
+                          [options]="employeeMappingOptions"
+                          [iconPath]="'user-two'"
+                          [placeholder]="'qboExportSettings.employeeRepresentationPlaceholder' | transloco"
+                          [formControllerName]="'employeeMapping'"
+                          [isDisabled]="isEmployeeMappingDisabled()">
                         </app-configuration-select-field>
-
-                        <div class="tw-px-20-px " *ngIf="showWarningMessageAboutAutoExpenseCreation && (exportSettingForm.get('creditCardExportType')?.value === QBOCorporateCreditCardExpensesObject.CREDIT_CARD_PURCHASE || exportSettingForm.get('creditCardExportType')?.value === QBOCorporateCreditCardExpensesObject.DEBIT_CARD_EXPENSE)">
-                            <app-configuration-info-label [infoText]="'qboExportSettings.warningMessageAboutAutoExpenseCreation' | transloco" [showCloseIcon]="true" (closeInfoLabel)="closeInfoLabel()" [customClasses]="'!tw-bg-white !tw-border-border-info-lighter'"></app-configuration-info-label>
-                        </div>
-
-                        <div *ngIf="showNameInJournalOption && brandingFeatureConfig.featureFlags.exportSettings.nameInJournalEntry">
-                            <app-configuration-select-field
-                                [form]="exportSettingForm"
-                                [isFieldMandatory]="false"
-                                [mandatoryErrorListName]="'qboExportSettings.mandatoryErrorNameInJournal' | transloco"
-                                [label]="'configuration.exportSetting.corporateCard.journalOptionLabel' | transloco"
-                                [subLabel]="'configuration.exportSetting.corporateCard.journalOptionSubLabel' | transloco"
-                                [options]="nameInJournalOptions"
-                                [iconPath]="'list'"
-                                [placeholder]="'qboExportSettings.nameInJournalPlaceholder' | transloco"
-                                [formControllerName]="'nameInJournalEntry'">
-                            </app-configuration-select-field>
-                        </div>
-
-                        <div *ngIf="helperService.isFieldRequired(exportSettingForm, 'defaultCCCAccount')">
-                            <app-configuration-select-field
-                              [form]="exportSettingForm"
-                              [destinationAttributes]="cccAccounts"
-                              [destinationOptionKey]="QboExportSettingDestinationOptionKey.CREDIT_CARD_ACCOUNT"
-                              [isOptionSearchInProgress]="isOptionSearchInProgress"
-                              [isAdvanceSearchEnabled]="true"
-                              (searchOptionsDropdown)="searchOptionsDropdown($event)"
-                              [optionLabel]="'name'"
-                              [iconPath]="'list'"
-                              [isFieldMandatory]="true"
-                              [mandatoryErrorListName]="'qboExportSettings.mandatoryErrorCreditCardAccount' | transloco"
-                              [label]="'configuration.exportSetting.corporateCard.defaultCCCAccountLabel' | transloco"
-                              [subLabel]="'qboExportSettings.cccDefaultAccountSubLabel' | transloco"
-                              [placeholder]="'configuration.exportSetting.corporateCard.defaultCCCAccountPlaceholder' | transloco"
-                              [isMultiLineOption]="isMultilineOption"
-                              [formControllerName]="'defaultCCCAccount'">
-                            </app-configuration-select-field>
-                        </div>
-
-                        <div *ngIf="helperService.isFieldRequired(exportSettingForm, 'defaultDebitCardAccount')">
-                            <app-configuration-select-field
-                              [form]="exportSettingForm"
-                              [destinationAttributes]="expenseAccounts"
-                              [destinationOptionKey]="QboExportSettingDestinationOptionKey.BANK_ACCOUNT_AND_CREDIT_CARD_ACCOUNT"
-                              [isOptionSearchInProgress]="isOptionSearchInProgress"
-                              [isAdvanceSearchEnabled]="true"
-                              (searchOptionsDropdown)="searchOptionsDropdown($event)"
-                              [optionLabel]="'name'"
-                              [iconPath]="'list'"
-                              [isFieldMandatory]="true"
-                              [mandatoryErrorListName]="'qboExportSettings.mandatoryErrorDebitCardAccount' | transloco"
-                              [label]="'configuration.exportSetting.corporateCard.defaultDebitCardAccountLabel' | transloco"
-                              [subLabel]="'qboExportSettings.debitCardDefaultAccountSubLabel' | transloco"
-                              [placeholder]="'configuration.exportSetting.corporateCard.defaultDebitCardAccountPlaceholder' | transloco"
-                              [isMultiLineOption]="isMultilineOption"
-                              [formControllerName]="'defaultDebitCardAccount'">
-                            </app-configuration-select-field>
-                        </div>
-
-                        <div *ngIf="helperService.isFieldRequired(exportSettingForm, 'defaultCreditCardVendor')">
-                            <app-configuration-select-field
-                              [form]="exportSettingForm"
-                              [destinationAttributes]="vendors"
-                              [destinationOptionKey]="QboExportSettingDestinationOptionKey.VENDOR"
-                              [isOptionSearchInProgress]="isOptionSearchInProgress"
-                              [isAdvanceSearchEnabled]="true"
-                              (searchOptionsDropdown)="searchOptionsDropdown($event)"
-                              [optionLabel]="'name'"
-                              [iconPath]="'list'"
-                              [isFieldMandatory]="true"
-                              [mandatoryErrorListName]="'qboExportSettings.mandatoryErrorCCCVendor' | transloco"
-                              [label]="'configuration.exportSetting.corporateCard.defaultCCCVendorLabel' | transloco"
-                              [subLabel]="'configuration.exportSetting.corporateCard.defaultCCCVendorSubLabel' | transloco"
-                              [placeholder]="'qboExportSettings.cccDefaultVendorPlaceholder' | transloco"
-                              [formControllerName]="'defaultCreditCardVendor'">
-                            </app-configuration-select-field>
-                        </div>
-
-                        <div *ngIf="(exportSettingForm.get('creditCardExportType')?.value === QBOCorporateCreditCardExpensesObject.BILL) && !((exportSettingForm.controls.reimbursableExportType.value === QBOReimbursableExpensesObject.BILL || (exportSettingForm.controls.reimbursableExportType.value === QBOReimbursableExpensesObject.JOURNAL_ENTRY && employeeSettingForm.get('employeeMapping')?.value === EmployeeFieldMapping.VENDOR)))">
-                            <app-configuration-select-field
-                              [form]="exportSettingForm"
-                              [destinationAttributes]="accountsPayables"
-                              [destinationOptionKey]="QboExportSettingDestinationOptionKey.ACCOUNTS_PAYABLE"
-                              [isOptionSearchInProgress]="isOptionSearchInProgress"
-                              [isAdvanceSearchEnabled]="true"
-                              (searchOptionsDropdown)="searchOptionsDropdown($event)"
-                              [optionLabel]="'name'"
-                              [iconPath]="'list'"
-                              [isFieldMandatory]="true"
-                              [mandatoryErrorListName]="'qboExportSettings.mandatoryErrorAccountsPayable' | transloco"
-                              [label]="'configuration.exportSetting.corporateCard.accountsPayableLabel' | transloco: { exportType: (exportSettingForm.get('creditCardExportType')?.value | snakeCaseToSpaceCase | lowercase) }"
-                              [subLabel]="'configuration.exportSetting.corporateCard.accountsPayableSubLabel' | transloco: { exportType: (exportSettingForm.get('creditCardExportType')?.value | snakeCaseToSpaceCase | lowercase) }"
-                              [placeholder]="'qboExportSettings.accountsPayablePlaceholder' | transloco"
-                              [isMultiLineOption]="isMultilineOption"
-                              [formControllerName]="'accountsPayable'">
-                            </app-configuration-select-field>
-                        </div>
+                        <app-configuration-select-field
+                          [form]="employeeSettingForm"
+                          [isFieldMandatory]="false"
+                          [mandatoryErrorListName]="'qboExportSettings.mandatoryErrorOption' | transloco"
+                          [label]="'qboExportSettings.employeeMatchingLabel' | transloco: { brandName: brandingConfig.brandName }"
+                          [subLabel]="'qboExportSettings.employeeMatchingSubLabel' | transloco: { brandName: brandingConfig.brandName }"
+                          [options]="autoMapEmployeeOptions"
+                          [iconPath]="'question-square-outline'"
+                          [placeholder]="'qboExportSettings.employeeRepresentationPlaceholder' | transloco"
+                          [formControllerName]="'autoMapEmployee'">
+                        </app-configuration-select-field>
+                      </form>
                     </div>
-
-                    <div *ngIf="exportSettingForm.get('creditCardExportType')?.value" class="tw-mt-16-px" [ngClass]="brandingStyle.configuration.configurationExportCardTertiary">
-                        <app-configuration-select-field
-                            [form]="exportSettingForm"
-                            [isFieldMandatory]="true"
-                            [mandatoryErrorListName]="'qboExportSettings.mandatoryErrorExpenseState' | transloco"
-                            [label]="'configuration.exportSetting.corporateCard.creditCardExpenseLabel' | transloco"
-                            [subLabel]="'configuration.exportSetting.corporateCard.creditCardExpenseSubLabel' | transloco"
-                            [options]="cccExpenseStateOptions"
-                            [iconPath]="'list'"
-                            [placeholder]="'configuration.exportSetting.corporateCard.expenseState' | transloco"
-                            [formControllerName]="'cccExpenseState'">
-                        </app-configuration-select-field>
-                    </div>
-
-                    <div *ngIf="exportSettingForm.get('creditCardExportType')?.value" class="tw-mt-16-px" [ngClass]="brandingStyle.configuration.configurationExportCardTertiary">
-                        <app-configuration-select-field
-                            [form]="exportSettingForm"
-                            [isFieldMandatory]="true"
-                            [mandatoryErrorListName]="'qboExportSettings.mandatoryErrorExpenseGrouping' | transloco"
-                            [label]="'qboExportSettings.expenseGroupingLabel' | transloco"
-                            [subLabel]="'configuration.exportSetting.corporateCard.creditCardExportGroupSubLabel' | transloco"
-                            [options]="expenseGroupByOptions"
-                            [iconPath]="'question-square-outline'"
-                            [placeholder]="'qboExportSettings.expenseGroupingPlaceholder' | transloco"
-                            [isDisabled]="[QBOCorporateCreditCardExpensesObject.CREDIT_CARD_PURCHASE, QBOCorporateCreditCardExpensesObject.DEBIT_CARD_EXPENSE].includes(exportSettingForm.get('creditCardExportType')?.value)"
-                            [formControllerName]="'creditCardExportGroup'">
-                        </app-configuration-select-field>
-                    </div>
-
-                    <div *ngIf="exportSettingForm.get('creditCardExportType')?.value" class="tw-mt-16-px" [ngClass]="brandingStyle.configuration.configurationExportCardTertiary">
-                        <app-configuration-select-field
-                            [form]="exportSettingForm"
-                            [isFieldMandatory]="true"
-                            [mandatoryErrorListName]="'qboExportSettings.mandatoryErrorExportDate' | transloco"
-                            [label]="'qboExportSettings.exportDateLabel' | transloco: { exportType: (exportSettingForm.get('creditCardExportType')?.value | snakeCaseToSpaceCase | lowercase) }"
-                            [subLabel]="'qboExportSettings.exportDateCorporateCardSubLabel' | transloco"
-                            [options]="cccExpenseGroupingDateOptions"
-                            [iconPath]="'calendar'"
-                            [placeholder]="'qboExportSettings.exportDatePlaceholder' | transloco: { exportType: (exportSettingForm.get('creditCardExportType')?.value | snakeCaseToSpaceCase | lowercase) }"
-                            [formControllerName]="'creditCardExportDate'">
-                        </app-configuration-select-field>
-
-                        <app-configuration-select-field *ngIf="brandingFeatureConfig.featureFlags.exportSettings.splitExpenseGrouping &&
-                        exportSettingForm.get('creditCardExportType')?.value === QBOCorporateCreditCardExpensesObject.CREDIT_CARD_PURCHASE"
+                  }
+                  @if (exportSettingForm.get('reimbursableExportType')?.value) {
+                    <div
+                      class="tw-mt-16-px" [ngClass]="brandingStyle.configuration.configurationExportCardTertiary">
+                      <app-configuration-select-field
                         [form]="exportSettingForm"
                         [isFieldMandatory]="true"
-                        [showClearIcon]="true"
-                        [mandatoryErrorListName]="'qboExportSettings.mandatoryErrorSplitExpenseGrouping' | transloco"
-                        [label]="'qboExportSettings.splitExpenseGroupingLabel' | transloco"
-                        [subLabel]="'qboExportSettings.splitExpenseGroupingSubLabel' | transloco"
-                        [options]="splitExpenseGroupingOptions"
-                        [iconPath]="'question-square-outline'"
-                        [placeholder]="'qboExportSettings.splitExpenseGroupingPlaceholder' | transloco"
-                        [formControllerName]="'splitExpenseGrouping'">
-                    </app-configuration-select-field>
+                        [mandatoryErrorListName]="'qboExportSettings.mandatoryErrorExpenseState' | transloco"
+                        [label]="'qboExportSettings.expenseStateLabel' | transloco: { brandName: brandingConfig.brandName }"
+                        [subLabel]="'qboExportSettings.expenseStateSubLabel' | transloco"
+                        [options]="expenseStateOptions"
+                        [iconPath]="'list'"
+                        [placeholder]="'qboExportSettings.expenseStatePlaceholder' | transloco"
+                        [formControllerName]="'expenseState'">
+                      </app-configuration-select-field>
                     </div>
+                  }
+                  @if (exportSettingForm.get('reimbursableExportType')?.value) {
+                    <div
+                      class="tw-mt-16-px" [ngClass]="brandingStyle.configuration.configurationExportCardTertiary">
+                      <app-configuration-select-field
+                        [form]="exportSettingForm"
+                        [isFieldMandatory]="true"
+                        [mandatoryErrorListName]="'qboExportSettings.mandatoryErrorExpenseGrouping' | transloco"
+                        [label]="'qboExportSettings.expenseGroupingLabel' | transloco"
+                        [subLabel]="'qboExportSettings.expenseGroupingSubLabel' | transloco"
+                        [options]="expenseGroupByOptions"
+                        [iconPath]="'question-square-outline'"
+                        [placeholder]="'qboExportSettings.expenseGroupingPlaceholder' | transloco"
+                        [formControllerName]="'reimbursableExportGroup'">
+                      </app-configuration-select-field>
+                    </div>
+                  }
+                  @if (exportSettingForm.get('reimbursableExportType')?.value) {
+                    <div
+                      class="tw-mt-16-px" [ngClass]="brandingStyle.configuration.configurationExportCardTertiary">
+                      <app-configuration-select-field
+                        [form]="exportSettingForm"
+                        [isFieldMandatory]="true"
+                        [mandatoryErrorListName]="'qboExportSettings.mandatoryErrorExportDate' | transloco"
+                        [label]="'qboExportSettings.exportDateLabel' | transloco: { exportType: (exportSettingForm.get('reimbursableExportType')?.value | snakeCaseToSpaceCase | lowercase) }"
+                        [subLabel]="'qboExportSettings.exportDateReimbursableSubLabel' | transloco: { brandName: brandingConfig.brandName }"
+                        [options]="reimbursableExpenseGroupingDateOptions"
+                        [placeholder]="'qboExportSettings.exportDatePlaceholder' | transloco: { exportType: (exportSettingForm.get('reimbursableExportType')?.value | snakeCaseToSpaceCase | lowercase) }"
+                        [iconPath]="'calendar'"
+                        [formControllerName]="'reimbursableExportDate'">
+                      </app-configuration-select-field>
+                    </div>
+                  }
                 </div>
+              }
             </div>
-            <app-configuration-step-footer
-                *ngIf="isOnboarding"
-                [ctaText]="!isSaveInProgress ? (isOnboarding ? ConfigurationCtaText.SAVE_AND_CONTINUE : ConfigurationCtaText.SAVE) : ConfigurationCtaText.SAVING"
-                [isButtonDisabled]="!exportSettingForm.valid"
-                [showBackButton]="isOnboarding ? true : false"
-                (save)="save()"
-                (navigateToPreviousStep)="navigateToPreviousStep()">
-            </app-configuration-step-footer>
-        </form>
+          }
+          @if (brandingFeatureConfig.featureFlags.exportSettings.reimbursableExpenses) {
+            <div class="tw-rounded-lg tw-border-border-tertiary tw-border tw-bg-bg-tertiary-lighter">
+              <app-configuration-toggle-field
+                [form]="exportSettingForm"
+                [label]="'configuration.exportSetting.headerText' | transloco"
+                [subLabel]="'configuration.exportSetting.contentText' | transloco: {brandName: brandingConfig.brandName}"
+                [formControllerName]="'creditCardExpense'"
+                [isSectionHeader]="true"
+                [hideToggle]="!brandingFeatureConfig.featureFlags.exportSettings.reimbursableExpenses">
+              </app-configuration-toggle-field>
+            </div>
+          }
+          @if (exportSettingForm.get('creditCardExpense')?.value) {
+            <div>
+              <div class="tw-mt-16-px" [ngClass]="brandingStyle.configuration.configurationExportCardTertiary">
+                <app-configuration-select-field
+                  [form]="exportSettingForm"
+                  [isFieldMandatory]="true"
+                  [mandatoryErrorListName]="'qboExportSettings.mandatoryErrorExportModule' | transloco"
+                  [label]="'qboExportSettings.exportTypeLabel' | transloco"
+                  [subLabel]="'configuration.exportSetting.corporateCard.creditCardExportTypeSubLabel' | transloco"
+                  [options]="creditCardExportTypes"
+                  [iconPath]="'list'"
+                  [placeholder]="'qboExportSettings.cccExportTypePlaceholder' | transloco"
+                  [formControllerName]="'creditCardExportType'"
+                  [appName]="appName"
+                  [showExportPreview]="true"
+                  [exportTypeIconPathArray]="previewImagePaths">
+                </app-configuration-select-field>
+                @if (showWarningMessageAboutAutoExpenseCreation && (exportSettingForm.get('creditCardExportType')?.value === QBOCorporateCreditCardExpensesObject.CREDIT_CARD_PURCHASE || exportSettingForm.get('creditCardExportType')?.value === QBOCorporateCreditCardExpensesObject.DEBIT_CARD_EXPENSE)) {
+                  <div class="tw-px-20-px ">
+                    <app-configuration-info-label [infoText]="'qboExportSettings.warningMessageAboutAutoExpenseCreation' | transloco" [showCloseIcon]="true" (closeInfoLabel)="closeInfoLabel()" [customClasses]="'!tw-bg-white !tw-border-border-info-lighter'"></app-configuration-info-label>
+                  </div>
+                }
+                @if (showNameInJournalOption && brandingFeatureConfig.featureFlags.exportSettings.nameInJournalEntry) {
+                  <div>
+                    <app-configuration-select-field
+                      [form]="exportSettingForm"
+                      [isFieldMandatory]="false"
+                      [mandatoryErrorListName]="'qboExportSettings.mandatoryErrorNameInJournal' | transloco"
+                      [label]="'configuration.exportSetting.corporateCard.journalOptionLabel' | transloco"
+                      [subLabel]="'configuration.exportSetting.corporateCard.journalOptionSubLabel' | transloco"
+                      [options]="nameInJournalOptions"
+                      [iconPath]="'list'"
+                      [placeholder]="'qboExportSettings.nameInJournalPlaceholder' | transloco"
+                      [formControllerName]="'nameInJournalEntry'">
+                    </app-configuration-select-field>
+                  </div>
+                }
+                @if (helperService.isFieldRequired(exportSettingForm, 'defaultCCCAccount')) {
+                  <div>
+                    <app-configuration-select-field
+                      [form]="exportSettingForm"
+                      [destinationAttributes]="cccAccounts"
+                      [destinationOptionKey]="QboExportSettingDestinationOptionKey.CREDIT_CARD_ACCOUNT"
+                      [isOptionSearchInProgress]="isOptionSearchInProgress"
+                      [isAdvanceSearchEnabled]="true"
+                      (searchOptionsDropdown)="searchOptionsDropdown($event)"
+                      [optionLabel]="'name'"
+                      [iconPath]="'list'"
+                      [isFieldMandatory]="true"
+                      [mandatoryErrorListName]="'qboExportSettings.mandatoryErrorCreditCardAccount' | transloco"
+                      [label]="'configuration.exportSetting.corporateCard.defaultCCCAccountLabel' | transloco"
+                      [subLabel]="'qboExportSettings.cccDefaultAccountSubLabel' | transloco"
+                      [placeholder]="'configuration.exportSetting.corporateCard.defaultCCCAccountPlaceholder' | transloco"
+                      [isMultiLineOption]="isMultilineOption"
+                      [formControllerName]="'defaultCCCAccount'">
+                    </app-configuration-select-field>
+                  </div>
+                }
+                @if (helperService.isFieldRequired(exportSettingForm, 'defaultDebitCardAccount')) {
+                  <div>
+                    <app-configuration-select-field
+                      [form]="exportSettingForm"
+                      [destinationAttributes]="expenseAccounts"
+                      [destinationOptionKey]="QboExportSettingDestinationOptionKey.BANK_ACCOUNT_AND_CREDIT_CARD_ACCOUNT"
+                      [isOptionSearchInProgress]="isOptionSearchInProgress"
+                      [isAdvanceSearchEnabled]="true"
+                      (searchOptionsDropdown)="searchOptionsDropdown($event)"
+                      [optionLabel]="'name'"
+                      [iconPath]="'list'"
+                      [isFieldMandatory]="true"
+                      [mandatoryErrorListName]="'qboExportSettings.mandatoryErrorDebitCardAccount' | transloco"
+                      [label]="'configuration.exportSetting.corporateCard.defaultDebitCardAccountLabel' | transloco"
+                      [subLabel]="'qboExportSettings.debitCardDefaultAccountSubLabel' | transloco"
+                      [placeholder]="'configuration.exportSetting.corporateCard.defaultDebitCardAccountPlaceholder' | transloco"
+                      [isMultiLineOption]="isMultilineOption"
+                      [formControllerName]="'defaultDebitCardAccount'">
+                    </app-configuration-select-field>
+                  </div>
+                }
+                @if (helperService.isFieldRequired(exportSettingForm, 'defaultCreditCardVendor')) {
+                  <div>
+                    <app-configuration-select-field
+                      [form]="exportSettingForm"
+                      [destinationAttributes]="vendors"
+                      [destinationOptionKey]="QboExportSettingDestinationOptionKey.VENDOR"
+                      [isOptionSearchInProgress]="isOptionSearchInProgress"
+                      [isAdvanceSearchEnabled]="true"
+                      (searchOptionsDropdown)="searchOptionsDropdown($event)"
+                      [optionLabel]="'name'"
+                      [iconPath]="'list'"
+                      [isFieldMandatory]="true"
+                      [mandatoryErrorListName]="'qboExportSettings.mandatoryErrorCCCVendor' | transloco"
+                      [label]="'configuration.exportSetting.corporateCard.defaultCCCVendorLabel' | transloco"
+                      [subLabel]="'configuration.exportSetting.corporateCard.defaultCCCVendorSubLabel' | transloco"
+                      [placeholder]="'qboExportSettings.cccDefaultVendorPlaceholder' | transloco"
+                      [formControllerName]="'defaultCreditCardVendor'">
+                    </app-configuration-select-field>
+                  </div>
+                }
+                @if ((exportSettingForm.get('creditCardExportType')?.value === QBOCorporateCreditCardExpensesObject.BILL) && !((exportSettingForm.controls.reimbursableExportType.value === QBOReimbursableExpensesObject.BILL || (exportSettingForm.controls.reimbursableExportType.value === QBOReimbursableExpensesObject.JOURNAL_ENTRY && employeeSettingForm.get('employeeMapping')?.value === EmployeeFieldMapping.VENDOR)))) {
+                  <div>
+                    <app-configuration-select-field
+                      [form]="exportSettingForm"
+                      [destinationAttributes]="accountsPayables"
+                      [destinationOptionKey]="QboExportSettingDestinationOptionKey.ACCOUNTS_PAYABLE"
+                      [isOptionSearchInProgress]="isOptionSearchInProgress"
+                      [isAdvanceSearchEnabled]="true"
+                      (searchOptionsDropdown)="searchOptionsDropdown($event)"
+                      [optionLabel]="'name'"
+                      [iconPath]="'list'"
+                      [isFieldMandatory]="true"
+                      [mandatoryErrorListName]="'qboExportSettings.mandatoryErrorAccountsPayable' | transloco"
+                      [label]="'configuration.exportSetting.corporateCard.accountsPayableLabel' | transloco: { exportType: (exportSettingForm.get('creditCardExportType')?.value | snakeCaseToSpaceCase | lowercase) }"
+                      [subLabel]="'configuration.exportSetting.corporateCard.accountsPayableSubLabel' | transloco: { exportType: (exportSettingForm.get('creditCardExportType')?.value | snakeCaseToSpaceCase | lowercase) }"
+                      [placeholder]="'qboExportSettings.accountsPayablePlaceholder' | transloco"
+                      [isMultiLineOption]="isMultilineOption"
+                      [formControllerName]="'accountsPayable'">
+                    </app-configuration-select-field>
+                  </div>
+                }
+              </div>
+              @if (exportSettingForm.get('creditCardExportType')?.value) {
+                <div class="tw-mt-16-px" [ngClass]="brandingStyle.configuration.configurationExportCardTertiary">
+                  <app-configuration-select-field
+                    [form]="exportSettingForm"
+                    [isFieldMandatory]="true"
+                    [mandatoryErrorListName]="'qboExportSettings.mandatoryErrorExpenseState' | transloco"
+                    [label]="'configuration.exportSetting.corporateCard.creditCardExpenseLabel' | transloco"
+                    [subLabel]="'configuration.exportSetting.corporateCard.creditCardExpenseSubLabel' | transloco"
+                    [options]="cccExpenseStateOptions"
+                    [iconPath]="'list'"
+                    [placeholder]="'configuration.exportSetting.corporateCard.expenseState' | transloco"
+                    [formControllerName]="'cccExpenseState'">
+                  </app-configuration-select-field>
+                </div>
+              }
+              @if (exportSettingForm.get('creditCardExportType')?.value) {
+                <div class="tw-mt-16-px" [ngClass]="brandingStyle.configuration.configurationExportCardTertiary">
+                  <app-configuration-select-field
+                    [form]="exportSettingForm"
+                    [isFieldMandatory]="true"
+                    [mandatoryErrorListName]="'qboExportSettings.mandatoryErrorExpenseGrouping' | transloco"
+                    [label]="'qboExportSettings.expenseGroupingLabel' | transloco"
+                    [subLabel]="'configuration.exportSetting.corporateCard.creditCardExportGroupSubLabel' | transloco"
+                    [options]="expenseGroupByOptions"
+                    [iconPath]="'question-square-outline'"
+                    [placeholder]="'qboExportSettings.expenseGroupingPlaceholder' | transloco"
+                    [isDisabled]="[QBOCorporateCreditCardExpensesObject.CREDIT_CARD_PURCHASE, QBOCorporateCreditCardExpensesObject.DEBIT_CARD_EXPENSE].includes(exportSettingForm.get('creditCardExportType')?.value)"
+                    [formControllerName]="'creditCardExportGroup'">
+                  </app-configuration-select-field>
+                </div>
+              }
+              @if (exportSettingForm.get('creditCardExportType')?.value) {
+                <div class="tw-mt-16-px" [ngClass]="brandingStyle.configuration.configurationExportCardTertiary">
+                  <app-configuration-select-field
+                    [form]="exportSettingForm"
+                    [isFieldMandatory]="true"
+                    [mandatoryErrorListName]="'qboExportSettings.mandatoryErrorExportDate' | transloco"
+                    [label]="'qboExportSettings.exportDateLabel' | transloco: { exportType: (exportSettingForm.get('creditCardExportType')?.value | snakeCaseToSpaceCase | lowercase) }"
+                    [subLabel]="'qboExportSettings.exportDateCorporateCardSubLabel' | transloco"
+                    [options]="cccExpenseGroupingDateOptions"
+                    [iconPath]="'calendar'"
+                    [placeholder]="'qboExportSettings.exportDatePlaceholder' | transloco: { exportType: (exportSettingForm.get('creditCardExportType')?.value | snakeCaseToSpaceCase | lowercase) }"
+                    [formControllerName]="'creditCardExportDate'">
+                  </app-configuration-select-field>
+                  @if (brandingFeatureConfig.featureFlags.exportSettings.splitExpenseGrouping &&
+                    exportSettingForm.get('creditCardExportType')?.value === QBOCorporateCreditCardExpensesObject.CREDIT_CARD_PURCHASE) {
+                    <app-configuration-select-field
+                      [form]="exportSettingForm"
+                      [isFieldMandatory]="true"
+                      [showClearIcon]="true"
+                      [mandatoryErrorListName]="'qboExportSettings.mandatoryErrorSplitExpenseGrouping' | transloco"
+                      [label]="'qboExportSettings.splitExpenseGroupingLabel' | transloco"
+                      [subLabel]="'qboExportSettings.splitExpenseGroupingSubLabel' | transloco"
+                      [options]="splitExpenseGroupingOptions"
+                      [iconPath]="'question-square-outline'"
+                      [placeholder]="'qboExportSettings.splitExpenseGroupingPlaceholder' | transloco"
+                      [formControllerName]="'splitExpenseGrouping'">
+                    </app-configuration-select-field>
+                  }
+                </div>
+              }
+            </div>
+          }
+        </div>
+        @if (isOnboarding) {
+          <app-configuration-step-footer
+            [ctaText]="!isSaveInProgress ? (isOnboarding ? ConfigurationCtaText.SAVE_AND_CONTINUE : ConfigurationCtaText.SAVE) : ConfigurationCtaText.SAVING"
+            [isButtonDisabled]="!exportSettingForm.valid"
+            [showBackButton]="isOnboarding ? true : false"
+            (save)="save()"
+            (navigateToPreviousStep)="navigateToPreviousStep()">
+          </app-configuration-step-footer>
+        }
+      </form>
     </div>
+  }
 </div>
 
-<div *ngIf="!isLoading && !isOnboarding" class="tw-sticky tw-top-0 tw-bottom-0 tw-left-0 tw-right-0 tw-bg-white">
+@if (!isLoading && !isOnboarding) {
+  <div class="tw-sticky tw-top-0 tw-bottom-0 tw-left-0 tw-right-0 tw-bg-white">
     <app-configuration-step-footer
-        [ctaText]="!isSaveInProgress ? (isOnboarding ? ConfigurationCtaText.SAVE_AND_CONTINUE : ConfigurationCtaText.SAVE) : ConfigurationCtaText.SAVING"
-        [isButtonDisabled]="!exportSettingForm.valid"
-        [showBackButton]="isOnboarding ? true : false"
-        (save)="save()"
-        (navigateToPreviousStep)="navigateToPreviousStep()">
+      [ctaText]="!isSaveInProgress ? (isOnboarding ? ConfigurationCtaText.SAVE_AND_CONTINUE : ConfigurationCtaText.SAVE) : ConfigurationCtaText.SAVING"
+      [isButtonDisabled]="!exportSettingForm.valid"
+      [showBackButton]="isOnboarding ? true : false"
+      (save)="save()"
+      (navigateToPreviousStep)="navigateToPreviousStep()">
     </app-configuration-step-footer>
-</div>
+  </div>
+}
 
 <app-configuration-confirmation-dialog
-    (warningAccepted)="constructPayloadAndSave($event)"
-    [isWarningVisible]="isConfirmationDialogVisible"
-    [headerText]="'qboExportSettings.confirmationDialogHeader' | transloco"
-    [contextText]="warningDialogText"
-    [confirmBtnText]="'qboExportSettings.confirmationDialogButton' | transloco"
-    [showSecondaryCTA]="false">
+  (warningAccepted)="constructPayloadAndSave($event)"
+  [isWarningVisible]="isConfirmationDialogVisible"
+  [headerText]="'qboExportSettings.confirmationDialogHeader' | transloco"
+  [contextText]="warningDialogText"
+  [confirmBtnText]="'qboExportSettings.confirmationDialogButton' | transloco"
+  [showSecondaryCTA]="false">
 </app-configuration-confirmation-dialog>
 

@@ -26,9 +26,10 @@ import { TranslocoService } from '@jsverse/transloco';
 import { AdvancedSettingsService } from 'src/app/core/services/common/advanced-settings.service';
 
 @Component({
-  selector: 'app-netsuite-advanced-settings',
-  templateUrl: './netsuite-advanced-settings.component.html',
-  styleUrls: ['./netsuite-advanced-settings.component.scss']
+    selector: 'app-netsuite-advanced-settings',
+    templateUrl: './netsuite-advanced-settings.component.html',
+    styleUrls: ['./netsuite-advanced-settings.component.scss'],
+    standalone: false
 })
 export class NetsuiteAdvancedSettingsComponent implements OnInit {
 

@@ -1,5 +1,5 @@
-import { DOCUMENT } from '@angular/common';
-import { Inject, Injectable } from '@angular/core';
+
+import { Inject, Injectable, DOCUMENT } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { BrandingConfiguration } from '../../models/branding/branding-configuration.model';
 import { updateBrandingConfigRegistry, defaultBrandingConfig } from 'src/app/branding/branding-config';
