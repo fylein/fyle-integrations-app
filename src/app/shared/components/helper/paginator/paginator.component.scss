@@ -1,4 +1,4 @@
-:host ::ng-deep .p-dropdown {
+:host ::ng-deep .p-select {
     @apply tw-w-fit tw-h-32-px tw-flex tw-items-center tw-px-10-px tw-py-6-px #{!important};
 }
 
@@ -10,12 +10,12 @@
     @apply tw-cursor-not-allowed #{!important};
 }
 
-:host ::ng-deep .p-dropdown .p-dropdown-label.p-inputtext {
+:host ::ng-deep .p-select .p-select-label.p-inputtext {
     @apply tw-pr-10-px #{!important};
 }
 
 [data-theme='co'] {
-    :host ::ng-deep .p-dropdown .p-dropdown-trigger {
+    :host ::ng-deep .p-select .p-select-dropdown {
         content: url('/assets/icons/co/grv-chevron-down-small.svg') !important;
         @apply tw-w-12-px #{!important};
     }

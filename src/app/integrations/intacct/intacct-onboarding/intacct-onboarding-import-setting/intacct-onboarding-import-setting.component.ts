@@ -6,9 +6,10 @@ import { IntacctOnboardingService } from 'src/app/core/services/si/si-configurat
 import { TranslocoService } from '@jsverse/transloco';
 
 @Component({
-  selector: 'app-intacct-onboarding-import-setting',
-  templateUrl: './intacct-onboarding-import-setting.component.html',
-  styleUrls: ['./intacct-onboarding-import-setting.component.scss']
+    selector: 'app-intacct-onboarding-import-setting',
+    templateUrl: './intacct-onboarding-import-setting.component.html',
+    styleUrls: ['./intacct-onboarding-import-setting.component.scss'],
+    standalone: false
 })
 export class IntacctOnboardingImportSettingComponent implements OnInit {
 

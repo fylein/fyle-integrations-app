@@ -1,16 +1,20 @@
-<div *ngIf="!isIncorrectBCConnectedDialogVisible">
+@if (!isIncorrectBCConnectedDialogVisible) {
+  <div>
     <div>
-        <app-landing-page-header [logoWidth]="'65px'" [logoStyleClasses]="'tw-p-0'" [logoSectionStyleClasses]="''" [iconPath]="'assets/logos/BusinessCentral-logo.svg'" [appName]="'businessCentralOnboardingLanding.appName' | transloco" [appDescription]="'businessCentralOnboardingLanding.appDescription' | transloco:{ brandName: brandingConfig.brandName }" [isLoading]="false" [isIntegrationSetupInProgress]="businessCentralConnectionInProgress" [isIntegrationConnected]="isIntegrationConnected" [redirectLink]="redirectLink" [buttonText]="'businessCentralOnboardingLanding.connectButton' | transloco" [postConnectionRoute]="'business_central/onboarding/connector'" (connectIntegration)="connectBusinessCentral()"></app-landing-page-header>
+      <app-landing-page-header [logoWidth]="'65px'" [logoStyleClasses]="'tw-p-0'" [logoSectionStyleClasses]="''" [iconPath]="'assets/logos/BusinessCentral-logo.svg'" [appName]="'businessCentralOnboardingLanding.appName' | transloco" [appDescription]="'businessCentralOnboardingLanding.appDescription' | transloco:{ brandName: brandingConfig.brandName }" [isLoading]="false" [isIntegrationSetupInProgress]="businessCentralConnectionInProgress" [isIntegrationConnected]="isIntegrationConnected" [redirectLink]="redirectLink" [buttonText]="'businessCentralOnboardingLanding.connectButton' | transloco" [postConnectionRoute]="'business_central/onboarding/connector'" (connectIntegration)="connectBusinessCentral()"></app-landing-page-header>
     </div>
     <div>
-        <app-landing-page-body [headlineText]="'businessCentralOnboardingLanding.headlineText' | transloco" [headerText]="'businessCentralOnboardingLanding.headerText' | transloco" [svgPath]="'assets/flow-charts/' + brandingService.getAssetsBrandId() + '-ms-dynamics-flow-chart.svg'" [appName]="appName"></app-landing-page-body>
+      <app-landing-page-body [headlineText]="'businessCentralOnboardingLanding.headlineText' | transloco" [headerText]="'businessCentralOnboardingLanding.headerText' | transloco" [svgPath]="'assets/flow-charts/' + brandingService.getAssetsBrandId() + '-ms-dynamics-flow-chart.svg'" [appName]="appName"></app-landing-page-body>
     </div>
-</div>
-<app-configuration-confirmation-dialog *ngIf="isIncorrectBCConnectedDialogVisible"
+  </div>
+}
+@if (isIncorrectBCConnectedDialogVisible) {
+  <app-configuration-confirmation-dialog
     (warningAccepted)="acceptWarning($event)"
     [isWarningVisible]="isIncorrectBCConnectedDialogVisible"
     [headerText]="'businessCentralOnboardingLanding.incorrectAccountDialogHeader' | transloco"
     [contextText]="'businessCentralOnboardingLanding.incorrectAccountDialogContext' | transloco"
     [confirmBtnText]="'businessCentralOnboardingLanding.reconnectButton' | transloco"
     [showSecondaryCTA]="false">
-</app-configuration-confirmation-dialog>
+  </app-configuration-confirmation-dialog>
+}

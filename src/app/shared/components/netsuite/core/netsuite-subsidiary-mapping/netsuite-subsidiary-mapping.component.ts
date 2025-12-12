@@ -18,9 +18,10 @@ import { NetsuiteMappingsService } from 'src/app/core/services/netsuite/netsuite
 import { TranslocoService } from '@jsverse/transloco';
 
 @Component({
-  selector: 'app-netsuite-subsidiary-mapping',
-  templateUrl: './netsuite-subsidiary-mapping.component.html',
-  styleUrls: ['./netsuite-subsidiary-mapping.component.scss']
+    selector: 'app-netsuite-subsidiary-mapping',
+    templateUrl: './netsuite-subsidiary-mapping.component.html',
+    styleUrls: ['./netsuite-subsidiary-mapping.component.scss'],
+    standalone: false
 })
 
 

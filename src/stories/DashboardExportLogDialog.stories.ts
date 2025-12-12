@@ -3,7 +3,6 @@ import { CommonModule } from '@angular/common';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import type { Meta, StoryObj } from '@storybook/angular';
 import { moduleMetadata } from '@storybook/angular';
-import { IconSpriteModule } from 'ng-svg-icon-sprite';
 import { DialogModule } from 'primeng/dialog';
 import { TableModule } from 'primeng/table';
 import { AppName } from 'src/app/core/models/enum/enum.model';
@@ -22,7 +21,7 @@ const meta: Meta<DashboardExportLogDialogComponent> = {
   decorators: [
     moduleMetadata({
       declarations: [DashboardExportLogDialogComponent, ExportLogTableComponent, ExportLogChildTableDialogComponent, SnakeCaseToSpaceCasePipe],
-      imports: [CommonModule, DialogModule, BrowserAnimationsModule, TableModule, IconSpriteModule.forRoot({ path: 'assets/sprites/sprite.svg' })]
+      imports: [CommonModule, DialogModule, BrowserAnimationsModule, TableModule ]
     })
   ],
   argTypes: {

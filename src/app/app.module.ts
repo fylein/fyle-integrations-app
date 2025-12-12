@@ -8,7 +8,6 @@ import { AppComponent } from './app.component';
 import { HTTP_INTERCEPTORS, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 // External Libraries
-import { IconSpriteModule } from 'ng-svg-icon-sprite';
 import { JwtHelperService, JWT_OPTIONS } from '@auth0/angular-jwt';
 import { GlobalErrorHandler } from './app.error-handling';
 import { JwtInterceptor } from './core/interceptor/jwt.interceptor';
@@ -25,7 +24,9 @@ import { provideTransloco, TranslocoService } from '@jsverse/transloco';
 import { firstValueFrom } from 'rxjs';
 import { TranslocoHttpLoader } from './transloco-http-loader';
 import { provideTranslocoMessageformat } from '@jsverse/transloco-messageformat';
-
+import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
+import { providePrimeNG } from 'primeng/config';
+import Aura from '@primeng/themes/aura';
 
 @NgModule({ declarations: [
         AppComponent
@@ -36,9 +37,18 @@ import { provideTranslocoMessageformat } from '@jsverse/transloco-messageformat'
         ToastModule,
         SharedModule,
         RippleModule,
-        IconSpriteModule.forRoot({ path: 'assets/sprites/sprite.svg' }),
         Sage300ConfigurationModule], providers: [
         MessageService,
+        provideAnimationsAsync(),
+        providePrimeNG({
+            theme: {
+                preset: Aura,
+                options: {
+                    darkModeSelector: false,
+                    cssLayer: true
+                }
+            }
+        }),
         provideTransloco({
             config: {
                 availableLangs: ['en'],

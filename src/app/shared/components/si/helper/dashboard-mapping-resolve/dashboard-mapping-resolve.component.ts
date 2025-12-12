@@ -11,9 +11,10 @@ import { SiWorkspaceService } from 'src/app/core/services/si/si-core/si-workspac
 import { TranslocoService } from '@jsverse/transloco';
 
 @Component({
-  selector: 'app-dashboard-mapping-resolve',
-  templateUrl: './dashboard-mapping-resolve.component.html',
-  styleUrls: ['./dashboard-mapping-resolve.component.scss']
+    selector: 'app-dashboard-mapping-resolve',
+    templateUrl: './dashboard-mapping-resolve.component.html',
+    styleUrls: ['./dashboard-mapping-resolve.component.scss'],
+    standalone: false
 })
 export class DashboardMappingResolveComponent implements OnInit {
 
@@ -45,7 +46,7 @@ export class DashboardMappingResolveComponent implements OnInit {
   ) { }
 
   tableDropdownWidth() {
-    const element = document.querySelector('.p-dropdown-panel.p-component.ng-star-inserted') as HTMLElement;
+    const element = document.querySelector('.p-select-panel.p-component.ng-star-inserted') as HTMLElement;
     if (element) {
       element.style.width = '300px';
     }

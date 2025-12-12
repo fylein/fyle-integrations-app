@@ -4,7 +4,7 @@ import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angul
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import type { Meta, StoryObj } from '@storybook/angular';
 import { moduleMetadata } from '@storybook/angular';
-import { InputSwitchModule } from 'primeng/inputswitch';
+import { ToggleSwitchModule } from 'primeng/toggleswitch';
 import { RippleModule } from 'primeng/ripple';
 import { ToggleComponent } from 'src/app/shared/components/input/toggle/toggle.component';
 import { setupStoryBookFormGroup } from './utility';
@@ -19,7 +19,7 @@ const meta: Meta<ToggleComponent> = {
   decorators: [
     moduleMetadata({
       declarations: [ToggleComponent],
-      imports: [CommonModule, BrowserAnimationsModule, InputSwitchModule, FormsModule, ReactiveFormsModule, RippleModule]
+      imports: [CommonModule, BrowserAnimationsModule, ToggleSwitchModule, FormsModule, ReactiveFormsModule, RippleModule]
     })
   ],
   argTypes: {

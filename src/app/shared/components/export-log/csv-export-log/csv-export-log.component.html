@@ -1,101 +1,112 @@
 @if (isLoading) {
-    <div class="tw-flex tw-justify-center tw-items-center tw-h-[370px]">
-        <app-loader></app-loader>
-    </div>
+  <div class="tw-flex tw-justify-center tw-items-center tw-h-[370px]">
+    <app-loader></app-loader>
+  </div>
 } @else {
+  <div>
     <div>
-        <div>
-            <div [ngClass]="{'tw-p-24-px': !isSkippedExpenses}">
-                <app-export-log-filter *ngIf="totalCount > 0 || isDateSelected || searchQuery"
-                    [exportLogForm]="exportLogForm"
-                    [hideCalendar]="hideCalendar"
-                    [dateOptions]="dateOptions"
-                    [isSimpleSearchRequired]="isSkippedExpenses"
-                    (handleSimpleSearch)="handleSimpleSearch($event)"
-                ></app-export-log-filter>
-            </div>
+      <div [ngClass]="{'tw-p-24-px': !isSkippedExpenses}">
+        @if (totalCount > 0 || isDateSelected || searchQuery) {
+          <app-export-log-filter
+            [exportLogForm]="exportLogForm"
+            [hideCalendar]="hideCalendar"
+            [dateOptions]="dateOptions"
+            [isSimpleSearchRequired]="isSkippedExpenses"
+            (handleSimpleSearch)="handleSimpleSearch($event)"
+          ></app-export-log-filter>
+        }
+      </div>
 
-            <!-- Custom CSV Completed Export Log Table -->
-            @if (isSkippedExpenses) {
-                <app-csv-expenses-table
-                    [isSkippedExpenses]="true"
-                    [expenses]="skippedExpenses"
-                ></app-csv-expenses-table>
-            } @else {
-            <p-table *ngIf="records.length > 0 && !isLoading" #dt1 [value]="records">
-                <ng-template pTemplate="header">
-                    <tr class="tw-text-text-primary">
-                        <th class="tw-min-w-120-px">{{ 'csvExportLog.tableHeaders.dateTime' | transloco}}</th>
-                        <th>{{ 'csvExportLog.tableHeaders.expenseType' | transloco }}</th>
-                        <th>{{ 'csvExportLog.tableHeaders.exportFile' | transloco }}</th>
-                        <th>{{ 'csvExportLog.tableHeaders.fileDetails' | transloco }}</th>
-                    </tr>
-                </ng-template>
+      <!-- Custom CSV Completed Export Log Table -->
+      @if (isSkippedExpenses) {
+        <app-csv-expenses-table
+          [isSkippedExpenses]="true"
+          [expenses]="skippedExpenses"
+        ></app-csv-expenses-table>
+      } @else {
+        @if (records.length > 0 && !isLoading) {
+          <p-table #dt1 [value]="records">
+            <ng-template pTemplate="header">
+              <tr class="tw-text-text-primary">
+                <th class="tw-min-w-120-px">{{ 'csvExportLog.tableHeaders.dateTime' | transloco}}</th>
+                <th>{{ 'csvExportLog.tableHeaders.expenseType' | transloco }}</th>
+                <th>{{ 'csvExportLog.tableHeaders.exportFile' | transloco }}</th>
+                <th>{{ 'csvExportLog.tableHeaders.fileDetails' | transloco }}</th>
+              </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-rowData>
+              <tr (click)="openExpensesDialog(rowData)" class="tw-cursor-pointer">
+                <td>
+                  <p class="tw-text-14-px tw-font-400 tw-text-text-secondary">{{rowData.exported_at | date}}</p>
+                  <span class="tw-font-400 !tw-text-12-px tw-text-text-muted">{{rowData.exported_at | date : "hh:mm a"}}</span>
+                </td>
+                <td>
+                  <h4 class="tw-text-14-px tw-font-400 tw-text-text-secondary">
+                    {{getExpenseType(rowData)}}
+                  </h4>
+                  <h5 class="tw-font-400 !tw-text-12-px tw-text-text-muted">
+                    {{rowData?.expenses?.length || 0}} {{ rowData?.expenses?.length === 1 ? ('csvExportLog.expense' | transloco) : ('csvExportLog.expenses' | transloco) }}
+                  </h5>
+                </td>
+                <td class="tw-text-text-secondary">
+                  <a
+                    (click)="downloadFile($event, rowData)"
+                    class="link tw-w-fit tw-inline-flex tw-items-center tw-gap-[20px]"
+                    >
+                    <span style="overflow-wrap: anywhere;">{{ constructFileName(rowData) }}</span>
+                    @if (brandingFeatureConfig.isIconsInsideButtonAllowed) {
+                      <app-svg-icon [svgSource]="'download-medium'"
+                        [width]="'20px'" [height]="'20px'" viewBox="0 0 16 16" class="tw-text-link-primary tw-pl-2-px tw-w-fit">
+                      </app-svg-icon>
+                    }
+                  </a>
+                </td>
+                <td class="tw-text-text-secondary">
+                  <p class="tw-text-14-px tw-font-400 tw-text-text-secondary">
+                    {{ rowData.error_count ? ('csvExportLog.errorCount' | transloco: { count: rowData.error_count }) : ('csvExportLog.noErrors' | transloco) }}
+                  </p>
+                </td>
+              </tr>
+            </ng-template>
+          </p-table>
+        }
+      }
 
-                <ng-template pTemplate="body" let-rowData>
-                    <tr (click)="openExpensesDialog(rowData)" class="tw-cursor-pointer">
-                        <td>
-                            <p class="tw-text-14-px tw-font-400 tw-text-text-secondary">{{rowData.exported_at | date}}</p>
-                            <span class="tw-font-400 !tw-text-12-px tw-text-text-muted">{{rowData.exported_at | date : "hh:mm a"}}</span>
-                        </td>
-                        <td>
-                            <h4 class="tw-text-14-px tw-font-400 tw-text-text-secondary">
-                                {{getExpenseType(rowData)}}
-                            </h4>
-                            <h5 class="tw-font-400 !tw-text-12-px tw-text-text-muted">
-                                {{rowData?.expenses?.length || 0}} {{ rowData?.expenses?.length === 1 ? ('csvExportLog.expense' | transloco) : ('csvExportLog.expenses' | transloco) }}
-                            </h5>
-                        </td>
-                        <td class="tw-text-text-secondary">
-                            <a
-                                (click)="downloadFile($event, rowData)"
-                                class="link tw-w-fit tw-inline-flex tw-items-center tw-gap-[20px]"
-                            >
-                                <span style="overflow-wrap: anywhere;">{{ constructFileName(rowData) }}</span>
-                                <app-svg-icon *ngIf="brandingFeatureConfig.isIconsInsideButtonAllowed" [svgSource]="'download-medium'"
-                                    [width]="'20px'" [height]="'20px'" viewBox="0 0 16 16" class="tw-text-link-primary tw-pl-2-px tw-w-fit">
-                                </app-svg-icon>
-                            </a>
-                        </td>
-                        <td class="tw-text-text-secondary">
-                            <p class="tw-text-14-px tw-font-400 tw-text-text-secondary">
-                                {{ rowData.error_count ? ('csvExportLog.errorCount' | transloco: { count: rowData.error_count }) : ('csvExportLog.noErrors' | transloco) }}
-                            </p>
-                        </td>
-                    </tr>
-                </ng-template>
-            </p-table>
-            }
-
-            <div *ngIf="totalCount > 0 && !isLoading" class="tw-p-24-px tw-border-t-1-px">
-                <app-paginator
-                    [dropDownValue]="limit"
-                    [page]="currentPage"
-                    [totalCount]="totalCount"
-                    (pageSizeChangeEvent)="pageSizeChanges($event)"
-                    (pageOffsetChangeEvent)="pageChanges($event)">
-                </app-paginator>
-            </div>
-
-            <app-zero-state-with-illustration *ngIf="(isDateSelected || searchQuery) && totalCount === 0 && !isLoading"
-                [mainText]="'csvExportLog.noResultsFound' | transloco"
-                [subText]="'csvExportLog.noResultsSuggestion' | transloco">
-            </app-zero-state-with-illustration>
-
+      @if (totalCount > 0 && !isLoading) {
+        <div class="tw-p-24-px tw-border-t-1-px">
+          <app-paginator
+            [dropDownValue]="limit"
+            [page]="currentPage"
+            [totalCount]="totalCount"
+            (pageSizeChangeEvent)="pageSizeChanges($event)"
+            (pageOffsetChangeEvent)="pageChanges($event)">
+          </app-paginator>
         </div>
+      }
 
-        <app-zero-state-with-illustration *ngIf="totalCount === 0 && (!isDateSelected && !searchQuery) && !isLoading"
+      @if ((isDateSelected || searchQuery) && totalCount === 0 && !isLoading) {
+        <app-zero-state-with-illustration
+          [mainText]="'csvExportLog.noResultsFound' | transloco"
+          [subText]="'csvExportLog.noResultsSuggestion' | transloco">
+        </app-zero-state-with-illustration>
+      }
+
+    </div>
+
+    @if (totalCount === 0 && (!isDateSelected && !searchQuery) && !isLoading) {
+      <app-zero-state-with-illustration
         [mainText]="'csvExportLog.noRecordsToShow' | transloco"
         [subText]="'csvExportLog.successfulExportsStoredHere' | transloco">
-        </app-zero-state-with-illustration>
+      </app-zero-state-with-illustration>
+    }
 
-    </div>
+  </div>
 }
 
 @if (isExpensesDialogOpen && selectedExpenses && selectedExportLog) {
-    <app-csv-export-log-dialog
-        [expenses]="selectedExpenses"
-        [exportLog]="selectedExportLog"
-        [(isDialogOpen)]="isExpensesDialogOpen"
-    ></app-csv-export-log-dialog>
+  <app-csv-export-log-dialog
+    [expenses]="selectedExpenses"
+    [exportLog]="selectedExportLog"
+    [(isDialogOpen)]="isExpensesDialogOpen"
+  ></app-csv-export-log-dialog>
 }

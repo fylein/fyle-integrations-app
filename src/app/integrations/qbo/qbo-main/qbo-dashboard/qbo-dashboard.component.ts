@@ -17,9 +17,10 @@ import { QboConnectorService } from 'src/app/core/services/qbo/qbo-configuration
 import { QBOCredential } from 'src/app/core/models/qbo/db/qbo-credential.model';
 
 @Component({
-  selector: 'app-qbo-dashboard',
-  templateUrl: './qbo-dashboard.component.html',
-  styleUrls: ['./qbo-dashboard.component.scss']
+    selector: 'app-qbo-dashboard',
+    templateUrl: './qbo-dashboard.component.html',
+    styleUrls: ['./qbo-dashboard.component.scss'],
+    standalone: false
 })
 export class QboDashboardComponent implements OnInit, OnDestroy {
 

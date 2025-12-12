@@ -1,163 +1,204 @@
 <div class="tw-text-slightly-normal-text-color">
-    <div *ngIf="!exposeC1Apps" class="tw-flex tw-text-14-px tw-h-56-px">
-        <div class="tw-pl-24-px tw-pr-48-px landing--tab" (click)="switchView(IntegrationsView.ALL)">
-            {{ 'landing.allTab' | transloco }}
-            <p *ngIf="integrationTabs.ALL" class="landing--active-tag"></p>
+  @if (!exposeC1Apps) {
+    <div class="tw-flex tw-text-14-px tw-h-56-px">
+      <div class="tw-pl-24-px tw-pr-48-px landing--tab" (click)="switchView(IntegrationsView.ALL)">
+        {{ 'landing.allTab' | transloco }}
+        @if (integrationTabs.ALL) {
+          <p class="landing--active-tag"></p>
+        }
+      </div>
+      <div class="tw-pr-48-px landing--tab" (click)="switchView(IntegrationsView.ACCOUNTING)">
+        {{ 'landing.accountingTab' | transloco }}
+        @if (integrationTabs.ACCOUNTING) {
+          <p class="landing--active-tag"></p>
+        }
+      </div>
+      <div class="tw-pr-48-px landing--tab" (click)="switchView(IntegrationsView.HRMS)">
+        {{ 'landing.hrmsTab' | transloco }}
+        @if (integrationTabs.HRMS) {
+          <p class="landing--active-tag"></p>
+        }
+      </div>
+      @if (isTravelperkAllowed) {
+        <div class="tw-pr-48-px landing--tab" (click)="switchView(IntegrationsView.TRAVEL)">
+          {{ 'landing.travelTab' | transloco }}
+          @if (integrationTabs.TRAVEL) {
+            <p class="landing--active-tag"></p>
+          }
         </div>
-        <div class="tw-pr-48-px landing--tab" (click)="switchView(IntegrationsView.ACCOUNTING)">
-            {{ 'landing.accountingTab' | transloco }}
-            <p *ngIf="integrationTabs.ACCOUNTING" class="landing--active-tag"></p>
-        </div>
-        <div class="tw-pr-48-px landing--tab" (click)="switchView(IntegrationsView.HRMS)">
-            {{ 'landing.hrmsTab' | transloco }}
-            <p *ngIf="integrationTabs.HRMS" class="landing--active-tag"></p>
-        </div>
-        <div *ngIf="isTravelperkAllowed" class="tw-pr-48-px landing--tab" (click)="switchView(IntegrationsView.TRAVEL)">
-            {{ 'landing.travelTab' | transloco }}
-            <p *ngIf="integrationTabs.TRAVEL" class="landing--active-tag"></p>
-        </div>
+      }
     </div>
+  }
 
-    <p *ngIf="!exposeC1Apps" class="tw-mt-1-px landing--divider"></p>
+  @if (!exposeC1Apps) {
+    <p class="tw-mt-1-px landing--divider"></p>
+  }
 
-    <div class="tw-pt-40-px" [ngClass]="brandingStyle.common.mainComponentPadding">
-        <div *ngIf="integrationTabs.ALL || integrationTabs.ACCOUNTING">
-            <p class="landing--section-heading">
-                {{ 'landing.accountingSectionTitle' | transloco }}
-            </p>
-            <p class="landing--section-caption" *ngIf="brandingConfig.brandId !== 'co'">
-                {{ 'landing.accountingSectionCaption' | transloco: { brandName: brandingConfig.brandName } }}
-            </p>
-            <p class="landing--section-caption" *ngIf="brandingConfig.brandId === 'co'">
-                {{ 'landing.accountingSectionCoCaption' | transloco }}
-            </p>
-
-            <div class="tw-flex tw-flex-wrap tw-gap-5">
-                <div *ngIf="exposeApps.NETSUITE">
-                    <div class="landing--accounting-app tw-mt-20-px" [ngClass]="brandingStyle.common.mainComponentShadow" (click)="openAccountingIntegrationApp(AccountingIntegrationApp.NETSUITE)">
-                        <img src="assets/logos/netsuite-logo.png" class="tw-mt-[-16px]" width="120px" height="60px" />
-                        <span class="landing--accounting-app-name !tw-pt-18-px">
-                            {{ 'landing.netsuiteAppName' | transloco }}
-                        </span>
-                    </div>
-                </div>
-                <div *ngIf="exposeApps.INTACCT" class="landing--accounting-app tw-mt-20-px" [ngClass]="brandingStyle.common.mainComponentShadow" (click)="openAccountingIntegrationApp(AccountingIntegrationApp.SAGE_INTACCT)">
-                    <img src="assets/logos/intacct-logo.png" class="tw-mt-[-16px]"  width="120px" height="60px" />
-                    <span class="landing--accounting-app-name !tw-pt-8-px">
-                        {{ 'landing.sageIntacctAppName' | transloco }}
-                    </span>
-                </div>
-                <div *ngIf="exposeApps.QBO" class="landing--accounting-app tw-mt-20-px" [ngClass]="brandingStyle.common.mainComponentShadow" (click)="openAccountingIntegrationApp(AccountingIntegrationApp.QBO)">
-                    <img class="tw-mt-10-px" src="assets/logos/quickbooks-logo.png" width="120px"  />
-                    <span class="landing--accounting-app-name">
-                        {{ 'landing.quickbooksOnlineAppName' | transloco }}
-                    </span>
-                </div>
-                <div *ngIf="exposeApps.XERO" class="landing--accounting-app tw-mt-20-px" [ngClass]="brandingStyle.common.mainComponentShadow" (click)="openAccountingIntegrationApp(AccountingIntegrationApp.XERO)">
-                    <img src="assets/logos/xero-logo.png" class="tw-mt-[-20px]" width="65px" height="60px" />
-                    <span class="landing--accounting-app-name">
-                        {{ 'landing.xeroAppName' | transloco }}
-                    </span>
-                </div>
-                <div *ngIf="exposeApps.QBD && showQBDIIFIntegration" class="landing--accounting-app tw-mt-20-px" [ngClass]="brandingStyle.common.mainComponentShadow" (click)="openInAppIntegration(InAppIntegration.QBD)">
-                    <img src="assets/logos/quickbooks-logo.png" width="120px" height="60px" />
-                    <span class="landing--accounting-app-name">
-                        {{ 'landing.quickbooksDesktopIifAppName' | transloco }}
-                    </span>
-                </div>
-                <!-- Direct -->
-                <div *ngIf="exposeApps.QBD_DIRECT && org.allow_qbd_direct_integration" class="landing--accounting-app tw-mt-20-px" [ngClass]="brandingStyle.common.mainComponentShadow" (click)="openInAppIntegration(InAppIntegration.QBD_DIRECT)">
-                    <img src="assets/logos/quickbooks-logo.png" width="120px" height="60px" />
-                    <span class="landing--accounting-app-name tw-gap-2 tw-px-4 tw-flex tw-items-center">
-                        {{ 'landing.quickbooksDesktopWebConnectorAppName' | transloco }}
-                    </span>
-                </div>
-                <div *ngIf="exposeApps.SAGE300" class="landing--accounting-app tw-mt-20-px" [ngClass]="brandingStyle.common.mainComponentShadow" (click)="openInAppIntegration(InAppIntegration.SAGE300)">
-                    <img src="assets/logos/sage300-logo.svg" width="110px" height="60px" />
-                    <span class="landing--accounting-app-name tw-gap-2">
-                        {{ 'landing.sage300CreAppName' | transloco }}
-                    </span>
-                </div>
-                <div *ngIf="exposeApps.BUSINESS_CENTRAL && org.allow_dynamics" class="landing--accounting-app tw-mt-20-px" [ngClass]="brandingStyle.common.mainComponentShadow" (click)="openInAppIntegration(InAppIntegration.BUSINESS_CENTRAL)">
-                    <img src="assets/logos/BusinessCentral-logo.svg" class="tw-mt-[-20px]" width="50px" height="60px" />
-                    <span class="landing--accounting-app-name tw-gap-2 tw-px-4 tw-flex tw-items-center">
-                        {{ 'landing.dynamics365BusinessCentralAppName' | transloco }}
-                    </span>
-                </div>
+  <div class="tw-pt-40-px" [ngClass]="brandingStyle.common.mainComponentPadding">
+    @if (integrationTabs.ALL || integrationTabs.ACCOUNTING) {
+      <div>
+        <p class="landing--section-heading">
+          {{ 'landing.accountingSectionTitle' | transloco }}
+        </p>
+        @if (brandingConfig.brandId !== 'co') {
+          <p class="landing--section-caption">
+            {{ 'landing.accountingSectionCaption' | transloco: { brandName: brandingConfig.brandName } }}
+          </p>
+        }
+        @if (brandingConfig.brandId === 'co') {
+          <p class="landing--section-caption">
+            {{ 'landing.accountingSectionCoCaption' | transloco }}
+          </p>
+        }
+        <div class="tw-flex tw-flex-wrap tw-gap-5">
+          @if (exposeApps.NETSUITE) {
+            <div>
+              <div class="landing--accounting-app tw-mt-20-px" [ngClass]="brandingStyle.common.mainComponentShadow" (click)="openAccountingIntegrationApp(AccountingIntegrationApp.NETSUITE)">
+                <img src="assets/logos/netsuite-logo.png" class="tw-mt-[-16px]" width="120px" height="60px" />
+                <span class="landing--accounting-app-name !tw-pt-18-px">
+                  {{ 'landing.netsuiteAppName' | transloco }}
+                </span>
+              </div>
             </div>
-        </div>
-
-        <div *ngIf="(integrationTabs.ALL || integrationTabs.HRMS) && exposeApps.BAMBOO_HR">
-            <p *ngIf="integrationTabs.ALL" class="tw-mt-1-px landing--section-divider"></p>
-            <p class="landing--section-heading">
-                {{ 'landing.hrmsSectionTitle' | transloco }}
-            </p>
-            <p class="landing--section-caption">
-                {{ 'landing.hrmsSectionCaption' | transloco: { brandName: brandingConfig.brandName } }}
-            </p>
-
-            <div class="tw-flex">
-                <div class="landing--accounting-app tw-mr-20-px" [ngClass]="brandingStyle.common.mainComponentShadow" (click)="openInAppIntegration(InAppIntegration.BAMBOO_HR)">
-                    <img src="assets/logos/bamboo-hr-logo.svg" width="160px" height="60px" />
-                    <span class="landing--accounting-app-name">
-                        {{ 'landing.bambooHrAppName' | transloco }}
-                    </span>
-                </div>
+          }
+          @if (exposeApps.INTACCT) {
+            <div class="landing--accounting-app tw-mt-20-px" [ngClass]="brandingStyle.common.mainComponentShadow" (click)="openAccountingIntegrationApp(AccountingIntegrationApp.SAGE_INTACCT)">
+              <img src="assets/logos/intacct-logo.png" class="tw-mt-[-16px]"  width="120px" height="60px" />
+              <span class="landing--accounting-app-name !tw-pt-8-px">
+                {{ 'landing.sageIntacctAppName' | transloco }}
+              </span>
             </div>
-        </div>
-
-        <div *ngIf="isTravelperkAllowed && exposeApps.TRAVELPERK && (integrationTabs.ALL || integrationTabs.TRAVEL)">
-            <p *ngIf="integrationTabs.ALL" class="tw-mt-1-px landing--section-divider"></p>
-            <p class="landing--section-heading">
-                {{ 'landing.travelSectionTitle' | transloco }}
-            </p>
-            <p class="landing--section-caption">
-                {{ 'landing.travelSectionCaption' | transloco: { brandName: brandingConfig.brandName } }}
-            </p>
-
-            <div class="tw-flex">
-                <div class="landing--accounting-app tw-mr-20-px" [ngClass]="brandingStyle.common.mainComponentShadow" (click)="openInAppIntegration(InAppIntegration.TRAVELPERK)">
-                    <img src="assets/logos/travelperk-logo.svg" width="160px" height="60px" />
-                    <span class="landing--accounting-app-name">
-                        {{ 'landing.travelperkAppName' | transloco }}
-                    </span>
-                </div>
+          }
+          @if (exposeApps.QBO) {
+            <div class="landing--accounting-app tw-mt-20-px" [ngClass]="brandingStyle.common.mainComponentShadow" (click)="openAccountingIntegrationApp(AccountingIntegrationApp.QBO)">
+              <img class="tw-mt-10-px" src="assets/logos/quickbooks-logo.png" width="120px"  />
+              <span class="landing--accounting-app-name">
+                {{ 'landing.quickbooksOnlineAppName' | transloco }}
+              </span>
             </div>
-        </div>
-
-        <div *ngIf="integrationTabs.ALL && !exposeC1Apps" class="tw-pb-100-px">
-            <p class="tw-my-40-px landing--divider"></p>
-
-            <p class="landing--section-heading">
-                {{ 'landing.lookingForSomethingElseTitle' | transloco }}
-            </p>
-            <p class="landing--section-caption" [innerHTML]="'landing.lookingForSomethingElseCaption' | transloco: { supportEmail: brandingConfig.supportEmail }">
-            </p>
-
-            <div class="tw-rounded-4-px tw-border-1-px">
-                <div class="landing--other-integrations">
-                    <div class="landing--other-integration-app">
-                        <img src="assets/logos/sage-logo.png" width="80px" height="80px" />
-                    </div>
-                    <div class="landing--other-integration-app">
-                        <img src="assets/logos/msdynamics-logo.png" width="150px" height="80px" />
-                    </div>
-                    <div class="landing--other-integration-app">
-                        <img src="assets/logos/financial-force-logo.png" width="150px" height="80px" />
-                    </div>
-                </div>
-                <div class="landing--other-integrations tw-pb-30-px">
-                    <div class="landing--other-integration-app">
-                        <img src="assets/logos/oracle-logo.png" width="120px" height="70px" />
-                    </div>
-                    <div class="landing--other-integration-app">
-                        <img src="assets/logos/bill-dot-com-logo.png" width="120px" height="70px" />
-                    </div>
-                    <div class="landing--other-integration-app">
-                        <img src="assets/logos/myob-logo.png" width="120px" height="70px" />
-                    </div>
-                </div>
+          }
+          @if (exposeApps.XERO) {
+            <div class="landing--accounting-app tw-mt-20-px" [ngClass]="brandingStyle.common.mainComponentShadow" (click)="openAccountingIntegrationApp(AccountingIntegrationApp.XERO)">
+              <img src="assets/logos/xero-logo.png" class="tw-mt-[-20px]" width="65px" height="60px" />
+              <span class="landing--accounting-app-name">
+                {{ 'landing.xeroAppName' | transloco }}
+              </span>
             </div>
+          }
+          @if (exposeApps.QBD && showQBDIIFIntegration) {
+            <div class="landing--accounting-app tw-mt-20-px" [ngClass]="brandingStyle.common.mainComponentShadow" (click)="openInAppIntegration(InAppIntegration.QBD)">
+              <img src="assets/logos/quickbooks-logo.png" width="120px" height="60px" />
+              <span class="landing--accounting-app-name">
+                {{ 'landing.quickbooksDesktopIifAppName' | transloco }}
+              </span>
+            </div>
+          }
+          <!-- Direct -->
+          @if (exposeApps.QBD_DIRECT && org.allow_qbd_direct_integration) {
+            <div class="landing--accounting-app tw-mt-20-px" [ngClass]="brandingStyle.common.mainComponentShadow" (click)="openInAppIntegration(InAppIntegration.QBD_DIRECT)">
+              <img src="assets/logos/quickbooks-logo.png" width="120px" height="60px" />
+              <span class="landing--accounting-app-name tw-gap-2 tw-px-4 tw-flex tw-items-center">
+                {{ 'landing.quickbooksDesktopWebConnectorAppName' | transloco }}
+              </span>
+            </div>
+          }
+          @if (exposeApps.SAGE300) {
+            <div class="landing--accounting-app tw-mt-20-px" [ngClass]="brandingStyle.common.mainComponentShadow" (click)="openInAppIntegration(InAppIntegration.SAGE300)">
+              <img src="assets/logos/sage300-logo.svg" width="110px" height="60px" />
+              <span class="landing--accounting-app-name tw-gap-2">
+                {{ 'landing.sage300CreAppName' | transloco }}
+              </span>
+            </div>
+          }
+          @if (exposeApps.BUSINESS_CENTRAL && org.allow_dynamics) {
+            <div class="landing--accounting-app tw-mt-20-px" [ngClass]="brandingStyle.common.mainComponentShadow" (click)="openInAppIntegration(InAppIntegration.BUSINESS_CENTRAL)">
+              <img src="assets/logos/BusinessCentral-logo.svg" class="tw-mt-[-20px]" width="50px" height="60px" />
+              <span class="landing--accounting-app-name tw-gap-2 tw-px-4 tw-flex tw-items-center">
+                {{ 'landing.dynamics365BusinessCentralAppName' | transloco }}
+              </span>
+            </div>
+          }
         </div>
-    </div>
+      </div>
+    }
+
+    @if ((integrationTabs.ALL || integrationTabs.HRMS) && exposeApps.BAMBOO_HR) {
+      <div>
+        @if (integrationTabs.ALL) {
+          <p class="tw-mt-1-px landing--section-divider"></p>
+        }
+        <p class="landing--section-heading">
+          {{ 'landing.hrmsSectionTitle' | transloco }}
+        </p>
+        <p class="landing--section-caption">
+          {{ 'landing.hrmsSectionCaption' | transloco: { brandName: brandingConfig.brandName } }}
+        </p>
+        <div class="tw-flex">
+          <div class="landing--accounting-app tw-mr-20-px" [ngClass]="brandingStyle.common.mainComponentShadow" (click)="openInAppIntegration(InAppIntegration.BAMBOO_HR)">
+            <img src="assets/logos/bamboo-hr-logo.svg" width="160px" height="60px" />
+            <span class="landing--accounting-app-name">
+              {{ 'landing.bambooHrAppName' | transloco }}
+            </span>
+          </div>
+        </div>
+      </div>
+    }
+
+    @if (isTravelperkAllowed && exposeApps.TRAVELPERK && (integrationTabs.ALL || integrationTabs.TRAVEL)) {
+      <div>
+        @if (integrationTabs.ALL) {
+          <p class="tw-mt-1-px landing--section-divider"></p>
+        }
+        <p class="landing--section-heading">
+          {{ 'landing.travelSectionTitle' | transloco }}
+        </p>
+        <p class="landing--section-caption">
+          {{ 'landing.travelSectionCaption' | transloco: { brandName: brandingConfig.brandName } }}
+        </p>
+        <div class="tw-flex">
+          <div class="landing--accounting-app tw-mr-20-px" [ngClass]="brandingStyle.common.mainComponentShadow" (click)="openInAppIntegration(InAppIntegration.TRAVELPERK)">
+            <img src="assets/logos/travelperk-logo.svg" width="160px" height="60px" />
+            <span class="landing--accounting-app-name">
+              {{ 'landing.travelperkAppName' | transloco }}
+            </span>
+          </div>
+        </div>
+      </div>
+    }
+
+    @if (integrationTabs.ALL && !exposeC1Apps) {
+      <div class="tw-pb-100-px">
+        <p class="tw-my-40-px landing--divider"></p>
+        <p class="landing--section-heading">
+          {{ 'landing.lookingForSomethingElseTitle' | transloco }}
+        </p>
+        <p class="landing--section-caption" [innerHTML]="'landing.lookingForSomethingElseCaption' | transloco: { supportEmail: brandingConfig.supportEmail }">
+        </p>
+        <div class="tw-rounded-4-px tw-border-1-px">
+          <div class="landing--other-integrations">
+            <div class="landing--other-integration-app">
+              <img src="assets/logos/sage-logo.png" width="80px" height="80px" />
+            </div>
+            <div class="landing--other-integration-app">
+              <img src="assets/logos/msdynamics-logo.png" width="150px" height="80px" />
+            </div>
+            <div class="landing--other-integration-app">
+              <img src="assets/logos/financial-force-logo.png" width="150px" height="80px" />
+            </div>
+          </div>
+          <div class="landing--other-integrations tw-pb-30-px">
+            <div class="landing--other-integration-app">
+              <img src="assets/logos/oracle-logo.png" width="120px" height="70px" />
+            </div>
+            <div class="landing--other-integration-app">
+              <img src="assets/logos/bill-dot-com-logo.png" width="120px" height="70px" />
+            </div>
+            <div class="landing--other-integration-app">
+              <img src="assets/logos/myob-logo.png" width="120px" height="70px" />
+            </div>
+          </div>
+        </div>
+      </div>
+    }
+  </div>
 </div>

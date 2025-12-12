@@ -1,59 +1,75 @@
 <div [formGroup]="form" [ngClass]="!expanded ? 'tw-pb-24-px' : ''">
-    <!-- Expanded field - for export settings pages -->
-    @if (expanded) {
-        <div class="tw-flex tw-flex-row tw-justify-between tw-items-center tw-p-24-px">
-            <div class="lg:tw-w-3/5 md:tw-w-1/2 tw-flex tw-items-start">
-                @if (iconPath) {
-                    <div class="tw-pr-16-px tw-mt-4-px">
-                        <app-svg-icon [svgSource]="iconPath" [width]="'24px'" [height]="'24px'" [styleClasses]="'tw-text-icon-primary'"></app-svg-icon>
-                    </div>
-                }
-                <div>
-                    <h3 class="tw-text-text-secondary tw-text-14-px" [ngClass]="brandingStyle.configuration.configurationFieldHeaderText">{{ label | snakeCaseToSpaceCase}}<app-mandatory-field *ngIf="isFieldMandatory"></app-mandatory-field></h3>
-                    <h5 class="!tw-text-text-muted tw-text-14-px !tw-font-400 !tw-leading-4 tw-max-w-600-px tw-text-pretty" [ngClass]="brandingStyle.common.inputLabelTextStyle">
-                        <ng-content select="[slot=subLabel]"></ng-content>
-                    </h5>
-                </div>
-            </div>
-
-            <div class="lg:tw-w-300-px md:tw-w-260-px tw-flex tw-flex-col">
-                <ng-container *ngTemplateOutlet="inputWithErrorTemplate"></ng-container>
-                <div class="tw-text-12-px tw-text-text-muted">
-                    <ng-content select="[slot=inputHint]"></ng-content>
-                </div>
-            </div>
+  <!-- Expanded field - for export settings pages -->
+  @if (expanded) {
+    <div class="tw-flex tw-flex-row tw-justify-between tw-items-center tw-p-24-px">
+      <div class="lg:tw-w-3/5 md:tw-w-1/2 tw-flex tw-items-start">
+        @if (iconPath) {
+          <div class="tw-pr-16-px tw-mt-4-px">
+            <app-svg-icon [svgSource]="iconPath" [width]="'24px'" [height]="'24px'" [styleClasses]="'tw-text-icon-primary'"></app-svg-icon>
+          </div>
+        }
+        <div>
+          <h3 class="tw-text-text-secondary tw-text-14-px" [ngClass]="brandingStyle.configuration.configurationFieldHeaderText">{{ label | snakeCaseToSpaceCase}}@if (isFieldMandatory) {
+            <app-mandatory-field></app-mandatory-field>
+          }</h3>
+          <h5 class="!tw-text-text-muted tw-text-14-px !tw-font-400 !tw-leading-4 tw-max-w-600-px tw-text-pretty" [ngClass]="brandingStyle.common.inputLabelTextStyle">
+            <ng-content select="[slot=subLabel]"></ng-content>
+          </h5>
         </div>
-    }
-    @else {
-    <div>
-        <span class="tw-text-14-px tw-text-form-label-text-color">
-            {{label}}
-        </span>
-        <app-mandatory-field [noSpacing]="true"></app-mandatory-field>
-    </div>
+      </div>
 
-    <div class="tw-mt-8-px">
-        <span [ngClass]="[isPasswordField ? 'p-input-icon-right': '', styleClasses ? styleClasses : '']">
-            <i *ngIf="type === 'password'" [ngClass]="brandingStyle.common.configurationBrandingClass" class="tw-text-placeholder tw-cursor-pointer pi pi-eye" (click)="changeFormControllerType(true)"></i>
-            <i *ngIf="type !== 'password' && isPasswordField" [ngClass]="brandingStyle.common.configurationBrandingClass" class="tw-text-placeholder tw-cursor-pointer pi pi-eye-slash " (click)="changeFormControllerType(false)"></i>
-            <ng-container *ngTemplateOutlet="inputWithErrorTemplate"></ng-container>
+      <div class="lg:tw-w-300-px md:tw-w-260-px tw-flex tw-flex-col">
+        <span [ngClass]="[isPasswordField ? 'p-input-icon-right': '']" class="tw-relative">
+          @if (isPasswordField && !isPasswordVisible) {
+            <i [ngClass]="brandingStyle.common.configurationBrandingClass" class="tw-text-placeholder tw-cursor-pointer pi pi-eye" (click)="changeFormControllerType(true)"></i>
+          }
+          @if (isPasswordField && isPasswordVisible) {
+            <i [ngClass]="brandingStyle.common.configurationBrandingClass" class="tw-text-placeholder tw-cursor-pointer pi pi-eye-slash" (click)="changeFormControllerType(false)"></i>
+          }
+          <ng-container *ngTemplateOutlet="inputWithErrorTemplate"></ng-container>
         </span>
+        <div class="tw-text-12-px tw-text-text-muted">
+          <ng-content select="[slot=inputHint]"></ng-content>
+        </div>
+      </div>
     </div>
-    }
+  }
+  @else {
+  <div>
+    <span class="tw-text-14-px tw-text-form-label-text-color">
+      {{label}}
+    </span>
+    <app-mandatory-field [noSpacing]="true"></app-mandatory-field>
+  </div>
 
-    <ng-template #inputWithErrorTemplate>
-        <input [type]="type"
-            class="tw-border-box-color"
+  <div class="tw-mt-8-px">
+    <span [ngClass]="[isPasswordField ? 'p-input-icon-right': '', styleClasses ? styleClasses : '']" class="tw-relative">
+      @if (isPasswordField && !isPasswordVisible) {
+        <i [ngClass]="brandingStyle.common.configurationBrandingClass" class="tw-text-placeholder tw-cursor-pointer pi pi-eye" (click)="changeFormControllerType(true)"></i>
+      }
+      @if (isPasswordField && isPasswordVisible) {
+        <i [ngClass]="brandingStyle.common.configurationBrandingClass" class="tw-text-placeholder tw-cursor-pointer pi pi-eye-slash" (click)="changeFormControllerType(false)"></i>
+      }
+      <ng-container *ngTemplateOutlet="inputWithErrorTemplate"></ng-container>
+    </span>
+  </div>
+}
+
+<ng-template #inputWithErrorTemplate>
+  <input [type]="type"
+    class="tw-border-box-color"
             [ngClass]="[
                 form.controls[formControllerName].invalid && form.controls[formControllerName].touched ? 'error-box' : 'normal-box',
                 styleClasses ? styleClasses : '',
                 expanded ? 'lg:tw-w-300-px md:tw-w-260-px' : 'tw-w-400-px'
             ]"
-            pInputText
-            [formControlName]="formControllerName"
-            [placeholder]="placeholder"
-            [required]="isFieldMandatory"
-        >
-        <app-mandatory-error-message *ngIf="isFieldMandatory && form.controls[formControllerName].touched && !form.controls[formControllerName].valid && !form.controls[formControllerName].disabled" [customErrorMessage]="customErrorMessage"></app-mandatory-error-message>
-    </ng-template>
+    pInputText
+    [formControlName]="formControllerName"
+    [placeholder]="placeholder"
+    [required]="isFieldMandatory"
+    >
+  @if (isFieldMandatory && form.controls[formControllerName].touched && !form.controls[formControllerName].valid && !form.controls[formControllerName].disabled) {
+    <app-mandatory-error-message [customErrorMessage]="customErrorMessage"></app-mandatory-error-message>
+  }
+</ng-template>
 </div>

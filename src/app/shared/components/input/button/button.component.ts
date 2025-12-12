@@ -3,9 +3,10 @@ import { brandingFeatureConfig, brandingStyle } from 'src/app/branding/branding-
 import { ButtonSize, ButtonType } from 'src/app/core/models/enum/enum.model';
 
 @Component({
-  selector: 'app-button',
-  templateUrl: './button.component.html',
-  styleUrl: './button.component.scss'
+    selector: 'app-button',
+    templateUrl: './button.component.html',
+    styleUrl: './button.component.scss',
+    standalone: false
 })
 export class ButtonComponent implements OnInit{
   @Input() buttonText: string = '';

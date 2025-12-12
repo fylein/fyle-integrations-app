@@ -19,9 +19,10 @@ import { NetsuiteAuthService } from 'src/app/core/services/netsuite/netsuite-cor
 import { IntegrationsService } from 'src/app/core/services/common/integrations.service';
 
 @Component({
-  selector: 'app-landing',
-  templateUrl: './landing.component.html',
-  styleUrls: ['./landing.component.scss']
+    selector: 'app-landing',
+    templateUrl: './landing.component.html',
+    styleUrls: ['./landing.component.scss'],
+    standalone: false
 })
 export class LandingComponent implements OnInit {
 

@@ -16,9 +16,10 @@ import { XeroAdvancedSettingsService } from 'src/app/core/services/xero/xero-con
 import { AccountingGroupedErrorStat, AccountingGroupedErrors, Error } from 'src/app/core/models/db/error.model';
 import { Router } from '@angular/router';
 @Component({
-  selector: 'app-xero-dashboard',
-  templateUrl: './xero-dashboard.component.html',
-  styleUrls: ['./xero-dashboard.component.scss']
+    selector: 'app-xero-dashboard',
+    templateUrl: './xero-dashboard.component.html',
+    styleUrls: ['./xero-dashboard.component.scss'],
+    standalone: false
 })
 export class XeroDashboardComponent implements OnInit, OnDestroy {
 

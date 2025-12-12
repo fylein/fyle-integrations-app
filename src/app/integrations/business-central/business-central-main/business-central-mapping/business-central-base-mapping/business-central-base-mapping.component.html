@@ -1,4 +1,5 @@
-<app-generic-mapping-v2 *ngIf="!isLoading"
+@if (!isLoading) {
+  <app-generic-mapping-v2
     [isLoading]="isLoading"
     [destinationOptions]="destinationOptions"
     [employeeFieldMapping]="employeeFieldMapping"
@@ -7,4 +8,5 @@
     [showAutoMapEmployee]="showAutoMapEmployee"
     [appName]="appName.BUSINESS_CENTRAL"
     (triggerAutoMapEmployee)="triggerAutoMapEmployees()"
-></app-generic-mapping-v2>
+  ></app-generic-mapping-v2>
+}
