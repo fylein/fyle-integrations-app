@@ -8,7 +8,7 @@ import { SelectFormOption } from 'src/app/core/models/common/select-form-option.
 import { DestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
 import { FyleField, IntegrationField } from 'src/app/core/models/db/mapping.model';
 import { AppName, ConfigurationCta, EmployeeFieldMapping, NetSuiteCorporateCreditCardExpensesObject, NetsuiteFyleField, NetsuiteOnboardingState, NetsuiteReimbursableExpensesObject, ToastSeverity } from 'src/app/core/models/enum/enum.model';
-import { NetsuiteImportSettingGet } from 'src/app/core/models/netsuite/netsuite-configuration/netsuite-import-setting.model';
+import { NetsuiteImportFieldsAttributeCounts, NetsuiteImportSettingGet } from 'src/app/core/models/netsuite/netsuite-configuration/netsuite-import-setting.model';
 import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
 import { MappingService } from 'src/app/core/services/common/mapping.service';
 import { WorkspaceService } from 'src/app/core/services/common/workspace.service';
@@ -99,6 +99,8 @@ export class NetsuiteImportSettingsComponent implements OnInit {
 
   readonly brandingStyle = brandingStyle;
 
+  attributeCounts: NetsuiteImportFieldsAttributeCounts;
+
   constructor(
     @Inject(FormBuilder) private formBuilder: FormBuilder,
     private helperService: NetsuiteHelperService,
@@ -118,6 +120,46 @@ export class NetsuiteImportSettingsComponent implements OnInit {
     this.customFieldOption = this.importSettingsService.getCustomFieldOption();
     this.customrSegmentOptions = this.netsuiteImportSettingsService.getCustomSegmentOptions();
 
+  }
+
+  updateCommonImportFields(isImportCodeEnabled: boolean, destinationField: keyof NetsuiteImportFieldsAttributeCounts, formControlName: string): void {
+    if (isImportCodeEnabled) {
+      this.importSettingService.getImportFieldsAttributeCounts().subscribe((importFieldsAttributeCounts: NetsuiteImportFieldsAttributeCounts) => {
+        this.attributeCounts = importFieldsAttributeCounts;
+        const destinationFieldCount: number = importFieldsAttributeCounts[destinationField] as number;
+        if (destinationFieldCount >= 30000) {
+          this.importSettingForm.controls[formControlName].setValue(false);
+          this.importSettingForm.controls[formControlName].disable();
+        } else {
+          this.importSettingForm.controls[formControlName].setValue(isImportCodeEnabled);
+          this.importSettingForm.controls[formControlName].enable();
+        }
+      });
+    }
+  }
+
+  updateImportFields(event: [boolean, string, number]): void {
+    const destinationField = event[1] === 'classes' ? 'classifications_count' : event[1].toLowerCase() + "_count";
+    const expenseFieldArray = this.importSettingForm.get('expenseFields') as FormArray;
+    if (event[0]) {
+      this.importSettingService.getImportFieldsAttributeCounts().subscribe((importFieldsAttributeCounts: NetsuiteImportFieldsAttributeCounts) => {
+        const count = importFieldsAttributeCounts[destinationField as keyof NetsuiteImportFieldsAttributeCounts];
+        if (typeof count === 'number' && count >= 30000) {
+          const expenseField = expenseFieldArray.controls[event[2]];
+          expenseField.patchValue({
+            import_to_fyle: false,
+            is_auto_import_enabled: false,
+            count: count
+          });
+        } else {
+          const expenseField = expenseFieldArray.controls[event[2]];
+          expenseField.patchValue({
+            import_to_fyle: event[0],
+            is_auto_import_enabled: true
+          });
+        }
+      });
+    }
   }
 
   addCustomSegment() {

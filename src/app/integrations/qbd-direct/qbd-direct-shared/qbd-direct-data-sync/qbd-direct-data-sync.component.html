@@ -50,7 +50,7 @@
       <div class="tw-pb-24-px">
         @if (brandingConfig.brandId !== 'co') {
           <div>
-            <app-configuration-info-label [infoText]="'qbdDirectDataSync.infoText' | transloco:{ brandName: brandingConfig.brandName }" [showIcon]="false"></app-configuration-info-label>
+            <app-configuration-info-label [iconSrc]="'info-circle-fill-medium'" [customBackgroundColorClass]="brandingStyle.configuration.infoLabelBackground" [customStyleClass]="brandingStyle.configuration.infoLabelIcon" [infoText]="'qbdDirectDataSync.infoText' | transloco:{ brandName: brandingConfig.brandName }" [showIcon]="false"></app-configuration-info-label>
           </div>
         }
         @if (brandingConfig.brandId === 'co') {

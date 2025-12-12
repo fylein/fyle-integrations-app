@@ -57,6 +57,31 @@ export type IntacctDependentImportFields = {
     isDisabled: boolean
 }
 
+export type IntacctImportFieldsAttributeCounts = {
+    id: number,
+    workspace: number,
+    accounts_count: number,
+    items_count: number,
+    vendors_count: number,
+    employees_count: number,
+    departments_count: number,
+    classes_count: number,
+    customers_count: number,
+    projects_count: number,
+    locations_count: number,
+    expense_types_count: number,
+    tax_details_count: number,
+    cost_codes_count: number,
+    cost_types_count: number,
+    charge_card_accounts_count: number,
+    payment_accounts_count: number,
+    location_entities_count: number,
+    expense_payment_types_count: number,
+    allocations_count: number,
+    created_at: Date,
+    updated_at: Date
+}
+
 export class ImportSettings {
     static constructPayload(importSettingsForm: FormGroup, existingDependentFieldSettings: DependentFieldSetting | null): ImportSettingPost{
         const expenseFieldArray = importSettingsForm.get('expenseFields')?.getRawValue();

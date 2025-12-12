@@ -7,7 +7,9 @@ export type Sage300DefaultFields = {
     destination_field: string,
     source_field: string,
     formController: string,
-    import_code: string
+    import_code: string,
+    is_auto_import_enabled?: boolean,
+    count?: number
 }
 
 export type Sage300DependentImportFields = {

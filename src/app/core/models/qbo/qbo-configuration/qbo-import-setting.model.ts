@@ -28,3 +28,18 @@ export type QBOImportSettingGet = {
   mapping_settings: MappingSetting[],
   workspace_id: number
 }
+
+export type QBOImportFieldsAttributeCounts = {
+  id: number,
+  workspace: number,
+  accounts_count: number,
+  items_count: number,
+  vendors_count: number,
+  employees_count: number,
+  departments_count: number,
+  classes_count: number,
+  customers_count: number,
+  tax_codes_count: number,
+  created_at: Date,
+  updated_at: Date
+}

@@ -21,6 +21,12 @@ export class ConfigurationInfoLabelComponent implements OnInit {
 
   readonly brandingStyle = brandingStyle;
 
+  @Input() iconSrc: string;
+
+  @Input() customStyleClass: any;
+
+  @Input() customBackgroundColorClass: any;
+
   constructor() { }
 
   clearSearch() {
@@ -29,5 +35,4 @@ export class ConfigurationInfoLabelComponent implements OnInit {
 
   ngOnInit(): void {
   }
-
 }
