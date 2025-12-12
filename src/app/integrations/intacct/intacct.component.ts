@@ -49,8 +49,13 @@ export class IntacctComponent implements OnInit {
     const pathName = this.windowReference.location.pathname;
     if (pathName === '/integrations/intacct') {
       if (migratedToRestApi) {
+        // Go to landing page only if token expires during onboarding
+        const shouldGoToLandingPage = !isIntacctTokenValid && this.workspace.onboarding_state !== IntacctOnboardingState.COMPLETE;
         const landingPageRoute = onboardingStateComponentMap[IntacctOnboardingState.CONNECTION];
-        this.router.navigateByUrl(isIntacctTokenValid ? onboardingStateComponentMap[this.workspace.onboarding_state] : landingPageRoute);
+
+        this.router.navigateByUrl(
+          shouldGoToLandingPage ? landingPageRoute : onboardingStateComponentMap[this.workspace.onboarding_state]
+        );
       } else {
         const shouldGoToConnector =
           isIntacctTokenValid === false &&
