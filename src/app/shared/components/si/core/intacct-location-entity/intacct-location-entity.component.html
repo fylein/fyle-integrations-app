@@ -40,7 +40,7 @@
             </div>
           </div>
           <div class="tw-pt-16-px">
-            @if (!locationEntity.location_entity_name) {
+            @if (!locationEntity?.location_entity_name) {
               <p-select appendTo="body" (onChange)="patchFormValue($event)" class="tw-pl-7" [placeholder]="'intacctLocationEntity.selectLocationEntity' | transloco: { locationEntity: locationEntityLabel }" formControllerName="locationEntity" [options]="locationEntityOptions" optionLabel="value">
               </p-select>
             }

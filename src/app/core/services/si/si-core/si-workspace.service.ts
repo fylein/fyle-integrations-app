@@ -60,6 +60,7 @@ export class SiWorkspaceService {
     return this.apiService.get(`/workspaces/${this.getWorkspaceId()}/configuration/`, {});
   }
 
+  @Cacheable()
   getFeatureConfigs(): Observable<FeatureConfig> {
     return this.apiService.get(`/workspaces/${this.getWorkspaceId()}/feature_configs/`, {});
   }

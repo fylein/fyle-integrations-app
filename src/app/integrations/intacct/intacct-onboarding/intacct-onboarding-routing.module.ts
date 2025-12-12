@@ -8,7 +8,6 @@ import { IntacctOnboardingDoneComponent } from './intacct-onboarding-done/intacc
 import { IntacctOnboardingComponent } from './intacct-onboarding.component';
 import { RouterModule, Routes } from '@angular/router';
 import { IntacctOnboardingConnectorComponent } from './intacct-onboarding-connector/intacct-onboarding-connector.component';
-import { IntacctTokenGuard } from 'src/app/core/guard/intacct-token.guard';
 
 
 const routes: Routes = [
@@ -26,18 +25,15 @@ const routes: Routes = [
       },
       {
         path: 'export_settings',
-        component: IntacctOnboardingExportSettingComponent,
-        canActivate: [IntacctTokenGuard]
+        component: IntacctOnboardingExportSettingComponent
       },
       {
         path: 'import_settings',
-        component: IntacctOnboardingImportSettingComponent,
-        canActivate: [IntacctTokenGuard]
+        component: IntacctOnboardingImportSettingComponent
       },
       {
         path: 'advanced_settings',
-        component: IntacctOnboardingAdvancedSettingComponent,
-        canActivate: [IntacctTokenGuard]
+        component: IntacctOnboardingAdvancedSettingComponent
       },
       {
         path: 'done',
