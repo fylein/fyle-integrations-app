@@ -1,13 +1,13 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { IntacctOnboardingState } from 'src/app/core/models/enum/enum.model';
-import { FeatureConfig } from 'src/app/core/models/intacct/db/feature-config.model';
 import { IntacctWorkspace } from 'src/app/core/models/intacct/db/workspaces.model';
 import { Cacheable } from 'ts-cacheable';
 import { StorageService } from '../../common/storage.service';
 import { Configuration } from 'src/app/core/models/intacct/db/configuration.model';
 import { HelperService } from '../../common/helper.service';
 import { ApiService } from '../../common/api.service';
+import { FeatureConfig } from 'src/app/core/models/intacct/db/feature-config.model';
 
 @Injectable({
   providedIn: 'root'
@@ -60,6 +60,7 @@ export class SiWorkspaceService {
     return this.apiService.get(`/workspaces/${this.getWorkspaceId()}/configuration/`, {});
   }
 
+  @Cacheable()
   getFeatureConfigs(): Observable<FeatureConfig> {
     return this.apiService.get(`/workspaces/${this.getWorkspaceId()}/feature_configs/`, {});
   }

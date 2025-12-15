@@ -12,6 +12,8 @@ export class IntacctConnectionFormComponent {
 
   @Input() connectIntacctForm: FormGroup;
 
+  @Input() isMigratedToRestApi!: boolean;
+
   @Input() isReconnecting?: boolean;
 
   readonly brandingFeatureConfig = brandingFeatureConfig;
