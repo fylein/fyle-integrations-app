@@ -12,6 +12,7 @@ import { IntacctConnectorService } from 'src/app/core/services/si/si-core/si-con
 import { Sage300ConnectorService } from 'src/app/core/services/sage300/sage300-configuration/sage300-connector.service';
 import { QboAuthService } from 'src/app/core/services/qbo/qbo-core/qbo-auth.service';
 import { XeroAuthService } from 'src/app/core/services/xero/xero-core/xero-auth.service';
+import { SiWorkspaceService } from 'src/app/core/services/si/si-core/si-workspace.service';
 
 
 @Component({
@@ -53,6 +54,8 @@ export class DashboardTokenExpiredComponent implements OnInit, OnDestroy {
 
   integrationSetupForm: FormGroup;
 
+  isMigratedToRestApi: boolean = false;
+
   constructor(
     private helperService: HelperService,
     private qboAuthService: QboAuthService,
@@ -61,7 +64,8 @@ export class DashboardTokenExpiredComponent implements OnInit, OnDestroy {
     private windowService: WindowService,
     private netsuiteConnector: NetsuiteConnectorService,
     private intacctConnector: IntacctConnectorService,
-    private sage300Connector: Sage300ConnectorService
+    private sage300Connector: Sage300ConnectorService,
+    private siWorkspaceService: SiWorkspaceService
   ) {}
 
   acceptWarning(data: ConfigurationWarningOut): void {
@@ -113,7 +117,7 @@ export class DashboardTokenExpiredComponent implements OnInit, OnDestroy {
     }
 
     if (this.appName === AppName.INTACCT) {
-      this.intacctConnector.connectSageIntacct(this.integrationSetupForm, true)
+      this.intacctConnector.connectSageIntacct(this.integrationSetupForm, true, this.isMigratedToRestApi)
       .subscribe(({ intacctSetupForm, isIntacctConnected }) => {
         this.integrationSetupForm = intacctSetupForm;
         this.isConnectionInProgress = false;
@@ -154,8 +158,11 @@ export class DashboardTokenExpiredComponent implements OnInit, OnDestroy {
       this.isTokenBasedAuthApp = true;
       this.helperService.setBaseApiURL(AppUrl.INTACCT);
 
-      this.intacctConnector.getIntacctFormGroup().subscribe(({ intacctSetupForm }) => {
-        this.integrationSetupForm = intacctSetupForm;
+      this.siWorkspaceService.getFeatureConfigs().subscribe((featureConfigs) => {
+        this.isMigratedToRestApi = featureConfigs.migrated_to_rest_api;
+        this.intacctConnector.getIntacctFormGroup(this.isMigratedToRestApi).subscribe(({ intacctSetupForm }) => {
+          this.integrationSetupForm = intacctSetupForm;
+        });
       });
     }
 

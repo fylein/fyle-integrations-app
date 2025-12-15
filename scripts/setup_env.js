@@ -48,10 +48,7 @@ const environment = {
       export_done_survery_id: `${process.env.REFINER_SAGE50_EXPORT_DONE_SURVEY_ID ? process.env.REFINER_SAGE50_EXPORT_DONE_SURVEY_ID : '{{REFINER_SAGE50_EXPORT_DONE_SURVEY_ID}}'}`,
     }
   },
-  sage50_api_url: `${process.env.SAGE50_API_URL ? process.env.SAGE50_API_URL : '{{SAGE50_API_URL}}'}`,
-  intacct_authorize_uri: `${process.env.INTACCT_AUTHORIZE_URI ? process.env.INTACCT_AUTHORIZE_URI : '{{INTACCT_AUTHORIZE_URI}}'}`,
-  intacct_oauth_client_id: `${process.env.INTACCT_OAUTH_CLIENT_ID ? process.env.INTACCT_OAUTH_CLIENT_ID : '{{INTACCT_OAUTH_CLIENT_ID}}'}`,
-  intacct_oauth_redirect_uri: `${process.env.INTACCT_OAUTH_REDIRECT_URI ? process.env.INTACCT_OAUTH_REDIRECT_URI : '{{INTACCT_OAUTH_REDIRECT_URI}}'}`
+  sage50_api_url: `${process.env.SAGE50_API_URL ? process.env.SAGE50_API_URL : '{{SAGE50_API_URL}}'}`
 };
 
 const targetPath = './src/environments/environment.json';
