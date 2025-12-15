@@ -12,7 +12,6 @@ import { SiMappingsService } from './si-mappings.service';
 import { IntegrationsToastService } from '../../common/integrations-toast.service';
 import { ToastSeverity } from 'src/app/core/models/enum/enum.model';
 import { TranslocoService } from '@jsverse/transloco';
-import { IntacctAuthorizationCodePayload } from 'src/app/core/models/intacct/intacct-configuration/connector.model';
 
 
 const sageIntacctCredentialCache = new Subject<void>();
@@ -34,13 +33,6 @@ export class IntacctConnectorService {
     private toastService: IntegrationsToastService,
     private translocoService: TranslocoService
   ) { }
-
-  postAuthCode(authorizationCodePayload: IntacctAuthorizationCodePayload): Observable<SageIntacctCredential> {
-    return this.apiService.post(
-      `/workspaces/${this.workspaceService.getWorkspaceId()}/sage_intacct/credentials/authorization_code/`,
-      authorizationCodePayload
-    );
-  }
 
   mapAPIResponseToSage300ConnectorFormGroup(sageIntacctConnection: SageIntacctCredential | null): FormGroup {
     const isDisabled = sageIntacctConnection?.si_company_id ? true : false;
