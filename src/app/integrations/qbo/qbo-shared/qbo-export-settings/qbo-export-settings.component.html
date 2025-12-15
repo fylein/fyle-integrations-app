@@ -99,7 +99,7 @@
                                 </app-configuration-select-field>
                             </div>
 
-                            <div *ngIf="(exportSettingForm.controls.reimbursableExportType.value === QBOReimbursableExpensesObject.BILL || (exportSettingForm.controls.reimbursableExportType.value === QBOReimbursableExpensesObject.JOURNAL_ENTRY && employeeSettingForm.get('employeeMapping')?.value === EmployeeFieldMapping.VENDOR))">
+                            <div *ngIf="isReimbursableAccountsPayableShown">
                                 <app-configuration-select-field
                                     [form]="exportSettingForm"
                                     [destinationAttributes]="accountsPayables"
@@ -108,7 +108,7 @@
                                     [isAdvanceSearchEnabled]="true"
                                     (searchOptionsDropdown)="searchOptionsDropdown($event)"
                                     [optionLabel]="'name'"
-                                    [isFieldMandatory]="true"
+                                    [isFieldMandatory]="isReimbursableAccountsPayableMandatory"
                                     [mandatoryErrorListName]="'qboExportSettings.mandatoryErrorAccountsPayable' | transloco"
                                     [label]="'qboExportSettings.accountsPayableLabel' | transloco: { exportType: (exportSettingForm.get('reimbursableExportType')?.value | snakeCaseToSpaceCase | lowercase) }"
                                     [subLabel]="'qboExportSettings.accountsPayableSubLabel' | transloco: { exportType: (exportSettingForm.get('reimbursableExportType')?.value | snakeCaseToSpaceCase | lowercase) }"
@@ -299,7 +299,7 @@
                             </app-configuration-select-field>
                         </div>
 
-                        <div *ngIf="(exportSettingForm.get('creditCardExportType')?.value === QBOCorporateCreditCardExpensesObject.BILL) && !((exportSettingForm.controls.reimbursableExportType.value === QBOReimbursableExpensesObject.BILL || (exportSettingForm.controls.reimbursableExportType.value === QBOReimbursableExpensesObject.JOURNAL_ENTRY && employeeSettingForm.get('employeeMapping')?.value === EmployeeFieldMapping.VENDOR)))">
+                        <div *ngIf="isCCCAccountsPayableShown">
                             <app-configuration-select-field
                               [form]="exportSettingForm"
                               [destinationAttributes]="accountsPayables"
@@ -309,13 +309,14 @@
                               (searchOptionsDropdown)="searchOptionsDropdown($event)"
                               [optionLabel]="'name'"
                               [iconPath]="'list'"
-                              [isFieldMandatory]="true"
+                              [isFieldMandatory]="false"
                               [mandatoryErrorListName]="'qboExportSettings.mandatoryErrorAccountsPayable' | transloco"
-                              [label]="'configuration.exportSetting.corporateCard.accountsPayableLabel' | transloco: { exportType: (exportSettingForm.get('creditCardExportType')?.value | snakeCaseToSpaceCase | lowercase) }"
-                              [subLabel]="'configuration.exportSetting.corporateCard.accountsPayableSubLabel' | transloco: { exportType: (exportSettingForm.get('creditCardExportType')?.value | snakeCaseToSpaceCase | lowercase) }"
+                              [label]="'qboExportSettings.accountsPayableLabel' | transloco: { exportType: (exportSettingForm.get('creditCardExportType')?.value | snakeCaseToSpaceCase | lowercase) }"
+                              [subLabel]="'qboExportSettings.accountsPayableSubLabel' | transloco: { exportType: (exportSettingForm.get('creditCardExportType')?.value | snakeCaseToSpaceCase | lowercase) }"
                               [placeholder]="'qboExportSettings.accountsPayablePlaceholder' | transloco"
                               [isMultiLineOption]="isMultilineOption"
-                              [formControllerName]="'accountsPayable'">
+                              [formControllerName]="'CCCAccountsPayable'"
+                              [isDisabled]="isCCCAccountsPayableDisabled">
                             </app-configuration-select-field>
                         </div>
                     </div>

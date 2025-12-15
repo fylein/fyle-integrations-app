@@ -138,6 +138,34 @@ export class QboExportSettingsComponent implements OnInit {
 
   showWarningMessageAboutAutoExpenseCreation: boolean;
 
+  get isReimbursableAccountsPayableMandatory(): boolean {
+    // Accounts payable is ONLY required for
+    // 1. reimbursable expenses exported as journal entry, AND
+    // 2. employee mapping is set to vendor
+    return (
+      this.exportSettingForm.get('reimbursableExportType')?.value === QBOReimbursableExpensesObject.JOURNAL_ENTRY &&
+      this.employeeSettingForm.get('employeeMapping')?.value === EmployeeFieldMapping.VENDOR
+    );
+  }
+
+  get isReimbursableAccountsPayableShown(): boolean {
+    return (
+      this.exportSettingForm.get('reimbursableExportType')?.value === QBOReimbursableExpensesObject.BILL || (
+        this.exportSettingForm.get('reimbursableExportType')?.value === QBOReimbursableExpensesObject.JOURNAL_ENTRY &&
+        this.employeeSettingForm.get('employeeMapping')?.value === EmployeeFieldMapping.VENDOR
+      )
+    );
+  }
+
+  get isCCCAccountsPayableShown(): boolean {
+    return this.exportSettingForm.get('creditCardExportType')?.value === QBOCorporateCreditCardExpensesObject.BILL;
+  }
+
+  /** If an AP is selected for reimbursable expenses, it should be read-only for CCC */
+  get isCCCAccountsPayableDisabled(): boolean {
+    return this.isReimbursableAccountsPayableShown && this.exportSettingForm.get('accountsPayable')?.value !== null;
+  }
+
   constructor(
     private translocoService: TranslocoService,
     public helperService: HelperService,
@@ -398,6 +426,29 @@ export class QboExportSettingsComponent implements OnInit {
     });
   }
 
+  private setupAccountsPayableWatchers(): void {
+    // CCC AP & reimbursable AP should be synced with each other
+    this.exportSettingForm.get('accountsPayable')?.valueChanges.subscribe((selectedAccountsPayable) => {
+      this.exportSettingForm.get('CCCAccountsPayable')?.setValue(selectedAccountsPayable, { emitEvent: false });
+    });
+
+    this.exportSettingForm.get('CCCAccountsPayable')?.valueChanges.subscribe((selectedCCCAccountsPayable) => {
+      this.exportSettingForm.get('accountsPayable')?.setValue(selectedCCCAccountsPayable, { emitEvent: false });
+    });
+
+    // Dynamically mark AP required based on the getter
+    this.exportSettingForm.valueChanges.subscribe(() => {
+      const accountsPayable = this.exportSettingForm.get('accountsPayable');
+
+      if (this.isReimbursableAccountsPayableMandatory) {
+        accountsPayable?.addValidators(Validators.required);
+      } else {
+        accountsPayable?.removeValidators(Validators.required);
+      }
+      accountsPayable?.updateValueAndValidity({ emitEvent: false });
+    });
+  }
+
   private handleOptionSearch(event: ExportSettingOptionSearch): void {
     const existingOptions = this.getExistingOptions(event.destinationOptionKey as QboExportSettingDestinationOptionKey);
 
@@ -582,6 +633,7 @@ export class QboExportSettingsComponent implements OnInit {
       this.setupCustomWatchers();
       this.setupCustomDateOptionWatchers();
       this.optionSearchWatcher();
+      this.setupAccountsPayableWatchers();
 
       this.qboExportSettingsService.setExportTypeValidatorsAndWatchers(
         exportModuleRule, this.exportSettingForm, employeeMappingControl
