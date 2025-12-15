@@ -7,11 +7,10 @@ import { SharedModule } from 'src/app/shared/shared.module';
 import { environment } from 'src/environments/environment';
 
 @Component({
-  selector: 'app-sage50-onboarding-done',
-  standalone: true,
-  imports: [SharedModule],
-  templateUrl: './sage50-onboarding-done.component.html',
-  styleUrl: './sage50-onboarding-done.component.scss'
+    selector: 'app-sage50-onboarding-done',
+    imports: [SharedModule],
+    templateUrl: './sage50-onboarding-done.component.html',
+    styleUrl: './sage50-onboarding-done.component.scss'
 })
 export class Sage50OnboardingDoneComponent {
   constructor(

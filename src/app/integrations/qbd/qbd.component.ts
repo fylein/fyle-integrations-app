@@ -11,9 +11,10 @@ import { HelperService } from 'src/app/core/services/common/helper.service';
 import { AuthService } from 'src/app/core/services/common/auth.service';
 
 @Component({
-  selector: 'app-qbd',
-  templateUrl: './qbd.component.html',
-  styleUrls: ['./qbd.component.scss']
+    selector: 'app-qbd',
+    templateUrl: './qbd.component.html',
+    styleUrls: ['./qbd.component.scss'],
+    standalone: false
 })
 export class QbdComponent implements OnInit {
   user: MinimalUser = this.userService.getUserProfile();

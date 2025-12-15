@@ -16,9 +16,10 @@ import { QbdDirectDestinationAttribute } from 'src/app/core/models/qbd-direct/db
 import { TranslocoService } from '@jsverse/transloco';
 
 @Component({
-  selector: 'app-dashboard-error-section',
-  templateUrl: './dashboard-error-section.component.html',
-  styleUrls: ['./dashboard-error-section.component.scss']
+    selector: 'app-dashboard-error-section',
+    templateUrl: './dashboard-error-section.component.html',
+    styleUrls: ['./dashboard-error-section.component.scss'],
+    standalone: false
 })
 export class DashboardErrorSectionComponent implements OnInit {
 
@@ -229,6 +230,15 @@ export class DashboardErrorSectionComponent implements OnInit {
     this.errorArticle = accountingError.article_link;
     // @ts-ignore
     this.errorExpenses = accountingError[this.exportKey]?.expenses;
+  }
+
+  closeAccountingErrorDialog(): void {
+    this.isAccountingErrorDialogVisible = false;
+  }
+
+  closeMappingResolveDialog(): void {
+    this.isMappingResolveVisible = false;
+    this.handleResolvedMappingStat();
   }
 
   private formatErrors(errors: Error[]): AccountingGroupedErrors {

@@ -1,19 +1,23 @@
 <div class="tw-border-separator tw-border tw-p-24-px" [ngClass]="brandingStyle.qbd_direct.onboarding.configurationStepSubHeaderCard">
-    <h4 class="tw-text-text-primary tw-font-nav-link-font-weight" [ngClass]="brandingStyle.qbd_direct.onboarding.configurationStepSubHeaderText">
-        {{label}}
-    </h4>
-    <h5 class="tw-text-14-px tw-pt-8-px !tw-font-400 tw-text-pretty" [ngClass]="brandingStyle.qbd_direct.onboarding.configurationStepSubHeaderDescription">
-        {{subLabel}}
-        <div *ngIf="showPreview" class="tw-inline-flex">
-            <a class="link tw-pr-4-px tw-w-fit" (click)="previewClick()">
-                {{ 'configurationStepSubHeader.clickHere' | transloco }}
-            </a>
-            {{ 'configurationStepSubHeader.toPreview' | transloco }}
-        </div>
-        <div *ngIf="readMoreLink" class="tw-inline-flex">
-            <a class="link tw-pr-4-px tw-w-fit" (click)="readMoreClick()">
-                {{ readMoreLinkText | transloco }}
-            </a>
-        </div>
-    </h5>
+  <h4 class="tw-text-text-primary tw-font-nav-link-font-weight" [ngClass]="brandingStyle.qbd_direct.onboarding.configurationStepSubHeaderText">
+    {{label}}
+  </h4>
+  <h5 class="tw-text-14-px tw-pt-8-px !tw-font-400 tw-text-pretty" [ngClass]="brandingStyle.qbd_direct.onboarding.configurationStepSubHeaderDescription">
+    {{subLabel}}
+    @if (showPreview) {
+      <div class="tw-inline-flex">
+        <a class="link tw-pr-4-px tw-w-fit" (click)="previewClick()">
+          {{ 'configurationStepSubHeader.clickHere' | transloco }}
+        </a>
+        {{ 'configurationStepSubHeader.toPreview' | transloco }}
+      </div>
+    }
+    @if (readMoreLink) {
+      <div class="tw-inline-flex">
+        <a class="link tw-pr-4-px tw-w-fit" (click)="readMoreClick()">
+          {{ readMoreLinkText | transloco }}
+        </a>
+      </div>
+    }
+  </h5>
 </div>

@@ -26,12 +26,11 @@ import { BrandingService } from 'src/app/core/services/common/branding.service';
 import { TrackingService } from 'src/app/core/services/integration/tracking.service';
 
 @Component({
-  selector: 'app-sage50-export-settings',
-  standalone: true,
-  imports: [SharedModule, CommonModule],
-  providers: [DialogService],
-  templateUrl: './sage50-export-settings.component.html',
-  styleUrl: './sage50-export-settings.component.scss'
+    selector: 'app-sage50-export-settings',
+    imports: [SharedModule, CommonModule],
+    providers: [DialogService],
+    templateUrl: './sage50-export-settings.component.html',
+    styleUrl: './sage50-export-settings.component.scss'
 })
 export class Sage50ExportSettingsComponent implements OnInit {
 
@@ -121,7 +120,7 @@ export class Sage50ExportSettingsComponent implements OnInit {
   // State
   selectedExportTypeName: string;
 
-  vendorUploadDialogRef?: DynamicDialogRef;
+  vendorUploadDialogRef?: DynamicDialogRef | null;
 
   // Track the last known good value to prevent race conditions
   private lastCCCExportType: Sage50CCCExportType | null = null;
@@ -299,7 +298,7 @@ export class Sage50ExportSettingsComponent implements OnInit {
       }
     });
 
-    this.vendorUploadDialogRef.onClose.subscribe((file: UploadedCSVFile | undefined) => {
+    this.vendorUploadDialogRef?.onClose.subscribe((file: UploadedCSVFile | undefined) => {
       if (file?.name) {
         this.applyPendingExportTypeChange();
         this.mappingService.getVendors().subscribe((vendors) => {
@@ -428,7 +427,7 @@ export class Sage50ExportSettingsComponent implements OnInit {
         } else {
           this.isCCCExportGroupEditable = true;
         }
-      });
+      });7;
 
     // Watchers for date fields
     this.exportSettingsForm.get('reimbursableExportGroup')?.valueChanges

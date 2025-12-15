@@ -25,9 +25,10 @@ import { AdvancedSettingsService } from 'src/app/core/services/common/advanced-s
 import { ExportSettingsService } from 'src/app/core/services/common/export-settings.service';
 
 @Component({
-  selector: 'app-intacct-advanced-settings',
-  templateUrl: './intacct-advanced-settings.component.html',
-  styleUrls: ['./intacct-advanced-settings.component.scss']
+    selector: 'app-intacct-advanced-settings',
+    templateUrl: './intacct-advanced-settings.component.html',
+    styleUrls: ['./intacct-advanced-settings.component.scss'],
+    standalone: false
 })
 
 export class IntacctAdvancedSettingsComponent implements OnInit {
@@ -399,7 +400,8 @@ export class IntacctAdvancedSettingsComponent implements OnInit {
 
   isAutoCreateMerchantsFieldVisible(): boolean {
     return (this.corporateCreditCardExpense === IntacctCorporateCreditCardExpensesObject.CHARGE_CARD_TRANSACTION && !this.importVendorsAsMerchants) ||
-      (this.corporateCreditCardExpense === IntacctCorporateCreditCardExpensesObject.JOURNAL_ENTRY && !this.importVendorsAsMerchants && this.useMerchantInJournalLine);
+      (this.corporateCreditCardExpense === IntacctCorporateCreditCardExpensesObject.JOURNAL_ENTRY && !this.importVendorsAsMerchants && this.useMerchantInJournalLine) ||
+      (this.corporateCreditCardExpense === IntacctCorporateCreditCardExpensesObject.EXPENSE_REPORT && !this.importVendorsAsMerchants);
   }
 
   ngOnInit(): void {

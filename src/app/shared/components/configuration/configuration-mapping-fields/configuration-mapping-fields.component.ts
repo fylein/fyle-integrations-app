@@ -6,9 +6,10 @@ import { TravelperkPaymentProfileSettingGet } from 'src/app/core/models/travelpe
 import { TravelperkDestinationAttribuite } from 'src/app/core/models/travelperk/travelperk.model';
 
 @Component({
-  selector: 'app-configuration-mapping-fields',
-  templateUrl: './configuration-mapping-fields.component.html',
-  styleUrls: ['./configuration-mapping-fields.component.scss']
+    selector: 'app-configuration-mapping-fields',
+    templateUrl: './configuration-mapping-fields.component.html',
+    styleUrls: ['./configuration-mapping-fields.component.scss'],
+    standalone: false
 })
 export class ConfigurationMappingFieldsComponent implements OnInit {
 

@@ -371,4 +371,20 @@ export class HelperService {
     }
     return destinationField + 's';
   }
+
+  normalizeChipFieldValues(form: FormGroup, controlNames: string[]): void {
+    controlNames.forEach(controlName => {
+      const control = form.get(controlName);
+      if (control) {
+        const currentValue = control.value;
+        if (!Array.isArray(currentValue)) {
+          if (currentValue === null || currentValue === undefined || currentValue === '') {
+            control.setValue([], { emitEvent: false });
+          } else {
+            control.setValue([currentValue], { emitEvent: false });
+          }
+        }
+      }
+    });
+  }
 }

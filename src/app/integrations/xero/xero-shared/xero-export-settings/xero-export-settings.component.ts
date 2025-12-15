@@ -20,9 +20,10 @@ import { ExportSettingsService } from 'src/app/core/services/common/export-setti
 import { BrandingService } from 'src/app/core/services/common/branding.service';
 
 @Component({
-  selector: 'app-xero-export-settings',
-  templateUrl: './xero-export-settings.component.html',
-  styleUrls: ['./xero-export-settings.component.scss']
+    selector: 'app-xero-export-settings',
+    templateUrl: './xero-export-settings.component.html',
+    styleUrls: ['./xero-export-settings.component.scss'],
+    standalone: false
 })
 export class XeroExportSettingsComponent implements OnInit {
 

@@ -8,9 +8,10 @@ import { WindowService } from 'src/app/core/services/common/window.service';
 import { TrackingService } from 'src/app/core/services/integration/tracking.service';
 
 @Component({
-  selector: 'app-landing-page-header',
-  templateUrl: './app-landing-page-header.component.html',
-  styleUrls: ['./app-landing-page-header.component.scss']
+    selector: 'app-landing-page-header',
+    templateUrl: './app-landing-page-header.component.html',
+    styleUrls: ['./app-landing-page-header.component.scss'],
+    standalone: false
 })
 export class AppLandingPageHeaderComponent implements OnInit {
 
@@ -52,7 +53,7 @@ export class AppLandingPageHeaderComponent implements OnInit {
 
   @Input() isConnectionInProgress: boolean;
 
-  @Input() postConnectionRoute: string;
+  @Input() postConnectionRoute?: string;
 
   @Input() showQBOButton: boolean;
 
@@ -104,7 +105,8 @@ export class AppLandingPageHeaderComponent implements OnInit {
   }
 
   connect(): void {
-    if (this.appName === AppName.TRAVELPERK || this.appName === AppName.BUSINESS_CENTRAL || this.appName === AppName.BAMBOO_HR || this.appName === AppName.XERO || this.appName.includes('QuickBooks Desktop ')) {
+    const isIntacctOAuthAllowed = this.appName === AppName.INTACCT && !this.postConnectionRoute;
+    if (this.appName === AppName.TRAVELPERK || this.appName === AppName.BUSINESS_CENTRAL || this.appName === AppName.BAMBOO_HR || this.appName === AppName.XERO || this.appName.includes('QuickBooks Desktop ') || isIntacctOAuthAllowed) {
       this.initiateOAuth();
       return;
     } else if (this.postConnectionRoute === 'qbd/onboarding/export_settings') {

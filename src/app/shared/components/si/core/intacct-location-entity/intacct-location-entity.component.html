@@ -1,56 +1,77 @@
-<div *ngIf="isLoading" class="tw-flex tw-justify-center tw-items-center tw-h-full">
-  <app-loader></app-loader>
-</div>
-
-<div *ngIf="!isLoading" class="configuration--contents tw-border-separator tw-my-6" [ngClass]="brandingStyle.common.configurationContents">
-  <div class="configuration--step-header configuration--step-header-styles">
-    <app-configuration-step-header
-      [headerText]="'intacctLocationEntity.headerText' | transloco"
-      [contentText]="'intacct.configuration.connector.locationSubLabel' | transloco: {brandName: brandingConfig.brandName}"
-      [redirectLink]="redirectLink">
-    </app-configuration-step-header>
+@if (isLoading) {
+  <div class="tw-flex tw-justify-center tw-items-center tw-h-full">
+    <app-loader></app-loader>
   </div>
-  <div class="tw-px-24-px">
-    <div class="tw-flex tw-justify-around tw-items-center tw-h-240-px">
-      <div class="tw-w-40-vw tw-h-240-px tw-flex tw-flex-col tw-items-center tw-justify-center">
-        <h5 class="tw-text-14-px tw-text-text-tertiary tw-font-500 align-center tw-cursor-default">
-          {{(brandingConfig.brandName)}}
-        </h5>
-        <h3 [pTooltip]="fyleOrgName" [tooltipDisabled]="fyleOrgName.length < 26" tooltipPosition="left" tooltipStyleClass="left" class="tw-text-18-px tw-pt-18-px tw-whitespace-nowrap tw-cursor-default">
-          {{ fyleOrgName | trimCharacter: 26 }}
-        </h3>
-      </div>
-      <div [ngClass]="{'tw-flex tw-h-[100%]': !brandingFeatureConfig.illustrationsAllowed}">
-        <img *ngIf="brandingFeatureConfig.illustrationsAllowed" src="assets/illustrations/vertical-divider.svg"/>
-        <p *ngIf="!brandingFeatureConfig.illustrationsAllowed" class="tw-border-l-divider-border-color tw-border-solid tw-border-l-1-px"></p>
-      </div>
+}
+
+@if (!isLoading) {
+  <div class="configuration--contents tw-border-separator tw-my-6" [ngClass]="brandingStyle.common.configurationContents">
+    <div class="configuration--step-header configuration--step-header-styles">
+      <app-configuration-step-header
+        [headerText]="'intacctLocationEntity.headerText' | transloco"
+        [contentText]="'intacct.configuration.connector.locationSubLabel' | transloco: {brandName: brandingConfig.brandName}"
+        [redirectLink]="redirectLink">
+      </app-configuration-step-header>
+    </div>
+    <div class="tw-px-24-px">
+      <div class="tw-flex tw-justify-around tw-items-center tw-h-240-px">
+        <div class="tw-w-40-vw tw-h-240-px tw-flex tw-flex-col tw-items-center tw-justify-center">
+          <h5 class="tw-text-14-px tw-text-text-tertiary tw-font-500 align-center tw-cursor-default">
+            {{(brandingConfig.brandName)}}
+          </h5>
+          <h3 [pTooltip]="fyleOrgName" [tooltipDisabled]="fyleOrgName.length < 26" tooltipPosition="left" tooltipStyleClass="left" class="tw-text-18-px tw-pt-18-px tw-whitespace-nowrap tw-cursor-default">
+            {{ fyleOrgName | trimCharacter: 26 }}
+          </h3>
+        </div>
+        <div [ngClass]="{'tw-flex tw-h-[100%]': !brandingFeatureConfig.illustrationsAllowed}">
+          @if (brandingFeatureConfig.illustrationsAllowed) {
+            <img src="assets/illustrations/vertical-divider.svg"/>
+          }
+          @if (!brandingFeatureConfig.illustrationsAllowed) {
+            <p class="tw-border-l-divider-border-color tw-border-solid tw-border-l-1-px"></p>
+          }
+        </div>
         <form class="tw-flex tw-flex-col tw-justify-center tw-items-center tw-w-40-vw" [formGroup]="locationEntityForm">
           <div class="tw-whitespace-nowrap">
             <div>
               <h5 class="tw-text-14-px tw-font-500 tw-items-center tw-text-text-tertiary">
-              {{(appName)}}
-            </h5>
+                {{(appName)}}
+              </h5>
             </div>
           </div>
-            <div class="tw-pt-16-px">
-              <p-dropdown appendTo="body" (onChange)="patchFormValue($event)" class="tw-pl-7" *ngIf="!locationEntity?.location_entity_name" [placeholder]="'intacctLocationEntity.selectLocationEntity' | transloco: { locationEntity: locationEntityLabel }" formControllerName="locationEntity" [options]="locationEntityOptions" optionLabel="value">
-              </p-dropdown>
+          <div class="tw-pt-16-px">
+            @if (!locationEntity?.location_entity_name) {
+              <p-select appendTo="body" (onChange)="patchFormValue($event)" class="tw-pl-7" [placeholder]="'intacctLocationEntity.selectLocationEntity' | transloco: { locationEntity: locationEntityLabel }" formControllerName="locationEntity" [options]="locationEntityOptions" optionLabel="value">
+              </p-select>
+            }
           </div>
-            <h3 *ngIf="locationEntity" [pTooltip]="locationEntity.location_entity_name" [tooltipDisabled]="locationEntity.location_entity_name.length < 26" tooltipPosition="left" tooltipStyleClass="left" class="tw-text-18-px center-align-text tw-whitespace-nowrap tw-cursor-default">
+          @if (locationEntity) {
+            <h3 [pTooltip]="locationEntity.location_entity_name" [tooltipDisabled]="locationEntity.location_entity_name.length < 26" tooltipPosition="left" tooltipStyleClass="left" class="tw-text-18-px center-align-text tw-whitespace-nowrap tw-cursor-default">
               {{ locationEntity.location_entity_name | trimCharacter: 26 }}
             </h3>
-
-            <div *ngIf="!locationEntity" class="tw-text-14-px tw-pl-24-px tw-pt-16-px tw-w-300-px tw-text-text-muted tw-text-center">
+          }
+          @if (!locationEntity) {
+            <div class="tw-text-14-px tw-pl-24-px tw-pt-16-px tw-w-300-px tw-text-text-muted tw-text-center">
               {{ 'intacctLocationEntity.selectLocationEntityToContinue' | transloco: { locationEntity: locationEntityLabel } }}
             </div>
-
-            <div *ngIf="isRefreshDimensionInProgress" class="tw-text-14-px tw-pt-16-px tw-w-300-px tw-text-text-muted tw-text-center">
-              {{ 'intacctLocationEntity.fetchingData' | transloco }}
-              <app-loader *ngIf="!brandingFeatureConfig.isIconsInsideButtonAllowed" [styleClass]="'spinner-16 tw-top-2-px'"></app-loader>
+          }
+          @if(isRefreshDimensionInProgress) {
+            <div class="tw-text-14-px tw-pt-16-px tw-w-300-px tw-text-text-muted tw-text-center">
+              <span>{{ 'intacctLocationEntity.fetchingData' | transloco }}</span>
             </div>
-        </form>
+            <br>
+              @if (!brandingFeatureConfig.isIconsInsideButtonAllowed) {
+                <app-loader [styleClass]="'spinner-16 tw-top-2-px'"></app-loader>
+              }
+            }
+          </form>
+        </div>
+      </div>
+      @if (!locationEntity) {
+        <app-configuration-step-footer [ctaText]="saveInProgress ? ConfigurationCtaText.SYNCING : ConfigurationCtaText.SAVE_AND_CONTINUE" (save)="save()" [isButtonDisabled]="!locationEntityForm.valid"></app-configuration-step-footer>
+      }
+      @if (locationEntity) {
+        <app-configuration-step-footer [ctaText]="saveInProgress ? ConfigurationCtaText.SYNCING : ConfigurationCtaText.CONTINUE" (save)="navigateToExportSetting()" [isButtonDisabled]="saveInProgress"></app-configuration-step-footer>
+      }
     </div>
-  </div>
-  <app-configuration-step-footer *ngIf="!locationEntity" [ctaText]="saveInProgress ? ConfigurationCtaText.SYNCING : ConfigurationCtaText.SAVE_AND_CONTINUE" (save)="save()" [isButtonDisabled]="!locationEntityForm.valid"></app-configuration-step-footer>
-  <app-configuration-step-footer *ngIf="locationEntity" [ctaText]="saveInProgress ? ConfigurationCtaText.SYNCING : ConfigurationCtaText.CONTINUE" (save)="navigateToExportSetting()" [isButtonDisabled]="saveInProgress"></app-configuration-step-footer>
-</div>
+  }

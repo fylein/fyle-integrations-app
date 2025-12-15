@@ -1,400 +1,431 @@
 <div class="tw-h-full">
-    <div *ngIf="isLoading" class="tw-flex tw-justify-center tw-items-center tw-pt-80-px tw-h-[75vh]">
-        <app-loader></app-loader>
+  @if (isLoading) {
+    <div class="tw-flex tw-justify-center tw-items-center tw-pt-80-px tw-h-[75vh]">
+      <app-loader></app-loader>
     </div>
-    <div *ngIf="!isLoading" [ngClass]="[brandingStyle.configuration.settingsContainer, isOnboarding ? brandingStyle.common.configurationContents : brandingStyle.common.configurationContentsDashboard, isOnboarding ? 'configuration--contents' : '']">
-        <div>
-            <app-configuration-step-header
-                [headerText]="'netsuite.configuration.exportSetting.stepName' | transloco"
-                [contentText]="'netsuite.configuration.exportSetting.contentText' | transloco: {brandName: brandingService.getBrandFullName()}"
-                [redirectLink]="redirectLink"
-                [showSyncButton]="isOnboarding"
-                [appName]="appName"
-                (refreshDimension)="refreshDimensions()">
-            </app-configuration-step-header>
-        </div>
-        <form [formGroup]="exportSettingForm">
-            <div class="tw-p-24-px" [ngClass]="{'tw-pt-0': !brandingFeatureConfig.featureFlags.exportSettings.reimbursableExpenses}">
-                <div *ngIf="brandingFeatureConfig.featureFlags.exportSettings.reimbursableExpenses" class="tw-mb-16-px">
-                    <div class="tw-rounded-lg tw-border-border-tertiary tw-border tw-bg-bg-tertiary-lighter">
-                        <app-configuration-toggle-field
+  }
+  @if (!isLoading) {
+    <div [ngClass]="[brandingStyle.configuration.settingsContainer, isOnboarding ? brandingStyle.common.configurationContents : brandingStyle.common.configurationContentsDashboard, isOnboarding ? 'configuration--contents' : '']">
+      <div>
+        <app-configuration-step-header
+          [headerText]="'netsuite.configuration.exportSetting.stepName' | transloco"
+          [contentText]="'netsuite.configuration.exportSetting.contentText' | transloco: {brandName: brandingService.getBrandFullName()}"
+          [redirectLink]="redirectLink"
+          [showSyncButton]="isOnboarding"
+          [appName]="appName"
+          (refreshDimension)="refreshDimensions()">
+        </app-configuration-step-header>
+      </div>
+      <form [formGroup]="exportSettingForm">
+        <div class="tw-p-24-px" [ngClass]="{'tw-pt-0': !brandingFeatureConfig.featureFlags.exportSettings.reimbursableExpenses}">
+          @if (brandingFeatureConfig.featureFlags.exportSettings.reimbursableExpenses) {
+            <div class="tw-mb-16-px">
+              <div class="tw-rounded-lg tw-border-border-tertiary tw-border tw-bg-bg-tertiary-lighter">
+                <app-configuration-toggle-field
+                  [form]="exportSettingForm"
+                  [label]="'netsuiteExportSettings.exportReimbursableExpenses' | transloco"
+                  [subLabel]="'netsuiteExportSettings.exportReimbursableExpensesDescription' | transloco: { brandName: brandingConfig.brandName }"
+                  [formControllerName]="'reimbursableExpense'" [isSectionHeader]="true">
+                </app-configuration-toggle-field>
+              </div>
+              @if (exportSettingForm.get('reimbursableExpense')?.value) {
+                <div>
+                  <div
+                    class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-border-tertiary tw-rounded-12-px">
+                    <app-configuration-select-field
+                      [form]="exportSettingForm"
+                      [isFieldMandatory]="true"
+                      [mandatoryErrorListName]="'netsuiteExportSettings.exportModule' | transloco"
+                      [label]="'netsuiteExportSettings.howExpensesExported' | transloco"
+                      [subLabel]="'netsuiteExportSettings.chooseTransactionType' | transloco: { brandName: brandingConfig.brandName }"
+                      [options]="reimbursableExportTypes"
+                      [iconPath]="'list'"
+                      [placeholder]="'netsuiteExportSettings.chooseTransactionType' | transloco: { brandName: brandingConfig.brandName }"
+                      [formControllerName]="'reimbursableExportType'"
+                      [appName]="appName"
+                      [showExportPreview]="true"
+                      [exportTypeIconPathArray]="previewImagePaths">
+                    </app-configuration-select-field>
+                    @if (exportSettingForm.get('reimbursableExportType')?.value && helperService.isFieldRequired(exportSettingForm, 'bankAccount')) {
+                      <div>
+                        <app-configuration-select-field
+                          [form]="exportSettingForm"
+                          [destinationAttributes]="bankAccounts"
+                          [destinationOptionKey]="NetsuiteExportSettingDestinationOptionKey.BANK_ACCOUNT"
+                          [isOptionSearchInProgress]="isOptionSearchInProgress"
+                          [optionLabel]="'name'"
+                          [iconPath]="'list'"
+                          [isFieldMandatory]="true"
+                          [mandatoryErrorListName]="'netsuiteExportSettings.employeePayablesAccount' | transloco"
+                          [label]="'netsuite.configuration.exportSetting.corporateCard.defaultDebitCardAccountLabel' | transloco"
+                          [subLabel]="'netsuiteExportSettings.employeePayablesAccountDescription' | transloco"
+                          [placeholder]="'netsuiteExportSettings.selectEmployeePayablesAccount' | transloco"
+                          [formControllerName]="'bankAccount'"
+                          [isAdvanceSearchEnabled]="true"
+                          (searchOptionsDropdown)="searchOptionsDropdown($event)">
+                        </app-configuration-select-field>
+                      </div>
+                    }
+                    @if (exportSettingForm.get('reimbursableExportType')?.value && helperService.isFieldRequired(exportSettingForm, 'accountsPayable')) {
+                      <div>
+                        <app-configuration-select-field
+                          [form]="exportSettingForm"
+                          [destinationAttributes]="accountsPayables"
+                          [destinationOptionKey]="NetsuiteExportSettingDestinationOptionKey.ACCOUNTS_PAYABLE"
+                          [isOptionSearchInProgress]="isOptionSearchInProgress"
+                          [optionLabel]="'name'"
+                          [iconPath]="'list'"
+                          [isFieldMandatory]="true"
+                          [mandatoryErrorListName]="'netsuiteExportSettings.vendorPayablesAccount' | transloco"
+                          [label]="'netsuite.configuration.exportSetting.corporateCard.accountsPayableLabel' | transloco"
+                          [subLabel]="'netsuiteExportSettings.vendorPayablesAccountDescription' | transloco"
+                          [placeholder]="'netsuiteExportSettings.selectVendorPayableAccount' | transloco"
+                          [formControllerName]="'accountsPayable'"
+                          [isAdvanceSearchEnabled]="true"
+                          (searchOptionsDropdown)="searchOptionsDropdown($event)">
+                        </app-configuration-select-field>
+                      </div>
+                    }
+                  </div>
+                  @if (exportSettingForm.get('reimbursableExportType')?.value) {
+                    <div class="tw-mt-16-px" [ngClass]="brandingStyle.configuration.configurationExportCardSecondary">
+                      <ng-container *ngTemplateOutlet="employeeFieldMapping"></ng-container>
+                      @if (exportSettingForm.get('reimbursableExportType')?.value) {
+                        <div>
+                          <app-configuration-select-field
                             [form]="exportSettingForm"
-                            [label]="'netsuiteExportSettings.exportReimbursableExpenses' | transloco"
-                            [subLabel]="'netsuiteExportSettings.exportReimbursableExpensesDescription' | transloco: { brandName: brandingConfig.brandName }"
-                            [formControllerName]="'reimbursableExpense'" [isSectionHeader]="true">
-                        </app-configuration-toggle-field>
+                            [isFieldMandatory]="false"
+                            [showClearIcon]="true"
+                            [mandatoryErrorListName]="'netsuiteExportSettings.employeeMapping' | transloco"
+                            [label]="'netsuiteExportSettings.howEmployeesMapped' | transloco: { brandName: brandingConfig.brandName, employeeFieldMapping: getEmployeeFieldMapping(exportSettingForm.get('employeeFieldMapping')?.value, exportSettingForm.get('reimbursableExportType')?.value) }"
+                            [subLabel]="'netsuiteExportSettings.autoMapEmployeesDescription' | transloco: { brandName: brandingConfig.brandName }"
+                            [options]="autoMapEmployeeOptions"
+                            [iconPath]="'question-square-outline'"
+                            [placeholder]="'netsuiteExportSettings.selectMappingMethod' | transloco"
+                          [formControllerName]="'autoMapEmployees'"></app-configuration-select-field>
+                        </div>
+                      }
                     </div>
-
-                    <div *ngIf="exportSettingForm.get('reimbursableExpense')?.value">
-                        <div
-                            class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-border-tertiary tw-rounded-12-px">
-                            <app-configuration-select-field
-                                [form]="exportSettingForm"
-                                [isFieldMandatory]="true"
-                                [mandatoryErrorListName]="'netsuiteExportSettings.exportModule' | transloco"
-                                [label]="'netsuiteExportSettings.howExpensesExported' | transloco"
-                                [subLabel]="'netsuiteExportSettings.chooseTransactionType' | transloco: { brandName: brandingConfig.brandName }"
-                                [options]="reimbursableExportTypes"
-                                [iconPath]="'list'"
-                                [placeholder]="'netsuiteExportSettings.chooseTransactionType' | transloco: { brandName: brandingConfig.brandName }"
-                                [formControllerName]="'reimbursableExportType'"
-                                [appName]="appName"
-                                [showExportPreview]="true"
-                                [exportTypeIconPathArray]="previewImagePaths">
-                            </app-configuration-select-field>
-
-
-                            <div *ngIf="exportSettingForm.get('reimbursableExportType')?.value && helperService.isFieldRequired(exportSettingForm, 'bankAccount')">
-                                <app-configuration-select-field
-                                [form]="exportSettingForm"
-                                [destinationAttributes]="bankAccounts"
-                                [destinationOptionKey]="NetsuiteExportSettingDestinationOptionKey.BANK_ACCOUNT"
-                                [isOptionSearchInProgress]="isOptionSearchInProgress"
-                                [optionLabel]="'name'"
-                                [iconPath]="'list'"
-                                [isFieldMandatory]="true"
-                                [mandatoryErrorListName]="'netsuiteExportSettings.employeePayablesAccount' | transloco"
-                                [label]="'netsuite.configuration.exportSetting.corporateCard.defaultDebitCardAccountLabel' | transloco"
-                                [subLabel]="'netsuiteExportSettings.employeePayablesAccountDescription' | transloco"
-                                [placeholder]="'netsuiteExportSettings.selectEmployeePayablesAccount' | transloco"
-                                [formControllerName]="'bankAccount'"
-                                [isAdvanceSearchEnabled]="true"
-                                (searchOptionsDropdown)="searchOptionsDropdown($event)">
-                                </app-configuration-select-field>
-                            </div>
-
-                            <div *ngIf="exportSettingForm.get('reimbursableExportType')?.value && helperService.isFieldRequired(exportSettingForm, 'accountsPayable')">
-                                <app-configuration-select-field
-                                [form]="exportSettingForm"
-                                [destinationAttributes]="accountsPayables"
-                                [destinationOptionKey]="NetsuiteExportSettingDestinationOptionKey.ACCOUNTS_PAYABLE"
-                                [isOptionSearchInProgress]="isOptionSearchInProgress"
-                                [optionLabel]="'name'"
-                                [iconPath]="'list'"
-                                [isFieldMandatory]="true"
-                                [mandatoryErrorListName]="'netsuiteExportSettings.vendorPayablesAccount' | transloco"
-                                [label]="'netsuite.configuration.exportSetting.corporateCard.accountsPayableLabel' | transloco"
-                                [subLabel]="'netsuiteExportSettings.vendorPayablesAccountDescription' | transloco"
-                                [placeholder]="'netsuiteExportSettings.selectVendorPayableAccount' | transloco"
-                                [formControllerName]="'accountsPayable'"
-                                [isAdvanceSearchEnabled]="true"
-                                (searchOptionsDropdown)="searchOptionsDropdown($event)">
-                                </app-configuration-select-field>
-                            </div>
-                        </div>
-
-                        <div *ngIf="exportSettingForm.get('reimbursableExportType')?.value" class="tw-mt-16-px" [ngClass]="brandingStyle.configuration.configurationExportCardSecondary">
-                            <ng-container *ngTemplateOutlet="employeeFieldMapping"></ng-container>
-                            <div *ngIf="exportSettingForm.get('reimbursableExportType')?.value">
-                                <app-configuration-select-field
-                                [form]="exportSettingForm"
-                                [isFieldMandatory]="false"
-                                [showClearIcon]="true"
-                                [mandatoryErrorListName]="'netsuiteExportSettings.employeeMapping' | transloco"
-                                [label]="'netsuiteExportSettings.howEmployeesMapped' | transloco: { brandName: brandingConfig.brandName, employeeFieldMapping: getEmployeeFieldMapping(exportSettingForm.get('employeeFieldMapping')?.value, exportSettingForm.get('reimbursableExportType')?.value) }"
-                                [subLabel]="'netsuiteExportSettings.autoMapEmployeesDescription' | transloco: { brandName: brandingConfig.brandName }"
-                                [options]="autoMapEmployeeOptions"
-                                [iconPath]="'question-square-outline'"
-                                [placeholder]="'netsuiteExportSettings.selectMappingMethod' | transloco"
-                                [formControllerName]="'autoMapEmployees'"></app-configuration-select-field>
-                            </div>
-                        </div>
-
-                        <div *ngIf="exportSettingForm.get('reimbursableExportType')?.value"
-                            class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-border-tertiary tw-rounded-12-px">
-                            <app-configuration-select-field
-                                [form]="exportSettingForm"
-                                [isFieldMandatory]="true"
-                                [mandatoryErrorListName]="'netsuiteExportSettings.expenseState' | transloco"
-                                [label]="'netsuiteExportSettings.expenseExportState' | transloco: { brandName: brandingConfig.brandName }"
-                                [subLabel]="'netsuiteExportSettings.expenseExportStateDescription' | transloco"
-                                [options]="expenseStateOptions"
-                                [iconPath]="'list'"
-                                [placeholder]="'netsuiteExportSettings.selectExportState' | transloco"
-                                [formControllerName]="'expenseState'">
-                            </app-configuration-select-field>
-                        </div>
-
-                        <div *ngIf="exportSettingForm.get('reimbursableExportType')?.value"
-                            class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-border-tertiary tw-rounded-12-px">
-                            <app-configuration-select-field
-                                [form]="exportSettingForm"
-                                [isFieldMandatory]="true"
-                                [mandatoryErrorListName]="'netsuiteExportSettings.howExpensesGrouped' | transloco"
-                                [label]="'netsuiteExportSettings.howShouldExpensesBeGrouped' | transloco"
-                                [subLabel]="'netsuiteExportSettings.expenseGroupingDescription' | transloco"
-                                [options]="expenseGroupByOptions"
-                                [iconPath]="'question-square-outline'"
-                                [placeholder]="'netsuiteExportSettings.selectExpenseGrouping' | transloco"
-                                [formControllerName]="'reimbursableExportGroup'">
-                            </app-configuration-select-field>
-                        </div>
-
-                        <div *ngIf="exportSettingForm.get('reimbursableExportType')?.value"
-                            class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-border-tertiary tw-rounded-12-px">
-                            <app-configuration-select-field
-                                [form]="exportSettingForm"
-                                [isFieldMandatory]="true"
-                                [mandatoryErrorListName]="'netsuiteExportSettings.exportDate' | transloco"
-                                [label]="'netsuiteExportSettings.setExportDateAs' | transloco: { exportType: (exportSettingForm.get('reimbursableExportType')?.value | snakeCaseToSpaceCase | lowercase) }"
-                                [subLabel]="'netsuiteExportSettings.exportDateDescription' | transloco: { brandName: brandingConfig.brandName }"
-                                [options]="reimbursableExpenseGroupingDateOptions"
-                                [iconPath]="'calendar'"
-                                [placeholder]="'netsuiteExportSettings.selectDateOfExportType' | transloco: { exportType: (exportSettingForm.get('reimbursableExportType')?.value | snakeCaseToSpaceCase | lowercase) }"
-                                [formControllerName]="'reimbursableExportDate'">
-                            </app-configuration-select-field>
-                        </div>
-                    </div>
-                </div>
-
-                <div *ngIf="brandingFeatureConfig.featureFlags.exportSettings.reimbursableExpenses" class="tw-rounded-lg tw-border-border-tertiary tw-border tw-bg-bg-tertiary-lighter">
-                    <app-configuration-toggle-field
+                  }
+                  @if (exportSettingForm.get('reimbursableExportType')?.value) {
+                    <div
+                      class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-border-tertiary tw-rounded-12-px">
+                      <app-configuration-select-field
                         [form]="exportSettingForm"
-                        [label]="'netsuite.configuration.exportSetting.headerText' | transloco"
-                        [subLabel]="'netsuite.configuration.exportSetting.contentText' | transloco: {brandName: brandingConfig.brandName}"
-                        [formControllerName]="'creditCardExpense'"
-                        [isSectionHeader]="true"
-                        [hideToggle]="!brandingFeatureConfig.featureFlags.exportSettings.reimbursableExpenses">
-                    </app-configuration-toggle-field>
+                        [isFieldMandatory]="true"
+                        [mandatoryErrorListName]="'netsuiteExportSettings.expenseState' | transloco"
+                        [label]="'netsuiteExportSettings.expenseExportState' | transloco: { brandName: brandingConfig.brandName }"
+                        [subLabel]="'netsuiteExportSettings.expenseExportStateDescription' | transloco"
+                        [options]="expenseStateOptions"
+                        [iconPath]="'list'"
+                        [placeholder]="'netsuiteExportSettings.selectExportState' | transloco"
+                        [formControllerName]="'expenseState'">
+                      </app-configuration-select-field>
+                    </div>
+                  }
+                  @if (exportSettingForm.get('reimbursableExportType')?.value) {
+                    <div
+                      class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-border-tertiary tw-rounded-12-px">
+                      <app-configuration-select-field
+                        [form]="exportSettingForm"
+                        [isFieldMandatory]="true"
+                        [mandatoryErrorListName]="'netsuiteExportSettings.howExpensesGrouped' | transloco"
+                        [label]="'netsuiteExportSettings.howShouldExpensesBeGrouped' | transloco"
+                        [subLabel]="'netsuiteExportSettings.expenseGroupingDescription' | transloco"
+                        [options]="expenseGroupByOptions"
+                        [iconPath]="'question-square-outline'"
+                        [placeholder]="'netsuiteExportSettings.selectExpenseGrouping' | transloco"
+                        [formControllerName]="'reimbursableExportGroup'">
+                      </app-configuration-select-field>
+                    </div>
+                  }
+                  @if (exportSettingForm.get('reimbursableExportType')?.value) {
+                    <div
+                      class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-border-tertiary tw-rounded-12-px">
+                      <app-configuration-select-field
+                        [form]="exportSettingForm"
+                        [isFieldMandatory]="true"
+                        [mandatoryErrorListName]="'netsuiteExportSettings.exportDate' | transloco"
+                        [label]="'netsuiteExportSettings.setExportDateAs' | transloco: { exportType: (exportSettingForm.get('reimbursableExportType')?.value | snakeCaseToSpaceCase | lowercase) }"
+                        [subLabel]="'netsuiteExportSettings.exportDateDescription' | transloco: { brandName: brandingConfig.brandName }"
+                        [options]="reimbursableExpenseGroupingDateOptions"
+                        [iconPath]="'calendar'"
+                        [placeholder]="'netsuiteExportSettings.selectDateOfExportType' | transloco: { exportType: (exportSettingForm.get('reimbursableExportType')?.value | snakeCaseToSpaceCase | lowercase) }"
+                        [formControllerName]="'reimbursableExportDate'">
+                      </app-configuration-select-field>
+                    </div>
+                  }
                 </div>
-
-
-                <div *ngIf="exportSettingForm.get('creditCardExpense')?.value">
-                    <div class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-border-tertiary tw-rounded-12-px">
-                        <app-configuration-select-field
-                            [form]="exportSettingForm"
-                            [isFieldMandatory]="true"
-                            [mandatoryErrorListName]="'netsuiteExportSettings.exportModule' | transloco"
-                            [label]="'netsuite.configuration.exportSetting.corporateCard.creditCardExpenseLabel' | transloco"
-                            [subLabel]="'netsuite.configuration.exportSetting.corporateCard.creditCardExpenseSubLabel' | transloco: {brandName: brandingConfig.brandName}"
-                            [options]="creditCardExportTypes"
-                            [iconPath]="'list'"
-                            [placeholder]="'netsuiteExportSettings.selectExpenseExportType' | transloco"
-                            [formControllerName]="'creditCardExportType'"
-                            [appName]="appName"
-                            [showExportPreview]="true"
-                            [exportTypeIconPathArray]="previewImagePaths">
-                        </app-configuration-select-field>
-
-                        <div *ngIf="brandingFeatureConfig.featureFlags.exportSettings.nameInJournalEntry && exportSettingForm.get('creditCardExportType')?.value && helperService.isFieldRequired(exportSettingForm, 'nameInJournalEntry')">
-                            <app-configuration-select-field
-                                [form]="exportSettingForm"
-                                [isFieldMandatory]="true"
-                                [mandatoryErrorListName]="'netsuiteExportSettings.nameInJournalEntryShouldExport' | transloco"
-                                [label]="'netsuite.configuration.exportSetting.corporateCard.journalOptionLabel' | transloco"
-                                [subLabel]="'netsuite.configuration.exportSetting.corporateCard.journalOptionSubLabel' | transloco"
-                                [options]="nameInJournalOptions"
-                                [iconPath]="'list'"
-                                [placeholder]="'netsuiteExportSettings.selectNameInJournalEntry' | transloco"
-                                [formControllerName]="'nameInJournalEntry'">
-                            </app-configuration-select-field>
-                        </div>
-
-                        <div *ngIf="(!exportSettingForm.get('reimbursableExportType')?.value || !brandingFeatureConfig.featureFlags.exportSettings.isReimbursableExpensesAllowed) && helperService.isFieldRequired(exportSettingForm, 'accountsPayable')">
-                            <app-configuration-select-field
-                            [form]="exportSettingForm"
-                            [destinationAttributes]="accountsPayables"
-                            [destinationOptionKey]="NetsuiteExportSettingDestinationOptionKey.ACCOUNTS_PAYABLE"
-                            [isOptionSearchInProgress]="isOptionSearchInProgress"
-                            [optionLabel]="'name'"
-                            [iconPath]="'list'"
-                            [isFieldMandatory]="true"
-                            [mandatoryErrorListName]="'netsuiteExportSettings.vendorPayablesAccount' | transloco"
-                            [label]="'netsuite.configuration.exportSetting.corporateCard.accountsPayableLabel' | transloco"
-                            [subLabel]="'netsuiteExportSettings.postCCCExpensesToVendorPayable' | transloco"
-                            [placeholder]="helperService.sentenseCaseConversion('Select vendor payable account')"
-                            [formControllerName]="'accountsPayable'"
-                            [isAdvanceSearchEnabled]="true"
-                            (searchOptionsDropdown)="searchOptionsDropdown($event)">
-                            </app-configuration-select-field>
-                        </div>
-
-                        <div *ngIf="(!exportSettingForm.get('reimbursableExportType')?.value || !brandingFeatureConfig.featureFlags.exportSettings.isReimbursableExpensesAllowed) && helperService.isFieldRequired(exportSettingForm, 'bankAccount')">
-                            <app-configuration-select-field
-                            [form]="exportSettingForm"
-                            [destinationAttributes]="bankAccounts"
-                            [destinationOptionKey]="NetsuiteExportSettingDestinationOptionKey.BANK_ACCOUNT"
-                            [isOptionSearchInProgress]="isOptionSearchInProgress"
-                            [optionLabel]="'name'"
-                            [iconPath]="'list'"
-                            [isFieldMandatory]="true"
-                            [mandatoryErrorListName]="'netsuiteExportSettings.employeePayablesAccount' | transloco"
-                            [label]="'netsuite.configuration.exportSetting.corporateCard.defaultDebitCardAccountLabel' | transloco"
-                            [subLabel]="'netsuiteExportSettings.postCCCExpensesToEmployeePayable' | transloco"
-                            [placeholder]="helperService.sentenseCaseConversion('Select a employee payables account')"
-                            [formControllerName]="'bankAccount'"
-                            [isAdvanceSearchEnabled]="true"
-                            (searchOptionsDropdown)="searchOptionsDropdown($event)">
-                            </app-configuration-select-field>
-                        </div>
-
-                        <div *ngIf="exportSettingForm.get('creditCardExportType')?.value && helperService.isFieldRequired(exportSettingForm, 'creditCardAccount')">
-                            <app-configuration-select-field
-                            [form]="exportSettingForm"
-                            [destinationAttributes]="exportSettingForm.get('creditCardExportType')?.value === NetSuiteCorporateCreditCardExpensesObject.JOURNAL_ENTRY ? bankAccounts: cccAccounts"
-                            [destinationOptionKey]="exportSettingForm.get('creditCardExportType')?.value === NetSuiteCorporateCreditCardExpensesObject.JOURNAL_ENTRY ? NetsuiteExportSettingDestinationOptionKey.BANK_ACCOUNT : NetsuiteExportSettingDestinationOptionKey.CREDIT_CARD_ACCOUNT"
-                            [isOptionSearchInProgress]="isOptionSearchInProgress"
-                            [optionLabel]="'name'"
-                            [iconPath]="'list'"
-                            [isFieldMandatory]="true"
-                            [mandatoryErrorListName]="'netsuiteExportSettings.creditCardAccount' | transloco"
-                            [label]="'netsuite.configuration.exportSetting.corporateCard.defaultCCCAccountLabel' | transloco"
-                            [subLabel]="'netsuiteExportSettings.postCCCExpensesToDefaultCCC' | transloco"
-                            [placeholder]="'netsuite.configuration.exportSetting.corporateCard.defaultCCCAccountPlaceholder' | transloco"
-                            [formControllerName]="'creditCardAccount'"
-                            [isAdvanceSearchEnabled]="true"
-                            (searchOptionsDropdown)="searchOptionsDropdown($event)">
-                            </app-configuration-select-field>
-                        </div>
-
-                        <div *ngIf="exportSettingForm.get('creditCardExportType')?.value && helperService.isFieldRequired(exportSettingForm, 'defaultCreditCardVendor')">
-                            <app-configuration-select-field
-                            [form]="exportSettingForm"
-                            [destinationAttributes]="creditCardVendors"
-                            [destinationOptionKey]="NetsuiteExportSettingDestinationOptionKey.VENDOR"
-                            [isOptionSearchInProgress]="isOptionSearchInProgress"
-                            [optionLabel]="'name'"
-                            [iconPath]="'list'"
-                            [isFieldMandatory]="true"
-                            [mandatoryErrorListName]="'netsuiteExportSettings.creditCardVendor' | transloco"
-                            [label]="'netsuite.configuration.exportSetting.corporateCard.defaultCCCVendorLabel' | transloco"
-                            [subLabel]="'netsuiteExportSettings.defaultCCCVendorDescription' | transloco"
-                            [placeholder]="'netsuiteExportSettings.selectDefaultCCCVendor' | transloco"
-                            [formControllerName]="'defaultCreditCardVendor'"
-                            [isAdvanceSearchEnabled]="true"
-                            (searchOptionsDropdown)="searchOptionsDropdown($event)">
-                            </app-configuration-select-field>
-                        </div>
-
-                    </div>
-
-                    <div *ngIf="!exportSettingForm.get('reimbursableExportType')?.value && exportSettingForm.get('creditCardExportType')?.value === NetSuiteReimbursableExpensesObject.JOURNAL_ENTRY" class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-border-tertiary tw-rounded-12-px">
-                        <ng-container *ngTemplateOutlet="employeeFieldMapping"></ng-container>
-                    </div>
-
-                    <div *ngIf="exportSettingForm.get('creditCardExportType')?.value" class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-border-tertiary tw-rounded-12-px">
-                        <app-configuration-select-field
-                            [form]="exportSettingForm"
-                            [isFieldMandatory]="true"
-                            [mandatoryErrorListName]="'netsuiteExportSettings.expenseState' | transloco"
-                            [label]="'netsuite.configuration.exportSetting.corporateCard.creditCardExpenseStateLabel' | transloco: {brandName: brandingConfig.brandName}"
-                            [subLabel]="'netsuite.configuration.exportSetting.corporateCard.creditCardExpenseStateSubLabel' | transloco"
-                            [options]="cccExpenseStateOptions"
-                            [iconPath]="'list'"
-                            [placeholder]="'netsuite.configuration.exportSetting.corporateCard.expenseState' | transloco"
-                            [formControllerName]="'cccExpenseState'">
-                        </app-configuration-select-field>
-                    </div>
-
-                    <div *ngIf="exportSettingForm.get('creditCardExportType')?.value" class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-border-tertiary tw-rounded-12-px">
-                        <app-configuration-select-field
-                            [form]="exportSettingForm"
-                            [isFieldMandatory]="true"
-                            [mandatoryErrorListName]="'netsuiteExportSettings.howExpensesGrouped' | transloco"
-                            [label]="'netsuiteExportSettings.howShouldExpensesBeGrouped' | transloco"
-                            [subLabel]="'configuration.exportSetting.corporateCard.creditCardExportTypeSubLabel' | transloco: {brandName: brandingConfig.brandName}"
-                            [options]="expenseGroupByOptions"
-                            [iconPath]="'question-square-outline'"
-                            [placeholder]="'netsuiteExportSettings.selectExpenseGrouping' | transloco"
-                            [isDisabled]="exportSettingForm.get('creditCardExportType')?.value === NetSuiteCorporateCreditCardExpensesObject.CREDIT_CARD_CHARGE ? true : false"
-                            [formControllerName]="'creditCardExportGroup'">
-                        </app-configuration-select-field>
-                    </div>
-
-                    <div *ngIf="exportSettingForm.get('creditCardExportType')?.value" class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-border-tertiary tw-rounded-12-px">
-                        <app-configuration-select-field
-                            [form]="exportSettingForm"
-                            [isFieldMandatory]="true"
-                            [mandatoryErrorListName]="'netsuiteExportSettings.exportDate' | transloco"
-                            [label]="'netsuiteExportSettings.setExportDateAs' | transloco: { exportType: (exportSettingForm.get('creditCardExportType')?.value | snakeCaseToSpaceCase | lowercase) }"
-                            [subLabel]="'The selected date will reflect in the corporate card expenses exported to NetSuite.'"
-                            [options]="cccExpenseGroupingDateOptions"
-                            [iconPath]="'calendar'"
-                            [placeholder]="'netsuiteExportSettings.selectDateOfExportType' | transloco: { exportType: (exportSettingForm.get('creditCardExportType')?.value | snakeCaseToSpaceCase | lowercase) }"
-                            [formControllerName]="'creditCardExportDate'">
-                        </app-configuration-select-field>
-                    </div>
-
-                    <div *ngIf="brandingFeatureConfig.featureFlags.exportSettings.splitExpenseGrouping && exportSettingForm.get('creditCardExportType')?.value === NetSuiteCorporateCreditCardExpensesObject.CREDIT_CARD_CHARGE" class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-border-tertiary tw-rounded-12-px">
-                        <app-configuration-select-field
-                            [form]="exportSettingForm"
-                            [isFieldMandatory]="true"
-                            [mandatoryErrorListName]="'netsuiteExportSettings.splitExpenseGrouping' | transloco"
-                            [label]="'netsuiteExportSettings.howSplitExpensesGrouped' | transloco"
-                            [subLabel]="'netsuiteExportSettings.splitExpenseGroupingDescription' | transloco"
-                            [options]="splitExpenseGroupingOptions"
-                            [iconPath]="'question-square-outline'"
-                            [placeholder]="'netsuiteExportSettings.selectSplitExpenseGroupingType' | transloco"
-                            [formControllerName]="'splitExpenseGrouping'">
-                        </app-configuration-select-field>
-                    </div>
-                </div>
+              }
             </div>
-            <app-configuration-step-footer
-                *ngIf="isOnboarding"
-                [ctaText]="!isSaveInProgress ? (isOnboarding ? ConfigurationCtaText.SAVE_AND_CONTINUE : ConfigurationCtaText.SAVE) : ConfigurationCtaText.SAVING"
-                [isButtonDisabled]="!exportSettingForm.valid"
-                [showBackButton]="isOnboarding ? true : false"
-                (save)="save()"
-                (navigateToPreviousStep)="navigateToPreviousStep()">
-            </app-configuration-step-footer>
-        </form>
+          }
+          @if (brandingFeatureConfig.featureFlags.exportSettings.reimbursableExpenses) {
+            <div class="tw-rounded-lg tw-border-border-tertiary tw-border tw-bg-bg-tertiary-lighter">
+              <app-configuration-toggle-field
+                [form]="exportSettingForm"
+                [label]="'netsuite.configuration.exportSetting.headerText' | transloco"
+                [subLabel]="'netsuite.configuration.exportSetting.contentText' | transloco: {brandName: brandingConfig.brandName}"
+                [formControllerName]="'creditCardExpense'"
+                [isSectionHeader]="true"
+                [hideToggle]="!brandingFeatureConfig.featureFlags.exportSettings.reimbursableExpenses">
+              </app-configuration-toggle-field>
+            </div>
+          }
+          @if (exportSettingForm.get('creditCardExpense')?.value) {
+            <div>
+              <div class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-border-tertiary tw-rounded-12-px">
+                <app-configuration-select-field
+                  [form]="exportSettingForm"
+                  [isFieldMandatory]="true"
+                  [mandatoryErrorListName]="'netsuiteExportSettings.exportModule' | transloco"
+                  [label]="'netsuite.configuration.exportSetting.corporateCard.creditCardExpenseLabel' | transloco"
+                  [subLabel]="'netsuite.configuration.exportSetting.corporateCard.creditCardExpenseSubLabel' | transloco: {brandName: brandingConfig.brandName}"
+                  [options]="creditCardExportTypes"
+                  [iconPath]="'list'"
+                  [placeholder]="'netsuiteExportSettings.selectExpenseExportType' | transloco"
+                  [formControllerName]="'creditCardExportType'"
+                  [appName]="appName"
+                  [showExportPreview]="true"
+                  [exportTypeIconPathArray]="previewImagePaths">
+                </app-configuration-select-field>
+                @if (brandingFeatureConfig.featureFlags.exportSettings.nameInJournalEntry && exportSettingForm.get('creditCardExportType')?.value && helperService.isFieldRequired(exportSettingForm, 'nameInJournalEntry')) {
+                  <div>
+                    <app-configuration-select-field
+                      [form]="exportSettingForm"
+                      [isFieldMandatory]="true"
+                      [mandatoryErrorListName]="'netsuiteExportSettings.nameInJournalEntryShouldExport' | transloco"
+                      [label]="'netsuite.configuration.exportSetting.corporateCard.journalOptionLabel' | transloco"
+                      [subLabel]="'netsuite.configuration.exportSetting.corporateCard.journalOptionSubLabel' | transloco"
+                      [options]="nameInJournalOptions"
+                      [iconPath]="'list'"
+                      [placeholder]="'netsuiteExportSettings.selectNameInJournalEntry' | transloco"
+                      [formControllerName]="'nameInJournalEntry'">
+                    </app-configuration-select-field>
+                  </div>
+                }
+                @if ((!exportSettingForm.get('reimbursableExportType')?.value || !brandingFeatureConfig.featureFlags.exportSettings.isReimbursableExpensesAllowed) && helperService.isFieldRequired(exportSettingForm, 'accountsPayable')) {
+                  <div>
+                    <app-configuration-select-field
+                      [form]="exportSettingForm"
+                      [destinationAttributes]="accountsPayables"
+                      [destinationOptionKey]="NetsuiteExportSettingDestinationOptionKey.ACCOUNTS_PAYABLE"
+                      [isOptionSearchInProgress]="isOptionSearchInProgress"
+                      [optionLabel]="'name'"
+                      [iconPath]="'list'"
+                      [isFieldMandatory]="true"
+                      [mandatoryErrorListName]="'netsuiteExportSettings.vendorPayablesAccount' | transloco"
+                      [label]="'netsuite.configuration.exportSetting.corporateCard.accountsPayableLabel' | transloco"
+                      [subLabel]="'netsuiteExportSettings.postCCCExpensesToVendorPayable' | transloco"
+                      [placeholder]="helperService.sentenseCaseConversion('Select vendor payable account')"
+                      [formControllerName]="'accountsPayable'"
+                      [isAdvanceSearchEnabled]="true"
+                      (searchOptionsDropdown)="searchOptionsDropdown($event)">
+                    </app-configuration-select-field>
+                  </div>
+                }
+                @if ((!exportSettingForm.get('reimbursableExportType')?.value || !brandingFeatureConfig.featureFlags.exportSettings.isReimbursableExpensesAllowed) && helperService.isFieldRequired(exportSettingForm, 'bankAccount')) {
+                  <div>
+                    <app-configuration-select-field
+                      [form]="exportSettingForm"
+                      [destinationAttributes]="bankAccounts"
+                      [destinationOptionKey]="NetsuiteExportSettingDestinationOptionKey.BANK_ACCOUNT"
+                      [isOptionSearchInProgress]="isOptionSearchInProgress"
+                      [optionLabel]="'name'"
+                      [iconPath]="'list'"
+                      [isFieldMandatory]="true"
+                      [mandatoryErrorListName]="'netsuiteExportSettings.employeePayablesAccount' | transloco"
+                      [label]="'netsuite.configuration.exportSetting.corporateCard.defaultDebitCardAccountLabel' | transloco"
+                      [subLabel]="'netsuiteExportSettings.postCCCExpensesToEmployeePayable' | transloco"
+                      [placeholder]="helperService.sentenseCaseConversion('Select a employee payables account')"
+                      [formControllerName]="'bankAccount'"
+                      [isAdvanceSearchEnabled]="true"
+                      (searchOptionsDropdown)="searchOptionsDropdown($event)">
+                    </app-configuration-select-field>
+                  </div>
+                }
+                @if (exportSettingForm.get('creditCardExportType')?.value && helperService.isFieldRequired(exportSettingForm, 'creditCardAccount')) {
+                  <div>
+                    <app-configuration-select-field
+                      [form]="exportSettingForm"
+                      [destinationAttributes]="exportSettingForm.get('creditCardExportType')?.value === NetSuiteCorporateCreditCardExpensesObject.JOURNAL_ENTRY ? bankAccounts: cccAccounts"
+                      [destinationOptionKey]="exportSettingForm.get('creditCardExportType')?.value === NetSuiteCorporateCreditCardExpensesObject.JOURNAL_ENTRY ? NetsuiteExportSettingDestinationOptionKey.BANK_ACCOUNT : NetsuiteExportSettingDestinationOptionKey.CREDIT_CARD_ACCOUNT"
+                      [isOptionSearchInProgress]="isOptionSearchInProgress"
+                      [optionLabel]="'name'"
+                      [iconPath]="'list'"
+                      [isFieldMandatory]="true"
+                      [mandatoryErrorListName]="'netsuiteExportSettings.creditCardAccount' | transloco"
+                      [label]="'netsuite.configuration.exportSetting.corporateCard.defaultCCCAccountLabel' | transloco"
+                      [subLabel]="'netsuiteExportSettings.postCCCExpensesToDefaultCCC' | transloco"
+                      [placeholder]="'netsuite.configuration.exportSetting.corporateCard.defaultCCCAccountPlaceholder' | transloco"
+                      [formControllerName]="'creditCardAccount'"
+                      [isAdvanceSearchEnabled]="true"
+                      (searchOptionsDropdown)="searchOptionsDropdown($event)">
+                    </app-configuration-select-field>
+                  </div>
+                }
+                @if (exportSettingForm.get('creditCardExportType')?.value && helperService.isFieldRequired(exportSettingForm, 'defaultCreditCardVendor')) {
+                  <div>
+                    <app-configuration-select-field
+                      [form]="exportSettingForm"
+                      [destinationAttributes]="creditCardVendors"
+                      [destinationOptionKey]="NetsuiteExportSettingDestinationOptionKey.VENDOR"
+                      [isOptionSearchInProgress]="isOptionSearchInProgress"
+                      [optionLabel]="'name'"
+                      [iconPath]="'list'"
+                      [isFieldMandatory]="true"
+                      [mandatoryErrorListName]="'netsuiteExportSettings.creditCardVendor' | transloco"
+                      [label]="'netsuite.configuration.exportSetting.corporateCard.defaultCCCVendorLabel' | transloco"
+                      [subLabel]="'netsuiteExportSettings.defaultCCCVendorDescription' | transloco"
+                      [placeholder]="'netsuiteExportSettings.selectDefaultCCCVendor' | transloco"
+                      [formControllerName]="'defaultCreditCardVendor'"
+                      [isAdvanceSearchEnabled]="true"
+                      (searchOptionsDropdown)="searchOptionsDropdown($event)">
+                    </app-configuration-select-field>
+                  </div>
+                }
+              </div>
+              @if (!exportSettingForm.get('reimbursableExportType')?.value && exportSettingForm.get('creditCardExportType')?.value === NetSuiteReimbursableExpensesObject.JOURNAL_ENTRY) {
+                <div class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-border-tertiary tw-rounded-12-px">
+                  <ng-container *ngTemplateOutlet="employeeFieldMapping"></ng-container>
+                </div>
+              }
+              @if (exportSettingForm.get('creditCardExportType')?.value) {
+                <div class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-border-tertiary tw-rounded-12-px">
+                  <app-configuration-select-field
+                    [form]="exportSettingForm"
+                    [isFieldMandatory]="true"
+                    [mandatoryErrorListName]="'netsuiteExportSettings.expenseState' | transloco"
+                    [label]="'netsuite.configuration.exportSetting.corporateCard.creditCardExpenseStateLabel' | transloco: {brandName: brandingConfig.brandName}"
+                    [subLabel]="'netsuite.configuration.exportSetting.corporateCard.creditCardExpenseStateSubLabel' | transloco"
+                    [options]="cccExpenseStateOptions"
+                    [iconPath]="'list'"
+                    [placeholder]="'netsuite.configuration.exportSetting.corporateCard.expenseState' | transloco"
+                    [formControllerName]="'cccExpenseState'">
+                  </app-configuration-select-field>
+                </div>
+              }
+              @if (exportSettingForm.get('creditCardExportType')?.value) {
+                <div class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-border-tertiary tw-rounded-12-px">
+                  <app-configuration-select-field
+                    [form]="exportSettingForm"
+                    [isFieldMandatory]="true"
+                    [mandatoryErrorListName]="'netsuiteExportSettings.howExpensesGrouped' | transloco"
+                    [label]="'netsuiteExportSettings.howShouldExpensesBeGrouped' | transloco"
+                    [subLabel]="'configuration.exportSetting.corporateCard.creditCardExportTypeSubLabel' | transloco: {brandName: brandingConfig.brandName}"
+                    [options]="expenseGroupByOptions"
+                    [iconPath]="'question-square-outline'"
+                    [placeholder]="'netsuiteExportSettings.selectExpenseGrouping' | transloco"
+                    [isDisabled]="exportSettingForm.get('creditCardExportType')?.value === NetSuiteCorporateCreditCardExpensesObject.CREDIT_CARD_CHARGE ? true : false"
+                    [formControllerName]="'creditCardExportGroup'">
+                  </app-configuration-select-field>
+                </div>
+              }
+              @if (exportSettingForm.get('creditCardExportType')?.value) {
+                <div class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-border-tertiary tw-rounded-12-px">
+                  <app-configuration-select-field
+                    [form]="exportSettingForm"
+                    [isFieldMandatory]="true"
+                    [mandatoryErrorListName]="'netsuiteExportSettings.exportDate' | transloco"
+                    [label]="'netsuiteExportSettings.setExportDateAs' | transloco: { exportType: (exportSettingForm.get('creditCardExportType')?.value | snakeCaseToSpaceCase | lowercase) }"
+                    [subLabel]="'The selected date will reflect in the corporate card expenses exported to NetSuite.'"
+                    [options]="cccExpenseGroupingDateOptions"
+                    [iconPath]="'calendar'"
+                    [placeholder]="'netsuiteExportSettings.selectDateOfExportType' | transloco: { exportType: (exportSettingForm.get('creditCardExportType')?.value | snakeCaseToSpaceCase | lowercase) }"
+                    [formControllerName]="'creditCardExportDate'">
+                  </app-configuration-select-field>
+                </div>
+              }
+              @if (brandingFeatureConfig.featureFlags.exportSettings.splitExpenseGrouping && exportSettingForm.get('creditCardExportType')?.value === NetSuiteCorporateCreditCardExpensesObject.CREDIT_CARD_CHARGE) {
+                <div class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-border-tertiary tw-rounded-12-px">
+                  <app-configuration-select-field
+                    [form]="exportSettingForm"
+                    [isFieldMandatory]="true"
+                    [mandatoryErrorListName]="'netsuiteExportSettings.splitExpenseGrouping' | transloco"
+                    [label]="'netsuiteExportSettings.howSplitExpensesGrouped' | transloco"
+                    [subLabel]="'netsuiteExportSettings.splitExpenseGroupingDescription' | transloco"
+                    [options]="splitExpenseGroupingOptions"
+                    [iconPath]="'question-square-outline'"
+                    [placeholder]="'netsuiteExportSettings.selectSplitExpenseGroupingType' | transloco"
+                    [formControllerName]="'splitExpenseGrouping'">
+                  </app-configuration-select-field>
+                </div>
+              }
+            </div>
+          }
+        </div>
+        @if (isOnboarding) {
+          <app-configuration-step-footer
+            [ctaText]="!isSaveInProgress ? (isOnboarding ? ConfigurationCtaText.SAVE_AND_CONTINUE : ConfigurationCtaText.SAVE) : ConfigurationCtaText.SAVING"
+            [isButtonDisabled]="!exportSettingForm.valid"
+            [showBackButton]="isOnboarding ? true : false"
+            (save)="save()"
+            (navigateToPreviousStep)="navigateToPreviousStep()">
+          </app-configuration-step-footer>
+        }
+      </form>
     </div>
+  }
 </div>
 
-<div *ngIf="!isLoading && !isOnboarding" class="tw-sticky tw-top-0 tw-bottom-0 tw-left-0 tw-right-0 tw-bg-white">
+@if (!isLoading && !isOnboarding) {
+  <div class="tw-sticky tw-top-0 tw-bottom-0 tw-left-0 tw-right-0 tw-bg-white">
     <app-configuration-step-footer
-        [ctaText]="!isSaveInProgress ? (isOnboarding ? ConfigurationCtaText.SAVE_AND_CONTINUE : ConfigurationCtaText.SAVE) : ConfigurationCtaText.SAVING"
-        [isButtonDisabled]="!exportSettingForm.valid"
-        [showBackButton]="isOnboarding ? true : false"
-        (save)="save()"
-        (navigateToPreviousStep)="navigateToPreviousStep()">
+      [ctaText]="!isSaveInProgress ? (isOnboarding ? ConfigurationCtaText.SAVE_AND_CONTINUE : ConfigurationCtaText.SAVE) : ConfigurationCtaText.SAVING"
+      [isButtonDisabled]="!exportSettingForm.valid"
+      [showBackButton]="isOnboarding ? true : false"
+      (save)="save()"
+      (navigateToPreviousStep)="navigateToPreviousStep()">
     </app-configuration-step-footer>
-</div>
+  </div>
+}
 
 <app-configuration-confirmation-dialog
-    (warningAccepted)="constructPayloadAndSave($event)"
-    [isWarningVisible]="isConfirmationDialogVisible"
-    [headerText]="'netsuiteExportSettings.changeInConfiguration' | transloco"
-    [contextText]="warningDialogText"
-    [confirmBtnText]="'netsuiteExportSettings.continue' | transloco"
-    [showSecondaryCTA]="false">
+  (warningAccepted)="constructPayloadAndSave($event)"
+  [isWarningVisible]="isConfirmationDialogVisible"
+  [headerText]="'netsuiteExportSettings.changeInConfiguration' | transloco"
+  [contextText]="warningDialogText"
+  [confirmBtnText]="'netsuiteExportSettings.continue' | transloco"
+  [showSecondaryCTA]="false">
 </app-configuration-confirmation-dialog>
 
 
 <ng-template #employeeFieldMapping>
-    <div *ngIf="brandingFeatureConfig.featureFlags.exportSettings.reimbursableExpenses" [formGroup]="exportSettingForm">
+  @if (brandingFeatureConfig.featureFlags.exportSettings.reimbursableExpenses) {
+    <div [formGroup]="exportSettingForm">
+      @if (!exportSettingForm.controls.employeeFieldMapping.disabled) {
         <app-configuration-select-field
-            *ngIf="!exportSettingForm.controls.employeeFieldMapping.disabled"
-            [form]="exportSettingForm"
-            [isFieldMandatory]="true"
-            [mandatoryErrorListName]="'netsuiteExportSettings.employeeField' | transloco"
-            [label]="'netsuiteExportSettings.howEmployeesRepresentedInNetsuite' | transloco"
-            [subLabel]="'netsuiteExportSettings.howEmployeesRepresentedInNetsuiteDescription' | transloco"
-            [options]="employeeFieldOptions"
-            [iconPath]="'user-two'"
-            [placeholder]="'netsuiteExportSettings.selectRepresentation' | transloco"
-            [formControllerName]="'employeeFieldMapping'"></app-configuration-select-field>
-
-        <div *ngIf="exportSettingForm.controls.employeeFieldMapping.disabled">
-            <div class="tw-p-24-px tw-flex tw-flex-row tw-justify-between tw-items-center">
-                <div class="tw-flex tw-items-start lg:tw-w-3/5 md:tw-w-1/2">
-                    <div class="tw-mt-4-px">
-                        <app-svg-icon [svgSource]="'list'" [width]="'24px'" [height]="'24px'" [styleClasses]="'tw-text-mandatory-field-color'"></app-svg-icon>
-                    </div>
-                    <div class="tw-pl-16-px">
-                        <h4 class="!tw-text-14-px" [ngClass]="brandingStyle.configuration.configurationFieldHeaderText">{{ 'netsuiteExportSettings.howEmployeesRepresentedInNetsuite' | transloco }}<app-mandatory-field></app-mandatory-field></h4>
-                        <h5 class="!tw-text-faded-text-color !tw-font-400 !tw-text-14-px tw-pt-6-px !tw-leading-4">{{ 'netsuiteExportSettings.howEmployeesRepresentedInNetsuiteDescription' | transloco }}</h5>
-                    </div>
-                </div>
-                <div>
-                    <div class="tw-h-input-height tw-flex tw-items-center tw-w-300-px tw-bg-input-disabled-bg tw-border-input-disabled-border tw-border radius">
-                        <div class="tw-text-14-px tw-text-slightly-normal-text-color tw-mx-14-px">{{getEmployeeFieldMapping(exportSettingForm.get('employeeFieldMapping')?.value, exportSettingForm.get('reimbursableExportType')?.value) | sentenceCase}}</div>
-                    </div>
-                    <span class="tw-text-text-muted tw-pt-3-px tw-text-12-px">{{ 'netsuiteExportSettings.autoSelectedBasedOnExportModule' | transloco }}</span>
-                </div>
+          [form]="exportSettingForm"
+          [isFieldMandatory]="true"
+          [mandatoryErrorListName]="'netsuiteExportSettings.employeeField' | transloco"
+          [label]="'netsuiteExportSettings.howEmployeesRepresentedInNetsuite' | transloco"
+          [subLabel]="'netsuiteExportSettings.howEmployeesRepresentedInNetsuiteDescription' | transloco"
+          [options]="employeeFieldOptions"
+          [iconPath]="'user-two'"
+          [placeholder]="'netsuiteExportSettings.selectRepresentation' | transloco"
+        [formControllerName]="'employeeFieldMapping'"></app-configuration-select-field>
+      }
+      @if (exportSettingForm.controls.employeeFieldMapping.disabled) {
+        <div>
+          <div class="tw-p-24-px tw-flex tw-flex-row tw-justify-between tw-items-center">
+            <div class="tw-flex tw-items-start lg:tw-w-3/5 md:tw-w-1/2">
+              <div class="tw-mt-4-px">
+                <app-svg-icon [svgSource]="'list'" [width]="'24px'" [height]="'24px'" [styleClasses]="'tw-text-mandatory-field-color'"></app-svg-icon>
+              </div>
+              <div class="tw-pl-16-px">
+                <h4 class="!tw-text-14-px" [ngClass]="brandingStyle.configuration.configurationFieldHeaderText">{{ 'netsuiteExportSettings.howEmployeesRepresentedInNetsuite' | transloco }}<app-mandatory-field></app-mandatory-field></h4>
+                <h5 class="!tw-text-faded-text-color !tw-font-400 !tw-text-14-px tw-pt-6-px !tw-leading-4">{{ 'netsuiteExportSettings.howEmployeesRepresentedInNetsuiteDescription' | transloco }}</h5>
+              </div>
             </div>
+            <div>
+              <div class="tw-h-input-height tw-flex tw-items-center tw-w-300-px tw-bg-input-disabled-bg tw-border-input-disabled-border tw-border radius">
+                <div class="tw-text-14-px tw-text-slightly-normal-text-color tw-mx-14-px">{{getEmployeeFieldMapping(exportSettingForm.get('employeeFieldMapping')?.value, exportSettingForm.get('reimbursableExportType')?.value) | sentenceCase}}</div>
+              </div>
+              <span class="tw-text-text-muted tw-pt-3-px tw-text-12-px">{{ 'netsuiteExportSettings.autoSelectedBasedOnExportModule' | transloco }}</span>
+            </div>
+          </div>
         </div>
+      }
     </div>
+  }
 </ng-template>
 

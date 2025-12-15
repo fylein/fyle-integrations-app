@@ -3,9 +3,10 @@ import { Router } from '@angular/router';
 import { TranslocoService } from '@jsverse/transloco';
 
 @Component({
-  selector: 'app-travelperk-onboarding-done',
-  templateUrl: './travelperk-onboarding-done.component.html',
-  styleUrls: ['./travelperk-onboarding-done.component.scss']
+    selector: 'app-travelperk-onboarding-done',
+    templateUrl: './travelperk-onboarding-done.component.html',
+    styleUrls: ['./travelperk-onboarding-done.component.scss'],
+    standalone: false
 })
 export class TravelperkOnboardingDoneComponent implements OnInit {
 
