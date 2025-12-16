@@ -4,7 +4,6 @@ import { Router } from '@angular/router';
 import { brandingConfig, brandingFeatureConfig, brandingKbArticles, brandingStyle } from 'src/app/branding/branding-config';
 import { IntacctConnectorService } from 'src/app/core/services/si/si-core/si-connector.service';
 import { ConfigurationCta } from 'src/app/core/models/enum/enum.model';
-import { SiWorkspaceService } from 'src/app/core/services/si/si-core/si-workspace.service';
 
 @Component({
     selector: 'app-intacct-connector',
@@ -17,8 +16,6 @@ export class IntacctConnectorComponent implements OnInit {
   isLoading: boolean = true;
 
   connectSageIntacctForm: FormGroup;
-
-  isMigratedToRestApi: boolean = false;
 
   ConfigurationCtaText = ConfigurationCta;
 
@@ -41,8 +38,7 @@ export class IntacctConnectorComponent implements OnInit {
   constructor(
     private router: Router,
     @Inject(FormBuilder) private formBuilder: FormBuilder,
-    private intacctConnectorService: IntacctConnectorService,
-    private workspaceService: SiWorkspaceService
+    private intacctConnectorService: IntacctConnectorService
   ) { }
 
   save() {
@@ -63,12 +59,9 @@ export class IntacctConnectorComponent implements OnInit {
   private setupPage(): void {
     this.isLoading = true;
     this.isOnboarding = this.router.url.includes('onboarding');
-    this.workspaceService.getFeatureConfigs().subscribe((featureConfigs) => {
-      this.isMigratedToRestApi = featureConfigs.migrated_to_rest_api;
-      this.intacctConnectorService.getIntacctFormGroup(this.isMigratedToRestApi).subscribe((intacctFormGroup) => {
-        this.connectSageIntacctForm = intacctFormGroup.intacctSetupForm;
-        this.isLoading = false;
-      });
+    this.intacctConnectorService.getIntacctFormGroup().subscribe((response) => {
+      this.connectSageIntacctForm = response.intacctSetupForm;
+      this.isLoading = false;
     });
   }
 
