@@ -2095,7 +2095,8 @@
     "continueConfirmation": "Are you sure you want to continue?",
     "continueButton": "Continue",
     "previewHeader": "Preview",
-    "customFieldPreviewText": "This is how the custom field will appear to employees on their expense form."
+    "customFieldPreviewText": "This is how the custom field will appear to employees on their expense form.",
+    "autoImportEnabledInfo": "{{destinationField}} cannot be imported because there are {{currentDestinationCount}} active values in {{appName}} , which exceeds our 30,000 import limit. To resolve this, please remove or disable any unused values from {{appName}} and try syncing again."
   },
   "services": {
     "travelperkOnboarding": {
