@@ -98,7 +98,7 @@
     <app-netsuite-connection-form [connectNetsuiteForm]="integrationSetupForm" [isReconnecting]="true"></app-netsuite-connection-form>
     }
     @if (appName === AppName.INTACCT) {
-    <app-intacct-connection-form [connectIntacctForm]="integrationSetupForm" [isReconnecting]="true" [isMigratedToRestApi]="isMigratedToRestApi"></app-intacct-connection-form>
+    <app-intacct-connection-form [connectIntacctForm]="integrationSetupForm" [isReconnecting]="true"></app-intacct-connection-form>
     }
     @if (appName === AppName.SAGE300) {
     <app-sage300-connection-form [connectSage300Form]="integrationSetupForm" [isReconnecting]="true"></app-sage300-connection-form>
