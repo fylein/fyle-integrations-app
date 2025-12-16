@@ -127,7 +127,7 @@ export class NetsuiteImportSettingsComponent implements OnInit {
       this.importSettingService.getImportFieldsAttributeCounts().subscribe((importFieldsAttributeCounts: NetsuiteImportFieldsAttributeCounts) => {
         this.attributeCounts = importFieldsAttributeCounts;
         const destinationFieldCount: number = importFieldsAttributeCounts[destinationField] as number;
-        if (destinationFieldCount >= 0) {
+        if (destinationFieldCount >= 30000) {
           this.importSettingForm.controls[formControlName].setValue(false);
           this.importSettingForm.controls[formControlName].disable();
         } else {
@@ -144,7 +144,7 @@ export class NetsuiteImportSettingsComponent implements OnInit {
     if (event[0]) {
       this.importSettingService.getImportFieldsAttributeCounts().subscribe((importFieldsAttributeCounts: NetsuiteImportFieldsAttributeCounts) => {
         const count = importFieldsAttributeCounts[destinationField as keyof NetsuiteImportFieldsAttributeCounts];
-        if (typeof count === 'number' && count >= 0) {
+        if (typeof count === 'number' && count >= 30000) {
           const expenseField = expenseFieldArray.controls[event[2]];
           expenseField.patchValue({
             import_to_fyle: false,
