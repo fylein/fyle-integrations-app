@@ -38,6 +38,10 @@
     @apply tw-opacity-100;
 }
 
+:host ::ng-deep .p-select-overlay .p-select-header input[type="text"] {
+    @apply tw-pl-2-px #{!important};
+}
+
 .sub-text {
     @apply tw-text-text-muted tw-text-12-px tw-pl-2-px lg:tw-w-300-px md:tw-w-260-px tw-pt-2-px;
 }
