@@ -7,7 +7,6 @@ import { StorageService } from '../../common/storage.service';
 import { Configuration } from 'src/app/core/models/intacct/db/configuration.model';
 import { HelperService } from '../../common/helper.service';
 import { ApiService } from '../../common/api.service';
-import { FeatureConfig } from 'src/app/core/models/intacct/db/feature-config.model';
 
 @Injectable({
   providedIn: 'root'
@@ -58,10 +57,5 @@ export class SiWorkspaceService {
 
   getConfiguration(): Observable<Configuration> {
     return this.apiService.get(`/workspaces/${this.getWorkspaceId()}/configuration/`, {});
-  }
-
-  @Cacheable()
-  getFeatureConfigs(): Observable<FeatureConfig> {
-    return this.apiService.get(`/workspaces/${this.getWorkspaceId()}/feature_configs/`, {});
   }
 }
