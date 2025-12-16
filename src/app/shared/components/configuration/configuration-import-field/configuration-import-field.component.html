@@ -27,6 +27,16 @@
           <div class="input-toggle-section tw-w-10-vw tw-pt-10-px">
             <p-toggleswitch [formControlName]="defaultField.formController" (onChange)="onImportToFyleToggleChange($event, defaultField.destination_field)"></p-toggleswitch>
           </div>
+            @if (!defaultField.is_auto_import_enabled && this.form.get(defaultField.formController)?.value) {
+                <div class="tw-pt-26-px tw-px-24-px">
+                    <app-configuration-info-label 
+                        [iconSrc]="'warning-filled'"
+                        [customBackgroundColorClass]="brandingStyle.configuration.infoLabelWarningBackground"
+                        [customStyleClass]="brandingStyle.configuration.infoLabelWarningIcon"
+                        [infoText]="'configurationImportField.autoImportEnabledInfo' | transloco: { destinationField: (getDestinationField(defaultField.destination_field | snakeCaseToSpaceCase) | sentenceCase), currentDestinationCount: defaultField.count, appName: uiExposedAppName }">
+                    </app-configuration-info-label>
+                </div>
+            }
         </div>
       </div>
     }
@@ -41,7 +51,7 @@
                 <div class="tw-w-3/4 tw-flex tw-items-start">
                   @if (isConfigToggleLeftAligned) {
                     <div class="configuration--input-toggle-section">
-                      <p-toggleswitch formControlName="import_to_fyle" [tooltipPosition]="'top'" [pTooltip]="expenseField.get('destination_field')?.value === 'CUSTOMER' && uiExposedAppName === AppName.XERO && isXeroProjectMapped ? ('xero.configuration.importSetting.toggleToastMessage' | transloco: {brandName: brandingConfig.brandName}) : ''" (onChange)="onShowWarningForDependentFields($event, expenseField)" [disabled]="expenseField.get('destination_field')?.value === 'CUSTOMER' && uiExposedAppName === AppName.XERO && isXeroProjectMapped"></p-toggleswitch>
+                      <p-toggleswitch formControlName="import_to_fyle" [tooltipPosition]="'top'" [pTooltip]="expenseField.get('destination_field')?.value === 'CUSTOMER' && uiExposedAppName === AppName.XERO && isXeroProjectMapped ? ('xero.configuration.importSetting.toggleToastMessage' | transloco: {brandName: brandingConfig.brandName}) : ''" (onChange)="onShowWarningForDependentFields($event, expenseField, i)" [disabled]="expenseField.get('destination_field')?.value === 'CUSTOMER' && uiExposedAppName === AppName.XERO && isXeroProjectMapped"></p-toggleswitch>
                     </div>
                   } @else {
                     <div class="tw-pr-16-px">
@@ -64,7 +74,7 @@
                 </div>
                 @if (!isConfigToggleLeftAligned) {
                   <div class="configuration--input-toggle-section">
-                    <p-toggleswitch formControlName="import_to_fyle" [tooltipPosition]="'top'" [pTooltip]="expenseField.get('destination_field')?.value === 'CUSTOMER' && uiExposedAppName === AppName.XERO && isXeroProjectMapped ? ('xero.configuration.importSetting.toggleToastMessage' | transloco: {brandName: brandingConfig.brandName}) : ''" (onChange)="onShowWarningForDependentFields($event, expenseField)" [disabled]="expenseField.get('destination_field')?.value === 'CUSTOMER' && uiExposedAppName === AppName.XERO && isXeroProjectMapped"></p-toggleswitch>
+                    <p-toggleswitch formControlName="import_to_fyle" [tooltipPosition]="'top'" [pTooltip]="expenseField.get('destination_field')?.value === 'CUSTOMER' && uiExposedAppName === AppName.XERO && isXeroProjectMapped ? ('xero.configuration.importSetting.toggleToastMessage' | transloco: {brandName: brandingConfig.brandName}) : ''" (onChange)="onShowWarningForDependentFields($event, expenseField, i)" [disabled]="(expenseField.get('destination_field')?.value === 'CUSTOMER' && uiExposedAppName === AppName.XERO && isXeroProjectMapped) || !expenseField.get('is_auto_import_enabled')?.value"></p-toggleswitch>
                   </div>
                 }
               </div>
@@ -127,9 +137,19 @@
               }
             </div>
             @if (!isDestinationFixedImport) {
-              <p-toggleswitch (onChange)="onSwitchChanged($event, expenseField)" [pTooltip]="isExpenseFieldDependent(expenseField.value) ? ('configurationImportField.dependentFieldsWarning' | transloco) : '' " (click)="updateDependentField(expenseField.get('source_field')?.value,expenseField.get('import_to_fyle')?.value)" formControlName="import_to_fyle" class="input-toggle-section tw-pl-4-px tw-pt-10-px"></p-toggleswitch>
+              <p-toggleswitch (onChange)="onSwitchChanged($event, expenseField, i)" [pTooltip]="isExpenseFieldDependent(expenseField.value) ? ('configurationImportField.dependentFieldsWarning' | transloco) : '' " (click)="updateDependentField(expenseField.get('source_field')?.value,expenseField.get('import_to_fyle')?.value)" formControlName="import_to_fyle" class="input-toggle-section tw-pl-4-px tw-pt-10-px"></p-toggleswitch>
             }
           </div>
+            @if (!expenseField.get('is_auto_import_enabled')?.value && !expenseField.get('import_to_fyle')?.value) {
+                <div class="tw-pt-26-px tw-px-24-px">
+                    <app-configuration-info-label 
+                        [iconSrc]="'warning-filled'"
+                        [customBackgroundColorClass]="brandingStyle.configuration.infoLabelWarningBackground"
+                        [customStyleClass]="brandingStyle.configuration.infoLabelWarningIcon"
+                        [infoText]="'configurationImportField.autoImportEnabledInfo' | transloco: { destinationField: (getDestinationField(expenseField.get('destination_field')?.value | snakeCaseToSpaceCase) | sentenceCase), currentDestinationCount: expenseField.get('count')?.value, appName: uiExposedAppName }">
+                    </app-configuration-info-label>
+                </div>
+            }
           @if (brandingFeatureConfig.featureFlags.importSettings.dependentField && expenseField.get('source_field')?.value==='PROJECT' && expenseField.get('import_to_fyle')?.value && expenseField.get('destination_field')?.value === dependentDestinationValue) {
             <div class="tw-pt-26-px" [ngClass]="brandingStyle.configuration.importFieldDependentField" [formGroup]="form">
               <div class="tw-flex" [ngClass]="brandingStyle.common.configurationBrandingClass">
@@ -245,6 +265,9 @@
           </div>
           <div class="tw-pt-16-px">
             <app-configuration-info-label
+                        [iconSrc]="'info-circle-fill-medium'"
+                        [customBackgroundColorClass]="brandingStyle.configuration.infoLabelBackground"
+                        [customStyleClass]="brandingStyle.configuration.infoLabelIcon"
               [infoText]="'configurationImportField.oneTimeSetupInfo' | transloco: { brandName: brandingConfig.brandName }">
             </app-configuration-info-label>
           </div>

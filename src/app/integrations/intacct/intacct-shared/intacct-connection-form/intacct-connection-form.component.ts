@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { brandingFeatureConfig } from 'src/app/branding/branding-config';
+import { brandingFeatureConfig, brandingStyle } from 'src/app/branding/branding-config';
 
 @Component({
     selector: 'app-intacct-connection-form',
@@ -17,6 +17,8 @@ export class IntacctConnectionFormComponent {
   @Input() isReconnecting?: boolean;
 
   readonly brandingFeatureConfig = brandingFeatureConfig;
+
+  readonly brandingStyle = brandingStyle;
 
   constructor(){
 

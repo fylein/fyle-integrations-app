@@ -74,6 +74,9 @@
           @if (appName === AppName.QBD_DIRECT && isExportInProgress) {
             <div class="tw-pt-16-px">
               <app-configuration-info-label
+                    [iconSrc]="'info-circle-fill-medium'"
+                    [customBackgroundColorClass]="brandingStyle.configuration.infoLabelBackground"
+                    [customStyleClass]="brandingStyle.configuration.infoLabelIcon"
                 [infoText]="'dashboardExportSection.qbdInfoText' | transloco">
               </app-configuration-info-label>
             </div>

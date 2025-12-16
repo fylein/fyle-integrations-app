@@ -22,9 +22,19 @@
               [subLabel]="'configuration.importSetting.importCategoriesSubLabel' | transloco: {brandName: brandingConfig.brandName}"
               [formControllerName]="'importCategories'"
               [isSectionHeader]="false"
-              [iconPath]="'arrow-tail-down'">
+              [iconPath]="'arrow-tail-down'"(importCodeEnabled)="updateCommonImportFields($event, 'accounts_count', 'importCategories', true)">
             </app-configuration-toggle-field>
-            @if (importSettingForm.get('importCategories')?.value) {
+            @if (importSettingForm.get('importCategories')?.disabled) {
+              <div class="tw-pb-26-px tw-px-24-px">
+                <app-configuration-info-label 
+                    [iconSrc]="'warning-filled'"
+                    [customBackgroundColorClass]="brandingStyle.configuration.infoLabelWarningBackground"
+                    [customStyleClass]="brandingStyle.configuration.infoLabelWarningIcon"
+                    [infoText]="'qboImportSettings.autoImportEnabledInfo' | transloco: { destinationField: 'Categories', currentDestinationCount: attributeCounts['accounts_count'], appName: appName }">
+                </app-configuration-info-label>
+              </div>
+            }    
+            @if (showChartOfCategory) {
               <div class="tw-pr-24-px tw-pl-64-px tw-py-0" [ngClass]="{'tw-pb-24-px': !(brandingFeatureConfig.featureFlags.importSettings.allowImportCode && importSettingForm.get('importCategories')?.value && qboImportCodeFieldCodeConfig[DefaultImportFields.ACCOUNT])}">
                 <div class="tw-flex tw-justify-between tw-items-center">
                   <h5 class="lg:tw-w-3/5 md:tw-w-1/2 tw-text-slightly-normal-text-color tw-text-14-px !tw-font-500">
@@ -78,8 +88,20 @@
                 [label]="'configuration.importSetting.importItemsLabel' | transloco: {brandName: brandingConfig.brandName}"
                 [subLabel]="'configuration.importSetting.importItemsSubLabel' | transloco: {brandName: brandingConfig.brandName}"
                 [formControllerName]="'importItems'"
-                [iconPath]="'arrow-tail-down'">
+                [iconPath]="'arrow-tail-down'"
+                (importCodeEnabled)="updateCommonImportFields($event, 'items_count', 'importItems')">
               </app-configuration-toggle-field>
+
+              @if (importSettingForm.get('importItems')?.disabled) {
+                <div class="tw-pb-26-px tw-px-24-px">
+                  <app-configuration-info-label 
+                      [iconSrc]="'warning-filled'"
+                      [customBackgroundColorClass]="brandingStyle.configuration.infoLabelWarningBackground"
+                      [customStyleClass]="brandingStyle.configuration.infoLabelWarningIcon"
+                      [infoText]="'qboImportSettings.autoImportEnabledInfo' | transloco: { destinationField: 'Products/services', currentDestinationCount: attributeCounts['items_count'], appName: appName }">
+                  </app-configuration-info-label>
+               </div>
+              }
             </div>
           }
           @if (isTaxGroupSyncAllowed && brandingFeatureConfig.featureFlags.importSettings.tax) {
@@ -90,8 +112,18 @@
                 [subLabel]="('configuration.importSetting.taxCodeSubLabel' | transloco) + brandingConfig.brandName + ('qboImportSettings.selectableFieldOnExpense' | transloco)"
                 [formControllerName]="'taxCode'"
                 [iconPath]="'arrow-tail-down'"
-                [hasDependentFields]="true">
+                [hasDependentFields]="true"(importCodeEnabled)="updateCommonImportFields($event, 'tax_codes_count', 'taxCode')">
               </app-configuration-toggle-field>
+              @if (importSettingForm.get('taxCode')?.disabled) {
+                <div class="tw-pt-26-px tw-px-24-px">
+                  <app-configuration-info-label 
+                      [iconSrc]="'warning-filled'"
+                      [customBackgroundColorClass]="brandingStyle.configuration.infoLabelWarningBackground"
+                      [customStyleClass]="brandingStyle.configuration.infoLabelWarningIcon"
+                      [infoText]="'qboImportSettings.autoImportEnabledInfo' | transloco: { destinationField: 'Tax code', currentDestinationCount: attributeCounts['tax_codes_count'], appName: appName }">
+                  </app-configuration-info-label>
+                </div>
+              }
               @if (importSettingForm.get('taxCode')?.value) {
                 <app-configuration-select-field
                   [form]="importSettingForm"
@@ -114,8 +146,16 @@
                 [label]="'configuration.importSetting.importVendorsAsMerchantsLabel' | transloco"
                 [subLabel]="'qboImportSettings.importVendorsAsMerchantsSubLabel' | transloco: { brandName: brandingConfig.brandName }"
                 [formControllerName]="'importVendorsAsMerchants'"
-                [iconPath]="'arrow-tail-down'">
+                [iconPath]="'arrow-tail-down'"(importCodeEnabled)="updateCommonImportFields($event, 'vendors_count', 'importVendorsAsMerchants')">
               </app-configuration-toggle-field>
+              <div *ngIf="importSettingForm.get('importVendorsAsMerchants')?.disabled" class="tw-pb-26-px tw-px-24-px">
+                  <app-configuration-info-label 
+                      [iconSrc]="'warning-filled'"
+                      [customBackgroundColorClass]="brandingStyle.configuration.infoLabelWarningBackground"
+                      [customStyleClass]="brandingStyle.configuration.infoLabelWarningIcon"
+                      [infoText]="'qboImportSettings.autoImportEnabledInfo' | transloco: { destinationField: 'Vendors', currentDestinationCount: attributeCounts['vendors_count'], appName: appName }">
+                  </app-configuration-info-label>
+              </div>
             </div>
           }
           <div>
@@ -124,7 +164,8 @@
               [appName]="appName"
               [accountingFieldOptions]="qboFields"
               [fyleFieldOptions]="fyleFields"
-              [isDestinationFixedImport]="true">
+              [isDestinationFixedImport]="true"
+              (importCodeEnabled)="updateImportFields($event)">
             </app-configuration-import-field>
           </div>
         </div>
