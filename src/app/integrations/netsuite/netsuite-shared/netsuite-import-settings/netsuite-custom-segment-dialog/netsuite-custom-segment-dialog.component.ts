@@ -24,6 +24,8 @@ export class NetsuiteCustomSegmentDialogComponent implements OnInit {
 
   @Output() closeDialog = new EventEmitter();
 
+  private pendingAction: 'close' | 'save' | null = null;
+
   ButtonType = ButtonType;
 
   ButtonSize = ButtonSize;
@@ -43,11 +45,22 @@ export class NetsuiteCustomSegmentDialogComponent implements OnInit {
   constructor() { }
 
   save() {
-    this.saveClick.emit();
+    this.pendingAction = 'save';
+    this.isCustomSegmentDialogVisible = false;
   }
 
   close() {
-    this.closeDialog.emit();
+    this.pendingAction = 'close';
+    this.isCustomSegmentDialogVisible = false;
+  }
+
+  onDialogHide() {
+    if (this.pendingAction === 'save') {
+      this.saveClick.emit();
+    } else if (this.pendingAction === 'close') {
+      this.closeDialog.emit();
+    }
+    this.pendingAction = null;
   }
 
   proceedToNextStep(stepNumber: number) {
