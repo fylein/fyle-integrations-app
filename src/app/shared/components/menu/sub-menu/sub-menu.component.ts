@@ -1,5 +1,6 @@
-import { Component, EventEmitter, Inject, Input, OnInit, Output } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component, EventEmitter, Inject, Input, OnDestroy, OnInit, Output } from '@angular/core';
+import { NavigationEnd, Router } from '@angular/router';
+import { Subject, filter, takeUntil } from 'rxjs';
 import { TabMenuItem } from 'src/app/core/models/common/tab-menu.model';
 
 @Component({
@@ -8,7 +9,7 @@ import { TabMenuItem } from 'src/app/core/models/common/tab-menu.model';
     styleUrls: ['./sub-menu.component.scss'],
     standalone: false
 })
-export class SubMenuComponent implements OnInit {
+export class SubMenuComponent implements OnInit, OnDestroy {
 
   @Input() modules: TabMenuItem[];
 
@@ -19,6 +20,8 @@ export class SubMenuComponent implements OnInit {
   @Input() shouldRedirect: boolean = true;
 
   @Input() customStyles: string = '';
+
+  private destroy$ = new Subject<void>();
 
   constructor(
     private router: Router
@@ -37,6 +40,17 @@ export class SubMenuComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.updateActiveModuleFromRoute();
+
+    this.router.events
+      .pipe(
+        filter(event => event instanceof NavigationEnd),
+        takeUntil(this.destroy$)
+      )
+      .subscribe(() => {
+        this.updateActiveModuleFromRoute();
+      });
+
     if (!this.shouldRedirect) {
       return;
     }
@@ -51,8 +65,21 @@ export class SubMenuComponent implements OnInit {
         this.router.navigateByUrl(firstRouterLink);
       }
     }
+  }
 
-    const activeModules = this.modules.find(module => this.router.url.includes(module.routerLink || ''));
-    // This.activeModule = activeModules ? activeModules.value : this.modules[0].value;
+  private updateActiveModuleFromRoute(): void {
+    const activeModules = this.modules.find(module =>
+      module.routerLink && this.router.url.includes(module.routerLink)
+    );
+
+    if (activeModules) {
+      this.activeModule = activeModules.value;
+      this.activeModuleChange.emit(this.activeModule);
+    }
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 }
