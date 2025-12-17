@@ -19,6 +19,8 @@ export class ConfigurationCustomFieldCreationDialogComponent implements OnInit {
 
   @Output() closeModelFn = new EventEmitter();
 
+  private pendingAction: 'close' | 'save' | null = null;
+
   ButtonType = ButtonType;
 
   ButtonSize = ButtonSize;
@@ -34,11 +36,22 @@ export class ConfigurationCustomFieldCreationDialogComponent implements OnInit {
   constructor() { }
 
   saveCustomField() {
-    this.saveCustomFieldFn.emit();
+    this.pendingAction = 'save';
+    this.showCustomFieldCreationDialog = false;
   }
 
   closeModel() {
-    this.closeModelFn.emit();
+    this.pendingAction = 'close';
+    this.showCustomFieldCreationDialog = false;
+  }
+
+  onDialogHide() {
+    if (this.pendingAction === 'save') {
+      this.saveCustomFieldFn.emit();
+    } else if (this.pendingAction === 'close') {
+      this.closeModelFn.emit();
+    }
+    this.pendingAction = null;
   }
 
   ngOnInit(): void {
