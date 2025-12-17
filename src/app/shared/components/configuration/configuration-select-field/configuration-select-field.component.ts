@@ -225,9 +225,6 @@ export class ConfigurationSelectFieldComponent implements OnInit, OnChanges {
     if (this.destinationAttributes) {
       this.optionsCopy = this.destinationAttributes.slice();
     }
-    if (this.destinationAttributes === undefined) {
-      this.destinationAttributes = [];
-    }
   }
 
   ngOnChanges(changes: SimpleChanges): void {
