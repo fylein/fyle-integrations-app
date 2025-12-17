@@ -41,6 +41,8 @@ export class ConfigurationConfirmationDialogComponent implements OnInit {
 
   readonly brandingKbArticles = brandingKbArticles;
 
+  private pendingWarningData: ConfigurationWarningOut | null = null;
+
   readonly brandingFeatureConfig = brandingFeatureConfig;
 
   readonly brandingStyle = brandingStyle;
@@ -59,7 +61,15 @@ export class ConfigurationConfirmationDialogComponent implements OnInit {
   ) { }
 
   acceptWarning(isWarningAccepted: boolean) {
-    this.warningAccepted.emit({hasAccepted: isWarningAccepted, event: this.event});
+    this.pendingWarningData = {hasAccepted: isWarningAccepted, event: this.event};
+    this.isWarningVisible = false;
+  }
+
+  onDialogHide() {
+    if (this.pendingWarningData) {
+      this.warningAccepted.emit(this.pendingWarningData);
+      this.pendingWarningData = null;
+    }
   }
 
   redirect() {
