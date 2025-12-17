@@ -127,7 +127,8 @@ export class SiMappingsService {
         VENDOR: [],
         EMPLOYEE: [],
         CHARGE_CARD_NUMBER: [],
-        TAX_DETAIL: []
+        TAX_DETAIL: [],
+        PAYMENT_ACCOUNT: []
       });
     }));
   }
