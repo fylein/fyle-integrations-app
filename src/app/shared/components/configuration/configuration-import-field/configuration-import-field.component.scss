@@ -116,7 +116,7 @@
 }
 
 .container input {
-@apply tw-absolute  tw-cursor-pointer tw-h-0 tw-w-0
+  @apply tw-absolute  tw-cursor-pointer tw-h-0 tw-w-0 tw-hidden #{!important};
 }
 
 .checkmark {
