@@ -302,12 +302,12 @@ export class IntacctAdvancedSettingsComponent implements OnInit {
     }).subscribe(
       ({ advancedSettings, groupedAttributes, expenseFilter, configuration, exportSettings }) => {
         this.advancedSettings = advancedSettings;
-        this.sageIntacctLocations = groupedAttributes.LOCATION;
+        this.sageIntacctLocations = groupedAttributes.LOCATION || [];
         this.sageIntacctDefaultItem = groupedAttributes.ITEM;
-        this.sageIntacctDepartments = groupedAttributes.DEPARTMENT;
-        this.sageIntacctProjects = groupedAttributes.PROJECT;
-        this.sageIntacctClasses = groupedAttributes.CLASS;
-        this.sageIntacctPaymentAccount = groupedAttributes.PAYMENT_ACCOUNT;
+        this.sageIntacctDepartments = groupedAttributes.DEPARTMENT || [];
+        this.sageIntacctProjects = groupedAttributes.PROJECT || [];
+        this.sageIntacctClasses = groupedAttributes.CLASS || [];
+        this.sageIntacctPaymentAccount = groupedAttributes.PAYMENT_ACCOUNT || [];
         this.reimbursableExpense = configuration.reimbursable_expenses_object;
         this.corporateCreditCardExpense = configuration.corporate_credit_card_expenses_object;
         const reimbursableGroup = this.exportSettingsService.getExportGroup(exportSettings?.expense_group_settings?.reimbursable_expense_group_fields);

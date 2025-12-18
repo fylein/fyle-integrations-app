@@ -34,21 +34,28 @@ export class IntacctConnectorService {
     private translocoService: TranslocoService
   ) { }
 
-  mapAPIResponseToSage300ConnectorFormGroup(sageIntacctConnection: SageIntacctCredential | null): FormGroup {
+  mapAPIResponseToSage300ConnectorFormGroup(sageIntacctConnection: SageIntacctCredential | null, isMigratedToRestApi: boolean): FormGroup {
     const isDisabled = sageIntacctConnection?.si_company_id ? true : false;
-    return new FormGroup({
+    const controls: Record<string, FormControl> = {
       companyID: new FormControl({value: sageIntacctConnection?.si_company_id ? sageIntacctConnection?.si_company_id : null, disabled: isDisabled}, Validators.required),
-      userID: new FormControl('', Validators.required),
-      userPassword: new FormControl('', Validators.required)
-    });
+      userID: new FormControl('', Validators.required)
+    };
+    if (!isMigratedToRestApi) {
+      controls.userPassword = new FormControl('', Validators.required);
+    }
+    return new FormGroup(controls);
   }
 
-  constructSage300ConnectionPayload(form: FormGroup): SageIntacctCredential {
-    return {
+  constructSage300ConnectionPayload(form: FormGroup, isMigratedToRestApi: boolean): SageIntacctCredential {
+    const payload = {
       si_user_id: form.get('userID')?.value,
-      si_company_id: form.get('companyID')?.value,
-      si_user_password: form.get('userPassword')?.value
-    };
+      si_company_id: form.get('companyID')?.value
+    } as SageIntacctCredential;
+
+    if (!isMigratedToRestApi) {
+      payload.si_user_password = form.get('userPassword')?.value;
+    }
+    return payload;
   }
 
   @Cacheable({
@@ -68,39 +75,39 @@ export class IntacctConnectorService {
     return this.apiService.post('/workspaces/' + this.workspaceId + '/credentials/sage_intacct/', data);
   }
 
-  connectSageIntacct(connectIntacctForm: FormGroup, isReconnecting?: boolean): Observable<{intacctSetupForm: FormGroup, isIntacctConnected: boolean}> {
+  connectSageIntacct(connectIntacctForm: FormGroup, isReconnecting?: boolean, isMigratedToRestApi: boolean = false): Observable<{intacctSetupForm: FormGroup, isIntacctConnected: boolean}> {
     this.workspaceId = this.storageService.get('workspaceId');
-    const connectorPayload = this.constructSage300ConnectionPayload(connectIntacctForm);
+    const connectorPayload = this.constructSage300ConnectionPayload(connectIntacctForm, isMigratedToRestApi);
     return this.postCredentials(connectorPayload).pipe(
       switchMap((response) => {
         if (!isReconnecting) {
           return this.mappingsService.refreshSageIntacctDimensions(['location_entities']).pipe(
             map(() => {
-              return { intacctSetupForm: this.mapAPIResponseToSage300ConnectorFormGroup(response), isIntacctConnected: true };
+              return { intacctSetupForm: this.mapAPIResponseToSage300ConnectorFormGroup(response, isMigratedToRestApi), isIntacctConnected: true };
             })
           );
         }
           this.toastService.displayToastMessage(ToastSeverity.SUCCESS, this.translocoService.translate('services.siConnector.connectionReconnectedToast'), 6000);
-          return of({ intacctSetupForm: this.mapAPIResponseToSage300ConnectorFormGroup(response), isIntacctConnected: true });
+          return of({ intacctSetupForm: this.mapAPIResponseToSage300ConnectorFormGroup(response, isMigratedToRestApi), isIntacctConnected: true });
 
       }),
       catchError(() => {
         this.toastService.displayToastMessage(ToastSeverity.ERROR, this.translocoService.translate('services.siConnector.connectionErrorToast'), 6000);
-        return of({ intacctSetupForm: this.mapAPIResponseToSage300ConnectorFormGroup(this.intacctCredential), isIntacctConnected: false });
+        return of({ intacctSetupForm: this.mapAPIResponseToSage300ConnectorFormGroup(this.intacctCredential, isMigratedToRestApi), isIntacctConnected: false });
       })
     );
   }
 
-  getIntacctFormGroup(): Observable<{intacctSetupForm: FormGroup}> {
+  getIntacctFormGroup(migratedToRestApi: boolean): Observable<{intacctSetupForm: FormGroup}> {
     return this.getSageIntacctCredential().pipe(
       map((intacctCredential) => {
         this.intacctCredential = intacctCredential;
-        return { intacctSetupForm: this.mapAPIResponseToSage300ConnectorFormGroup(intacctCredential) };
+        return { intacctSetupForm: this.mapAPIResponseToSage300ConnectorFormGroup(intacctCredential, migratedToRestApi) };
       }),
       catchError(() => {
         this.intacctCredential = null;
         return of({
-          intacctSetupForm: this.mapAPIResponseToSage300ConnectorFormGroup(null)
+          intacctSetupForm: this.mapAPIResponseToSage300ConnectorFormGroup(null, migratedToRestApi)
         });
       })
     );

@@ -28,7 +28,7 @@ export class IntacctLocationEntityComponent implements OnInit {
 
   locationEntityOptions: IntacctDestinationAttribute[];
 
-  locationEntity: LocationEntityMapping;
+  locationEntity?: LocationEntityMapping;
 
   isLoading: boolean = true;
 
