@@ -225,7 +225,7 @@
                             </div>
                           </ng-template>
                         </p-select></div>
-                        <p-toggleswitch class="tw-pl-32-px input-toggle-section" formControlName="costCodesImportToggle" [disabled]="true" [attr.aria-label]="'intacctImportSettings.importCostCodesAriaLabel' | transloco" role="switch"></p-toggleswitch>
+                        <p-toggleswitch class="tw-pl-32-px input-toggle-section" formControlName="costCodesImportToggle" [attr.aria-label]="'intacctImportSettings.importCostCodesAriaLabel' | transloco" role="switch"></p-toggleswitch>
                       </div>
                     }
                     @if (importSettingsForm.get('isDependentImportEnabled')?.value) {
@@ -248,7 +248,7 @@
                               {{ option.display_name }}                                    </div>
                             </ng-template>
                           </p-select></div>
-                          <p-toggleswitch class="tw-pl-32-px input-toggle-section" formControlName="costTypesImportToggle" [disabled]="true" [attr.aria-label]="'intacctImportSettings.importCostTypesAriaLabel' | transloco" role="switch"></p-toggleswitch>
+                          <p-toggleswitch class="tw-pl-32-px input-toggle-section" formControlName="costTypesImportToggle" [attr.aria-label]="'intacctImportSettings.importCostTypesAriaLabel' | transloco" role="switch"></p-toggleswitch>
                         </div>
                       }
                     </div>
