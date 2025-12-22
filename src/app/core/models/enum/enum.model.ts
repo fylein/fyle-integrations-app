@@ -115,7 +115,7 @@ export enum AppName {
 export enum AppNameInService {
   BAMBOO_HR = 'bambooHR',
   QBD = 'qbd',
-  TRAVELPERK = 'perk',
+  TRAVELPERK = 'travelperk',
   INTACCT = 'sage_intacct',
   SAGE300 = 'sage300',
   BUSINESS_CENTRAL = 'business_central'
@@ -649,7 +649,7 @@ export enum RefinerSurveyType {
 export enum AppUrl {
   BAMBOO_HR = 'bamboo_hr',
   QBD = 'qbd',
-  TRAVELPERK = 'perk',
+  TRAVELPERK = 'travelperk',
   INTACCT = 'intacct',
   SAGE300 = 'sage300',
   BUSINESS_CENTRAL = 'business_central',
