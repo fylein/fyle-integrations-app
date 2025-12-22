@@ -938,7 +938,7 @@ export enum TrackingApp {
   BUSINESS_CENTRAL = 'BC',
   QBD = 'QBD',
   BAMBOO_HR = 'BHR',
-  TRAVELPERK = 'P',
+  TRAVELPERK = 'TP',
   QBD_DIRECT = 'QBD_DIRECT',
   SAGE50 = 'SAGE50'
 }
