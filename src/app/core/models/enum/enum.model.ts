@@ -33,7 +33,7 @@ export enum InAppIntegration {
   QBO = 'QuickBooks Online',
   BAMBOO_HR = 'Bamboo HR',
   QBD = 'QuickBooks Desktop',
-  TRAVELPERK = 'TravelPerk',
+  TRAVELPERK = 'Perk',
   INTACCT = 'Sage Intacct',
   SAGE300 = 'Sage 300 CRE',
   BUSINESS_CENTRAL = 'Dynamics 365 Business Central',
@@ -83,9 +83,9 @@ export enum BusinessCentralUpdateEvent {
 }
 
 export enum TravelperkUpdateEvent {
-  CONNECT_TRAVELPERK = 'Connect TravelPerk',
-  PAYMENT_PROFILE_SETTINGS_TRAVELPERK = 'Import Settings TravelPerk',
-  ADVANCED_SETTINGS_TRAVELPERK = 'Advanced Settings TravelPerk',
+  CONNECT_TRAVELPERK = 'Connect Perk',
+  PAYMENT_PROFILE_SETTINGS_TRAVELPERK = 'Import Settings Perk',
+  ADVANCED_SETTINGS_TRAVELPERK = 'Advanced Settings Perk',
 }
 
 export enum QbdDirectUpdateEvent {
@@ -101,7 +101,7 @@ export enum QbdDirectUpdateEvent {
 export enum AppName {
   BAMBOO_HR = 'BambooHR',
   QBD = 'QuickBooks Desktop',
-  TRAVELPERK = 'TravelPerk',
+  TRAVELPERK = 'Perk',
   INTACCT = 'Sage Intacct',
   SAGE300 = 'Sage 300 CRE',
   QBO = 'QuickBooks Online',
@@ -115,7 +115,7 @@ export enum AppName {
 export enum AppNameInService {
   BAMBOO_HR = 'bambooHR',
   QBD = 'qbd',
-  TRAVELPERK = 'travelperk',
+  TRAVELPERK = 'perk',
   INTACCT = 'sage_intacct',
   SAGE300 = 'sage300',
   BUSINESS_CENTRAL = 'business_central'
@@ -141,8 +141,8 @@ export enum Page {
   EXPORT_SETTING_BUSINESS_CENTRAL = 'Export Settings BusinessCentral',
   IMPORT_SETTINGS_BUSINESS_CENTRAL = 'Import Settings BusinessCentral',
   ADVANCED_SETTINGS_BUSINESS_CENTRAL = 'Advanced Settings BusinessCentral',
-  PAYMENT_PROFILE_SETTINGS_TRAVELPERK = 'Payment Profile Settings TravelPerk',
-  ADVANCED_SETTINGS_TRAVELPERK = 'Advanced Settings TravelPerk',
+  PAYMENT_PROFILE_SETTINGS_TRAVELPERK = 'Payment Profile Settings Perk',
+  ADVANCED_SETTINGS_TRAVELPERK = 'Advanced Settings Perk',
   EXPORT_SETTING_QBD_DIRECT = 'Export Settings QuickBooks Desktop Connector',
   CONNECT_QBD_DIRECT = 'Connect QuickBooks Desktop Connector',
   CONFIRM_PRE_REQUISITES_QBD_DIRECT = 'Confirm Pre Requisites QuickBooks Desktop Connector',
@@ -649,7 +649,7 @@ export enum RefinerSurveyType {
 export enum AppUrl {
   BAMBOO_HR = 'bamboo_hr',
   QBD = 'qbd',
-  TRAVELPERK = 'travelperk',
+  TRAVELPERK = 'perk',
   INTACCT = 'intacct',
   SAGE300 = 'sage300',
   BUSINESS_CENTRAL = 'business_central',
@@ -938,7 +938,7 @@ export enum TrackingApp {
   BUSINESS_CENTRAL = 'BC',
   QBD = 'QBD',
   BAMBOO_HR = 'BHR',
-  TRAVELPERK = 'TP',
+  TRAVELPERK = 'P',
   QBD_DIRECT = 'QBD_DIRECT',
   SAGE50 = 'SAGE50'
 }

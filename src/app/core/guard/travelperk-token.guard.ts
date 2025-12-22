@@ -27,7 +27,7 @@ export class TravelperkTokenGuard {
       catchError(error => {
         if (error.status === 400) {
           globalCacheBusterNotifier.next();
-          this.toastService.displayToastMessage(ToastSeverity.ERROR, 'Oops! Your TravelPerk connection expired, please connect again');
+          this.toastService.displayToastMessage(ToastSeverity.ERROR, 'Oops! Your Perk connection expired, please connect again');
           this.router.navigateByUrl('integrations/travelperk/onboarding/landing');
         }
         return throwError(() => error);
