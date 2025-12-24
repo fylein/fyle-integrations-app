@@ -5,6 +5,8 @@ fi
 
 for f in /usr/share/nginx/html/*
 do
+    # Skip directories, only process regular files
+    [ -f "$f" ] || continue
     echo "Substituting Environment variables and other stuff in $f ...";
     sed -i $SED_EXTRA_ARGS "s?{{CLUSTER_DOMAIN_API_URL}}?${CLUSTER_DOMAIN_API_URL}?g" $f;
     sed -i $SED_EXTRA_ARGS "s?{{QBD_API_URL}}?${QBD_API_URL}?g" $f;
