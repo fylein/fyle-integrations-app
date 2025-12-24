@@ -18,9 +18,10 @@ import { TranslocoService } from '@jsverse/transloco';
 import { AccountingExportService } from 'src/app/core/services/common/accounting-export.service';
 
 @Component({
-  selector: 'app-intacct-completed-export-log',
-  templateUrl: './intacct-completed-export-log.component.html',
-  styleUrls: ['./intacct-completed-export-log.component.scss']
+    selector: 'app-intacct-completed-export-log',
+    templateUrl: './intacct-completed-export-log.component.html',
+    styleUrls: ['./intacct-completed-export-log.component.scss'],
+    standalone: false
 })
 export class IntacctCompletedExportLogComponent implements OnInit {
 
@@ -94,7 +95,7 @@ export class IntacctCompletedExportLogComponent implements OnInit {
   }
 
   openExpenseinFyle(expense_id: string) {
-    const url = `${environment.fyle_app_url}/app/admin/#/view_expense/${expense_id}`;
+    const url = `${environment.fyle_app_url}/app/admin/#/company_expenses?txnId=${expense_id}`;
     window.open(url, '_blank');
   }
 

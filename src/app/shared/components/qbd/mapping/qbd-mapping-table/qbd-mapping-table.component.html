@@ -1,26 +1,34 @@
 <div class="tw-border-t-1-px tw-border-t-separator">
-    <p-table [value]="mappings" [tableStyle]="{ 'min-width': '50rem' }" [sortField]="'source_value'" [sortOrder]="1">
-        <ng-template pTemplate="header">
-            <tr>
-                <th class="tw-flex tw-justify-start tw-items-center">{{ fyleHeaderName | snakeCaseToSpaceCase | sentenceCase }} <i class="tw-ml-6-px pi pi-sort-amount-down"></i></th>
-                <th>{{ destinationHeaderName }}</th>
-                <th>{{ 'qbdMappingTable.status' | transloco }}</th>
-            </tr>
-        </ng-template>
-        <ng-template pTemplate="body" let-mapping let-rowIndex="rowIndex">
-            <tr>
-                <td>{{ mapping.source_value }}</td>
-                <td>
-                    <span class="p-input-icon-right" (keydown)="isTypingInBox($event, mapping)" *ngIf="destinationFieldType === fieldType.TEXT">
-                        <i *ngIf="focussedMappingId === mapping.id" class="pi pi-check tooltip" (click)="postTextFieldValue(mapping)" [pTooltip]="getToolTipText()" [escape]="false"  tooltipPosition="top"></i>
-                        <input type="text" pInputText [placeholder]="getPlaceholder()" [value]="mapping.destination_value" (input)="onTextBoxChange($event)">        
-                    </span>  
-                </td>
-                <td>
-                    <p *ngIf="mapping.destination_value" class="mapped">{{brandingFeatureConfig.isIconsInsideButtonAllowed ? ('qbdMappingTable.mappedCaps' | transloco) : ('qbdMappingTable.mapped' | transloco)}}</p>
-                    <p *ngIf="!mapping.destination_value" class="unmapped">{{brandingFeatureConfig.isIconsInsideButtonAllowed ? ('qbdMappingTable.unmappedCaps' | transloco) : ('qbdMappingTable.unmapped' | transloco)}}</p>
-                </td>
-            </tr>
-        </ng-template>
-    </p-table>
+  <p-table [value]="qbdMappings" [tableStyle]="{ 'min-width': '50rem' }" [sortField]="'source_value'" [sortOrder]="1">
+    <ng-template pTemplate="header">
+      <tr>
+        <th class="tw-flex tw-justify-start tw-items-center">{{ fyleHeaderName | snakeCaseToSpaceCase | sentenceCase }} <i class="tw-ml-6-px pi pi-sort-amount-down"></i></th>
+        <th>{{ destinationHeaderName }}</th>
+        <th>{{ 'qbdMappingTable.status' | transloco }}</th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-mapping let-rowIndex="rowIndex">
+      <tr>
+        <td>{{ mapping.source_value }}</td>
+        <td>
+          @if (destinationFieldType === fieldType.TEXT) {
+            <span class="p-input-icon-right" (keydown)="isTypingInBox($event, mapping)">
+              @if (focussedMappingId === mapping.id) {
+                <i class="pi pi-check tooltip" (click)="postTextFieldValue(mapping)" [pTooltip]="getToolTipText()" [escape]="false"  tooltipPosition="top"></i>
+              }
+              <input type="text" pInputText [placeholder]="getPlaceholder()" [value]="mapping.destination_value" (input)="onTextBoxChange($event)">
+            </span>
+          }
+        </td>
+        <td>
+          @if (mapping.destination_value) {
+            <p class="mapped">{{ ('qbdMappingTable.mapped' | transloco)}}</p>
+          }
+          @if (!mapping.destination_value) {
+            <p class="unmapped">{{ ('qbdMappingTable.unmapped' | transloco)}}</p>
+          }
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
 </div>

@@ -1,67 +1,73 @@
 <div>
-    <p-dialog [dismissableMask]="false" [showHeader]="false" [modal]="true" [(visible)]="showCustomFieldCreationDialog" [draggable]="false" [style]="{width: '468px'}">
-        <div [formGroup]="customFieldForm">
-            <div class="tw-p-24-px tw-border-b-1-px tw-border-b-divider-border-color">
-                <div class="tw-flex tw-justify-between tw-items-center">
-                    <p class="tw-text-text-primary tw-text-20-px tw-font-500">{{'common.customField' | transloco}}</p>
-                    <app-svg-icon [svgSource]="'cross-medium'" class="tw-cursor-pointer tw-text-12-px" (click)="closeModel()" [height]="'16px'" [width]="'16px'"></app-svg-icon>
-                </div>
-            </div>
-            <div *ngIf="existingFields.indexOf(customFieldForm.get('attribute_type')?.value?.toLowerCase()) !== -1">
-                <div class="tw-px-16-px tw-text-12-px tw-pt-12-px tw-flex">
-                    <span class="error-box tw-flex tw-p-4-px">
-                        <app-svg-icon [svgSource]="'danger-fill'" [width]="'20px'" [height]="'20px'" [styleClasses]="'tw-text-alert-toast tw-mb-16-px'"></app-svg-icon>
-                        <h5 class="tw-ml-6-px">
-                            {{ 'configurationCustomFieldCreationDialog.existingFieldError' | transloco: { brandName: brandingConfig.brandName } }}
-                        </h5>
-                    </span>
-                </div>
-            </div>
-            <div class="tw-p-24-px">
-                <p class="tw-pb-8-px tw-text-form-label-text-color tw-text-label-text-size">
-                    {{'common.customFieldName' | transloco}} <span *ngIf="isAsterikAllowed" class="tw-text-mandatory-field-color">*</span>
-                </p>
-                <input formControlName="attribute_type" type="text" class="tw-w-420-px tw-h-32-px" pInputText [placeholder]="'configurationCustomFieldCreationDialog.fieldTypePlaceholder' | transloco" [ngClass]="[customFieldForm.controls['attribute_type'].touched && !customFieldForm.controls['attribute_type'].valid && !customFieldForm.controls['attribute_type'].disabled ? 'error-box' : 'normal-box']" required/>
-                <app-mandatory-error-message *ngIf="customFieldForm.controls['attribute_type'].touched && !customFieldForm.controls['attribute_type'].valid && !customFieldForm.controls['attribute_type'].disabled" [customErrorMessage]="'configurationCustomFieldCreationDialog.invalidTypeMessage' | transloco"></app-mandatory-error-message>
-
-                <p class="tw-pt-16-px tw-text-form-label-text-color tw-text-label-text-size tw-pb-8-px">
-                    {{'common.customFieldPlaceholderName' | transloco}} <span *ngIf="isAsterikAllowed" class="tw-text-mandatory-field-color">*</span>
-                </p>
-                <input formControlName="source_placeholder" type="text" class="tw-w-420-px tw-h-32-px" pInputText [placeholder]="'configurationCustomFieldCreationDialog.fieldNamePlaceholder' | transloco" [ngClass]="[customFieldForm.controls['source_placeholder'].touched && !customFieldForm.controls['source_placeholder'].valid && !customFieldForm.controls['source_placeholder'].disabled ? 'error-box' : 'normal-box']" required/>
-                <app-mandatory-error-message *ngIf="customFieldForm.controls['source_placeholder'].touched && !customFieldForm.controls['source_placeholder'].valid && !customFieldForm.controls['source_placeholder'].disabled" [customErrorMessage]="'configurationCustomFieldCreationDialog.invalidNameMessage' | transloco"></app-mandatory-error-message>
-
-                <div>
-                    <h5 class="tw-pt-16-px tw-text-form-label-text-color tw-text-label-text-size tw-pb-8-px">
-                      {{'common.customFieldType' | transloco}}
-                    </h5>
-                    <div class="tw-w-420-px tw-h-32-px">
-                      <input class="tw-w-420-px form-input-disabled" type="text" [placeholder]="'configurationCustomFieldCreationDialog.selectPlaceholder' | transloco" disabled>
-                    </div>
-                  </div>
-
-                  <div class="label-section tw-pt-8">
-                    <div class="label-content tw-w-420-px">
-                      <h5 class="name-text text-secondary tw-text-label-text-size">
-                        {{customFieldForm.get('attribute_type')?.value ? customFieldForm.get('attribute_type')?.value : ('configurationCustomFieldCreationDialog.defaultLabel' | transloco)}}
-                      </h5>
-                      <div class="form-field tw-pt-4-px">
-                        <input class="form-input tw-w-352-px" type="text" disabled
-                        [placeholder]="customFieldForm.get('source_placeholder')?.value ? customFieldForm.get('source_placeholder')?.value : ('configurationCustomFieldCreationDialog.enterTextPlaceholder' | transloco)">
-                      </div>
-                    </div>
-                  </div>
-
-                <div class="tw-flex tw-justify-end tw-pt-24-px tw-text-14-px">
-                    <div class="tw-mr-16-px">
-                        <button type="button" class="p-button outline-sm" (click)="closeModel()">
-                            {{ 'configurationCustomFieldCreationDialog.cancel' | transloco }}
-                        </button>
-                    </div>
-                    <button type="button" class="p-button-raised" pButton [disabled]="!customFieldForm.valid || existingFields.indexOf(customFieldForm.get('attribute_type')?.value?.toLowerCase()) !== -1" (click)="saveCustomField()">
-                        {{'common.customFieldCreateandSave' | transloco}}
-                    </button>
-                </div>
-            </div>
+  <p-dialog [dismissableMask]="false" [showHeader]="false" [modal]="true" [(visible)]="showCustomFieldCreationDialog" [draggable]="false" [style]="{width: '468px'}" (onHide)="onDialogHide()">
+    <div [formGroup]="customFieldForm">
+      <div class="tw-p-24-px tw-border-b-1-px tw-border-b-divider-border-color">
+        <div class="tw-flex tw-justify-between tw-items-center">
+          <p class="tw-text-text-primary tw-text-20-px tw-font-500">{{'common.customField' | transloco}}</p>
+          <app-svg-icon [svgSource]="'cross-medium'" class="tw-cursor-pointer tw-text-12-px" (click)="closeModel()" [height]="'16px'" [width]="'16px'"></app-svg-icon>
         </div>
-    </p-dialog>
+      </div>
+      @if (existingFields.indexOf(customFieldForm.get('attribute_type')?.value?.toLowerCase()) !== -1) {
+        <div>
+          <div class="tw-px-16-px tw-text-12-px tw-pt-12-px tw-flex">
+            <span class="error-box tw-flex tw-p-4-px">
+              <app-svg-icon [svgSource]="'danger-fill'" [width]="'20px'" [height]="'20px'" [styleClasses]="'tw-text-alert-toast tw-mb-16-px'"></app-svg-icon>
+              <h5 class="tw-ml-6-px">
+                {{ 'configurationCustomFieldCreationDialog.existingFieldError' | transloco: { brandName: brandingConfig.brandName } }}
+              </h5>
+            </span>
+          </div>
+        </div>
+      }
+      <div class="tw-p-24-px">
+        <p class="tw-pb-8-px tw-text-form-label-text-color tw-text-label-text-size">
+          {{'common.customFieldName' | transloco}} @if (isAsterikAllowed) {
+          <span class="tw-text-text-danger-dark">*</span>
+        }
+      </p>
+      <input formControlName="attribute_type" type="text" class="tw-w-420-px tw-h-32-px" pInputText [placeholder]="'configurationCustomFieldCreationDialog.fieldTypePlaceholder' | transloco" [ngClass]="[customFieldForm.controls['attribute_type'].touched && !customFieldForm.controls['attribute_type'].valid && !customFieldForm.controls['attribute_type'].disabled ? 'error-box' : 'normal-box']" required/>
+      @if (customFieldForm.controls['attribute_type'].touched && !customFieldForm.controls['attribute_type'].valid && !customFieldForm.controls['attribute_type'].disabled) {
+        <app-mandatory-error-message [customErrorMessage]="'configurationCustomFieldCreationDialog.invalidTypeMessage' | transloco"></app-mandatory-error-message>
+      }
+
+      <p class="tw-pt-16-px tw-text-form-label-text-color tw-text-label-text-size tw-pb-8-px">
+        {{'common.customFieldPlaceholderName' | transloco}} @if (isAsterikAllowed) {
+        <span class="tw-text-text-danger-dark">*</span>
+      }
+    </p>
+    <input formControlName="source_placeholder" type="text" class="tw-w-420-px tw-h-32-px" pInputText [placeholder]="'configurationCustomFieldCreationDialog.fieldNamePlaceholder' | transloco" [ngClass]="[customFieldForm.controls['source_placeholder'].touched && !customFieldForm.controls['source_placeholder'].valid && !customFieldForm.controls['source_placeholder'].disabled ? 'error-box' : 'normal-box']" required/>
+    @if (customFieldForm.controls['source_placeholder'].touched && !customFieldForm.controls['source_placeholder'].valid && !customFieldForm.controls['source_placeholder'].disabled) {
+      <app-mandatory-error-message [customErrorMessage]="'configurationCustomFieldCreationDialog.invalidNameMessage' | transloco"></app-mandatory-error-message>
+    }
+
+
+    <div class="label-section tw-pt-8">
+      <div class="label-content tw-w-420-px">
+        <p class="name-text sub-text-color tw-text-14-px">{{ 'common.customFieldPreviewText' | transloco }}</p>
+        <h5 class="name-text text-secondary tw-text-label-text-size">
+          {{customFieldForm.get('attribute_type')?.value ? customFieldForm.get('attribute_type')?.value : ('configurationCustomFieldCreationDialog.defaultLabel' | transloco)}}
+        </h5>
+        <div class="form-field tw-pt-4-px">
+          <input class="form-input tw-w-352-px" type="text" disabled
+            [placeholder]="customFieldForm.get('source_placeholder')?.value ? customFieldForm.get('source_placeholder')?.value : ('configurationCustomFieldCreationDialog.enterTextPlaceholder' | transloco)">
+        </div>
+      </div>
+    </div>
+
+    <div class="tw-flex tw-items-center tw-justify-end tw-pt-24-px tw-text-14-px">
+      <div class="tw-mr-16-px">
+        @if (brandingFeatureConfig.isDashboardButtonOutlined) {
+          <app-button [buttonSize]="ButtonSize.SMALL" [buttonType]="ButtonType.SECONDARY" (buttonClick)="closeModel()" [styleClasses]="'tw-px-16-px tw-py-8-px tw-text-14-px'" [buttonText]="'configurationCustomFieldCreationDialog.cancel' | transloco"></app-button>
+        } @else {
+          <button type="button" class="p-button outline-sm" (click)="closeModel()">
+            {{ 'configurationCustomFieldCreationDialog.cancel' | transloco }}
+          </button>
+        }
+      </div>
+
+      <app-button [buttonSize]="ButtonSize.SMALL" [buttonType]="ButtonType.PRIMARY" [styleClasses]="'tw-text-14-px'" [disabled]="!customFieldForm.valid || existingFields.indexOf(customFieldForm.get('attribute_type')?.value?.toLowerCase()) !== -1" [buttonText]="'common.customFieldCreateandSave' | transloco" (buttonClick)="saveCustomField()"></app-button>
+    </div>
+  </div>
+</div>
+</p-dialog>
 </div>

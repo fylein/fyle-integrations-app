@@ -10,6 +10,22 @@ export type FeatureConfiguration = {
         showMoreDropdownInMainMenu: boolean;
         loginRedirectUri: boolean;
         loginToAllConnectedApps: boolean;
+        hasAssistedSetupSupport: boolean;
+        isDashboardButtonOutlined: boolean;
+        shouldShowOnboardingYouTubeVideo: boolean,
+        shouldShowXeroPreviewImage: boolean,
+        disableTextColorWhenChecked: boolean,
+        footerButtonsRightAligned: boolean,
+        useMainMenuForSubmenu: boolean,
+        usePrimaryLoader: boolean,
+        allowToastMessageInApps: boolean
+        qbdDirect: {
+            showStepStateAsIcons: boolean,
+            showStepStateDivider: boolean,
+            isStepSectionAlwaysVisible: boolean,
+            configToggleLeftAligned: boolean,
+            unlockStepsInOrder: boolean,
+        },
         featureFlags: {
             showOptionalTextInsteadOfAsterisk: boolean;
             cloneSettings: boolean;
@@ -56,6 +72,7 @@ export type FeatureConfiguration = {
             },
             mappings: {
                 employeeMapping: boolean;
+                allowExpandableSearch: boolean;
             },
             dashboard: {
                 disconnectButton: boolean;

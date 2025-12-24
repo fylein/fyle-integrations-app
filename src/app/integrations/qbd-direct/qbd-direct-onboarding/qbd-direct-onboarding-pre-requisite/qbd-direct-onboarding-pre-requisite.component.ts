@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { brandingKbArticles, brandingStyle, brandingConfig } from 'src/app/branding/branding-config';
+import { brandingKbArticles, brandingStyle, brandingConfig, brandingFeatureConfig } from 'src/app/branding/branding-config';
 import { BrandingConfiguration } from 'src/app/core/models/branding/branding-configuration.model';
 import { CheckBoxUpdate } from 'src/app/core/models/common/helper.model';
 import { AppName, ConfigurationCta, Page, ProgressPhase, QBDDirectInteractionType, QbdDirectOnboardingState, QbdDirectUpdateEvent, QBDPreRequisiteState, TrackingApp } from 'src/app/core/models/enum/enum.model';
@@ -15,11 +15,10 @@ import { SharedModule } from 'src/app/shared/shared.module';
 import { TranslocoModule, TranslocoService } from '@jsverse/transloco';
 
 @Component({
-  selector: 'app-qbd-direct-onboarding-pre-requisite',
-  standalone: true,
-  imports: [CommonModule, SharedModule, TranslocoModule],
-  templateUrl: './qbd-direct-onboarding-pre-requisite.component.html',
-  styleUrl: './qbd-direct-onboarding-pre-requisite.component.scss'
+    selector: 'app-qbd-direct-onboarding-pre-requisite',
+    imports: [CommonModule, SharedModule, TranslocoModule],
+    templateUrl: './qbd-direct-onboarding-pre-requisite.component.html',
+    styleUrl: './qbd-direct-onboarding-pre-requisite.component.scss'
 })
 export class QbdDirectOnboardingPreRequisiteComponent {
 
@@ -31,7 +30,7 @@ export class QbdDirectOnboardingPreRequisiteComponent {
 
   QBDDirectInteractionType = QBDDirectInteractionType;
 
-  QBDconnectorArticleLink: string = brandingKbArticles.onboardingArticles.QBD_DIRECT.CONNECTOR;
+  QBDconnectorArticleLink: string = brandingConfig.brandId === 'co' ? '' : brandingKbArticles.onboardingArticles.QBD_DIRECT.CONNECTOR;
 
   brandingConfig: BrandingConfiguration = brandingConfig;
 
@@ -50,6 +49,8 @@ export class QbdDirectOnboardingPreRequisiteComponent {
   sessionStartTime: Date = new Date();
 
   readonly brandingStyle = brandingStyle;
+
+  readonly brandingFeatureConfig = brandingFeatureConfig;
 
   constructor(
     private router: Router,
@@ -77,7 +78,7 @@ export class QbdDirectOnboardingPreRequisiteComponent {
         id: 3,
         label: this.translocoService.translate('qbdDirectOnboardingPreRequisite.loginAsAdminLabel'),
         caption: this.translocoService.translate('qbdDirectOnboardingPreRequisite.loginAsAdminCaption'),
-        externalLink: this.QBDconnectorArticleLink,
+        externalLink: brandingConfig.brandId === 'co' ? '' : this.QBDconnectorArticleLink,
         iconName: 'user-one',
         state: QBDPreRequisiteState.INCOMPLETE
       }
@@ -85,10 +86,27 @@ export class QbdDirectOnboardingPreRequisiteComponent {
     this.onboardingSteps = this.onboardingService.getOnboardingSteps(this.translocoService.translate('qbd_direct.configuration.preRequisite.stepName'), this.workspaceService.getOnboardingState());
   }
 
+  isStepDisabled(stepId: number): boolean {
+
+    if (stepId === 1) {
+      return false;
+    }
+
+    for (let i = 0; i < stepId - 1; i++) {
+      if (this.preRequisitesteps[i].state !== QBDPreRequisiteState.COMPLETE) {
+        return true;
+      }
+    }
+
+    return false;
+  }
+
   updateConnectorStatus(status: CheckBoxUpdate): void {
     this.preRequisitesteps[status.id-1].state = status.value ? QBDPreRequisiteState.COMPLETE : QBDPreRequisiteState.INCOMPLETE;
     if (this.preRequisitesteps[0].state === QBDPreRequisiteState.COMPLETE && this.preRequisitesteps[1].state === QBDPreRequisiteState.COMPLETE && this.preRequisitesteps[2].state === QBDPreRequisiteState.COMPLETE) {
       this.isContinueDisabled = false;
+    } else {
+      this.isContinueDisabled = true;
     }
   }
 

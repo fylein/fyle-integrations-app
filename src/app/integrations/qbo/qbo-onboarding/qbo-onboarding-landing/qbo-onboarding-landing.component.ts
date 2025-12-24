@@ -4,12 +4,14 @@ import { Subject, Subscription, takeUntil } from 'rxjs';
 import { brandingConfig, brandingDemoVideoLinks, brandingKbArticles } from 'src/app/branding/branding-config';
 import { AppName } from 'src/app/core/models/enum/enum.model';
 import { ConfigurationWarningOut } from 'src/app/core/models/misc/configuration-warning.model';
+import { BrandingService } from 'src/app/core/services/common/branding.service';
 import { QboAuthService } from 'src/app/core/services/qbo/qbo-core/qbo-auth.service';
 
 @Component({
-  selector: 'app-qbo-onboarding-landing',
-  templateUrl: './qbo-onboarding-landing.component.html',
-  styleUrls: ['./qbo-onboarding-landing.component.scss']
+    selector: 'app-qbo-onboarding-landing',
+    templateUrl: './qbo-onboarding-landing.component.html',
+    styleUrls: ['./qbo-onboarding-landing.component.scss'],
+    standalone: false
 })
 export class QboOnboardingLandingComponent implements OnInit, OnDestroy {
 
@@ -31,7 +33,8 @@ export class QboOnboardingLandingComponent implements OnInit, OnDestroy {
 
   constructor(
     private router: Router,
-    private qboAuthService: QboAuthService
+    private qboAuthService: QboAuthService,
+    public brandingService: BrandingService
   ) { }
 
   acceptWarning(data: ConfigurationWarningOut): void {

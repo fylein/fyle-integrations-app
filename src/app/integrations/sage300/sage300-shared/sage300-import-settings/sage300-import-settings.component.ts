@@ -8,7 +8,7 @@ import { IntegrationField, FyleField } from 'src/app/core/models/db/mapping.mode
 import { HelperService } from 'src/app/core/services/common/helper.service';
 import { MappingService } from 'src/app/core/services/common/mapping.service';
 import { Sage300ImportSettingsService } from 'src/app/core/services/sage300/sage300-configuration/sage300-import-settings.service';
-import { Sage300HelperService } from 'src/app/core/services/sage300/sage300-helper/sage300-helper.service';
+import { Sage300HelperService } from 'src/app/core/services/sage300/sage300-core/sage300-helper.service';
 import { fyleFieldsResponse, importSettingsResponse, sage300FieldsResponse } from '../fixture';
 import { catchError, forkJoin, of } from 'rxjs';
 import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
@@ -18,11 +18,13 @@ import { brandingConfig, brandingKbArticles, brandingStyle } from 'src/app/brand
 import { ConfigurationWarningOut } from 'src/app/core/models/misc/configuration-warning.model';
 import { TranslocoService } from '@jsverse/transloco';
 import { ImportSettingsService } from 'src/app/core/services/common/import-settings.service';
+import { BrandingService } from 'src/app/core/services/common/branding.service';
 
 @Component({
-  selector: 'app-sage300-import-settings',
-  templateUrl: './sage300-import-settings.component.html',
-  styleUrls: ['./sage300-import-settings.component.scss']
+    selector: 'app-sage300-import-settings',
+    templateUrl: './sage300-import-settings.component.html',
+    styleUrls: ['./sage300-import-settings.component.scss'],
+    standalone: false
 })
 export class Sage300ImportSettingsComponent implements OnInit {
 
@@ -109,7 +111,8 @@ export class Sage300ImportSettingsComponent implements OnInit {
     private toastService: IntegrationsToastService,
     private trackingService: TrackingService,
     private workspaceService: WorkspaceService,
-    private translocoService: TranslocoService
+    private translocoService: TranslocoService,
+    public brandingService: BrandingService
   ) {
     this.costCodeFieldOption = [{ attribute_type: 'custom_field', display_name: this.translocoService.translate('sage300ImportSettings.createCustomField'), source_placeholder: null, is_dependent: true }];
     this.costCategoryOption = [{ attribute_type: 'custom_field', display_name: this.translocoService.translate('sage300ImportSettings.createCustomField'), source_placeholder: null, is_dependent: true }];
@@ -438,7 +441,7 @@ updateImportCodeFieldConfig() {
     this.importSettingService.postImportSettings(importSettingPayload).subscribe((importSettingsResponse: Sage300ImportSettingGet) => {
       this.isSaveInProgress = false;
       this.updateImportCodeFieldConfig();
-      this.toastService.displayToastMessage(ToastSeverity.SUCCESS, this.translocoService.translate('sage300ImportSettings.importSettingsSuccess'));
+      this.toastService.displayToastMessage(ToastSeverity.SUCCESS, this.translocoService.translate('sage300ImportSettings.importSettingsSuccess'), undefined, this.isOnboarding);
       this.trackingService.trackTimeSpent(TrackingApp.SAGE300, Page.IMPORT_SETTINGS_SAGE300, this.sessionStartTime);
       if (this.workspaceService.getOnboardingState() === Sage300OnboardingState.IMPORT_SETTINGS) {
         this.trackingService.onOnboardingStepCompletion(TrackingApp.SAGE300, Sage300OnboardingState.IMPORT_SETTINGS, 3, importSettingPayload);

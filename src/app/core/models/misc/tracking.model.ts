@@ -20,8 +20,8 @@ import { Workspace } from "../db/workspaces.model";
 
 export type UpdateEventAdditionalProperty = {
     phase: ProgressPhase,
-    oldState: QBDAdvancedSettingsGet | QBDExportSettingGet | QBDFieldMappingGet | Sage300ExportSettingGet |  Sage300ImportSettingGet | Sage300AdvancedSettingGet | null | BusinessCentralExportSettingGet | BusinessCentralImportSettingsGet | BusinessCentralAdvancedSettingsGet | TravelperkPaymentProfileSettingResponse | TravelperkAdvancedSettingPost | QbdDirectExportSettingsPost | QbdDirectImportSettingPost | QbdDirectAdvancedSettingsPost | Workspace,
-    newState: QBDAdvancedSettingsGet | QBDExportSettingGet | QBDFieldMappingGet | Sage300ExportSettingGet |  Sage300ImportSettingGet | Sage300AdvancedSettingGet | BusinessCentralExportSettingGet | BusinessCentralImportSettingsGet | BusinessCentralAdvancedSettingsGet | TravelperkPaymentProfileSettingResponse | TravelperkAdvancedSettingPost |  QbdDirectExportSettingsPost | QbdDirectImportSettingPost | QbdDirectAdvancedSettingsPost | Workspace
+    oldState: QBDAdvancedSettingsGet | QBDExportSettingGet | QBDFieldMappingGet | Sage300ExportSettingGet |  Sage300ImportSettingGet | Sage300AdvancedSettingGet | null | BusinessCentralExportSettingGet | BusinessCentralImportSettingsGet | BusinessCentralAdvancedSettingsGet | TravelperkPaymentProfileSettingResponse | TravelperkAdvancedSettingPost | QbdDirectExportSettingsPost | QbdDirectImportSettingPost | QbdDirectAdvancedSettingsPost | Workspace | any,
+    newState: QBDAdvancedSettingsGet | QBDExportSettingGet | QBDFieldMappingGet | Sage300ExportSettingGet |  Sage300ImportSettingGet | Sage300AdvancedSettingGet | BusinessCentralExportSettingGet | BusinessCentralImportSettingsGet | BusinessCentralAdvancedSettingsGet | TravelperkPaymentProfileSettingResponse | TravelperkAdvancedSettingPost |  QbdDirectExportSettingsPost | QbdDirectImportSettingPost | QbdDirectAdvancedSettingsPost | Workspace | any
   };
 
 export type UpdateIntacctEventAdditionalProperty = {
@@ -57,7 +57,8 @@ export type TrackingAppMap = {
   [AppName.TRAVELPERK]: TrackingApp.TRAVELPERK,
   [AppName.NETSUITE]: TrackingApp.NETSUITE,
   [AppName.XERO]: TrackingApp.XERO,
-  [AppName.QBD_DIRECT]: TrackingApp.QBD_DIRECT
+  [AppName.QBD_DIRECT]: TrackingApp.QBD_DIRECT,
+  [AppName.SAGE50]: TrackingApp.SAGE50
 }
 
 export const trackingAppMap: TrackingAppMap = {
@@ -70,5 +71,6 @@ export const trackingAppMap: TrackingAppMap = {
   [AppName.TRAVELPERK]: TrackingApp.TRAVELPERK,
   [AppName.NETSUITE]: TrackingApp.NETSUITE,
   [AppName.XERO]: TrackingApp.XERO,
-  [AppName.QBD_DIRECT]: TrackingApp.QBD_DIRECT
+  [AppName.QBD_DIRECT]: TrackingApp.QBD_DIRECT,
+  [AppName.SAGE50]: TrackingApp.SAGE50
 };

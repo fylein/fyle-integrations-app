@@ -1,9 +1,8 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
-import { AppName, ConfigurationCta, EmployeeFieldMapping, ExpenseGroupingFieldOption, Page, ProgressPhase, QBDCorporateCreditCardExpensesObject, QbdDirectCCCExportDateType, QbdDirectExpenseGroupBy, QbdDirectExportSettingDestinationAccountType, QbdDirectExportSettingDestinationOptionKey, QbdDirectOnboardingState, QbdDirectReimbursableExpensesObject, QbdDirectUpdateEvent, QBDExpenseGroupedBy, ToastSeverity, TrackingApp, QBDReimbursableExpensesObject } from 'src/app/core/models/enum/enum.model';
+import { AppName, ConfigurationCta, EmployeeFieldMapping, Page, ProgressPhase, QBDCorporateCreditCardExpensesObject, QbdDirectCCCExportDateType, QbdDirectExportSettingDestinationAccountType, QbdDirectExportSettingDestinationOptionKey, QbdDirectOnboardingState, QbdDirectReimbursableExpensesObject, QbdDirectUpdateEvent, ToastSeverity, TrackingApp, QBDReimbursableExpensesObject, FyleField, QbdDirectCCCPurchasedFromField } from 'src/app/core/models/enum/enum.model';
 import { QbdDirectExportSettingGet } from 'src/app/core/models/qbd-direct/qbd-direct-configuration/qbd-direct-export-settings.model';
-import { QbdDirectImportSettingGet } from 'src/app/core/models/qbd-direct/qbd-direct-configuration/qbd-direct-import-settings.model';
 import { ConfigurationWarningOut } from 'src/app/core/models/misc/configuration-warning.model';
 import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
 import { TrackingService } from 'src/app/core/services/integration/tracking.service';
@@ -11,35 +10,46 @@ import { QbdDirectExportSettingsService } from 'src/app/core/services/qbd-direct
 import { QbdDirectImportSettingsService } from 'src/app/core/services/qbd-direct/qbd-direct-configuration/qbd-direct-import-settings.service';
 import { HelperService } from 'src/app/core/services/common/helper.service';
 import { MappingService } from 'src/app/core/services/common/mapping.service';
-import { catchError, debounceTime, filter, forkJoin, Observable, of, Subject } from 'rxjs';
+import { catchError, debounceTime, filter, forkJoin, Observable, of, pairwise, startWith, Subject } from 'rxjs';
 import { CommonModule } from '@angular/common';
 import { brandingConfig, brandingFeatureConfig, brandingKbArticles, brandingStyle } from 'src/app/branding/branding-config';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { WorkspaceService } from 'src/app/core/services/common/workspace.service';
 import { SelectFormOption } from 'src/app/core/models/common/select-form-option.model';
-import { DefaultDestinationAttribute, DestinationAttribute, PaginatedDestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
+import { DestinationAttribute, PaginatedDestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
 import { ExportSettingOptionSearch } from 'src/app/core/models/common/export-settings.model';
 import { QbdDirectDestinationAttribute } from 'src/app/core/models/qbd-direct/db/qbd-direct-destination-attribuite.model';
 import { QBDExportSettingFormOption } from 'src/app/core/models/qbd/qbd-configuration/qbd-export-setting.model';
 import { QbdDirectHelperService } from 'src/app/core/services/qbd-direct/qbd-direct-core/qbd-direct-helper.service';
 import { TranslocoModule, TranslocoService } from '@jsverse/transloco';
 import { EmployeeSettingsService } from 'src/app/core/services/common/employee-settings.service';
-import { ExportSettingsService } from 'src/app/core/services/common/export-settings.service';
+import { BrandingService } from 'src/app/core/services/common/branding.service';
+import { QbdDirectMappingService } from 'src/app/core/services/qbd-direct/qbd-direct-core/qbd-direct-mapping.service';
+
+
+type MappingWarningDialogState = {
+  isVisible: boolean;
+  triggerControl:
+    | 'reimbursableExportType'
+    | 'creditCardExportType'
+    | 'cccPurchasedFromField'
+    | 'CCCEmployeeMapping'
+    | null;
+  newValue: string | null;
+  postUpdateAction?: (newValue: string | null) => void;
+}
 
 @Component({
-  selector: 'app-qbd-direct-export-settings',
-  templateUrl: './qbd-direct-export-settings.component.html',
-  standalone: true,
-  imports: [CommonModule, SharedModule, TranslocoModule],
-  styleUrl: './qbd-direct-export-settings.component.scss'
+    selector: 'app-qbd-direct-export-settings',
+    templateUrl: './qbd-direct-export-settings.component.html',
+    imports: [CommonModule, SharedModule, TranslocoModule],
+    styleUrl: './qbd-direct-export-settings.component.scss'
 })
 export class QbdDirectExportSettingsComponent implements OnInit{
 
   isLoading: boolean;
 
   isOnboarding: any;
-
-  exportSettings: QbdDirectExportSettingGet | null;
 
   isImportItemsEnabled: boolean;
 
@@ -64,6 +74,8 @@ export class QbdDirectExportSettingsComponent implements OnInit{
   nameInJEOptions: QBDExportSettingFormOption[] = [];
 
   employeeMappingOptions: SelectFormOption[] = [];
+
+  cccPurchasedFromFieldOptions: QBDExportSettingFormOption[] = [];
 
   appName: AppName = AppName.QBD_DIRECT;
 
@@ -97,6 +109,81 @@ export class QbdDirectExportSettingsComponent implements OnInit{
 
   readonly brandingStyle = brandingStyle;
 
+  /** State for the mapping warning dialog */
+  mappingWarningDialog: MappingWarningDialogState = {
+    isVisible: false,
+    triggerControl: null,
+    newValue: null
+  };
+
+  mappedEmployeesCount: number;
+
+  _exportSettings: QbdDirectExportSettingGet | null;
+
+  get exportSettings(): QbdDirectExportSettingGet | null {
+    return this._exportSettings;
+  }
+
+  set exportSettings(value: QbdDirectExportSettingGet | null) {
+    // Once we get / update export settings, use the employee field mapping to get the currently mapped employees count
+    this._exportSettings = value;
+    if (value) {
+      const employeeFieldMapping = value?.employee_field_mapping || FyleField.VENDOR;
+      this.mappingService.getMappingStats(
+        FyleField.EMPLOYEE, employeeFieldMapping, this.appName, this.isEmployeeAndVendorAllowed
+      ).subscribe(({all_attributes_count, unmapped_attributes_count}) => {
+        this.mappedEmployeesCount = all_attributes_count - unmapped_attributes_count;
+      });
+    }
+  }
+
+  previewImagePaths =[
+    {
+      [QbdDirectReimbursableExpensesObject.BILL]: 'assets/illustrations/qbd-direct/Reimbursable-bill.png',
+      [QbdDirectReimbursableExpensesObject.JOURNAL_ENTRY]: 'assets/illustrations/qbd-direct/Reimbursable-journal-entry.png',
+      [QbdDirectReimbursableExpensesObject.CHECK]: 'assets/illustrations/qbd-direct/Reimbursable-check.png'
+    },
+    {
+      [QBDCorporateCreditCardExpensesObject.CREDIT_CARD_PURCHASE]: 'assets/illustrations/qbd-direct/CCC-credit-card-transaction.png',
+      [QBDCorporateCreditCardExpensesObject.JOURNAL_ENTRY]: 'assets/illustrations/qbd-direct/CCC-journal-entry.png'
+    }
+  ];
+
+  get showCCCEmployeeMapping(): boolean {
+    // The field is hidden only if reimbursable is toggled off and credit card export type is set to CCP
+    // It is visible and editable if reimbursable is disabled + CCC is set to JE
+    // It is visible and disabled if reimbursable is enabled + CCC is set to anything
+
+    const isCCCEnabled = !!this.exportSettingsForm.get('creditCardExportType')?.value;
+    const isReimbursableEnabled = !!this.exportSettingsForm.get('reimbursableExportType')?.value;
+    const isCCCJESelected = this.exportSettingsForm.get('creditCardExportType')?.value === QBDCorporateCreditCardExpensesObject.JOURNAL_ENTRY;
+
+    return isCCCEnabled && (isReimbursableEnabled || isCCCJESelected);
+  }
+
+  get isCCCEmployeeMappingDisabled(): boolean {
+    // Show whatever is set in reimbursable employee mapping field in CCC mapping as well.
+    const isReimbursableEnabled = !!this.exportSettingsForm.get('reimbursableExportType')?.value;
+    return isReimbursableEnabled;
+  }
+
+  get CCCEmployeeMappingSublabel(): string {
+    if (this.isCCCEmployeeMappingDisabled) {
+      return this.translocoService.translate('qbd_direct.configuration.exportSetting.reimbursable.disabledCCCEmployeeMappingSubLabel');
+    }
+    return this.translocoService.translate('qbd_direct.configuration.exportSetting.reimbursable.employeeMappingSubLabel', {
+      brandName: this.brandingConfig.brandName
+    });
+  }
+
+  get isEmployeeAndVendorAllowed(): boolean {
+    if (!this.exportSettings) {
+      return false;
+    }
+    return this.qbdDirectMappingService.getIsEmployeeAndVendorAllowed(this.exportSettings);
+  }
+
+
   constructor(
     private router: Router,
     private exportSettingService: QbdDirectExportSettingsService,
@@ -109,7 +196,9 @@ export class QbdDirectExportSettingsComponent implements OnInit{
     private qbdDirectHelperService: QbdDirectHelperService,
     private translocoService: TranslocoService,
     private qbdDirectExportSettingsService: QbdDirectExportSettingsService,
-    private employeeSettingsService: EmployeeSettingsService
+    private employeeSettingsService: EmployeeSettingsService,
+    public brandingService: BrandingService,
+    private qbdDirectMappingService: QbdDirectMappingService
   ) {
     this.cccExpenseGroupingDateOptions = this.qbdDirectExportSettingsService.creditCardExpenseGroupingDateOptions();
     this.reimbursableExpenseGroupingDateOptions = this.qbdDirectExportSettingsService.reimbursableExpenseGroupingDateOptions();
@@ -119,10 +208,11 @@ export class QbdDirectExportSettingsComponent implements OnInit{
     this.reimbursableExportTypes = this.qbdDirectExportSettingsService.reimbursableExportTypes();
     this.nameInJEOptions = this.qbdDirectExportSettingsService.nameInJEOptions();
     this.employeeMappingOptions = this.employeeSettingsService.getEmployeeFieldMappingOptions();
+    this.cccPurchasedFromFieldOptions = this.qbdDirectExportSettingsService.cccPurchasedFromFieldOptions();
   }
 
   isEmployeeMappingDisabled(): boolean {
-    if (this.exportSettingsForm.get('reimbursableExportType')?.value === QbdDirectReimbursableExpensesObject.JOURNAL_ENTRY || (!this.exportSettingsForm.get('reimbursableExpense')?.value && this.exportSettingsForm.get('creditCardExportType')?.value === QbdDirectReimbursableExpensesObject.JOURNAL_ENTRY)) {
+    if (this.exportSettingsForm.get('reimbursableExportType')?.value === QbdDirectReimbursableExpensesObject.JOURNAL_ENTRY || (!this.exportSettingsForm.get('reimbursableExpense')?.value && this.exportSettingsForm.get('creditCardExportType')?.value === QbdDirectReimbursableExpensesObject.JOURNAL_ENTRY && this.brandingFeatureConfig.featureFlags.exportSettings.isReimbursableExpensesAllowed)) {
       return false;
     }
     return true;
@@ -280,7 +370,8 @@ export class QbdDirectExportSettingsComponent implements OnInit{
         }
 
         this.isSaveInProgress = false;
-        this.toastService.displayToastMessage(ToastSeverity.SUCCESS, this.translocoService.translate('qbdDirectExportSettings.exportSettingsSavedSuccess'));
+        this.exportSettings = response;
+        this.toastService.displayToastMessage(ToastSeverity.SUCCESS, this.translocoService.translate('qbdDirectExportSettings.exportSettingsSavedSuccess'), undefined, this.isOnboarding);
 
         if (this.isOnboarding) {
           this.workspaceService.setOnboardingState(QbdDirectOnboardingState.IMPORT_SETTINGS);
@@ -301,8 +392,28 @@ export class QbdDirectExportSettingsComponent implements OnInit{
   }
 
   cccExportTypeWatcher(): void {
-    this.exportSettingsForm.controls.creditCardExportType.valueChanges.subscribe((creditCardExportTypeValue) => {
-      if (creditCardExportTypeValue === QBDCorporateCreditCardExpensesObject.CREDIT_CARD_PURCHASE) {
+    this.exportSettingsForm.controls.creditCardExportType.valueChanges
+    .pipe(
+      startWith(this.exportSettingsForm.get('creditCardExportType')?.value),
+      pairwise()
+    )
+    .subscribe(([previousValue, currentValue]) => {
+      /* Employee warning dialog - CASE #1:
+       * Employees and vendors are allowed, and CCC module is changed from CCP
+       */
+      const changedFromCCP = (
+        previousValue === QBDCorporateCreditCardExpensesObject.CREDIT_CARD_PURCHASE &&
+        currentValue !== QBDCorporateCreditCardExpensesObject.CREDIT_CARD_PURCHASE &&
+        currentValue !== null
+      );
+
+      if (this.isEmployeeAndVendorAllowed && changedFromCCP) {
+        this.showMappingWarningDialog({
+          triggerControl: 'creditCardExportType',
+          previousValue,
+          newValue: currentValue
+        });
+      } else if (currentValue === QBDCorporateCreditCardExpensesObject.CREDIT_CARD_PURCHASE) {
         this.exportSettingsForm.controls.creditCardExportGroup.patchValue(this.qbdDirectExportSettingsService.expenseGroupingFieldOptions()[1].value);
         this.exportSettingsForm.controls.creditCardExportGroup.disable();
       }
@@ -349,13 +460,34 @@ export class QbdDirectExportSettingsComponent implements OnInit{
   }
 
   employeeMappingWatcher() {
-    this.exportSettingsForm.controls.reimbursableExportType.valueChanges.subscribe((reimbursableExportTypeValue) => {
-      if (reimbursableExportTypeValue === QbdDirectReimbursableExpensesObject.BILL) {
-        this.exportSettingsForm.controls.employeeMapping.patchValue(EmployeeFieldMapping.VENDOR);
+    this.exportSettingsForm.controls.reimbursableExportType.valueChanges
+    .pipe(
+      startWith(this.exportSettingsForm.get('reimbursableExportType')?.value),
+      pairwise()
+    )
+    .subscribe(([previousValue, currentValue]) => {
+      /**
+       * Employee warning dialog - CASE #2:
+       * Employees and vendors are allowed, and reimbursable exports are turned on
+       */
+      const isReimbursableExportEnabled = previousValue === null && currentValue !== null;
+
+      // Only if the user accepts the warning, we update the dependent fields
+      const postUpdateAction = () => {
+        if (currentValue === QbdDirectReimbursableExpensesObject.BILL) {
+          this.exportSettingsForm.controls.employeeMapping.patchValue(EmployeeFieldMapping.VENDOR);
+        }
+      };
+      if (this.isEmployeeAndVendorAllowed && isReimbursableExportEnabled) {
+        this.showMappingWarningDialog({
+          triggerControl: 'reimbursableExportType',
+          previousValue,
+          newValue: currentValue,
+          postUpdateAction
+        });
+      } else {
+        postUpdateAction?.();
       }
-      // Else if (reimbursableExportTypeValue === QbdDirectReimbursableExpensesObject.CHECK) {
-      //   This.exportSettingsForm.controls.employeeMapping.patchValue(EmployeeFieldMapping.EMPLOYEE);
-      // }
     });
   }
 
@@ -402,6 +534,40 @@ export class QbdDirectExportSettingsComponent implements OnInit{
     });
   }
 
+  employeeFieldMappingWatcher() {
+    // Reimbursable employee field mapping overwrites the corresponding field in CCC
+    this.exportSettingsForm.get('employeeMapping')?.valueChanges.subscribe((reimbursableEmployeeMapping) => {
+      this.exportSettingsForm.get('CCCEmployeeMapping')?.setValue(reimbursableEmployeeMapping);
+    });
+
+    /**
+     * Employee warning dialog - CASE #3:
+     * 1. Employees and vendors are not allowed (if they are allowed, employee field mapping is ignored) AND
+     * 2. Employee field mapping is changed from a previously saved value to a new value
+     * (CCCEmployeeMapping is used because it captures both reimbursable and CCC fields' updates)
+     */
+    this.exportSettingsForm.get('CCCEmployeeMapping')?.valueChanges
+      .pipe(
+        startWith(this.exportSettingsForm.get('CCCEmployeeMapping')?.value),
+        pairwise()
+      )
+      .subscribe(([previousValue, currentValue]) => {
+        const savedValue = this.exportSettings?.employee_field_mapping;
+        const changedFromSavedValue = (
+          !!savedValue &&
+          currentValue !== savedValue &&
+          currentValue !== null
+        );
+        if (!this.isEmployeeAndVendorAllowed && changedFromSavedValue) {
+          this.showMappingWarningDialog({
+            triggerControl: 'CCCEmployeeMapping',
+            previousValue,
+            newValue: currentValue
+          });
+        }
+      });
+  }
+
   destinationOptionsWatcher(detailAccountType: string[], destinationOptions: QbdDirectDestinationAttribute[]): DestinationAttribute[] {
     return destinationOptions.filter((account: QbdDirectDestinationAttribute) =>  detailAccountType.includes(account.detail.account_type));
   }
@@ -423,11 +589,11 @@ export class QbdDirectExportSettingsComponent implements OnInit{
     this.cccExportGroupingWatcher();
 
     this.reimburesmentExpenseGroupingWatcher();
+
+    this.employeeFieldMappingWatcher();
   }
 
-  private setupForm(exportSettingResponse: QbdDirectExportSettingGet | null, accounts: DestinationAttribute[]): void {
-    this.exportSettings = exportSettingResponse;
-
+  private setupForm(accounts: DestinationAttribute[]): void {
     this.cccExpenseStateOptions = this.qbdDirectExportSettingsService.cccExpenseStateOptions();
     this.expenseStateOptions = this.qbdDirectExportSettingsService.expenseStateOptions();
 
@@ -512,6 +678,49 @@ export class QbdDirectExportSettingsComponent implements OnInit{
     return content;
   }
 
+  private showMappingWarningDialog({ triggerControl, previousValue, newValue, postUpdateAction }: {
+    triggerControl: MappingWarningDialogState['triggerControl'],
+    previousValue: string | null,
+    newValue: MappingWarningDialogState['newValue'],
+    postUpdateAction?: MappingWarningDialogState['postUpdateAction']
+  }): void {
+    if (this.mappingWarningDialog.isVisible || !this.mappedEmployeesCount) {
+      return;
+    }
+
+    // As soon as the warning dialog is shown, go back to the previous value.
+    // We update to the new value only if the user accepts the warning.
+    if (triggerControl) {
+      setTimeout(() => {
+        this.exportSettingsForm.get(triggerControl)?.setValue(previousValue);
+      }, 0);
+    }
+
+    this.mappingWarningDialog = {
+      isVisible: true,
+      triggerControl,
+      newValue,
+      postUpdateAction
+    };
+  }
+
+  handleMappingWarningClose({ hasAccepted }: ConfigurationWarningOut): void {
+    const { triggerControl, newValue, postUpdateAction } = this.mappingWarningDialog;
+
+    // If the user accepts the warning, proceed with the update.
+    if (hasAccepted && triggerControl && newValue) {
+      this.exportSettingsForm.get(triggerControl)?.setValue(newValue);
+      postUpdateAction?.(newValue);
+    }
+
+    // Reset the warning dialog state
+    this.mappingWarningDialog = {
+      isVisible: false,
+      triggerControl: null,
+      newValue: null
+    };
+  }
+
   private constructWarningMessage(): string {
     let content: string = '';
     const existingReimbursableExportType = this.exportSettings?.reimbursable_expense_export_type || 'None';
@@ -570,6 +779,7 @@ export class QbdDirectExportSettingsComponent implements OnInit{
       this.importSettingService.getImportSettings().pipe(catchError(() => of(null))),
       ...groupedAttributes
     ]).subscribe(([exportSettingResponse, importSettingsResponse, ...paginatedAccounts]) => {
+      this.exportSettings = exportSettingResponse;
 
       // Extract items status
       this.isImportItemsEnabled = importSettingsResponse?.import_settings?.import_item_as_category || false;
@@ -586,10 +796,10 @@ export class QbdDirectExportSettingsComponent implements OnInit{
       if (defaultAccountsObservable) {
         defaultAccountsObservable.subscribe((response) => {
           accounts = accounts.concat(response.results);
-          this.setupForm(exportSettingResponse, accounts);
+          this.setupForm(accounts);
         });
       } else {
-        this.setupForm(exportSettingResponse, accounts);
+        this.setupForm(accounts);
       }
     });
   }

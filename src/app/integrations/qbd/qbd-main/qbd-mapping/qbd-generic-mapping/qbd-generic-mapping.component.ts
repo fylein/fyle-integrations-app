@@ -8,13 +8,14 @@ import { QBDFieldMappingGet } from 'src/app/core/models/qbd/qbd-configuration/qb
 import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
 import { WindowService } from 'src/app/core/services/common/window.service';
 import { QbdFieldMappingService } from 'src/app/core/services/qbd/qbd-configuration/qbd-field-mapping.service';
-import { QbdMappingService } from 'src/app/core/services/qbd/qbd-mapping/qbd-mapping.service';
+import { QbdMappingService } from 'src/app/core/services/qbd/qbd-core/qbd-mapping.service';
 import { TranslocoService } from '@jsverse/transloco';
 
 @Component({
-  selector: 'app-qbd-generic-mapping',
-  templateUrl: './qbd-generic-mapping.component.html',
-  styleUrls: ['./qbd-generic-mapping.component.scss']
+    selector: 'app-qbd-generic-mapping',
+    templateUrl: './qbd-generic-mapping.component.html',
+    styleUrls: ['./qbd-generic-mapping.component.scss'],
+    standalone: false
 })
 export class QbdGenericMappingComponent implements OnInit {
 

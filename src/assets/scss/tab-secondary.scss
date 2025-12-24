@@ -1,32 +1,48 @@
-:host ::ng-deep .p-tabmenu {
-    @apply tw-text-14-px tw-font-nav-link-font-weight;
+:host ::ng-deep .p-tabs {
+    @apply tw-text-14-px tw-font-nav-link-font-weight #{!important};
 }
 
-:host ::ng-deep .p-tabmenu-nav .p-menuitem-text {
-    @apply tw-font-nav-link-font-weight;
+:host ::ng-deep .p-tabs .p-tablist .p-tablist-content {
+    @apply tw-overflow-visible #{!important};
 }
 
-:host ::ng-deep .p-tabmenu .p-tabmenu-nav {
-    @apply tw-bg-[transparent] tw-border-b tw-border-nav-tabs-active-border;
+:host ::ng-deep .p-tabs .p-tablist {
+    @apply tw-bg-[transparent] tw-overflow-visible tw-border-b tw-border-nav-tabs-active-border #{!important};
 }
 
-:host ::ng-deep .p-tabmenu .p-tabmenu-nav .p-tabmenuitem .p-menuitem-link {
-    @apply tw-bg-nav-tabs-hover-bg tw-ml-0 tw-mr-22-px tw-px-24-px tw-py-12-px tw-mx-10-px tw-mt-0 tw-border tw-text-text-primary tw-border-nav-tabs-active-border tw-rounded-t-lg;
+:host ::ng-deep .p-tabs .p-tablist .p-tablist-active-bar {
+    @apply tw-hidden #{!important};
 }
 
-:host ::ng-deep .p-tabmenu .p-tabmenu-nav .p-tabmenuitem.p-highlight .p-menuitem-link,
-:host ::ng-deep .p-tabmenu .p-tabmenu-nav .p-tabmenuitem.p-highlight .p-menuitem-link:not(.p-disabled):hover {
-    @apply tw-text-text-primary tw-border-b-0 tw-bg-nav-tabs-active-bg;
+:host ::ng-deep .p-tabs .p-tablist .p-tablist-tab-list {
+    @apply tw-mt-12-px tw-border-none #{!important};
 }
 
-:host ::ng-deep .p-tabmenu .p-tabmenu-nav .p-tabmenuitem:not(.p-highlight) .p-menuitem-link {
-    @apply tw-border-b-nav-tabs-active-border tw-py-10-px tw-text-nav-tabs-inactive-text-color tw-bg-nav-tabs-inactive-bg #{!important};
+:host ::ng-deep .p-tabs .p-tablist .p-tab {
+    @apply tw-bg-nav-tabs-hover-bg tw-ml-0 tw-mr-22-px tw-px-24-px tw-py-12-px tw-mx-10-px tw-mt-0 tw-border tw-text-text-primary tw-border-nav-tabs-active-border tw-rounded-t-lg tw-font-nav-link-font-weight tw-cursor-pointer #{!important};
 }
 
-:host ::ng-deep .p-tabmenu .p-tabmenu-nav .p-tabmenuitem {
-    @apply -tw-mr-12-px;
+:host ::ng-deep .p-tabs .p-tablist .p-tab:not([aria-selected="true"]):not(.p-tab-active) {
+    @apply tw-border-b-0 tw-py-12-px tw-text-nav-tabs-inactive-text-color tw-bg-nav-tabs-inactive-bg #{!important};
 }
 
-:host ::ng-deep .p-tabmenu .p-tabmenu-nav .p-tabmenuitem .p-menuitem-link:not(.p-disabled):focus {
-    @apply tw-shadow-none;
+:host ::ng-deep .p-tabs .p-tablist .p-tab[aria-selected="true"],
+:host ::ng-deep .p-tabs .p-tablist .p-tab.p-tab-active {
+    @apply tw-text-text-primary tw-border-b-0 tw-bg-white tw-rounded-t-8-px #{!important};
+}
+
+:host ::ng-deep .p-tabs .p-tablist .p-tab:not([disabled]):focus,
+:host ::ng-deep .p-tabs .p-tablist .p-tab:not([disabled]):focus-visible {
+    @apply tw-shadow-none tw-outline-none #{!important};
+}
+
+[data-theme='fyle'] {
+    :host ::ng-deep .p-tabs .p-tablist .p-tab {
+        @apply tw-px-16-px tw-mr-0-px tw-border-t-0 tw-border-x-0 tw-border-nav-link-active-border tw-border-solid tw-border-b-2-px tw-bg-white #{!important};
+    }
+
+    :host ::ng-deep .p-tabs .p-tablist .p-tab:focus,
+    :host ::ng-deep .p-tabs .p-tablist .p-tab:focus-visible {
+       @apply tw-relative tw-rounded-t-xl tw-shadow-focused tw-border-b-white #{!important};
+    }
 }

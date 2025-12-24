@@ -13,11 +13,10 @@ import { AppcuesService } from 'src/app/core/services/integration/appcues.servic
 import { QbdDirectHelperService } from 'src/app/core/services/qbd-direct/qbd-direct-core/qbd-direct-helper.service';
 
 @Component({
-  selector: 'app-qbd-direct',
-  standalone: true,
-  imports: [RouterModule],
-  templateUrl: './qbd-direct.component.html',
-  styleUrl: './qbd-direct.component.scss'
+    selector: 'app-qbd-direct',
+    imports: [RouterModule],
+    templateUrl: './qbd-direct.component.html',
+    styleUrl: './qbd-direct.component.scss'
 })
 export class QbdDirectComponent implements OnInit {
 

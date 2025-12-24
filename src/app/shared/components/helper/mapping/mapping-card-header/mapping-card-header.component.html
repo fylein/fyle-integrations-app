@@ -1,30 +1,25 @@
-<div class="tw-flex tw-justify-between">
+<div class="tw-flex tw-justify-between" [ngClass]="brandingStyle.dashboard.mapping.countCardsContainer">
     <div class="tw-flex">
-        <div class="tw-rounded-10-px tw-bg-lv-stats-bg tw-border-1-px tw-border-border-tertiary tw-pt-16-px tw-pr-56-px tw-pb-10-px tw-pl-16-px tw-h-84-px" [ngClass]="brandingStyle.mapping.mappingHeaderBoxShadow" [attr.aria-label]="('mappingCardHeader.total' | transloco) + ' ' + getPluralOfSourceField(sourceField)">
+        <div class="tw-rounded-10-px tw-bg-lv-stats-bg tw-pt-16-px tw-pr-56-px tw-pb-10-px tw-pl-16-px tw-h-84-px" [ngClass]="brandingStyle.dashboard.mapping.headerCard" [attr.aria-label]="('mappingCardHeader.total' | transloco) + ' ' + getPluralOfSourceField(sourceField)">
             <div class="tw-w-34-px tw-h-6-px tw-rounded-12-px tw-bg-bg-brand-muted">
             </div>
             <div class="tw-pt-8-px tw-text-lv-stats-label-text-color tw-text-12-px">
-                <p>{{'mappingCardHeader.total' | transloco}} {{getPluralOfSourceField(sourceField)}}</p>
+                <p>{{'mappingCardHeader.total' | transloco}} {{mappingStats.all_attributes_count !== 1 ? getPluralOfSourceField(sourceField) : getSingularOfSourceField(sourceField)}}</p>
             </div>
-            <div class="tw-text-16-px tw-text-600 tw-text-text-primary">
+            <div class="tw-text-600 tw-text-text-primary" [ngClass]="brandingStyle.dashboard.mapping.countText">
                 <p>{{mappingStats.all_attributes_count}}</p>
             </div>
         </div>
         <span class="tw-pl-16-px"></span>
-        <div class="tw-rounded-10-px tw-bg-white tw-border-1-px tw-border-border-tertiary tw-pt-16-px tw-pr-56-px tw-pb-10-px tw-pl-16-px tw-h-84-px" [ngClass]="brandingStyle.mapping.mappingHeaderBoxShadow" [attr.aria-label]="('mappingCardHeader.unmapped' | transloco) + ' ' + getPluralOfSourceField(sourceField)">
+        <div class="tw-rounded-10-px tw-bg-white tw-pt-16-px tw-pr-56-px tw-pb-10-px tw-pl-16-px tw-h-84-px" [ngClass]="brandingStyle.dashboard.mapping.headerCard" [attr.aria-label]="('mappingCardHeader.unmapped' | transloco) + ' ' + getPluralOfSourceField(sourceField)">
             <div class="tw-w-34-px tw-h-6-px tw-rounded-12-px tw-bg-bg-brand-muted">
             </div>
             <div class="tw-pt-8-px tw-text-lv-stats-label-text-color tw-text-12-px">
-                <p>{{'mappingCardHeader.unmapped' | transloco}} {{getPluralOfSourceField(sourceField)}}</p>
+                <p>{{'mappingCardHeader.unmapped' | transloco}} {{mappingStats.unmapped_attributes_count !== 1 ? getPluralOfSourceField(sourceField) : getSingularOfSourceField(sourceField)}}</p>
             </div>
-            <div class="tw-text-16-px tw-text-600 tw-text-text-primary">
+            <div class="tw-text-600 tw-text-text-primary" [ngClass]="brandingStyle.dashboard.mapping.countText">
                 <p>{{mappingStats.unmapped_attributes_count}}</p>
             </div>
         </div>
-    </div>
-    <div *ngIf="showAutoMapEmployee && sourceField==='EMPLOYEE'" class="tw-mt-24-px">
-        <button type="button" class="tw-text-white tw-text-500 tw-px-24-px tw-py-12-px tw-bg-mandatory-field-color tw-rounded-4-px" (click)="triggerAutoMapEmployees()">
-        <p class="tw-text-14-px tw-font-400 tw-pl-5px">{{'common.autoMap' | transloco}} {{sourceField | lowercase}}</p>
-        </button>
     </div>
 </div>

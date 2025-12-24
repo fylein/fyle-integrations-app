@@ -1,10 +1,12 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { brandingConfig, brandingFeatureConfig, brandingStyle } from 'src/app/branding/branding-config';
+import { ButtonSize, ButtonType } from 'src/app/core/models/enum/enum.model';
 
 @Component({
-  selector: 'app-onboarding-done',
-  templateUrl: './onboarding-done.component.html',
-  styleUrls: ['./onboarding-done.component.scss']
+    selector: 'app-onboarding-done',
+    templateUrl: './onboarding-done.component.html',
+    styleUrls: ['./onboarding-done.component.scss'],
+    standalone: false
 })
 export class OnboardingDoneComponent implements OnInit {
 
@@ -17,6 +19,10 @@ export class OnboardingDoneComponent implements OnInit {
   readonly brandingFeatureConfig = brandingFeatureConfig;
 
   readonly brandingStyle = brandingStyle;
+
+  ButtonType = ButtonType;
+
+  ButtonSize = ButtonSize;
 
   constructor() { }
 

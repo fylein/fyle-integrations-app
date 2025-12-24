@@ -11,12 +11,13 @@ import { UserService } from 'src/app/core/services/misc/user.service';
 import { SiWorkspaceService } from 'src/app/core/services/si/si-core/si-workspace.service';
 import { SiAuthService } from 'src/app/core/services/si/si-core/si-auth.service';
 import { AuthService } from 'src/app/core/services/common/auth.service';
-import { IntacctConnectorService } from 'src/app/core/services/si/si-core/intacct-connector.service';
+import { IntacctConnectorService } from 'src/app/core/services/si/si-core/si-connector.service';
 
 @Component({
-  selector: 'app-intacct',
-  templateUrl: './intacct.component.html',
-  styleUrls: ['./intacct.component.scss']
+    selector: 'app-intacct',
+    templateUrl: './intacct.component.html',
+    styleUrls: ['./intacct.component.scss'],
+    standalone: false
 })
 export class IntacctComponent implements OnInit {
 

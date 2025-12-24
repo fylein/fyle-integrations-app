@@ -1,61 +1,75 @@
 <div>
-    <div *ngIf="mappingType==='CATEGORY_MAPPING'">
+  @if (mappingType==='CATEGORY_MAPPING') {
+    <div>
       <p-table [value]="groupedError">
         <ng-template pTemplate="header">
-            <tr>
-                <th>{{ 'dashboardMappingResolve.categoryHeader' | transloco }}</th>
-                <th>{{getCategoryDestinationType() | snakeCaseToSpaceCase | sentenceCase}}</th>
-            </tr>
+          <tr>
+            <th>{{ 'dashboardMappingResolve.categoryHeader' | transloco }}</th>
+            <th>{{getCategoryDestinationType() | snakeCaseToSpaceCase | sentenceCase}}</th>
+          </tr>
         </ng-template>
         <ng-template pTemplate="body" let-error let-rowIndex="rowIndex">
-            <tr *ngIf="!isLoading">
-                <td>{{ error.expense_attribute.value }}</td>
-                <td>
-                    <p-dropdown appendTo="body" (onShow)="tableDropdownWidth()"
-                    [options]="getCategoryMappingOptions()"
-                    optionLabel="value"
-                    [placeholder]="'dashboardMappingResolve.selectOptionPlaceholder' | transloco"
-                    (onChange)="saveCategoryMapping(error.expense_attribute, $event);"
-                    [filter]="true"
-                    filterBy="value">
-                    </p-dropdown>
-                </td>
+          @if (!isLoading) {
+            <tr>
+              <td>{{ error.expense_attribute.value }}</td>
+              <td>
+                <p-select appendTo="body" (onShow)="tableDropdownWidth()"
+                  [options]="getCategoryMappingOptions()"
+                  optionLabel="value"
+                  [placeholder]="'dashboardMappingResolve.selectOptionPlaceholder' | transloco"
+                  (onChange)="saveCategoryMapping(error.expense_attribute, $event);"
+                  [filter]="true"
+                  filterBy="value">
+                </p-select>
+              </td>
             </tr>
-            <ng-container *ngTemplateOutlet="shimmers"></ng-container>
+          }
+          <ng-container *ngTemplateOutlet="shimmers"></ng-container>
         </ng-template>
-    </p-table>
+      </p-table>
     </div>
-    <div *ngIf="mappingType==='EMPLOYEE_MAPPING'">
+  }
+  @if (mappingType==='EMPLOYEE_MAPPING') {
+    <div>
       <p-table [value]="groupedError">
         <ng-template pTemplate="header">
-            <tr>
+          <tr>
             <th>{{ 'dashboardMappingResolve.employeeEmailHeader' | transloco }}</th>
             <th>{{ 'dashboardMappingResolve.sageIntacctHeader' | transloco }}{{getEmployeeAttributeType() | lowercase}}</th>
-            </tr>
+          </tr>
         </ng-template>
         <ng-template pTemplate="body" let-error>
-            <tr *ngIf="!isLoading">
-                <td>{{ error.expense_attribute.value }}</td>
-                <td>
-                    <p-dropdown appendTo="body" (onShow)="tableDropdownWidth()"
-                    [options]="fyleEmployeeOptions"
-                    optionLabel="value"
-                    [placeholder]="'dashboardMappingResolve.selectOptionPlaceholder' | transloco"
-                    (onChange)="saveEmployeeMapping(error.expense_attribute, $event);"
-                    [filter]="true"
-                    filterBy="value">
-                    </p-dropdown>
-                </td>
+          @if (!isLoading) {
+            <tr>
+              <td>{{ error.expense_attribute.value }}</td>
+              <td>
+                <p-select appendTo="body" (onShow)="tableDropdownWidth()"
+                  [options]="fyleEmployeeOptions"
+                  optionLabel="value"
+                  [placeholder]="'dashboardMappingResolve.selectOptionPlaceholder' | transloco"
+                  (onChange)="saveEmployeeMapping(error.expense_attribute, $event);"
+                  [filter]="true"
+                  filterBy="value">
+                </p-select>
+              </td>
             </tr>
-            <ng-container *ngTemplateOutlet="shimmers"></ng-container>
+          }
+          <ng-container *ngTemplateOutlet="shimmers"></ng-container>
         </ng-template>
-        </p-table>
+      </p-table>
     </div>
+  }
 </div>
 
 <ng-template #shimmers>
-    <tr *ngFor="let _ of [0,1,2,3,4,5,6]">
-        <td *ngIf="isLoading"><p-skeleton width="150px" height="28px" shape="rectangle"></p-skeleton></td>
-        <td *ngIf="isLoading"><p-skeleton width="250px" height="28px" shape="rectangle"></p-skeleton></td>
+  @for (_ of [0,1,2,3,4,5,6]; track _) {
+    <tr>
+      @if (isLoading) {
+        <td><p-skeleton width="150px" height="28px" shape="rectangle"></p-skeleton></td>
+      }
+      @if (isLoading) {
+        <td><p-skeleton width="250px" height="28px" shape="rectangle"></p-skeleton></td>
+      }
     </tr>
+  }
 </ng-template>

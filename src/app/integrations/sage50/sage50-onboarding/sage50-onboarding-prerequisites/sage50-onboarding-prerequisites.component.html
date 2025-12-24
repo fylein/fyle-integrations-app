@@ -1,0 +1,57 @@
+
+@if (isLoading) {
+    <div class="tw-flex tw-justify-center tw-items-center tw-h-full">
+        <app-loader></app-loader>
+    </div>
+} @else {
+    <div class="configuration--contents tw-border-border-tertiary tw-mt-24-px" [ngClass]="brandingStyle.common.configurationContents">
+        <div>
+            <app-configuration-step-header
+                [headerText]="'sage50OnboardingPrerequisites.configurationHeaderText' | transloco"
+                [headerInfoTooltip]="'sage50OnboardingPrerequisites.configurationHeaderInfoTooltip' | transloco: { brandName: brandingConfig.brandName} "
+                [contentText]="'sage50OnboardingPrerequisites.configurationSubHeaderText' | transloco"
+                [redirectLink]="brandingKbArticles.onboardingArticles.SAGE50.PREREQUISITES">
+            </app-configuration-step-header>
+        </div>
+        <div class="tw-p-24-px">
+            <div class="tw-rounded-[10px] tw-border tw-border-border-tertiary tw-p-24-px tw-flex tw-flex-col tw-gap-[48px]">
+                <app-configuration-csv-upload-field
+                    [attributeType]="Sage50AttributeType.ACCOUNT"
+                    [label]="'sage50OnboardingPrerequisites.chartOfAccountsLabel' | transloco"
+                    [subLabel]="'sage50OnboardingPrerequisites.chartOfAccountsSublabel' | transloco"
+                    [(fileName)]="fileNames.ACCOUNT"
+                    [articleLink]="brandingKbArticles.postOnboardingArticles.SAGE50.ACCOUNT"
+                    [videoURL]="brandingDemoVideoLinks.postOnboarding.SAGE50.ACCOUNT"
+                    [isFieldMandatory]="true"
+                    [uploadData]="uploadData.bind(this)"
+                ></app-configuration-csv-upload-field>
+                <app-configuration-csv-upload-field
+                    [attributeType]="Sage50AttributeType.VENDOR"
+                    [label]="'sage50OnboardingPrerequisites.vendorLabel' | transloco"
+                    [subLabel]="'sage50OnboardingPrerequisites.vendorSublabel' | transloco"
+                    [(fileName)]="fileNames.VENDOR"
+                    [articleLink]="brandingKbArticles.postOnboardingArticles.SAGE50.VENDOR"
+                    [videoURL]="brandingDemoVideoLinks.postOnboarding.SAGE50.VENDOR"
+                    [uploadData]="uploadData.bind(this)"
+                ></app-configuration-csv-upload-field>
+            </div>
+        </div>
+        <app-configuration-step-footer
+            [ctaText]="'sage50OnboardingPrerequisites.continue' | transloco"
+            [AppName]="AppName.SAGE50"
+            [isButtonDisabled]="!isFormFilled"
+            (save)="continueToNextStep()"
+        ></app-configuration-step-footer>
+    </div>
+}
+<div>
+    <app-configuration-confirmation-dialog
+        (warningAccepted)="acceptVendorUploadWarning($event)"
+        [isWarningVisible]="showVendorUploadWarning"
+        [headerText]="'sage50OnboardingPrerequisites.warningHeader' | transloco"
+        [contextText]="'sage50OnboardingPrerequisites.warningContext' | transloco"
+        [confirmBtnText]="'sage50OnboardingPrerequisites.skipAndContinue' | transloco"
+        [appName]="AppName.SAGE50"
+        [event]="ConfigurationWarningEvent.SAGE50_SKIP_VENDOR_UPLOAD">
+    </app-configuration-confirmation-dialog>
+</div>

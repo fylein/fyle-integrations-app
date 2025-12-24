@@ -17,11 +17,13 @@ import { SelectFormOption } from 'src/app/core/models/common/select-form-option.
 import { DestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
 import { TranslocoService } from '@jsverse/transloco';
 import { ExportSettingsService } from 'src/app/core/services/common/export-settings.service';
+import { BrandingService } from 'src/app/core/services/common/branding.service';
 
 @Component({
-  selector: 'app-business-central-export-settings',
-  templateUrl: './business-central-export-settings.component.html',
-  styleUrls: ['./business-central-export-settings.component.scss']
+    selector: 'app-business-central-export-settings',
+    templateUrl: './business-central-export-settings.component.html',
+    styleUrls: ['./business-central-export-settings.component.scss'],
+    standalone: false
 })
 export class BusinessCentralExportSettingsComponent implements OnInit {
 
@@ -101,7 +103,8 @@ export class BusinessCentralExportSettingsComponent implements OnInit {
     public helper: HelperService,
     private translocoService: TranslocoService,
     private businessCentralExportSettingsService: BusinessCentralExportSettingsService,
-    private exportSettingsService: ExportSettingsService
+    private exportSettingsService: ExportSettingsService,
+    public brandingService: BrandingService
   ) {
     this.reimbursableExpenseGroupingDateOptions = this.businessCentralExportSettingsService.getReimbursableExpenseGroupingDateOptions();
     this.cccExpenseGroupingDateOptions = this.businessCentralExportSettingsService.getCCCExpenseGroupingDateOptions();

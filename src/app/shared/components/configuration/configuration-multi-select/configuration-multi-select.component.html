@@ -1,37 +1,53 @@
 <div [formGroup]="form" [ngClass]="!isCloneSettingView ? 'tw-p-24-px': ''" class="tw-flex tw-justify-between tw-items-center">
-    <div *ngIf="!isCloneSettingView" class="lg:tw-w-3/5 md:tw-w-1/2 tw-flex tw-items-start">
-        <div class="tw-pr-16-px">
-            <app-svg-icon *ngIf="iconPath" [svgSource]="iconPath" [width]="'24px'" [height]="'24px'" [styleClasses]="'tw-text-mandatory-field-color'"></app-svg-icon>
-        </div>
-        <div>
-            <h5 class="tw-text-text-secondary tw-text-14-px !tw-font-500">{{ label }}<app-mandatory-field *ngIf="isFieldMandatory"></app-mandatory-field></h5>
-            <h5 class="!tw-text-text-muted tw-text-14-px !tw-font-400 !tw-leading-4" [innerHTML]="subLabel" [ngClass]="brandingStyle.common.inputLabelTextStyle"></h5>
-        </div>
+  @if (!isCloneSettingView) {
+    <div class="lg:tw-w-3/5 md:tw-w-1/2 tw-flex tw-items-start">
+      <div class="tw-pr-16-px">
+        @if (iconPath) {
+          <app-svg-icon [svgSource]="iconPath" [width]="'24px'" [height]="'24px'" [styleClasses]="'tw-text-icon-primary'"></app-svg-icon>
+        }
+      </div>
+      <div>
+        <h5 [ngClass]="brandingStyle.qbd_direct.onboarding.configurationToggleHeaderText">{{ label }}@if (isFieldMandatory) {
+          <app-mandatory-field></app-mandatory-field>
+        }</h5>
+        <h5 class="!tw-leading-4" [innerHTML]="subLabel" [ngClass]="[brandingStyle.common.inputLabelTextStyle, brandingStyle.qbd_direct.onboarding.configurationToggleDescriptionText]"></h5>
+      </div>
     </div>
-    <div class="tw-pl-34-px">
-        <p-multiSelect [options]="options" styleClass="tw-z-2 tw-py-8-px tw-px-12-px" [formControlName]="formControllerName" [defaultLabel]="placeholder"
-        [ngClass]="[form.controls[formControllerName].invalid && isFieldMandatory ? 'error-box' : 'normal-box']"
-        [dropdownIcon]="'pi pi-chevron-down ' + brandingConfig.brandId"
-        (onChange)="onMultiSelectChange()">
-            <ng-template let-value pTemplate="selectedItems" >
-                <div *ngIf="form.get(formControllerName)?.value?.length>0" class="tw-flex">
-                    <p *ngFor="let name of value;let i = index">{{ getMemo(name) }}<span *ngIf="i !== value?.length-1">,&nbsp;</span></p>
-                </div>
-                <div *ngIf="form.get(formControllerName)?.value?.length === 0" class="tw-text-placeholder">
-                    {{ placeholder }}
-                </div>
-            </ng-template>
-            <ng-template let-memo let-index="index" pTemplate="item">
-                <!-- <div pDraggable="gens" pDroppable="gens" dragHandle=".barsHandle" (onDragStart)="onDragStart(index)" (onDrop)="onDrop(index)" >
-                    <p class="tw-text-sub-text-color tw-text-14-px">{{ gens | sentenceCase | snakeCaseToSpaceCase }}</p>
-                </div> -->
-                <div>
-                    <p class="tw-text-14-px">{{ getMemo(memo) }}</p>
-                </div>
-            </ng-template>
-        </p-multiSelect>
-        <div>
-            <app-mandatory-error-message *ngIf="isFieldMandatory && form.controls[formControllerName].touched && form.get(formControllerName)?.value?.length === 0" [listName]="mandatoryErrorListName" [customErrorMessage]="customErrorMessage"></app-mandatory-error-message>
-        </div>
-    </div>
+  }
+  <div class="tw-pl-34-px">
+    <p-multiselect [options]="options" styleClass="tw-z-2 tw-py-8-px tw-px-12-px" [formControlName]="formControllerName" [placeholder]="placeholder"
+      [ngClass]="[form.controls[formControllerName].invalid && isFieldMandatory ? 'error-box' : 'normal-box']"
+      [dropdownIcon]="'pi pi-chevron-down ' + brandingConfig.brandId"
+      [selectionLimit]="maxSelections"
+      (onChange)="onMultiSelectChange()">
+      <ng-template let-value pTemplate="selectedItems" >
+        @if (form.get(formControllerName)?.value?.length>0) {
+          <div class="tw-flex">
+            <p class="tw-overflow-hidden tw-text-ellipsis">{{ getSelectedItemsText(value) }}</p>
+          </div>
+        }
+        @if (form.get(formControllerName)?.value?.length === 0) {
+          <div class="tw-text-placeholder">
+            {{ placeholder }}
+          </div>
+        }
+      </ng-template>
+      <ng-template let-memo let-index="index" pTemplate="item">
+        <!-- <div pDraggable="gens" pDroppable="gens" dragHandle=".barsHandle" (onDragStart)="onDragStart(index)" (onDrop)="onDrop(index)" >
+        <p class="tw-text-sub-text-color tw-text-14-px">{{ gens | sentenceCase | snakeCaseToSpaceCase }}</p>
+      </div> -->
+      <div>
+        <p [pTooltip]="getOptionTooltip(memo)"
+          tooltipPosition="top"
+          class="tw-text-14-px !tw-pointer-events-auto"
+        >{{ getMemo(memo) }}</p>
+      </div>
+    </ng-template>
+  </p-multiselect>
+  <div>
+    @if (isFieldMandatory && form.controls[formControllerName].touched && form.get(formControllerName)?.value?.length === 0) {
+      <app-mandatory-error-message [listName]="mandatoryErrorListName" [customErrorMessage]="customErrorMessage"></app-mandatory-error-message>
+    }
+  </div>
+</div>
 </div>

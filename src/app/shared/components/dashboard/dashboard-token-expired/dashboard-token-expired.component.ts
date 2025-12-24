@@ -3,21 +3,23 @@ import { FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
 import { brandingConfig, brandingFeatureConfig, brandingKbArticles } from 'src/app/branding/branding-config';
-import { AppName, AppUrl } from 'src/app/core/models/enum/enum.model';
+import { AppName, AppUrl, ButtonSize, ButtonType } from 'src/app/core/models/enum/enum.model';
 import { ConfigurationWarningOut } from 'src/app/core/models/misc/configuration-warning.model';
 import { HelperService } from 'src/app/core/services/common/helper.service';
 import { WindowService } from 'src/app/core/services/common/window.service';
 import { NetsuiteConnectorService } from 'src/app/core/services/netsuite/netsuite-core/netsuite-connector.service';
-import { IntacctConnectorService } from 'src/app/core/services/si/si-core/intacct-connector.service';
+import { IntacctConnectorService } from 'src/app/core/services/si/si-core/si-connector.service';
 import { Sage300ConnectorService } from 'src/app/core/services/sage300/sage300-configuration/sage300-connector.service';
 import { QboAuthService } from 'src/app/core/services/qbo/qbo-core/qbo-auth.service';
 import { XeroAuthService } from 'src/app/core/services/xero/xero-core/xero-auth.service';
+import { SiWorkspaceService } from 'src/app/core/services/si/si-core/si-workspace.service';
 
 
 @Component({
-  selector: 'app-dashboard-token-expired',
-  templateUrl: './dashboard-token-expired.component.html',
-  styleUrl: './dashboard-token-expired.component.scss'
+    selector: 'app-dashboard-token-expired',
+    templateUrl: './dashboard-token-expired.component.html',
+    styleUrl: './dashboard-token-expired.component.scss',
+    standalone: false
 })
 export class DashboardTokenExpiredComponent implements OnInit, OnDestroy {
   AppName = AppName;
@@ -31,6 +33,12 @@ export class DashboardTokenExpiredComponent implements OnInit, OnDestroy {
   readonly brandingConfig = brandingConfig;
 
   @Input() appName: string;
+
+  @Input() qboCompanyName: string;
+
+  ButtonType = ButtonType;
+
+  ButtonSize = ButtonSize;
 
   isIncorrectAccountSelected: boolean;
 
@@ -46,6 +54,8 @@ export class DashboardTokenExpiredComponent implements OnInit, OnDestroy {
 
   integrationSetupForm: FormGroup;
 
+  isMigratedToRestApi: boolean = false;
+
   constructor(
     private helperService: HelperService,
     private qboAuthService: QboAuthService,
@@ -54,7 +64,8 @@ export class DashboardTokenExpiredComponent implements OnInit, OnDestroy {
     private windowService: WindowService,
     private netsuiteConnector: NetsuiteConnectorService,
     private intacctConnector: IntacctConnectorService,
-    private sage300Connector: Sage300ConnectorService
+    private sage300Connector: Sage300ConnectorService,
+    private siWorkspaceService: SiWorkspaceService
   ) {}
 
   acceptWarning(data: ConfigurationWarningOut): void {
@@ -106,7 +117,7 @@ export class DashboardTokenExpiredComponent implements OnInit, OnDestroy {
     }
 
     if (this.appName === AppName.INTACCT) {
-      this.intacctConnector.connectSageIntacct(this.integrationSetupForm, true)
+      this.intacctConnector.connectSageIntacct(this.integrationSetupForm, true, this.isMigratedToRestApi)
       .subscribe(({ intacctSetupForm, isIntacctConnected }) => {
         this.integrationSetupForm = intacctSetupForm;
         this.isConnectionInProgress = false;
@@ -147,8 +158,11 @@ export class DashboardTokenExpiredComponent implements OnInit, OnDestroy {
       this.isTokenBasedAuthApp = true;
       this.helperService.setBaseApiURL(AppUrl.INTACCT);
 
-      this.intacctConnector.getIntacctFormGroup().subscribe(({ intacctSetupForm }) => {
-        this.integrationSetupForm = intacctSetupForm;
+      this.siWorkspaceService.getFeatureConfigs().subscribe((featureConfigs) => {
+        this.isMigratedToRestApi = featureConfigs.migrated_to_rest_api;
+        this.intacctConnector.getIntacctFormGroup(this.isMigratedToRestApi).subscribe(({ intacctSetupForm }) => {
+          this.integrationSetupForm = intacctSetupForm;
+        });
       });
     }
 

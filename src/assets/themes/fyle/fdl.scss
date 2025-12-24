@@ -1,28 +1,68 @@
 // Declare the Token Name from Common element library figma file here
 // Refer: https://www.figma.com/file/JAhSNaV7gZKYsQyCFZLC9w/Common-Element-library?type=design&node-id=0%3A1&mode=design&t=0FzXvulWRrAS9gc9-1
-// You can view all the list of tokens by clicking on Local Variables button on right side menu, you need edit access to view this.  
+// You can view all the list of tokens by clicking on Local Variables button on right side menu, you need edit access to view this.
 // Don't add any token which is not in figma common element library's token list, few exceptions are for gradients as they are not supported by figma yet.
 
-@import './primitives_variables';
+@use './primitives_variables' as *;
 
 @layer base {
   [data-theme='fyle'] {
-      //brand bg
+    //Colors
+    --white: #{$white};
+    --placeholder: #{$grey-400};
+    --separator: #{$grey-50};
+    --normal-text-color: #{$grey-800};
+    --menu-inactive-text-color: var(--text-primary);
+    --sub-text-color: #{$grey-600};
+    --faded-text-color: #{$grey-500};
+    --box-color: #{$grey-300};
+    --mandatory-field-color: #{$brand-500};
+    --disabled-bg-color: #{$grey-100};
+    --info: #{$blue-500};
+    --alert-toast: #{$red-500};
+    --line-inactive: #{$grey-55};
+    --mapped-green-border: #{$green-200};
+    --mapped-green-bg: #{$green-50};
+    --unmapped-red-border: #{$red-300};
+    --unmapped-red-bg: #{$red-200};
+    --cta-disabled: #{$red-350};
+    --pink: #{$pink-400};
+    --check-box: #{$grey-120};
+    --pink-box-border: #{$pink-opacity-16};
+    --configuration-bg: #{$blue-50};
+    --info-section: #{$blue-100};
+    --success-toast: #{$green-500};
+    --progress-bar-bg: #{$green-350};
+    --bg-xero-btn: #{$blue-xero};
+    --bg-qbo-btn: #{$green-qbo};
+
+    //brand bg
+    --bg-brand: #{$utility-major-25};
     --bg-brand-primary: #{$brand-500};
     --bg-brand-disable: #{$brand-300};
     --bg-brand-muted: #B3D9C8;
-    //grey bg
+
+    //toast bg
+    --bg-toast-grey: #{$grey-675};
+
+    //colors bg
     --bg-primary: #{$grey-800};
     --bg-secondary: #{$grey-700};
     --bg-disable: #{$grey-400};
     --bg-tertiary: #{$grey-100};
     --bg-white: #{$white};
+    --bg-green: #{$brand-600};
     --bg-primary-opacity: #{$primary-opacity-10};
+    --bg-grey-primary: #{$grey-50};
+    --bg-red: #{$red-660};
+    --bg-subtle: #{$utility-major-10};
+
     //_contextual bg
     --bg-success: #{$green-500};
-    --bg-info: #{$blue-500};
+    --bg-info: #{$semantic-info-500};
     --bg-warning: #{$yellow-500};
     --bg-danger: #{$red-500};
+    --bg-danger-dark: #{$red-600};
 
     //light bg
     --bg-info-light: #{$blue-200};
@@ -32,6 +72,7 @@
     --bg-highlight-light: #{$purple-200};
     --bg-disable-light: #{$grey-100};
     --bg-tertiary-light: #{$blue-50};
+    --bg-link-muted: #{$grey-250};
 
     //lighter bg
     --bg-info-lighter: #{$blue-100};
@@ -40,18 +81,20 @@
     --bg-danger-lighter: #{$red-100};
     --bg-success-lighter: #{$green-50};
     --bg-disable-lighter: #{$grey-100};
-    --bg-tertiary-lighter: var(--bg-tertiary);
+    --bg-tertiary-lighter: #{$grey-50};
 
     //border-color
     --border-brand: #{$brand-500};
     --border-primary: #{$grey-700};
     --border-secondary: #{$grey-300};
-    --border-tertiary: #{$grey-200};
+    --border-tertiary: #{$grey-50};
+    --border-subtle: #{$grey-350};
 
-    --border-info: #{$blue-500};
+    --border-info: #{$semantic-info-500};
     --border-warning: #{$yellow-500};
     --border-success: #{$green-500};
     --border-danger: #{$red-500};
+    --border-danger-dark: #{$red-600};
     --border-white: #{$white};
 
     --border-danger-light: #{$red-300};
@@ -79,6 +122,7 @@
     --border-radius-xl: #{$size-14};
     --border-radius-2xl: #{$size-16};
     --border-radius-full: 50%;
+    --border-focus: #{$semantic-focus-500};
 
     //border-width
     --border-1: #{$size-1};
@@ -87,35 +131,41 @@
     //text
     --text-brand-primary: #{$brand-500};
     --text-brand-secondary: #{$brand-300};
-    --text-primary: #{$grey-800};
-    --text-secondary: #{$grey-700};
-    --text-tertiary: #{$grey-600};
+    --text-primary: #{$grey-900};
+    --text-secondary: #{$yin-075};
+    --text-tertiary: #{$yin-065};
     --text-success: #{$green-500};
     --text-info: #{$blue-900};
     --text-warning: #{$yellow-500};
     --text-danger: #{$red-500};
+    --text-danger-dark: #{$red-600};
     --text-highlight: #{$purple-500};
     --text-calm: #{$green-900};
     --text-white: #{$white};
     --text-disable: #{$grey-400};
-    --text-placeholder: #{$grey-400};
-    --text-label: #{$grey-500};
+    --text-placeholder: #{$grey-550};
+    --text-label: #{$grey-850};
     --text-pending: #{$yellow-800}; //todo: confirmation from design team for the exact token names
     --text-muted: #{$grey-500};
+    --text-toast-color: #{$grey-90};
+    --text-red: #{$red-600};
 
     //link
-    --link-primary: #{$blue-600};
+    --link-primary: #{$green-700};
     --link-visited: #{$purple-500};
+    --link-muted: #{$grey-550};
 
     //icons
     --icon-brand-primary: #{$brand-500};
     --icon-brand-disable: #{$brand-300};
+    --icon-primary: #{$grey-675};
     --icon-secondary: #{$grey-700};
     --icon-tertiary: #{$grey-500};
     --icon-disable: #{$grey-400};
     --icon-white: #{$white};
     --icon-success: #{$green-500};
     --icon-danger: #{$red-500};
+    --icon-danger-dark: #{$red-600};
     --icon-info: #{$blue-500};
     --icon-warning: #{$yellow-500};
     --icon-muted: #{$grey-400};
@@ -181,17 +231,17 @@
     --gradient-dark-lg-center: #242c42;
     --gradient-dark-lg-end: #05091c;
 
-    --gradient-white-xs-start: rgba(255, 255, 255, 0.90); 
+    --gradient-white-xs-start: rgba(255, 255, 255, 0.90);
     --gradient-white-xs-end: rgba(255, 255, 255, 0.24);
 
     --gradient-white-fade-xs-start: rgba(255, 255, 255, 0.00);
     --gradient-white-fade-xs-end: #f5f5f5;
-    
-    /*TODO-clean up once figma tokens are created*/ 
+
+    /*TODO-clean up once figma tokens are created*/
     //brand gradient
     --gradient-brand-start: #{$brand-500};
     --gradient-brand-end: #fe5196;
-    --gradient-light-sm-start: #e1eeff; 
+    --gradient-light-sm-start: #e1eeff;
     --gradient-light-sm-end: #ffe4fb;
 
     //dropdown shadow
@@ -237,7 +287,7 @@
     --btn-outline-secondary-hover-bg: #{$white};
 
     --btn-tertiary-text-color: var(--text-brand-primary);
-    
+
     --btn-tertiary-hover-text-color: var(--text-brand-primary);
 
     --btn-tertiary-hover-bg: #{$white};
@@ -250,41 +300,39 @@
 
     --nav-tabs-hover-bg: transparent;
 
-    --nav-link-active-border: var(--bg-primary);
+    --nav-link-active-border: #{$brand-500};
 
     --nav-link-font-weight: 500;
 
     --nav-tabs-active: var(--text-disable);
 
-    --nav-tabs-active-border: var(--border-secondary);
+    --nav-tabs-active-border: #{$grey-350};
 
-    --nav-tabs-active-bg:  #{$white};
+    --nav-tabs-active-bg: var(--bg-brand);
 
     --nav-tabs-inactive-bg: transparent;
 
-    --nav-tabs-inactive-text-color: var(--text-disable);
+    --nav-tabs-inactive-text-color: #{$grey-900};
 
     --search-default-filled-text: var(--text-primary);
 
     --search-focused-placeholder-text: var(--text-placeholder);
 
-    --search-default-border: var(--border-secondary);
+    --search-default-border: var(--utility-major-300);
 
     --search-focused-filled-border: var(--btn-secondary-hover-bg);
 
     --select-focused-border: var(--border-primary);
 
-    --select-default-border: var(--border-secondary);
-
     --select-default-placeholder-text: var(--text-placeholder);
 
     --dropdown-option-height: 32px;
 
-    --dd-menu-item-default-text-color: var(--text-secondary);
+    --dd-menu-item-default-text-color: var(--text-primary);
 
     --dd-menu-item-hover-bg: var(--bg-tertiary);
 
-    --checkbox-icon-selected-color: var(--bg-brand-primary);
+    --checkbox-icon-selected-color: var(--bg-brand-primary);;
 
     --checkbox-icon-color: var(--icon-disable);
 
@@ -307,12 +355,15 @@
 
     --alerts-success-icon-color: var(--text-white);
 
-    --toast-success-bg: var(--bg-success);
+    --toast-success-bg: #{$green-950};
+
+    --toast-error: #{$red-600};
+
+    --toast-info-bg: #{$slate-500};
 
     --toast-text-color: var(--text-white);
 
     --alerts-error-icon-color: var(--bg-danger);
-
     --toast-error-bg: var(--bg-danger);
 
     --chips-border-color: var(--border-secondary);
@@ -337,7 +388,7 @@
 
     --calendar-date-default-text-color: var(--text-secondary);
 
-    --tooltip-bg: var(--bg-secondary);
+    --tooltip-bg: #{$grey-675};
 
     --date-picker-filled-icon-color: var(--icon-muted);
 
@@ -352,7 +403,7 @@
     --input-focused-border: var(--bg-secondary);
 
     --modal-header-text-color: var(--bg-primary);
-    
+
     --lv-pagination-icon-active-color: var(--icon-tertiary);
 
     --lv-pagination-icon-disable-color: var(--icon-disable);
@@ -407,5 +458,69 @@
     --badge-light-bg: var(--bg-white);
     --badge-light-border-color: var(--border-tertiary);
     --badge-light-text-color: var(--text-tertiary);
+
+    // Toggle
+    --toggle-enabled-bg: #{$grey-650};
+    --toggle-disabled-bg: #{$white};
+    --toggle-enabled-text-color: #{$white};
+    --toggle-disabled-text-color: #{$slate-500};
+    --toggle-border: var(--toggle-enabled-bg);
+    --toggle-border-width: 1px;
+
+    // Inputs
+    --input-height: 40px;
+
+    // Input - Disabled
+    --input-disabled-bg: #{$utility-major-25};
+    --input-disabled-border: #{$utility-major-100};
+
+    // Select
+    --select-default-border: #{$utility-major-300};
+    --select-menu-item-active-bg: #{$utility-major-200};
+
+    // Yin - Dark font colors
+    --yin-100: #{$yin-100};
+    --yin-090: #{$yin-090};
+    --yin-075: #{$yin-075};
+    --yin-065: #{$yin-065};
+    --yin-055: #{$yin-055};
+    --yin-030: #{$yin-030};
+
+    // Action/Major - Primary theme colour for major actions (Jade)
+    --action-major-25: #{$action-major-25};
+    --action-major-150: #{$action-major-150};
+    --action-major-350: #{$action-major-350};
+    --action-major-450: #{$action-major-450};
+    --action-major-500: #{$action-major-500};
+    --action-major-600: #{$action-major-600};
+    --action-major-700: #{$action-major-700};
+
+    // Utility/Major - Base colour for grayscale tints/shades
+    --utility-major-10: #{$utility-major-10};
+    --utility-major-25: #{$utility-major-25};
+    --utility-major-40: #{$utility-major-40};
+    --utility-major-50: #{$utility-major-50};
+    --utility-major-75: #{$utility-major-75};
+    --utility-major-100: #{$utility-major-100};
+    --utility-major-150: #{$utility-major-150};
+    --utility-major-200: #{$utility-major-200};
+    --utility-major-300: #{$utility-major-300};
+    --utility-major-400: #{$utility-major-400};
+    --utility-major-450: #{$utility-major-450};
+    --utility-major-500: #{$utility-major-500};
+    --utility-major-800: #{$utility-major-800};
+
+    // Semantics colors - UI semantic colors denote standard states. Each color has the same meaning in all contexts.
+    --semantic-focus-500: #{$semantic-focus-500};
+    --semantic-info-500: #{$semantic-info-500};
+
+    // Loader colors
+    --loader-neutral: #{$brand-500};
+    --loader-neutral-track: #{$loader-neutral-track};
+    --loader-action: #{$utility-major-400};
+    --loader-action-track: #{$loader-action-track};
+
+    // Font family
+    --font-primary: "sage-ui", "Helvetica Neue", Roboto, Segoe UI, Arial;
   }
 }

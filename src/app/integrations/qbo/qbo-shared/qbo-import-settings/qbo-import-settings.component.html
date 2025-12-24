@@ -1,141 +1,214 @@
-<div *ngIf="isLoading" class="tw-flex tw-justify-center tw-items-center tw-h-screen">
+@if (isLoading) {
+  <div class="tw-flex tw-justify-center tw-items-center tw-h-[75vh]">
     <app-loader></app-loader>
-</div>
-<div *ngIf="!isLoading" class="configuration--contents tw-border-border-tertiary tw-mt-6" [ngClass]="brandingStyle.common.configurationContents">
+  </div>
+}
+@if (!isLoading) {
+  <div [ngClass]="[brandingStyle.configuration.settingsContainer, isOnboarding ? brandingStyle.common.configurationContents : brandingStyle.common.configurationContentsDashboard, isOnboarding ? 'configuration--contents' : '']">
     <div>
-        <app-configuration-step-header [headerText]="'configuration.importSetting.stepName' | transloco"
-            [contentText]="'configuration.importSetting.contentText' | transloco: {brandName: brandingConfig.brandName}"
-            [redirectLink]="supportArticleLink" [showSyncButton]="isOnboarding" [appName]="appName"
-            (refreshDimension)="refreshDimensions()">
-        </app-configuration-step-header>
+      <app-configuration-step-header [headerText]="'configuration.importSetting.stepName' | transloco"
+        [contentText]="'configuration.importSetting.contentText' | transloco: {brandName: brandingService.getBrandFullName()}"
+        [redirectLink]="supportArticleLink" [showSyncButton]="isOnboarding" [appName]="appName"
+        (refreshDimension)="refreshDimensions()">
+      </app-configuration-step-header>
     </div>
     <div>
-        <form [formGroup]="importSettingForm">
-            <div class="tw-p-24-px">
-                <div class="tw-rounded-lg tw-border-border-tertiary tw-border">
-                    <app-configuration-toggle-field
-                        [form]="importSettingForm"
-                        [label]="'configuration.importSetting.importCategoriesLabel' | transloco: {brandName: brandingConfig.brandName}"
-                        [subLabel]="'configuration.importSetting.importCategoriesSubLabel' | transloco: {brandName: brandingConfig.brandName}"
-                        [formControllerName]="'importCategories'"
-                        [isSectionHeader]="false"
-                        [iconPath]="'arrow-tail-down'">
-                    </app-configuration-toggle-field>
-
-                    <div class="tw-pr-24-px tw-pl-64-px tw-py-0" *ngIf="importSettingForm.get('importCategories')?.value" [ngClass]="{'tw-pb-24-px': !(brandingFeatureConfig.featureFlags.importSettings.allowImportCode && importSettingForm.get('importCategories')?.value && qboImportCodeFieldCodeConfig[DefaultImportFields.ACCOUNT])}">
-                        <div class="tw-flex tw-justify-between tw-items-center">
-                            <h5 class="lg:tw-w-3/5 md:tw-w-1/2 tw-text-slightly-normal-text-color tw-text-14-px !tw-font-500">
-                                {{ 'configuration.importSetting.chartOfAccountTypes' | transloco: {brandName: brandingConfig.brandName} }}
-                                <p class="tw-text-text-muted" [ngClass]="brandingStyle.common.inputLabelTextStyle">
-                                    {{'configuration.importSetting.chartOfAccountTypesSubLabel' | transloco}}
-                                </p>
-                            </h5>
-                            <div class="p-field-checkbox tw-pl-34-px">
-                                <p-multiSelect [optionDisabled]="'Expense'" [placeholder]="'qboImportSettings.selectChartOfAccountsPlaceholder' | transloco" [options]="chartOfAccountTypesList" styleClass="tw-z-2 tw-py-8-px tw-px-12-px" [formControlName]="'chartOfAccountTypes'">
-                                    <ng-template let-value pTemplate="selectedItems">
-                                        <div class="tw-inline-flex tw-align-items-center" *ngFor="let option of value; let i = index">
-                                            <div>{{ option }}<span *ngIf="i !== value?.length-1">,&nbsp;</span></div>
-                                        </div>
-                                        <div *ngIf="!value || value.length === 0">{{ 'qboImportSettings.selectChartOfAccounts' | transloco }}</div>
-                                    </ng-template>
-                                </p-multiSelect>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div *ngIf="brandingFeatureConfig.featureFlags.importSettings.allowImportCode && importSettingForm.get('importCategories')?.value && qboImportCodeFieldCodeConfig[DefaultImportFields.ACCOUNT]">
-                        <app-configuration-select-field
-                            [appName]="appName"
-                            [form]="importSettingForm"
-                            [isDisableTextRequired]="false"
-                            [options]="getImportCodeSelectorOptions(DefaultImportFields.ACCOUNT)"
-                            [placeholder]="'qboImportSettings.howToImportPlaceholder' | transloco: { field: helper.sentenseCaseConversion(DefaultImportFields.ACCOUNT).toLowerCase() }"
-                            [label]="'qboImportSettings.howToImportLabel' | transloco: { field: helper.sentenseCaseConversion(DefaultImportFields.ACCOUNT).toLowerCase(), appName: appName }"
-                            [subLabel]="'qboImportSettings.howToImportSubLabel' | transloco: { field: helper.sentenseCaseConversion(DefaultImportFields.ACCOUNT).toLowerCase() }"
-                            [isMultiLineOption]="true"
-                            [isFieldMandatory]="true"
-                            [customErrorMessage]="'qboImportSettings.howToImportError' | transloco: { field: helper.sentenseCaseConversion(DefaultImportFields.ACCOUNT).toLowerCase() }"
-                            [isDisabled]="!qboImportCodeFieldCodeConfig[DefaultImportFields.ACCOUNT]"
-                            [formControllerName]="'importCategoryCode'">
-                        </app-configuration-select-field>
-                    </div>
-                </div>
-
-                <div class="tw-rounded-lg tw-border-border-tertiary tw-border tw-mt-24-px" *ngIf="workspaceGeneralSettings.reimbursable_expenses_object !== QBOReimbursableExpensesObject.JOURNAL_ENTRY && workspaceGeneralSettings.corporate_credit_card_expenses_object !== QBOCorporateCreditCardExpensesObject.JOURNAL_ENTRY">
-                    <app-configuration-toggle-field
-                      [form]="importSettingForm"
-                      [label]="'configuration.importSetting.importItemsLabel' | transloco: {brandName: brandingConfig.brandName}"
-                      [subLabel]="'configuration.importSetting.importItemsSubLabel' | transloco: {brandName: brandingConfig.brandName}"
-                      [formControllerName]="'importItems'"
-                      [iconPath]="'arrow-tail-down'">
-                    </app-configuration-toggle-field>
-                </div>
-
-                <div class="tw-rounded-lg tw-border-border-tertiary tw-border tw-mt-24-px" *ngIf="isTaxGroupSyncAllowed && brandingFeatureConfig.featureFlags.importSettings.tax">
-                    <app-configuration-toggle-field
-                      [form]="importSettingForm"
-                      [label]="'configuration.exportSetting.taxCodeLabel' | transloco"
-                      [subLabel]="('configuration.exportSetting.taxCodeSubLabel' | transloco) + brandingConfig.brandName + ('qboImportSettings.selectableFieldOnExpense' | transloco)"
-                      [formControllerName]="'taxCode'"
-                      [iconPath]="'arrow-tail-down'"
-                      [hasDependentFields]="true">
-                    </app-configuration-toggle-field>
-
-                    <app-configuration-select-field *ngIf="importSettingForm.get('taxCode')?.value"
-                        [form]="importSettingForm"
-                        [isFieldMandatory]="true"
-                        [mandatoryErrorListName]="'qboImportSettings.mandatoryTaxCodeError' | transloco"
-                        [label]="'configuration.exportSetting.defaultTaxCodeLabel' | transloco"
-                        [subLabel]="'qboImportSettings.defaultTaxCodeSubLabel' | transloco: { brandName: brandingConfig.brandName }"
-                        [destinationAttributes]="taxCodes"
-                        [optionLabel]="'name'"
-                        [placeholder]="'qboImportSettings.selectTaxCodePlaceholder' | transloco"
-                        [formControllerName]="'defaultTaxCode'">
-                    </app-configuration-select-field>
+      <form [formGroup]="importSettingForm">
+        <div class="tw-p-24-px">
+          <div class="tw-rounded-lg tw-border-border-tertiary tw-border">
+            <app-configuration-toggle-field
+              [form]="importSettingForm"
+              [label]="'configuration.importSetting.importCategoriesLabel' | transloco: {brandName: brandingConfig.brandName}"
+              [subLabel]="'configuration.importSetting.importCategoriesSubLabel' | transloco: {brandName: brandingConfig.brandName}"
+              [formControllerName]="'importCategories'"
+              [isSectionHeader]="false"
+              [iconPath]="'arrow-tail-down'"(importCodeEnabled)="updateCommonImportFields($event, 'accounts_count', 'importCategories', true)">
+            </app-configuration-toggle-field>
+            @if (importSettingForm.get('importCategories')?.disabled) {
+              <div class="tw-pb-26-px tw-px-24-px">
+                <app-configuration-info-label 
+                    [iconSrc]="'warning-filled'"
+                    [customBackgroundColorClass]="brandingStyle.configuration.infoLabelWarningBackground"
+                    [customStyleClass]="brandingStyle.configuration.infoLabelWarningIcon"
+                    [infoText]="'qboImportSettings.autoImportEnabledInfo' | transloco: { destinationField: 'Categories', currentDestinationCount: attributeCounts['accounts_count'], appName: appName }">
+                </app-configuration-info-label>
+              </div>
+            }    
+            @if (showChartOfCategory) {
+              <div class="tw-pr-24-px tw-pl-64-px tw-py-0" [ngClass]="{'tw-pb-24-px': !(brandingFeatureConfig.featureFlags.importSettings.allowImportCode && importSettingForm.get('importCategories')?.value && qboImportCodeFieldCodeConfig[DefaultImportFields.ACCOUNT])}">
+                <div class="tw-flex tw-justify-between tw-items-center">
+                  <h5 class="lg:tw-w-3/5 md:tw-w-1/2 tw-text-slightly-normal-text-color tw-text-14-px !tw-font-500">
+                    {{ 'configuration.importSetting.chartOfAccountTypes' | transloco: {brandName: brandingConfig.brandName} }}
+                    <p class="tw-text-text-muted" [ngClass]="brandingStyle.common.inputLabelTextStyle">
+                      {{'configuration.importSetting.chartOfAccountTypesSubLabel' | transloco}}
+                    </p>
+                  </h5>
+                  <div class="p-field-checkbox tw-pl-34-px">
+                    <p-multiselect [optionDisabled]="'Expense'" [placeholder]="'qboImportSettings.selectChartOfAccountsPlaceholder' | transloco" [options]="chartOfAccountTypesList" styleClass="tw-z-2 tw-py-8-px tw-px-12-px" [formControlName]="'chartOfAccountTypes'">
+                      <ng-template let-value pTemplate="selectedItems">
+                        @for (option of value; track option; let i = $index) {
+                          <div class="tw-inline-flex tw-align-items-center">
+                            <div>{{ option }}@if (i !== value?.length-1) {
+                              <span>,&nbsp;</span>
+                            }</div>
+                          </div>
+                        }
+                        @if (!value || value.length === 0) {
+                          <div>{{ 'qboImportSettings.selectChartOfAccounts' | transloco }}</div>
+                        }
+                      </ng-template>
+                    </p-multiselect>
                   </div>
-
-                  <div class="tw-rounded-lg tw-border-border-tertiary tw-border tw-mt-24-px" *ngIf="isImportMerchantsAllowed && brandingFeatureConfig.featureFlags.importSettings.importVendorsAsMerchants">
-                    <app-configuration-toggle-field
-                        [form]="importSettingForm"
-                        [label]="'configuration.importSetting.importVendorsAsMerchantsLabel' | transloco"
-                        [subLabel]="'qboImportSettings.importVendorsAsMerchantsSubLabel' | transloco: { brandName: brandingConfig.brandName }"
-                        [formControllerName]="'importVendorsAsMerchants'"
-                        [iconPath]="'arrow-tail-down'">
-                    </app-configuration-toggle-field>
-                  </div>
-
-                <div>
-                    <app-configuration-import-field
-                        [form]="importSettingForm"
-                        [appName]="appName"
-                        [accountingFieldOptions]="qboFields"
-                        [fyleFieldOptions]="fyleFields"
-                        [isDestinationFixedImport]="true">
-                    </app-configuration-import-field>
                 </div>
+              </div>
+            }
+            @if (brandingFeatureConfig.featureFlags.importSettings.allowImportCode && importSettingForm.get('importCategories')?.value && qboImportCodeFieldCodeConfig[DefaultImportFields.ACCOUNT]) {
+              <div>
+                <app-configuration-select-field
+                  [appName]="appName"
+                  [form]="importSettingForm"
+                  [isDisableTextRequired]="false"
+                  [options]="getImportCodeSelectorOptions(DefaultImportFields.ACCOUNT)"
+                  [placeholder]="'qboImportSettings.howToImportPlaceholder' | transloco: { field: helper.sentenseCaseConversion(DefaultImportFields.ACCOUNT).toLowerCase() }"
+                  [label]="'qboImportSettings.howToImportLabel' | transloco: { field: helper.sentenseCaseConversion(DefaultImportFields.ACCOUNT).toLowerCase(), appName: appName }"
+                  [subLabel]="'qboImportSettings.howToImportSubLabel' | transloco: { field: helper.sentenseCaseConversion(DefaultImportFields.ACCOUNT).toLowerCase() }"
+                  [isMultiLineOption]="true"
+                  [isFieldMandatory]="true"
+                  [customErrorMessage]="'qboImportSettings.howToImportError' | transloco: { field: helper.sentenseCaseConversion(DefaultImportFields.ACCOUNT).toLowerCase() }"
+                  [isDisabled]="!qboImportCodeFieldCodeConfig[DefaultImportFields.ACCOUNT]"
+                  [formControllerName]="'importCategoryCode'">
+                </app-configuration-select-field>
+              </div>
+            }
+          </div>
+          @if (workspaceGeneralSettings.reimbursable_expenses_object !== QBOReimbursableExpensesObject.JOURNAL_ENTRY && workspaceGeneralSettings.corporate_credit_card_expenses_object !== QBOCorporateCreditCardExpensesObject.JOURNAL_ENTRY) {
+            <div class="tw-rounded-lg tw-border-border-tertiary tw-border tw-mt-24-px">
+              <app-configuration-toggle-field
+                [form]="importSettingForm"
+                [label]="'configuration.importSetting.importItemsLabel' | transloco: {brandName: brandingConfig.brandName}"
+                [subLabel]="'configuration.importSetting.importItemsSubLabel' | transloco: {brandName: brandingConfig.brandName}"
+                [formControllerName]="'importItems'"
+                [iconPath]="'arrow-tail-down'"
+                (importCodeEnabled)="updateCommonImportFields($event, 'items_count', 'importItems')">
+              </app-configuration-toggle-field>
+
+              @if (importSettingForm.get('importItems')?.disabled) {
+                <div class="tw-pb-26-px tw-px-24-px">
+                  <app-configuration-info-label 
+                      [iconSrc]="'warning-filled'"
+                      [customBackgroundColorClass]="brandingStyle.configuration.infoLabelWarningBackground"
+                      [customStyleClass]="brandingStyle.configuration.infoLabelWarningIcon"
+                      [infoText]="'qboImportSettings.autoImportEnabledInfo' | transloco: { destinationField: 'Products/services', currentDestinationCount: attributeCounts['items_count'], appName: appName }">
+                  </app-configuration-info-label>
+               </div>
+              }
             </div>
-            <app-configuration-step-footer
-                [ctaText] = "!isSaveInProgress ? (isOnboarding ? ConfigurationCtaText.SAVE_AND_CONTINUE : ConfigurationCtaText.SAVE) : ConfigurationCtaText.SAVING"
-                [isButtonDisabled]="!importSettingForm.valid"
-                [showBackButton]="isOnboarding ? true : false"
-                (save)="save()"
-                (navigateToPreviousStep)="navigateToPreviousStep()">
-            </app-configuration-step-footer>
-        </form>
+          }
+          @if (isTaxGroupSyncAllowed && brandingFeatureConfig.featureFlags.importSettings.tax) {
+            <div class="tw-rounded-lg tw-border-border-tertiary tw-border tw-mt-24-px">
+              <app-configuration-toggle-field
+                [form]="importSettingForm"
+                [label]="'configuration.importSetting.taxCodeLabel' | transloco"
+                [subLabel]="('configuration.importSetting.taxCodeSubLabel' | transloco) + brandingConfig.brandName + ('qboImportSettings.selectableFieldOnExpense' | transloco)"
+                [formControllerName]="'taxCode'"
+                [iconPath]="'arrow-tail-down'"
+                [hasDependentFields]="true"(importCodeEnabled)="updateCommonImportFields($event, 'tax_codes_count', 'taxCode')">
+              </app-configuration-toggle-field>
+              @if (importSettingForm.get('taxCode')?.disabled) {
+                <div class="tw-pt-26-px tw-px-24-px">
+                  <app-configuration-info-label 
+                      [iconSrc]="'warning-filled'"
+                      [customBackgroundColorClass]="brandingStyle.configuration.infoLabelWarningBackground"
+                      [customStyleClass]="brandingStyle.configuration.infoLabelWarningIcon"
+                      [infoText]="'qboImportSettings.autoImportEnabledInfo' | transloco: { destinationField: 'Tax code', currentDestinationCount: attributeCounts['tax_codes_count'], appName: appName }">
+                  </app-configuration-info-label>
+                </div>
+              }
+              @if (importSettingForm.get('taxCode')?.value) {
+                <app-configuration-select-field
+                  [form]="importSettingForm"
+                  [isFieldMandatory]="true"
+                  [mandatoryErrorListName]="'qboImportSettings.mandatoryTaxCodeError' | transloco"
+                  [label]="'configuration.importSetting.defaultTaxCodeLabel' | transloco"
+                  [subLabel]="'qboImportSettings.defaultTaxCodeSubLabel' | transloco: { brandName: brandingConfig.brandName }"
+                  [destinationAttributes]="taxCodes"
+                  [optionLabel]="'name'"
+                  [placeholder]="'qboImportSettings.selectTaxCodePlaceholder' | transloco"
+                  [formControllerName]="'defaultTaxCode'">
+                </app-configuration-select-field>
+              }
+            </div>
+          }
+          @if (isImportMerchantsAllowed && brandingFeatureConfig.featureFlags.importSettings.importVendorsAsMerchants) {
+            <div class="tw-rounded-lg tw-border-border-tertiary tw-border tw-mt-24-px">
+              <app-configuration-toggle-field
+                [form]="importSettingForm"
+                [label]="'configuration.importSetting.importVendorsAsMerchantsLabel' | transloco"
+                [subLabel]="'qboImportSettings.importVendorsAsMerchantsSubLabel' | transloco: { brandName: brandingConfig.brandName }"
+                [formControllerName]="'importVendorsAsMerchants'"
+                [iconPath]="'arrow-tail-down'"(importCodeEnabled)="updateCommonImportFields($event, 'vendors_count', 'importVendorsAsMerchants')">
+              </app-configuration-toggle-field>
+              <div *ngIf="importSettingForm.get('importVendorsAsMerchants')?.disabled" class="tw-pb-26-px tw-px-24-px">
+                  <app-configuration-info-label 
+                      [iconSrc]="'warning-filled'"
+                      [customBackgroundColorClass]="brandingStyle.configuration.infoLabelWarningBackground"
+                      [customStyleClass]="brandingStyle.configuration.infoLabelWarningIcon"
+                      [infoText]="'qboImportSettings.autoImportEnabledInfo' | transloco: { destinationField: 'Vendors', currentDestinationCount: attributeCounts['vendors_count'], appName: appName }">
+                  </app-configuration-info-label>
+              </div>
+            </div>
+          }
+          <div>
+            <app-configuration-import-field
+              [form]="importSettingForm"
+              [appName]="appName"
+              [accountingFieldOptions]="qboFields"
+              [fyleFieldOptions]="fyleFields"
+              [isDestinationFixedImport]="true"
+              (importCodeEnabled)="updateImportFields($event)">
+            </app-configuration-import-field>
+          </div>
+        </div>
+        @if (isOnboarding) {
+          <app-configuration-step-footer
+            [ctaText] = "!isSaveInProgress ? (isOnboarding ? ConfigurationCtaText.SAVE_AND_CONTINUE : ConfigurationCtaText.SAVE) : ConfigurationCtaText.SAVING"
+            [isButtonDisabled]="!importSettingForm.valid"
+            [showBackButton]="isOnboarding ? true : false"
+            (save)="save()"
+            (navigateToPreviousStep)="navigateToPreviousStep()">
+          </app-configuration-step-footer>
+        }
+      </form>
     </div>
-</div>
+  </div>
+}
+
+@if (!isLoading && !isOnboarding) {
+  <div class="tw-sticky tw-top-0 tw-bottom-0 tw-left-0 tw-right-0 tw-bg-white">
+    <app-configuration-step-footer
+      [ctaText] = "!isSaveInProgress ? (isOnboarding ? ConfigurationCtaText.SAVE_AND_CONTINUE : ConfigurationCtaText.SAVE) : ConfigurationCtaText.SAVING"
+      [isButtonDisabled]="!importSettingForm.valid"
+      [showBackButton]="isOnboarding ? true : false"
+      (save)="save()"
+      (navigateToPreviousStep)="navigateToPreviousStep()">
+    </app-configuration-step-footer>
+  </div>
+}
+
 <div>
-    <app-configuration-custom-field-creation-dialog
-        [customFieldForm]="customFieldForm"
-        [showCustomFieldCreationDialog]="showCustomFieldDialog"
-        (saveCustomFieldFn)="saveFyleExpenseField()"
-        (closeModelFn)="closeModel()">
-    </app-configuration-custom-field-creation-dialog>
+  <app-configuration-custom-field-creation-dialog
+    [customFieldForm]="customFieldForm"
+    [showCustomFieldCreationDialog]="showCustomFieldDialog"
+    (saveCustomFieldFn)="saveFyleExpenseField()"
+    (closeModelFn)="closeModel()">
+  </app-configuration-custom-field-creation-dialog>
 </div>
-<div *ngIf="isPreviewDialogVisible">
+@if (isPreviewDialogVisible) {
+  <div>
     <app-preview-dialog
-        [isPreviewDialogVisible]="true"
-        [iconPath]="'assets/illustrations/sageIntacct/IntacctImportSettings.png'" (closeDialog)="closeDialog()"
-        [header]="'qboImportSettings.previewHeader' | transloco">
+      [isPreviewDialogVisible]="true"
+      [iconPath]="'assets/illustrations/sageIntacct/IntacctImportSettings.png'" (closeDialog)="closeDialog()"
+      [header]="'qboImportSettings.previewHeader' | transloco">
     </app-preview-dialog>
-</div>
+  </div>
+}

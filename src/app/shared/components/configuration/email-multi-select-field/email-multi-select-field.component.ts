@@ -1,20 +1,21 @@
 import { Component, EventEmitter, Inject, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { DropdownFilterOptions } from 'primeng/dropdown';
+import { SelectFilterOptions } from 'primeng/select';
 import { BambooHRConfigurationPost } from 'src/app/core/models/bamboo-hr/bamboo-hr.model';
-import { AppName, ClickEvent, ToastSeverity } from 'src/app/core/models/enum/enum.model';
+import { AppName, ButtonSize, ButtonType, ClickEvent, ToastSeverity } from 'src/app/core/models/enum/enum.model';
 import { QBDEmailOptions } from 'src/app/core/models/qbd/qbd-configuration/qbd-advanced-setting.model';
 import { TrackingService } from 'src/app/core/services/integration/tracking.service';
 import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
 import { EmailOption } from 'src/app/core/models/intacct/intacct-configuration/advanced-settings.model';
 import { trackingAppMap } from 'src/app/core/models/misc/tracking.model';
-import { brandingConfig, brandingStyle } from 'src/app/branding/branding-config';
+import { brandingConfig, brandingFeatureConfig, brandingStyle } from 'src/app/branding/branding-config';
 import { TranslocoService } from '@jsverse/transloco';
 
 @Component({
-  selector: 'app-email-multi-select-field',
-  templateUrl: './email-multi-select-field.component.html',
-  styleUrls: ['./email-multi-select-field.component.scss']
+    selector: 'app-email-multi-select-field',
+    templateUrl: './email-multi-select-field.component.html',
+    styleUrls: ['./email-multi-select-field.component.scss'],
+    standalone: false
 })
 export class EmailMultiSelectFieldComponent implements OnInit {
 
@@ -44,6 +45,10 @@ export class EmailMultiSelectFieldComponent implements OnInit {
 
   @Input() appName: AppName;
 
+  ButtonType = ButtonType;
+
+  ButtonSize = ButtonSize;
+
   addEmailForm: FormGroup = this.formBuilder.group({
     email: [null, Validators.compose([Validators.email, Validators.required])],
     name: [null, Validators.required]
@@ -56,6 +61,8 @@ export class EmailMultiSelectFieldComponent implements OnInit {
   emails: QBDEmailOptions[];
 
   readonly brandingConfig = brandingConfig;
+
+  readonly brandingFeatureConfig = brandingFeatureConfig;
 
   readonly brandingStyle = brandingStyle;
 
@@ -70,7 +77,7 @@ export class EmailMultiSelectFieldComponent implements OnInit {
     return element.offsetWidth < element.scrollWidth;
   }
 
-  clearSearch(options: DropdownFilterOptions): void {
+  clearSearch(options: SelectFilterOptions): void {
     if (options.reset) {
       options.reset();
     }

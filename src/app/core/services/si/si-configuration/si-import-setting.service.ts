@@ -8,7 +8,7 @@ import { ApiService } from '../../common/api.service';
 @Injectable({
   providedIn: 'root'
 })
-export class SiImportSettingService {
+export class SiImportSettingsService {
 
   constructor(
     private apiService: ApiService,

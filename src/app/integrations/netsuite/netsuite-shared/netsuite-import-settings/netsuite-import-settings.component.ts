@@ -8,7 +8,7 @@ import { SelectFormOption } from 'src/app/core/models/common/select-form-option.
 import { DestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
 import { FyleField, IntegrationField } from 'src/app/core/models/db/mapping.model';
 import { AppName, ConfigurationCta, EmployeeFieldMapping, NetSuiteCorporateCreditCardExpensesObject, NetsuiteFyleField, NetsuiteOnboardingState, NetsuiteReimbursableExpensesObject, ToastSeverity } from 'src/app/core/models/enum/enum.model';
-import { NetsuiteImportSettingGet } from 'src/app/core/models/netsuite/netsuite-configuration/netsuite-import-setting.model';
+import { NetsuiteImportFieldsAttributeCounts, NetsuiteImportSettingGet } from 'src/app/core/models/netsuite/netsuite-configuration/netsuite-import-setting.model';
 import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
 import { MappingService } from 'src/app/core/services/common/mapping.service';
 import { WorkspaceService } from 'src/app/core/services/common/workspace.service';
@@ -19,11 +19,13 @@ import { NetsuiteConnectorService } from 'src/app/core/services/netsuite/netsuit
 import { NetsuiteHelperService } from 'src/app/core/services/netsuite/netsuite-core/netsuite-helper.service';
 import { TranslocoService } from '@jsverse/transloco';
 import { ImportSettingsService } from 'src/app/core/services/common/import-settings.service';
+import { BrandingService } from 'src/app/core/services/common/branding.service';
 
 @Component({
-  selector: 'app-netsuite-import-settings',
-  templateUrl: './netsuite-import-settings.component.html',
-  styleUrls: ['./netsuite-import-settings.component.scss']
+    selector: 'app-netsuite-import-settings',
+    templateUrl: './netsuite-import-settings.component.html',
+    styleUrls: ['./netsuite-import-settings.component.scss'],
+    standalone: false
 })
 export class NetsuiteImportSettingsComponent implements OnInit {
 
@@ -97,6 +99,8 @@ export class NetsuiteImportSettingsComponent implements OnInit {
 
   readonly brandingStyle = brandingStyle;
 
+  attributeCounts: NetsuiteImportFieldsAttributeCounts;
+
   constructor(
     @Inject(FormBuilder) private formBuilder: FormBuilder,
     private helperService: NetsuiteHelperService,
@@ -110,11 +114,52 @@ export class NetsuiteImportSettingsComponent implements OnInit {
     private netsuiteAdvancedSettingService: NetsuiteAdvancedSettingsService,
     private translocoService: TranslocoService,
     private importSettingsService: ImportSettingsService,
-    private netsuiteImportSettingsService: NetsuiteImportSettingsService
+    private netsuiteImportSettingsService: NetsuiteImportSettingsService,
+    public brandingService: BrandingService
   ) {
     this.customFieldOption = this.importSettingsService.getCustomFieldOption();
     this.customrSegmentOptions = this.netsuiteImportSettingsService.getCustomSegmentOptions();
 
+  }
+
+  updateCommonImportFields(isImportCodeEnabled: boolean, destinationField: keyof NetsuiteImportFieldsAttributeCounts, formControlName: string): void {
+    if (isImportCodeEnabled) {
+      this.importSettingService.getImportFieldsAttributeCounts().subscribe((importFieldsAttributeCounts: NetsuiteImportFieldsAttributeCounts) => {
+        this.attributeCounts = importFieldsAttributeCounts;
+        const destinationFieldCount: number = importFieldsAttributeCounts[destinationField] as number;
+        if (destinationFieldCount >= 30000) {
+          this.importSettingForm.controls[formControlName].setValue(false);
+          this.importSettingForm.controls[formControlName].disable();
+        } else {
+          this.importSettingForm.controls[formControlName].setValue(isImportCodeEnabled);
+          this.importSettingForm.controls[formControlName].enable();
+        }
+      });
+    }
+  }
+
+  updateImportFields(event: [boolean, string, number]): void {
+    const destinationField = event[1] === 'classes' ? 'classifications_count' : event[1].toLowerCase() + "_count";
+    const expenseFieldArray = this.importSettingForm.get('expenseFields') as FormArray;
+    if (event[0]) {
+      this.importSettingService.getImportFieldsAttributeCounts().subscribe((importFieldsAttributeCounts: NetsuiteImportFieldsAttributeCounts) => {
+        const count = importFieldsAttributeCounts[destinationField as keyof NetsuiteImportFieldsAttributeCounts];
+        if (typeof count === 'number' && count >= 30000) {
+          const expenseField = expenseFieldArray.controls[event[2]];
+          expenseField.patchValue({
+            import_to_fyle: false,
+            is_auto_import_enabled: false,
+            count: count
+          });
+        } else {
+          const expenseField = expenseFieldArray.controls[event[2]];
+          expenseField.patchValue({
+            import_to_fyle: event[0],
+            is_auto_import_enabled: true
+          });
+        }
+      });
+    }
   }
 
   addCustomSegment() {
@@ -131,7 +176,7 @@ export class NetsuiteImportSettingsComponent implements OnInit {
     const importSettingPayload = this.netsuiteImportSettingsService.constructPayload(this.importSettingForm);
     this.importSettingService.postImportSettings(importSettingPayload).subscribe(() => {
       this.isSaveInProgress = false;
-      this.toastService.displayToastMessage(ToastSeverity.SUCCESS, this.translocoService.translate('netsuiteImportSettings.importSettingsSuccess'));
+      this.toastService.displayToastMessage(ToastSeverity.SUCCESS, this.translocoService.translate('netsuiteImportSettings.importSettingsSuccess'), undefined, this.isOnboarding);
 
       if (this.isOnboarding) {
         this.workspaceService.setOnboardingState(NetsuiteOnboardingState.ADVANCED_CONFIGURATION);
@@ -280,9 +325,19 @@ export class NetsuiteImportSettingsComponent implements OnInit {
         workspaceGeneralSetting.corporate_credit_card_expenses_object === NetsuiteReimbursableExpensesObject.EXPENSE_REPORT
       );
 
-      if (workspaceGeneralSetting.reimbursable_expenses_object === NetsuiteReimbursableExpensesObject.BILL && (!workspaceGeneralSetting.corporate_credit_card_expenses_object || workspaceGeneralSetting.corporate_credit_card_expenses_object === 'BILL')) {
-        this.isImportItemsAllowed = true;
-      }
+      // 1. Both reimbursable and corporate credit card are enabled and set to BILL
+      // 2. reimbursable is disabled and corporate credit card is set to BILL
+      // 3. reimbursable is set to BILL and corporate credit card is disabled
+      const isReimbursableBill = workspaceGeneralSetting.reimbursable_expenses_object === NetsuiteReimbursableExpensesObject.BILL;
+      const isCorporateCreditCardBill = workspaceGeneralSetting.corporate_credit_card_expenses_object === NetSuiteCorporateCreditCardExpensesObject.BILL;
+      const isReimbursableEnabled = !!workspaceGeneralSetting.reimbursable_expenses_object;
+      const isCorporateCreditCardEnabled = !!workspaceGeneralSetting.corporate_credit_card_expenses_object;
+
+      this.isImportItemsAllowed = (
+        (isReimbursableEnabled && isReimbursableBill && isCorporateCreditCardEnabled && isCorporateCreditCardBill) ||
+        (!isReimbursableEnabled && isCorporateCreditCardEnabled && isCorporateCreditCardBill) ||
+        (isReimbursableEnabled && isReimbursableBill && !isCorporateCreditCardEnabled)
+      );
 
       if (
         ( workspaceGeneralSetting.reimbursable_expenses_object === NetsuiteReimbursableExpensesObject.JOURNAL_ENTRY && workspaceGeneralSetting.corporate_credit_card_expenses_object === NetSuiteCorporateCreditCardExpensesObject.JOURNAL_ENTRY )

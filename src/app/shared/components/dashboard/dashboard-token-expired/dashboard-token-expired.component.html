@@ -7,11 +7,11 @@
 
   @if (!isConnectionInProgress) {
   <div class="tw-flex tw-flex-col tw-items-center" [ngClass]="isTokenBasedAuthApp ? 'tw-gap-[32px]' : 'tw-gap-[4px]'">
-    
-    <p class="tw-text-18-px tw-text-text-primary"> {{isIntegrationDisconnected ? 'dashboardTokenExpired.integrationDisconnected' : 'dashboardTokenExpired.connectionExpired' | transloco}} </p>
+
+    <p class="tw-text-18-px tw-text-text-primary"> {{ (isIntegrationDisconnected ? 'dashboardTokenExpired.integrationDisconnected' : 'dashboardTokenExpired.connectionExpired') | transloco }} </p>
     @if (!isIntegrationDisconnected) {
     @if (!isTokenBasedAuthApp) {
-    <p class="tw-text-center tw-text-14-px tw-text-text-tertiary tw-w-[650px] tw-break-words tw-whitespace-normal">
+    <p class="tw-text-center tw-text-14-px tw-text-text-tertiary tw-w-[650px] tw-break-words tw-whitespace-pre-line">
       {{ 'dashboardTokenExpired.connectionExpiredDescription' | transloco:{ appName: appName } }} </p>
     } @else {
       <p class="tw-text-start tw-text-14-px tw-text-text-tertiary tw-break-words tw-whitespace-normal">
@@ -19,13 +19,13 @@
         <span class="tw-mt-8-px tw-block"> {{ 'dashboardTokenExpired.tokenBasedAppDisconnectedExtendedDescription' | transloco }} </span>
         <span class="tw-flex tw-flex-row tw-items-center tw-gap-1 tw-cursor-pointer">
           {{ 'dashboardTokenExpired.tutorialStep1Text' | transloco}}
-             <span class="tw-text-hyperlink-color tw-underline tw-flex tw-items-center tw-gap-1" (click)="openCredentialGenerationGuide()"> 
+             <span class="link tw-flex tw-items-center tw-gap-1" (click)="openCredentialGenerationGuide()">
               {{ 'dashboardTokenExpired.tutorialStep1Context' | transloco:{ appName: appName } }}
-             <app-svg-icon [svgSource]="'open-in-new-tab'" [width]="'16px'" [height]="'16px'"></app-svg-icon> 
+             <app-svg-icon [svgSource]="'open-in-new-tab'" [width]="'16px'" [height]="'16px'"></app-svg-icon>
            </span>
         </span>
 
-        <span> {{ 'dashboardTokenExpired.tutorialStep2Text' | transloco}} {{ 'dashboardTokenExpired.tutorialStep2Context' | transloco}} </span> 
+        <span> {{ 'dashboardTokenExpired.tutorialStep2Text' | transloco}} {{ 'dashboardTokenExpired.tutorialStep2Context' | transloco}} </span>
       </p> }
     } @else {
       <p class="tw-text-center tw-text-14-px tw-text-text-tertiary tw-w-[700px] tw-break-words tw-whitespace-normal">
@@ -49,7 +49,7 @@
 
   @if (appName === AppName.NETSUITE || appName === AppName.INTACCT || appName === AppName.SAGE300) {
       <div class="tw-cursor-pointer">
-        <button pButton (click)="toggleIntegrationReconnectDialog()"> {{'dashboardTokenExpired.reconnectIntegrationButtonText' | transloco}}</button>
+        <app-button  [buttonSize]="ButtonSize.MEDIUM" [buttonType]="ButtonType.PRIMARY" [buttonText]="'dashboardTokenExpired.reconnectIntegrationButtonText' | transloco" (buttonClick)="toggleIntegrationReconnectDialog()"></app-button>
       </div>
   }
 }
@@ -65,14 +65,15 @@
 </div>
 
 @if (isIncorrectAccountSelected) {
-<app-configuration-confirmation-dialog (warningAccepted)="acceptWarning($event)"
+<app-configuration-confirmation-dialog (warningAccepted)="initiateOAuth()"
+  [appName]="appName"
   [isWarningVisible]="isIncorrectAccountSelected" [headerText]="'dashboardTokenExpired.incorrectAccountSelectedHeader' | transloco"
-  [contextText]="'dashboardTokenExpired.incorrectAccountSelectedContext' | transloco:{ appName: appName }"
+  [contextText]="'dashboardTokenExpired.incorrectAccountSelectedContext' | transloco:{ appName: appName, qboCompanyName: qboCompanyName }"
   [confirmBtnText]="'dashboardTokenExpired.reconnectButton' | transloco" [showSecondaryCTA]="false">
 </app-configuration-confirmation-dialog>
 }
 
-<p-dialog 
+<p-dialog
   [visible]="isIntegrationReconnectDialogVisible"
   [showHeader]="false"
   [modal]="true"
@@ -97,7 +98,7 @@
     <app-netsuite-connection-form [connectNetsuiteForm]="integrationSetupForm" [isReconnecting]="true"></app-netsuite-connection-form>
     }
     @if (appName === AppName.INTACCT) {
-    <app-intacct-connection-form [connectIntacctForm]="integrationSetupForm" [isReconnecting]="true"></app-intacct-connection-form>
+    <app-intacct-connection-form [connectIntacctForm]="integrationSetupForm" [isReconnecting]="true" [isMigratedToRestApi]="isMigratedToRestApi"></app-intacct-connection-form>
     }
     @if (appName === AppName.SAGE300) {
     <app-sage300-connection-form [connectSage300Form]="integrationSetupForm" [isReconnecting]="true"></app-sage300-connection-form>
@@ -107,9 +108,7 @@
 
   <!-- Footer -->
   <div class="tw-flex tw-justify-end tw-py-4 tw-px-6 tw-border-t tw-border-t-box-color tw-gap-16">
-    <button type="button" (click)="reconnectToIntegration()" class="connect-btn" pButton>
-      {{ 'dashboardTokenExpired.reconnectButton' | transloco}}
-    </button>
+    <app-button  [buttonSize]="ButtonSize.MEDIUM" [buttonType]="ButtonType.PRIMARY" [buttonText]="'dashboardTokenExpired.reconnectButton' | transloco" (buttonClick)="reconnectToIntegration()"></app-button>
   </div>
 
 </p-dialog>

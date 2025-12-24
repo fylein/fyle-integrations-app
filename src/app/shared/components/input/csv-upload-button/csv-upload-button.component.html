@@ -1,0 +1,53 @@
+<!-- Initial Upload Button -->
+@if (!fileName) {
+    <app-button
+        [buttonType]="ButtonType.SECONDARY"
+        [buttonSize]="ButtonSize.MEDIUM"
+        [buttonText]="'csvUploadButton.uploadButton' | transloco"
+        [svgSource]="'upload'"
+        [iconSize]="'20px'"
+        [iconViewbox]="'0 0 16 16'"
+        [disabled]="isDisabled"
+        (buttonClick)="handleUploadClick()"
+        class="tw-text-14-px tw-shrink-0">
+    </app-button>
+} @else {
+    <!-- Reupload UI with filename and icon button -->
+    @if (showFileName) {
+        <div class="tw-flex tw-items-center tw-gap-[16px] tw-shrink-0">
+            <div class="tw-flex tw-items-center tw-gap-[4px]">
+                <img src="assets/icons/file-csv-dark.svg" [alt]="'csvUploadButton.csvUpload' | transloco">
+                <span 
+                    #fileNameElement
+                    class="tw-text-14-px tw-text-text-secondary tw-font-500 tw-truncate tw-max-w-[140px]"
+                    [pTooltip]="fileNameElement.offsetWidth < fileNameElement.scrollWidth ? fileName : ''"
+                    tooltipPosition="top">{{ fileName }}</span>
+            </div>
+            <app-button
+                [buttonType]="ButtonType.TERTIARY"
+                [buttonSize]="ButtonSize.MEDIUM"
+                [svgSource]="'upload'"
+                [iconSize]="'16px'"
+                [iconViewbox]="'0 0 16 16'"
+                [disabled]="isDisabled"
+                (buttonClick)="handleReuploadClick()"
+                [pTooltip]="'csvUploadButton.reuploadTooltip' | transloco"
+                [tooltipPosition]="'top'"
+                styleClasses="!tw-p-0 tw-min-w-40-px">
+            </app-button>
+        </div>
+    } @else {
+        <!-- Hide filename - Only Reupload Button -->
+        <app-button
+            [buttonType]="ButtonType.SECONDARY"
+            [buttonSize]="ButtonSize.MEDIUM"
+            [buttonText]="'csvUploadButton.reuploadButton' | transloco"
+            [svgSource]="'upload'"
+            [iconSize]="'20px'"
+            [iconViewbox]="'0 0 16 16'"
+            [disabled]="isDisabled"
+            (buttonClick)="handleReuploadClick()"
+            class="tw-text-14-px tw-shrink-0">
+        </app-button>
+    }
+}

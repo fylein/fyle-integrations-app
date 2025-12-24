@@ -1,3 +1,7 @@
 <app-onboarding-steppers [onboardingSteps]="onboardingSteps" [disableConfigurationStepsIfTokenInvalid]="!isNetsuiteCredentialsValid"></app-onboarding-steppers>
-<app-netsuite-connector (setupConnectionStatus)="setupConnectionStatus($event)" *ngIf="!isNetsuiteCredentialsValid"></app-netsuite-connector>
-<app-netsuite-subsidiary-mapping *ngIf="isNetsuiteCredentialsValid"></app-netsuite-subsidiary-mapping>
+@if (!isNetsuiteCredentialsValid) {
+  <app-netsuite-connector (setupConnectionStatus)="setupConnectionStatus($event)"></app-netsuite-connector>
+}
+@if (isNetsuiteCredentialsValid) {
+  <app-netsuite-subsidiary-mapping></app-netsuite-subsidiary-mapping>
+}

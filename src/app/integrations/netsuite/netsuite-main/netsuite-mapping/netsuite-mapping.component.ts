@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { MenuItem } from 'primeng/api';
+import { TabMenuItem } from 'src/app/core/models/common/tab-menu.model';
 import { brandingFeatureConfig, brandingConfig, brandingStyle } from 'src/app/branding/branding-config';
 import { FyleField } from 'src/app/core/models/enum/enum.model';
 import { MappingService } from 'src/app/core/services/common/mapping.service';
@@ -9,23 +9,26 @@ import { SnakeCaseToSpaceCasePipe } from 'src/app/shared/pipes/snake-case-to-spa
 import { TranslocoService } from '@jsverse/transloco';
 
 @Component({
-  selector: 'app-netsuite-mapping',
-  templateUrl: './netsuite-mapping.component.html',
-  styleUrls: ['./netsuite-mapping.component.scss']
+    selector: 'app-netsuite-mapping',
+    templateUrl: './netsuite-mapping.component.html',
+    styleUrls: ['./netsuite-mapping.component.scss'],
+    standalone: false
 })
 export class NetsuiteMappingComponent implements OnInit {
 
   isLoading: boolean = true;
 
-  mappingPages: MenuItem[];
+  mappingPages: TabMenuItem[];
 
-  activeModule: MenuItem;
+  activeModule: string;
 
   readonly isGradientAllowed: boolean = brandingFeatureConfig.isGradientAllowed;
 
   readonly brandingConfig = brandingConfig;
 
   readonly brandingStyle = brandingStyle;
+
+  readonly brandingFeatureConfig = brandingFeatureConfig;
 
   constructor(
     private mappingService: MappingService,
@@ -41,7 +44,8 @@ export class NetsuiteMappingComponent implements OnInit {
             const mappingPage = new SnakeCaseToSpaceCasePipe().transform(item.source_field);
             this.mappingPages.push({
               label: new SentenceCasePipe(this.translocoService).transform(mappingPage),
-              routerLink: `/integrations/netsuite/main/mapping/${encodeURIComponent(item.source_field.toLowerCase())}`
+              routerLink: `/integrations/netsuite/main/mapping/${encodeURIComponent(item.source_field.toLowerCase())}`,
+              value: 'mapping_' + item.source_field.toLowerCase()
             });
           }
         });
@@ -49,15 +53,15 @@ export class NetsuiteMappingComponent implements OnInit {
       if (!brandingFeatureConfig.featureFlags.mapEmployees) {
         this.mappingPages.splice(0, 1);
       }
-      this.router.navigateByUrl(this.mappingPages[0].routerLink);
+      this.router.navigateByUrl(this.mappingPages[0].routerLink!);
       this.isLoading = false;
     });
   }
 
   ngOnInit(): void {
     this.mappingPages = [
-      {label: this.translocoService.translate('netsuiteMapping.employee'), routerLink: '/integrations/netsuite/main/mapping/employee'},
-      {label: this.translocoService.translate('netsuiteMapping.category'), routerLink: '/integrations/netsuite/main/mapping/category'}
+      {label: this.translocoService.translate('netsuiteMapping.employee'), routerLink: '/integrations/netsuite/main/mapping/employee', value: 'employee'},
+      {label: this.translocoService.translate('netsuiteMapping.category'), routerLink: '/integrations/netsuite/main/mapping/category', value: 'category'}
     ];
     this.setupPage();
   }

@@ -8,14 +8,16 @@ import { Travelperk } from 'src/app/core/models/travelperk/travelperk.model';
 import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
 import { StorageService } from 'src/app/core/services/common/storage.service';
 import { OrgService } from 'src/app/core/services/org/org.service';
-import { TravelperkService } from 'src/app/core/services/travelperk/travelperk.service';
+import { TravelperkService } from 'src/app/core/services/travelperk/travelperk-core/travelperk.service';
 import { environment } from 'src/environments/environment';
 import { TranslocoService } from '@jsverse/transloco';
+import { BrandingService } from 'src/app/core/services/common/branding.service';
 
 @Component({
-  selector: 'app-travelperk-onboarding-landing',
-  templateUrl: './travelperk-onboarding-landing.component.html',
-  styleUrls: ['./travelperk-onboarding-landing.component.scss']
+    selector: 'app-travelperk-onboarding-landing',
+    templateUrl: './travelperk-onboarding-landing.component.html',
+    styleUrls: ['./travelperk-onboarding-landing.component.scss'],
+    standalone: false
 })
 export class TravelperkOnboardingLandingComponent implements OnInit {
 
@@ -45,7 +47,8 @@ export class TravelperkOnboardingLandingComponent implements OnInit {
     private toastService: IntegrationsToastService,
     private storageService: StorageService,
     private router: Router,
-    private translocoService: TranslocoService
+    private translocoService: TranslocoService,
+    public brandingService: BrandingService
   ) { }
 
   disconnect(): void {

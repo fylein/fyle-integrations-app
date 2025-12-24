@@ -2,7 +2,9 @@ export type ImportDefaultField = {
   destination_field: string,
   source_field: string,
   formController: string,
-  import_code?: string
+  import_code?: string,
+  is_auto_import_enabled?: boolean
+  count?: number
 }
 
 export type ExpenseField = {
@@ -26,7 +28,8 @@ export type ImportSettingMappingRow = {
   is_custom: boolean,
   source_field: string,
   source_placeholder: string | null,
-  import_code?: boolean
+  import_code?: boolean,
+  is_auto_import_enabled?: boolean
 }
 
 export type ImportSettingsCustomFieldRow = {

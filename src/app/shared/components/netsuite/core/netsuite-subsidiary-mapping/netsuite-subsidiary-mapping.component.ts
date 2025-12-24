@@ -18,9 +18,10 @@ import { NetsuiteMappingsService } from 'src/app/core/services/netsuite/netsuite
 import { TranslocoService } from '@jsverse/transloco';
 
 @Component({
-  selector: 'app-netsuite-subsidiary-mapping',
-  templateUrl: './netsuite-subsidiary-mapping.component.html',
-  styleUrls: ['./netsuite-subsidiary-mapping.component.scss']
+    selector: 'app-netsuite-subsidiary-mapping',
+    templateUrl: './netsuite-subsidiary-mapping.component.html',
+    styleUrls: ['./netsuite-subsidiary-mapping.component.scss'],
+    standalone: false
 })
 
 
@@ -115,7 +116,7 @@ export class NetsuiteSubsidiaryMappingComponent implements OnInit {
     }
     this.isLoading = false;
     this.saveInProgress = false;
-    this.toastService.displayToastMessage(ToastSeverity.SUCCESS, this.translocoService.translate('netsuiteSubsidiaryMapping.subsidiarySelectedSuccess'));
+    this.toastService.displayToastMessage(ToastSeverity.SUCCESS, this.translocoService.translate('netsuiteSubsidiaryMapping.subsidiarySelectedSuccess'), undefined, this.isOnboarding);
   }
 
   private handleSuccess(netsuiteSubsidiaryMappingPayload: NetsuiteSubsidiaryMappingPost): void {

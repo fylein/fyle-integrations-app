@@ -12,11 +12,13 @@ import { IntegrationsToastService } from 'src/app/core/services/common/integrati
 import { WorkspaceService } from 'src/app/core/services/common/workspace.service';
 import { environment } from 'src/environments/environment';
 import { TranslocoService } from '@jsverse/transloco';
+import { BrandingService } from 'src/app/core/services/common/branding.service';
 
 @Component({
-  selector: 'app-business-central-onboarding-landing',
-  templateUrl: './business-central-onboarding-landing.component.html',
-  styleUrls: ['./business-central-onboarding-landing.component.scss']
+    selector: 'app-business-central-onboarding-landing',
+    templateUrl: './business-central-onboarding-landing.component.html',
+    styleUrls: ['./business-central-onboarding-landing.component.scss'],
+    standalone: false
 })
 export class BusinessCentralOnboardingLandingComponent implements OnInit, OnDestroy {
 
@@ -43,7 +45,8 @@ export class BusinessCentralOnboardingLandingComponent implements OnInit, OnDest
     private toastService: IntegrationsToastService,
     private businessCentralHelperService: BusinessCentralHelperService,
     private workspaceService: WorkspaceService,
-    private translocoService: TranslocoService
+    private translocoService: TranslocoService,
+    public brandingService: BrandingService
   ) { }
 
   acceptWarning(data: ConfigurationWarningOut): void {

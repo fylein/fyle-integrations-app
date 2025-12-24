@@ -1,6 +1,6 @@
 import {  Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, Router, RouterStateSnapshot, UrlTree } from '@angular/router';
-import { Observable, catchError, map, throwError } from 'rxjs';
+import { Observable, catchError, map, throwError, of } from 'rxjs';
 import { WorkspaceService } from '../services/common/workspace.service';
 import { QboConnectorService } from '../services/qbo/qbo-configuration/qbo-connector.service';
 import { globalCacheBusterNotifier } from 'ts-cacheable';
@@ -50,9 +50,11 @@ export class QboTokenGuard  {
             if (error.error.message === "Quickbooks Online disconnected") {
               return this.router.navigateByUrl('integrations/qbo/disconnect/dashboard');
             }
+
+            return of(true);
           }
 
-          return throwError(error);
+          return of(true);
         })
       );
 

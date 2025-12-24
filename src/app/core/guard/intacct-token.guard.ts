@@ -1,11 +1,11 @@
 import { Injectable } from "@angular/core";
 import { ActivatedRouteSnapshot, Router, RouterStateSnapshot, UrlTree } from "@angular/router";
-import { Observable, map, catchError, throwError } from "rxjs";
+import { Observable, map, catchError, throwError, of } from "rxjs";
 import { globalCacheBusterNotifier } from "ts-cacheable";
 import { WorkspaceService } from "../services/common/workspace.service";
 import { AppUrl } from "../models/enum/enum.model";
 import { HelperService } from "../services/common/helper.service";
-import { IntacctConnectorService } from "../services/si/si-core/intacct-connector.service";
+import { IntacctConnectorService } from "../services/si/si-core/si-connector.service";
 
 
 @Injectable({
@@ -39,8 +39,10 @@ export class IntacctTokenGuard  {
             if (error.error.message === "Intacct connection expired"){
               return this.router.navigateByUrl('integrations/intacct/token_expired/dashboard');
             }
+
+            return of(true);
           }
-          return throwError(error);
+          return of(true);
         })
       );
   }

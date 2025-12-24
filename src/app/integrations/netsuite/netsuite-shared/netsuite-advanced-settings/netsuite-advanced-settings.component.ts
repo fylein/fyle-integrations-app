@@ -26,9 +26,10 @@ import { TranslocoService } from '@jsverse/transloco';
 import { AdvancedSettingsService } from 'src/app/core/services/common/advanced-settings.service';
 
 @Component({
-  selector: 'app-netsuite-advanced-settings',
-  templateUrl: './netsuite-advanced-settings.component.html',
-  styleUrls: ['./netsuite-advanced-settings.component.scss']
+    selector: 'app-netsuite-advanced-settings',
+    templateUrl: './netsuite-advanced-settings.component.html',
+    styleUrls: ['./netsuite-advanced-settings.component.scss'],
+    standalone: false
 })
 export class NetsuiteAdvancedSettingsComponent implements OnInit {
 
@@ -88,6 +89,8 @@ export class NetsuiteAdvancedSettingsComponent implements OnInit {
   paymentAccounts: DefaultDestinationAttribute[];
 
   ConfigurationCtaText = ConfigurationCta;
+
+  dfvReadMoreLink: string = brandingKbArticles.onboardingArticles.NETSUITE.DFV_READ_MORE;
 
   readonly brandingFeatureConfig = brandingFeatureConfig;
 
@@ -184,7 +187,7 @@ export class NetsuiteAdvancedSettingsComponent implements OnInit {
 
     this.advancedSettingsService.postAdvancedSettings(advancedSettingPayload).subscribe(() => {
       this.isSaveInProgress = false;
-      this.toastService.displayToastMessage(ToastSeverity.SUCCESS, this.translocoService.translate('netsuiteAdvancedSettings.saveSuccess'));
+      this.toastService.displayToastMessage(ToastSeverity.SUCCESS, this.translocoService.translate('netsuiteAdvancedSettings.saveSuccess'), undefined, this.isOnboarding);
 
       if (this.isOnboarding) {
         this.workspaceService.setOnboardingState(NetsuiteOnboardingState.COMPLETE);
@@ -287,13 +290,13 @@ export class NetsuiteAdvancedSettingsComponent implements OnInit {
 
       this.workspaceGeneralSettings = workspaceGeneralSettings;
 
-      this.paymentAccounts = netsuiteAttributes.VENDOR_PAYMENT_ACCOUNT.map((option: DestinationAttribute) => this.exportSettingsService.formatGeneralMappingPayload(option));
+      this.paymentAccounts = netsuiteAttributes.VENDOR_PAYMENT_ACCOUNT.map((option: DestinationAttribute) => this.exportSettingsService.formatGeneralMappingPayload(option)) || [];
 
-      this.netsuiteLocations = netsuiteAttributes.LOCATION.map((option: DestinationAttribute) => this.exportSettingsService.formatGeneralMappingPayload(option));
+      this.netsuiteLocations = netsuiteAttributes.LOCATION.map((option: DestinationAttribute) => this.exportSettingsService.formatGeneralMappingPayload(option)) || [];
 
-      this.netsuiteDepartments = netsuiteAttributes.DEPARTMENT.map((option: DestinationAttribute) => this.exportSettingsService.formatGeneralMappingPayload(option));
+      this.netsuiteDepartments = netsuiteAttributes.DEPARTMENT.map((option: DestinationAttribute) => this.exportSettingsService.formatGeneralMappingPayload(option)) || [];
 
-      this.netsuiteClasses = netsuiteAttributes.CLASS.map((option: DestinationAttribute) => this.exportSettingsService.formatGeneralMappingPayload(option));
+      this.netsuiteClasses = netsuiteAttributes.CLASS.map((option: DestinationAttribute) => this.exportSettingsService.formatGeneralMappingPayload(option)) || [];
 
       const isSkipExportEnabled = expenseFiltersGet.count > 0;
 

@@ -6,9 +6,10 @@ import { SnakeCaseToSpaceCasePipe } from 'src/app/shared/pipes/snake-case-to-spa
 import { TranslocoService } from '@jsverse/transloco';
 
 @Component({
-  selector: 'app-configuration-multi-select',
-  templateUrl: './configuration-multi-select.component.html',
-  styleUrls: ['./configuration-multi-select.component.scss']
+    selector: 'app-configuration-multi-select',
+    templateUrl: './configuration-multi-select.component.html',
+    styleUrls: ['./configuration-multi-select.component.scss'],
+    standalone: false
 })
 export class ConfigurationMultiSelectComponent implements OnInit {
 
@@ -34,6 +35,10 @@ export class ConfigurationMultiSelectComponent implements OnInit {
 
   @Input() isCloneSettingView: boolean;
 
+  @Input() maxSelections: number;
+
+  @Input() selectionLimitExceededTooltipText: string;
+
   @Output() changeInMultiSelect = new EventEmitter();
 
   currentlyDragging: string | null;
@@ -52,11 +57,53 @@ export class ConfigurationMultiSelectComponent implements OnInit {
   ) { }
 
   onMultiSelectChange() {
+    const selectedValues = this.form.get(this.formControllerName)?.value;
+
+    if (selectedValues && selectedValues.length > 0) {
+      const optionsCopy = [...this.options];
+
+      const sortedValues = [...selectedValues].sort((a, b) => {
+        return optionsCopy.indexOf(a) - optionsCopy.indexOf(b);
+      });
+
+      this.form.get(this.formControllerName)?.setValue(sortedValues, { emitEvent: false });
+    }
+
     this.changeInMultiSelect.emit();
   }
 
   getMemo(memo: string): string {
-    return memo === 'expense_key' ? this.translocoService.translate('configurationMultiSelect.expenseReportId') : new SnakeCaseToSpaceCasePipe().transform(new SentenceCasePipe(this.translocoService).transform(memo));
+    if (memo === 'expense_key') {
+      return this.translocoService.translate('configurationMultiSelect.expenseReportId');
+    } else if (memo === 'card_number') {
+      return this.translocoService.translate('configurationMultiSelect.cardNumber');
+    } else if (memo === 'spent_at') {
+      return this.translocoService.translate('configurationMultiSelect.spentAt');
+    } else if (memo === 'merchant' && this.options.includes('card_merchant')) {
+      return this.translocoService.translate('configurationMultiSelect.merchant');
+    } else if (memo === 'card_merchant') {
+      return this.translocoService.translate('configurationMultiSelect.cardMerchant');
+    }
+
+    return new SnakeCaseToSpaceCasePipe().transform(new SentenceCasePipe(this.translocoService).transform(memo));
+  }
+
+  getOptionTooltip(item: string): string | undefined {
+    // If selection limit is reached, show tooltip on the disabled (not selected) options
+    const selectedOptions = this.form.get(this.formControllerName)?.value;
+    const isOptionSelected = selectedOptions.includes(item);
+    if (this.maxSelections && selectedOptions.length >= this.maxSelections && !isOptionSelected) {
+      return this.selectionLimitExceededTooltipText;
+    }
+    return undefined;
+  }
+
+  // Helper to join selected item labels into a single string for template rendering
+  getSelectedItemsText(value: string[] | null | undefined): string {
+    if (!value || value.length === 0) {
+      return '';
+    }
+    return value.map((name: string) => this.getMemo(name)).join(', ');
   }
 
 //   DragStart(memo: string) {

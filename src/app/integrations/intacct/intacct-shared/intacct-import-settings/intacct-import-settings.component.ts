@@ -4,30 +4,32 @@ import { Router } from '@angular/router';
 import { RxwebValidators } from '@rxweb/reactive-form-validators';
 import { forkJoin } from 'rxjs';
 import { brandingConfig, brandingFeatureConfig, brandingKbArticles, brandingStyle } from 'src/app/branding/branding-config';
-import { IntacctCategoryDestination, ConfigurationCta, IntacctOnboardingState, IntacctUpdateEvent, Page, ProgressPhase, ToastSeverity, MappingSourceField, AppName, TrackingApp, SageIntacctField, IntacctReimbursableExpensesObject, IntacctCorporateCreditCardExpensesObject } from 'src/app/core/models/enum/enum.model';
+import { IntacctCategoryDestination, ConfigurationCta, IntacctOnboardingState, IntacctUpdateEvent, Page, ProgressPhase, ToastSeverity, MappingSourceField, AppName, TrackingApp, SageIntacctField, IntacctReimbursableExpensesObject, IntacctCorporateCreditCardExpensesObject, ButtonType, ButtonSize } from 'src/app/core/models/enum/enum.model';
 import { IntacctDestinationAttribute } from 'src/app/core/models/intacct/db/destination-attribute.model';
 import { ExpenseField } from 'src/app/core/models/intacct/db/expense-field.model';
 import { LocationEntityMapping } from 'src/app/core/models/intacct/db/location-entity-mapping.model';
-import { DependentFieldSetting, ImportSettingGet, ImportSettingPost, ImportSettings, MappingSetting } from 'src/app/core/models/intacct/intacct-configuration/import-settings.model';
+import { DependentFieldSetting, ImportSettingGet, ImportSettingPost, ImportSettings, IntacctImportFieldsAttributeCounts, MappingSetting } from 'src/app/core/models/intacct/intacct-configuration/import-settings.model';
 import { Org } from 'src/app/core/models/org/org.model';
 import { HelperService } from 'src/app/core/services/common/helper.service';
 import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
 import { StorageService } from 'src/app/core/services/common/storage.service';
 import { TrackingService } from 'src/app/core/services/integration/tracking.service';
 import { OrgService } from 'src/app/core/services/org/org.service';
-import { SiImportSettingService } from 'src/app/core/services/si/si-configuration/si-import-setting.service';
-import { IntacctConnectorService } from 'src/app/core/services/si/si-core/intacct-connector.service';
+import { SiImportSettingsService } from 'src/app/core/services/si/si-configuration/si-import-settings.service';
+import { IntacctConnectorService } from 'src/app/core/services/si/si-core/si-connector.service';
 import { SiMappingsService } from 'src/app/core/services/si/si-core/si-mappings.service';
 import { SiWorkspaceService } from 'src/app/core/services/si/si-core/si-workspace.service';
 import { SentenceCasePipe } from 'src/app/shared/pipes/sentence-case.pipe';
 import { SnakeCaseToSpaceCasePipe } from 'src/app/shared/pipes/snake-case-to-space-case.pipe';
 import { TranslocoService } from '@jsverse/transloco';
 import { ImportSettingsService } from 'src/app/core/services/common/import-settings.service';
+import { BrandingService } from 'src/app/core/services/common/branding.service';
 
 @Component({
-  selector: 'app-intacct-import-settings',
-  templateUrl: './intacct-import-settings.component.html',
-  styleUrls: ['./intacct-import-settings.component.scss']
+    selector: 'app-intacct-import-settings',
+    templateUrl: './intacct-import-settings.component.html',
+    styleUrls: ['./intacct-import-settings.component.scss'],
+    standalone: false
 })
 
 export class IntacctImportSettingsComponent implements OnInit {
@@ -96,6 +98,10 @@ export class IntacctImportSettingsComponent implements OnInit {
 
   importCodeField: FormGroup[] = [];
 
+  ButtonType = ButtonType;
+
+  ButtonSize = ButtonSize;
+
   acceptedImportCodeField: string[] = [SageIntacctField.ACCOUNT, SageIntacctField.DEPARTMENT, MappingSourceField.PROJECT];
 
   existingFields: string[] = ['employee id', 'organisation name', 'employee name', 'employee email', 'expense date', 'expense date', 'expense id', 'report id', 'employee id', 'department', 'state', 'reporter', 'report', 'purpose', 'vendor', 'category', 'category code', 'mileage distance', 'mileage unit', 'flight from city', 'flight to city', 'flight from date', 'flight to date', 'flight from class', 'flight to class', 'hotel checkin', 'hotel checkout', 'hotel location', 'hotel breakfast', 'currency', 'amount', 'foreign currency', 'foreign amount', 'tax', 'approver', 'project', 'billable', 'cost center', 'cost center code', 'approved on', 'reimbursable', 'receipts', 'paid date', 'expense created date'];
@@ -110,11 +116,15 @@ export class IntacctImportSettingsComponent implements OnInit {
 
   readonly brandingStyle = brandingStyle;
 
+  attributeCounts: IntacctImportFieldsAttributeCounts;
+
+  defaultAttribuitesWarningArray: boolean[] = [false, false, false];
+
   constructor(
     private router: Router,
     private mappingService: SiMappingsService,
     private connectorService: IntacctConnectorService,
-    private importSettingService: SiImportSettingService,
+    private importSettingService: SiImportSettingsService,
     @Inject(FormBuilder) private formBuilder: FormBuilder,
     private orgService: OrgService,
     private toastService: IntegrationsToastService,
@@ -123,7 +133,8 @@ export class IntacctImportSettingsComponent implements OnInit {
     private workspaceService: SiWorkspaceService,
     public helper: HelperService,
     private translocoService: TranslocoService,
-    private importSettingsService: ImportSettingsService
+    private importSettingsService: ImportSettingsService,
+    public brandingService: BrandingService
   ) { }
 
   get expenseFieldsGetter() {
@@ -132,6 +143,48 @@ export class IntacctImportSettingsComponent implements OnInit {
 
   get importCodeFieldGetter() {
     return this.importSettingsForm.get('importCodeFields') as FormArray;
+  }
+
+  showWarningForImportFields(isImportCodeEnabled: boolean, destinationField: keyof IntacctImportFieldsAttributeCounts, formControlName: string, index: number): void {
+    if (isImportCodeEnabled) {
+      this.importSettingService.getImportFieldsAttributeCounts().subscribe((importFieldsAttributeCounts: IntacctImportFieldsAttributeCounts) => {
+        this.attributeCounts = importFieldsAttributeCounts;
+        const destinationFieldCount: number = importFieldsAttributeCounts[destinationField] as number;
+        if (destinationFieldCount >= 30000) {
+          this.importSettingsForm.controls[formControlName].setValue(false);
+          this.importSettingsForm.controls[formControlName].disable();
+          this.defaultAttribuitesWarningArray[index] = true;
+        } else {
+          this.importSettingsForm.controls[formControlName].setValue(isImportCodeEnabled);
+          this.importSettingsForm.controls[formControlName].enable();
+          this.defaultAttribuitesWarningArray[index] = false;
+        }
+      });
+    }
+  }
+
+  updateImportFields(event: [boolean, string, number]): void {
+    const destinationField = this.helper.getDestinationFieldPlural(event[1].toLowerCase()) + "_count";
+    const expenseFieldArray = this.importSettingsForm.get('expenseFields') as FormArray;
+    if (event[0]) {
+      this.importSettingService.getImportFieldsAttributeCounts().subscribe((importFieldsAttributeCounts: IntacctImportFieldsAttributeCounts) => {
+        const count = importFieldsAttributeCounts[destinationField as keyof IntacctImportFieldsAttributeCounts];
+        if (typeof count === 'number' && count >= 30000) {
+          const expenseField = expenseFieldArray.controls[event[2]];
+          expenseField.patchValue({
+            import_to_fyle: false,
+            is_auto_import_enabled: false,
+            count: count
+          });
+        } else {
+          const expenseField = expenseFieldArray.controls[event[2]];
+          expenseField.patchValue({
+            import_to_fyle: event[0],
+            is_auto_import_enabled: true
+          });
+        }
+      });
+    }
   }
 
   addImportCodeField(event: any, sourceField: string) {
@@ -354,11 +407,7 @@ export class IntacctImportSettingsComponent implements OnInit {
   }
 
   private addCustomField() {
-    this.customFieldForm = this.formBuilder.group({
-      attribute_type: [null, Validators.required],
-      display_name: [null],
-      source_placeholder: [null, Validators.required]
-    });
+    this.customFieldForm.reset();
     this.showDialog = true;
   }
 
@@ -396,7 +445,9 @@ export class IntacctImportSettingsComponent implements OnInit {
       destination_field: [data.destination_field || '', RxwebValidators.unique()],
       import_to_fyle: [data.import_to_fyle || false],
       is_custom: [data.is_custom || false],
-      source_placeholder: [data.source_placeholder || null]
+      source_placeholder: [data.source_placeholder || null],
+      is_auto_import_enabled: [true],
+      count: [0]
     });
   }
 
@@ -457,7 +508,7 @@ export class IntacctImportSettingsComponent implements OnInit {
   }
 
   onDropdownChange(event: any, index: number) {
-    // Get the selected value from the <p-dropdown>
+    // Get the selected value from the <p-select>
     const selectedValue = event.value;
 
     // Find the selected field in 'fyleFields' based on the selected value
@@ -478,6 +529,8 @@ export class IntacctImportSettingsComponent implements OnInit {
     if (selectedValue === 'custom_field') {
       (this.importSettingsForm.get('expenseFields') as FormArray).at(index)?.get('source_field')?.setValue(null);
     }
+
+    this.updateImportFields([(this.importSettingsForm.get('expenseFields') as FormArray).at(index)?.get('import_to_fyle')?.value, (this.importSettingsForm.get('expenseFields') as FormArray).at(index)?.get('destination_field')?.value, index]);
   }
 
   isExpenseFieldDependent(expenseField: MappingSetting): boolean {
@@ -546,7 +599,11 @@ export class IntacctImportSettingsComponent implements OnInit {
   private getSettingsAndSetupForm(): void {
     this.isLoading = true;
     this.isOnboarding = this.router.url.includes('onboarding');
-
+    this.customFieldForm = this.formBuilder.group({
+      attribute_type: [null, Validators.required],
+      display_name: [null],
+      source_placeholder: [null, Validators.required]
+    });
     this.costCodeFieldOption = [{ attribute_type: 'custom_field', display_name: this.translocoService.translate('intacctImportSettings.createCustomField'), source_placeholder: null, is_dependent: true }];
     this.costTypeFieldOption = [{ attribute_type: 'custom_field', display_name: this.translocoService.translate('intacctImportSettings.createCustomField'), source_placeholder: null, is_dependent: true }];
     this.customFieldOption = [{ attribute_type: 'custom_field', display_name: this.translocoService.translate('intacctImportSettings.createCustomField'), source_placeholder: null, is_dependent: false }];
@@ -702,7 +759,7 @@ export class IntacctImportSettingsComponent implements OnInit {
     this.saveInProgress = true;
     const importSettingPayload = ImportSettings.constructPayload(this.importSettingsForm, this.dependentFieldSettings);
     this.importSettingService.postImportSettings(importSettingPayload).subscribe((response: ImportSettingPost) => {
-      this.toastService.displayToastMessage(ToastSeverity.SUCCESS, this.translocoService.translate('intacctImportSettings.importSettingsSuccess'));
+      this.toastService.displayToastMessage(ToastSeverity.SUCCESS, this.translocoService.translate('intacctImportSettings.importSettingsSuccess'), undefined, this.isOnboarding);
       this.trackingService.trackTimeSpent(TrackingApp.INTACCT, Page.IMPORT_SETTINGS_INTACCT, this.sessionStartTime);
       if (this.workspaceService.getIntacctOnboardingState() === IntacctOnboardingState.IMPORT_SETTINGS) {
         this.trackingService.integrationsOnboardingCompletion(TrackingApp.INTACCT, IntacctOnboardingState.IMPORT_SETTINGS, 3, importSettingPayload);

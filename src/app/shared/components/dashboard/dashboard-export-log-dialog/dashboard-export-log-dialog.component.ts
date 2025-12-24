@@ -1,12 +1,14 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { brandingStyle } from 'src/app/branding/branding-config';
 import { AccountingExportList } from 'src/app/core/models/db/accounting-export.model';
 import { AppName } from 'src/app/core/models/enum/enum.model';
 import { WindowService } from 'src/app/core/services/common/window.service';
 
 @Component({
-  selector: 'app-dashboard-export-log-dialog',
-  templateUrl: './dashboard-export-log-dialog.component.html',
-  styleUrls: ['./dashboard-export-log-dialog.component.scss']
+    selector: 'app-dashboard-export-log-dialog',
+    templateUrl: './dashboard-export-log-dialog.component.html',
+    styleUrls: ['./dashboard-export-log-dialog.component.scss'],
+    standalone: false
 })
 export class DashboardExportLogDialogComponent implements OnInit {
 
@@ -23,6 +25,8 @@ export class DashboardExportLogDialogComponent implements OnInit {
   @Input() appName: AppName;
 
   @Output() hideExportLogDialog = new EventEmitter<void>();
+
+  readonly brandingStyle = brandingStyle;
 
   constructor(
     private windowService: WindowService

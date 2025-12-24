@@ -20,11 +20,13 @@ import { XeroImportSettingsService } from 'src/app/core/services/xero/xero-confi
 import { XeroHelperService } from 'src/app/core/services/xero/xero-core/xero-helper.service';
 import { TranslocoService } from '@jsverse/transloco';
 import { ImportSettingsService } from 'src/app/core/services/common/import-settings.service';
+import { BrandingService } from 'src/app/core/services/common/branding.service';
 
 @Component({
-  selector: 'app-xero-import-settings',
-  templateUrl: './xero-import-settings.component.html',
-  styleUrls: ['./xero-import-settings.component.scss']
+    selector: 'app-xero-import-settings',
+    templateUrl: './xero-import-settings.component.html',
+    styleUrls: ['./xero-import-settings.component.scss'],
+    standalone: false
 })
 export class XeroImportSettingsComponent implements OnInit {
 
@@ -96,7 +98,8 @@ export class XeroImportSettingsComponent implements OnInit {
     private orgService: OrgService,
     private toastService: IntegrationsToastService,
     private xeroConnectorService: XeroConnectorService,
-    private translocoService: TranslocoService
+    private translocoService: TranslocoService,
+    public brandingService: BrandingService
   ) {
     this.customFieldOption = this.importSettingService.getCustomFieldOption();
   }
@@ -200,7 +203,7 @@ export class XeroImportSettingsComponent implements OnInit {
     const importSettingPayload = this.importSettingService.constructPayload(this.importSettingsForm);
     this.importSettingService.postImportSettings(importSettingPayload).subscribe(() => {
       this.isSaveInProgress = false;
-      this.toastService.displayToastMessage(ToastSeverity.SUCCESS, this.translocoService.translate('xeroImportSettings.importSettingsSuccess'));
+      this.toastService.displayToastMessage(ToastSeverity.SUCCESS, this.translocoService.translate('xeroImportSettings.importSettingsSuccess'), undefined, this.isOnboarding);
 
       if (this.isOnboarding) {
         this.workspaceService.setOnboardingState(XeroOnboardingState.ADVANCED_CONFIGURATION);

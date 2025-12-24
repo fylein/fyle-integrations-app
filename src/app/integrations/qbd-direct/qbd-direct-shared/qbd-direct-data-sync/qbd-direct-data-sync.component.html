@@ -1,39 +1,69 @@
-<div class="tw-border tw-rounded-border-radius-2xs tw-border-border-tertiary" [ngClass]="{'tw-opacity-50': !showSection}">
-    <div class="tw-p-24-px">
-        <div class="tw-flex tw-items-center tw-justify-between">
-            <div class="tw-flex tw-items-center tw-justify-start">
-                <div class="tw-w-20-px tw-h-20-px tw-rounded-border-radius-2xs tw-bg-bg-secondary tw-text-white tw-text-14-px tw-font-500 tw-text-center tw-mr-12-px">
-                    {{ 'qbdDirectDataSync.stepNumber' | transloco }}
-                </div>
-                <div class="tw-text-14-px tw-font-500" [ngClass]="[!showSection ? 'tw-text-text-disable' : 'tw-text-text-tertiary']">
-                    <span>{{ 'qbdDirectDataSync.title' | transloco }}</span>
-                </div>
-            </div>
+<div class="tw-border tw-rounded-border-radius-2xs" [ngClass]="!showSection && !brandingFeatureConfig.qbdDirect.isStepSectionAlwaysVisible ? 'tw-opacity-50' : brandingStyle.qbd_direct.onboarding.stepStateCard">
+  <div class="tw-p-24-px">
+    <div class="tw-flex tw-items-center tw-justify-between">
+      <div class="tw-flex tw-items-center tw-justify-start">
+        @if(brandingFeatureConfig.qbdDirect.showStepStateAsIcons) {
+          <div class="tw-flex tw-justify-center tw-items-center tw-bg-bg-brand tw-h-32-px tw-w-32-px tw-rounded-full tw-mr-12-px">
+            <app-svg-icon [c1SvgSource]="'grv-transfer'" [width]="'14px'" [height]="'16px'" [isTextColorAllowed]="true" [styleClasses]="'tw-text-text-primary'"></app-svg-icon>
+          </div>
+        } @else {
+          <div class="tw-w-20-px tw-h-20-px tw-rounded-border-radius-2xs tw-bg-bg-secondary tw-text-white tw-text-14-px tw-font-500 tw-text-center tw-mr-12-px">
+            {{ 'qbdDirectDataSync.stepNumber' | transloco }}
+          </div>
+        }
+        <div class="tw-text-14-px tw-font-500" [ngClass]="[!showSection && !brandingFeatureConfig.qbdDirect.isStepSectionAlwaysVisible ? 'tw-text-text-disable' : brandingStyle.qbd_direct.onboarding.stepStateHeaderText]">
+          <span>{{ 'qbdDirectDataSync.title' | transloco }}</span>
         </div>
-        <div class="tw-py-20-px" *ngIf="!isLoading && showSection">
-            <div *ngFor="let field of qbdFields; let i = index" [ngClass]=" i !== qbdFields.length-1 ? 'tw-border-b tw-border-b-divider-border-color' : '' ">
-                <div class="tw-flex tw-items-center tw-justify-between tw-px-12-px tw-py-20-px">
-                    <div>
-                        <span class="tw-text-text-tertiary tw-font-400 tw-text-14-px">{{field.attribute_type | snakeCaseToSpaceCase | sentenceCase}}</span>
-                    </div>
-                    <div>
-                        <span *ngIf="field.count !== null" class="tw-text-text-tertiary tw-font-400 tw-text-14-px">{{field.count}}</span>
-                        <div class="spin-icon tw-text-text-tertiary tw-font-400 tw-text-14-px">
-                            <app-svg-icon *ngIf="field.count === null" [svgSource]="'arrow-rotate-sync'" [width]="'14px'" [height]="'14px'" [isTextColorAllowed]="true" [styleClasses]="'tw-text-icon-tertiary'"></app-svg-icon>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div *ngIf="!isLoading && showSection">
-            <app-configuration-info-label [infoText]="'qbdDirectDataSync.infoText' | transloco:{ brandName: brandingConfig.brandName }" [showIcon]="false"></app-configuration-info-label>
-        </div>
-        <div *ngIf="isLoading && showSection" class="tw-flex tw-flex-col tw-justify-center tw-items-center tw-h-[400px]">
-            <app-loader styleClass="spinner-30 tw-top-2-px"></app-loader>
-            <span class="tw-text-14-px tw-font-400 tw-text-text-primary">{{ 'qbdDirectDataSync.loadingState' | transloco }}</span>
-        </div>
+      </div>
     </div>
-    <div *ngIf="!isLoading && showSection">
-        <app-configuration-step-footer [ctaText]="ConfigurationCtaText.CONTINUE" [AppName]="appName.QBD_DIRECT" [isButtonDisabled]="isCTAEnabled" (save)="onContinueClick()"></app-configuration-step-footer>
-    </div>
+  </div>
+
+  @if (brandingFeatureConfig.qbdDirect.showStepStateDivider && showSection) {
+    <div class="tw-border-t tw-border-border-tertiary"></div>
+  }
+
+  <div [ngClass]="showSection ? 'tw-p-24-px tw-py-0 ' + brandingStyle.qbd_direct.onboarding.dataSyncContent : ''">
+    @if (!isLoading && showSection) {
+      <div>
+        @for (field of qbdFields; track field; let i = $index) {
+          <div [ngClass]=" i !== qbdFields.length-1 ? 'tw-border-b tw-border-b-divider-border-color' : '' ">
+            <div class="tw-flex tw-items-center tw-justify-between tw-py-20-px">
+              <div>
+                <span class="tw-font-400 tw-text-14-px" [ngClass]="brandingStyle.qbd_direct.onboarding.dataSyncText">{{field.attribute_type | snakeCaseToSpaceCase | sentenceCase}}</span>
+              </div>
+              <div>
+                @if (field.count !== null) {
+                  <span class="tw-font-400 tw-text-14-px" [ngClass]="brandingStyle.qbd_direct.onboarding.dataSyncText">{{field.count}}</span>
+                }
+                <div class="spin-icon tw-font-400 tw-text-14-px" [ngClass]="brandingStyle.qbd_direct.onboarding.dataSyncText">
+                  @if (field.count === null) {
+                    <app-svg-icon [svgSource]="'arrow-rotate-sync'" [c1SvgSource]="'grv-refresh'" [width]="'14px'" [height]="'14px'" [isTextColorAllowed]="true" [styleClasses]="brandingStyle.qbd_direct.onboarding.dataSyncIcon"></app-svg-icon>
+                  }
+                </div>
+              </div>
+            </div>
+          </div>
+        }
+      </div>
+    }
+    @if (!isLoading && showSection) {
+      <div class="tw-pb-24-px">
+        @if (brandingConfig.brandId !== 'co') {
+          <div>
+            <app-configuration-info-label [iconSrc]="'info-circle-fill-medium'" [customBackgroundColorClass]="brandingStyle.configuration.infoLabelBackground" [customStyleClass]="brandingStyle.configuration.infoLabelIcon" [infoText]="'qbdDirectDataSync.infoText' | transloco:{ brandName: brandingConfig.brandName }" [showIcon]="false"></app-configuration-info-label>
+          </div>
+        }
+        @if (brandingConfig.brandId === 'co') {
+          <div>
+            <h4 class="tw-text-14-px tw-font-600 tw-text-text-primary">{{ 'qbdDirectDataSync.infoText' | transloco }}</h4>
+          </div>
+        }
+      </div>
+    }
+    @if (isLoading && showSection) {
+      <div class="tw-flex tw-flex-col tw-justify-center tw-items-center tw-h-[400px]">
+        <app-loader styleClass="spinner-30 tw-top-2-px"></app-loader>
+      </div>
+    }
+  </div>
 </div>

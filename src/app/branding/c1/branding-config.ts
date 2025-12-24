@@ -17,6 +17,22 @@ export const c1FeatureConfig: FeatureConfiguration[string] = {
     showMoreDropdownInMainMenu: false,
     loginRedirectUri: true,
     loginToAllConnectedApps: false,
+    hasAssistedSetupSupport: false,
+    isDashboardButtonOutlined: false,
+    shouldShowOnboardingYouTubeVideo: true,
+    shouldShowXeroPreviewImage: true,
+    disableTextColorWhenChecked: false,
+    footerButtonsRightAligned: true,
+    useMainMenuForSubmenu: true,
+    usePrimaryLoader: true,
+    allowToastMessageInApps: false,
+    qbdDirect: {
+        showStepStateAsIcons: true,
+        showStepStateDivider: true,
+        isStepSectionAlwaysVisible: true,
+        configToggleLeftAligned: true,
+        unlockStepsInOrder: true
+    },
     featureFlags: {
         cloneSettings: false,
         mapEmployees: false,
@@ -62,7 +78,8 @@ export const c1FeatureConfig: FeatureConfiguration[string] = {
             expenseType: false
         },
         mappings: {
-            employeeMapping: false
+            employeeMapping: false,
+            allowExpandableSearch: true
         },
         dashboard: {
             disconnectButton: false,
@@ -82,7 +99,9 @@ export const c1KbArticles: KbArticle[string] = {
         SAGE300: `${brandingConfig.helpArticleDomain}/en/articles/8948413-how-to-set-up-the-fyle-sage-300-cre-integration`,
         BUSINESS_CENTRAL: `${brandingConfig.helpArticleDomain}/en/collections/215867-integrations-with-fyle`,
         XERO: `${brandingConfig.helpArticleDomain}/en/articles/9361876-set-up-the-expense-management-xero-integration`,
-        QBD_DIRECT: `${brandingConfig.helpArticleDomain}/en/collections/215867-integrations-with-fyle#quickbooks-desktop`
+        QBD_DIRECT: `${brandingConfig.helpArticleDomain}/en/articles/12585767-set-up-an-integration-with-quickbooks-desktop`,
+        // TODO(sage50): update link
+        SAGE50: `${brandingConfig.helpArticleDomain}`
     },
     onboardingArticles: {
         INTACCT: {
@@ -91,14 +110,16 @@ export const c1KbArticles: KbArticle[string] = {
             ADVANCED_SETTING: `${brandingConfig.helpArticleDomain}/en/articles/9082146-configure-the-capital-one-sage-intacct-integration#h_498f2acc61`,
             LANDING: `${brandingConfig.helpArticleDomain}/en/articles/9082146-configure-the-capital-one-sage-intacct-integration`,
             CONNECTOR: `${brandingConfig.helpArticleDomain}/en/articles/9081356-generate-credentials-to-connect-with-sage-intacct`,
-            SKIP_EXPORT: `${brandingConfig.helpArticleDomain}/en/articles/9082146-configure-the-capital-one-sage-intacct-integration`
+            SKIP_EXPORT: `${brandingConfig.helpArticleDomain}/en/articles/9082146-configure-the-capital-one-sage-intacct-integration`,
+            DFV_READ_MORE: `${brandingConfig.helpArticleDomain}/en/articles/9082146-configure-the-capital-one-sage-intacct-integration`
         },
         NETSUITE: {
             CONNECTOR: `${brandingConfig.helpArticleDomain}/en/articles/9471329-generate-credentials-to-connect-with-netsuite`,
             EXPORT_SETTING: `${brandingConfig.helpArticleDomain}/en/articles/9330230-onboarding-process-to-set-up-netsuite-integration#h_cca32ec1be`,
             IMPORT_SETTING: `${brandingConfig.helpArticleDomain}/een/articles/9330230-onboarding-process-to-set-up-netsuite-integration#h_c18c533ca1`,
             ADVANCED_SETTING: `${brandingConfig.helpArticleDomain}/en/articles/9330230-onboarding-process-to-set-up-netsuite-integration#h_b394546a8c`,
-            SKIP_EXPORT: `${brandingConfig.helpArticleDomain}/en/articles/7882821-how-to-skip-exporting-specific-expenses-from-fyle-to-sage-intacct`
+            SKIP_EXPORT: `${brandingConfig.helpArticleDomain}/en/articles/7882821-how-to-skip-exporting-specific-expenses-from-fyle-to-sage-intacct`,
+            DFV_READ_MORE: `${brandingConfig.helpArticleDomain}/en/articles/7882821-how-to-skip-exporting-specific-expenses-from-fyle-to-sage-intacct`
         },
         SAGE300: {
             IMPORT_SETTING: `${brandingConfig.helpArticleDomain}/en/articles/8948413-how-to-set-up-the-fyle-sage-300-cre-integration#h_e68fbd43da`,
@@ -138,13 +159,33 @@ export const c1KbArticles: KbArticle[string] = {
             ADVANCED_SETTING: `${brandingConfig.helpArticleDomain}/en/articles/9361876-set-up-the-expense-management-xero-integration#h_dab5b9668c`
         },
         QBD_DIRECT: {
-            IMPORT_SETTING: `${brandingConfig.helpArticleDomain}/en/articles/9082146-configure-the-capital-one-sage-intacct-integration#h_78e1747002`,
-            EXPORT_SETTING: `${brandingConfig.helpArticleDomain}/en/articles/9082146-configure-the-capital-one-sage-intacct-integration#h_eebe5df4b7`,
-            ADVANCED_SETTING: `${brandingConfig.helpArticleDomain}/en/articles/9082146-configure-the-capital-one-sage-intacct-integration#h_498f2acc61`,
-            CONNECTOR: `${brandingConfig.helpArticleDomain}/en/articles/10259583-quickbooks-desktop-integration-beta#h_d3cc42849a`,
+            IMPORT_SETTING: `${brandingConfig.helpArticleDomain}/en/articles/12585767-set-up-an-integration-with-quickbooks-desktop#h_0c194b57b6`,
+            EXPORT_SETTING: `${brandingConfig.helpArticleDomain}/en/articles/12585767-set-up-an-integration-with-quickbooks-desktop#h_c1cbc71bf2`,
+            ADVANCED_SETTING: `${brandingConfig.helpArticleDomain}/en/articles/12585767-set-up-an-integration-with-quickbooks-desktop#h_dd62a240fe`,
+            CONNECTOR: `${brandingConfig.helpArticleDomain}/en/articles/12585767-set-up-an-integration-with-quickbooks-desktop#h_2e0ba92e21`,
             ASSISTED_SETUP_ARTICLE_LINK: `${brandingConfig.helpArticleDomain}/en/articles/10259583-quickbooks-desktop-integration`,
             HELPER_ARTICLE: `${brandingConfig.helpArticleDomain}/en/articles/7882821-how-to-skip-exporting-specific-expenses-from-fyle-to-sage-intacct`,
-            GCAL_LINK: `https://calendar.app.google/xRwaKsiwEYukqigx9`
+            GCAL_LINK: `https://calendar.app.google/xRwaKsiwEYukqigx9`,
+            ERROR_RESOLUTION_GUIDE_LINK: `${brandingConfig.helpArticleDomain}/en/articles/12585819-quickbooks-web-connector-qbw-error-resolution-guide`
+        },
+        SAGE50: {
+            // TODO(sage50)
+            PREREQUISITES: `${brandingConfig.helpArticleDomain}`,
+            LANDING: `${brandingConfig.helpArticleDomain}`,
+            EXPORT_SETTINGS: `${brandingConfig.helpArticleDomain}`,
+            IMPORT_SETTINGS: `${brandingConfig.helpArticleDomain}`,
+            ADVANCED_SETTINGS: `${brandingConfig.helpArticleDomain}`
+        }
+    },
+    postOnboardingArticles: {
+        // TODO(sage50): Update links
+        SAGE50: {
+            JOB: `${brandingConfig.helpArticleDomain}`,
+            PHASE: `${brandingConfig.helpArticleDomain}`,
+            VENDOR: `${brandingConfig.helpArticleDomain}`,
+            ACCOUNT: `${brandingConfig.helpArticleDomain}`,
+            COST_CODE: `${brandingConfig.helpArticleDomain}`,
+            EXPORT_LOG: `${brandingConfig.helpArticleDomain}`
         }
     }
 };
@@ -160,6 +201,18 @@ export const c1DemoVideoLinks: DemoVideo[string] = {
         TRAVELPERK: 'https://www.youtube.com/embed/2oYdc8KcQnk',
         XERO: 'https://www.youtube.com/embed/KeiegWDj308',
         NETSUITE: 'https://www.youtube.com/embed/e3X3TtjxrHk',
-        QBD_DIRECT: 'https://www.youtube.com/embed/e3X3TtjxrHk'
+        QBD_DIRECT: 'https://www.youtube.com/embed/rKxbQWETnlo',
+        // TODO(sage50): Update link for Sage 50
+        SAGE50: 'https://www.youtube.com/embed/2oYdc8KcQnk'
+    },
+    postOnboarding: {
+        // TODO(sage50): Update links
+        SAGE50: {
+            JOB: 'https://www.youtube.com/embed/2oYdc8KcQnk',
+            PHASE: 'https://www.youtube.com/embed/2oYdc8KcQnk',
+            VENDOR: 'https://www.youtube.com/embed/2oYdc8KcQnk',
+            ACCOUNT: 'https://www.youtube.com/embed/2oYdc8KcQnk',
+            COST_CODE: 'https://www.youtube.com/embed/2oYdc8KcQnk'
+        }
     }
 };

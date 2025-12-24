@@ -1,66 +1,97 @@
 <div class="tw-py-32-px" [ngClass]="brandingStyle.common.mainComponentPadding">
-    <div *ngIf="!isImportInProgress" class="tw-rounded-8-px tw-bg-white tw-border-1-px tw-border-border-tertiary tw-z-1 tw-relative" [ngClass]="brandingStyle.common.mainComponentShadow">
-        <div class="tw-p-24-px">
-            <div class="tw-flex tw-justify-between tw-items-center ">
-                <img *ngIf="brandingFeatureConfig.featureFlags.displayAppLogoInDashboard" src="{{logoPath}}" width="logoWidth" class="tw-mr-24-px tw-h-44-px"/>
-                <div class="tw-w-4/5">
-                    <div class="tw-flex tw-items-center">
-                        <app-svg-icon [styleClasses]="'tw-flex tw-mt-1-px tw-pr-8-px'" *ngIf="brandingFeatureConfig.illustrationsAllowed && !isExportInProgress && !exportableAccountingExportIds.length" [svgSource]="'check'" [height]="'24px'" [width]="'24px'"></app-svg-icon>
-                        <app-svg-icon [styleClasses]="'tw-flex tw-mt-1-px tw-pr-8-px tw-text-icon-secondary'" *ngIf="brandingFeatureConfig.illustrationsAllowed && ((!isExportInProgress && exportableAccountingExportIds.length) || (isExportInProgress))" [svgSource]="'arrow-tail-up'" [height]="'24px'" [width]="'24px'"></app-svg-icon>
-                        <h3 class="tw-text-20-px tw-font-500 tw-text-text-primary" *ngIf="!isExportInProgress && !exportableAccountingExportIds.length && !accountingExportSummary">{{ 'dashboard.exportHeaderFirstTimeZeroStateText' | transloco}}</h3>
-                        <h3 class="tw-text-20-px tw-font-500 tw-text-text-primary" *ngIf="isExportInProgress"> {{ 'dashboardExportSection.exportingExpensesToApp' | transloco: { processedCount: processedCount, totalCount: exportableAccountingExportIds.length, appName: uiExposedAppName } }}</h3>
-                        <h3 class="tw-text-20-px tw-font-500 tw-text-text-primary" *ngIf="!isExportInProgress && exportableAccountingExportIds.length"> {{ 'dashboardExportSection.expensesReadyToExport' | transloco: { count: exportableAccountingExportIds.length } }}</h3>
-                        <h3 class="tw-text-20-px tw-font-500 tw-text-text-primary" *ngIf="!isExportInProgress && !exportableAccountingExportIds.length && accountingExportSummary?.successful_accounting_export_count">{{ 'dashboard.exportHeaderZeroStateText' | transloco}}</h3>
-                        <app-svg-icon *ngIf="brandingConfig.brandId !== 'co'" [svgSource]="'info-circle-fill'" [width]="'16px'" [height]="'16px'" [styleClasses]="'tw-flex tw-text-info tw-ml-4-px tw-text-text-brand-primary'" [tooltipText]="'dashboardExportSection.exportTooltip' | transloco: { brandName: brandingConfig.brandName }" [tooltipPosition]="'top'"></app-svg-icon>
-                    </div>
-                    <h5 class="tw-text-14-px tw-font-400 tw-text-text-secondary tw-pt-8-px" [ngClass]="{'tw-pl-0': !brandingFeatureConfig.illustrationsAllowed, 'tw-pl-34-px': brandingFeatureConfig.illustrationsAllowed}" *ngIf="!isExportInProgress && !exportableAccountingExportIds.length && !accountingExportSummary && brandingFeatureConfig.featureFlags.contentVersion === 'v1'">
-                        {{ 'dashboardExportSection.noNewExpensesToExportV1Prefix' | transloco }}
-                        <p class="tw-pt-4-px">
-                            {{ 'dashboardExportSection.expensesAvailableHereForExport' | transloco: { importStates: importStates } }}
-                        </p>
-                    </h5>
-                    <h5 class="tw-text-14-px tw-font-400 tw-text-text-secondary tw-pt-8-px" [ngClass]="{'tw-pl-0': !brandingFeatureConfig.illustrationsAllowed, 'tw-pl-34-px': brandingFeatureConfig.illustrationsAllowed}" *ngIf="!isExportInProgress && !exportableAccountingExportIds.length && !accountingExportSummary && brandingFeatureConfig.featureFlags.contentVersion === 'v2'">
-                        <p class="tw-pt-4-px">
-                            {{ 'dashboardExportSection.expensesAvailableInDashboard' | transloco: { importStates: importStates } }}
-                        </p>
-                    </h5>
-                    <h5 class="tw-text-14-px tw-font-400 tw-text-text-secondary tw-pt-8-px" [ngClass]="{'tw-pl-0': !brandingFeatureConfig.illustrationsAllowed, 'tw-pl-34-px': brandingFeatureConfig.illustrationsAllowed}" *ngIf="isExportInProgress">{{ 'dashboardExportSection.exportInProgressMessage' | transloco }}</h5>
-                    <h5 class="tw-text-14-px tw-font-400 tw-text-text-secondary tw-pt-8-px" [ngClass]="{'tw-pl-0': !brandingFeatureConfig.illustrationsAllowed, 'tw-pl-34-px': brandingFeatureConfig.illustrationsAllowed}" *ngIf="!isExportInProgress && !exportableAccountingExportIds.length && accountingExportSummary?.successful_accounting_export_count">
-                        {{ 'dashboardExportSection.noExpensesToExport' | transloco: { importStates: importStates } }}
-                    </h5>
-                    <div *ngIf="!isExportInProgress && failedExpenseGroupCount !== null && failedExpenseGroupCount > 0" fxLayout="row" fxFlex="4" class="tw-text-14-px tw-font-500 tw-text-text-secondary tw-pt-8-px tw-flex" [ngClass]="{'tw-pl-0': !brandingFeatureConfig.illustrationsAllowed, 'tw-pl-34-px': brandingFeatureConfig.illustrationsAllowed}">
-                        <h5>{{ 'dashboardExportSection.exportSummary' | transloco: { newCount: (exportableAccountingExportIds.length - failedExpenseGroupCount > 0 ? exportableAccountingExportIds.length - failedExpenseGroupCount : 0), failedCount: failedExpenseGroupCount } }}</h5>
-                    </div>
-                    <div *ngIf="!isExportInProgress && exportableAccountingExportIds.length && (failedExpenseGroupCount === null || failedExpenseGroupCount === 0)" fxLayout="row" fxFlex="4" class="tw-text-14-px tw-font-500 tw-text-text-secondary tw-pt-8-px tw-flex" [ngClass]="{'tw-pl-0': !brandingFeatureConfig.illustrationsAllowed, 'tw-pl-34-px': brandingFeatureConfig.illustrationsAllowed}">
-                        <h5>{{ 'dashboardExportSection.exportSummaryZeroFailed' | transloco: { newCount: exportableAccountingExportIds.length } }}</h5>
-                    </div>
-                </div>
-                <div class="tw-flex tw-items-end tw-justify-end">
-                    <div>
-                        <button type="button" class="export-btn tw-float-right tw-flex tw-justify-end tw-items-center tw-text-white tw-text-500 tw-bg-mandatory-field-color tw-rounded-4-px p-button-raised" pButton (click)="triggerExport()" [ngClass]="!exportableAccountingExportIds.length || isExportInProgress ? 'btn-disabled' : 'btn-enabled'" [disabled]="isExportInProgress || !exportableAccountingExportIds.length">
-                            <p class="tw-flex !tw-text-14-px !tw-font-500" *ngIf="!isExportInProgress">{{ 'dashboardExportSection.exportButtonText' | transloco }}
-                                <app-svg-icon *ngIf="brandingFeatureConfig.isIconsInsideButtonAllowed" [svgSource]="'arrow-tail-right-medium'" [width]="'18px'" [height]="'18px'" [styleClasses]="'tw-pl-8-px tw-pt-2-px tw-text-12-px'"></app-svg-icon>
-                            </p>
-                            <p class="tw-flex !tw-text-14-px !tw-font-500" *ngIf="isExportInProgress">{{ 'dashboardExportSection.exportingButtonText' | transloco }}
-                                <app-svg-icon *ngIf="brandingFeatureConfig.isIconsInsideButtonAllowed" [svgSource]="'arrow-tail-right-medium'" [width]="'18px'" [height]="'18px'" [styleClasses]="'tw-pl-8-px tw-pt-2-px tw-text-12-px'"></app-svg-icon>
-                            </p>
-                        </button><br>
-                    </div>
-                </div>
+  @if (!isImportInProgress) {
+    <div class="tw-rounded-8-px tw-bg-white tw-border-1-px tw-border-border-tertiary tw-z-1 tw-relative" [ngClass]="brandingStyle.common.mainComponentShadow">
+      <div class="tw-p-24-px">
+        <div class="tw-flex tw-items-center tw-justify-between">
+          @if (brandingFeatureConfig.featureFlags.displayAppLogoInDashboard) {
+            <img src="{{logoPath}}" width="logoWidth" class="tw-mr-24-px tw-h-44-px"/>
+          }
+          <div class="tw-w-4/5">
+            <div class="tw-flex tw-items-center">
+              @if (brandingFeatureConfig.illustrationsAllowed && !isExportInProgress && !exportableAccountingExportIds.length) {
+                <app-svg-icon [styleClasses]="'tw-flex tw-mt-1-px tw-pr-8-px'" [svgSource]="'check'" [height]="'24px'" [width]="'24px'"></app-svg-icon>
+              }
+              @if (brandingFeatureConfig.illustrationsAllowed && ((!isExportInProgress && exportableAccountingExportIds.length) || (isExportInProgress))) {
+                <app-svg-icon [styleClasses]="'tw-flex tw-mt-1-px tw-pr-8-px tw-text-icon-secondary'" [svgSource]="'arrow-tail-up'" [height]="'24px'" [width]="'24px'"></app-svg-icon>
+              }
+              @if (!isExportInProgress && !exportableAccountingExportIds.length && !accountingExportSummary) {
+                <h3 [ngClass]="brandingStyle.dashboard.exportSectionHeaderText">{{ 'dashboard.exportHeaderFirstTimeZeroStateText' | transloco}}</h3>
+              }
+              @if (isExportInProgress) {
+                <h3 [ngClass]="brandingStyle.dashboard.exportSectionHeaderText"> {{ ( appName === AppName.SAGE50 ? 'dashboardExportSection.exportingExpensesToAppSage50' : 'dashboardExportSection.exportingExpensesToApp' ) | transloco: { processedCount: processedCount, totalCount: exportableAccountingExportIds.length, appName: uiExposedAppName } }}</h3>
+              }
+              @if (!isExportInProgress && exportableAccountingExportIds.length) {
+                <h3 [ngClass]="brandingStyle.dashboard.exportSectionHeaderText"> {{ 'dashboardExportSection.expensesReadyToExport' | transloco: { count: exportableAccountingExportIds.length } }}</h3>
+              }
+              @if (!isExportInProgress && !exportableAccountingExportIds.length && accountingExportSummary?.successful_accounting_export_count) {
+                <h3 [ngClass]="brandingStyle.dashboard.exportSectionHeaderText">{{ (brandingConfig.brandId === 'co' && appName === AppName.QBD_DIRECT ? 'qbd_direct.dashboard.exportHeaderZeroStateText' : 'dashboard.exportHeaderZeroStateText') | transloco}}</h3>
+              }
+              @if (brandingConfig.brandId !== 'co') {
+                <app-svg-icon [svgSource]="'info-circle-fill'" [width]="'16px'" [height]="'16px'" [styleClasses]="'tw-flex tw-text-info tw-ml-4-px tw-text-text-brand-primary'" [tooltipText]="'dashboardExportSection.exportTooltip' | transloco: { brandName: brandingConfig.brandName }" [tooltipPosition]="'top'"></app-svg-icon>
+              }
             </div>
-            <div *ngIf="appName === AppName.QBD_DIRECT && isExportInProgress" class="tw-pt-16-px">
-                <app-configuration-info-label
-                    [infoText]="'dashboardExportSection.qbdInfoText' | transloco">
-                </app-configuration-info-label>
+            @if (!isExportInProgress && !exportableAccountingExportIds.length && !accountingExportSummary && brandingFeatureConfig.featureFlags.contentVersion === 'v1') {
+              <h5 [ngClass]="[brandingStyle.dashboard.exportSectionDescriptionText,brandingFeatureConfig.illustrationsAllowed ? 'tw-pl-34-px' : 'tw-pl-0']">
+                {{ 'dashboardExportSection.noNewExpensesToExportV1Prefix' | transloco }}
+                <p [ngClass]="brandingStyle.dashboard.exportSectionDescriptionSubText">
+                  {{ 'dashboardExportSection.expensesAvailableHereForExport' | transloco: { importStates: importStates } }}
+                </p>
+              </h5>
+            }
+            @if (!isExportInProgress && !exportableAccountingExportIds.length && !accountingExportSummary && brandingFeatureConfig.featureFlags.contentVersion === 'v2') {
+              <h5 [ngClass]="[brandingStyle.dashboard.exportSectionDescriptionText,brandingFeatureConfig.illustrationsAllowed ? 'tw-pl-34-px' : 'tw-pl-0']">
+                <p [ngClass]="brandingStyle.dashboard.exportSectionDescriptionSubText">
+                  {{ 'dashboardExportSection.expensesAvailableInDashboard' | transloco: { importStates: importStates } }}
+                </p>
+              </h5>
+            }
+            @if (isExportInProgress) {
+              <h5 [ngClass]="[brandingStyle.dashboard.exportSectionDescriptionText,brandingFeatureConfig.illustrationsAllowed ? 'tw-pl-34-px' : 'tw-pl-0']">{{ 'dashboardExportSection.exportInProgressMessage' | transloco }}</h5>
+            }
+            @if (!isExportInProgress && !exportableAccountingExportIds.length && accountingExportSummary?.successful_accounting_export_count) {
+              <h5 [ngClass]="[brandingStyle.dashboard.exportSectionDescriptionText,brandingFeatureConfig.illustrationsAllowed ? 'tw-pl-34-px' : 'tw-pl-0']">
+                {{ (brandingConfig.brandId === 'co' && appName === AppName.QBD_DIRECT ? 'qbd_direct.dashboard.noExpensesToExport' : 'dashboardExportSection.noExpensesToExport') | transloco: { importStates: importStates } }}
+              </h5>
+            }
+            @if (!isExportInProgress && failedExpenseGroupCount !== null && failedExpenseGroupCount > 0) {
+              <div fxLayout="row" fxFlex="4" class="tw-flex" [ngClass]="[brandingStyle.dashboard.exportSectionDescriptionText,brandingFeatureConfig.illustrationsAllowed ? 'tw-pl-34-px' : 'tw-pl-0']">
+                <h5>{{ 'dashboardExportSection.exportSummary' | transloco: { newCount: (exportableAccountingExportIds.length - failedExpenseGroupCount > 0 ? exportableAccountingExportIds.length - failedExpenseGroupCount : 0), failedCount: failedExpenseGroupCount } }}</h5>
+              </div>
+            }
+            @if (!isExportInProgress && exportableAccountingExportIds.length && (failedExpenseGroupCount === null || failedExpenseGroupCount === 0)) {
+              <div fxLayout="row" fxFlex="4" class="tw-flex" [ngClass]="[brandingStyle.dashboard.exportSectionDescriptionText,brandingFeatureConfig.illustrationsAllowed ? 'tw-pl-34-px' : 'tw-pl-0']">
+                <h5>{{ 'dashboardExportSection.exportSummaryZeroFailed' | transloco: { newCount: exportableAccountingExportIds.length } }}</h5>
+              </div>
+            }
+          </div>
+          <div class="tw-flex tw-items-end tw-justify-end">
+            <div class="tw-flex tw-justify-end tw-items-center">
+              <app-button  [buttonSize]="ButtonSize.MEDIUM" [buttonType]="ButtonType.PRIMARY" (buttonClick)="triggerExport()" [disabled]="isExportButtonDisabled || isExportInProgress || !exportableAccountingExportIds.length" [svgSource]="'arrow-tail-right-medium'" [buttonText]="isExportInProgress ? ('dashboardExportSection.exportingButtonText' | transloco) : ('dashboardExportSection.exportButtonText' | transloco)"></app-button>
+              <br>
+              </div>
             </div>
+          </div>
+          @if (appName === AppName.QBD_DIRECT && isExportInProgress) {
+            <div class="tw-pt-16-px">
+              <app-configuration-info-label
+                    [iconSrc]="'info-circle-fill-medium'"
+                    [customBackgroundColorClass]="brandingStyle.configuration.infoLabelBackground"
+                    [customStyleClass]="brandingStyle.configuration.infoLabelIcon"
+                [infoText]="'dashboardExportSection.qbdInfoText' | transloco">
+              </app-configuration-info-label>
+            </div>
+          }
         </div>
-        <div  *ngIf="isExportInProgress">
+        @if (isExportInProgress) {
+          <div >
             <p-progressBar class="!tw-h-6-px" [value]="exportProgressPercentage" [showValue]='false' [mode]="loaderType"></p-progressBar>
-        </div>
-    </div>
-    
+          </div>
+        }
+      </div>
+    }
+
     <!-- Shimmers -->
     <div class="tw-shadow-app-card tw-rounded-8-px tw-bg-white tw-z-1 tw-relative">
-        <app-shimmers [isDashboardImportInProgress]="isImportInProgress"></app-shimmers>
+      <app-shimmers [isDashboardImportInProgress]="isImportInProgress"></app-shimmers>
     </div>
-</div>
+  </div>

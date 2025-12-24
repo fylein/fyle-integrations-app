@@ -1,21 +1,22 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { MenuItem } from 'primeng/api';
+import { TabMenuItem } from 'src/app/core/models/common/tab-menu.model';
 import { AppName, ToastSeverity } from 'src/app/core/models/enum/enum.model';
 import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
-import { TravelperkService } from 'src/app/core/services/travelperk/travelperk.service';
+import { TravelperkService } from 'src/app/core/services/travelperk/travelperk-core/travelperk.service';
 import { TranslocoService } from '@jsverse/transloco';
 
 @Component({
-  selector: 'app-travelperk-main',
-  templateUrl: './travelperk-main.component.html',
-  styleUrls: ['./travelperk-main.component.scss']
+    selector: 'app-travelperk-main',
+    templateUrl: './travelperk-main.component.html',
+    styleUrls: ['./travelperk-main.component.scss'],
+    standalone: false
 })
 export class TravelperkMainComponent implements OnInit {
 
   appName: AppName = AppName.TRAVELPERK;
 
-  modules: MenuItem[];
+  modules: TabMenuItem[];
 
   isConnectionInProgress: boolean = false;
 
@@ -28,7 +29,7 @@ export class TravelperkMainComponent implements OnInit {
 
   ngOnInit(): void {
     this.modules = [
-      {label: this.translocoService.translate('travelperkMain.configurationLabel'), routerLink: '/integrations/travelperk/main/configuration'}
+      { label: this.translocoService.translate('travelperkMain.configurationLabel'), routerLink: '/integrations/travelperk/main/configuration', value: 'configuration' }
     ];
   }
 

@@ -1,39 +1,48 @@
-<div *ngIf="isGradientAllowed" class="tw-absolute tw-bg-header-1 tw-bg-no-repeat tw-h-110-px tw-w-[100%]"></div>
-<div *ngIf="isGradientAllowed" class="tw-absolute tw-bg-header-2 tw-h-110-px tw-w-[100%]"></div>
+@if (isGradientAllowed) {
+  <div class="tw-absolute tw-bg-header-1 tw-bg-no-repeat tw-h-110-px tw-w-[100%]"></div>
+}
+@if (isGradientAllowed) {
+  <div class="tw-absolute tw-bg-header-2 tw-h-110-px tw-w-[100%]"></div>
+}
 
-<div *ngIf="isLoading" class="tw-flex tw-justify-center tw-items-center tw-h-screen">
+@if (isLoading) {
+  <div class="tw-flex tw-justify-center tw-items-center tw-h-full">
     <app-loader></app-loader>
-</div>
+  </div>
+}
 
-<div *ngIf="!isLoading">
+@if (!isLoading) {
+  <div>
     <app-dashboard-export-section
-        (export)="export()"
-        [appName]="appName"
-        [isImportInProgress]="isImportInProgress"
-        [isExportInProgress]="isExportInProgress"
-        [exportableAccountingExportIds]="exportableAccountingExportIds"
-        [failedExpenseGroupCount]="failedExpenseGroupCount"
-        [exportProgressPercentage]="exportProgressPercentage"
-        [accountingExportSummary]="accountingExportSummary"
-        [processedCount]="processedCount"
-        [reimbursableImportState]="reimbursableImportState"
-        [cccImportState]="cccImportState">
+      (export)="export()"
+      [appName]="appName"
+      [isImportInProgress]="isImportInProgress"
+      [isExportInProgress]="isExportInProgress"
+      [exportableAccountingExportIds]="exportableAccountingExportIds"
+      [failedExpenseGroupCount]="failedExpenseGroupCount"
+      [exportProgressPercentage]="exportProgressPercentage"
+      [accountingExportSummary]="accountingExportSummary"
+      [processedCount]="processedCount"
+      [reimbursableImportState]="reimbursableImportState"
+      [cccImportState]="cccImportState">
     </app-dashboard-export-section>
-
-    <app-zero-state *ngIf="!accountingExportSummary && !exportableAccountingExportIds.length"
+    @if (!accountingExportSummary && !exportableAccountingExportIds.length) {
+      <app-zero-state
         [zeroStateImageURL]="'assets/illustrations/dashboard-illustration.svg'"
         [headerText]="'dashboard.dashboardExportZeroStateHeaderText' | transloco"
         [subHeaderText]="'dashboard.dashboardExportZeroStateSubHeaderText' | transloco">
-    </app-zero-state>
-
-    <app-dashboard-export-summary-section *ngIf="exportableAccountingExportIds.length || accountingExportSummary"
+      </app-zero-state>
+    }
+    @if (exportableAccountingExportIds.length || accountingExportSummary) {
+      <app-dashboard-export-summary-section
         [appName]="appName"
         [exportLogVersion]="'v2'"
         [accountingExportSummary]="accountingExportSummary"
         [isRealTimeExportEnabled]="isRealTimeExportEnabled">
-    </app-dashboard-export-summary-section>
-
-    <app-dashboard-error-section *ngIf="errors.EMPLOYEE_MAPPING.length || errors.CATEGORY_MAPPING.length || errors.ACCOUNTING_ERROR.length"
+      </app-dashboard-export-summary-section>
+    }
+    @if (errors.EMPLOYEE_MAPPING.length || errors.CATEGORY_MAPPING.length || errors.ACCOUNTING_ERROR.length) {
+      <app-dashboard-error-section
         [appName]="appName"
         [apiModuleUrl]="AppUrl.QBD_DIRECT"
         [errors]="errors"
@@ -45,6 +54,10 @@
         [importCodeFields]="importCodeFields"
         [chartOfAccounts]="chartOfAccounts"
         [errorsVersion]="'v1'"
-        [exportKey]="'export_log'">
-    </app-dashboard-error-section>
-</div>
+        [exportKey]="'export_log'"
+        [redirectLink]="redirectLink"
+        [isEmployeeAndVendorAllowed]="isEmployeeAndVendorAllowed">
+      </app-dashboard-error-section>
+    }
+  </div>
+}

@@ -2,7 +2,6 @@
 import { CommonModule } from '@angular/common';
 import type { Meta, StoryObj } from '@storybook/angular';
 import { moduleMetadata } from '@storybook/angular';
-import { IconSpriteModule } from 'ng-svg-icon-sprite';
 import { QBDExpenseGroupedBy } from 'src/app/core/models/enum/enum.model';
 import { MandatoryFieldComponent } from 'src/app/shared/components/helper/mandatory-field/mandatory-field.component';
 import { ConfigurationLabelComponent } from 'src/app/shared/components/configuration/configuration-label/configuration-label.component';
@@ -17,7 +16,7 @@ const meta: Meta<ConfigurationLabelComponent> = {
   decorators: [
     moduleMetadata({
       declarations: [ConfigurationLabelComponent, MandatoryFieldComponent],
-      imports: [CommonModule, IconSpriteModule.forRoot({ path: 'assets/sprites/sprite.svg' })]
+      imports: [CommonModule ]
     })
   ],
   argTypes: {

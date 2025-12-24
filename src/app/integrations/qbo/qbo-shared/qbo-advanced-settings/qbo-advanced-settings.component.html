@@ -1,168 +1,194 @@
-<div *ngIf="isLoading" class="tw-flex tw-justify-center tw-items-center tw-h-screen">
+@if (isLoading) {
+  <div class="tw-flex tw-justify-center tw-items-center tw-h-[75vh]">
     <app-loader></app-loader>
-</div>
-<div *ngIf="!isLoading" class="configuration--contents tw-border-border-tertiary tw-mt-6" [ngClass]="brandingStyle.common.configurationContents">
+  </div>
+}
+@if (!isLoading) {
+  <div [ngClass]="[brandingStyle.configuration.settingsContainer, isOnboarding ? brandingStyle.common.configurationContents : brandingStyle.common.configurationContentsDashboard, isOnboarding ? 'configuration--contents' : '']">
     <div>
-        <app-configuration-step-header
-            [headerText]="'configuration.advancedSettings.stepName' | transloco"
-            [contentText]="'configuration.advancedSettings.contentText' | transloco"
-            [redirectLink]="supportArticleLink"
-            [showSyncButton]="isOnboarding"
-            [appName]="appName"
-            (refreshDimension)="refreshDimensions()">
-        </app-configuration-step-header>
+      <app-configuration-step-header
+        [headerText]="'configuration.advancedSettings.stepName' | transloco"
+        [contentText]="'configuration.advancedSettings.contentText' | transloco"
+        [redirectLink]="supportArticleLink"
+        [showSyncButton]="isOnboarding"
+        [appName]="appName"
+        (refreshDimension)="refreshDimensions()">
+      </app-configuration-step-header>
     </div>
     <form [formGroup]="advancedSettingForm">
-        <div class="tw-p-24-px">
-            <div class="tw-mb-16-px">
-                <app-configuration-step-sub-header
-                    [label]="'qboAdvancedSettings.automation' | transloco"
-                    [subLabel]="'configuration.advancedSettings.automationSubLabel' | transloco: {brandName: brandingConfig.brandName}">
-                </app-configuration-step-sub-header>
-            </div>
-            <div class="tw-mb-16-px">
-                <div class="tw-rounded-12-px tw-border-border-tertiary tw-border tw-bg-white tw-mb-16-px">
-                    <app-configuration-toggle-field
-                        [form]="advancedSettingForm"
-                        [label]="'qboAdvancedSettings.scheduleAutomaticExport' | transloco"
-                        [subLabel]="'configuration.advancedSettings.scheduleSubLabel' | transloco: {brandName: brandingConfig.brandName}"
-                        [formControllerName]="'exportSchedule'"
-                        [iconPath]="'calendar'">
-                    </app-configuration-toggle-field>
-
-                    <div *ngIf="advancedSettingForm.get('exportSchedule')?.value">
-                        <app-configuration-schedule-export
-                            [form]="advancedSettingForm"
-                            [appName]="appName"
-                            [isFieldMandatory]="false"
-                            [mandatoryErrorListName]="'qboAdvancedSettings.automaticExportMethod' | transloco"
-                            [label]="'qboAdvancedSettings.setupExportFrequency' | transloco"
-                            [subLabel]="'configuration.advancedSettings.frequencySubLabel' | transloco: {brandName: brandingConfig.brandName}"
-                            [options]="hours"
-                            [isEmailPresent]="brandingFeatureConfig.featureFlags.advancedSettings.emailNotification ? true: false"
-                            [formControllerName]="'exportScheduleFrequency'"
-                            [adminEmails]="adminEmails">
-                        </app-configuration-schedule-export>
-                    </div>
-                </div>
-            </div>
-
-            <div class="tw-mb-16-px">
-                <app-configuration-step-sub-header
-                    [label]="'configuration.advancedSettings.otherPreferencesLabel' | transloco"
-                    [subLabel]="'configuration.advancedSettings.otherPreferencesSubLabel' | transloco: {brandName: brandingConfig.brandName}">
-                </app-configuration-step-sub-header>
-            </div>
-            <div class="tw-rounded-12-px tw-border-border-tertiary tw-border tw-bg-white tw-mb-16-px">
-                <app-configuration-toggle-field
-                    [form]="advancedSettingForm"
-                    [iconPath]="'calendar'"
-                    [label]="'configuration.advancedSettings.accountingPeriodLabel' | transloco"
-                    [subLabel]="'configuration.advancedSettings.accountingPeriodSubLabel' | transloco"
-                    [formControllerName]="'changeAccountingPeriod'">
-                </app-configuration-toggle-field>
-
-                <app-configuration-toggle-field *ngIf="isAutoCreateVendorsFieldVisible() && brandingFeatureConfig.featureFlags.advancedSettings.autoCreateVendors"
-                    [form]="advancedSettingForm"
-                    [iconPath]="'user-plus'"
-                    [label]="'configuration.advancedSettings.autoCreateVendorsLabel' | transloco"
-                    [subLabel]="'qboAdvancedSettings.autoCreateVendorsSubLabel' | transloco: { brandName: brandingConfig.brandName }"
-                    [formControllerName]="'autoCreateVendors'">
-                </app-configuration-toggle-field>
-
-                <app-configuration-select-field *ngIf="isPaymentSyncFieldVisible() && brandingFeatureConfig.featureFlags.advancedSettings.paymentsSync"
-                    [form]="advancedSettingForm"
-                    [options]="paymentSyncOptions"
-                    [iconPath]="'arrow-rotate'"
-                    [label]="'configuration.advancedSettings.paymentSyncLabel' | transloco"
-                    [subLabel]="'qboAdvancedSettings.paymentSyncSubLabel' | transloco: { brandName: brandingConfig.brandName }"
-                    [placeholder]="'qboAdvancedSettings.paymentSyncPlaceholder' | transloco"
-                    [formControllerName]="'paymentSync'"
-                    [showClearIcon]="true">
-                </app-configuration-select-field>
-
-                <app-configuration-select-field *ngIf="advancedSettingForm.get('paymentSync')?.value && advancedSettingForm.get('paymentSync')?.value === 'fyle_to_qbo'"
-                    [form]="advancedSettingForm"
-                    [destinationAttributes]="billPaymentAccounts"
-                    [optionLabel]="'name'"
-                    [isFieldMandatory]="true"
-                    [mandatoryErrorListName]="'qboAdvancedSettings.paymentAccountError' | transloco"
-                    [label]="'configuration.advancedSettings.billPaymentAccountLabel' | transloco"
-                    [subLabel]="'qboAdvancedSettings.billPaymentAccountSubLabel' | transloco: { brandName: brandingConfig.brandName, subLabel: 'configuration.advancedSettings.billPaymentAccountSubLabel' | transloco }"
-                    [placeholder]="'qboAdvancedSettings.selectPaymentAccountPlaceholder' | transloco"
-                    [formControllerName]="'billPaymentAccount'">
-                </app-configuration-select-field>
-
-                <app-configuration-toggle-field *ngIf="isSingleCreditLineJEFieldVisible() && brandingFeatureConfig.featureFlags.advancedSettings.singleCreditLineJE"
-                    [form]="advancedSettingForm"
-                    [iconPath]="'list'"
-                    [label]="'configuration.advancedSettings.singleCreditLineJELabel' | transloco"
-                    [subLabel]="'configuration.advancedSettings.singleCreditLineJESubLabel' | transloco"
-                    [formControllerName]="'singleCreditLineJE'">
-                </app-configuration-toggle-field>
-
-                <app-configuration-toggle-field *ngIf="isAutoCreateMerchantsAsVendorsFieldVisible()"
-                    [form]="advancedSettingForm"
-                    [iconPath]="'user-plus'"
-                    [label]="'configuration.advancedSettings.autoCreateMerchantsAsVendorsLabel' | transloco"
-                    [subLabel]="'configuration.advancedSettings.autoCreateMerchantsAsVendorsSubLabel' | transloco: {brandName: brandingConfig.brandName}"
-                    [formControllerName]="'autoCreateMerchantsAsVendors'">
-                </app-configuration-toggle-field>
-            </div>
-
-            <div class="tw-mb-16-px">
-                <app-configuration-step-sub-header
-                    [label]="'qboAdvancedSettings.customization' | transloco"
-                    [subLabel]="'configuration.advancedSettings.customizeSectionSubLabel' | transloco: {brandName: brandingConfig.brandName}">
-                </app-configuration-step-sub-header>
-            </div>
-            <div class="tw-rounded-12-px tw-border-border-tertiary tw-border tw-bg-white tw-mb-16-px">
-                <app-configuration-multi-select
-                    [form]="advancedSettingForm"
-                    [isFieldMandatory]="false"
-                    [mandatoryErrorListName]="'qboAdvancedSettings.itemLevelDescription' | transloco"
-                    [label]="'configuration.advancedSettings.memoStructureLabel' | transloco"
-                    [subLabel]="'configuration.advancedSettings.memoStructureSubLabel' | transloco: {brandName: brandingConfig.brandName}"
-                    [options]="defaultMemoOptions"
-                    [iconPath]="'list'"
-                    [placeholder]="'qboAdvancedSettings.setDescriptionPlaceholder' | transloco"
-                    [formControllerName]="'memoStructure'"
-                    (changeInMultiSelect)="onMultiSelectChange()">
-                </app-configuration-multi-select>
-                <div class="preview-text">
-                    <h4 class="tw-text-form-label-text-color tw-mb-12-px">{{'configuration.advancedSettings.previewDescriptionFieldLabel' | transloco}}</h4>
-                    <div class="preview-box">
-                        {{memoPreviewText}}
-                    </div>
-                </div>
-            </div>
-
-            <div class="tw-rounded-12-px tw-border-border-tertiary tw-border tw-bg-white tw-mb-16-px" *ngIf="brandingFeatureConfig.featureFlags.advancedSettings.skipExport">
-                <app-configuration-toggle-field
-                    [form]="advancedSettingForm"
-                    [label]="'qboAdvancedSettings.skipExportLabel' | transloco: { brandName: brandingConfig.brandName }"
-                    [subLabel]="'qboAdvancedSettings.skipExportSubLabel' | transloco: { brandName: brandingConfig.brandName }"
-                    [formControllerName]="'skipExport'"
-                    [iconPath]="'list'"
-                    [redirectLink]="skipExportRedirectLink">
-                </app-configuration-toggle-field>
-                <div *ngIf="advancedSettingForm.get('skipExport')?.value">
-                    <app-configuration-skip-export
-                    [enableSkipExport]="advancedSettingForm.get('skipExport')?.value"
-                    [skipExportForm]="skipExportForm"
-                    [expenseFilter]="expenseFilters"
-                    [conditionFieldOptions]="conditionFieldOptions"
-                    (deleteSkipExportForm)="deleteExpenseFilter($event)"
-                    (invalidSkipExportForm)="invalidSkipExportForm($event)">
-                    </app-configuration-skip-export>
-                </div>
-            </div>
+      <div class="tw-p-24-px">
+        <div [ngClass]="brandingStyle.configuration.configurationAdvancedSettingAutomationCardHeader">
+          <app-configuration-step-sub-header
+            [label]="'qboAdvancedSettings.automation' | transloco"
+            [subLabel]="'configuration.advancedSettings.automationSubLabel' | transloco: {brandName: brandingConfig.brandName}">
+          </app-configuration-step-sub-header>
         </div>
+        <div class="tw-mb-16-px">
+          <div [ngClass]="brandingStyle.configuration.configurationAdvancedSettingAutomationCardBody">
+            <app-configuration-toggle-field
+              [form]="advancedSettingForm"
+              [label]="'qboAdvancedSettings.scheduleAutomaticExport' | transloco"
+              [subLabel]="'configuration.advancedSettings.scheduleSubLabel' | transloco: {brandName: brandingConfig.brandName}"
+              [formControllerName]="'exportSchedule'"
+              [iconPath]="'calendar'">
+            </app-configuration-toggle-field>
+            @if (advancedSettingForm.get('exportSchedule')?.value) {
+              <div>
+                <app-configuration-schedule-export
+                  [form]="advancedSettingForm"
+                  [appName]="appName"
+                  [isFieldMandatory]="false"
+                  [mandatoryErrorListName]="'qboAdvancedSettings.automaticExportMethod' | transloco"
+                  [label]="'qboAdvancedSettings.setupExportFrequency' | transloco"
+                  [subLabel]="'configuration.advancedSettings.frequencySubLabel' | transloco: {brandName: brandingConfig.brandName}"
+                  [options]="hours"
+                  [isEmailPresent]="brandingFeatureConfig.featureFlags.advancedSettings.emailNotification ? true: false"
+                  [formControllerName]="'exportScheduleFrequency'"
+                  [adminEmails]="adminEmails">
+                </app-configuration-schedule-export>
+              </div>
+            }
+          </div>
+        </div>
+        <div [ngClass]="brandingStyle.configuration.configurationAdvancedSettingAutomationCardHeader">
+          <app-configuration-step-sub-header
+            [label]="'configuration.advancedSettings.otherPreferencesLabel' | transloco"
+            [subLabel]="'configuration.advancedSettings.otherPreferencesSubLabel' | transloco: {brandName: brandingConfig.brandName}">
+          </app-configuration-step-sub-header>
+        </div>
+        <div [ngClass]="brandingStyle.configuration.configurationAdvancedSettingNetsuiteCardBody">
+          <app-configuration-toggle-field
+            [form]="advancedSettingForm"
+            [iconPath]="'calendar'"
+            [label]="'configuration.advancedSettings.accountingPeriodLabel' | transloco"
+            [subLabel]="'configuration.advancedSettings.accountingPeriodSubLabel' | transloco"
+            [formControllerName]="'changeAccountingPeriod'">
+          </app-configuration-toggle-field>
+          @if (isAutoCreateVendorsFieldVisible() && brandingFeatureConfig.featureFlags.advancedSettings.autoCreateVendors) {
+            <app-configuration-toggle-field
+              [form]="advancedSettingForm"
+              [iconPath]="'user-plus'"
+              [label]="'configuration.advancedSettings.autoCreateVendorsLabel' | transloco"
+              [subLabel]="'qboAdvancedSettings.autoCreateVendorsSubLabel' | transloco: { brandName: brandingConfig.brandName }"
+              [formControllerName]="'autoCreateVendors'">
+            </app-configuration-toggle-field>
+          }
+          @if (isPaymentSyncFieldVisible() && brandingFeatureConfig.featureFlags.advancedSettings.paymentsSync) {
+            <app-configuration-select-field
+              [form]="advancedSettingForm"
+              [options]="paymentSyncOptions"
+              [iconPath]="'arrow-rotate'"
+              [label]="'configuration.advancedSettings.paymentSyncLabel' | transloco"
+              [subLabel]="'qboAdvancedSettings.paymentSyncSubLabel' | transloco: { brandName: brandingConfig.brandName }"
+              [placeholder]="'qboAdvancedSettings.paymentSyncPlaceholder' | transloco"
+              [formControllerName]="'paymentSync'"
+              [showClearIcon]="true"
+              [appName]="appName">
+            </app-configuration-select-field>
+          }
+          @if (advancedSettingForm.get('paymentSync')?.value && advancedSettingForm.get('paymentSync')?.value === 'fyle_to_qbo') {
+            <app-configuration-select-field
+              [form]="advancedSettingForm"
+              [destinationAttributes]="billPaymentAccounts"
+              [optionLabel]="'name'"
+              [isFieldMandatory]="true"
+              [mandatoryErrorListName]="'qboAdvancedSettings.paymentAccountError' | transloco"
+              [label]="'configuration.advancedSettings.billPaymentAccountLabel' | transloco"
+              [subLabel]="'qboAdvancedSettings.billPaymentAccountSubLabel' | transloco: { brandName: brandingConfig.brandName, subLabel: 'configuration.advancedSettings.billPaymentAccountSubLabel' | transloco }"
+              [placeholder]="'qboAdvancedSettings.selectPaymentAccountPlaceholder' | transloco"
+              [formControllerName]="'billPaymentAccount'">
+            </app-configuration-select-field>
+          }
+          @if (isSingleCreditLineJEFieldVisible() && brandingFeatureConfig.featureFlags.advancedSettings.singleCreditLineJE) {
+            <app-configuration-toggle-field
+              [form]="advancedSettingForm"
+              [iconPath]="'list'"
+              [label]="'configuration.advancedSettings.singleCreditLineJELabel' | transloco"
+              [subLabel]="'configuration.advancedSettings.singleCreditLineJESubLabel' | transloco"
+              [formControllerName]="'singleCreditLineJE'">
+            </app-configuration-toggle-field>
+          }
+          @if (isAutoCreateMerchantsAsVendorsFieldVisible()) {
+            <app-configuration-toggle-field
+              [form]="advancedSettingForm"
+              [iconPath]="'user-plus'"
+              [label]="'configuration.advancedSettings.autoCreateMerchantsAsVendorsLabel' | transloco"
+              [subLabel]="'configuration.advancedSettings.autoCreateMerchantsAsVendorsSubLabel' | transloco: {brandName: brandingConfig.brandName}"
+              [formControllerName]="'autoCreateMerchantsAsVendors'">
+            </app-configuration-toggle-field>
+          }
+        </div>
+        <div  [ngClass]="brandingStyle.configuration.configurationAdvancedSettingAutomationCardHeader">
+          <app-configuration-step-sub-header
+            [label]="'qboAdvancedSettings.customization' | transloco"
+            [subLabel]="'configuration.advancedSettings.customizeSectionSubLabel' | transloco: {brandName: brandingConfig.brandName}">
+          </app-configuration-step-sub-header>
+        </div>
+        <div [ngClass]="brandingStyle.configuration.configurationAdvancedSettingNetsuiteCardBody">
+          <app-configuration-multi-select
+            [form]="advancedSettingForm"
+            [isFieldMandatory]="false"
+            [mandatoryErrorListName]="'qboAdvancedSettings.itemLevelDescription' | transloco"
+            [label]="'configuration.advancedSettings.memoStructureLabel' | transloco"
+            [subLabel]="'configuration.advancedSettings.memoStructureSubLabel' | transloco: {brandName: brandingConfig.brandName}"
+            [options]="defaultMemoOptions"
+            [iconPath]="'list'"
+            [placeholder]="'qboAdvancedSettings.setDescriptionPlaceholder' | transloco"
+            [formControllerName]="'memoStructure'"
+            (changeInMultiSelect)="onMultiSelectChange()">
+          </app-configuration-multi-select>
+          <div class="preview-text">
+            <div class="preview-box">
+              {{memoPreviewText}}
+            </div>
+          </div>
+        </div>
+        @if (brandingFeatureConfig.featureFlags.advancedSettings.skipExport) {
+          <div [ngClass]="brandingStyle.configuration.configurationAdvancedSettingNetsuiteCardBody">
+            <app-configuration-toggle-field
+              [form]="advancedSettingForm"
+              [label]="'qboAdvancedSettings.skipExportLabel' | transloco: { brandName: brandingConfig.brandName }"
+              [subLabel]="'qboAdvancedSettings.skipExportSubLabel' | transloco: { brandName: brandingConfig.brandName }"
+              [formControllerName]="'skipExport'"
+              [iconPath]="'list'"
+              [redirectLink]="skipExportRedirectLink">
+            </app-configuration-toggle-field>
+            @if (advancedSettingForm.get('skipExport')?.value) {
+              <div>
+                <app-configuration-skip-export
+                  [enableSkipExport]="advancedSettingForm.get('skipExport')?.value"
+                  [skipExportForm]="skipExportForm"
+                  [expenseFilter]="expenseFilters"
+                  [conditionFieldOptions]="conditionFieldOptions"
+                  (deleteSkipExportForm)="deleteExpenseFilter($event)"
+                  (invalidSkipExportForm)="invalidSkipExportForm($event)">
+                </app-configuration-skip-export>
+              </div>
+            }
+          </div>
+        }
+      </div>
+      @if (isOnboarding) {
         <app-configuration-step-footer
-            [ctaText] = "!isSaveInProgress ? (isOnboarding ? ConfigurationCtaText.SAVE_AND_CONTINUE : ConfigurationCtaText.SAVE) : ConfigurationCtaText.SAVING"
-            [isButtonDisabled]="!advancedSettingForm.valid || isSkipExportFormInvalid"
-            [showBackButton]="isOnboarding ? true : false"
-            (save)="save()"
-            (navigateToPreviousStep)="navigateToPreviousStep()"></app-configuration-step-footer>
+          [ctaText] = "!isSaveInProgress ? (isOnboarding ? ConfigurationCtaText.SAVE_AND_CONTINUE : ConfigurationCtaText.SAVE) : ConfigurationCtaText.SAVING"
+          [isButtonDisabled]="!advancedSettingForm.valid || isSkipExportFormInvalid"
+          [showBackButton]="isOnboarding ? true : false"
+          (save)="save()"
+          (navigateToPreviousStep)="navigateToPreviousStep()">
+        </app-configuration-step-footer>
+      }
     </form>
-</div>
+  </div>
+}
+
+@if (!isLoading && !isOnboarding) {
+  <div class="tw-sticky tw-top-0 tw-bottom-0 tw-left-0 tw-right-0 tw-bg-white">
+    <app-configuration-step-footer
+      [ctaText] = "!isSaveInProgress ? (isOnboarding ? ConfigurationCtaText.SAVE_AND_CONTINUE : ConfigurationCtaText.SAVE) : ConfigurationCtaText.SAVING"
+      [isButtonDisabled]="!advancedSettingForm.valid || isSkipExportFormInvalid"
+      [showBackButton]="isOnboarding ? true : false"
+      (save)="save()"
+      (navigateToPreviousStep)="navigateToPreviousStep()">
+    </app-configuration-step-footer>
+  </div>
+}

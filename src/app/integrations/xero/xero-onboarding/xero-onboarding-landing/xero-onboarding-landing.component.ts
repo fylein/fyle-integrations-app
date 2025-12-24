@@ -13,11 +13,13 @@ import { XeroAuthService } from 'src/app/core/services/xero/xero-core/xero-auth.
 import { XeroHelperService } from 'src/app/core/services/xero/xero-core/xero-helper.service';
 import { environment } from 'src/environments/environment';
 import { TranslocoService } from '@jsverse/transloco';
+import { BrandingService } from 'src/app/core/services/common/branding.service';
 
 @Component({
-  selector: 'app-xero-onboarding-landing',
-  templateUrl: './xero-onboarding-landing.component.html',
-  styleUrls: ['./xero-onboarding-landing.component.scss']
+    selector: 'app-xero-onboarding-landing',
+    templateUrl: './xero-onboarding-landing.component.html',
+    styleUrls: ['./xero-onboarding-landing.component.scss'],
+    standalone: false
 })
 export class XeroOnboardingLandingComponent implements OnInit, OnDestroy {
 
@@ -47,7 +49,8 @@ export class XeroOnboardingLandingComponent implements OnInit, OnDestroy {
     private xeroHelper: XeroHelperService,
     private toastService: IntegrationsToastService,
     private xeroAuthService: XeroAuthService,
-    private translocoService: TranslocoService
+    private translocoService: TranslocoService,
+    public brandingService: BrandingService
   ) { }
 
   acceptWarning(data: ConfigurationWarningOut): void {

@@ -3,14 +3,16 @@ import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/fo
 import { forkJoin } from 'rxjs';
 import { constructPayload1, constructPayload2 } from 'src/app/core/models/intacct/misc/skip-export.model';
 import { ConditionField, CustomOperatorOption, ExpenseFilterResponse, JoinOptions, SkipExport } from 'src/app/core/models/intacct/intacct-configuration/advanced-settings.model';
-import { SiAdvancedSettingService } from 'src/app/core/services/si/si-configuration/si-advanced-setting.service';
+import { SiAdvancedSettingsService } from 'src/app/core/services/si/si-configuration/si-advanced-settings.service';
 import { RxwebValidators } from '@rxweb/reactive-form-validators';
 import { TranslocoService } from '@jsverse/transloco';
+import { HelperService } from 'src/app/core/services/common/helper.service';
 
 @Component({
-  selector: 'app-skip-export',
-  templateUrl: './skip-export.component.html',
-  styleUrls: ['./skip-export.component.scss']
+    selector: 'app-skip-export',
+    templateUrl: './skip-export.component.html',
+    styleUrls: ['./skip-export.component.scss'],
+    standalone: false
 })
 export class SkipExportComponent implements OnInit {
 
@@ -62,8 +64,9 @@ export class SkipExportComponent implements OnInit {
 
   constructor(
     @Inject(FormBuilder) private formBuilder: FormBuilder,
-    private advancedSettingsService: SiAdvancedSettingService,
-    private translocoService: TranslocoService
+    private advancedSettingsService: SiAdvancedSettingsService,
+    private translocoService: TranslocoService,
+    private helper: HelperService
   ) {
     this.customOperatorOptions = [
       {
@@ -204,16 +207,18 @@ export class SkipExportComponent implements OnInit {
     this.skipExportForm.controls.join_by.reset();
     this.skipExportForm.controls.condition2.reset();
     this.valueOption2=[];
+    this.skipExportForm.controls.value2.setValue([]);
   }
 
   resetFields(operator: AbstractControl, value: AbstractControl, conditionSelected: ConditionField, rank: number) {
 
     operator.reset();
-    value.reset();
     if (rank === 1) {
       this.valueOption1 = [];
+      this.skipExportForm.controls.value1.setValue([]);
     } else if (rank === 2) {
       this.valueOption2 = [];
+      this.skipExportForm.controls.value2.setValue([]);
     }
     if (conditionSelected) {
       if (conditionSelected.is_custom) {
@@ -589,6 +594,7 @@ export class SkipExportComponent implements OnInit {
       }
     }
     this.fieldWatcher();
+    this.helper.normalizeChipFieldValues(this.skipExportForm, ['value1', 'value2']);
     this.isLoading = false;
   }
 
@@ -605,5 +611,36 @@ export class SkipExportComponent implements OnInit {
 
   ngOnInit(): void {
     this.getSettingsAndSetupForm();
+  }
+
+  // Methods for p-autocomplete functionality (replacing p-autocomplete)
+    onKeyDown(event: any, fieldNumber: number): void {
+    const keyboardEvent = event as KeyboardEvent;
+    const target = keyboardEvent.target as HTMLInputElement;
+    // Handle comma and Enter key to add chips (replaces separator="," functionality)
+    if ((keyboardEvent.key === ',' || keyboardEvent.key === 'Enter') && target.value.trim()) {
+      keyboardEvent.preventDefault();
+      this.addChip(target.value.trim(), target, fieldNumber);
+    }
+  }
+
+  onBlur(event: any, fieldNumber: number): void {
+    const target = event.target as HTMLInputElement;
+    // Replaces [addOnBlur]="true" functionality
+    if (target.value.trim()) {
+      this.addChip(target.value.trim(), target, fieldNumber);
+    }
+  }
+
+  private addChip(value: string, inputElement: HTMLInputElement, fieldNumber: number): void {
+    const formControlName = fieldNumber === 1 ? 'value1' : 'value2';
+    const currentValues = this.skipExportForm.get(formControlName)?.value || [];
+
+    // Avoid duplicates
+    if (!currentValues.includes(value)) {
+      const newValues = [...currentValues, value];
+      this.skipExportForm.get(formControlName)?.setValue(newValues);
+      inputElement.value = ''; // Clear input after adding
+    }
   }
 }

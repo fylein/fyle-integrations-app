@@ -1,18 +1,20 @@
 import { Component, OnInit } from '@angular/core';
-import { MenuItem } from 'primeng/api';
+import { TabMenuItem } from 'src/app/core/models/common/tab-menu.model';
 import { brandingFeatureConfig, brandingConfig, brandingStyle } from 'src/app/branding/branding-config';
 import { TranslocoService } from '@jsverse/transloco';
+import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-netsuite-configuration',
-  templateUrl: './netsuite-configuration.component.html',
-  styleUrls: ['./netsuite-configuration.component.scss']
+    selector: 'app-netsuite-configuration',
+    templateUrl: './netsuite-configuration.component.html',
+    styleUrls: ['./netsuite-configuration.component.scss'],
+    standalone: false
 })
 export class NetsuiteConfigurationComponent implements OnInit {
 
-  modules: MenuItem[] = [];
+  modules: TabMenuItem[] = [];
 
-  activeModule: MenuItem = this.modules[0];
+  activeModule: string;
 
   readonly isGradientAllowed: boolean = brandingFeatureConfig.isGradientAllowed;
 
@@ -20,17 +22,19 @@ export class NetsuiteConfigurationComponent implements OnInit {
 
   readonly brandingStyle = brandingStyle;
 
-  constructor(private translocoService: TranslocoService) { }
+  readonly brandingFeatureConfig = brandingFeatureConfig;
+
+  constructor(private translocoService: TranslocoService, private router: Router) { }
 
   ngOnInit(): void {
     this.modules = [
-      {label: this.translocoService.translate('netsuite.configuration.exportSetting.stepName'), routerLink: '/integrations/netsuite/main/configuration/export_settings'},
-      {label: this.translocoService.translate('netsuite.configuration.importSetting.stepName'), routerLink: '/integrations/netsuite/main/configuration/import_settings'},
-      {label: this.translocoService.translate('netsuite.configuration.advancedSettings.stepName'), routerLink: '/integrations/netsuite/main/configuration/advanced_settings'}
+      { label: this.translocoService.translate('netsuite.configuration.exportSetting.stepName'), routerLink: '/integrations/netsuite/main/configuration/export_settings', value: 'export_settings' },
+      { label: this.translocoService.translate('netsuite.configuration.importSetting.stepName'), routerLink: '/integrations/netsuite/main/configuration/import_settings', value: 'import_settings' },
+      { label: this.translocoService.translate('netsuite.configuration.advancedSettings.stepName'), routerLink: '/integrations/netsuite/main/configuration/advanced_settings', value: 'advanced_settings' }
     ];
-    // If (brandingConfig.brandId !== 'co') {
-    //   This.modules.push({label: 'Connection', routerLink: '/integrations/netsuite/main/configuration/connector'});
-    // }
+
+    this.activeModule = this.modules[0].value;
+    this.router.navigate([this.modules[0].routerLink]);
   }
 
 }

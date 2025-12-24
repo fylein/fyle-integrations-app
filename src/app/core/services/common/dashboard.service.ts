@@ -2,9 +2,7 @@ import { Injectable } from '@angular/core';
 import { ApiService } from './api.service';
 import { WorkspaceService } from './workspace.service';
 import { Observable, from } from 'rxjs';
-import { Error, ErrorResponse } from '../../models/db/error.model';
 import { HelperService } from './helper.service';
-import { ExportableAccountingExport } from '../../models/db/accounting-export.model';
 import { AppName, TaskLogState } from '../../models/enum/enum.model';
 import { TaskLogGetParams, TaskResponse } from '../../models/db/task-log.model';
 
@@ -16,21 +14,21 @@ export class DashboardService {
   constructor(
     private apiService: ApiService,
     private workspaceService: WorkspaceService,
-    private helper: HelperService
+    private helperService: HelperService
   ) {
-    helper.setBaseApiURL();
+    helperService.setBaseApiURL();
   }
 
-  getExportableAccountingExportIds(version?: 'v1' | 'v2'): Observable<any> {
+  getExportableAccountingExportIds(version?: 'v1' | 'v2' | 'v3'): Observable<any> {
     // Dedicated to qbd direct
-    if (version === 'v2') {
-      return this.apiService.get(`/workspaces/${this.workspaceService.getWorkspaceId()}/export_logs/ready_to_export/`, {});
+    if (version === 'v2' || version === 'v3') {
+      return this.apiService.get(this.helperService.buildEndpointPath(`${this.workspaceService.getWorkspaceId()}/export_logs/${(version === 'v3' ? 'ready_to_export_count' : 'ready_to_export')}/`), {});
     }
     return this.apiService.get(`/workspaces/${this.workspaceService.getWorkspaceId()}/fyle/${version === 'v1' ? 'exportable_expense_groups' : 'exportable_accounting_exports'}/`, {});
   }
 
-  triggerAccountingExport(version?: 'v1'): Observable<{}> {
-    const url = version === 'v1' ? `/workspaces/${this.workspaceService.getWorkspaceId()}/qbd/export/` : `/workspaces/${this.workspaceService.getWorkspaceId()}/exports/trigger/`;
+  triggerAccountingExport(version?: 'v1' | 'v2'): Observable<{}> {
+    const url = version === 'v1' ? `/workspaces/${this.workspaceService.getWorkspaceId()}/qbd/export/` : (version === 'v2' ? `/${this.workspaceService.getWorkspaceId()}/export_logs/export/` : `/workspaces/${this.workspaceService.getWorkspaceId()}/exports/trigger/`);
     return this.apiService.post(url, {});
   }
 

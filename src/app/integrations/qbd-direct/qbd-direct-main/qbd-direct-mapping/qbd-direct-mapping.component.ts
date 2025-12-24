@@ -1,30 +1,31 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
-import { MenuItem } from 'primeng/api';
+import { TabMenuItem } from 'src/app/core/models/common/tab-menu.model';
 import { brandingFeatureConfig, brandingStyle } from 'src/app/branding/branding-config';
 import { brandingConfig } from 'src/app/branding/branding-config';
-import { FyleField } from 'src/app/core/models/enum/enum.model';
+import { FyleField, QBDCorporateCreditCardExpensesObject, QbdDirectCCCPurchasedFromField } from 'src/app/core/models/enum/enum.model';
 import { MappingService } from 'src/app/core/services/common/mapping.service';
 import { SentenceCasePipe } from 'src/app/shared/pipes/sentence-case.pipe';
 import { SnakeCaseToSpaceCasePipe } from 'src/app/shared/pipes/snake-case-to-space-case.pipe';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { TranslocoModule, TranslocoService } from '@jsverse/transloco';
+import { QbdDirectExportSettingsService } from 'src/app/core/services/qbd-direct/qbd-direct-configuration/qbd-direct-export-settings.service';
+import { forkJoin } from 'rxjs';
 
 @Component({
-  selector: 'app-qbd-direct-mapping',
-  standalone: true,
-  imports: [RouterModule, SharedModule, CommonModule, TranslocoModule],
-  templateUrl: './qbd-direct-mapping.component.html',
-  styleUrl: './qbd-direct-mapping.component.scss'
+    selector: 'app-qbd-direct-mapping',
+    imports: [RouterModule, SharedModule, CommonModule, TranslocoModule],
+    templateUrl: './qbd-direct-mapping.component.html',
+    styleUrl: './qbd-direct-mapping.component.scss'
 })
 export class QbdDirectMappingComponent implements OnInit {
 
   isLoading: boolean = true;
 
-  mappingPages: MenuItem[];
+  mappingPages: TabMenuItem[];
 
-  activeModule: MenuItem;
+  activeModule: string;
 
   readonly isGradientAllowed: boolean = brandingFeatureConfig.isGradientAllowed;
 
@@ -32,37 +33,50 @@ export class QbdDirectMappingComponent implements OnInit {
 
   readonly brandingStyle = brandingStyle;
 
+  readonly brandingFeatureConfig =  brandingFeatureConfig;
+
   constructor(
     private mappingService: MappingService,
+    private exportSettingService: QbdDirectExportSettingsService,
     private router: Router,
     private translocoService: TranslocoService
   ) { }
 
   private setupPage(): void {
-    this.mappingService.getMappingSettings().subscribe((response) => {
-      if (response.results && Array.isArray(response.results)) {
-        response.results.forEach((item) => {
+    forkJoin([
+      this.mappingService.getMappingSettings(),
+      this.exportSettingService.getQbdExportSettings()
+    ]).subscribe(([mappingSettingsResponse, exportSettingResponse]) => {
+      if (mappingSettingsResponse.results && Array.isArray(mappingSettingsResponse.results)) {
+        mappingSettingsResponse.results.forEach((item) => {
           if (item.source_field !== FyleField.EMPLOYEE && item.source_field !== FyleField.CATEGORY) {
             const mappingPage = new SnakeCaseToSpaceCasePipe().transform(item.source_field);
             this.mappingPages.push({
               label: new SentenceCasePipe(this.translocoService).transform(mappingPage),
-              routerLink: `/integrations/qbd_direct/main/mapping/${encodeURIComponent(item.source_field.toLowerCase())}`
+              routerLink: `/integrations/qbd_direct/main/mapping/${encodeURIComponent(item.source_field.toLowerCase())}`,
+              value: 'mapping_' + item.source_field.toLowerCase()
             });
           }
         });
       }
-      if (!brandingFeatureConfig.featureFlags.mapEmployees) {
+
+      const isEmployeeMappingHidden = (
+        !exportSettingResponse?.reimbursable_expense_export_type &&
+        exportSettingResponse?.credit_card_expense_export_type === QBDCorporateCreditCardExpensesObject.CREDIT_CARD_PURCHASE &&
+        exportSettingResponse?.ccc_purchased_from_field === QbdDirectCCCPurchasedFromField.MERCHANT
+      );
+      if (!brandingFeatureConfig.featureFlags.mapEmployees || isEmployeeMappingHidden) {
         this.mappingPages.splice(0, 1);
       }
-      this.router.navigateByUrl(this.mappingPages[0].routerLink);
+      this.router.navigateByUrl(this.mappingPages[0].routerLink!);
       this.isLoading = false;
     });
   }
 
   ngOnInit(): void {
     this.mappingPages = [
-      {label: this.translocoService.translate('qbdDirectMapping.employee'), routerLink: '/integrations/qbd_direct/main/mapping/employee'},
-      {label: this.translocoService.translate('qbdDirectMapping.category'), routerLink: '/integrations/qbd_direct/main/mapping/category'}
+      {label: this.translocoService.translate('qbdDirectMapping.employee'), routerLink: '/integrations/qbd_direct/main/mapping/employee', value: 'employee'},
+      {label: this.translocoService.translate('qbdDirectMapping.category'), routerLink: '/integrations/qbd_direct/main/mapping/category', value: 'category'}
     ];
     this.setupPage();
   }

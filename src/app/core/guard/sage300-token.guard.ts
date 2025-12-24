@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 import { ActivatedRouteSnapshot, Router, RouterStateSnapshot, UrlTree } from "@angular/router";
-import { Observable, map, catchError, throwError } from "rxjs";
+import { Observable, map, catchError, throwError, of } from "rxjs";
 import { globalCacheBusterNotifier } from "ts-cacheable";
 import { WorkspaceService } from "../services/common/workspace.service";
 import { AppUrl } from "../models/enum/enum.model";
@@ -39,8 +39,10 @@ export class Sage300TokenGuard  {
             if (error.error.message === "Sage300 connection expired"){
               return this.router.navigateByUrl('integrations/sage300/token_expired/dashboard');
             }
+
+            return of(true);
           }
-          return throwError(error);
+          return of(true);
         })
       );
   }

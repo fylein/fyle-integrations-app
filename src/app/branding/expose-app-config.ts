@@ -11,8 +11,9 @@ export const exposeAppConfig: AllowedAppsConfiguration = {
             XERO: true,
             NETSUITE: true,
             QBD: true,
-            BAMBOO: true,
-            QBD_DIRECT: true
+            BAMBOO_HR: true,
+            QBD_DIRECT: true,
+            SAGE50: true
         },
         'production-1-in': {
             INTACCT: true,
@@ -23,8 +24,9 @@ export const exposeAppConfig: AllowedAppsConfiguration = {
             XERO: true,
             NETSUITE: true,
             QBD: true,
-            BAMBOO: true,
-            QBD_DIRECT: false
+            BAMBOO_HR: true,
+            QBD_DIRECT: false,
+            SAGE50: false
         },
         'production-1-us': {
             INTACCT: true,
@@ -35,11 +37,25 @@ export const exposeAppConfig: AllowedAppsConfiguration = {
             XERO: true,
             NETSUITE: true,
             QBD: true,
-            BAMBOO: true,
-            QBD_DIRECT: true
+            BAMBOO_HR: true,
+            QBD_DIRECT: true,
+            SAGE50: true
         }
     },
     co: {
+        'c1-staging': {
+            INTACCT: true,
+            SAGE300: false,
+            QBO: true,
+            BUSINESS_CENTRAL: false,
+            TRAVELPERK: false,
+            XERO: true,
+            NETSUITE: true,
+            QBD: false,
+            BAMBOO_HR: false,
+            QBD_DIRECT: true,
+            SAGE50: false
+        },
         'c1-qa': {
             INTACCT: true,
             SAGE300: false,
@@ -49,8 +65,9 @@ export const exposeAppConfig: AllowedAppsConfiguration = {
             XERO: true,
             NETSUITE: true,
             QBD: false,
-            BAMBOO: false,
-            QBD_DIRECT: false
+            BAMBOO_HR: false,
+            QBD_DIRECT: true,
+            SAGE50: false
         },
         'c1-production-1-us': {
             INTACCT: true,
@@ -61,8 +78,9 @@ export const exposeAppConfig: AllowedAppsConfiguration = {
             XERO: true,
             NETSUITE: true,
             QBD: false,
-            BAMBOO: false,
-            QBD_DIRECT: false
+            BAMBOO_HR: false,
+            QBD_DIRECT: true,
+            SAGE50: false
         }
     }
 };

@@ -1,6 +1,6 @@
-<div>
-    <app-main-menu [modules]="modules" [activeItem]="modules[0]" [appName]="appName" [isDropdrownRequired]="false" [isSyncVisible]="true" [isDisconnectRequired]="true" [isConnectionInProgress]="isConnectionInProgress" [toolTipText]="'travelperkMain.toolTipText' | transloco" (refreshDimensionClick)="refreshDimentions()" (disconnectClick)="disconnect()"></app-main-menu>
-    <div>
+<div class="page-layout-container">
+    <app-main-menu [modules]="modules" [activeItem]="modules[0].value" [appName]="appName" [isDropdrownRequired]="false" [isSyncVisible]="true" [isDisconnectRequired]="true" [isConnectionInProgress]="isConnectionInProgress" [toolTipText]="'travelperkMain.toolTipText' | transloco" (refreshDimensionClick)="refreshDimentions()" (disconnectClick)="disconnect()"></app-main-menu>
+    <div class="router-outlet-container">
         <router-outlet></router-outlet>
     </div>
 </div>

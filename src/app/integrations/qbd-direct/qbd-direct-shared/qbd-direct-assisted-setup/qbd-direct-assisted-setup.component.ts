@@ -1,15 +1,17 @@
 import { Component, Input, ViewEncapsulation } from '@angular/core';
 import { TranslocoService } from '@jsverse/transloco';
 import { brandingConfig, brandingFeatureConfig, brandingKbArticles } from 'src/app/branding/branding-config';
-import { ToastSeverity, QBDDirectInteractionType } from 'src/app/core/models/enum/enum.model';
+import { ToastSeverity, QBDDirectInteractionType, ButtonType, ButtonSize, ClickEvent, TrackingApp } from 'src/app/core/models/enum/enum.model';
 import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
+import { TrackingService } from 'src/app/core/services/integration/tracking.service';
 import { QbdDirectAssistedSetupService } from 'src/app/core/services/qbd-direct/qbd-direct-configuration/qbd-direct-assisted-setup.service';
 
 @Component({
-  selector: 'app-qbd-direct-assisted-setup',
-  templateUrl: './qbd-direct-assisted-setup.component.html',
-  styleUrls: ['./qbd-direct-assisted-setup.component.scss'],
-  encapsulation: ViewEncapsulation.None
+    selector: 'app-qbd-direct-assisted-setup',
+    templateUrl: './qbd-direct-assisted-setup.component.html',
+    styleUrls: ['./qbd-direct-assisted-setup.component.scss'],
+    encapsulation: ViewEncapsulation.None,
+    standalone: false
 })
 
 export class QbdDirectAssistedSetupComponent {
@@ -18,6 +20,10 @@ export class QbdDirectAssistedSetupComponent {
   readonly brandingConfig = brandingConfig;
 
   readonly brandingKbArticles = brandingKbArticles;
+
+  ButtonType = ButtonType;
+
+  ButtonSize = ButtonSize;
 
   @Input() interactionType: QBDDirectInteractionType | undefined;
 
@@ -32,7 +38,8 @@ export class QbdDirectAssistedSetupComponent {
 constructor(
     private assistedSetupService: QbdDirectAssistedSetupService,
     private toastService: IntegrationsToastService,
-    private translocoService: TranslocoService
+    private translocoService: TranslocoService,
+    private trackingService: TrackingService
   ) {}
 
   get nativeWindow(): Window {
@@ -44,6 +51,10 @@ constructor(
   }
 
   toggleAssistedSetupDialog(): void{
+    if (!this.isAssistedSetupDialogVisible) {
+      this.trackingService.onClickEvent(TrackingApp.QBD_DIRECT, ClickEvent.QBD_DIRECT_ASSISTED_SETUP_DIALOG);
+    }
+
     this.isQuerySubmitted = false;
     this.isAssistedSetupDialogVisible = !this.isAssistedSetupDialogVisible;
     if (!this.isAssistedSetupDialogVisible){
@@ -82,6 +93,8 @@ constructor(
   }
 
   bookSlot(): void {
+    this.trackingService.onClickEvent(TrackingApp.QBD_DIRECT, ClickEvent.QBD_DIRECT_ASSISTED_SETUP_BOOKED);
+
     this.assistedSetupService.bookSlot().subscribe({
       next: () => {
         this.toggleAssistedSetupDialog();

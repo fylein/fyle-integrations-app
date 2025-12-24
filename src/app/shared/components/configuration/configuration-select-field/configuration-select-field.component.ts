@@ -19,9 +19,10 @@ import { interval } from 'rxjs';
 import { TranslocoService } from '@jsverse/transloco';
 
 @Component({
-  selector: 'app-configuration-select-field',
-  templateUrl: './configuration-select-field.component.html',
-  styleUrls: ['./configuration-select-field.component.scss']
+    selector: 'app-configuration-select-field',
+    templateUrl: './configuration-select-field.component.html',
+    styleUrls: ['./configuration-select-field.component.scss'],
+    standalone: false
 })
 export class ConfigurationSelectFieldComponent implements OnInit, OnChanges {
 
@@ -76,9 +77,19 @@ export class ConfigurationSelectFieldComponent implements OnInit, OnChanges {
 
   @Input() isDisableTextRequired: boolean = true;
 
+  @Input() disabledText: string;
+
   @Input() isimportSettings: boolean = false;
 
+  @Input() infoTooltipText?: string;
+
+  @Input() customClasses: string = '';
+
+  @Input() isOneTimeField: boolean = false;
+
   @Output() searchOptionsDropdown: EventEmitter<ExportSettingOptionSearch> = new EventEmitter<ExportSettingOptionSearch>();
+
+  @Output() dropdownChange: EventEmitter<{event: any, formControllerName: string}> = new EventEmitter<{event: any, formControllerName: string}>();
 
   exportTypeIconPath: string;
 
@@ -104,6 +115,10 @@ export class ConfigurationSelectFieldComponent implements OnInit, OnChanges {
 
   dialogHeader: string;
 
+  currentExportTypeIndex: number = 0;
+
+  availableExportTypes: string[] = [];
+
   readonly brandingConfig = brandingConfig;
 
   readonly brandingFeatureConfig = brandingFeatureConfig;
@@ -114,11 +129,19 @@ export class ConfigurationSelectFieldComponent implements OnInit, OnChanges {
 
   readonly brandingStyle = brandingStyle;
 
+  autoSyncPaymentsPreviewClick: boolean = false;
+
   constructor(
     private trackingService: TrackingService,
     private router: Router,
     private translocoService: TranslocoService
   ) { }
+
+  previewClick() {
+    this.dialogHeader = this.translocoService.translate('configurationSelectField.paymentSyncHeader');
+    this.isPreviewDialogVisible = true;
+    this.autoSyncPaymentsPreviewClick = true;
+  }
 
   onSearchFocus(isSearchFocused: boolean): void {
     this.isSearchFocused = isSearchFocused;
@@ -140,14 +163,37 @@ export class ConfigurationSelectFieldComponent implements OnInit, OnChanges {
   }
 
   showExportPreviewDialog(exportType: string) {
-    this.dialogHeader = this.translocoService.translate('configurationSelectField.previewOfExport', { exportType: new SnakeCaseToSpaceCasePipe().transform(exportType.toLowerCase()), appName: this.appName });
+    const index = this.formControllerName === 'reimbursableExportType' ? 0 : 1;
+
+    // Get all available export types for navigation
+    this.availableExportTypes = Object.keys(this.exportTypeIconPathArray[index]);
+    this.currentExportTypeIndex = this.availableExportTypes.indexOf(exportType);
+
+    this.updatePreviewDialog(exportType);
+    this.isPreviewDialogVisible = true;
+  }
+
+  updatePreviewDialog(exportType: string) {
+    this.dialogHeader = this.translocoService.translate(this.appName === AppName.SAGE50 ? 'configurationSelectField.previewOfExportSage50Header' : 'configurationSelectField.previewOfExport', { exportType: new SnakeCaseToSpaceCasePipe().transform(exportType.toLowerCase()), appName: this.appName, aOrAn: ['a', 'e', 'i', 'o', 'u'].includes(exportType[0].toLowerCase()) ? 'an' : 'a' });
     const index = this.formControllerName === 'reimbursableExportType' ? 0 : 1;
     this.exportTypeIconPath = this.exportTypeIconPathArray[index][exportType];
-    this.isPreviewDialogVisible = true;
+  }
+
+  navigatePreview(direction: 'next' | 'previous') {
+    if (direction === 'next' && this.currentExportTypeIndex < this.availableExportTypes.length - 1) {
+      this.currentExportTypeIndex++;
+      this.updatePreviewDialog(this.availableExportTypes[this.currentExportTypeIndex]);
+    } else if (direction === 'previous' && this.currentExportTypeIndex > 0) {
+      this.currentExportTypeIndex--;
+      this.updatePreviewDialog(this.availableExportTypes[this.currentExportTypeIndex]);
+    }
   }
 
   closeDialog() {
     this.isPreviewDialogVisible = false;
+    this.autoSyncPaymentsPreviewClick = false;
+    this.currentExportTypeIndex = 0;
+    this.availableExportTypes = [];
   }
 
   simpleSearch(query: string) {
@@ -155,7 +201,7 @@ export class ConfigurationSelectFieldComponent implements OnInit, OnChanges {
   }
 
   clearSearch(): void {
-    this.form.controls.searchOption.patchValue('');
+    this.form.controls.searchOption?.patchValue('');
   }
 
   searchOptions(event: any) {
@@ -170,8 +216,8 @@ export class ConfigurationSelectFieldComponent implements OnInit, OnChanges {
   ngOnInit(): void {
     this.meridiemOption = [this.translocoService.translate('configurationSelectField.am'), this.translocoService.translate('configurationSelectField.pm')];
     this.exportTableData = [
-      { exportModule: this.translocoService.translate('configurationSelectField.expenseReport'), employeeMapping: this.translocoService.translate('configurationSelectField.employee'), chartOfAccounts: this.translocoService.translate('configurationSelectField.expenseTypes'), sageIntacctModule: this.translocoService.translate('configurationSelectField.timeAndExpense') },
       { exportModule: this.translocoService.translate('configurationSelectField.bill'), employeeMapping: this.translocoService.translate('configurationSelectField.vendor'), chartOfAccounts: this.translocoService.translate('configurationSelectField.glAccounts'), sageIntacctModule: this.translocoService.translate('configurationSelectField.accountsPayable') },
+      { exportModule: this.translocoService.translate('configurationSelectField.expenseReport'), employeeMapping: this.translocoService.translate('configurationSelectField.employee'), chartOfAccounts: this.translocoService.translate('configurationSelectField.expenseTypes'), sageIntacctModule: this.translocoService.translate('configurationSelectField.timeAndExpense') },
       { exportModule: this.translocoService.translate('configurationSelectField.journalEntry'), employeeMapping: this.translocoService.translate('configurationSelectField.employeeVendor'), chartOfAccounts: this.translocoService.translate('configurationSelectField.glAccounts'), sageIntacctModule: this.translocoService.translate('configurationSelectField.generalLedger') }
     ];
     this.uiExposedAppName = this.appName === AppName.QBD_DIRECT ? AppName.QBD : this.appName;
@@ -182,15 +228,26 @@ export class ConfigurationSelectFieldComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes.isDisabled?.currentValue) {
-      this.form.get(this.formControllerName)?.disable();
-    } else if (!changes.isDisabled?.currentValue) {
-      this.form.get(this.formControllerName)?.enable();
+    // Only modify FormControl state if isDisabled actually changed
+    if (changes.isDisabled) {
+      if (changes.isDisabled.currentValue) {
+        this.form.get(this.formControllerName)?.disable();
+      } else {
+        this.form.get(this.formControllerName)?.enable();
+      }
     }
 
     if (this.destinationAttributes){ /* Refreshing options to fix primeng dropdown search issue */
     this.optionsCopy = this.destinationAttributes;
     this.destinationAttributes = [...this.optionsCopy];
     }
+  }
+
+  onDropdownChange(event: any): void {
+    // Emit the change event to parent component for handling
+    this.dropdownChange.emit({
+      event,
+      formControllerName: this.formControllerName
+    });
   }
 }

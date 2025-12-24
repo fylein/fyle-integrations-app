@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { AppName, ConfigurationCta, IntacctField, IntacctOnboardingState, ToastSeverity, TrackingApp } from 'src/app/core/models/enum/enum.model';
 import { LocationEntityMapping } from 'src/app/core/models/intacct/db/location-entity-mapping.model';
 import { UserService } from 'src/app/core/services/misc/user.service';
-import { IntacctConnectorService } from 'src/app/core/services/si/si-core/intacct-connector.service';
+import { IntacctConnectorService } from 'src/app/core/services/si/si-core/si-connector.service';
 import { StorageService } from 'src/app/core/services/common/storage.service';
 import { SiWorkspaceService } from 'src/app/core/services/si/si-core/si-workspace.service';
 import { TrackingService } from 'src/app/core/services/integration/tracking.service';
@@ -17,9 +17,10 @@ import { HelperService } from 'src/app/core/services/common/helper.service';
 import { TranslocoService } from '@jsverse/transloco';
 
 @Component({
-  selector: 'app-intacct-location-entity',
-  templateUrl: './intacct-location-entity.component.html',
-  styleUrls: ['./intacct-location-entity.component.scss']
+    selector: 'app-intacct-location-entity',
+    templateUrl: './intacct-location-entity.component.html',
+    styleUrls: ['./intacct-location-entity.component.scss'],
+    standalone: false
 })
 export class IntacctLocationEntityComponent implements OnInit {
 
@@ -27,7 +28,7 @@ export class IntacctLocationEntityComponent implements OnInit {
 
   locationEntityOptions: IntacctDestinationAttribute[];
 
-  locationEntity: LocationEntityMapping;
+  locationEntity?: LocationEntityMapping;
 
   isLoading: boolean = true;
 
@@ -125,7 +126,7 @@ export class IntacctLocationEntityComponent implements OnInit {
       this.router.navigate(['/integrations/intacct/onboarding/export_settings']);
     }
     this.isLoading = false;
-    this.toastService.displayToastMessage(ToastSeverity.SUCCESS, this.translocoService.translate('intacctLocationEntity.locationEntitySuccessToast'));
+    this.toastService.displayToastMessage(ToastSeverity.SUCCESS, this.translocoService.translate('intacctLocationEntity.locationEntitySuccessToast'), undefined, this.isOnboarding);
   }
 
   private handleSuccess(locationEntityMappingPayload: LocationEntityPost): void {
@@ -159,10 +160,7 @@ export class IntacctLocationEntityComponent implements OnInit {
         detail: {}
       };
 
-      // Only add top level option if there are multiple location entities
-      this.locationEntityOptions = locationEntities.length > 1
-        ? [topLevelOption].concat(locationEntities)
-        : locationEntities;
+      this.locationEntityOptions = [topLevelOption].concat(locationEntities);
 
       this.setupLocationEntityMapping();
     });

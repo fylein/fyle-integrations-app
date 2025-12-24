@@ -1,8 +1,8 @@
-import { CommonModule } from '@angular/common';
+
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { Observable, interval, switchMap, from, takeWhile, forkJoin, catchError, of, Subject, takeUntil } from 'rxjs';
-import { brandingFeatureConfig } from 'src/app/branding/branding-config';
+import { brandingFeatureConfig, brandingKbArticles } from 'src/app/branding/branding-config';
 import { brandingConfig } from 'src/app/branding/branding-config';
 import { AccountingExportSummary, AccountingExportSummaryModel } from 'src/app/core/models/db/accounting-export-summary.model';
 import { DestinationFieldMap, DashboardModel } from 'src/app/core/models/db/dashboard.model';
@@ -19,13 +19,13 @@ import { QbdDirectAdvancedSettingsService } from 'src/app/core/services/qbd-dire
 import { SharedModule } from 'src/app/shared/shared.module';
 import { environment } from 'src/environments/environment';
 import { TranslocoModule, TranslocoService } from '@jsverse/transloco';
+import { QbdDirectMappingService } from 'src/app/core/services/qbd-direct/qbd-direct-core/qbd-direct-mapping.service';
 
 @Component({
-  selector: 'app-qbd-direct-dashboard',
-  standalone: true,
-  imports: [RouterModule, CommonModule, SharedModule, TranslocoModule],
-  templateUrl: './qbd-direct-dashboard.component.html',
-  styleUrl: './qbd-direct-dashboard.component.scss'
+    selector: 'app-qbd-direct-dashboard',
+    imports: [RouterModule, SharedModule, TranslocoModule],
+    templateUrl: './qbd-direct-dashboard.component.html',
+    styleUrl: './qbd-direct-dashboard.component.scss'
 })
 export class QbdDirectDashboardComponent implements OnInit, OnDestroy {
 
@@ -84,7 +84,11 @@ export class QbdDirectDashboardComponent implements OnInit, OnDestroy {
 
   chartOfAccounts: string[];
 
+  isEmployeeAndVendorAllowed: boolean = false;
+
   private destroy$ = new Subject<void>();
+
+  redirectLink: string = brandingKbArticles.onboardingArticles.QBD_DIRECT.ERROR_RESOLUTION_GUIDE_LINK;
 
   constructor(
     private accountingExportService: AccountingExportService,
@@ -94,6 +98,7 @@ export class QbdDirectDashboardComponent implements OnInit, OnDestroy {
     private importSettingService: QbdDirectImportSettingsService,
     private refinerService: RefinerService,
     private qbdDirectAdvancedSettingsService: QbdDirectAdvancedSettingsService,
+    private qbdDirectMappingService: QbdDirectMappingService,
     private translocoService: TranslocoService
   ) { }
 
@@ -115,7 +120,7 @@ export class QbdDirectDashboardComponent implements OnInit, OnDestroy {
         ).length > 0, true
       )
     ).subscribe((res: QbdDirectTaskResponse) => {
-      this.processedCount = res.results.filter((task: { status: TaskLogState; }) => (task.status !== TaskLogState.IN_PROGRESS && task.status !== TaskLogState.ENQUEUED)).length;
+      this.processedCount = res.results.filter((task: { status: TaskLogState; }) => (task.status && task.status !== TaskLogState.IN_PROGRESS && task.status !== TaskLogState.ENQUEUED)).length;
       this.exportProgressPercentage = Math.round((this.processedCount / this.exportableAccountingExportIds.length) * 100);
 
       if (res.results.filter((task: { status: TaskLogState; }) => (this.exportLogProcessingStates.includes(task.status))).length === 0) {
@@ -182,6 +187,8 @@ export class QbdDirectDashboardComponent implements OnInit, OnDestroy {
       this.cccImportState = responses[4].credit_card_expense_export_type && responses[4].credit_card_expense_state ? this.cccExpenseImportStateMap[responses[4].credit_card_expense_state] : null;
 
       this.isRealTimeExportEnabled = responses[6]?.is_real_time_export_enabled;
+
+      this.isEmployeeAndVendorAllowed = this.qbdDirectMappingService.getIsEmployeeAndVendorAllowed(responses[4]);
 
       if (queuedTasks.length) {
         this.isImportInProgress = false;

@@ -16,11 +16,13 @@ import { QboAuthService } from 'src/app/core/services/qbo/qbo-core/qbo-auth.serv
 import { XeroAuthService } from 'src/app/core/services/xero/xero-core/xero-auth.service';
 import { exposeAppConfig } from 'src/app/branding/expose-app-config';
 import { NetsuiteAuthService } from 'src/app/core/services/netsuite/netsuite-core/netsuite-auth.service';
+import { IntegrationsService } from 'src/app/core/services/common/integrations.service';
 
 @Component({
-  selector: 'app-landing',
-  templateUrl: './landing.component.html',
-  styleUrls: ['./landing.component.scss']
+    selector: 'app-landing',
+    templateUrl: './landing.component.html',
+    styleUrls: ['./landing.component.scss'],
+    standalone: false
 })
 export class LandingComponent implements OnInit {
 
@@ -57,19 +59,6 @@ export class LandingComponent implements OnInit {
     [AccountingIntegrationApp.XERO]: [`${environment.fyle_app_url}/xero`, environment.xero_client_id]
   };
 
-  private readonly inAppIntegrationUrlMap: InAppIntegrationUrlMap = {
-    [InAppIntegration.BAMBOO_HR]: '/integrations/bamboo_hr/',
-    [InAppIntegration.QBD]: '/integrations/qbd/',
-    [InAppIntegration.TRAVELPERK]: '/integrations/travelperk/',
-    [InAppIntegration.INTACCT]: '/integrations/intacct',
-    [InAppIntegration.QBO]: '/integrations/qbo',
-    [InAppIntegration.SAGE300]: '/integrations/sage300',
-    [InAppIntegration.BUSINESS_CENTRAL]: '/integrations/business_central',
-    [InAppIntegration.NETSUITE]: '/integrations/netsuite',
-    [InAppIntegration.XERO]: '/integrations/xero',
-    [InAppIntegration.QBD_DIRECT]: '/integrations/qbd_direct'
-  };
-
   readonly brandingConfig = brandingConfig;
 
   readonly isINCluster = this.storageService.get('cluster-domain')?.includes('in1');
@@ -90,7 +79,8 @@ export class LandingComponent implements OnInit {
     private router: Router,
     private siAuthService: SiAuthService,
     private storageService: StorageService,
-    private orgService: OrgService
+    private orgService: OrgService,
+    private integrationService: IntegrationsService
   ) { }
 
 
@@ -112,7 +102,7 @@ export class LandingComponent implements OnInit {
   }
 
   openInAppIntegration(inAppIntegration: InAppIntegration): void {
-    this.router.navigate([this.inAppIntegrationUrlMap[inAppIntegration]]);
+    this.router.navigate([this.integrationService.inAppIntegrationUrlMap[inAppIntegration]]);
   }
 
   private loginAndRedirectToInAppIntegration(redirectUri: string, inAppIntegration: InAppIntegration): void {

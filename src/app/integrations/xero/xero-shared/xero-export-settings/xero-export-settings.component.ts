@@ -17,11 +17,13 @@ import { XeroExportSettingsService } from 'src/app/core/services/xero/xero-confi
 import { XeroHelperService } from 'src/app/core/services/xero/xero-core/xero-helper.service';
 import { TranslocoService } from '@jsverse/transloco';
 import { ExportSettingsService } from 'src/app/core/services/common/export-settings.service';
+import { BrandingService } from 'src/app/core/services/common/branding.service';
 
 @Component({
-  selector: 'app-xero-export-settings',
-  templateUrl: './xero-export-settings.component.html',
-  styleUrls: ['./xero-export-settings.component.scss']
+    selector: 'app-xero-export-settings',
+    templateUrl: './xero-export-settings.component.html',
+    styleUrls: ['./xero-export-settings.component.scss'],
+    standalone: false
 })
 export class XeroExportSettingsComponent implements OnInit {
 
@@ -80,7 +82,9 @@ export class XeroExportSettingsComponent implements OnInit {
   XeroExportSettingDestinationOptionKey = XeroExportSettingDestinationOptionKey;
 
   previewImagePaths =[
-    {},
+    {
+      'PURCHASE BILL': 'assets/illustrations/xero/bill.png'
+    },
     {
       'BANK TRANSACTION': 'assets/illustrations/xero/bank-transaction.png'
     }
@@ -101,7 +105,8 @@ export class XeroExportSettingsComponent implements OnInit {
     private workspaceService: WorkspaceService,
     private toastService: IntegrationsToastService,
     private translocoService: TranslocoService,
-    private exportSettingsService: ExportSettingsService
+    private exportSettingsService: ExportSettingsService,
+    public brandingService: BrandingService
   ) {
     this.reimbursableExpenseGroupingDateOptions = this.xeroExportSettingService.getReimbursableExpenseGroupingDateOptions();
     this.reimbursableExportTypes = this.xeroExportSettingService.getReimbursableExportTypes();
@@ -145,7 +150,7 @@ export class XeroExportSettingsComponent implements OnInit {
       const exportSettingPayload = this.xeroExportSettingService.constructPayload(this.exportSettingForm);
       this.xeroExportSettingService.postExportSettings(exportSettingPayload).subscribe((response: XeroExportSettingGet) => {
         this.isSaveInProgress = false;
-        this.toastService.displayToastMessage(ToastSeverity.SUCCESS, this.translocoService.translate('xeroExportSettings.exportSettingsSuccess'));
+        this.toastService.displayToastMessage(ToastSeverity.SUCCESS, this.translocoService.translate('xeroExportSettings.exportSettingsSuccess'), undefined, this.isOnboarding);
 
         if (this.isOnboarding) {
           this.workspaceService.setOnboardingState(XeroOnboardingState.IMPORT_SETTINGS);

@@ -6,7 +6,7 @@ import { QBDAdvancedSettingModel, QBDAdvancedSettingsGet, QBDEmailOptions } from
 import { QBDExportSettingFormOption } from 'src/app/core/models/qbd/qbd-configuration/qbd-export-setting.model';
 import { TrackingService } from 'src/app/core/services/integration/tracking.service';
 import { OrgService } from 'src/app/core/services/org/org.service';
-import { QbdAdvancedSettingService } from 'src/app/core/services/qbd/qbd-configuration/qbd-advanced-setting.service';
+import { QbdAdvancedSettingsService } from 'src/app/core/services/qbd/qbd-configuration/qbd-advanced-settings.service';
 import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
 import { QbdWorkspaceService } from 'src/app/core/services/qbd/qbd-core/qbd-workspace.service';
 import { environment } from 'src/environments/environment';
@@ -14,9 +14,10 @@ import { brandingConfig, brandingStyle } from 'src/app/branding/branding-config'
 import { TranslocoService } from '@jsverse/transloco';
 
 @Component({
-  selector: 'app-qbd-advanced-setting',
-  templateUrl: './qbd-advanced-setting.component.html',
-  styleUrls: ['./qbd-advanced-setting.component.scss']
+    selector: 'app-qbd-advanced-setting',
+    templateUrl: './qbd-advanced-setting.component.html',
+    styleUrls: ['./qbd-advanced-setting.component.scss'],
+    standalone: false
 })
 export class QbdAdvancedSettingComponent implements OnInit {
   isOnboarding: any;
@@ -59,7 +60,7 @@ export class QbdAdvancedSettingComponent implements OnInit {
 
   constructor(
     private router: Router,
-    private advancedSettingService: QbdAdvancedSettingService,
+    private advancedSettingService: QbdAdvancedSettingsService,
     @Inject(FormBuilder) private formBuilder: FormBuilder,
     private workspaceService: QbdWorkspaceService,
     private orgService: OrgService,
@@ -249,7 +250,7 @@ export class QbdAdvancedSettingComponent implements OnInit {
     const advancedSettingPayload = QBDAdvancedSettingModel.constructPayload(this.advancedSettingsForm);
     this.advancedSettingService.postQbdAdvancedSettings(advancedSettingPayload).subscribe((response: QBDAdvancedSettingsGet) => {
       this.saveInProgress = false;
-      this.toastService.displayToastMessage(ToastSeverity.SUCCESS, this.translocoService.translate('qbdAdvancedSetting.advancedSettingsSavedSuccess'));
+      this.toastService.displayToastMessage(ToastSeverity.SUCCESS, this.translocoService.translate('qbdAdvancedSetting.advancedSettingsSavedSuccess'), undefined, this.isOnboarding);
       this.trackingService.trackTimeSpent(TrackingApp.QBD, Page.ADVANCED_SETTINGS_QBD, this.sessionStartTime);
       if (this.workspaceService.getOnboardingState() === QBDOnboardingState.ADVANCED_SETTINGS) {
         this.trackingService.onOnboardingStepCompletion(TrackingApp.QBD, QBDOnboardingState.ADVANCED_SETTINGS, 4, advancedSettingPayload);

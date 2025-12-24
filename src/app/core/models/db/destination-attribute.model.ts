@@ -24,7 +24,7 @@ export type DestinationAttribute = {
   created_at: Date;
   updated_at: Date;
   workspace: number;
-
+  detail: any;
 };
 
 export type DefaultDestinationAttribute = {
@@ -57,4 +57,10 @@ export type GroupedDestinationAttribute = {
   ACCOUNTS_PAYABLE: DestinationAttribute[],
   TAX_CODE: DestinationAttribute[],
   COMPANY: BusinessCentralDestinationAttributes[]
+};
+
+export type DestinationAttributeStats = {
+  attributes_count: number;
+  active_attributes_count: number;
+  inactive_attributes_count: number;
 };

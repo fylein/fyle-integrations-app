@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { BusinessCentralWorkspace } from 'src/app/core/models/business-central/db/business-central-workspace.model';
 import { MinimalUser } from 'src/app/core/models/db/user.model';
 import { AppUrl, BusinessCentralOnboardingState } from 'src/app/core/models/enum/enum.model';
-import { BusinessCentralMappingService } from 'src/app/core/services/business-central/business-central-mapping/business-central-mapping.service';
+import { BusinessCentralMappingService } from 'src/app/core/services/business-central/business-central-core/business-central-mapping.service';
 import { AuthService } from 'src/app/core/services/common/auth.service';
 import { HelperService } from 'src/app/core/services/common/helper.service';
 import { IntegrationsUserService } from 'src/app/core/services/common/integrations-user.service';
@@ -12,9 +12,10 @@ import { WindowService } from 'src/app/core/services/common/window.service';
 import { WorkspaceService } from 'src/app/core/services/common/workspace.service';
 
 @Component({
-  selector: 'app-business-central',
-  templateUrl: './business-central.component.html',
-  styleUrls: ['./business-central.component.scss']
+    selector: 'app-business-central',
+    templateUrl: './business-central.component.html',
+    styleUrls: ['./business-central.component.scss'],
+    standalone: false
 })
 export class BusinessCentralComponent implements OnInit {
 

@@ -24,9 +24,10 @@ import { TranslocoService } from '@jsverse/transloco';
 import { AdvancedSettingsService } from 'src/app/core/services/common/advanced-settings.service';
 
 @Component({
-  selector: 'app-qbo-advanced-settings',
-  templateUrl: './qbo-advanced-settings.component.html',
-  styleUrls: ['./qbo-advanced-settings.component.scss']
+    selector: 'app-qbo-advanced-settings',
+    templateUrl: './qbo-advanced-settings.component.html',
+    styleUrls: ['./qbo-advanced-settings.component.scss'],
+    standalone: false
 })
 export class QboAdvancedSettingsComponent implements OnInit {
 
@@ -146,7 +147,7 @@ export class QboAdvancedSettingsComponent implements OnInit {
 
     this.advancedSettingsService.postAdvancedSettings(advancedSettingPayload).subscribe(() => {
       this.isSaveInProgress = false;
-      this.toastService.displayToastMessage(ToastSeverity.SUCCESS, this.translocoService.translate('qboAdvancedSettings.advancedSettingsSuccess'));
+      this.toastService.displayToastMessage(ToastSeverity.SUCCESS, this.translocoService.translate('qboAdvancedSettings.advancedSettingsSuccess'), undefined, this.isOnboarding);
 
       if (this.isOnboarding) {
         this.workspaceService.setOnboardingState(QBOOnboardingState.COMPLETE);
@@ -244,7 +245,7 @@ export class QboAdvancedSettingsComponent implements OnInit {
 
       this.workspaceGeneralSettings = workspaceGeneralSettings;
 
-      this.billPaymentAccounts = billPaymentAccounts.BANK_ACCOUNT.map((option: DestinationAttribute) => this.exportSettingsService.formatGeneralMappingPayload(option));
+      this.billPaymentAccounts = billPaymentAccounts.BANK_ACCOUNT.map((option: DestinationAttribute) => this.exportSettingsService.formatGeneralMappingPayload(option)) || [];
 
       const isSkipExportEnabled = expenseFiltersGet.count > 0;
 

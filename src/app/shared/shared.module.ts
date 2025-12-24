@@ -2,18 +2,18 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { LoaderComponent } from './components/core/loader/loader.component';
 import { AppLandingPageHeaderComponent } from './components/helper/app-landing-page-header/app-landing-page-header.component';
-import { InputSwitchModule } from 'primeng/inputswitch';
+import { ToggleSwitchModule } from 'primeng/toggleswitch';
 import { RadioButtonModule } from 'primeng/radiobutton';
 import { ToastModule } from 'primeng/toast';
 import { InputTextModule } from 'primeng/inputtext';
-import { DropdownModule } from 'primeng/dropdown';
+import { SelectModule } from 'primeng/select';
 import { DialogModule } from 'primeng/dialog';
 import { MultiSelectModule } from 'primeng/multiselect';
 import { DragDropModule } from 'primeng/dragdrop';
 import { ProgressBarModule } from 'primeng/progressbar';
+import { SplitButtonModule } from 'primeng/splitbutton';
 
 // External Libraries
-import { IconSpriteModule } from 'ng-svg-icon-sprite';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { ButtonModule } from 'primeng/button';
 import { TooltipModule } from 'primeng/tooltip';
@@ -37,7 +37,7 @@ import { EmailMultiSelectFieldComponent } from './components/configuration/email
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ConfigurationMultiSelectComponent } from './components/configuration/configuration-multi-select/configuration-multi-select.component';
 import { ConfigurationLabelComponent } from './components/configuration/configuration-label/configuration-label.component';
-import { CalendarModule } from 'primeng/calendar';
+import { DatePickerModule } from 'primeng/datepicker';
 import { AppLandingPageBodyComponent } from './components/helper/app-landing-page-body/app-landing-page-body.component';
 import { QbdMappingTableComponent } from './components/qbd/mapping/qbd-mapping-table/qbd-mapping-table.component';
 import { MappingFilterComponent } from './components/helper/mapping/mapping-filter/mapping-filter.component';
@@ -46,8 +46,8 @@ import { TableModule } from 'primeng/table';
 import { IntacctConnectorComponent } from './components/si/core/intacct-connector/intacct-connector.component';
 import { IntacctLocationEntityComponent } from './components/si/core/intacct-location-entity/intacct-location-entity.component';
 import { SkipExportComponent } from './components/si/helper/skip-export/skip-export.component';
-import { ChipsModule } from 'primeng/chips';
-import { TabMenuModule } from 'primeng/tabmenu';
+import { AutoCompleteModule } from 'primeng/autocomplete';
+import { TabsModule } from 'primeng/tabs';
 import { DashboardMappingResolveComponent } from './components/si/helper/dashboard-mapping-resolve/dashboard-mapping-resolve.component';
 import { DashboardIntacctErrorsComponent } from './components/si/helper/dashboard-intacct-errors/dashboard-intacct-errors.component';
 import { DashboardExportSectionComponent } from './components/dashboard/dashboard-export-section/dashboard-export-section.component';
@@ -99,9 +99,13 @@ import { NetsuiteConnectionFormComponent } from '../integrations/netsuite/netsui
 import { IntacctConnectionFormComponent } from '../integrations/intacct/intacct-shared/intacct-connection-form/intacct-connection-form.component';
 import { Sage300ConnectionFormComponent } from '../integrations/sage300/sage300-shared/sage300-connection-form/sage300-connection-form.component';
 import { QbdDirectAssistedSetupComponent } from '../integrations/qbd-direct/qbd-direct-shared/qbd-direct-assisted-setup/qbd-direct-assisted-setup.component';
-import { OutlinedIconButtonComponent } from './components/input/outlined-icon-button/outlined-icon-button.component';
+import { ButtonComponent } from './components/input/button/button.component';
 import { SkippedExportLogComponent } from './pages/export-log/skipped-export-log/skipped-export-log.component';
 import { TranslocoModule } from '@jsverse/transloco';
+import { SplitMenuButtonComponent } from './components/input/split-menu-button/split-menu-button.component';
+import { ConfigurationFieldContainerComponent } from './components/configuration/configuration-field-container/configuration-field-container.component';
+import { UploadedFileDetailsComponent } from './components/core/uploaded-file-details/uploaded-file-details.component';
+import { AlertComponent } from './components/core/alert/alert.component';
 
 @NgModule({
   declarations: [
@@ -181,9 +185,13 @@ import { TranslocoModule } from '@jsverse/transloco';
     NetsuiteConnectionFormComponent,
     IntacctConnectionFormComponent,
     Sage300ConnectionFormComponent,
-    OutlinedIconButtonComponent,
+    ButtonComponent,
+    SplitMenuButtonComponent,
     QbdDirectAssistedSetupComponent,
-    SkippedExportLogComponent
+    SkippedExportLogComponent,
+    ConfigurationFieldContainerComponent,
+    UploadedFileDetailsComponent,
+    AlertComponent
   ],
   imports: [
     CommonModule,
@@ -191,28 +199,29 @@ import { TranslocoModule } from '@jsverse/transloco';
     ButtonModule,
     TooltipModule,
     SkeletonModule,
-    InputSwitchModule,
+    ToggleSwitchModule,
     RadioButtonModule,
     FormsModule,
     ReactiveFormsModule,
     ToastModule,
     InputTextModule,
-    DropdownModule,
+    SelectModule,
     DialogModule,
     MultiSelectModule,
     DragDropModule,
     ProgressBarModule,
-    CalendarModule,
-    ChipsModule,
+    DatePickerModule,
+    AutoCompleteModule,
     TableModule,
-    TabMenuModule,
+    TabsModule,
     IconFieldModule,
     InputIconModule,
     CheckboxButtonComponent,
-    IconSpriteModule.forRoot({ path: 'assets/sprites/sprite.svg' }),
-    TranslocoModule
+    TranslocoModule,
+    SplitButtonModule
   ],
   exports: [
+    CommonModule,
     LoaderComponent,
     AppLandingPageBodyComponent,
     AppLandingPageHeaderComponent,
@@ -234,9 +243,10 @@ import { TranslocoModule } from '@jsverse/transloco';
     ConfigurationStepHeaderComponent,
     EmailMultiSelectFieldComponent,
     ConfigurationMultiSelectComponent,
-    DropdownModule,
-    CalendarModule,
-    ChipsModule,
+    SelectModule,
+    DialogModule,
+    DatePickerModule,
+    AutoCompleteModule,
     FormsModule, ReactiveFormsModule, ProgressBarModule,
     ToastModule,
     IntacctConnectorComponent,
@@ -267,6 +277,7 @@ import { TranslocoModule } from '@jsverse/transloco';
     ConfigurationSkipExportComponent,
     ConfigurationStepSubHeaderComponent,
     GenericMappingV2Component,
+    GenericMappingTableComponent,
     SubMenuComponent,
     ConfigurationScheduleExportComponent,
     ConfigurationConnectorComponent,
@@ -291,10 +302,14 @@ import { TranslocoModule } from '@jsverse/transloco';
     NetsuiteConnectionFormComponent,
     IntacctConnectionFormComponent,
     Sage300ConnectionFormComponent,
-    OutlinedIconButtonComponent,
+    ButtonComponent,
+    SplitMenuButtonComponent,
     QbdDirectAssistedSetupComponent,
     SkippedExportLogComponent,
-    TranslocoModule
+    TranslocoModule,
+    ConfigurationFieldContainerComponent,
+    UploadedFileDetailsComponent,
+    AlertComponent
   ]
 })
 export class SharedModule { }

@@ -5,9 +5,10 @@ import { AppName, IntacctOnboardingState, QBDOnboardingState } from 'src/app/cor
 import { OnboardingStepper } from 'src/app/core/models/misc/onboarding-stepper.model';
 
 @Component({
-  selector: 'app-onboarding-steppers',
-  templateUrl: './onboarding-stepper.component.html',
-  styleUrls: ['./onboarding-stepper.component.scss']
+    selector: 'app-onboarding-steppers',
+    templateUrl: './onboarding-stepper.component.html',
+    styleUrls: ['./onboarding-stepper.component.scss'],
+    standalone: false
 })
 export class OnboardingSteppersComponent implements OnInit {
 
@@ -24,6 +25,10 @@ export class OnboardingSteppersComponent implements OnInit {
   constructor(
     private router: Router
   ) { }
+
+  getViewBox(onboardingStep: OnboardingStepper) {
+    return onboardingStep.icon === 'upload' ? '0 0 16 16' : '';
+  }
 
   shouldDisableConfigurationSteps(index: number): boolean {
     return ([1, 2, 3].includes(index) && this.disableConfigurationStepsIfTokenInvalid) || ([0, 1].includes(index) && this.disableConnectionStepsIfCompleted);

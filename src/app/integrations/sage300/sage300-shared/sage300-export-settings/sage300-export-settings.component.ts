@@ -11,19 +11,21 @@ import { IntegrationsToastService } from 'src/app/core/services/common/integrati
 import { MappingService } from 'src/app/core/services/common/mapping.service';
 import { WorkspaceService } from 'src/app/core/services/common/workspace.service';
 import { TrackingService } from 'src/app/core/services/integration/tracking.service';
-import { Sage300ExportSettingService } from 'src/app/core/services/sage300/sage300-configuration/sage300-export-setting.service';
-import { Sage300HelperService } from 'src/app/core/services/sage300/sage300-helper/sage300-helper.service';
+import { Sage300ExportSettingsService } from 'src/app/core/services/sage300/sage300-configuration/sage300-export-settings.service';
+import { Sage300HelperService } from 'src/app/core/services/sage300/sage300-core/sage300-helper.service';
 import { SelectFormOption } from 'src/app/core/models/common/select-form-option.model';
 import { DestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
 import { Sage300ImportSettingsService } from 'src/app/core/services/sage300/sage300-configuration/sage300-import-settings.service';
 import { TranslocoService } from '@jsverse/transloco';
 import { ExportSettingsService } from 'src/app/core/services/common/export-settings.service';
+import { BrandingService } from 'src/app/core/services/common/branding.service';
 
 
 @Component({
-  selector: 'app-sage300-export-settings',
-  templateUrl: './sage300-export-settings.component.html',
-  styleUrls: ['./sage300-export-settings.component.scss']
+    selector: 'app-sage300-export-settings',
+    templateUrl: './sage300-export-settings.component.html',
+    styleUrls: ['./sage300-export-settings.component.scss'],
+    standalone: false
 })
 export class Sage300ExportSettingsComponent implements OnInit {
 
@@ -106,7 +108,7 @@ export class Sage300ExportSettingsComponent implements OnInit {
   readonly brandingStyle = brandingStyle;
 
   constructor(
-    private exportSettingService: Sage300ExportSettingService,
+    private exportSettingService: Sage300ExportSettingsService,
     private importSettingsService: Sage300ImportSettingsService,
     private router: Router,
     private helperService: HelperService,
@@ -117,7 +119,8 @@ export class Sage300ExportSettingsComponent implements OnInit {
     public helper: HelperService,
     private mappingService: MappingService,
     private translocoService: TranslocoService,
-    private exportSettingsService: ExportSettingsService
+    private exportSettingsService: ExportSettingsService,
+    public brandingService: BrandingService
   ) { }
 
   refreshDimensions(isRefresh: boolean) {
@@ -153,7 +156,7 @@ export class Sage300ExportSettingsComponent implements OnInit {
     const exportSettingPayload = ExportSettingModel.createExportSettingPayload(this.exportSettingForm);
     this.exportSettingService.postExportSettings(exportSettingPayload).subscribe((exportSettingResponse: Sage300ExportSettingGet) => {
       this.isSaveInProgress = false;
-      this.toastService.displayToastMessage(ToastSeverity.SUCCESS, this.translocoService.translate('sage300ExportSettings.exportSettingsSavedSuccess'));
+      this.toastService.displayToastMessage(ToastSeverity.SUCCESS, this.translocoService.translate('sage300ExportSettings.exportSettingsSavedSuccess'), undefined, this.isOnboarding);
       this.trackingService.trackTimeSpent(TrackingApp.SAGE300, Page.EXPORT_SETTING_SAGE300, this.sessionStartTime);
       if (this.workspaceService.getOnboardingState() === Sage300OnboardingState.EXPORT_SETTINGS) {
         this.trackingService.onOnboardingStepCompletion(TrackingApp.SAGE300, Sage300OnboardingState.EXPORT_SETTINGS, 2, exportSettingPayload);

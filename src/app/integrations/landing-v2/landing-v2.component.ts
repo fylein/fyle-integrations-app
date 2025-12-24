@@ -1,27 +1,22 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { AccountingIntegrationApp, InAppIntegration, IntegrationAppKey, IntegrationView, ThemeOption } from 'src/app/core/models/enum/enum.model';
+import { AccountingIntegrationApp, ClickEvent, InAppIntegration, IntegrationAppKey, IntegrationView, ThemeOption, TrackingApp } from 'src/app/core/models/enum/enum.model';
 import { integrationCallbackUrlMap, IntegrationsView } from 'src/app/core/models/integrations/integrations.model';
 import { EventsService } from 'src/app/core/services/common/events.service';
 import { OrgService } from 'src/app/core/services/org/org.service';
 import { environment } from 'src/environments/environment';
 import { Org } from 'src/app/core/models/org/org.model';
-import { SiAuthService } from 'src/app/core/services/si/si-core/si-auth.service';
 import { StorageService } from 'src/app/core/services/common/storage.service';
-import { Token } from 'src/app/core/models/misc/token.model';
-import { MinimalUser } from 'src/app/core/models/db/user.model';
 import { brandingConfig, brandingFeatureConfig } from 'src/app/branding/branding-config';
-import { QboAuthService } from 'src/app/core/services/qbo/qbo-core/qbo-auth.service';
-import { XeroAuthService } from 'src/app/core/services/xero/xero-core/xero-auth.service';
 import { exposeAppConfig } from 'src/app/branding/expose-app-config';
-import { NetsuiteAuthService } from 'src/app/core/services/netsuite/netsuite-core/netsuite-auth.service';
 import { IntegrationsService } from 'src/app/core/services/common/integrations.service';
 import { TrackingService } from 'src/app/core/services/integration/tracking.service';
 
 @Component({
-  selector: 'app-landing-v2',
-  templateUrl: './landing-v2.component.html',
-  styleUrl: './landing-v2.component.scss'
+    selector: 'app-landing-v2',
+    templateUrl: './landing-v2.component.html',
+    styleUrl: './landing-v2.component.scss',
+    standalone: false
 })
 export class LandingV2Component implements OnInit {
 
@@ -68,13 +63,23 @@ export class LandingV2Component implements OnInit {
 
   readonly ThemeOption = ThemeOption;
 
+  private readonly trackingInAppIntegrationMap = {
+    [InAppIntegration.QBD]: TrackingApp.QBD,
+    [InAppIntegration.QBD_DIRECT]: TrackingApp.QBD_DIRECT,
+    [InAppIntegration.SAGE300]: TrackingApp.SAGE300,
+    [InAppIntegration.SAGE50]: TrackingApp.SAGE50,
+    [InAppIntegration.BUSINESS_CENTRAL]: TrackingApp.BUSINESS_CENTRAL,
+    [InAppIntegration.TRAVELPERK]: TrackingApp.TRAVELPERK,
+    [InAppIntegration.BAMBOO_HR]: TrackingApp.BAMBOO_HR,
+    [InAppIntegration.INTACCT]: TrackingApp.INTACCT,
+    [InAppIntegration.NETSUITE]: TrackingApp.NETSUITE,
+    [InAppIntegration.XERO]: TrackingApp.XERO,
+    [InAppIntegration.QBO]: TrackingApp.QBO
+  };
+
   constructor(
     private eventsService: EventsService,
-    private qboAuthService: QboAuthService,
-    private xeroAuthService: XeroAuthService,
-    private nsAuthService: NetsuiteAuthService,
     private router: Router,
-    private siAuthService: SiAuthService,
     private storageService: StorageService,
     private orgService: OrgService,
     private integrationService: IntegrationsService,
@@ -91,37 +96,38 @@ export class LandingV2Component implements OnInit {
   }
 
   isAppShown(appKey: IntegrationAppKey) {
-    // If this app disabled for this org
+    // If this app disabled for this org, or not exposed
+    const isAppExposed = this.exposeApps[appKey];
     if (
       (appKey === 'BUSINESS_CENTRAL' && !this.org.allow_dynamics) ||
       (appKey === 'QBD_DIRECT' && !this.org.allow_qbd_direct_integration) ||
       (appKey === 'TRAVELPERK' && !this.org.allow_travelperk) ||
-      (appKey === 'QBD' && !this.showQBDIIFIntegration)
+      (appKey === 'QBD' && !this.showQBDIIFIntegration) ||
+      !isAppExposed
     ) {
       return false;
     }
 
-    // If this app allowed and all apps are shown
+    // If this app enabled & exposed, and all apps are shown
     if (this.integrationTabs.ALL) {
       return true;
     }
 
-    const allAppKeys = Object.keys(InAppIntegration) as IntegrationAppKey[];
-
     if (appKey === 'BAMBOO_HR') {
-      return this.exposeApps.BAMBOO && this.integrationTabs.HRMS;
+      return this.integrationTabs.HRMS;
     }
 
     if (appKey === 'TRAVELPERK') {
-      return this.exposeApps.TRAVELPERK && this.integrationTabs.TRAVEL;
+      return this.integrationTabs.TRAVEL;
     }
 
     // If the app was not BAMBOO_HR or TRAVELPERK, it must be an accounting app
+    const allAppKeys = Object.keys(InAppIntegration) as IntegrationAppKey[];
     if (allAppKeys.includes(appKey)) {
-      return this.exposeApps[appKey] && this.integrationTabs.ACCOUNTING;
+      return this.integrationTabs.ACCOUNTING;
     }
 
-    // TS catch-all (shouln't reach here)
+    // TS catch-all (shouldn't reach here)
     return false;
   }
 
@@ -147,6 +153,7 @@ export class LandingV2Component implements OnInit {
   }
 
   openInAppIntegration(inAppIntegration: InAppIntegration): void {
+    this.trackingService.onClickEvent(this.trackingInAppIntegrationMap[inAppIntegration], ClickEvent.OPEN_INTEGRATION);
     this.router.navigate([this.integrationService.inAppIntegrationUrlMap[inAppIntegration]]);
   }
 

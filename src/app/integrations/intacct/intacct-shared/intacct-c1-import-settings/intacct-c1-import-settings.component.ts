@@ -12,16 +12,17 @@ import { HelperService } from 'src/app/core/services/common/helper.service';
 import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
 import { StorageService } from 'src/app/core/services/common/storage.service';
 import { TrackingService } from 'src/app/core/services/integration/tracking.service';
-import { SiImportSettingService } from 'src/app/core/services/si/si-configuration/si-import-setting.service';
-import { IntacctConnectorService } from 'src/app/core/services/si/si-core/intacct-connector.service';
+import { SiImportSettingsService } from 'src/app/core/services/si/si-configuration/si-import-settings.service';
+import { IntacctConnectorService } from 'src/app/core/services/si/si-core/si-connector.service';
 import { SiMappingsService } from 'src/app/core/services/si/si-core/si-mappings.service';
 import { SiWorkspaceService } from 'src/app/core/services/si/si-core/si-workspace.service';
 import { TranslocoService } from '@jsverse/transloco';
 
 @Component({
-  selector: 'app-intacct-c1-import-settings',
-  templateUrl: './intacct-c1-import-settings.component.html',
-  styleUrls: ['./intacct-c1-import-settings.component.scss']
+    selector: 'app-intacct-c1-import-settings',
+    templateUrl: './intacct-c1-import-settings.component.html',
+    styleUrls: ['./intacct-c1-import-settings.component.scss'],
+    standalone: false
 })
 export class IntacctC1ImportSettingsComponent implements OnInit {
 
@@ -93,7 +94,7 @@ export class IntacctC1ImportSettingsComponent implements OnInit {
     private router: Router,
     private mappingService: SiMappingsService,
     private connectorService: IntacctConnectorService,
-    private importSettingService: SiImportSettingService,
+    private importSettingService: SiImportSettingsService,
     @Inject(FormBuilder) private formBuilder: FormBuilder,
     private toastService: IntegrationsToastService,
     private trackingService: TrackingService,
@@ -506,7 +507,7 @@ export class IntacctC1ImportSettingsComponent implements OnInit {
     this.saveInProgress = true;
     const importSettingPayload = ImportSettings.constructPayload(this.importSettingsForm, this.importSettings!.dependent_field_settings);
     this.importSettingService.postImportSettings(importSettingPayload).subscribe((response: ImportSettingPost) => {
-      this.toastService.displayToastMessage(ToastSeverity.SUCCESS, this.translocoService.translate('intacctC1ImportSettings.importSettingsSuccess'));
+      this.toastService.displayToastMessage(ToastSeverity.SUCCESS, this.translocoService.translate('intacctC1ImportSettings.importSettingsSuccess'), undefined, this.isOnboarding);
       this.trackingService.trackTimeSpent(TrackingApp.INTACCT, Page.IMPORT_SETTINGS_INTACCT, this.sessionStartTime);
       if (this.workspaceService.getIntacctOnboardingState() === IntacctOnboardingState.IMPORT_SETTINGS) {
         this.trackingService.integrationsOnboardingCompletion(TrackingApp.INTACCT, IntacctOnboardingState.IMPORT_SETTINGS, 3, importSettingPayload);

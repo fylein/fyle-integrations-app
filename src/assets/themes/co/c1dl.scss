@@ -1,12 +1,41 @@
 // Declare the token name from common element library figma file here
 // Refer: https://www.figma.com/file/4UeThUEsAVURfLUoozuzJY/Capital_One_Design_Lang?type=design&node-id=0-1&mode=design&t=7Wgc9cpl8fnb5Lrg-0
-// You can view all the list of tokens by clicking on Local Variables button on right side menu, you need edit access to view this.  
+// You can view all the list of tokens by clicking on Local Variables button on right side menu, you need edit access to view this.
 // Don't add any token which is not in figma common element library's token list, few exceptions are for gradients as they are not supported by figma yet.
 
-@import "./primitives_variables.scss";
+@use "./primitives_variables.scss" as *;
 
 @layer base {
   [data-theme="co"] {
+    // Colors
+    --white: #{$white};
+    --placeholder: #{$grey-40};
+    --separator: #{$grey-22};
+    --normal-text-color: #{$grey-82};
+    --menu-inactive-text-color: #{$grey-40};
+    --sub-text-color: #{$grey-60};
+    --faded-text-color: #{$grey-55};
+    --box-color: #{$grey-30};
+    --mandatory-field-color: #{$blue-55};
+    --disabled-bg-color: #{$grey-07};
+    --info: #{$blue-50};
+    --alert-toast: #{$red-50};
+    --line-inactive: #{$grey-17};
+    --mapped-green-border: #{$green-02};
+    --mapped-green-bg: #{$green-03};
+    --unmapped-red-border: #{$red-30};
+    --unmapped-red-bg: #{$red-07};
+    --cta-disabled: #{$blue-55};
+    --pink: #{$blue-55};
+    --check-box: #{$grey-12};
+    --pink-box-border: #{$pink-opacity-16};
+    --configuration-bg: var(--bg-tertiary-lighter);
+    --info-section: var(--bg-tertiary-lighter);
+    --success-toast: var(--text-success);
+    --progress-bar-bg: var(--white);
+    --bg-xero-btn: #{$blue-xero};
+    --bg-qbo-btn: #{$green-qbo};
+
     // Elevation
     --background-overlay-subtle: rgba($black, 0.02);
 
@@ -30,6 +59,8 @@
     --text-tertiary: #{$grey-55};
     --text-warning: #{$yellow-55};
     --text-white: #{$white};
+    --text-secondary-neutral: #{$grey-65};
+    --text-disabled: #{$grey-19};
 
     // Icon
     --icon-brand-disable: #{$blue-10};
@@ -46,6 +77,8 @@
     --icon-tertiary: #{$grey-55};
     --icon-warning: #{$yellow-55};
     --icon-white: #{$white};
+    --icon-blue: #{$blue-icon};
+    --icon-grey: #{$grey-08};
 
     // Border Radius
     --border-radius-2xl: #{$size-12};
@@ -69,6 +102,7 @@
     --border-brand-pressed: #{$blue-75};
     --border-calm-light: #{$green-10};
     --border-danger: #{$red-55};
+    --border-danger-dark: #{$red-55};
     --border-danger-light: #{$red-15};
     --border-danger-lighter: #{$red-10};
     --border-disable: #{$grey-20};
@@ -86,6 +120,9 @@
     --border-warning: #{$yellow-55};
     --border-warning-lighter: #{$yellow-05};
     --border-white: #{$white};
+    --border-grey: #{$grey-09};
+    --border-blue: #{$blue-icon};
+    --tertiary-lighter: #{$tertiary-lighter};
 
     // Spacing
     --spacing-0: 0px;
@@ -144,6 +181,7 @@
     --bg-tertiary-lighter: #{$grey-05};
     --bg-warning-lighter: #{$yellow-05};
     --bg-info-lightest: #{$blue-05};
+    --bg-link-muted: var(--text-muted);
 
     // Background - Grey
     --bg-disable: #{$grey-15};
@@ -154,6 +192,7 @@
     --bg-white: #{$white};
 
     // Background - Brand
+    --bg-brand: #{$tertiary-lighter};
     --bg-brand-disable: var(--bg-disable-lighter);
     --bg-brand-hover: #{$blue-65};
     --bg-brand-muted: #{rgba($blue-55, 0.15)};
@@ -165,12 +204,14 @@
     --bg-info: #{$blue-45};
     --bg-success: #{$green-45};
     --bg-warning: #{$yellow-20};
+    --bg-blue: #{$blue-info};
 
     // Link
     --link-hover: #{$blue-65};
     --link-pressed: #{$blue-75};
     --link-primary: #{$blue-55};
     --link-visited: #{$purple-55};
+    --link-muted: var(--text-muted);
 
     // Button Primary - Default
     --btn-primary-bg: var(--bg-brand-primary);
@@ -328,7 +369,7 @@
     --calendar-year-selected-bg: var(--bg-brand-primary);
     --calendar-year-selected-text-color: var(--text-white);
     --calendar-year-text-color: var(--text-secondary);
-  
+
     // Calendar - Other
     --calendar-day-text-color: var(--text-label);
     --calendar-header-hover-text-color: var(--text-brand-primary);
@@ -336,7 +377,7 @@
 
     // Checkbox
     --checkbox-icon-color: var(--icon-tertiary);
-    --checkbox-icon-disabled-color: var(--icon-disable);
+    --checkbox-icon-disabled-color: var(--text-disabled);
     --checkbox-icon-hover-color: #{$blue-65};
     --checkbox-icon-selected-color: var(--icon-brand-primary);
     --checkbox-icon-selected-disabled-color: #{$grey-05};
@@ -364,6 +405,9 @@
     --dd-menu-item-section-header-text-color: var(--text-disable);
     --dd-menu-item-drag-icon-color: var(--icon-disable);
     --dd-search-default-bg: var(--bg-tertiary);
+
+    // Input
+    --input-height: 40px;
 
     // Input - Default
     --input-default-bg: var(--bg-white);
@@ -873,5 +917,17 @@
     --scrollbar-track: #eaeaea;
 
     --scrollbar-thumb-hover: #aaa;
+
+    // Toggle
+    --toggle-enabled-bg: #{$blue-55};
+    --toggle-disabled-bg: var(--form-switch-bg);
+    --toggle-enabled-text-color: #{$white};
+    --toggle-disabled-text-color: #{$white};
+    --toggle-border: none;
+    --toggle-border-width: 0px;
+
+
+    // Font family
+    --font-primary: "Optimist";
   }
 }

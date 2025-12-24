@@ -1,0 +1,6 @@
+<div class="page-layout-container">
+    <app-main-menu [modules]="activeModules" [activeItem]="activeModules[0].value" [appName]="appName" [isDropdrownRequired]="false" (refreshDimensionClick)="refreshDimensions()" [isSyncVisible]="true"></app-main-menu>
+    <div class="router-outlet-container">
+        <router-outlet></router-outlet>
+    </div>
+</div>

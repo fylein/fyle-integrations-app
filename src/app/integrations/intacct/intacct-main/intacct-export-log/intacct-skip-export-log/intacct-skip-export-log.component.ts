@@ -6,7 +6,7 @@ import { SkipExportLogResponse, SkipExportList, SkipExportLog } from 'src/app/co
 import { Paginator } from 'src/app/core/models/misc/paginator.model';
 import { TrackingService } from 'src/app/core/services/integration/tracking.service';
 import { ExportLogService } from 'src/app/core/services/common/export-log.service';
-import { PaginatorService } from 'src/app/core/services/si/si-core/paginator.service';
+import { PaginatorService } from 'src/app/core/services/si/si-core/si-paginator.service';
 import { brandingConfig, brandingFeatureConfig, brandingStyle } from 'src/app/branding/branding-config';
 import { SkippedAccountingExportModel } from 'src/app/core/models/db/accounting-export.model';
 import { debounceTime } from 'rxjs/operators';
@@ -15,9 +15,10 @@ import { UserService } from 'src/app/core/services/misc/user.service';
 import { AccountingExportService } from 'src/app/core/services/common/accounting-export.service';
 
 @Component({
-  selector: 'app-intacct-skip-export-log',
-  templateUrl: './intacct-skip-export-log.component.html',
-  styleUrls: ['./intacct-skip-export-log.component.scss']
+    selector: 'app-intacct-skip-export-log',
+    templateUrl: './intacct-skip-export-log.component.html',
+    styleUrls: ['./intacct-skip-export-log.component.scss'],
+    standalone: false
 })
 export class IntacctSkipExportLogComponent implements OnInit {
 

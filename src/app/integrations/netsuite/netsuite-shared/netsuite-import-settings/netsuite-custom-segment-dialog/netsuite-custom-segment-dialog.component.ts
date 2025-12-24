@@ -1,13 +1,14 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { brandingConfig } from 'src/app/branding/branding-config';
+import { brandingConfig, brandingFeatureConfig, brandingStyle } from 'src/app/branding/branding-config';
 import { SelectFormOption } from 'src/app/core/models/common/select-form-option.model';
-import { NetsuiteCustomSegmentOption } from 'src/app/core/models/enum/enum.model';
+import { ButtonSize, ButtonType, NetsuiteCustomSegmentOption } from 'src/app/core/models/enum/enum.model';
 
 @Component({
-  selector: 'app-netsuite-custom-segment-dialog',
-  templateUrl: './netsuite-custom-segment-dialog.component.html',
-  styleUrls: ['./netsuite-custom-segment-dialog.component.scss']
+    selector: 'app-netsuite-custom-segment-dialog',
+    templateUrl: './netsuite-custom-segment-dialog.component.html',
+    styleUrls: ['./netsuite-custom-segment-dialog.component.scss'],
+    standalone: false
 })
 export class NetsuiteCustomSegmentDialogComponent implements OnInit {
 
@@ -23,6 +24,12 @@ export class NetsuiteCustomSegmentDialogComponent implements OnInit {
 
   @Output() closeDialog = new EventEmitter();
 
+  private pendingAction: 'close' | 'save' | null = null;
+
+  ButtonType = ButtonType;
+
+  ButtonSize = ButtonSize;
+
   isCustomTypeSelectionActive: boolean = true;
 
   isInternalIDSelectionActive: boolean = false;
@@ -33,14 +40,29 @@ export class NetsuiteCustomSegmentDialogComponent implements OnInit {
 
   readonly brandingConfig = brandingConfig;
 
+  readonly brandingFeatureConfig = brandingFeatureConfig;
+
+  readonly brandingStyle = brandingStyle;
+
   constructor() { }
 
   save() {
-    this.saveClick.emit();
+    this.pendingAction = 'save';
+    this.isCustomSegmentDialogVisible = false;
   }
 
   close() {
-    this.closeDialog.emit();
+    this.pendingAction = 'close';
+    this.isCustomSegmentDialogVisible = false;
+  }
+
+  onDialogHide() {
+    if (this.pendingAction === 'save') {
+      this.saveClick.emit();
+    } else if (this.pendingAction === 'close') {
+      this.closeDialog.emit();
+    }
+    this.pendingAction = null;
   }
 
   proceedToNextStep(stepNumber: number) {

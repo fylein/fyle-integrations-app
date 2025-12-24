@@ -1,13 +1,14 @@
-import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { brandingConfig, brandingFeatureConfig, brandingStyle } from 'src/app/branding/branding-config';
 import { AppName } from 'src/app/core/models/enum/enum.model';
 import { WindowService } from 'src/app/core/services/common/window.service';
 
 @Component({
-  selector: 'app-configuration-toggle-field',
-  templateUrl: './configuration-toggle-field.component.html',
-  styleUrls: ['./configuration-toggle-field.component.scss']
+    selector: 'app-configuration-toggle-field',
+    templateUrl: './configuration-toggle-field.component.html',
+    styleUrls: ['./configuration-toggle-field.component.scss'],
+    standalone: false
 })
 export class ConfigurationToggleFieldComponent implements OnInit, OnChanges {
 
@@ -33,7 +34,11 @@ export class ConfigurationToggleFieldComponent implements OnInit, OnChanges {
 
   @Input() appName: string;
 
+  @Output() importCodeEnabled = new EventEmitter<boolean>();
+
   AppName = AppName;
+
+  isConfigToggleLeftAligned = brandingFeatureConfig.qbdDirect.configToggleLeftAligned;
 
   readonly brandingFeatureConfig = brandingFeatureConfig;
 

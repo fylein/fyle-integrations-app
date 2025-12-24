@@ -9,9 +9,10 @@ import { Sage300ConnectorService } from 'src/app/core/services/sage300/sage300-c
 import { Sage300OnboardingService } from 'src/app/core/services/sage300/sage300-configuration/sage300-onboarding.service';
 
 @Component({
-  selector: 'app-sage300-onboarding-connector',
-  templateUrl: './sage300-onboarding-connector.component.html',
-  styleUrls: ['./sage300-onboarding-connector.component.scss']
+    selector: 'app-sage300-onboarding-connector',
+    templateUrl: './sage300-onboarding-connector.component.html',
+    styleUrls: ['./sage300-onboarding-connector.component.scss'],
+    standalone: false
 })
 export class Sage300OnboardingConnectorComponent implements OnInit {
 
@@ -45,10 +46,11 @@ export class Sage300OnboardingConnectorComponent implements OnInit {
     this.isLoading = true;
     this.connectorService.connectSage300(this.connectSage300Form).subscribe(({sage300SetupForm, isSage300Connected}) => {
         this.connectSage300Form = sage300SetupForm;
-        this.isLoading = false;
         if (isSage300Connected === true){
         this.workspaceService.setOnboardingState(Sage300OnboardingState.EXPORT_SETTINGS);
         this.router.navigate([this.onboardingSteps[1].route]);
+        } else {
+          this.isLoading = false;
         }
       });
   }

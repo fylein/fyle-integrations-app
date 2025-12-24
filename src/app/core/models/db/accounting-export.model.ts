@@ -74,11 +74,10 @@ export class SkippedAccountingExportModel {
 
   static parseAPIResponseToSkipExportList(skippedExpense: SkipExportLog, org_id?: string): SkipExportList {
     return {
-      updated_at: skippedExpense.updated_at,
-      claim_number: skippedExpense.claim_number,
+      ...skippedExpense,
       employee: [skippedExpense.employee_name, skippedExpense.employee_email],
       expenseType: skippedExpense.fund_source === 'PERSONAL' ? 'Reimbursable' : 'Corporate Card',
-      fyleUrl: `${environment.fyle_app_url}/app/admin/#/view_expense/${skippedExpense.expense_id}?org_id=${org_id}`
+      fyleUrl: `${environment.fyle_app_url}/app/admin/#/company_expenses?txnId=${skippedExpense.expense_id}&org_id=${org_id}`
     };
   }
 }

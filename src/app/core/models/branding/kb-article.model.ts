@@ -1,3 +1,5 @@
+import { Sage50ImportableField } from "../sage50/sage50-configuration/sage50-import-settings.model";
+
 export type KbArticle = {
     [brandingId: string]: {
         topLevelArticles: {
@@ -10,9 +12,17 @@ export type KbArticle = {
             SAGE300: string;
             BUSINESS_CENTRAL: string;
             XERO: string;
-            QBD_DIRECT: string
+            QBD_DIRECT: string;
+            SAGE50: string;
         },
         onboardingArticles: {
+            SAGE50: {
+                PREREQUISITES: string;
+                LANDING: string;
+                EXPORT_SETTINGS: string;
+                IMPORT_SETTINGS: string;
+                ADVANCED_SETTINGS: string;
+            },
             QBD_DIRECT: {
                 IMPORT_SETTING: string;
                 EXPORT_SETTING: string;
@@ -21,8 +31,10 @@ export type KbArticle = {
                 ASSISTED_SETUP_ARTICLE_LINK: string;
                 HELPER_ARTICLE: string;
                 GCAL_LINK: string;
+                ERROR_RESOLUTION_GUIDE_LINK: string;
             },
             INTACCT: {
+                DFV_READ_MORE: string;
                 IMPORT_SETTING: string;
                 EXPORT_SETTING: string;
                 ADVANCED_SETTING: string;
@@ -31,6 +43,7 @@ export type KbArticle = {
                 SKIP_EXPORT: string;
             },
             NETSUITE: {
+                DFV_READ_MORE: string;
                 CONNECTOR: string;
                 EXPORT_SETTING: string;
                 IMPORT_SETTING: string;
@@ -73,6 +86,11 @@ export type KbArticle = {
                 IMPORT_SETTING: string;
                 ADVANCED_SETTING: string;
             },
+        },
+        postOnboardingArticles: {
+            SAGE50: {
+                EXPORT_LOG: string;
+            } & Record<Sage50ImportableField, string>;
         }
     }
 };

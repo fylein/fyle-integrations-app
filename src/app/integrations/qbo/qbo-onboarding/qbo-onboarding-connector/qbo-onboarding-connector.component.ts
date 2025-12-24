@@ -10,7 +10,7 @@ import { ConfigurationWarningOut } from 'src/app/core/models/misc/configuration-
 import { OnboardingStepper } from 'src/app/core/models/misc/onboarding-stepper.model';
 import { QBOCredential } from 'src/app/core/models/qbo/db/qbo-credential.model';
 import { QBOConnectorModel, QBOConnectorPost } from 'src/app/core/models/qbo/qbo-configuration/qbo-connector.model';
-import { CloneSettingService } from 'src/app/core/services/common/clone-setting.service';
+import { CloneSettingsService } from 'src/app/core/services/common/clone-settings.service';
 import { HelperService } from 'src/app/core/services/common/helper.service';
 import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
 import { StorageService } from 'src/app/core/services/common/storage.service';
@@ -24,9 +24,10 @@ import { TranslocoService } from '@jsverse/transloco';
 import { QboOnboardingService } from 'src/app/core/services/qbo/qbo-configuration/qbo-onboarding.service';
 
 @Component({
-  selector: 'app-qbo-onboarding-connector',
-  templateUrl: './qbo-onboarding-connector.component.html',
-  styleUrls: ['./qbo-onboarding-connector.component.scss']
+    selector: 'app-qbo-onboarding-connector',
+    templateUrl: './qbo-onboarding-connector.component.html',
+    styleUrls: ['./qbo-onboarding-connector.component.scss'],
+    standalone: false
 })
 export class QboOnboardingConnectorComponent implements OnInit, OnDestroy {
 
@@ -77,7 +78,7 @@ export class QboOnboardingConnectorComponent implements OnInit, OnDestroy {
   readonly brandingStyle = brandingStyle;
 
   constructor(
-    private cloneSettingService: CloneSettingService,
+    private cloneSettingService: CloneSettingsService,
     private helperService: HelperService,
     private qboConnectorService: QboConnectorService,
     private qboHelperService: QboHelperService,
@@ -198,7 +199,7 @@ export class QboOnboardingConnectorComponent implements OnInit, OnDestroy {
       const errorMessage = 'message' in error.error ? error.error.message : this.translocoService.translate('qboOnboardingConnector.failedToConnectQBO');
       if (errorMessage === 'Please choose the correct QuickBooks Online account') {
         this.warningHeaderText = this.translocoService.translate('qboOnboardingConnector.incorrectAccountWarningHeader');
-        this.warningContextText = this.translocoService.translate('qboOnboardingConnector.incorrectAccountWarningContent');
+        this.warningContextText = this.translocoService.translate('qboOnboardingConnector.incorrectAccountWarningContent', { accountName: this.qboCompanyName || 'a different' });
         this.primaryButtonText = this.translocoService.translate('qboOnboardingConnector.reconnectButtonText');
         this.warningEvent = ConfigurationWarningEvent.INCORRECT_QBO_ACCOUNT_CONNECTED;
         this.isWarningDialogVisible = true;

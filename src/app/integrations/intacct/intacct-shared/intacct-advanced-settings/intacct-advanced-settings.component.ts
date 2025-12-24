@@ -7,10 +7,10 @@ import { AppName, ConfigurationCta, FyleField, IntacctOnboardingState, IntacctRe
 import { AdvancedSetting, AdvancedSettingFormOption, AdvancedSettingsGet, AdvancedSettingsPost, HourOption } from 'src/app/core/models/intacct/intacct-configuration/advanced-settings.model';
 import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
 import { TrackingService } from 'src/app/core/services/integration/tracking.service';
-import { SiAdvancedSettingService } from 'src/app/core/services/si/si-configuration/si-advanced-setting.service';
+import { SiAdvancedSettingsService } from 'src/app/core/services/si/si-configuration/si-advanced-settings.service';
 import { SiMappingsService } from 'src/app/core/services/si/si-core/si-mappings.service';
 import { SiWorkspaceService } from 'src/app/core/services/si/si-core/si-workspace.service';
-import { SiExportSettingService } from 'src/app/core/services/si/si-configuration/si-export-setting.service';
+import { SiExportSettingsService } from 'src/app/core/services/si/si-configuration/si-export-settings.service';
 
 import { LowerCasePipe } from '@angular/common';
 import { IntacctDestinationAttribute } from 'src/app/core/models/intacct/db/destination-attribute.model';
@@ -25,9 +25,10 @@ import { AdvancedSettingsService } from 'src/app/core/services/common/advanced-s
 import { ExportSettingsService } from 'src/app/core/services/common/export-settings.service';
 
 @Component({
-  selector: 'app-intacct-advanced-settings',
-  templateUrl: './intacct-advanced-settings.component.html',
-  styleUrls: ['./intacct-advanced-settings.component.scss']
+    selector: 'app-intacct-advanced-settings',
+    templateUrl: './intacct-advanced-settings.component.html',
+    styleUrls: ['./intacct-advanced-settings.component.scss'],
+    standalone: false
 })
 
 export class IntacctAdvancedSettingsComponent implements OnInit {
@@ -101,6 +102,8 @@ export class IntacctAdvancedSettingsComponent implements OnInit {
 
   paymentSyncOptions: AdvancedSettingFormOption[];
 
+  dfvReadMoreLink: string = brandingKbArticles.onboardingArticles.INTACCT.DFV_READ_MORE;
+
   readonly brandingConfig = brandingConfig;
 
   readonly brandingFeatureConfig = brandingFeatureConfig;
@@ -113,13 +116,13 @@ export class IntacctAdvancedSettingsComponent implements OnInit {
 
   constructor(
     private router: Router,
-    private advancedSettingsService: SiAdvancedSettingService,
+    private advancedSettingsService: SiAdvancedSettingsService,
     @Inject(FormBuilder) private formBuilder: FormBuilder,
     private toastService: IntegrationsToastService,
     private trackingService: TrackingService,
     private workspaceService: SiWorkspaceService,
     private mappingService: SiMappingsService,
-    private siExportSettingService : SiExportSettingService,
+    private siExportSettingsService : SiExportSettingsService,
     private translocoService: TranslocoService,
     private exportSettingsService: ExportSettingsService,
     private advanceSettingsService: AdvancedSettingsService
@@ -288,7 +291,7 @@ export class IntacctAdvancedSettingsComponent implements OnInit {
     const advancedSettings$ = this.advancedSettingsService.getAdvancedSettings();
     const expenseFilters$ = this.advancedSettingsService.getExpenseFilter();
     const config$ = this.mappingService.getConfiguration();
-    const exportSettings$ = this.siExportSettingService.getExportSettings();
+    const exportSettings$ = this.siExportSettingsService.getExportSettings();
 
     forkJoin({
       advancedSettings: advancedSettings$,
@@ -299,12 +302,12 @@ export class IntacctAdvancedSettingsComponent implements OnInit {
     }).subscribe(
       ({ advancedSettings, groupedAttributes, expenseFilter, configuration, exportSettings }) => {
         this.advancedSettings = advancedSettings;
-        this.sageIntacctLocations = groupedAttributes.LOCATION;
+        this.sageIntacctLocations = groupedAttributes.LOCATION || [];
         this.sageIntacctDefaultItem = groupedAttributes.ITEM;
-        this.sageIntacctDepartments = groupedAttributes.DEPARTMENT;
-        this.sageIntacctProjects = groupedAttributes.PROJECT;
-        this.sageIntacctClasses = groupedAttributes.CLASS;
-        this.sageIntacctPaymentAccount = groupedAttributes.PAYMENT_ACCOUNT;
+        this.sageIntacctDepartments = groupedAttributes.DEPARTMENT || [];
+        this.sageIntacctProjects = groupedAttributes.PROJECT || [];
+        this.sageIntacctClasses = groupedAttributes.CLASS || [];
+        this.sageIntacctPaymentAccount = groupedAttributes.PAYMENT_ACCOUNT || [];
         this.reimbursableExpense = configuration.reimbursable_expenses_object;
         this.corporateCreditCardExpense = configuration.corporate_credit_card_expenses_object;
         const reimbursableGroup = this.exportSettingsService.getExportGroup(exportSettings?.expense_group_settings?.reimbursable_expense_group_fields);
@@ -362,7 +365,7 @@ export class IntacctAdvancedSettingsComponent implements OnInit {
         this.advancedSettingsService.deleteExpenseFilter(1).subscribe();
         this.advancedSettingsService.deleteExpenseFilter(2).subscribe();
       }
-      this.toastService.displayToastMessage(ToastSeverity.SUCCESS, this.translocoService.translate('intacctAdvancedSettings.advancedSettingsSuccess'));
+      this.toastService.displayToastMessage(ToastSeverity.SUCCESS, this.translocoService.translate('intacctAdvancedSettings.advancedSettingsSuccess'), undefined, this.isOnboarding);
       this.trackingService.trackTimeSpent(TrackingApp.INTACCT, Page.IMPORT_SETTINGS_INTACCT, this.sessionStartTime);
       if (this.workspaceService.getIntacctOnboardingState() === IntacctOnboardingState.ADVANCED_CONFIGURATION) {
         this.trackingService.integrationsOnboardingCompletion(TrackingApp.INTACCT, IntacctOnboardingState.ADVANCED_CONFIGURATION, 3, advancedSettingsPayload);
@@ -397,7 +400,8 @@ export class IntacctAdvancedSettingsComponent implements OnInit {
 
   isAutoCreateMerchantsFieldVisible(): boolean {
     return (this.corporateCreditCardExpense === IntacctCorporateCreditCardExpensesObject.CHARGE_CARD_TRANSACTION && !this.importVendorsAsMerchants) ||
-      (this.corporateCreditCardExpense === IntacctCorporateCreditCardExpensesObject.JOURNAL_ENTRY && !this.importVendorsAsMerchants && this.useMerchantInJournalLine);
+      (this.corporateCreditCardExpense === IntacctCorporateCreditCardExpensesObject.JOURNAL_ENTRY && !this.importVendorsAsMerchants && this.useMerchantInJournalLine) ||
+      (this.corporateCreditCardExpense === IntacctCorporateCreditCardExpensesObject.EXPENSE_REPORT && !this.importVendorsAsMerchants);
   }
 
   ngOnInit(): void {

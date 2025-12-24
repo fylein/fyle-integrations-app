@@ -1,5 +1,8 @@
 /* stylelint-disable scss/no-dollar-variables */
 
+//opacity Primitives
+$pink-opacity-16: rgba(255, 51, 102, 0.16);
+
 // Size Primitives
 $size-0: 0px;
 $size-1: 1px;
@@ -29,7 +32,7 @@ $opacity-0: #ffffff00;
 
 /* stylelint-disable scss/no-dollar-variables */
 
-// Only Add those variables in this file which are added as primitives in figma common element library, 
+// Only Add those variables in this file which are added as primitives in figma common element library,
 // Refer: https://www.figma.com/file/4UeThUEsAVURfLUoozuzJY/Capital_One_Design_Lang?type=design&node-id=0-1&mode=design&t=7Wgc9cpl8fnb5Lrg-0
 // You can view all the list of primitives by clicking on Local Variables button on right side menu, you need edit access to view this.
 
@@ -37,16 +40,27 @@ $opacity-0: #ffffff00;
 $grey-95: #121212;
 $grey-90: #1f1f1f;
 $grey-85: #282828;
+$grey-82: #161528;
 $grey-80: #363636;
 $grey-75: #3d3d3d;
 $grey-65: #525252;
+$grey-60: #414562;
 $grey-55: #6e6e6e;
 $grey-45: #828282;
+$grey-40: #a9acbc;
 $grey-35: #9e9e9e;
+$grey-30: #dfdfe2;
 $grey-25: #b5b5b5;
+$grey-22: #ececee;
 $grey-20: #bfbfbf;
+$grey-19: #BFBFBF;
+$grey-17: #CCCDD7;
 $grey-15: #d4d4d4;
+$grey-12: #ced4da;
 $grey-10: #e9e9e9;
+$grey-09: #D4D4D4;
+$grey-08: #6E6E6E;
+$grey-07: #f5f5f5;
 $grey-05: #f4f4f4;
 
 // Blue
@@ -57,6 +71,7 @@ $blue-80: #05354c;
 $blue-75: #013d58;
 $blue-65: #015884;
 $blue-55: #0070a8;
+$blue-50: #5C98E5;
 $blue-45: #1388c3;
 $blue-35: #2da9e6;
 $blue-25: #54c4fc;
@@ -64,6 +79,9 @@ $blue-20: #81dafe;
 $blue-15: #aae2fe;
 $blue-10: #cceeff;
 $blue-05: #ebf8ff;
+$blue-xero: #0c7da1;
+$blue-icon: #0070A8;
+$blue-info: #EBF8FF;
 
 // Yellow
 $yellow-55: #8f6400;
@@ -85,22 +103,31 @@ $green-20: #7edc65;
 $green-15: #a1ed8d;
 $green-10: #c7f6bb;
 $green-05: #e9fce4;
+$green-03: #EEF8F2;
+$green-02: #D9EBE1;
 $green: #2e9414;
 $green-hover: #0e6018;
+$green-qbo: #2ba01d;
 
 // Red
 $red-75: #742021;
 $red-65: #9c2124;
 $red-55: #cc2427;
+$red-50: #DA1E28;
 $red-45: #e5494b;
 $red-35: #ff6b6e;
+$red-30: #f5c0c3;
 $red-25: #ff999b;
 $red-20: #ffb8b9;
 $red-15: #ffc7c8;
 $red-10: #ffdede;
+$red-07: #FCE9EA;
 $red-05: #fff0f0;
 $red-hover: #ba2629;
 
 // Purple
 $purple-55: #8a42d1;
 $purple-35: #ba87ee;
+
+// brand
+$tertiary-lighter: #F4F4F4;

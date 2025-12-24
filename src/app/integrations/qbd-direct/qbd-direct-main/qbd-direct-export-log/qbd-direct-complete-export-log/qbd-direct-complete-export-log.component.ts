@@ -18,11 +18,10 @@ import { SharedModule } from 'src/app/shared/shared.module';
 import { TranslocoService } from '@jsverse/transloco';
 
 @Component({
-  selector: 'app-qbd-direct-complete-export-log',
-  standalone: true,
-  imports: [CommonModule, SharedModule],
-  templateUrl: './qbd-direct-complete-export-log.component.html',
-  styleUrl: './qbd-direct-complete-export-log.component.scss'
+    selector: 'app-qbd-direct-complete-export-log',
+    imports: [CommonModule, SharedModule],
+    templateUrl: './qbd-direct-complete-export-log.component.html',
+    styleUrl: './qbd-direct-complete-export-log.component.scss'
 })
 export class QbdDirectCompleteExportLogComponent implements OnInit {
 
@@ -63,6 +62,8 @@ export class QbdDirectCompleteExportLogComponent implements OnInit {
   private searchQuerySubject = new Subject<string>();
 
   readonly brandingStyle = brandingStyle;
+
+  readonly AppName = AppName;
 
   constructor(
     @Inject(FormBuilder) private formBuilder: FormBuilder,

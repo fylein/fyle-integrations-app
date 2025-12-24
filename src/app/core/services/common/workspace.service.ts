@@ -1,12 +1,13 @@
 import { Injectable } from '@angular/core';
 import { StorageService } from './storage.service';
 import { Observable } from 'rxjs';
-import { AppUrl, BusinessCentralOnboardingState, IntacctOnboardingState, NetsuiteOnboardingState, QBDOnboardingState, QBOOnboardingState, Sage300OnboardingState, XeroOnboardingState } from '../../models/enum/enum.model';
+import { AppUrl, BusinessCentralOnboardingState, IntacctOnboardingState, NetsuiteOnboardingState, QBDOnboardingState, QBOOnboardingState, Sage300OnboardingState, Sage50OnboardingState, XeroOnboardingState } from '../../models/enum/enum.model';
 import { ApiService } from './api.service';
 import { HelperService } from './helper.service';
 import { AppUrlMap } from '../../models/integrations/integrations.model';
 import { WorkspaceOnboardingState } from '../../models/db/workspaces.model';
 import { QbdDirectWorkspace } from '../../models/qbd-direct/db/qbd-direct-workspaces.model';
+import { Cacheable } from 'ts-cacheable';
 
 @Injectable({
   providedIn: 'root'
@@ -22,7 +23,7 @@ export class WorkspaceService {
    }
 
   importFyleAttributes(refresh: boolean): Observable<{}> {
-    return this.apiService.post(`/workspaces/${this.getWorkspaceId()}/fyle/import_attributes/`, {refresh});
+    return this.apiService.post(this.helper.buildEndpointPath(`${this.getWorkspaceId()}/fyle/import_attributes/`), {refresh});
   }
 
   // The return type is made any intentionally, the caller can specify the return type to be aligned with the app
@@ -60,7 +61,8 @@ export class WorkspaceService {
       [AppUrl.QBO]: QBOOnboardingState.CONNECTION,
       [AppUrl.NETSUITE]: NetsuiteOnboardingState.CONNECTION,
       [AppUrl.XERO]: XeroOnboardingState.CONNECTION,
-      [AppUrl.QBD_DIRECT]: QBDOnboardingState.CONNECTION
+      [AppUrl.QBD_DIRECT]: QBDOnboardingState.CONNECTION,
+      [AppUrl.SAGE50]: Sage50OnboardingState.YET_TO_START
     };
     const onboardingState = this.storageService.get('onboarding-state');
     return onboardingState ? onboardingState : appInitialOnboardingState[(this.helper.getAppName()) as AppUrl];
@@ -68,11 +70,11 @@ export class WorkspaceService {
 
   // The return type is made any intentionally, the caller can specify the return type to be aligned with the app
   getConfiguration(): Observable<any> {
-    return this.apiService.get(`/workspaces/${this.getWorkspaceId()}/configuration/`, {});
+    return this.apiService.get(this.helper.buildEndpointPath(`${this.getWorkspaceId()}/configuration/`), {});
   }
 
   getWorkspaceGeneralSettings(): Observable<any> {
-    return this.apiService.get(`/workspaces/${this.getWorkspaceId()}/settings/general/`, {});
+    return this.apiService.get(this.helper.buildEndpointPath(`${this.getWorkspaceId()}/settings/general/`), {});
   }
 
   updateWorkspaceOnboardingState(payload: WorkspaceOnboardingState): Observable<QbdDirectWorkspace> {

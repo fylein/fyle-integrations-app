@@ -1,15 +1,17 @@
 import { Component, EventEmitter, Inject, Input, OnInit, Output } from '@angular/core';
 import { SafeResourceUrl } from '@angular/platform-browser';
 import { Router } from '@angular/router';
-import { brandingConfig, brandingFeatureConfig } from 'src/app/branding/branding-config';
-import { AppName, ClickEvent, QBDDirectInteractionType, TrackingApp } from 'src/app/core/models/enum/enum.model';
+import { TranslocoService } from '@jsverse/transloco';
+import { brandingConfig, brandingFeatureConfig, brandingStyle } from 'src/app/branding/branding-config';
+import { AppName, ButtonSize, ButtonType, ClickEvent, QBDDirectInteractionType, TrackingApp } from 'src/app/core/models/enum/enum.model';
 import { WindowService } from 'src/app/core/services/common/window.service';
 import { TrackingService } from 'src/app/core/services/integration/tracking.service';
 
 @Component({
-  selector: 'app-landing-page-header',
-  templateUrl: './app-landing-page-header.component.html',
-  styleUrls: ['./app-landing-page-header.component.scss']
+    selector: 'app-landing-page-header',
+    templateUrl: './app-landing-page-header.component.html',
+    styleUrls: ['./app-landing-page-header.component.scss'],
+    standalone: false
 })
 export class AppLandingPageHeaderComponent implements OnInit {
 
@@ -23,6 +25,8 @@ export class AppLandingPageHeaderComponent implements OnInit {
 
   @Output() syncEmployees = new EventEmitter<void>();
 
+  @Output() connectButtonClick = new EventEmitter<void>();
+
   @Input() iconPath: string;
 
   @Input() isIntegrationConnected: boolean;
@@ -31,7 +35,7 @@ export class AppLandingPageHeaderComponent implements OnInit {
 
   @Input() appName: string;
 
-  @Input() buttonText: string;
+  @Input() buttonText: string = this.translocoService.translate('appLandingPageHeader.connectButton');
 
   @Input() appDescription: string;
 
@@ -59,11 +63,15 @@ export class AppLandingPageHeaderComponent implements OnInit {
 
   @Input() logoStyleClasses: string = 'tw-py-10-px tw-px-20-px';
 
-  @Input() logoSectionStyleClasses: string = 'tw-rounded-4-px tw-border-1-px tw-border-bg-secondary tw-bg-white tw-w-176-px';
+  @Input() logoSectionStyleClasses: string = brandingStyle.qbd_direct.onboarding.logoSectionStyle;
 
   @Input() uiExposedAppName: string;
 
   @Input() isAssistedSetupSlotBooked?: boolean;
+
+  ButtonType = ButtonType;
+
+  ButtonSize = ButtonSize;
 
   qboConnectButtonSource: string = 'assets/buttons/connect-to-qbo.svg';
 
@@ -75,10 +83,13 @@ export class AppLandingPageHeaderComponent implements OnInit {
 
   readonly brandingFeatureConfig = brandingFeatureConfig;
 
+  brandingStyle = brandingStyle;
+
   constructor(
     private router: Router,
     private trackingService: TrackingService,
-    public windowService: WindowService
+    public windowService: WindowService,
+    private translocoService: TranslocoService
   ) { }
 
   syncData(): void {
@@ -103,6 +114,9 @@ export class AppLandingPageHeaderComponent implements OnInit {
       this.trackingService.onClickEvent(TrackingApp.INTACCT, ClickEvent.CONNECT_INTACCT);
     } else if (this.postConnectionRoute === 'sage300/onboarding/connector') {
       this.trackingService.onClickEvent(TrackingApp.SAGE300, ClickEvent.CONNECT_SAGE300);
+    }
+    if (this.connectButtonClick?.observed) {
+      this.connectButtonClick.emit();
     }
     this.router.navigate([`/integrations/${this.postConnectionRoute}`]);
   }

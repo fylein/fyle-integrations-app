@@ -13,7 +13,7 @@ import { ConfigurationWarningOut } from 'src/app/core/models/misc/configuration-
 import { OnboardingStepper } from 'src/app/core/models/misc/onboarding-stepper.model';
 import { Org } from 'src/app/core/models/org/org.model';
 import { QBOCloneSetting } from 'src/app/core/models/qbo/qbo-configuration/qbo-clone-setting.model';
-import { CloneSettingService } from 'src/app/core/services/common/clone-setting.service';
+import { CloneSettingsService } from 'src/app/core/services/common/clone-settings.service';
 import { ConfigurationService } from 'src/app/core/services/common/configuration.service';
 import { HelperService } from 'src/app/core/services/common/helper.service';
 import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
@@ -33,9 +33,10 @@ import { QboOnboardingService } from 'src/app/core/services/qbo/qbo-configuratio
 import { QboCloneSettingsService } from 'src/app/core/services/qbo/qbo-configuration/qbo-clone-settings.service';
 
 @Component({
-  selector: 'app-qbo-clone-settings',
-  templateUrl: './qbo-clone-settings.component.html',
-  styleUrls: ['./qbo-clone-settings.component.scss']
+    selector: 'app-qbo-clone-settings',
+    templateUrl: './qbo-clone-settings.component.html',
+    styleUrls: ['./qbo-clone-settings.component.scss'],
+    standalone: false
 })
 export class QboCloneSettingsComponent implements OnInit {
 
@@ -176,7 +177,7 @@ export class QboCloneSettingsComponent implements OnInit {
   readonly brandingStyle = brandingStyle;
 
   constructor(
-    private cloneSettingService: CloneSettingService,
+    private cloneSettingService: CloneSettingsService,
     private configurationService: ConfigurationService,
     @Inject(FormBuilder) private formBuilder: FormBuilder,
     private exportSettingService: QboExportSettingsService,

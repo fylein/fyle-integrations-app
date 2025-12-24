@@ -21,9 +21,10 @@ import { TranslocoService } from '@jsverse/transloco';
 import { AdvancedSettingsService } from 'src/app/core/services/common/advanced-settings.service';
 
 @Component({
-  selector: 'app-xero-advanced-settings',
-  templateUrl: './xero-advanced-settings.component.html',
-  styleUrls: ['./xero-advanced-settings.component.scss']
+    selector: 'app-xero-advanced-settings',
+    templateUrl: './xero-advanced-settings.component.html',
+    styleUrls: ['./xero-advanced-settings.component.scss'],
+    standalone: false
 })
 export class XeroAdvancedSettingsComponent implements OnInit {
 
@@ -99,7 +100,7 @@ export class XeroAdvancedSettingsComponent implements OnInit {
 
     this.advancedSettingService.postAdvancedSettings(advancedSettingPayload).subscribe(() => {
       this.isSaveInProgress = false;
-      this.toastService.displayToastMessage(ToastSeverity.SUCCESS, this.translocoService.translate('xeroAdvancedSettings.advancedSettingsSuccess'));
+      this.toastService.displayToastMessage(ToastSeverity.SUCCESS, this.translocoService.translate('xeroAdvancedSettings.advancedSettingsSuccess'), undefined, this.isOnboarding);
 
       if (this.isOnboarding) {
         this.workspaceService.setOnboardingState(XeroOnboardingState.COMPLETE);
@@ -167,7 +168,7 @@ export class XeroAdvancedSettingsComponent implements OnInit {
       this.advancedSettingService.getWorkspaceAdmins()
     ]).subscribe(response => {
       this.advancedSettings = response[0];
-      this.billPaymentAccounts = response[1];
+      this.billPaymentAccounts = response[1] || [];
       this.workspaceGeneralSettings = response[2];
       this.adminEmails = this.advancedSettings.workspace_schedules?.additional_email_options ? this.advancedSettings.workspace_schedules?.additional_email_options.concat(response[3]).flat() : response[3];
       this.advancedSettingForm = this.xeroAdvancedSettingsService.mapAPIResponseToFormGroup(this.advancedSettings, this.adminEmails, this.billPaymentAccounts, this.helperService.shouldAutoEnableAccountingPeriod(this.org.created_at), this.isOnboarding);

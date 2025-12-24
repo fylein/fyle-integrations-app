@@ -5,6 +5,7 @@ const ICON_MAPPING = {
   'arrow-down': 'grv-chevron-down',
   'arrow-line': 'arrow-line',
   'arrow-rotate-sync': 'grv-recurring-small',
+  'arrow-rotate-sync-medium': 'grv-recurring-small',
   'arrow-rotate': 'grv-recurring',
   'arrow-tail-down-medium': 'grv-arrow-down-medium',
   'arrow-tail-down': 'grv-arrow-down',
@@ -23,6 +24,7 @@ const ICON_MAPPING = {
   'check-circle-outline-extra-large': 'grv-checkmark-encircled-extra-large',
   'check-medium': 'grv-checkmark-medium',
   'check': 'grv-checkmark',
+  'check-small': 'grv-checkmark-medium',
   'check-large': 'grv-checkmark-large',
   'cross-xs-small': 'grv-close-xs-small',
   'cross-medium': 'grv-close-medium',
@@ -41,6 +43,7 @@ const ICON_MAPPING = {
   'gear': 'grv-settings',
   'info-circle-fill-medium': 'c1-info-medium',
   'info-circle-fill': 'c1-info-small',
+  'info-circle-fill-small': 'grv-caution-triangle-critical-small',
   'line': 'grv-line',
   'link-vertical-medium': 'grv-link-medium',
   'list': 'grv-notes',
@@ -63,13 +66,20 @@ const ICON_MAPPING = {
   'lock': 'grv-lock',
   'eye-slash-medium': 'grv-show-hide-medium',
   'eye-medium': 'grv-show-medium',
-  'user-one': 'grv-person'
+  'user-one': 'grv-person',
+  'download-medium': 'grv-download-medium',
+  'expand': 'grv-folder',
+  'folder': 'grv-folder',
+  'toast-success': 'toast-success',
+  'toast-info': 'toast-info',
+  'toast-cross': 'toast-cross'
 };
 
 @Component({
-  selector: 'app-svg-icon',
-  templateUrl: './svg-icon.component.html',
-  styleUrls: ['./svg-icon.component.scss']
+    selector: 'app-svg-icon',
+    templateUrl: './svg-icon.component.html',
+    styleUrls: ['./svg-icon.component.scss'],
+    standalone: false
 })
 export class SvgIconComponent implements OnInit {
 
@@ -81,6 +91,8 @@ export class SvgIconComponent implements OnInit {
 
   @Input() height: string;
 
+  @Input() viewBox: string;
+
   @Input() styleClasses: string = '';
 
   @Input() tooltipPosition: string = 'top';
@@ -90,6 +102,12 @@ export class SvgIconComponent implements OnInit {
   @Input() isTextColorAllowed: boolean = false;
 
   @Output() iconClick = new EventEmitter();
+
+  // Path to the SVG sprite file
+  private readonly spritePath = 'assets/sprites/sprite.svg';
+
+  // Computed sprite URL with icon reference
+  spriteUrl: string = '';
 
   constructor() { }
 
@@ -113,6 +131,9 @@ export class SvgIconComponent implements OnInit {
         this.styleClasses += ' tw-text-icon-primary';
       }
     }
+
+    // Build the sprite URL: path#iconName
+    this.spriteUrl = `${this.spritePath}#${this.svgSource}`;
   }
 
   ngOnInit(): void {

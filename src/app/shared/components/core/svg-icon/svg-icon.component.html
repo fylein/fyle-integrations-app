@@ -1,10 +1,12 @@
 <div [class]="styleClasses">
-    <svg-icon-sprite
+    <svg
         (click)="iconClickEvent()"
-        [src]="svgSource"
-        [width]="width"
-        [height]="height"
+        [attr.width]="width"
+        [attr.height]="height"
+        [attr.viewBox]="viewBox"
         [pTooltip]="tooltipText"
-        [tooltipPosition]="tooltipPosition">
-    </svg-icon-sprite>
+        [tooltipPosition]="tooltipPosition"
+        class="svg-icon">
+        <use [attr.href]="spriteUrl"></use>
+    </svg>
 </div>

@@ -22,11 +22,10 @@ import { TranslocoModule, TranslocoService } from '@jsverse/transloco';
 import { QbdDirectOnboardingService } from 'src/app/core/services/qbd-direct/qbd-direct-configuration/qbd-direct-onboarding.service';
 
 @Component({
-  selector: 'app-qbd-direct-onboarding-connector',
-  standalone: true,
-  imports: [QbdDirectSharedModule, SharedModule, CommonModule, TranslocoModule],
-  templateUrl: './qbd-direct-onboarding-connector.component.html',
-  styleUrl: './qbd-direct-onboarding-connector.component.scss'
+    selector: 'app-qbd-direct-onboarding-connector',
+    imports: [QbdDirectSharedModule, SharedModule, CommonModule, TranslocoModule],
+    templateUrl: './qbd-direct-onboarding-connector.component.html',
+    styleUrl: './qbd-direct-onboarding-connector.component.scss'
 })
 export class QbdDirectOnboardingConnectorComponent implements OnInit {
 
@@ -79,6 +78,8 @@ export class QbdDirectOnboardingConnectorComponent implements OnInit {
   workspace: QbdDirectWorkspace;
 
   readonly brandingStyle = brandingStyle;
+
+  readonly AppName = AppName;
 
   constructor(
     private router: Router,
@@ -277,7 +278,7 @@ export class QbdDirectOnboardingConnectorComponent implements OnInit {
       this.workspaceService.setOnboardingState(workspaceResponse.onboarding_state);
       this.router.navigate([`/integrations/qbd_direct/onboarding/export_settings`]);
       this.isLoading = false;
-      this.toastService.displayToastMessage(ToastSeverity.SUCCESS, this.translocoService.translate('qbdDirectOnboardingConnector.connectionSuccessToast'));
+      this.toastService.displayToastMessage(ToastSeverity.SUCCESS, this.translocoService.translate('qbdDirectOnboardingConnector.connectionSuccessToast'), undefined, true);
     });
   }
 

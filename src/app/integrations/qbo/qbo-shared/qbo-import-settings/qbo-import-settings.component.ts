@@ -9,7 +9,7 @@ import { DefaultDestinationAttribute, DestinationAttribute } from 'src/app/core/
 import { FyleField, IntegrationField } from 'src/app/core/models/db/mapping.model';
 import { AppName, ConfigurationCta, DefaultImportFields, QBOCorporateCreditCardExpensesObject, QBOField, QBOOnboardingState, QBOReimbursableExpensesObject, ToastSeverity } from 'src/app/core/models/enum/enum.model';
 import { QBOWorkspaceGeneralSetting } from 'src/app/core/models/qbo/db/workspace-general-setting.model';
-import { QBOImportSettingGet } from 'src/app/core/models/qbo/qbo-configuration/qbo-import-setting.model';
+import { QBOImportFieldsAttributeCounts, QBOImportSettingGet } from 'src/app/core/models/qbo/qbo-configuration/qbo-import-setting.model';
 import { HelperService } from 'src/app/core/services/common/helper.service';
 import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
 import { MappingService } from 'src/app/core/services/common/mapping.service';
@@ -19,11 +19,13 @@ import { QboImportSettingsService } from 'src/app/core/services/qbo/qbo-configur
 import { QboHelperService } from 'src/app/core/services/qbo/qbo-core/qbo-helper.service';
 import { TranslocoService } from '@jsverse/transloco';
 import { ExportSettingsService } from 'src/app/core/services/common/export-settings.service';
+import { BrandingService } from 'src/app/core/services/common/branding.service';
 
 @Component({
-  selector: 'app-qbo-import-settings',
-  templateUrl: './qbo-import-settings.component.html',
-  styleUrls: ['./qbo-import-settings.component.scss']
+    selector: 'app-qbo-import-settings',
+    templateUrl: './qbo-import-settings.component.html',
+    styleUrls: ['./qbo-import-settings.component.scss'],
+    standalone: false
 })
 export class QboImportSettingsComponent implements OnInit {
 
@@ -91,6 +93,10 @@ export class QboImportSettingsComponent implements OnInit {
 
   readonly brandingStyle = brandingStyle;
 
+  attributeCounts: QBOImportFieldsAttributeCounts;
+
+  showChartOfCategory: boolean = false;
+
   constructor(
     @Inject(FormBuilder) private formBuilder: FormBuilder,
     private helperService: QboHelperService,
@@ -102,10 +108,53 @@ export class QboImportSettingsComponent implements OnInit {
     private workspaceService: WorkspaceService,
     public helper: HelperService,
     private translocoService: TranslocoService,
-    private exportSettingsService: ExportSettingsService
+    private exportSettingsService: ExportSettingsService,
+    public brandingService: BrandingService
   ) {
     this.customFieldOption = this.importSettingService.getCustomFieldOption();
     this.chartOfAccountTypesList = this.importSettingService.getChartOfAccountTypesList();
+  }
+
+  updateCommonImportFields(isImportCodeEnabled: boolean, destinationField: keyof QBOImportFieldsAttributeCounts, formControlName: string, isCategory: boolean = false): void {
+    if (isImportCodeEnabled) {
+      this.importSettingService.getImportFieldsAttributeCounts().subscribe((importFieldsAttributeCounts: QBOImportFieldsAttributeCounts) => {
+        this.attributeCounts = importFieldsAttributeCounts;
+        const destinationFieldCount: number = importFieldsAttributeCounts[destinationField] as number;
+        if (destinationFieldCount >= 30000) {
+          this.showChartOfCategory = false;
+          this.importSettingForm.controls[formControlName].setValue(false);
+          this.importSettingForm.controls[formControlName].disable();
+        } else {
+          this.showChartOfCategory = isCategory ? true : false;
+          this.importSettingForm.controls[formControlName].setValue(isImportCodeEnabled);
+          this.importSettingForm.controls[formControlName].enable();
+        }
+      });
+    }
+  }
+
+  updateImportFields(event: [boolean, string, number]): void {
+    const destinationField = event[1].toLowerCase() + "_count";
+    const expenseFieldArray = this.importSettingForm.get('expenseFields') as FormArray;
+    if (event[0]) {
+      this.importSettingService.getImportFieldsAttributeCounts().subscribe((importFieldsAttributeCounts: QBOImportFieldsAttributeCounts) => {
+        const count = importFieldsAttributeCounts[destinationField as keyof QBOImportFieldsAttributeCounts];
+        if (typeof count === 'number' && count >= 30000) {
+          const expenseField = expenseFieldArray.controls[event[2]];
+          expenseField.patchValue({
+            import_to_fyle: false,
+            is_auto_import_enabled: false,
+            count: count
+          });
+        } else {
+          const expenseField = expenseFieldArray.controls[event[2]];
+          expenseField.patchValue({
+            import_to_fyle: event[0],
+            is_auto_import_enabled: true
+          });
+        }
+      });
+    }
   }
 
   closeModel() {
@@ -144,7 +193,7 @@ export class QboImportSettingsComponent implements OnInit {
     const importSettingPayload = this.importSettingService.constructPayload(this.importSettingForm);
     this.importSettingService.postImportSettings(importSettingPayload).subscribe(() => {
       this.isSaveInProgress = false;
-      this.toastService.displayToastMessage(ToastSeverity.SUCCESS, this.translocoService.translate('qboImportSettings.importSettingsSuccess'));
+      this.toastService.displayToastMessage(ToastSeverity.SUCCESS, this.translocoService.translate('qboImportSettings.importSettingsSuccess'), undefined, this.isOnboarding);
       this.updateImportCodeFieldConfig();
       if (this.isOnboarding) {
         this.workspaceService.setOnboardingState(QBOOnboardingState.ADVANCED_CONFIGURATION);

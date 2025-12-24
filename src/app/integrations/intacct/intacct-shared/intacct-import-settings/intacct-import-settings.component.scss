@@ -1,19 +1,16 @@
 :host ::ng-deep .p-button {
     @apply tw-w-fit #{!important};
   }
-  
+
   .save-btn {
     @apply tw-border tw-bg-mandatory-field-color tw-rounded-4-px #{!important};
   }
-  
+
   .cancel-btn {
     @apply tw-py-10-px tw-px-16-px tw-border tw-border-box-color tw-bg-white tw-rounded-4-px tw-text-slightly-normal-text-color tw-mr-16-px #{!important};
   }
-  
-  :host ::ng-deep .p-dropdown {
-    @apply tw-scale-90 #{!important};
-  }
-  
+
+
   .form-input-disabled {
     padding: 11px 0px 11px 14px;
     background: #F5F5F5;
@@ -21,23 +18,23 @@
     box-sizing: border-box;
     border-radius: 8px;
   }
-  
+
   .label-content {
     background: #F5F5F5;
     border: 1px solid #DFDFE2;
     box-sizing: border-box;
     border-radius: 4px;
-    height: 100px;
+    height: auto;
   }
-  
+
   .name-text {
     padding: 12px 0px 8px 16px;
   }
-  
+
   .form-field {
     padding: 8px 16px 22px;
   }
-  
+
   .form-input {
     padding: 11px 0px 11px 14px;
     height: 40px;
@@ -46,12 +43,12 @@
     box-sizing: border-box;
     border-radius: 8px;
   }
-  
+
   .container {
       display: flex;
       justify-content: start;
   }
-  
+
   .sub-text {
       border-radius: 8px;
       border: 1px solid var(--grayscale-light-border, #ECECEE);
@@ -62,10 +59,9 @@
       gap: 16px;
       max-width: auto;
   }
-  
+
   .sub-text-note {
       display: flex;
-      padding: 16px;
       align-items: flex-start;
       align-self: stretch;
       border-radius: 4px;
@@ -75,47 +71,46 @@
       color: #5a5d72;
       font-style: normal;
   }
-  
+
     .fields-header {
       display: flex;
     }
-  
+
     .fields-header-text {
       font-weight: 500;
       line-height: 18px;
     }
-    
+
   .add-button-container {
     display: flex;
     align-items: center;
   }
-  
+
   .add-row-text {
     cursor: pointer; /* Changes the cursor to a hand when hovering */
     color: #F36;
   }
-  
+
   .delete-button {
     cursor: pointer;
   }
-  
+
   .custom-option {
-    color: rgb(232, 73, 99);
-    display: flex;
+    @apply tw-text-mandatory-field-color tw-flex;
   }
-  
+
   .icon-align {
     @apply tw-ml-0 tw-mr-6-px tw-align-middle #{!important};
   }
-  
+
   :host ::ng-deep input {
     @apply tw-text-14-px #{!important};
   }
-  
-  :host ::ng-deep .selectedItem  .p-dropdown-trigger {
+
+  :host ::ng-deep .selectedItem  .p-select-dropdown {
     @apply tw-hidden #{!important};
   }
-  
+
   .error-box {
     background: rgba(218, 30, 40, 0.02);
     border: 1px solid rgba(218, 30, 40, 0.04);

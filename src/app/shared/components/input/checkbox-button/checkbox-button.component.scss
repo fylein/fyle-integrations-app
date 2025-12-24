@@ -1,33 +1,53 @@
-.checkedText {
-    @apply tw-w-[95px] tw-border tw-rounded-sm tw-border-btn-outline-secondary-border-color #{!important};
-}
-
-.unCheckedText {
-    @apply tw-w-[148px] tw-border tw-rounded-sm tw-border-btn-outline-secondary-border-color #{!important};
-}
-
-:host ::ng-deep .p-button {
-    @apply tw-h-40-px tw-text-text-secondary tw-bg-btn-outline-secondary-bg tw-rounded-border-radius-2xs tw-border tw-border-btn-outline-secondary-border-color #{!important};
+::ng-deep .p-button {
+    @apply tw-flex tw-bg-btn-outline-secondary-bg tw-rounded-border-radius-2xs tw-border tw-border-btn-outline-secondary-border-color #{!important};
 }
 
 :host ::ng-deep .p-button:enabled:hover {
-    @apply tw-text-text-secondary tw-bg-btn-outline-secondary-bg tw-border tw-border-btn-outline-secondary-border-color #{!important};
+    @apply tw-bg-btn-outline-secondary-bg tw-border tw-border-btn-outline-secondary-border-color #{!important};
 }
 
-input[type="checkbox"] {
-    @apply tw-relative tw-w-16-px tw-h-16-px tw-appearance-none tw-bg-white tw-border tw-border-checkbox-icon-color tw-mr-8-px tw-rounded-border-radius-2xs tw-cursor-pointer #{!important};
+[data-theme='co'] {
+    :host ::ng-deep .p-button:disabled {
+        @apply tw-text-text-disabled #{!important};
+    }
 }
-  
+
 .unCheckedText:hover input[type="checkbox"], input[type="checkbox"]:hover {
     @apply tw-border-checkbox-icon-selected-color #{!important};
 }
 
-input[type="checkbox"]:checked {
-    @apply tw-bg-checkbox-icon-selected-color tw-border-checkbox-icon-selected-color #{!important};
-}
-  
 input[type="checkbox"]:checked::after {
     content: url('./../../../../../assets/icons/co/grv-checkmark-small.svg') !important;
     @apply tw-absolute tw-top-[-3px] tw-left-[2px] #{!important};
 }
-  
+
+input[type="checkbox"].fyle-checkbox {
+    @apply tw-relative tw-w-16-px tw-h-16-px tw-appearance-none tw-bg-white tw-border tw-border-checkbox-icon-color tw-mr-8-px tw-rounded-border-radius-2xs tw-cursor-pointer #{!important};
+}
+
+input[type="checkbox"].fyle-checkbox:checked {
+    @apply tw-bg-checkbox-icon-selected-color tw-border-checkbox-icon-selected-color #{!important};
+}
+
+
+/* CO Theme - Rounded checkbox */
+input[type="checkbox"].co-checkbox {
+    @apply tw-relative tw-w-16-px tw-h-16-px tw-appearance-none tw-bg-white tw-border tw-border-checkbox-icon-color tw-mr-8-px tw-rounded-full tw-cursor-pointer #{!important};
+}
+
+input[type="checkbox"].co-checkbox:hover {
+    @apply tw-border-checkbox-icon-selected-color #{!important};
+}
+
+input[type="checkbox"].co-checkbox:disabled {
+    @apply tw-border-checkbox-icon-disabled-color #{!important};
+}
+
+input[type="checkbox"].co-checkbox:checked {
+    @apply tw-bg-bg-success tw-border-none #{!important};
+}
+
+input[type="checkbox"].co-checkbox:checked::after {
+    content: url('./../../../../../assets/icons/co/grv-checkmark-small.svg') !important;
+    @apply tw-absolute tw-top-[50%] tw-left-[50%] tw-translate-x-[-50%] tw-translate-y-[-50%] #{!important};
+}

@@ -2,7 +2,7 @@ import { inject, Injectable } from '@angular/core';
 import { WorkspaceService } from '../../common/workspace.service';
 import { CacheBuster, Cacheable } from 'ts-cacheable';
 import { Observable, Subject } from 'rxjs';
-import { QBOImportSettingGet, QBOImportSettingPost } from 'src/app/core/models/qbo/qbo-configuration/qbo-import-setting.model';
+import { QBOImportFieldsAttributeCounts, QBOImportSettingGet, QBOImportSettingPost } from 'src/app/core/models/qbo/qbo-configuration/qbo-import-setting.model';
 import { ApiService } from '../../common/api.service';
 import { IntegrationField } from 'src/app/core/models/db/mapping.model';
 import { FormArray, FormControl, FormGroup } from '@angular/forms';
@@ -87,5 +87,9 @@ export class QboImportSettingsService extends ImportSettingsService {
   getImportCodeFieldConfig() {
     const workspaceId = this.workspaceService.getWorkspaceId();
     return this.apiService.get(`/v2/workspaces/${workspaceId}/import_settings/import_code_fields_config/`, {});
+  }
+
+  getImportFieldsAttributeCounts(): Observable<QBOImportFieldsAttributeCounts> {
+    return this.apiService.get(`/workspaces/${this.workspaceService.getWorkspaceId()}/qbo/attributes_count/`, {});
   }
 }

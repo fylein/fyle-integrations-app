@@ -1,17 +1,18 @@
 import { EventEmitter, inject, Injectable, Output } from '@angular/core';
 import { WorkspaceService } from '../../common/workspace.service';
-import { Observable } from 'rxjs';
+import { Observable, startWith } from 'rxjs';
 import { QbdDirectExportSettingGet, QbdDirectExportSettingsPost } from 'src/app/core/models/qbd-direct/qbd-direct-configuration/qbd-direct-export-settings.model';
 import { ApiService } from '../../common/api.service';
 import { HelperService } from '../../common/helper.service';
 import { HelperUtility } from 'src/app/core/models/common/helper.model';
 import { FormControl, FormGroup } from "@angular/forms";
 import { ExportModuleRule, ExportSettingValidatorRule } from "../../../models/common/export-settings.model";
-import { CCCExpenseState, EmployeeFieldMapping, ExpenseState, FyleField, NameInJEField, NameInJournalEntry, QBDCorporateCreditCardExpensesObject, QbdDirectCCCExportDateType, QbdDirectExpenseGroupBy, QbdDirectReimbursableExpensesObject, QbdDirectReimbursableExportDateType, QBDExpenseGroupedBy, QBDExportDateType, QBDReimbursableExpensesObject, SplitExpenseGrouping } from "../../../models/enum/enum.model";
+import { CCCExpenseState, EmployeeFieldMapping, ExpenseState, FyleField, NameInJEField, NameInJournalEntry, QBDCorporateCreditCardExpensesObject, QbdDirectCCCExportDateType, QbdDirectCCCPurchasedFromField, QbdDirectExpenseGroupBy, QbdDirectReimbursableExpensesObject, QbdDirectReimbursableExportDateType, QBDExpenseGroupedBy, QBDExportDateType, QBDReimbursableExpensesObject, SplitExpenseGrouping } from "../../../models/enum/enum.model";
 import { QBDExportSettingFormOption } from "../../../models/qbd/qbd-configuration/qbd-export-setting.model";
 import { DestinationAttribute } from "../../../models/db/destination-attribute.model";
 import { QbdDirectDestinationAttribute } from "../../../models/qbd-direct/db/qbd-direct-destination-attribuite.model";
 import { ExportSettingsService } from "src/app/core/services/common/export-settings.service";
+import { brandingFeatureConfig } from 'src/app/branding/branding-config';
 
 @Injectable({
   providedIn: 'root'
@@ -137,6 +138,19 @@ export class QbdDirectExportSettingsService extends ExportSettingsService {
       ];
   }
 
+  cccPurchasedFromFieldOptions(): QBDExportSettingFormOption[] {
+    return [
+      {
+        label: this.translocoService.translate('services.qbdDirectExportSettings.merchant'),
+        value: QbdDirectCCCPurchasedFromField.MERCHANT
+      },
+      {
+        label: this.translocoService.translate('services.qbdDirectExportSettings.employeeOrVendor'),
+        value: QbdDirectCCCPurchasedFromField.EMPLOYEE
+      }
+    ];
+  }
+
   setCreditCardExpenseGroupingDateOptions(cccExportGroup: QbdDirectExpenseGroupBy):QBDExportSettingFormOption[] {
       if (cccExportGroup === QbdDirectExpenseGroupBy.REPORT) {
         return this.creditCardExpenseGroupingDateOptions().concat([{
@@ -170,8 +184,10 @@ export class QbdDirectExportSettingsService extends ExportSettingsService {
         case 'defaultReimbursableAccountsPayableAccountName':
           return form.controls.reimbursableExportType.value === QBDReimbursableExpensesObject.JOURNAL_ENTRY;
         case 'nameInJE':
-          return form.controls.creditCardExportType.value === QBDCorporateCreditCardExpensesObject.JOURNAL_ENTRY;
+          return brandingFeatureConfig.featureFlags.exportSettings.nameInJournalEntry &&
+                 form.controls.creditCardExportType.value === QBDCorporateCreditCardExpensesObject.JOURNAL_ENTRY;
         case 'defaultCreditCardAccountName':
+        case 'cccPurchasedFromField':
           return form.controls.creditCardExportType.value === QBDCorporateCreditCardExpensesObject.CREDIT_CARD_PURCHASE;
         case 'employeeMapping':
           return !form.get('reimbursableExportType')?.value && form.get('creditCardExportType')?.value && form.get('creditCardExportType')?.value === QBDCorporateCreditCardExpensesObject.JOURNAL_ENTRY;
@@ -198,7 +214,7 @@ export class QbdDirectExportSettingsService extends ExportSettingsService {
             {
               formController: 'creditCardExportType',
               requiredValue: {
-                [QBDCorporateCreditCardExpensesObject.CREDIT_CARD_PURCHASE]: ['defaultCreditCardAccountName'],
+                [QBDCorporateCreditCardExpensesObject.CREDIT_CARD_PURCHASE]: ['defaultCreditCardAccountName', 'cccPurchasedFromField'],
                 [QBDCorporateCreditCardExpensesObject.JOURNAL_ENTRY]: ['defaultCCCAccountsPayableAccountName', 'nameInJE', 'employeeMapping']
               }
             }
@@ -209,27 +225,51 @@ export class QbdDirectExportSettingsService extends ExportSettingsService {
 
   mapAPIResponseToFormGroup(exportSettings: QbdDirectExportSettingGet | null, destinationAccounts: QbdDirectDestinationAttribute[]): FormGroup {
       const findObjectByDestinationId = (array: DestinationAttribute[], id: string) => array?.find(item => item.destination_id === id) || null;
+
+      let creditCardExpenseValue = !!exportSettings?.credit_card_expense_export_type;
+      if (!brandingFeatureConfig.featureFlags.exportSettings.isReimbursableExpensesAllowed) {
+        creditCardExpenseValue = true;
+      }
+
       return new FormGroup({
           reimbursableExportType: new FormControl(exportSettings?.reimbursable_expense_export_type),
           reimbursableExpense: new FormControl(exportSettings?.reimbursable_expense_export_type ? true : false),
           reimbursableExportGroup: new FormControl(exportSettings?.reimbursable_expense_grouped_by ? exportSettings?.reimbursable_expense_grouped_by : null),
           reimbursableExportDate: new FormControl(exportSettings?.reimbursable_expense_date ? exportSettings?.reimbursable_expense_date : null),
-          creditCardExpense: new FormControl(exportSettings?.credit_card_expense_export_type ? true : false),
+          creditCardExpense: new FormControl(creditCardExpenseValue),
           creditCardExportType: new FormControl(exportSettings?.credit_card_expense_export_type ? exportSettings?.credit_card_expense_export_type : null),
           creditCardExportGroup: new FormControl(exportSettings?.credit_card_expense_grouped_by ? exportSettings?.credit_card_expense_grouped_by : this.expenseGroupingFieldOptions()[1].value),
           creditCardExportDate: new FormControl(exportSettings?.credit_card_expense_date ? exportSettings?.credit_card_expense_date : this.expenseGroupingFieldOptions()[0].value),
           reimbursableExpenseState: new FormControl(exportSettings?.reimbursable_expense_state ? exportSettings?.reimbursable_expense_state : null),
           creditCardExpenseState: new FormControl(exportSettings?.credit_card_expense_state ? exportSettings?.credit_card_expense_state : null),
           employeeMapping: new FormControl(exportSettings?.employee_field_mapping ? exportSettings?.employee_field_mapping : EmployeeFieldMapping.VENDOR),
-          nameInJE: new FormControl(exportSettings?.name_in_journal_entry ? exportSettings?.name_in_journal_entry : null),
+          CCCEmployeeMapping: new FormControl(exportSettings?.employee_field_mapping ? exportSettings?.employee_field_mapping : EmployeeFieldMapping.VENDOR),
+          nameInJE: new FormControl(exportSettings?.name_in_journal_entry ? exportSettings?.name_in_journal_entry : this.nameInJEOptions()[0].value),
           defaultCreditCardAccountName: new FormControl(exportSettings?.default_credit_card_account_id ? findObjectByDestinationId( destinationAccounts, exportSettings.default_credit_card_account_id) : null),
           defaultReimbursableAccountsPayableAccountName: new FormControl(exportSettings?.default_reimbursable_accounts_payable_account_id ? findObjectByDestinationId( destinationAccounts, exportSettings.default_reimbursable_accounts_payable_account_id) : null),
           defaultCCCAccountsPayableAccountName: new FormControl(exportSettings?.default_ccc_accounts_payable_account_id ? findObjectByDestinationId( destinationAccounts, exportSettings.default_ccc_accounts_payable_account_id) : null),
+          cccPurchasedFromField: new FormControl(exportSettings?.ccc_purchased_from_field ? exportSettings?.ccc_purchased_from_field : null),
           searchOption: new FormControl([])
       });
   }
 
   static constructPayload(exportSettingsForm: FormGroup): QbdDirectExportSettingsPost {
+    let nameInJournalEntry;
+
+    if (!brandingFeatureConfig.featureFlags.exportSettings.nameInJournalEntry) {
+      nameInJournalEntry = NameInJournalEntry.MERCHANT;
+    } else {
+      nameInJournalEntry = exportSettingsForm.get('nameInJE')?.value;
+    }
+
+    // Primary: CCC employee mapping; Fallback: reimbursable employee mapping
+    // (since CCC employee mapping always has the latest value of reimbursable employee mapping, but not vice versa)
+    const employeeFieldMapping = exportSettingsForm.get('CCCEmployeeMapping')?.value
+        ? exportSettingsForm.get('CCCEmployeeMapping')?.value
+        : exportSettingsForm.get('employeeMapping')?.value
+        ? exportSettingsForm.get('employeeMapping')?.value
+        : null;
+
     const exportSettingPayload: QbdDirectExportSettingsPost = {
         reimbursable_expense_export_type: exportSettingsForm.get('reimbursableExportType')?.value ? exportSettingsForm.get('reimbursableExportType')?.value : null,
         reimbursable_expense_state: exportSettingsForm.get('reimbursableExpenseState')?.value ? exportSettingsForm.get('reimbursableExpenseState')?.value : null,
@@ -239,14 +279,15 @@ export class QbdDirectExportSettingsService extends ExportSettingsService {
         credit_card_expense_state: exportSettingsForm.get('creditCardExpenseState')?.value ? exportSettingsForm.get('creditCardExpenseState')?.value : null,
         credit_card_expense_grouped_by: exportSettingsForm.get('creditCardExpense')?.value && exportSettingsForm.get('creditCardExportGroup')?.value ? exportSettingsForm.get('creditCardExportGroup')?.value : null,
         credit_card_expense_date: exportSettingsForm.get('creditCardExpense')?.value && exportSettingsForm.get('creditCardExportDate')?.value ? exportSettingsForm.get('creditCardExportDate')?.value : null,
-        employee_field_mapping: exportSettingsForm.get('employeeMapping')?.value ? exportSettingsForm.get('employeeMapping')?.value : null,
-        name_in_journal_entry: exportSettingsForm.get('nameInJE')?.value ? exportSettingsForm.get('nameInJE')?.value : null,
+        employee_field_mapping: employeeFieldMapping,
+        name_in_journal_entry: nameInJournalEntry,
         default_credit_card_account_name: exportSettingsForm.get('defaultCreditCardAccountName')?.value ? exportSettingsForm.get('defaultCreditCardAccountName')?.value.value : null,
         default_credit_card_account_id: exportSettingsForm.get('defaultCreditCardAccountName')?.value ? exportSettingsForm.get('defaultCreditCardAccountName')?.value.destination_id : null,
         default_reimbursable_accounts_payable_account_name: exportSettingsForm.get('defaultReimbursableAccountsPayableAccountName')?.value ? exportSettingsForm.get('defaultReimbursableAccountsPayableAccountName')?.value.value : null,
         default_reimbursable_accounts_payable_account_id: exportSettingsForm.get('defaultReimbursableAccountsPayableAccountName')?.value ? exportSettingsForm.get('defaultReimbursableAccountsPayableAccountName')?.value.destination_id : null,
         default_ccc_accounts_payable_account_name: exportSettingsForm.get('defaultCCCAccountsPayableAccountName')?.value ? exportSettingsForm.get('defaultCCCAccountsPayableAccountName')?.value.value : null,
-        default_ccc_accounts_payable_account_id: exportSettingsForm.get('defaultCCCAccountsPayableAccountName')?.value ? exportSettingsForm.get('defaultCCCAccountsPayableAccountName')?.value.destination_id : null
+        default_ccc_accounts_payable_account_id: exportSettingsForm.get('defaultCCCAccountsPayableAccountName')?.value ? exportSettingsForm.get('defaultCCCAccountsPayableAccountName')?.value.destination_id : null,
+        ccc_purchased_from_field: exportSettingsForm.get('cccPurchasedFromField')?.value ? exportSettingsForm.get('cccPurchasedFromField')?.value : null
     };
 
     return exportSettingPayload;
@@ -289,7 +330,9 @@ export class QbdDirectExportSettingsService extends ExportSettingsService {
 
   setExportTypeValidatorsAndWatchers(exportTypeValidatorRule: ExportModuleRule[], form: FormGroup): void {
     Object.values(exportTypeValidatorRule).forEach((values) => {
-      form.controls[values.formController].valueChanges.subscribe((selectedValue) => {
+      form.controls[values.formController].valueChanges
+      .pipe(startWith(form?.get(values.formController)?.value))
+      .subscribe((selectedValue) => {
         this.mandatoryFormController = [];
         this.setupDynamicValidators(form, values, selectedValue);
       });

@@ -26,9 +26,10 @@ import { RedirectUriStorageService } from 'src/app/core/services/misc/redirect-u
 import { IframeOriginStorageService } from 'src/app/core/services/misc/iframe-origin-storage.service';
 
 @Component({
-  selector: 'app-login',
-  templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss']
+    selector: 'app-login',
+    templateUrl: './login.component.html',
+    styleUrls: ['./login.component.scss'],
+    standalone: false
 })
 export class LoginComponent implements OnInit {
 
@@ -190,6 +191,8 @@ export class LoginComponent implements OnInit {
         };
         this.userService.storeUserProfile(user);
 
+        // TODO: move this to the interceptor, make the call when API returns user not found
+        // So that the user doesn't have to refresh the page manually
         if (this.exposeApps?.QBD) {
           this.helperService.setBaseApiURL(AppUrl.QBD);
           this.qbdAuthService.qbdLogin(clusterDomainWithToken.tokens.refresh_token).subscribe();
@@ -208,6 +211,11 @@ export class LoginComponent implements OnInit {
         if (this.exposeApps?.BUSINESS_CENTRAL) {
           this.helperService.setBaseApiURL(AppUrl.BUSINESS_CENTRAL);
           this.businessCentralAuthService.loginWithRefreshToken(clusterDomainWithToken.tokens.refresh_token).subscribe();
+        }
+
+        if (this.exposeApps?.SAGE50) {
+          this.helperService.setBaseApiURL(AppUrl.SAGE50, { auth: true });
+          this.authService.loginWithRefreshToken(clusterDomainWithToken.tokens.refresh_token).subscribe();
         }
 
         // Only local dev needs this, login happens via postMessage for prod/staging through webapp

@@ -1,7 +1,3 @@
 .info-label {
-    @apply tw-flex tw-gap-2 tw-justify-start tw-items-start tw-self-stretch tw-py-8-px tw-px-16-px tw-border tw-rounded-6-px tw-bg-bg-tertiary-lighter tw-border-separate #{!important};
-}
-
-.info-label-text {
-    @apply tw-text-14-px tw-font-400 tw-self-stretch tw-text-text-secondary #{!important};
+    @apply tw-flex tw-gap-2 tw-justify-start tw-items-start tw-self-stretch tw-py-8-px tw-px-12-px tw-rounded-4-px #{!important};
 }

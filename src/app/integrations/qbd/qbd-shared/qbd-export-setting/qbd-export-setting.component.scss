@@ -1,10 +1,10 @@
 :host ::ng-deep .error-box {
-    @apply tw-border-alert-toast #{!important};
+    @apply tw-border-border-danger-dark #{!important};
 }
-
+/*
 :host ::ng-deep .normal-box  {
     @apply tw-border-box-color #{!important};
-}
+} */
 
 :host ::ng-deep .normal-box :enabled:focus-visible {
     @apply tw-border-input-focused-border #{!important};

@@ -1,18 +1,21 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { brandingConfig, brandingFeatureConfig, brandingStyle } from 'src/app/branding/branding-config';
-import { AppName, ToastSeverity } from 'src/app/core/models/enum/enum.model';
+import { AppName, ButtonSize, ButtonType, ToastSeverity } from 'src/app/core/models/enum/enum.model';
 import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
 import { WindowService } from 'src/app/core/services/common/window.service';
 import { SiMappingsService } from 'src/app/core/services/si/si-core/si-mappings.service';
 
 @Component({
-  selector: 'app-configuration-step-header',
-  templateUrl: './configuration-step-header.component.html',
-  styleUrls: ['./configuration-step-header.component.scss']
+    selector: 'app-configuration-step-header',
+    templateUrl: './configuration-step-header.component.html',
+    styleUrls: ['./configuration-step-header.component.scss'],
+    standalone: false
 })
 export class ConfigurationStepHeaderComponent implements OnInit {
 
   @Input() headerText: string;
+
+  @Input() headerInfoTooltip: string;
 
   @Input() contentText: string;
 
@@ -29,6 +32,12 @@ export class ConfigurationStepHeaderComponent implements OnInit {
   brandingFeatureConfig = brandingFeatureConfig;
 
   readonly brandingStyle = brandingStyle;
+
+  ButtonType = ButtonType;
+
+  ButtonSize = ButtonSize;
+
+  readonly AppName = AppName;
 
   constructor(
     public windowService: WindowService

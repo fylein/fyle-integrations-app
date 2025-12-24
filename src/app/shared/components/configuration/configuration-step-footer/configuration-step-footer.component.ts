@@ -1,11 +1,12 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { brandingConfig, brandingFeatureConfig } from 'src/app/branding/branding-config';
-import { AppName, QBDDirectInteractionType } from 'src/app/core/models/enum/enum.model';
+import { AppName, ButtonSize, ButtonType, ConfigurationCta, QBDDirectInteractionType } from 'src/app/core/models/enum/enum.model';
 
 @Component({
-  selector: 'app-configuration-step-footer',
-  templateUrl: './configuration-step-footer.component.html',
-  styleUrls: ['./configuration-step-footer.component.scss']
+    selector: 'app-configuration-step-footer',
+    templateUrl: './configuration-step-footer.component.html',
+    styleUrls: ['./configuration-step-footer.component.scss'],
+    standalone: false
 })
 export class ConfigurationStepFooterComponent implements OnInit {
 
@@ -31,9 +32,15 @@ export class ConfigurationStepFooterComponent implements OnInit {
 
   appName = AppName;
 
+  ButtonType = ButtonType;
+
+  ButtonSize = ButtonSize;
+
   readonly brandingFeatureConfig = brandingFeatureConfig;
 
   readonly brandingConfig = brandingConfig;
+
+  readonly ConfigurationCta = ConfigurationCta;
 
   constructor() { }
 

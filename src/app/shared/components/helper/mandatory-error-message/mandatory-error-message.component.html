@@ -1,6 +1,11 @@
-<div class="tw-text-form-error-help-text-color tw-text-12-px tw-font-400 tw-pt-4-px tw-max-w-300-px tw-flex tw-text-pretty tw-items-center">
-    <app-svg-icon *ngIf="brandingFeatureConfig.featureFlags.useCustomIcon" [c1SvgSource]="'grv-caution-triangle-critical-small'" [width]="'14px'" [height]="'14px'" [styleClasses]="'tw-pr-4-px tw-text-form-error-icon-color'" [isTextColorAllowed]="true"></app-svg-icon>
-    <span *ngIf="listName">{{ 'mandatoryErrorMessage.pleaseSelectPrefix' | transloco }}{{ listName }}{{ 'mandatoryErrorMessage.fromTheListSuffix' | transloco }}</span>
-    <span *ngIf="customErrorMessage">{{ customErrorMessage }}</span>
-  </div>
-  
+<div class="mandatory-error-message tw-font-400 tw-pt-4-px tw-max-w-300-px tw-flex tw-text-pretty tw-items-center">
+  @if (brandingFeatureConfig.featureFlags.useCustomIcon) {
+    <app-svg-icon [c1SvgSource]="'grv-caution-triangle-critical-small'" [width]="'14px'" [height]="'14px'" [styleClasses]="'tw-pr-4-px tw-text-form-error-icon-color'" [isTextColorAllowed]="true"></app-svg-icon>
+  }
+  @if (listName) {
+    <span>{{ 'mandatoryErrorMessage.pleaseSelectPrefix' | transloco }}{{ listName }}{{ 'mandatoryErrorMessage.fromTheListSuffix' | transloco }}</span>
+  }
+  @if (customErrorMessage) {
+    <span>{{ customErrorMessage }}</span>
+  }
+</div>

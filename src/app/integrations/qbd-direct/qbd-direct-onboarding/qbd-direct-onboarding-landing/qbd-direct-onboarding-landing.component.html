@@ -3,6 +3,6 @@
         <app-landing-page-header [buttonText]="'qbdDirectOnboardingLanding.setUpIntegration' | transloco" [iconPath]="'assets/logos/qbo.png'" [appName]="'qbdDirectOnboardingLanding.appName' | transloco" [uiExposedAppName]="'qbdDirectOnboardingLanding.uiExposedAppName' | transloco" [isAssistedSetupSlotBooked]="isAssistedSetupSlotBooked" [appDescription]="'qbd_direct.landing.contentText' | transloco: {brandName: brandingConfig.brandName}" [isConnectionInProgress]="isQbdConnectionInProgress" [isLoading]="false" [isIntegrationConnected]="false" [redirectLink]="redirectLink" (connectIntegration)="connectQbdDirect()" [logoStyleClasses]="'tw-p-16-px'"></app-landing-page-header>
     </div>
     <div>
-        <app-landing-page-body [headlineText]="'qbd_direct.landing.guideHeaderText' | transloco" [headerText]="'qbdDirectOnboardingLanding.guideHeader' | transloco : {brandName: brandingConfig.brandName}" [embedVideo]="embedVideoLink" [embedImage]="'assets/co/coQBOLanding.svg'" [svgPath]="'assets/flow-charts/' + brandingConfig.brandId +'-qbd-direct-flow-chart.svg'" [appName]="appName"></app-landing-page-body>
+        <app-landing-page-body [headlineText]="'qbd_direct.landing.guideHeaderLineText' | transloco" [headerText]="'qbd_direct.landing.guideHeaderText' | transloco : {brandName: brandingConfig.brandName}" [embedVideo]="embedVideoLink" [embedImage]="'assets/co/coQBOLanding.svg'" [svgPath]="'assets/flow-charts/' + brandingService.getAssetsBrandId() + '-qbd-direct-flow-chart.svg'" [appName]="appName"></app-landing-page-body>
     </div>
 </div>

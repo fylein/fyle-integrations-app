@@ -1,8 +1,19 @@
-<div *ngIf="isGradientAllowed" class="tw-absolute tw-bg-header-1 tw-bg-no-repeat tw-h-84-px tw-w-[100%]"></div>
-<div *ngIf="isGradientAllowed" class="tw-absolute tw-bg-header-2 tw-h-84-px tw-w-[100%]"></div>
-<div *ngIf="!isLoading" class="tw-py-40-px" [ngClass]="brandingStyle.common.mainComponentPadding">
-    <app-sub-menu [modules]="mappingPages" [activeModule]="mappingPages[0]"></app-sub-menu>
-    <div>
+@if (isGradientAllowed) {
+  <div class="tw-absolute tw-bg-header-1 tw-bg-no-repeat tw-h-84-px tw-w-[100%]"></div>
+}
+@if (isGradientAllowed) {
+  <div class="tw-absolute tw-bg-header-2 tw-h-84-px tw-w-[100%]"></div>
+}
+@if (!isLoading) {
+  <div class="tw-py-40-px page-layout-container" [ngClass]="brandingStyle.common.mainComponentPadding">
+    <div [ngClass]="brandingStyle.dashboard.mapping.background">
+      @if (brandingFeatureConfig.useMainMenuForSubmenu) {
+        <app-main-menu [modules]="mappingPages" [styleClasses]="brandingStyle.dashboard.subMenuContainer" [activeItem]="mappingPages[0].value"></app-main-menu>
+      } @else {
+        <app-sub-menu [modules]="mappingPages" [activeModule]="mappingPages[0].value"></app-sub-menu>
+      }
+      <div class="router-outlet-container">
         <router-outlet></router-outlet>
+      </div></div>
     </div>
-</div>
+  }

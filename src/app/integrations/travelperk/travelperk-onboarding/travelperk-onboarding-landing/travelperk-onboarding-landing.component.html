@@ -15,7 +15,7 @@
 
     <app-landing-page-body
         [headerText]="'travelperkOnboardingLanding.headerText' | transloco: { brandName: brandingConfig.brandName }" 
-        [svgPath]="'assets/flow-charts/travelperk-flow-chart.svg'" 
+        [svgPath]="'assets/flow-charts/' + brandingService.getAssetsBrandId() + '-travelperk-flow-chart.svg'" 
         [redirectLink]="brandingKbArticles.topLevelArticles.TRAVELPERK"
         [embedVideo]="''"
         [appName]="AppName.TRAVELPERK">

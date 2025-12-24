@@ -1,11 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { brandingConfig, brandingDemoVideoLinks, brandingKbArticles } from 'src/app/branding/branding-config';
+import { BrandingService } from 'src/app/core/services/common/branding.service';
 
 
 @Component({
-  selector: 'app-netsuite-onboarding-landing',
-  templateUrl: './netsuite-onboarding-landing.component.html',
-  styleUrls: ['./netsuite-onboarding-landing.component.scss']
+    selector: 'app-netsuite-onboarding-landing',
+    templateUrl: './netsuite-onboarding-landing.component.html',
+    styleUrls: ['./netsuite-onboarding-landing.component.scss'],
+    standalone: false
 })
 export class NetsuiteOnboardingLandingComponent implements OnInit {
 
@@ -15,7 +17,7 @@ export class NetsuiteOnboardingLandingComponent implements OnInit {
 
   embedVideoLink = brandingDemoVideoLinks.onboarding.NETSUITE;
 
-  constructor() { }
+  constructor(public brandingService: BrandingService) { }
 
   ngOnInit(): void {
   }

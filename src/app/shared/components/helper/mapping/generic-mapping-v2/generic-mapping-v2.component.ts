@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { forkJoin } from 'rxjs';
+import { forkJoin, Observable } from 'rxjs';
 import { brandingConfig, brandingStyle } from 'src/app/branding/branding-config';
 import { DestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
 import { ExtendedGenericMapping, GenericMappingResponse } from 'src/app/core/models/db/extended-generic-mapping.model';
@@ -14,9 +14,10 @@ import { debounceTime } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 
 @Component({
-  selector: 'app-generic-mapping-v2',
-  templateUrl: './generic-mapping-v2.component.html',
-  styleUrls: ['./generic-mapping-v2.component.scss']
+    selector: 'app-generic-mapping-v2',
+    templateUrl: './generic-mapping-v2.component.html',
+    styleUrls: ['./generic-mapping-v2.component.scss'],
+    standalone: false
 })
 export class GenericMappingV2Component implements OnInit {
 
@@ -47,6 +48,10 @@ export class GenericMappingV2Component implements OnInit {
   @Input() detailAccountType: string[] | undefined;
 
   @Input() destinationAttributes?: string | string[];
+
+  @Input() searchHandler?: (query?: string) => Observable<void>;
+
+  @Input() isEmployeeAndVendorAllowed: boolean = false;
 
   isInitialSetupComplete: boolean = false;
 
@@ -104,8 +109,13 @@ export class GenericMappingV2Component implements OnInit {
   }
 
   private getFilteredMappings() {
-    const shouldSendAppName = this.appName !== AppName.BUSINESS_CENTRAL ? [this.appName] : [];
-    this.mappingService.getGenericMappingsV2(this.limit, this.offset, this.destinationField, this.selectedMappingFilter, this.alphabetFilter, this.sourceField, this.isCategoryMappingGeneric, this.searchQuery, ...shouldSendAppName).subscribe((mappingResponse: GenericMappingResponse) => {
+    let appName: AppName[] = [];
+    let isEmployeeAndVendorAllowed: boolean[] = [];
+    if (this.appName !== AppName.BUSINESS_CENTRAL) {
+      appName = [this.appName];
+      isEmployeeAndVendorAllowed = [this.isEmployeeAndVendorAllowed];
+    }
+    this.mappingService.getGenericMappingsV2(this.limit, this.offset, this.destinationField, this.selectedMappingFilter, this.alphabetFilter, this.sourceField, this.isCategoryMappingGeneric, this.searchQuery, ...appName, ...isEmployeeAndVendorAllowed).subscribe((mappingResponse: GenericMappingResponse) => {
       this.filteredMappings = mappingResponse.results.concat();
       this.filteredMappingCount = this.filteredMappings.length;
       this.totalCount = mappingResponse.count;
@@ -159,10 +169,15 @@ export class GenericMappingV2Component implements OnInit {
     this.limit = paginator.limit;
     this.offset = paginator.offset;
     this.sourceType = decodeURIComponent(decodeURIComponent(this.route.snapshot.params.source_field)).toUpperCase();
-    const shouldSendAppName = this.appName !== AppName.BUSINESS_CENTRAL ? [this.appName] : [];
+    let appName: AppName[] = [];
+    let isEmployeeAndVendorAllowed: boolean[] = [];
+    if (this.appName !== AppName.BUSINESS_CENTRAL) {
+      appName = [this.appName];
+      isEmployeeAndVendorAllowed = [this.isEmployeeAndVendorAllowed];
+    }
     forkJoin([
-      this.mappingService.getGenericMappingsV2(this.limit, 0, this.destinationField, this.selectedMappingFilter, this.alphabetFilter, this.sourceField, this.isCategoryMappingGeneric, null, ...shouldSendAppName),
-      this.mappingService.getMappingStats(this.sourceField, this.destinationField, this.appName)
+      this.mappingService.getGenericMappingsV2(this.limit, 0, this.destinationField, this.selectedMappingFilter, this.alphabetFilter, this.sourceField, this.isCategoryMappingGeneric, null, ...appName, ...isEmployeeAndVendorAllowed),
+      this.mappingService.getMappingStats(this.sourceField, this.destinationField, this.appName, this.isEmployeeAndVendorAllowed)
     ]).subscribe(
       ([mappingResponse, mappingStat]) => {
         this.totalCount = mappingResponse.count;

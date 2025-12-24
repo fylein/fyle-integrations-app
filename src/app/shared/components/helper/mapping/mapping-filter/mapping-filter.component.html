@@ -1,30 +1,34 @@
-<div class="tw-flex tw-justify-start tw-items-end" [formGroup]="form">
-    <div class="tw-mr-16-px tw-flex tw-content-center">
-        <app-search [form]="form" [placeholder]="'mappingFilter.searchPlaceholder' | transloco" [width]="'150-px'" [height]="'40-px'"></app-search>
+<div class="tw-flex tw-justify-start tw-items-end tw-overflow-hidden tw-pl-6-px tw-pb-6-px" [formGroup]="form">
+  <div class="tw-mr-16-px tw-flex tw-content-center">
+    <app-search [form]="form" [placeholder]="'mappingFilter.searchPlaceholder' | transloco" [width]="'150-px'" [height]="'40-px'"></app-search>
+  </div>
+  <div>
+    <div class="tw-pl-16-px">
+      <p class="tw-text-12-px tw-text-form-label-text-color tw-font-nav-link-font-weight tw-pb-8-px">{{ 'mappingFilter.statusLabel' | transloco }}</p>
     </div>
-    <div>
-        <div class="tw-pl-16-px">
-            <p class="tw-text-12-px tw-text-form-label-text-color tw-font-nav-link-font-weight tw-pb-8-px">{{ 'mappingFilter.statusLabel' | transloco }}</p>
-        </div>
-        <div class="tw-border-l tw-border-l-qf-divider tw-pl-16-px">
-            <p-dropdown appendTo="body" [options]="mappingsFilter" class="mappingFilterDropdown"  formControlName="filterOption" optionLabel="label"
-                [placeholder]="'mapping.filterPlaceholder' | transloco" [ngClass]="{'selectedItem': form.controls.filterOption.value !== null, 'filterDropdown': form.controls.filterOption.value === '', 'mapping-filter-applied': form.get('filterOption')?.value}">
-                <ng-template let-item pTemplate="item">
-                    <div [ngClass]="getSelectedFilter(item.value)">{{ item.label }}</div>
-                </ng-template>
-                <ng-template class="tw-flex tw-justify-between tw-items-center" let-value pTemplate="selectedItem">
-                    <p [ngClass]="getSelectedFilter(form.controls.filterOption.value.value)">{{ form.controls.filterOption.value.label }}</p>
-                    <app-svg-icon [svgSource]="'cross-medium-large'" [c1SvgSource]="'grv-cross-filled-medium'" (click)="removeFilter()" [height]="'18px'" [width]="'18px'"></app-svg-icon>
-                </ng-template>
-            </p-dropdown>
-        </div>
+    <div class="tw-border-l tw-border-l-qf-divider tw-pl-16-px">
+      <p-select appendTo="body" [options]="mappingsFilter" class="mappingFilterDropdown"  formControlName="filterOption" optionLabel="label"
+        [placeholder]="'mapping.filterPlaceholder' | transloco" [ngClass]="{'selectedItem': form.controls.filterOption.value !== null, 'filterDropdown': form.controls.filterOption.value === '', 'mapping-filter-applied': form.get('filterOption')?.value}">
+        <ng-template let-item pTemplate="item">
+          <div [ngClass]="getSelectedFilter(item.value)">{{ item.label }}</div>
+        </ng-template>
+        <ng-template class="tw-flex tw-justify-between tw-items-center" let-value pTemplate="selectedItem">
+          <p [ngClass]="getSelectedFilter(form.controls.filterOption.value.value)">{{ form.controls.filterOption.value.label }}</p>
+          <app-svg-icon [svgSource]="'cross-medium-large'" [c1SvgSource]="'grv-cross-filled-medium'" (click)="removeFilter()" [height]="'18px'" [width]="'18px'"></app-svg-icon>
+        </ng-template>
+      </p-select>
     </div>
-    <div *ngIf="!isAlphabetFilterHidden" class="tw-pl-16-px tw-pb-12-px tw-text-14-px tw-items-center tw-justify-center">
-        <div class="tw-flex">
-            <p class="tw-pr-8-px tw-cursor-pointer" [ngClass]="selectedAlphabeticalFilter === 'All' ? 'tw-text-text-secondary': 'tw-text-text-muted'" (click)="filterOptionUpdateHandler('All')">
-                {{ 'mappingFilter.allFilter' | transloco }}
-            </p>
-            <p class="tw-pr-8-px tw-cursor-pointer" *ngFor="let option of filterOptions" [ngClass]="selectedAlphabeticalFilter === option ? 'tw-text-text-secondary': 'tw-text-text-muted'" (click)="filterOptionUpdateHandler(option)">{{option}}</p>
-        </div>
+  </div>
+  @if (!isAlphabetFilterHidden) {
+    <div class="tw-pl-16-px tw-py-6-px tw-text-14-px tw-items-center tw-justify-center">
+      <div class="tw-flex">
+        <p class="tw-px-6-px tw-cursor-pointer" [ngClass]="selectedAlphabeticalFilter === 'All' ? 'tw-text-text-secondary': 'tw-text-text-muted'" (click)="filterOptionUpdateHandler('All')">
+          {{ 'mappingFilter.allFilter' | transloco }}
+        </p>
+        @for (option of filterOptions; track option) {
+          <p class="tw-px-6-px tw-cursor-pointer" [ngClass]="selectedAlphabeticalFilter === option ? 'tw-text-text-secondary tw-border-b-2 tw-border-nav-link-active-border': 'tw-text-text-muted'" (click)="filterOptionUpdateHandler(option)">{{option}}</p>
+        }
+      </div>
     </div>
+  }
 </div>

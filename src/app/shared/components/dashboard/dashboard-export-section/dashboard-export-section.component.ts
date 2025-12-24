@@ -1,13 +1,14 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { brandingConfig, brandingFeatureConfig, brandingStyle } from 'src/app/branding/branding-config';
 import { AccountingExportSummary } from 'src/app/core/models/db/accounting-export-summary.model';
-import { AppName, CCCImportState, LoaderType, ReimbursableImportState } from 'src/app/core/models/enum/enum.model';
+import { AppName, ButtonSize, ButtonType, CCCImportState, LoaderType, ReimbursableImportState } from 'src/app/core/models/enum/enum.model';
 import { TranslocoService } from '@jsverse/transloco';
 
 @Component({
-  selector: 'app-dashboard-export-section',
-  templateUrl: './dashboard-export-section.component.html',
-  styleUrls: ['./dashboard-export-section.component.scss']
+    selector: 'app-dashboard-export-section',
+    templateUrl: './dashboard-export-section.component.html',
+    styleUrls: ['./dashboard-export-section.component.scss'],
+    standalone: false
 })
 export class DashboardExportSectionComponent implements OnInit {
 
@@ -27,6 +28,8 @@ export class DashboardExportSectionComponent implements OnInit {
 
   @Input() processedCount: number;
 
+  @Input() isExportButtonDisabled: boolean = false;
+
   @Input() loaderType: LoaderType = LoaderType.DETERMINATE;
 
   @Input() reimbursableImportState: ReimbursableImportState | null;
@@ -34,6 +37,12 @@ export class DashboardExportSectionComponent implements OnInit {
   @Input() cccImportState: CCCImportState | null;
 
   @Output() export = new EventEmitter<boolean>();
+
+  ButtonType = ButtonType;
+
+  ButtonSize = ButtonSize;
+
+  LoaderType = LoaderType;
 
   readonly brandingConfig = brandingConfig;
 
@@ -57,7 +66,8 @@ export class DashboardExportSectionComponent implements OnInit {
     [AppName.NETSUITE, 'assets/logos/netsuite-logo.png'],
     [AppName.QBO, 'assets/logos/email/qbo.png'],
     [AppName.INTACCT, 'assets/logos/intacct-logo.png'],
-    [AppName.XERO, 'assets/logos/xero-logo.png']
+    [AppName.XERO, 'assets/logos/xero-logo.png'],
+    [AppName.QBD_DIRECT, 'assets/logos/quickbooks-logo.png']
   ]);
 
   get logoPath(): string {

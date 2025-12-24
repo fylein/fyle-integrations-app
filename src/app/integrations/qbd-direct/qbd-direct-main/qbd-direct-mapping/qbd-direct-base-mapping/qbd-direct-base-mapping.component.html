@@ -1,13 +1,17 @@
-<app-generic-mapping-v2 *ngIf="!isLoading"
+@if (!isLoading) {
+  <app-generic-mapping-v2
     [isLoading]="isLoading"
-    [destinationOptions]="destinationOptions"
-    [employeeFieldMapping]="employeeFieldMapping"
+    [destinationOptions]="qbdDirectMappingService.getDestinationOptions()"
+    [employeeFieldMapping]="qbdDirectMappingService.getEmployeeFieldMapping()"
     [sourceField]="sourceField"
-    [destinationField]="destinationField"
+    [destinationField]="qbdDirectMappingService.getDestinationField()"
+    [destinationAttributes]="qbdDirectMappingService.getDestinationAttributes()"
+    [destinationFieldDisplayName]="qbdDirectMappingService.getDestinationFieldDisplayName()"
     [showAutoMapEmployee]="false"
     [appName]="AppName.QBD_DIRECT"
     [isCategoryMappingGeneric]="sourceField === FyleField.CATEGORY ? true : false"
-    [displayName]="displayName"
-    [detailAccountType] = "detailAccountType"
-    [isMultiLineOption]="sourceField === FyleField.CATEGORY && brandingConfig.brandId !== 'co' ? true : false">
-</app-generic-mapping-v2>
+    [isMultiLineOption]="sourceField === FyleField.CATEGORY && brandingConfig.brandId !== 'co' ? true : false"
+    [searchHandler]="handleSearch"
+    [isEmployeeAndVendorAllowed]="qbdDirectMappingService.isEmployeeAndVendorAllowed"
+  ></app-generic-mapping-v2>
+}

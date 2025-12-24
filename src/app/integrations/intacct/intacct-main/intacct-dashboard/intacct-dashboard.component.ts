@@ -7,21 +7,22 @@ import { Expense } from 'src/app/core/models/intacct/db/expense.model';
 import { LastExport } from 'src/app/core/models/intacct/db/last-export.model';
 import { IntacctTaskLog, IntacctTaskResponse } from 'src/app/core/models/intacct/db/task-log.model';
 import { UserService } from 'src/app/core/services/misc/user.service';
-import { ExportLogService } from 'src/app/core/services/si/export-log/export-log.service';
+import { ExportLogService } from 'src/app/core/services/si/si-core/si-export-log.service';
 import { AccountingExportSummary, AccountingExportSummaryModel } from 'src/app/core/models/db/accounting-export-summary.model';
 import { AccountingGroupedErrorStat, AccountingGroupedErrors, Error } from 'src/app/core/models/db/error.model';
 import { DashboardModel, DestinationFieldMap } from 'src/app/core/models/db/dashboard.model';
 import { DashboardService } from 'src/app/core/services/common/dashboard.service';
 import { AccountingExportService } from 'src/app/core/services/common/accounting-export.service';
 import { WorkspaceService } from 'src/app/core/services/common/workspace.service';
-import { SiExportSettingService } from 'src/app/core/services/si/si-configuration/si-export-setting.service';
+import { SiExportSettingsService } from 'src/app/core/services/si/si-configuration/si-export-settings.service';
 import { Router } from '@angular/router';
-import { SiAdvancedSettingService } from 'src/app/core/services/si/si-configuration/si-advanced-setting.service';
+import { SiAdvancedSettingsService } from 'src/app/core/services/si/si-configuration/si-advanced-settings.service';
 
 @Component({
-  selector: 'app-intacct-dashboard',
-  templateUrl: './intacct-dashboard.component.html',
-  styleUrls: ['./intacct-dashboard.component.scss']
+    selector: 'app-intacct-dashboard',
+    templateUrl: './intacct-dashboard.component.html',
+    styleUrls: ['./intacct-dashboard.component.scss'],
+    standalone: false
 })
 export class IntacctDashboardComponent implements OnInit, OnDestroy {
 
@@ -122,9 +123,9 @@ export class IntacctDashboardComponent implements OnInit, OnDestroy {
     private accountingExportService: AccountingExportService,
     private userService: UserService,
     private workspaceService: WorkspaceService,
-    private intacctExportSettingService: SiExportSettingService,
+    private intacctExportSettingService: SiExportSettingsService,
     private router: Router,
-    private intacctAdvancedSettingsService: SiAdvancedSettingService
+    private intacctAdvancedSettingsService: SiAdvancedSettingsService
   ) { }
 
   export() {

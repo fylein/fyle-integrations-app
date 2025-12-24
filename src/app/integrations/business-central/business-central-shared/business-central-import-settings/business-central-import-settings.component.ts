@@ -17,11 +17,13 @@ import { brandingConfig, brandingKbArticles, brandingStyle } from 'src/app/brand
 import { businessCentralFieldsResponse, fyleFieldsResponse, importSettingsResponse } from '../business-central.fixture';
 import { ExpenseField } from 'src/app/core/models/common/import-settings.model';
 import { TranslocoService } from '@jsverse/transloco';
+import { BrandingService } from 'src/app/core/services/common/branding.service';
 
 @Component({
-  selector: 'app-business-central-import-settings',
-  templateUrl: './business-central-import-settings.component.html',
-  styleUrls: ['./business-central-import-settings.component.scss']
+    selector: 'app-business-central-import-settings',
+    templateUrl: './business-central-import-settings.component.html',
+    styleUrls: ['./business-central-import-settings.component.scss'],
+    standalone: false
 })
 export class BusinessCentralImportSettingsComponent implements OnInit {
 
@@ -78,7 +80,8 @@ export class BusinessCentralImportSettingsComponent implements OnInit {
     private trackingService: TrackingService,
     private workspaceService: WorkspaceService,
     private translocoService: TranslocoService,
-    private businessCentralImportSettingsService: BusinessCentralImportSettingsService
+    private businessCentralImportSettingsService: BusinessCentralImportSettingsService,
+    public brandingService: BrandingService
   ) {
     this.chartOfAccountTypesList = this.businessCentralImportSettingsService.getChartOfAccountTypesList();
   }

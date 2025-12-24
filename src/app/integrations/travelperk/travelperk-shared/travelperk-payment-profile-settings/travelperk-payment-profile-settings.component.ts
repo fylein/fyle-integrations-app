@@ -8,16 +8,17 @@ import { HelperService } from 'src/app/core/services/common/helper.service';
 import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
 import { WorkspaceService } from 'src/app/core/services/common/workspace.service';
 import { TrackingService } from 'src/app/core/services/integration/tracking.service';
-import { TravelperkService } from 'src/app/core/services/travelperk/travelperk.service';
+import { TravelperkService } from 'src/app/core/services/travelperk/travelperk-core/travelperk.service';
 import { travelperkPaymentProfileMappingResponse } from '../travelperk.fixture';
 import { SelectFormLabel, SelectFormOption } from 'src/app/core/models/common/select-form-option.model';
 import { TranslocoService } from '@jsverse/transloco';
-import { TravelperkPaymentProfileSettingService } from 'src/app/core/services/travelperk/travelperk-payment-profile-settings.service';
+import { TravelperkPaymentProfileSettingsService } from 'src/app/core/services/travelperk/travelperk-configuration/travelperk-payment-profile-settings.service';
 
 @Component({
-  selector: 'app-travelperk-payment-profile-settings',
-  templateUrl: './travelperk-payment-profile-settings.component.html',
-  styleUrls: ['./travelperk-payment-profile-settings.component.scss']
+    selector: 'app-travelperk-payment-profile-settings',
+    templateUrl: './travelperk-payment-profile-settings.component.html',
+    styleUrls: ['./travelperk-payment-profile-settings.component.scss'],
+    standalone: false
 })
 export class TravelperkPaymentProfileSettingsComponent implements OnInit {
 
@@ -67,7 +68,7 @@ export class TravelperkPaymentProfileSettingsComponent implements OnInit {
     private trackingService: TrackingService,
     private workspaceService: WorkspaceService,
     private translocoService: TranslocoService,
-    private travelperkPaymentProfileSettingService: TravelperkPaymentProfileSettingService
+    private travelperkPaymentProfileSettingService: TravelperkPaymentProfileSettingsService
   ) {
     this.userRole = this.travelperkPaymentProfileSettingService.getUserRoleOptions();
   }
