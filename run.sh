@@ -3,8 +3,10 @@ then
   SED_EXTRA_ARGS='""';
 fi
 
-for f in /usr/share/nginx/html/*
+for f in /usr/share/nginx/html/*.html /usr/share/nginx/html/*.js
 do
+    # Skip if file doesn't exist
+    [ -e "$f" ] || continue
     # Skip directories, only process regular files
     [ -f "$f" ] || continue
     echo "Substituting Environment variables and other stuff in $f ...";
