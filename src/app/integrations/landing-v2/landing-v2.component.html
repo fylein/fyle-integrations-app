@@ -130,7 +130,7 @@
           <div class="landing-v2--accounting-app"
             (click)="openAccountingIntegrationApp(AccountingIntegrationApp.NETSUITE)">
             <div class="tw-flex tw-justify-between tw-items-center">
-              <img src="assets/logos/netsuite-logo-new.png" />
+              <img src="assets/logos/netsuite-logo-new.png" class="netsuite-logo"/>
               @if (isAppConnected('NETSUITE')) {
                 <app-badge [text]="'landingV2.statusConnected' | transloco" [theme]="ThemeOption.SUCCESS"></app-badge>
               } @else {
