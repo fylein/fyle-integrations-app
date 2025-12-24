@@ -24,6 +24,31 @@ COPY . /app
 # generate build
 RUN npm run build
 
+RUN cd /app/dist/fyle-integrations-app && \
+    echo "Looking for runtime file..." && \
+    RUNTIME_FILE=$(ls runtime.*.js 2>/dev/null | grep -v "\.map$" | head -n 1) && \
+    if [ -z "$RUNTIME_FILE" ]; then \
+        echo "ERROR: No runtime.*.js file found!"; \
+        exit 1; \
+    fi && \
+    echo "Found: $RUNTIME_FILE" && \
+    NEW_RUNTIME_FILE="${RUNTIME_FILE%.js}fixed.js" && \
+    echo "Renaming to: $NEW_RUNTIME_FILE" && \
+    mv "$RUNTIME_FILE" "$NEW_RUNTIME_FILE" && \
+    if [ ! -f "$NEW_RUNTIME_FILE" ]; then \
+        echo "ERROR: Rename failed!"; \
+        exit 1; \
+    fi && \
+    echo "Updating index.html..." && \
+    sed -i "s|$RUNTIME_FILE|$NEW_RUNTIME_FILE|g" index.html && \
+    if ! grep -q "$NEW_RUNTIME_FILE" index.html; then \
+        echo "ERROR: index.html update failed!"; \
+        exit 1; \
+    fi && \
+    echo "✅ Successfully renamed $RUNTIME_FILE to $NEW_RUNTIME_FILE" && \
+    echo "✅ index.html updated" && \
+    ls -lh runtime.*.js
+
 ############
 ### prod ###
 ############
