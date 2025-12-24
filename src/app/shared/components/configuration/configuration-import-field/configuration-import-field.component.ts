@@ -242,7 +242,7 @@ export class ConfigurationImportFieldComponent implements OnInit {
         this.showWarningForDependentFields.emit();
       }
     }
-    this.importCodeEnabled.emit([event.checked, this.getDestinationField(formGroup.get('destination_field')?.value), index]);
+    this.importCodeEnabled.emit([event.checked, this.getDestinationField(formGroup.get('destination_field')?.value.toLowerCase()), index]);
   }
 
   isExpenseFieldDependent(expenseField: MappingSetting): boolean {
