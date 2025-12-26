@@ -39,7 +39,7 @@ export const connectAwsS3MockData = {
 };
 
 export const travelperkErrorMockData = {
-    message: "Travelperk Not Found"
+    message: "Perk Not Found"
 };
 
 export const travelperkConfigurationMockData: TravelperkConfiguration = {

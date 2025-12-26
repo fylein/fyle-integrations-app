@@ -435,19 +435,19 @@
     "advancedSettings": "Advanced settings"
   },
   "travelperkMain": {
-    "toolTipText": "The integration will automatically create expenses for any new invoice created in TravelPerk",
+    "toolTipText": "The integration will automatically create expenses for any new invoice created in Perk",
     "configurationLabel": "Configuration",
-    "disconnectSuccess": "Disconnected Travelperk successfully",
-    "syncDataDimensions": "Syncing data dimensions from TravelPerk"
+    "disconnectSuccess": "Disconnected Perk successfully",
+    "syncDataDimensions": "Syncing data dimensions from Perk"
   },
   "travelperkOnboardingDone": {
     "headerText": "Congratulations! <p class=\"tw-pt-10-px\">Your configuration setup is now complete. </p>"
   },
   "travelperkOnboardingLanding": {
-    "disconnectSuccess": "Disconnected TravelPerk successfully",
-    "connectSuccess": "Connected Travelperk successfully",
-    "appDescription": "Effortlessly automate accurate expense creation for your TravelPerk invoices as credit card expenses in {{brandName}}.",
-    "headerText": "Learn how to seamlessly connect your TravelPerk account with {{brandName}} and optimize your workflow for an efficient integration."
+    "disconnectSuccess": "Disconnected Perk successfully",
+    "connectSuccess": "Connected Perk successfully",
+    "appDescription": "Effortlessly automate accurate expense creation for your Perk invoices as credit card expenses in {{brandName}}.",
+    "headerText": "Learn how to seamlessly connect your Perk account with {{brandName}} and optimize your workflow for an efficient integration."
   },
   "qboOnboardingLanding": {
     "appName": "QuickBooks Online",
@@ -476,21 +476,21 @@
     "bambooHrAppName": "BambooHR",
     "travelSectionTitle": "Travel",
     "travelSectionCaption": "If your company uses any of the Travel Management Systems below, you can easily integrate your {{brandName}} account with it.",
-    "travelperkAppName": "TravelPerk",
+    "travelperkAppName": "Perk",
     "lookingForSomethingElseTitle": "Looking for something else?",
     "lookingForSomethingElseCaption": "We are looking forward to building integrations with a few other applications in the market, as listed below. If you have a use case to integrate with these, we would love to hear them at <span class=\"link\">{{supportEmail}}</span>"
   },
   "travelperkAdvancedSettings": {
     "headerText": "Advanced settings",
-    "contentText": "In this section, you can customize the data you want to include in your {{brandName}} expenses created from your TravelPerk invoices. ",
+    "contentText": "In this section, you can customize the data you want to include in your {{brandName}} expenses created from your Perk invoices. ",
     "categoryMappingLabel": "Category mapping",
-    "categoryMappingSubLabel": "Expense entries from TravelPerk invoices in {{brandName}} are categorized according to the booking type. Map the listed booking types to your desired categories in {{brandName}} for accurate expense coding.",
+    "categoryMappingSubLabel": "Expense entries from Perk invoices in {{brandName}} are categorized according to the booking type. Map the listed booking types to your desired categories in {{brandName}} for accurate expense coding.",
     "sourceFieldText": "Category in {{brandName}}",
-    "destinationFieldText": "Booking type in TravelPerk",
+    "destinationFieldText": "Booking type in Perk",
     "sourceFieldPlaceholderText": "Select a category",
     "destinationCategoryPlaceholder": "Select a category",
     "defaultValuesLabel": "Default values",
-    "defaultValuesSubLabel": "Default values below will act as substitutes for missing TravelPerk data points. For instance, if a user or category is inactive, the values below will be used instead of the unavailable user/category.",
+    "defaultValuesSubLabel": "Default values below will act as substitutes for missing Perk data points. For instance, if a user or category is inactive, the values below will be used instead of the unavailable user/category.",
     "defaultEmployeeLabel": "Default employee",
     "defaultEmployeeSubLabel": "Depending on your payment profile settings, the integration will create expenses on behalf of the respective employee. If the employee is not found in {{brandName}}, the expenses will be created on behalf of the admin who set up the integration.",
     "defaultCategoryLabel": "Default category",
@@ -513,9 +513,9 @@
   },
   "travelperkPaymentProfileSettings": {
     "headerText": "Payment profile settings",
-    "contentText": "Each invoice in TravelPerk is linked to multiple user roles such as booker, traveler and card holder. You can create expenses for all your TravelPerk invoices in {{brandName}} based on the user role you configure for each payment profile. ",
+    "contentText": "Each invoice in Perk is linked to multiple user roles such as booker, traveler and card holder. You can create expenses for all your Perk invoices in {{brandName}} based on the user role you configure for each payment profile. ",
     "assignUserRoleLabel": "Assign user role for required payment profiles",
-    "assignUserRoleSubLabel": "Assign user role for TravelPerk payment profiles requiring automated expense creation in {{brandName}}. Expenses will be created on behalf of the user roles configured below.",
+    "assignUserRoleSubLabel": "Assign user role for Perk payment profiles requiring automated expense creation in {{brandName}}. Expenses will be created on behalf of the user roles configured below.",
     "infoText": "For payment profiles with cards added in {{brandName}}, select the 'card holder' user role for accurate reconciliation.",
     "userRoleSourceField": "User Role",
     "paymentProfileDestinationField": "Payment profile",
@@ -1971,7 +1971,7 @@
     "xero": "Xero",
     "bambooHR": "BambooHR",
     "categoryHRMS": "HRMS",
-    "travelperk": "TravelPerk",
+    "travelperk": "Perk",
     "categoryTravel": "Travel",
     "sage50": "Sage 50 (US)",
     "beta": "Beta"
@@ -2100,7 +2100,7 @@
   },
   "services": {
     "travelperkOnboarding": {
-      "connectToTravelperk": "Connect to TravelPerk",
+      "connectToTravelperk": "Connect to Perk",
       "paymentProfileSettings": "Payment profile settings",
       "advancedSettings": "Advanced settings"
     },
