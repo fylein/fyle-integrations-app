@@ -46,7 +46,7 @@
                       [showExportPreview]="true"
                       [exportTypeIconPathArray]="previewImagePaths">
                     </app-configuration-select-field>
-                    @if (exportSettingForm.get('reimbursableExportType')?.value && helperService.isFieldRequired(exportSettingForm, 'bankAccount')) {
+                    @if (showField('bankAccount')) {
                       <div>
                         <app-configuration-select-field
                           [form]="exportSettingForm"
@@ -57,8 +57,8 @@
                           [iconPath]="'list'"
                           [isFieldMandatory]="true"
                           [mandatoryErrorListName]="'netsuiteExportSettings.employeePayablesAccount' | transloco"
-                          [label]="'netsuite.configuration.exportSetting.corporateCard.defaultDebitCardAccountLabel' | transloco"
-                          [subLabel]="'netsuiteExportSettings.employeePayablesAccountDescription' | transloco"
+                          [label]="getFieldLabel('bankAccount')"
+                          [subLabel]="getFieldSublabel('bankAccount')"
                           [placeholder]="'netsuiteExportSettings.selectEmployeePayablesAccount' | transloco"
                           [formControllerName]="'bankAccount'"
                           [isAdvanceSearchEnabled]="true"
@@ -66,7 +66,7 @@
                         </app-configuration-select-field>
                       </div>
                     }
-                    @if (exportSettingForm.get('reimbursableExportType')?.value && helperService.isFieldRequired(exportSettingForm, 'accountsPayable')) {
+                    @if (showField('accountsPayable')) {
                       <div>
                         <app-configuration-select-field
                           [form]="exportSettingForm"
@@ -76,10 +76,10 @@
                           [optionLabel]="'name'"
                           [iconPath]="'list'"
                           [isFieldMandatory]="true"
-                          [mandatoryErrorListName]="'netsuiteExportSettings.vendorPayablesAccount' | transloco"
-                          [label]="'netsuite.configuration.exportSetting.corporateCard.accountsPayableLabel' | transloco"
-                          [subLabel]="'netsuiteExportSettings.vendorPayablesAccountDescription' | transloco"
-                          [placeholder]="'netsuiteExportSettings.selectVendorPayableAccount' | transloco"
+                          [mandatoryErrorListName]="'netsuiteExportSettings.accountsPayableAccount' | transloco"
+                          [label]="getFieldLabel('accountsPayable')"
+                          [subLabel]="getFieldSublabel('accountsPayable')"
+                          [placeholder]="'netsuiteExportSettings.selectAccountsPayableAccount' | transloco"
                           [formControllerName]="'accountsPayable'"
                           [isAdvanceSearchEnabled]="true"
                           (searchOptionsDropdown)="searchOptionsDropdown($event)">
@@ -203,7 +203,7 @@
                     </app-configuration-select-field>
                   </div>
                 }
-                @if ((!exportSettingForm.get('reimbursableExportType')?.value || !brandingFeatureConfig.featureFlags.exportSettings.isReimbursableExpensesAllowed) && helperService.isFieldRequired(exportSettingForm, 'accountsPayable')) {
+                @if (showField('CCCAccountsPayable')) {
                   <div>
                     <app-configuration-select-field
                       [form]="exportSettingForm"
@@ -214,16 +214,17 @@
                       [iconPath]="'list'"
                       [isFieldMandatory]="true"
                       [mandatoryErrorListName]="'netsuiteExportSettings.vendorPayablesAccount' | transloco"
-                      [label]="'netsuite.configuration.exportSetting.corporateCard.accountsPayableLabel' | transloco"
-                      [subLabel]="'netsuiteExportSettings.postCCCExpensesToVendorPayable' | transloco"
+                      [label]="getFieldLabel('CCCAccountsPayable')"
+                      [subLabel]="getFieldSublabel('CCCAccountsPayable')"
                       [placeholder]="helperService.sentenseCaseConversion('Select vendor payable account')"
-                      [formControllerName]="'accountsPayable'"
+                      [formControllerName]="'CCCAccountsPayable'"
                       [isAdvanceSearchEnabled]="true"
+                      [isDisabled]="isFieldDisabled('CCCAccountsPayable')"
                       (searchOptionsDropdown)="searchOptionsDropdown($event)">
                     </app-configuration-select-field>
                   </div>
                 }
-                @if ((!exportSettingForm.get('reimbursableExportType')?.value || !brandingFeatureConfig.featureFlags.exportSettings.isReimbursableExpensesAllowed) && helperService.isFieldRequired(exportSettingForm, 'bankAccount')) {
+                @if (showField('CCCBankAccount')) {
                   <div>
                     <app-configuration-select-field
                       [form]="exportSettingForm"
@@ -234,16 +235,17 @@
                       [iconPath]="'list'"
                       [isFieldMandatory]="true"
                       [mandatoryErrorListName]="'netsuiteExportSettings.employeePayablesAccount' | transloco"
-                      [label]="'netsuite.configuration.exportSetting.corporateCard.defaultDebitCardAccountLabel' | transloco"
-                      [subLabel]="'netsuiteExportSettings.postCCCExpensesToEmployeePayable' | transloco"
+                      [label]="getFieldLabel('CCCBankAccount')"
+                      [subLabel]="getFieldSublabel('CCCBankAccount')"
                       [placeholder]="helperService.sentenseCaseConversion('Select a employee payables account')"
-                      [formControllerName]="'bankAccount'"
+                      [formControllerName]="'CCCBankAccount'"
                       [isAdvanceSearchEnabled]="true"
+                      [isDisabled]="isFieldDisabled('CCCBankAccount')"
                       (searchOptionsDropdown)="searchOptionsDropdown($event)">
                     </app-configuration-select-field>
                   </div>
                 }
-                @if (exportSettingForm.get('creditCardExportType')?.value && helperService.isFieldRequired(exportSettingForm, 'creditCardAccount')) {
+                @if (showField('creditCardAccount')) {
                   <div>
                     <app-configuration-select-field
                       [form]="exportSettingForm"
@@ -263,7 +265,7 @@
                     </app-configuration-select-field>
                   </div>
                 }
-                @if (exportSettingForm.get('creditCardExportType')?.value && helperService.isFieldRequired(exportSettingForm, 'defaultCreditCardVendor')) {
+                @if (showField('defaultCreditCardVendor')) {
                   <div>
                     <app-configuration-select-field
                       [form]="exportSettingForm"

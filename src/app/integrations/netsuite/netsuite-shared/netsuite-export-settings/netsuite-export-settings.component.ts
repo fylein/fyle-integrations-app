@@ -22,6 +22,43 @@ import { TranslocoService } from '@jsverse/transloco';
 import { ExportSettingsService } from 'src/app/core/services/common/export-settings.service';
 import { BrandingService } from 'src/app/core/services/common/branding.service';
 
+export const FIELD_DEPENDENCIES = {
+  bankAccount: (form: FormGroup) => (
+    form.get('reimbursableExportType')?.value === NetsuiteReimbursableExpensesObject.EXPENSE_REPORT || (
+      form.get('reimbursableExportType')?.value === NetsuiteReimbursableExpensesObject.JOURNAL_ENTRY &&
+      form.get('employeeFieldMapping')?.value === EmployeeFieldMapping.EMPLOYEE
+    )
+  ),
+  accountsPayable: (form: FormGroup) => (
+    form.get('reimbursableExportType')?.value === NetsuiteReimbursableExpensesObject.BILL || (
+      form.get('reimbursableExportType')?.value === NetsuiteReimbursableExpensesObject.JOURNAL_ENTRY &&
+      form.get('employeeFieldMapping')?.value === EmployeeFieldMapping.VENDOR
+    )
+  ),
+  CCCBankAccount: (form: FormGroup) => (
+    form.get('creditCardExportType')?.value === NetSuiteCorporateCreditCardExpensesObject.EXPENSE_REPORT
+  ),
+  CCCAccountsPayable: (form: FormGroup) => (
+    form.get('creditCardExportType')?.value === NetSuiteCorporateCreditCardExpensesObject.BILL
+  ),
+  creditCardAccount: (form: FormGroup) => (
+    form.get('creditCardExportType')?.value === NetSuiteCorporateCreditCardExpensesObject.JOURNAL_ENTRY ||
+    form.get('creditCardExportType')?.value === NetSuiteCorporateCreditCardExpensesObject.CREDIT_CARD_CHARGE
+  ),
+  defaultCreditCardVendor: (form: FormGroup) => (
+    form.get('creditCardExportType')?.value === NetSuiteCorporateCreditCardExpensesObject.BILL ||
+    form.get('creditCardExportType')?.value === NetSuiteCorporateCreditCardExpensesObject.CREDIT_CARD_CHARGE || (
+      form.get('creditCardExportType')?.value === NetSuiteCorporateCreditCardExpensesObject.JOURNAL_ENTRY &&
+      form.get('nameInJournalEntry')?.value === NameInJournalEntry.MERCHANT
+    )
+  )
+};
+
+const SOURCE_FIELDS: Record<string, keyof typeof FIELD_DEPENDENCIES> = {
+  CCCBankAccount: 'bankAccount',
+  CCCAccountsPayable: 'accountsPayable'
+};
+
 @Component({
     selector: 'app-netsuite-export-settings',
     templateUrl: './netsuite-export-settings.component.html',
@@ -117,6 +154,94 @@ export class NetsuiteExportSettingsComponent implements OnInit {
   NetsuiteExportSettingDestinationOptionKey = NetsuiteExportSettingDestinationOptionKey;
 
   readonly brandingStyle = brandingStyle;
+
+  get currentReimbursableExportType(): NetsuiteReimbursableExpensesObject {
+    return this.exportSettingForm.get('reimbursableExportType')?.value;
+  }
+
+  get currentCCCExportType(): NetSuiteCorporateCreditCardExpensesObject {
+    return this.exportSettingForm.get('creditCardExportType')?.value;
+  }
+
+  showField(field: keyof typeof FIELD_DEPENDENCIES): boolean {
+    const condition = FIELD_DEPENDENCIES[field];
+    return condition ? condition(this.exportSettingForm) : true;
+  }
+
+  isFieldDisabled(field: keyof typeof FIELD_DEPENDENCIES): boolean {
+    // If a field is shown in reimbursable, disable the corresponding field in CCC
+    if (field in SOURCE_FIELDS) {
+      return this.showField(SOURCE_FIELDS[field]);
+    }
+    return false;
+  }
+
+  /** Get the field label based on the current reimbursable export type */
+  getFieldLabel(field: string): string {
+    if (field === 'bankAccount') {
+      return this.currentReimbursableExportType === NetsuiteReimbursableExpensesObject.EXPENSE_REPORT ? (
+        this.translocoService.translate('netsuiteExportSettings.employeePayablesAccountLabel')
+      ) : ( // If journal entry
+        this.translocoService.translate('netsuiteExportSettings.defaultCreditLineAccountLabel')
+      );
+    }
+
+    if (field === 'CCCBankAccount') {
+      return this.translocoService.translate('netsuiteExportSettings.cccAccountsPayableLabel');
+    }
+
+    if (field === 'accountsPayable') {
+      return this.currentReimbursableExportType === NetsuiteReimbursableExpensesObject.BILL ? (
+        this.translocoService.translate('netsuiteExportSettings.accountsPayableLabel')
+      ) : ( // If journal entry
+        this.translocoService.translate('netsuiteExportSettings.defaultCreditLineAccountLabel')
+      );
+    }
+
+    if (field === 'CCCAccountsPayable') {
+      return this.translocoService.translate('netsuiteExportSettings.accountsPayableLabel');
+    }
+
+    return '';
+  }
+
+  getFieldSublabel(field: string): string {
+    if (field === 'bankAccount') {
+      return this.currentReimbursableExportType === NetsuiteReimbursableExpensesObject.EXPENSE_REPORT ? (
+        this.translocoService.translate('netsuiteExportSettings.employeePayablesAccountDescription')
+      ) : (
+        this.translocoService.translate('netsuiteExportSettings.defaultCreditLineAccountDescription')
+      );
+    }
+
+    if (field === 'CCCBankAccount') {
+      return this.isFieldDisabled('CCCBankAccount') ? (
+        this.translocoService.translate('netsuiteExportSettings.cccAccountsPayableAccountDescriptionNonEditable')
+      ) : (
+        this.translocoService.translate('netsuiteExportSettings.cccAccountsPayableAccountDescription')
+      );
+    }
+
+    if (field === 'accountsPayable') {
+      return this.currentReimbursableExportType === NetsuiteReimbursableExpensesObject.BILL ? (
+        this.translocoService.translate('netsuiteExportSettings.accountsPayableAccountDescription')
+      ) : (
+        this.translocoService.translate('netsuiteExportSettings.defaultCreditLineAccountDescription')
+      );
+    }
+
+    if (field === 'CCCAccountsPayable') {
+      return this.isFieldDisabled('CCCAccountsPayable') ? (
+        // Non-editable
+        this.translocoService.translate('netsuiteExportSettings.cccAccountsPayableAccountDescriptionNonEditable')
+      ) : (
+        // Editable
+        this.translocoService.translate('netsuiteExportSettings.accountsPayableAccountDescription')
+      );
+    }
+
+    return '';
+  }
 
   constructor(
     private exportSettingService: NetsuiteExportSettingsService,
@@ -385,6 +510,26 @@ export class NetsuiteExportSettingsComponent implements OnInit {
     });
   }
 
+  private setupFieldSyncWatchers(): void {
+    // Sync both bank account fields
+    this.exportSettingForm.controls.CCCBankAccount.valueChanges.subscribe((value) => {
+      this.exportSettingForm.controls.bankAccount.setValue(value, { emitEvent: false });
+    });
+
+    this.exportSettingForm.controls.bankAccount.valueChanges.subscribe((value) => {
+      this.exportSettingForm.controls.CCCBankAccount.setValue(value, { emitEvent: false });
+    });
+
+    // Sync both accounts payable fields
+    this.exportSettingForm.controls.accountsPayable.valueChanges.subscribe((value) => {
+      this.exportSettingForm.controls.CCCAccountsPayable.setValue(value, { emitEvent: false });
+    });
+
+    this.exportSettingForm.controls.CCCAccountsPayable.valueChanges.subscribe((value) => {
+      this.exportSettingForm.controls.accountsPayable.setValue(value, { emitEvent: false });
+    });
+  }
+
 
   private optionSearchWatcher(): void {
     this.optionSearchUpdate.pipe(
@@ -514,6 +659,7 @@ export class NetsuiteExportSettingsComponent implements OnInit {
       this.optionSearchWatcher();
       this.setupCustomWatchers();
       this.setupCustomDateOptionWatchers();
+      this.setupFieldSyncWatchers();
       this.isLoading = false;
     });
   }

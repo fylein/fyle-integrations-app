@@ -144,10 +144,10 @@
           "creditCardExpenseStateSubLabel": "You can choose to only export expenses when they've been labeled approved or closed.",
           "defaultCCCAccountLabel": "Set default credit card account as",
           "defaultCCCAccountPlaceholder": "Select default credit card account",
-          "defaultDebitCardAccountLabel": "Set employee payables account as",
+          "defaultDebitCardAccountLabel": "Default payment/employee payable account",
           "defaultDebitCardAccountPlaceholder": "Select default debit card account",
           "defaultCCCVendorLabel": "Set default corporate card vendor as",
-          "accountsPayableLabel": "Set vendor payables account as",
+          "accountsPayableLabel": "Default accounts payable account",
           "journalOptionLabel": "Name in journal entry",
           "journalOptionSubLabel": "You can select either the 'merchant name' or the 'employee name' to appear in the 'name' field of your journal entries."
         }
