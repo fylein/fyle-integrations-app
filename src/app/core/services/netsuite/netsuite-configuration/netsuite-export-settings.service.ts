@@ -270,8 +270,10 @@ export class NetsuiteExportSettingsService extends ExportSettingsService {
         creditCardExportGroup: new FormControl(this.getExportGroup(exportSettings?.expense_group_settings?.corporate_credit_card_expense_group_fields)),
         creditCardExportDate: new FormControl(exportSettings?.expense_group_settings?.ccc_export_date_type),
         bankAccount: new FormControl(exportSettings?.general_mappings?.reimbursable_account?.id ? exportSettings.general_mappings.reimbursable_account : null),
+        CCCBankAccount: new FormControl(exportSettings?.general_mappings?.reimbursable_account?.id ? exportSettings.general_mappings.reimbursable_account : null),
         creditCardAccount: new FormControl(exportSettings?.general_mappings?.default_ccc_account?.id ? exportSettings.general_mappings.default_ccc_account : null),
         accountsPayable: new FormControl(exportSettings?.general_mappings?.accounts_payable?.id ? exportSettings.general_mappings.accounts_payable : null),
+        CCCAccountsPayable: new FormControl(exportSettings?.general_mappings?.accounts_payable?.id ? exportSettings.general_mappings.accounts_payable : null),
         defaultCreditCardVendor: new FormControl(exportSettings?.general_mappings?.default_ccc_vendor?.id ? exportSettings.general_mappings.default_ccc_vendor : null),
         nameInJournalEntry: new FormControl(exportSettings?.configuration?.name_in_journal_entry ? exportSettings?.configuration.name_in_journal_entry : this.getNameInJournalOptions()[0].value),
         searchOption: new FormControl(''),
@@ -319,9 +321,9 @@ export class NetsuiteExportSettingsService extends ExportSettingsService {
           name_in_journal_entry: nameInJournalEntry
         },
         general_mappings: {
-          reimbursable_account: exportSettingsForm.get('bankAccount')?.value ? exportSettingsForm.get('bankAccount')?.value : emptyDestinationAttribute,
+          reimbursable_account: exportSettingsForm.get('CCCBankAccount')?.value ?? exportSettingsForm.get('bankAccount')?.value ?? emptyDestinationAttribute,
           default_ccc_account: exportSettingsForm.get('creditCardAccount')?.value ? exportSettingsForm.get('creditCardAccount')?.value : emptyDestinationAttribute,
-          accounts_payable: exportSettingsForm.get('accountsPayable')?.value ? exportSettingsForm.get('accountsPayable')?.value : emptyDestinationAttribute,
+          accounts_payable: exportSettingsForm.get('CCCAccountsPayable')?.value ?? exportSettingsForm.get('accountsPayable')?.value ?? emptyDestinationAttribute,
           default_ccc_vendor: exportSettingsForm.get('defaultCreditCardVendor')?.value ? exportSettingsForm.get('defaultCreditCardVendor')?.value : emptyDestinationAttribute
         }
       };
