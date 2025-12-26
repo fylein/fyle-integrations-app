@@ -3,12 +3,8 @@ then
   SED_EXTRA_ARGS='""';
 fi
 
-for f in /usr/share/nginx/html/*.html /usr/share/nginx/html/*.js
+for f in /usr/share/nginx/html/*
 do
-    # Skip if file doesn't exist
-    [ -e "$f" ] || continue
-    # Skip directories, only process regular files
-    [ -f "$f" ] || continue
     echo "Substituting Environment variables and other stuff in $f ...";
     sed -i $SED_EXTRA_ARGS "s?{{CLUSTER_DOMAIN_API_URL}}?${CLUSTER_DOMAIN_API_URL}?g" $f;
     sed -i $SED_EXTRA_ARGS "s?{{QBD_API_URL}}?${QBD_API_URL}?g" $f;
