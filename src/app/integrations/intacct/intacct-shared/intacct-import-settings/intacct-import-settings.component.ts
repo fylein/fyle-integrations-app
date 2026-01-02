@@ -306,7 +306,6 @@ export class IntacctImportSettingsComponent implements OnInit {
         this.customFieldForm.reset();
         this.showDialog = false;
       }
-      this.customFieldControl.disable();
       this.customFieldForDependentField = false;
     } else {
       this.addImportCodeField({checked: true}, this.customFieldControl.get('destination_field')?.value);
@@ -344,7 +343,7 @@ export class IntacctImportSettingsComponent implements OnInit {
   private costCodesCostTypesWatcher(): void {
     if (this.importSettingsForm.get('costCodes')?.value) {
       this.costCodeFieldOption = [this.importSettingsForm.get('costCodes')?.value];
-      this.importSettingsForm.controls.costCodes.disable();
+      this.dependentFieldSettings?.cost_code_field_name !== null ? this.importSettingsForm.controls.costCodes.disable() : this.importSettingsForm.controls.costCodes.enable();
       this.importSettingsForm.get('costCodesImportToggle')?.disable();
     } else {
       // Cost types cannot be edited without first mapping cost codes
@@ -355,7 +354,7 @@ export class IntacctImportSettingsComponent implements OnInit {
 
     if (this.importSettingsForm.get('costTypes')?.value) {
       this.costTypeFieldOption = [this.importSettingsForm.get('costTypes')?.value];
-      this.importSettingsForm.controls.costTypes.disable();
+      this.dependentFieldSettings?.cost_type_field_name !== null ? this.importSettingsForm.controls.costTypes.disable() : this.importSettingsForm.controls.costTypes.enable();
     }
 
     this.importSettingsForm.controls.isDependentImportEnabled.valueChanges.subscribe((isDependentImportEnabled) => {
