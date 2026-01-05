@@ -361,7 +361,11 @@ export class SkipExportComponent implements OnInit {
     }
 
     if (valueField.condition1.field_name === 'spent_at') {
-      valueField.value1 = new Date(valueField.value1).toISOString().split('T')[0] + 'T17:00:00.000Z';
+      const date = new Date(valueField.value1);
+      const year = date.getFullYear();
+      const month = String(date.getMonth() + 1).padStart(2, '0');
+      const day = String(date.getDate()).padStart(2, '0');
+      valueField.value1 = `${year}-${month}-${day}T17:00:00.000Z`;
     }
 
     if (typeof valueField.value1 === 'string') {
@@ -373,7 +377,11 @@ export class SkipExportComponent implements OnInit {
       .subscribe((skipExport1: SkipExport) => {
         if (valueField.condition2 && valueField.operator2) {
           if (valueField.condition2.field_name === 'spent_at') {
-            valueField.value2 = new Date(valueField.value2).toISOString().split('T')[0] + 'T17:00:00.000Z';
+            const date = new Date(valueField.value2);
+            const year = date.getFullYear();
+            const month = String(date.getMonth() + 1).padStart(2, '0');
+            const day = String(date.getDate()).padStart(2, '0');
+            valueField.value2 = `${year}-${month}-${day}T17:00:00.000Z`;
           }
 
           if (valueField.condition2.is_custom === true) {
