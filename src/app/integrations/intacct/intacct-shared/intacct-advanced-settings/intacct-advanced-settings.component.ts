@@ -1,7 +1,7 @@
 import { Component, Inject, OnInit, ViewChild } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { forkJoin } from 'rxjs';
+import { debounceTime, forkJoin, Subject } from 'rxjs';
 import { QBDEmailOptions } from 'src/app/core/models/qbd/qbd-configuration/qbd-advanced-setting.model';
 import { AppName, ConfigurationCta, FyleField, IntacctOnboardingState, IntacctReimbursableExpensesObject, IntacctCorporateCreditCardExpensesObject, IntacctUpdateEvent, Page, PaymentSyncDirection, ProgressPhase, ToastSeverity, TrackingApp, ExpenseGroupingFieldOption } from 'src/app/core/models/enum/enum.model';
 import { AdvancedSetting, AdvancedSettingFormOption, AdvancedSettingsGet, AdvancedSettingsPost, HourOption } from 'src/app/core/models/intacct/intacct-configuration/advanced-settings.model';
@@ -104,6 +104,8 @@ export class IntacctAdvancedSettingsComponent implements OnInit {
 
   dfvReadMoreLink: string = brandingKbArticles.onboardingArticles.INTACCT.DFV_READ_MORE;
 
+  isOptionSearchInProgress: boolean;
+
   readonly brandingConfig = brandingConfig;
 
   readonly brandingFeatureConfig = brandingFeatureConfig;
@@ -127,6 +129,77 @@ export class IntacctAdvancedSettingsComponent implements OnInit {
     private exportSettingsService: ExportSettingsService,
     private advanceSettingsService: AdvancedSettingsService
   ) { }
+
+  searchOptions(event: any, destinationAttributes: IntacctDestinationAttribute[], destinationAttributeKey: string) {
+    const searchTerm = (event.filter as string).trim();
+    if (!searchTerm) {
+      return;
+    }
+
+    this.optionSearchHandler(searchTerm, destinationAttributes, destinationAttributeKey);
+  }
+
+  clearSearch(): void {
+    this.advancedSettingsForm.controls.searchOption?.patchValue('');
+  }
+
+  dfvIsOverflowing(element: any): boolean {
+    return element.offsetWidth < element.scrollWidth;
+  }
+
+  private dfvDropdownOptions(destinationAttributes: IntacctDestinationAttribute[], destinationAttributeKey: string): void {
+    switch (destinationAttributeKey) {
+      case 'LOCATION':
+        this.sageIntacctLocations = destinationAttributes.concat();
+        break;
+      case 'DEPARTMENT':
+        this.sageIntacctDepartments = destinationAttributes.concat();
+        break;
+      case 'PROJECT':
+        this.sageIntacctProjects = destinationAttributes.concat();
+        break;
+      case 'CLASS':
+        this.sageIntacctClasses = destinationAttributes.concat();
+        break;
+      case 'ITEM':
+        this.sageIntacctDefaultItem = destinationAttributes.concat();
+        break;
+      default:
+        break;
+    }
+  }
+
+  private optionSearchHandler(searchTerm: string, destinationAttributes: IntacctDestinationAttribute[], destinationAttributeKey: string): void {
+    debounceTime(1000);
+    this.isOptionSearchInProgress = true;
+    const existingOptions = destinationAttributes.concat();
+    const newOptions: IntacctDestinationAttribute[] = [];
+
+    this.mappingService.getPaginatedDestinationAttributes(destinationAttributeKey, searchTerm).subscribe((response) => {
+      response.results.forEach((option) => {
+        newOptions.push(option);
+      });
+
+      // Insert new options to existing options
+      newOptions.forEach((option: IntacctDestinationAttribute) => {
+        if (!existingOptions.find((existingOption) => existingOption.id === option.id)) {
+          existingOptions.push(option);
+        }
+      });
+      destinationAttributes = existingOptions.concat();
+      destinationAttributes = this.sortDropdownOptions(destinationAttributes);
+      this.dfvDropdownOptions(destinationAttributes, destinationAttributeKey);
+      this.isOptionSearchInProgress = false;
+    }, (error) => {
+      this.isOptionSearchInProgress = false;
+    });
+  }
+
+  private sortDropdownOptions(destinationAttributes: IntacctDestinationAttribute[]): IntacctDestinationAttribute[] {
+    return destinationAttributes.sort((a: IntacctDestinationAttribute, b: IntacctDestinationAttribute) => {
+      return a.value.localeCompare(b.value);
+    });
+  }
 
   invalidSkipExportForm($event: boolean) {
     this.isSkipExportFormInvalid = $event;
@@ -303,7 +376,7 @@ export class IntacctAdvancedSettingsComponent implements OnInit {
       ({ advancedSettings, groupedAttributes, expenseFilter, configuration, exportSettings }) => {
         this.advancedSettings = advancedSettings;
         this.sageIntacctLocations = groupedAttributes.LOCATION || [];
-        this.sageIntacctDefaultItem = groupedAttributes.ITEM;
+        this.sageIntacctDefaultItem = groupedAttributes.ITEM || [];
         this.sageIntacctDepartments = groupedAttributes.DEPARTMENT || [];
         this.sageIntacctProjects = groupedAttributes.PROJECT || [];
         this.sageIntacctClasses = groupedAttributes.CLASS || [];

@@ -196,13 +196,48 @@
             <app-optional-field class="tw-text-14-px"></app-optional-field>
           }</div>
           <div class="tw-pt-2">
-            <p-select appendTo="body" [options]="sageIntacctLocations" optionLabel="value"
-              formControlName="defaultLocation" [placeholder]="'intacctAdvancedSettings.selectDimension' | transloco: { dimension: 'intacct.configuration.advancedSettings.location' | transloco }" [ngClass]="{'selectedItem': advancedSettingsForm.controls.defaultLocation.value, 'filterDropdown': !advancedSettingsForm.controls.defaultLocation.value, 'hideClearIcon': advancedSettingsForm.controls['defaultLocation'].value}">
-              <ng-template class="tw-flex tw-justify-between tw-items-center" pTemplate="selectedItem" let-item>
-                <p>
-                  {{ item.value }}
-                </p>
-                <app-svg-icon [svgSource]="'cross-medium'" (click)="removeFilter(advancedSettingsForm.controls.defaultLocation)" [height]="'16px'" [width]="'16px'"></app-svg-icon>
+            <p-select appendTo="body" [options]="sageIntacctLocations" optionLabel="value" class="!tw-w-300-px"
+              formControlName="defaultLocation"
+              [placeholder]="'intacctAdvancedSettings.selectDimension' | transloco: { dimension: 'intacct.configuration.advancedSettings.location' | transloco }"
+              [ngClass]="{
+                'selectedItem': advancedSettingsForm.controls.defaultLocation.value, 
+                'filterDropdown': !advancedSettingsForm.controls.defaultLocation.value, 
+                'hideClearIcon': advancedSettingsForm.controls['defaultLocation'].value}"
+              [filter]="true"
+              (onFilter)="searchOptions($event, sageIntacctLocations, 'LOCATION')"
+              (onHide)="clearSearch()"
+              [filterFields]="['value', 'code']"
+              [resetFilterOnHide]="true"
+              [emptyFilterMessage]="isOptionSearchInProgress ? ('configurationSelectField.searching' | transloco) : ('configurationSelectField.noResultsFound' | transloco)"
+              [dropdownIcon]="isOptionSearchInProgress ? 'pi pi-spinner pi-spin' : 'pi pi-chevron-down ' + brandingConfig.brandId">
+              <ng-template let-options pTemplate="item">
+                <div #textElement
+                  [ngStyle]="{'white-space': 'nowrap', 'overflow': 'hidden', 'text-overflow': 'ellipsis', 'max-width': '16rem'}"
+                  [pTooltip]="dfvIsOverflowing(textElement) ? options.value: null" tooltipPosition="top">
+                  <span>
+                    {{options.value}}
+                  </span>
+                    <p class="tw-text-text-muted tw-text-12-px">{{ options.code ? options.code : '--'}}</p>
+                </div>
+              </ng-template>
+              <ng-template let-value pTemplate="selectedItem">
+                @if (value) {
+                  <p>
+                    @if (value?.code) {
+                      <span>{{ value?.code }}: </span>
+                    }
+                    {{ value.value }}
+                  </p>
+                  <app-svg-icon [svgSource]="'cross-medium'" (click)="removeFilter(advancedSettingsForm.controls.defaultLocation)" [height]="'16px'" [width]="'16px'"></app-svg-icon>
+                }
+                @if (!value) {
+                  <div class="tw-text-placeholder">
+                    {{'intacctAdvancedSettings.selectDimension' | transloco: { dimension: 'intacct.configuration.advancedSettings.location' | transloco } }}
+                  </div>
+                }
+              </ng-template>
+              <ng-template pTemplate="filtericon">
+                <app-svg-icon [svgSource]="'search-medium'" [width]="'18px'" [height]="'18px'" [styleClasses]="brandingStyle.configuration.searchIconFocus" [isTextColorAllowed]="true"></app-svg-icon>
               </ng-template>
             </p-select>
             @if (brandingFeatureConfig.featureFlags.exportSettings.reimbursableExpenses) {
@@ -218,26 +253,48 @@
           <app-optional-field class="tw-text-14-px"></app-optional-field>
         }</div>
         <div class="tw-pt-2">
-          <p-select appendTo="body" [options]="sageIntacctDepartments" optionLabel="value"
-            formControlName="defaultDepartment" [placeholder]="'intacctAdvancedSettings.selectDimension' | transloco: { dimension: 'intacct.configuration.advancedSettings.department' | transloco }" [ngClass]="{'selectedItem': advancedSettingsForm.controls.defaultDepartment.value, 'filterDropdown': !advancedSettingsForm.controls.defaultDepartment.value, 'hideClearIcon': advancedSettingsForm.controls['defaultDepartment'].value}">
-            <ng-template class="tw-flex tw-justify-between tw-items-center" let-value pTemplate="selectedItem">
-              <p>
-                @if (value?.code && brandingFeatureConfig.featureFlags.importSettings.allowImportCode) {
-                  <span>{{ value?.code }}: </span>
-                }
-                {{ value?.value }}
-              </p>
-              <app-svg-icon [svgSource]="'cross-medium'" (click)="removeFilter(advancedSettingsForm.controls.defaultDepartment)" [height]="'16px'" [width]="'16px'"></app-svg-icon>
-            </ng-template>
+          <p-select appendTo="body" [options]="sageIntacctDepartments" optionLabel="value" class="!tw-w-300-px"
+            formControlName="defaultDepartment"
+            [placeholder]="'intacctAdvancedSettings.selectDimension' | transloco: { dimension: 'intacct.configuration.advancedSettings.department' | transloco }"
+            [ngClass]="{
+              'selectedItem': advancedSettingsForm.controls.defaultDepartment.value, 
+              'filterDropdown': !advancedSettingsForm.controls.defaultDepartment.value, 
+              'hideClearIcon': advancedSettingsForm.controls['defaultDepartment'].value}"
+            [filter]="true"
+            (onFilter)="searchOptions($event, sageIntacctDepartments, 'DEPARTMENT')"
+            (onHide)="clearSearch()"
+            [filterFields]="['value', 'code']"
+            [resetFilterOnHide]="true"
+            [emptyFilterMessage]="isOptionSearchInProgress ? ('configurationSelectField.searching' | transloco) : ('configurationSelectField.noResultsFound' | transloco)"
+            [dropdownIcon]="isOptionSearchInProgress ? 'pi pi-spinner pi-spin' : 'pi pi-chevron-down ' + brandingConfig.brandId">
             <ng-template let-options pTemplate="item">
               <div #textElement
                 [ngStyle]="{'white-space': 'nowrap', 'overflow': 'hidden', 'text-overflow': 'ellipsis', 'max-width': '16rem'}"
-                [pTooltip]="isOverflowing(textElement, options)" tooltipPosition="top">
+                [pTooltip]="dfvIsOverflowing(textElement) ? options.value: null" tooltipPosition="top">
                 <span>
                   {{options.value}}
                 </span>
-                <p class="tw-text-text-muted tw-text-12-px">{{ options.code ? options.code : '--'}}</p>
+                  <p class="tw-text-text-muted tw-text-12-px">{{ options.code ? options.code : '--'}}</p>
               </div>
+            </ng-template>
+            <ng-template let-value pTemplate="selectedItem">
+              @if (value) {
+                <p>
+                  @if (value?.code) {
+                    <span>{{ value?.code }}: </span>
+                  }
+                  {{ value.value }}
+                </p>
+                <app-svg-icon [svgSource]="'cross-medium'" (click)="removeFilter(advancedSettingsForm.controls.defaultDepartment)" [height]="'16px'" [width]="'16px'"></app-svg-icon>
+              }
+              @if (!value) {
+                <div class="tw-text-placeholder">
+                  {{'intacctAdvancedSettings.selectDimension' | transloco: { dimension: 'intacct.configuration.advancedSettings.department' | transloco } }}
+                </div>
+              }
+            </ng-template>
+            <ng-template pTemplate="filtericon">
+              <app-svg-icon [svgSource]="'search-medium'" [width]="'18px'" [height]="'18px'" [styleClasses]="brandingStyle.configuration.searchIconFocus" [isTextColorAllowed]="true"></app-svg-icon>
             </ng-template>
           </p-select>
           @if (brandingFeatureConfig.featureFlags.exportSettings.reimbursableExpenses) {
@@ -253,13 +310,48 @@
         <app-optional-field class="tw-text-14-px"></app-optional-field>
       }</div>
       <div class="tw-pt-2">
-        <p-select appendTo="body" [options]="sageIntacctProjects" optionLabel="value"
-          formControlName="defaultProject" [placeholder]="'intacctAdvancedSettings.selectDimension' | transloco: { dimension: 'intacct.configuration.advancedSettings.project' | transloco }" [ngClass]="{'selectedItem': advancedSettingsForm.controls.defaultProject.value, 'filterDropdown': !advancedSettingsForm.controls.defaultProject.value, 'hideClearIcon': advancedSettingsForm.controls['defaultProject'].value}">
-          <ng-template class="tw-flex tw-justify-between tw-items-center" pTemplate="selectedItem" let-item>
-            <div>
-              {{ item.value }}
+        <p-select appendTo="body" [options]="sageIntacctProjects" optionLabel="value" class="!tw-w-300-px"
+          formControlName="defaultProject"
+          [placeholder]="'intacctAdvancedSettings.selectDimension' | transloco: { dimension: 'intacct.configuration.advancedSettings.project' | transloco }"
+          [ngClass]="{
+            'selectedItem': advancedSettingsForm.controls.defaultProject.value, 
+            'filterDropdown': !advancedSettingsForm.controls.defaultProject.value, 
+            'hideClearIcon': advancedSettingsForm.controls['defaultProject'].value}"
+          [filter]="true"
+          (onFilter)="searchOptions($event, sageIntacctProjects, 'PROJECT')"
+          (onHide)="clearSearch()"
+          [filterFields]="['value', 'code']"
+          [resetFilterOnHide]="true"
+          [emptyFilterMessage]="isOptionSearchInProgress ? ('configurationSelectField.searching' | transloco) : ('configurationSelectField.noResultsFound' | transloco)"
+          [dropdownIcon]="isOptionSearchInProgress ? 'pi pi-spinner pi-spin' : 'pi pi-chevron-down ' + brandingConfig.brandId">
+          <ng-template let-options pTemplate="item">
+            <div #textElement
+              [ngStyle]="{'white-space': 'nowrap', 'overflow': 'hidden', 'text-overflow': 'ellipsis', 'max-width': '16rem'}"
+              [pTooltip]="dfvIsOverflowing(textElement) ? options.value: null" tooltipPosition="top">
+              <span>
+                {{options.value}}
+              </span>
+                <p class="tw-text-text-muted tw-text-12-px">{{ options.code ? options.code : '--'}}</p>
             </div>
-            <app-svg-icon [svgSource]="'cross-medium'" (click)="removeFilter(advancedSettingsForm.controls.defaultProject)" [height]="'16px'" [width]="'16px'"></app-svg-icon>
+          </ng-template>
+          <ng-template let-value pTemplate="selectedItem">
+            @if (value) {
+              <p>
+                @if (value?.code) {
+                  <span>{{ value?.code }}: </span>
+                }
+                {{ value.value }}
+              </p>
+              <app-svg-icon [svgSource]="'cross-medium'" (click)="removeFilter(advancedSettingsForm.controls.defaultProject)" [height]="'16px'" [width]="'16px'"></app-svg-icon>
+            }
+            @if (!value) {
+              <div class="tw-text-placeholder">
+                {{'intacctAdvancedSettings.selectDimension' | transloco: { dimension: 'intacct.configuration.advancedSettings.project' | transloco } }}
+              </div>
+            }
+          </ng-template>
+          <ng-template pTemplate="filtericon">
+            <app-svg-icon [svgSource]="'search-medium'" [width]="'18px'" [height]="'18px'" [styleClasses]="brandingStyle.configuration.searchIconFocus" [isTextColorAllowed]="true"></app-svg-icon>
           </ng-template>
         </p-select>
       </div>
@@ -269,13 +361,48 @@
       <app-optional-field class="tw-text-14-px"></app-optional-field>
     }</div>
     <div class="tw-pt-2">
-      <p-select appendTo="body" [options]="sageIntacctClasses" optionLabel="value"
-        formControlName="defaultClass" [placeholder]="'intacctAdvancedSettings.selectDimension' | transloco: { dimension: 'intacct.configuration.advancedSettings.class' | transloco }" [ngClass]="{'selectedItem': advancedSettingsForm.controls.defaultClass.value, 'filterDropdown': !advancedSettingsForm.controls.defaultClass.value, 'hideClearIcon': advancedSettingsForm.controls['defaultClass'].value}">
-        <ng-template class="tw-flex tw-justify-between tw-items-center" pTemplate="selectedItem" let-item>
-          <div>
-            {{ item.value }}
+      <p-select appendTo="body" [options]="sageIntacctClasses" optionLabel="value" class="!tw-w-300-px"
+        formControlName="defaultClass"
+        [placeholder]="'intacctAdvancedSettings.selectDimension' | transloco: { dimension: 'intacct.configuration.advancedSettings.class' | transloco }"
+        [ngClass]="{
+          'selectedItem': advancedSettingsForm.controls.defaultClass.value, 
+          'filterDropdown': !advancedSettingsForm.controls.defaultClass.value, 
+          'hideClearIcon': advancedSettingsForm.controls['defaultClass'].value}"
+        [filter]="true"
+        (onFilter)="searchOptions($event, sageIntacctClasses, 'CLASS')"
+        (onHide)="clearSearch()"
+        [filterFields]="['value', 'code']"
+        [resetFilterOnHide]="true"
+        [emptyFilterMessage]="isOptionSearchInProgress ? ('configurationSelectField.searching' | transloco) : ('configurationSelectField.noResultsFound' | transloco)"
+        [dropdownIcon]="isOptionSearchInProgress ? 'pi pi-spinner pi-spin' : 'pi pi-chevron-down ' + brandingConfig.brandId">
+        <ng-template let-options pTemplate="item">
+          <div #textElement
+            [ngStyle]="{'white-space': 'nowrap', 'overflow': 'hidden', 'text-overflow': 'ellipsis', 'max-width': '16rem'}"
+            [pTooltip]="dfvIsOverflowing(textElement) ? options.value: null" tooltipPosition="top">
+            <span>
+              {{options.value}}
+            </span>
+              <p class="tw-text-text-muted tw-text-12-px">{{ options.code ? options.code : '--'}}</p>
           </div>
-          <app-svg-icon [svgSource]="'cross-medium'" (click)="removeFilter(advancedSettingsForm.controls.defaultClass)" [height]="'16px'" [width]="'16px'"></app-svg-icon>
+        </ng-template>
+        <ng-template let-value pTemplate="selectedItem">
+          @if (value) {
+            <p>
+              @if (value?.code) {
+                <span>{{ value?.code }}: </span>
+              }
+              {{ value.value }}
+            </p>
+            <app-svg-icon [svgSource]="'cross-medium'" (click)="removeFilter(advancedSettingsForm.controls.defaultClass)" [height]="'16px'" [width]="'16px'"></app-svg-icon>
+          }
+          @if (!value) {
+            <div class="tw-text-placeholder">
+              {{'intacctAdvancedSettings.selectDimension' | transloco: { dimension: 'intacct.configuration.advancedSettings.class' | transloco } }}
+            </div>
+          }
+        </ng-template>
+        <ng-template pTemplate="filtericon">
+          <app-svg-icon [svgSource]="'search-medium'" [width]="'18px'" [height]="'18px'" [styleClasses]="brandingStyle.configuration.searchIconFocus" [isTextColorAllowed]="true"></app-svg-icon>
         </ng-template>
       </p-select>
     </div>
@@ -285,13 +412,48 @@
     <app-optional-field class="tw-text-14-px"></app-optional-field>
   }</div>
   <div class="tw-pt-2">
-    <p-select appendTo="body" [options]="sageIntacctDefaultItem" optionLabel="value"
-      formControlName="defaultItems" [placeholder]="'intacctAdvancedSettings.selectDimension' | transloco: { dimension: 'intacct.configuration.advancedSettings.item' | transloco }" [ngClass]="{'selectedItem': advancedSettingsForm.controls.defaultItems.value, 'filterDropdown': !advancedSettingsForm.controls.defaultItems.value, 'hideClearIcon': advancedSettingsForm.controls['defaultItems'].value}">
-      <ng-template class="tw-flex tw-justify-between tw-items-center" pTemplate="selectedItem" let-item>
-        <div>
-          {{ item.value }}
+    <p-select appendTo="body" [options]="sageIntacctDefaultItem" optionLabel="value" class="!tw-w-300-px"
+      formControlName="defaultItems"
+      [placeholder]="'intacctAdvancedSettings.selectDimension' | transloco: { dimension: 'intacct.configuration.advancedSettings.item' | transloco }"
+      [ngClass]="{
+        'selectedItem': advancedSettingsForm.controls.defaultItems.value, 
+        'filterDropdown': !advancedSettingsForm.controls.defaultItems.value, 
+        'hideClearIcon': advancedSettingsForm.controls['defaultItems'].value}"
+      [filter]="true"
+      (onFilter)="searchOptions($event, sageIntacctDefaultItem, 'ITEM')"
+      (onHide)="clearSearch()"
+      [filterFields]="['value', 'code']"
+      [resetFilterOnHide]="true"
+      [emptyFilterMessage]="isOptionSearchInProgress ? ('configurationSelectField.searching' | transloco) : ('configurationSelectField.noResultsFound' | transloco)"
+      [dropdownIcon]="isOptionSearchInProgress ? 'pi pi-spinner pi-spin' : 'pi pi-chevron-down ' + brandingConfig.brandId">
+      <ng-template let-options pTemplate="item">
+        <div #textElement
+          [ngStyle]="{'white-space': 'nowrap', 'overflow': 'hidden', 'text-overflow': 'ellipsis', 'max-width': '16rem'}"
+          [pTooltip]="dfvIsOverflowing(textElement) ? options.value: null" tooltipPosition="top">
+          <span>
+            {{options.value}}
+          </span>
+            <p class="tw-text-text-muted tw-text-12-px">{{ options.code ? options.code : '--'}}</p>
         </div>
-        <app-svg-icon [svgSource]="'cross-medium'" (click)="removeFilter(advancedSettingsForm.controls.defaultItems)" [height]="'16px'" [width]="'16px'"></app-svg-icon>
+      </ng-template>
+      <ng-template let-value pTemplate="selectedItem">
+        @if (value) {
+          <p>
+            @if (value?.code) {
+              <span>{{ value?.code }}: </span>
+            }
+            {{ value.value }}
+          </p>
+          <app-svg-icon [svgSource]="'cross-medium'" (click)="removeFilter(advancedSettingsForm.controls.defaultItems)" [height]="'16px'" [width]="'16px'"></app-svg-icon>
+        }
+        @if (!value) {
+          <div class="tw-text-placeholder">
+            {{'intacctAdvancedSettings.selectDimension' | transloco: { dimension: 'intacct.configuration.advancedSettings.class' | transloco } }}
+          </div>
+        }
+      </ng-template>
+      <ng-template pTemplate="filtericon">
+        <app-svg-icon [svgSource]="'search-medium'" [width]="'18px'" [height]="'18px'" [styleClasses]="brandingStyle.configuration.searchIconFocus" [isTextColorAllowed]="true"></app-svg-icon>
       </ng-template>
     </p-select>
   </div>
