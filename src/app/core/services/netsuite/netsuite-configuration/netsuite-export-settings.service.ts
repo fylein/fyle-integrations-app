@@ -12,6 +12,43 @@ import { ExportSettingsService } from '../../common/export-settings.service';
 import { brandingFeatureConfig } from 'src/app/branding/branding-config';
 import { DefaultDestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
 
+export const NETSUITE_FIELD_DEPENDENCIES = {
+  bankAccount: (form: FormGroup) => (
+    form.get('reimbursableExportType')?.value === NetsuiteReimbursableExpensesObject.EXPENSE_REPORT || (
+      form.get('reimbursableExportType')?.value === NetsuiteReimbursableExpensesObject.JOURNAL_ENTRY &&
+      form.get('employeeFieldMapping')?.value === EmployeeFieldMapping.EMPLOYEE
+    )
+  ),
+  accountsPayable: (form: FormGroup) => (
+    form.get('reimbursableExportType')?.value === NetsuiteReimbursableExpensesObject.BILL || (
+      form.get('reimbursableExportType')?.value === NetsuiteReimbursableExpensesObject.JOURNAL_ENTRY &&
+      form.get('employeeFieldMapping')?.value === EmployeeFieldMapping.VENDOR
+    )
+  ),
+  CCCBankAccount: (form: FormGroup) => (
+    form.get('creditCardExportType')?.value === NetSuiteCorporateCreditCardExpensesObject.EXPENSE_REPORT
+  ),
+  CCCAccountsPayable: (form: FormGroup) => (
+    form.get('creditCardExportType')?.value === NetSuiteCorporateCreditCardExpensesObject.BILL
+  ),
+  creditCardAccount: (form: FormGroup) => (
+    form.get('creditCardExportType')?.value === NetSuiteCorporateCreditCardExpensesObject.JOURNAL_ENTRY ||
+    form.get('creditCardExportType')?.value === NetSuiteCorporateCreditCardExpensesObject.CREDIT_CARD_CHARGE
+  ),
+  defaultCreditCardVendor: (form: FormGroup) => (
+    form.get('creditCardExportType')?.value === NetSuiteCorporateCreditCardExpensesObject.BILL ||
+    form.get('creditCardExportType')?.value === NetSuiteCorporateCreditCardExpensesObject.CREDIT_CARD_CHARGE || (
+      form.get('creditCardExportType')?.value === NetSuiteCorporateCreditCardExpensesObject.JOURNAL_ENTRY &&
+      form.get('nameInJournalEntry')?.value === NameInJournalEntry.MERCHANT
+    )
+  )
+};
+
+export const NETSUITE_SOURCE_FIELDS: Record<string, keyof typeof NETSUITE_FIELD_DEPENDENCIES> = {
+  CCCBankAccount: 'bankAccount',
+  CCCAccountsPayable: 'accountsPayable'
+};
+
 @Injectable({
   providedIn: 'root'
 })

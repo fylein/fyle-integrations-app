@@ -16,48 +16,11 @@ import { IntegrationsToastService } from 'src/app/core/services/common/integrati
 import { MappingService } from 'src/app/core/services/common/mapping.service';
 import { WindowService } from 'src/app/core/services/common/window.service';
 import { WorkspaceService } from 'src/app/core/services/common/workspace.service';
-import { NetsuiteExportSettingsService } from 'src/app/core/services/netsuite/netsuite-configuration/netsuite-export-settings.service';
+import { NetsuiteExportSettingsService, NETSUITE_FIELD_DEPENDENCIES, NETSUITE_SOURCE_FIELDS } from 'src/app/core/services/netsuite/netsuite-configuration/netsuite-export-settings.service';
 import { NetsuiteHelperService } from 'src/app/core/services/netsuite/netsuite-core/netsuite-helper.service';
 import { TranslocoService } from '@jsverse/transloco';
 import { ExportSettingsService } from 'src/app/core/services/common/export-settings.service';
 import { BrandingService } from 'src/app/core/services/common/branding.service';
-
-export const FIELD_DEPENDENCIES = {
-  bankAccount: (form: FormGroup) => (
-    form.get('reimbursableExportType')?.value === NetsuiteReimbursableExpensesObject.EXPENSE_REPORT || (
-      form.get('reimbursableExportType')?.value === NetsuiteReimbursableExpensesObject.JOURNAL_ENTRY &&
-      form.get('employeeFieldMapping')?.value === EmployeeFieldMapping.EMPLOYEE
-    )
-  ),
-  accountsPayable: (form: FormGroup) => (
-    form.get('reimbursableExportType')?.value === NetsuiteReimbursableExpensesObject.BILL || (
-      form.get('reimbursableExportType')?.value === NetsuiteReimbursableExpensesObject.JOURNAL_ENTRY &&
-      form.get('employeeFieldMapping')?.value === EmployeeFieldMapping.VENDOR
-    )
-  ),
-  CCCBankAccount: (form: FormGroup) => (
-    form.get('creditCardExportType')?.value === NetSuiteCorporateCreditCardExpensesObject.EXPENSE_REPORT
-  ),
-  CCCAccountsPayable: (form: FormGroup) => (
-    form.get('creditCardExportType')?.value === NetSuiteCorporateCreditCardExpensesObject.BILL
-  ),
-  creditCardAccount: (form: FormGroup) => (
-    form.get('creditCardExportType')?.value === NetSuiteCorporateCreditCardExpensesObject.JOURNAL_ENTRY ||
-    form.get('creditCardExportType')?.value === NetSuiteCorporateCreditCardExpensesObject.CREDIT_CARD_CHARGE
-  ),
-  defaultCreditCardVendor: (form: FormGroup) => (
-    form.get('creditCardExportType')?.value === NetSuiteCorporateCreditCardExpensesObject.BILL ||
-    form.get('creditCardExportType')?.value === NetSuiteCorporateCreditCardExpensesObject.CREDIT_CARD_CHARGE || (
-      form.get('creditCardExportType')?.value === NetSuiteCorporateCreditCardExpensesObject.JOURNAL_ENTRY &&
-      form.get('nameInJournalEntry')?.value === NameInJournalEntry.MERCHANT
-    )
-  )
-};
-
-const SOURCE_FIELDS: Record<string, keyof typeof FIELD_DEPENDENCIES> = {
-  CCCBankAccount: 'bankAccount',
-  CCCAccountsPayable: 'accountsPayable'
-};
 
 @Component({
     selector: 'app-netsuite-export-settings',
@@ -163,15 +126,15 @@ export class NetsuiteExportSettingsComponent implements OnInit {
     return this.exportSettingForm.get('creditCardExportType')?.value;
   }
 
-  showField(field: keyof typeof FIELD_DEPENDENCIES): boolean {
-    const condition = FIELD_DEPENDENCIES[field];
+  showField(field: keyof typeof NETSUITE_FIELD_DEPENDENCIES): boolean {
+    const condition = NETSUITE_FIELD_DEPENDENCIES[field];
     return condition ? condition(this.exportSettingForm) : true;
   }
 
-  isFieldDisabled(field: keyof typeof FIELD_DEPENDENCIES): boolean {
+  isFieldDisabled(field: keyof typeof NETSUITE_FIELD_DEPENDENCIES): boolean {
     // If a field is shown in reimbursable, disable the corresponding field in CCC
-    if (field in SOURCE_FIELDS) {
-      return this.showField(SOURCE_FIELDS[field]);
+    if (field in NETSUITE_SOURCE_FIELDS) {
+      return this.showField(NETSUITE_SOURCE_FIELDS[field]);
     }
     return false;
   }
