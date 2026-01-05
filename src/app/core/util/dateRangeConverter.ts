@@ -11,3 +11,10 @@ export const convertDateRangeToAPIFormat = (selectedDateFilter: SelectedDateFilt
       end: `${endDate.getUTCFullYear()}-${endDate.getUTCMonth() + 1}-${endDate.getUTCDate()}T${endDate.getUTCHours()}:${endDate.getUTCMinutes()}:${endDate.getUTCSeconds()}`
     };
 };
+
+export const convertDateToSkipExportFormat = (date: Date): string => {
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, '0');
+  const day = String(date.getDate()).padStart(2, '0');
+  return `${year}-${month}-${day}T17:00:00.000Z`;
+};

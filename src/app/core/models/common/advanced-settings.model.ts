@@ -1,5 +1,6 @@
 import { FormControl, FormGroup } from "@angular/forms";
 import { JoinOption, Operator } from "../enum/enum.model";
+import { convertDateToSkipExportFormat } from "../../util/dateRangeConverter";
 
 export type EmailOption = {
     email: string;
@@ -82,11 +83,7 @@ export class SkipExportModel {
       }
     }
     if (valueField.condition1.field_name === 'spent_at') {
-      const date = new Date(valueField.value1);
-      const year = date.getFullYear();
-      const month = String(date.getMonth() + 1).padStart(2, '0');
-      const day = String(date.getDate()).padStart(2, '0');
-      valueField.value1 = `${year}-${month}-${day}T17:00:00.000Z`;
+      valueField.value1 = convertDateToSkipExportFormat(new Date(valueField.value1));
     }
     if (typeof valueField.value1 === 'string') {
       valueField.value1 = [valueField.value1];
@@ -97,11 +94,7 @@ export class SkipExportModel {
         valueField.operator2 = 'in';
       }
       if (valueField.condition2.field_name === 'spent_at') {
-        const date = new Date(valueField.value2);
-        const year = date.getFullYear();
-        const month = String(date.getMonth() + 1).padStart(2, '0');
-        const day = String(date.getDate()).padStart(2, '0');
-        valueField.value2 = `${year}-${month}-${day}T17:00:00.000Z`;
+        valueField.value2 = convertDateToSkipExportFormat(new Date(valueField.value2));
       }
       if (valueField.condition2.is_custom === true) {
         if (valueField.operator2 === 'is_empty') {
