@@ -407,11 +407,7 @@ export class IntacctImportSettingsComponent implements OnInit {
   }
 
   private addCustomField() {
-    this.customFieldForm = this.formBuilder.group({
-      attribute_type: [null, Validators.required],
-      display_name: [null],
-      source_placeholder: [null, Validators.required]
-    });
+    this.customFieldForm.reset();
     this.showDialog = true;
   }
 
@@ -603,7 +599,11 @@ export class IntacctImportSettingsComponent implements OnInit {
   private getSettingsAndSetupForm(): void {
     this.isLoading = true;
     this.isOnboarding = this.router.url.includes('onboarding');
-
+    this.customFieldForm = this.formBuilder.group({
+      attribute_type: [null, Validators.required],
+      display_name: [null],
+      source_placeholder: [null, Validators.required]
+    });
     this.costCodeFieldOption = [{ attribute_type: 'custom_field', display_name: this.translocoService.translate('intacctImportSettings.createCustomField'), source_placeholder: null, is_dependent: true }];
     this.costTypeFieldOption = [{ attribute_type: 'custom_field', display_name: this.translocoService.translate('intacctImportSettings.createCustomField'), source_placeholder: null, is_dependent: true }];
     this.customFieldOption = [{ attribute_type: 'custom_field', display_name: this.translocoService.translate('intacctImportSettings.createCustomField'), source_placeholder: null, is_dependent: false }];

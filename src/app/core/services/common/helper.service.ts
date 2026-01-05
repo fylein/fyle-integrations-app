@@ -377,6 +377,11 @@ export class HelperService {
       const control = form.get(controlName);
       if (control) {
         const currentValue = control.value;
+
+        if (currentValue instanceof Date || typeof currentValue === 'boolean') {
+          return;
+        }
+
         if (!Array.isArray(currentValue)) {
           if (currentValue === null || currentValue === undefined || currentValue === '') {
             control.setValue([], { emitEvent: false });

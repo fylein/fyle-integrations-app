@@ -225,7 +225,7 @@
                             </div>
                           </ng-template>
                         </p-select></div>
-                        <p-toggleswitch class="tw-pl-32-px input-toggle-section" formControlName="costCodesImportToggle" [disabled]="true" [attr.aria-label]="'intacctImportSettings.importCostCodesAriaLabel' | transloco" role="switch"></p-toggleswitch>
+                        <p-toggleswitch class="tw-pl-32-px input-toggle-section" formControlName="costCodesImportToggle" [attr.aria-label]="'intacctImportSettings.importCostCodesAriaLabel' | transloco" role="switch"></p-toggleswitch>
                       </div>
                     }
                     @if (importSettingsForm.get('isDependentImportEnabled')?.value) {
@@ -248,7 +248,7 @@
                               {{ option.display_name }}                                    </div>
                             </ng-template>
                           </p-select></div>
-                          <p-toggleswitch class="tw-pl-32-px input-toggle-section" formControlName="costTypesImportToggle" [disabled]="true" [attr.aria-label]="'intacctImportSettings.importCostTypesAriaLabel' | transloco" role="switch"></p-toggleswitch>
+                          <p-toggleswitch class="tw-pl-32-px input-toggle-section" formControlName="costTypesImportToggle" [attr.aria-label]="'intacctImportSettings.importCostTypesAriaLabel' | transloco" role="switch"></p-toggleswitch>
                         </div>
                       }
                     </div>
@@ -332,9 +332,8 @@
       </div>
     }
 
-    @if (showDialog) {
-      <p-dialog [dismissableMask]="true" [showHeader]="false" [modal]="true" [(visible)]="showDialog" [draggable]="false" [style]="{width: '468px'}">
-        <div [formGroup]="customFieldForm">
+    <p-dialog [dismissableMask]="true" [showHeader]="false" [modal]="true" [(visible)]="showDialog" [draggable]="false" [style]="{width: '468px'}">
+      <div [formGroup]="customFieldForm">
           <div class="tw-p-24-px tw-border-b-1-px tw-border-b-box-color">
             <div class="tw-flex tw-justify-between tw-items-center">
               <p class="tw-text-20-px tw-font-500">{{ 'intacctImportSettings.addNewCustomField' | transloco }}</p>
@@ -386,11 +385,9 @@
             </div>
           </div>
         </div>
-      </p-dialog>
-    }
+    </p-dialog>
 
-    @if (showDependentFieldWarning) {
-      <p-dialog [showHeader]="false" [modal]="true" [(visible)]="showDependentFieldWarning" [draggable]="false" [style]="{width: '468px'}">
+      <p-dialog [(visible)]="showDependentFieldWarning" [showHeader]="false" [modal]="true" [draggable]="false" [style]="{width: '468px'}">
         <div class="tw-px-24-px tw-py-22-px tw-border-b-1-px tw-border-b-box-color">
           <div class="tw-flex tw-justify-between tw-items-center">
             <div class="tw-flex tw-items-center">
@@ -415,9 +412,7 @@
           <app-button [buttonSize]="ButtonSize.SMALL" [buttonType]="ButtonType.PRIMARY" (buttonClick)="acceptDependentFieldWarning(true)" [buttonText]="'intacctImportSettings.continueButton' | transloco"></app-button>
         </div>
       </p-dialog>
-    }
 
-    @if (isDialogVisible) {
       <div>
         <p-dialog [header]="'intacctImportSettings.previewHeader' | transloco" [dismissableMask]="true" [showHeader]="true" [modal]="true" [(visible)]="isDialogVisible" [breakpoints]="{ '960px': '75vw' }" [draggable]="false" [resizable]="false">
           <div class="tw-flex tw-items-center tw-justify-center tw-px-24-px tw-pb-24-px">
@@ -425,5 +420,3 @@
           </div>
         </p-dialog>
       </div>
-    }
-

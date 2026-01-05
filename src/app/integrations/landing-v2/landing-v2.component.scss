@@ -70,3 +70,15 @@
         @apply tw-block;
     }
 }
+
+@media screen and (max-width: 1920px) {
+    .netsuite-logo {
+        max-width: 140px !important;
+    }
+}
+
+@media screen and (max-width: 1340px) {
+    .netsuite-logo {
+        max-width: 130px !important;
+    }
+}

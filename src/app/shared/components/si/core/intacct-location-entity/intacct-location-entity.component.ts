@@ -28,7 +28,7 @@ export class IntacctLocationEntityComponent implements OnInit {
 
   locationEntityOptions: IntacctDestinationAttribute[];
 
-  locationEntity: LocationEntityMapping;
+  locationEntity?: LocationEntityMapping;
 
   isLoading: boolean = true;
 
@@ -160,10 +160,7 @@ export class IntacctLocationEntityComponent implements OnInit {
         detail: {}
       };
 
-      // Only add top level option if there are multiple location entities
-      this.locationEntityOptions = locationEntities.length > 1
-        ? [topLevelOption].concat(locationEntities)
-        : locationEntities;
+      this.locationEntityOptions = [topLevelOption].concat(locationEntities);
 
       this.setupLocationEntityMapping();
     });
