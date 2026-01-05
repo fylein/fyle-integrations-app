@@ -16,7 +16,7 @@ import { IntegrationsToastService } from 'src/app/core/services/common/integrati
 import { MappingService } from 'src/app/core/services/common/mapping.service';
 import { WindowService } from 'src/app/core/services/common/window.service';
 import { WorkspaceService } from 'src/app/core/services/common/workspace.service';
-import { NetsuiteExportSettingsService } from 'src/app/core/services/netsuite/netsuite-configuration/netsuite-export-settings.service';
+import { NetsuiteExportSettingsService, NETSUITE_FIELD_DEPENDENCIES, NETSUITE_SOURCE_FIELDS } from 'src/app/core/services/netsuite/netsuite-configuration/netsuite-export-settings.service';
 import { NetsuiteHelperService } from 'src/app/core/services/netsuite/netsuite-core/netsuite-helper.service';
 import { TranslocoService } from '@jsverse/transloco';
 import { ExportSettingsService } from 'src/app/core/services/common/export-settings.service';
@@ -117,6 +117,94 @@ export class NetsuiteExportSettingsComponent implements OnInit {
   NetsuiteExportSettingDestinationOptionKey = NetsuiteExportSettingDestinationOptionKey;
 
   readonly brandingStyle = brandingStyle;
+
+  get currentReimbursableExportType(): NetsuiteReimbursableExpensesObject {
+    return this.exportSettingForm.get('reimbursableExportType')?.value;
+  }
+
+  get currentCCCExportType(): NetSuiteCorporateCreditCardExpensesObject {
+    return this.exportSettingForm.get('creditCardExportType')?.value;
+  }
+
+  showField(field: keyof typeof NETSUITE_FIELD_DEPENDENCIES): boolean {
+    const condition = NETSUITE_FIELD_DEPENDENCIES[field];
+    return condition ? condition(this.exportSettingForm) : true;
+  }
+
+  isFieldDisabled(field: keyof typeof NETSUITE_FIELD_DEPENDENCIES): boolean {
+    // If a field is shown in reimbursable, disable the corresponding field in CCC
+    if (field in NETSUITE_SOURCE_FIELDS) {
+      return this.showField(NETSUITE_SOURCE_FIELDS[field]);
+    }
+    return false;
+  }
+
+  /** Get the field label based on the current reimbursable export type */
+  getFieldLabel(field: string): string {
+    if (field === 'bankAccount') {
+      return this.currentReimbursableExportType === NetsuiteReimbursableExpensesObject.EXPENSE_REPORT ? (
+        this.translocoService.translate('netsuiteExportSettings.employeePayablesAccountLabel')
+      ) : ( // If journal entry
+        this.translocoService.translate('netsuiteExportSettings.defaultCreditLineAccountLabel')
+      );
+    }
+
+    if (field === 'CCCBankAccount') {
+      return this.translocoService.translate('netsuiteExportSettings.cccAccountsPayableLabel');
+    }
+
+    if (field === 'accountsPayable') {
+      return this.currentReimbursableExportType === NetsuiteReimbursableExpensesObject.BILL ? (
+        this.translocoService.translate('netsuiteExportSettings.accountsPayableLabel')
+      ) : ( // If journal entry
+        this.translocoService.translate('netsuiteExportSettings.defaultCreditLineAccountLabel')
+      );
+    }
+
+    if (field === 'CCCAccountsPayable') {
+      return this.translocoService.translate('netsuiteExportSettings.accountsPayableLabel');
+    }
+
+    return '';
+  }
+
+  getFieldSublabel(field: string): string {
+    if (field === 'bankAccount') {
+      return this.currentReimbursableExportType === NetsuiteReimbursableExpensesObject.EXPENSE_REPORT ? (
+        this.translocoService.translate('netsuiteExportSettings.employeePayablesAccountDescription')
+      ) : (
+        this.translocoService.translate('netsuiteExportSettings.defaultCreditLineAccountDescription')
+      );
+    }
+
+    if (field === 'CCCBankAccount') {
+      return this.isFieldDisabled('CCCBankAccount') ? (
+        this.translocoService.translate('netsuiteExportSettings.cccAccountsPayableAccountDescriptionNonEditable')
+      ) : (
+        this.translocoService.translate('netsuiteExportSettings.cccAccountsPayableAccountDescription')
+      );
+    }
+
+    if (field === 'accountsPayable') {
+      return this.currentReimbursableExportType === NetsuiteReimbursableExpensesObject.BILL ? (
+        this.translocoService.translate('netsuiteExportSettings.accountsPayableAccountDescription')
+      ) : (
+        this.translocoService.translate('netsuiteExportSettings.defaultCreditLineAccountDescription')
+      );
+    }
+
+    if (field === 'CCCAccountsPayable') {
+      return this.isFieldDisabled('CCCAccountsPayable') ? (
+        // Non-editable
+        this.translocoService.translate('netsuiteExportSettings.cccAccountsPayableAccountDescriptionNonEditable')
+      ) : (
+        // Editable
+        this.translocoService.translate('netsuiteExportSettings.accountsPayableAccountDescription')
+      );
+    }
+
+    return '';
+  }
 
   constructor(
     private exportSettingService: NetsuiteExportSettingsService,
@@ -385,6 +473,26 @@ export class NetsuiteExportSettingsComponent implements OnInit {
     });
   }
 
+  private setupFieldSyncWatchers(): void {
+    // Sync both bank account fields
+    this.exportSettingForm.controls.CCCBankAccount.valueChanges.subscribe((value) => {
+      this.exportSettingForm.controls.bankAccount.setValue(value, { emitEvent: false });
+    });
+
+    this.exportSettingForm.controls.bankAccount.valueChanges.subscribe((value) => {
+      this.exportSettingForm.controls.CCCBankAccount.setValue(value, { emitEvent: false });
+    });
+
+    // Sync both accounts payable fields
+    this.exportSettingForm.controls.accountsPayable.valueChanges.subscribe((value) => {
+      this.exportSettingForm.controls.CCCAccountsPayable.setValue(value, { emitEvent: false });
+    });
+
+    this.exportSettingForm.controls.CCCAccountsPayable.valueChanges.subscribe((value) => {
+      this.exportSettingForm.controls.accountsPayable.setValue(value, { emitEvent: false });
+    });
+  }
+
 
   private optionSearchWatcher(): void {
     this.optionSearchUpdate.pipe(
@@ -518,6 +626,7 @@ export class NetsuiteExportSettingsComponent implements OnInit {
       this.optionSearchWatcher();
       this.setupCustomWatchers();
       this.setupCustomDateOptionWatchers();
+      this.setupFieldSyncWatchers();
       this.isLoading = false;
     });
   }
