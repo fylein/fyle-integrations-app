@@ -56,7 +56,7 @@
                         [iconSrc]="'warning-filled'"
                         [customBackgroundColorClass]="brandingStyle.configuration.infoLabelWarningBackground"
                         [customStyleClass]="brandingStyle.configuration.infoLabelWarningIcon"
-                        [infoText]="'configurationImportField.autoImportEnabledInfo' | transloco: { destinationField: (getDestinationField(intacctCategoryDestinationLabel | snakeCaseToSpaceCase) | sentenceCase), currentDestinationCount: attributeCounts['accounts_count'], appName: appName }">
+                        [infoText]="'intacctImportSettings.autoImportEnabledInfo' | transloco: { destinationField: (getDestinationField(intacctCategoryDestinationLabel | snakeCaseToSpaceCase) | sentenceCase), currentDestinationCount: attributeCounts['accounts_count'], appName: appName }">
                     </app-configuration-info-label>
                 </div>
             }
@@ -75,19 +75,19 @@
           <p-toggleswitch formControlName="importVendorAsMerchant" [attr.aria-label]="'intacctImportSettings.importVendorAriaLabel' | transloco" role="switch" (onChange)="showWarningForImportFields($event.checked, 'vendors_count', 'importVendorAsMerchant', 1)"></p-toggleswitch>
         </span>
       </div>
+      <div class="tw-flex tw-px-24-px">
+        @if (defaultAttribuitesWarningArray[1]) {
+            <div class="tw-pt-26-px tw-px-24-px">
+                <app-configuration-info-label 
+                    [iconSrc]="'warning-filled'"
+                    [customBackgroundColorClass]="brandingStyle.configuration.infoLabelWarningBackground"
+                    [customStyleClass]="brandingStyle.configuration.infoLabelWarningIcon"
+                    [infoText]="'intacctImportSettings.autoImportEnabledInfo' | transloco: { destinationField: 'intacctImportSettings.vendorLabel' | transloco, currentDestinationCount: attributeCounts['vendors_count'], appName: appName }">
+                </app-configuration-info-label>
+            </div>
+        }
+      </div>
       @if (isImportTaxVisible) {
-        <div class="tw-flex tw-px-24-px">
-            @if (defaultAttribuitesWarningArray[1]) {
-                <div class="tw-pt-26-px tw-px-24-px">
-                    <app-configuration-info-label 
-                        [iconSrc]="'warning-filled'"
-                        [customBackgroundColorClass]="brandingStyle.configuration.infoLabelWarningBackground"
-                        [customStyleClass]="brandingStyle.configuration.infoLabelWarningIcon"
-                        [infoText]="'configurationImportField.autoImportEnabledInfo' | transloco: { destinationField: 'intacctImportSettings.vendorLabel' | transloco, currentDestinationCount: attributeCounts['vendors_count'], appName: appName }">
-                    </app-configuration-info-label>
-                </div>
-            }
-        </div>
         <div class="tw-flex tw-pt-18-px">
           <span class="tw-pl-48-px">
             <input type="text" class="tw-text-14-px tw-text-slightly-normal-text-color !tw-font-500 tw-w-300-px !tw-px-14-px !tw-py-10-px tw-border tw-border-solid !tw-border-separator tw-rounded-4-px" [value]="'intacctImportSettings.taxDetailLabel' | transloco" disabled>
@@ -109,7 +109,7 @@
                         [iconSrc]="'warning-filled'"
                         [customBackgroundColorClass]="brandingStyle.configuration.infoLabelWarningBackground"
                         [customStyleClass]="brandingStyle.configuration.infoLabelWarningIcon"
-                        [infoText]="'configurationImportField.autoImportEnabledInfo' | transloco: { destinationField: 'intacctImportSettings.taxDetailLabel' | transloco, currentDestinationCount: attributeCounts['tax_details_count'], appName: appName }">
+                        [infoText]="'intacctImportSettings.autoImportEnabledInfo' | transloco: { destinationField: 'intacctImportSettings.taxDetailLabel' | transloco, currentDestinationCount: attributeCounts['tax_details_count'], appName: appName }">
                     </app-configuration-info-label>
                 </div>
             }
@@ -192,7 +192,7 @@
                                 [iconSrc]="'warning-filled'"
                                 [customBackgroundColorClass]="brandingStyle.configuration.infoLabelWarningBackground"
                                 [customStyleClass]="brandingStyle.configuration.infoLabelWarningIcon"
-                                [infoText]="'configurationImportField.autoImportEnabledInfo' | transloco: { destinationField: (getDestinationField(expenseField.get('destination_field')?.value | snakeCaseToSpaceCase) | sentenceCase), currentDestinationCount: expenseField.get('count')?.value, appName: appName }">
+                                [infoText]="'intacctImportSettings.autoImportEnabledInfo' | transloco: { destinationField: (getDestinationField(expenseField.get('destination_field')?.value | snakeCaseToSpaceCase) | sentenceCase), currentDestinationCount: expenseField.get('count')?.value, appName: appName }">
                             </app-configuration-info-label>
                         </div>
                     }

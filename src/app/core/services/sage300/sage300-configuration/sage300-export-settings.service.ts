@@ -64,6 +64,10 @@ export class Sage300ExportSettingsService {
   getCCCExpenseGroupingDateOptions(): Sage300ExportSettingFormOption[] {
     return [
       {
+        label: this.translocoService.translate('common.currentDate'),
+        value: Sage300ExpenseDate.CURRENT_DATE
+      },
+      {
         label: this.translocoService.translate('services.sage300ExportSettings.cardTransactionPostDate'),
         value: Sage300ExpenseDate.POSTED_AT
       },
