@@ -105,7 +105,7 @@ export class NetsuiteAdvancedSettingsComponent implements OnInit {
 
   isOptionSearchInProgress: boolean;
 
-  NetsuiteAdvancedSettingDestinationOptionKey = NetsuiteAdvancedSettingDestinationOptionKey
+  NetsuiteAdvancedSettingDestinationOptionKey = NetsuiteAdvancedSettingDestinationOptionKey;
 
   constructor(
     private advancedSettingsService: NetsuiteAdvancedSettingsService,
