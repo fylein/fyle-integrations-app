@@ -746,6 +746,12 @@ export enum NetsuiteExportSettingDestinationOptionKey {
   CREDIT_CARD_ACCOUNT = 'CREDIT_CARD_ACCOUNT',
 }
 
+export enum NetsuiteAdvancedSettingDestinationOptionKey {
+  LOCATION = 'LOCATION',
+  DEPARTMENT = 'DEPARTMENT',
+  CLASS = 'CLASS'
+}
+
 export enum QboExportSettingDestinationOptionKey {
   BANK_ACCOUNT = 'BANK_ACCOUNT',
   CREDIT_CARD_ACCOUNT = 'CREDIT_CARD_ACCOUNT',
@@ -792,7 +798,8 @@ XeroExportSettingDestinationOptionKey |
 Sage300ExportSettingDestinationOptionKey |
 BCExportSettingDestinationOptionKey |
 QbdDirectExportSettingDestinationOptionKey |
-Sage50ExportSettingDestinationOptionKey;
+Sage50ExportSettingDestinationOptionKey |
+NetsuiteAdvancedSettingDestinationOptionKey;
 
 export enum QbdDirectExportSettingDestinationAccountType {
   OtherCurrentAsset = 'OtherCurrentAsset',

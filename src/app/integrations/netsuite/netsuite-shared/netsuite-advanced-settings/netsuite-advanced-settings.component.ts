@@ -1,12 +1,12 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
-import { forkJoin } from 'rxjs';
+import { debounceTime, forkJoin } from 'rxjs';
 import { brandingConfig, brandingFeatureConfig, brandingKbArticles, brandingStyle } from 'src/app/branding/branding-config';
 import { ConditionField, EmailOption, ExpenseFilterPayload, ExpenseFilterResponse, SkipExportModel, SkipExportValidatorRule, skipExportValidator } from 'src/app/core/models/common/advanced-settings.model';
 import { SelectFormOption } from 'src/app/core/models/common/select-form-option.model';
 import { DefaultDestinationAttribute, DestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
-import { AppName, AutoMapEmployeeOptions, ConfigurationCta, EmployeeFieldMapping, NameInJournalEntry, NetSuiteCorporateCreditCardExpensesObject, NetsuiteOnboardingState, NetsuiteReimbursableExpensesObject, ToastSeverity } from 'src/app/core/models/enum/enum.model';
+import { AppName, AutoMapEmployeeOptions, ConfigurationCta, EmployeeFieldMapping, NameInJournalEntry, NetsuiteAdvancedSettingDestinationOptionKey, NetSuiteCorporateCreditCardExpensesObject, NetsuiteExportSettingDestinationOptionKey, NetsuiteOnboardingState, NetsuiteReimbursableExpensesObject, ToastSeverity } from 'src/app/core/models/enum/enum.model';
 import { NetsuiteConfiguration } from 'src/app/core/models/netsuite/db/netsuite-workspace-general-settings.model';
 import { NetsuiteAdvancedSettingGet } from 'src/app/core/models/netsuite/netsuite-configuration/netsuite-advanced-settings.model';
 import { NetSuiteExportSettingGet } from 'src/app/core/models/netsuite/netsuite-configuration/netsuite-export-setting.model';
@@ -24,6 +24,7 @@ import { NetsuiteHelperService } from 'src/app/core/services/netsuite/netsuite-c
 import { OrgService } from 'src/app/core/services/org/org.service';
 import { TranslocoService } from '@jsverse/transloco';
 import { AdvancedSettingsService } from 'src/app/core/services/common/advanced-settings.service';
+import { ExportSettingOptionSearch } from 'src/app/core/models/common/export-settings.model';
 
 @Component({
     selector: 'app-netsuite-advanced-settings',
@@ -102,6 +103,10 @@ export class NetsuiteAdvancedSettingsComponent implements OnInit {
 
   readonly brandingStyle = brandingStyle;
 
+  isOptionSearchInProgress: boolean;
+
+  NetsuiteAdvancedSettingDestinationOptionKey = NetsuiteAdvancedSettingDestinationOptionKey
+
   constructor(
     private advancedSettingsService: NetsuiteAdvancedSettingsService,
     private configurationService: ConfigurationService,
@@ -122,6 +127,70 @@ export class NetsuiteAdvancedSettingsComponent implements OnInit {
     this.netsuiteLocationLevels = this.advancedSettingsService.getDefaultLevelOptions();
     this.netsuiteDepartmentLevels = this.advancedSettingsService.getDefaultLevelOptions();
     this.netsuiteClassLevels = this.advancedSettingsService.getDefaultLevelOptions();
+  }
+
+  searchOptionsDropdown(event: ExportSettingOptionSearch): void {
+    if (event.searchTerm) {
+      this.isOptionSearchInProgress = true;
+      this.optionSearchHandler(event.searchTerm, event.destinationAttributes, event.destinationOptionKey as string);
+    }
+  }
+
+  clearSearch(): void {
+    this.advancedSettingForm.controls.searchOption?.patchValue('');
+  }
+
+  private dfvDropdownOptions(destinationAttributes: DefaultDestinationAttribute[], destinationAttributeKey: string): void {
+    switch (destinationAttributeKey) {
+      case 'LOCATION':
+        this.netsuiteLocations = destinationAttributes.concat();
+        break;
+      case 'DEPARTMENT':
+        this.netsuiteDepartments = destinationAttributes.concat();
+        break;
+      case 'CLASS':
+        this.netsuiteClasses = destinationAttributes.concat();
+        break;
+      default:
+        break;
+    }
+  }
+
+  private optionSearchHandler(searchTerm: string, destinationAttributes: DefaultDestinationAttribute[], destinationAttributeKey: string): void {
+    debounceTime(1000);
+    this.isOptionSearchInProgress = true;
+    const existingOptions = destinationAttributes.concat();
+    let newOptions: DefaultDestinationAttribute[];
+
+    this.mappingService.getPaginatedDestinationAttributes(destinationAttributeKey, searchTerm).subscribe((response) => {
+      newOptions = response.results.map(this.exportSettingsService.formatGeneralMappingPayload);
+
+        // Insert new options to existing options
+        newOptions.forEach((option) => {
+          if (!existingOptions.find((existingOption) => existingOption.id === option.id)) {
+            existingOptions.push(option);
+          }
+      });
+
+      // Insert new options to existing options
+      newOptions.forEach((option: DefaultDestinationAttribute) => {
+        if (!existingOptions.find((existingOption) => existingOption.id === option.id)) {
+          existingOptions.push(option);
+        }
+      });
+      destinationAttributes = existingOptions.concat();
+      destinationAttributes = this.sortDropdownOptions(destinationAttributes);
+      this.dfvDropdownOptions(destinationAttributes, destinationAttributeKey);
+      this.isOptionSearchInProgress = false;
+    }, (error) => {
+      this.isOptionSearchInProgress = false;
+    });
+  }
+
+  private sortDropdownOptions(destinationAttributes: DefaultDestinationAttribute[]): DefaultDestinationAttribute[] {
+    return destinationAttributes.sort((a: DefaultDestinationAttribute, b: DefaultDestinationAttribute) => {
+      return a.name?.localeCompare(b.name || '') || 0;
+    });
   }
 
   isOptional(): string {
