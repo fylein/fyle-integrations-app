@@ -2,6 +2,7 @@ export const c1Styles = {
     common: {
         configurationContents: 'tw-mx-60-px tw-shadow-shadow-level-1',
         configurationContentsDashboard: '',
+        mainComponentmarging: 'tw-mb-126-px',
         mainComponentPadding: 'tw-px-60-px',
         mainComponentShadow: 'tw-shadow-shadow-level-1',
         inputLabelTextStyle: 'tw-pt-4-px',

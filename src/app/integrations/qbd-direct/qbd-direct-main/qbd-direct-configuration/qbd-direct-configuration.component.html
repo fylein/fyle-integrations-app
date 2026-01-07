@@ -4,7 +4,7 @@
 @if (isGradientAllowed) {
   <div class="tw-absolute tw-bg-header-2 tw-h-84-px tw-w-[100%]"></div>
 }
-<div class="tw-pt-40-px page-layout-container" [ngClass]="brandingFeatureConfig.useMainMenuForSubmenu ? brandingStyle.common.mainComponentPadding : ''">
+<div class="tw-pt-40-px page-layout-container" [ngClass]="[brandingFeatureConfig.useMainMenuForSubmenu ? brandingStyle.common.mainComponentPadding : '', brandingStyle.common.mainComponentmarging]">
 
   <div [ngClass]="brandingStyle.dashboard.mapping.background">
     @if (brandingFeatureConfig.useMainMenuForSubmenu) {
