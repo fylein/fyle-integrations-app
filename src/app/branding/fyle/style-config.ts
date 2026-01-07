@@ -4,6 +4,7 @@ export const fyleStyles = {
         configurationContentsDashboard: 'tw-mx-120-px tw-shadow-app-card',
         mainComponentPadding: 'tw-px-120-px',
         mainComponentShadow: 'tw-shadow-app-card',
+        mainComponentmarging: '',
         inputLabelTextStyle: 'tw-pt-8-px',
         configurationBrandingClass: 'fyle',
         paginatorContainer: '',
