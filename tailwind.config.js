@@ -1135,6 +1135,7 @@ module.exports = {
       },
       zIndex: {
         1: '1',
+        1200: '1200',
       },
       padding: {
         '2-px': '2px',
