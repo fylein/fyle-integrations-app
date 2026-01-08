@@ -52,7 +52,7 @@ export class LandingComponent implements OnInit {
     [IntegrationView.TRAVEL]: false
   };
 
-  isLoading: boolean = true; 
+  isLoading: boolean = true;
 
   private readonly integrationCallbackUrlMap: IntegrationCallbackUrl = {
     [AccountingIntegrationApp.NETSUITE]: [`${environment.fyle_app_url}/netsuite`, environment.ns_client_id],
@@ -87,7 +87,7 @@ export class LandingComponent implements OnInit {
 
 
   switchView(clickedView: IntegrationView): void {
-    
+
     const initialState = Object.create(this.integrationTabsInitialState);
 
     // Resetting to initial state and setting clicked view to true
