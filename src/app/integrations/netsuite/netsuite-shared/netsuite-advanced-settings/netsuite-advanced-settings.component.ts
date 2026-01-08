@@ -157,20 +157,12 @@ export class NetsuiteAdvancedSettingsComponent implements OnInit {
   }
 
   private optionSearchHandler(searchTerm: string, destinationAttributes: DefaultDestinationAttribute[], destinationAttributeKey: string): void {
-    debounceTime(1000);
     this.isOptionSearchInProgress = true;
     const existingOptions = destinationAttributes.concat();
     let newOptions: DefaultDestinationAttribute[];
 
     this.mappingService.getPaginatedDestinationAttributes(destinationAttributeKey, searchTerm).subscribe((response) => {
       newOptions = response.results.map(this.exportSettingsService.formatGeneralMappingPayload);
-
-        // Insert new options to existing options
-        newOptions.forEach((option) => {
-          if (!existingOptions.find((existingOption) => existingOption.id === option.id)) {
-            existingOptions.push(option);
-          }
-      });
 
       // Insert new options to existing options
       newOptions.forEach((option: DefaultDestinationAttribute) => {
