@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 
 import { QboRoutingModule } from './qbo-routing.module';
 import { QboComponent } from './qbo.component';
+import { SharedModule } from 'src/app/shared/shared.module';
 
 
 @NgModule({
@@ -11,7 +12,8 @@ import { QboComponent } from './qbo.component';
   ],
   imports: [
     CommonModule,
-    QboRoutingModule
+    QboRoutingModule,
+    SharedModule
   ]
 })
 export class QboModule { }
