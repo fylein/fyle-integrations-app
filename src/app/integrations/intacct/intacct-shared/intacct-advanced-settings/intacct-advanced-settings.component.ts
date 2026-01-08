@@ -3,7 +3,7 @@ import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from
 import { Router } from '@angular/router';
 import { debounceTime, forkJoin, Subject } from 'rxjs';
 import { QBDEmailOptions } from 'src/app/core/models/qbd/qbd-configuration/qbd-advanced-setting.model';
-import { AppName, ConfigurationCta, FyleField, IntacctOnboardingState, IntacctReimbursableExpensesObject, IntacctCorporateCreditCardExpensesObject, IntacctUpdateEvent, Page, PaymentSyncDirection, ProgressPhase, ToastSeverity, TrackingApp, ExpenseGroupingFieldOption } from 'src/app/core/models/enum/enum.model';
+import { AppName, ConfigurationCta, FyleField, IntacctOnboardingState, IntacctReimbursableExpensesObject, IntacctCorporateCreditCardExpensesObject, IntacctUpdateEvent, Page, PaymentSyncDirection, ProgressPhase, ToastSeverity, TrackingApp, ExpenseGroupingFieldOption, IntacctAdvancedSettingDestinationOptionKey } from 'src/app/core/models/enum/enum.model';
 import { AdvancedSetting, AdvancedSettingFormOption, AdvancedSettingsGet, AdvancedSettingsPost, HourOption } from 'src/app/core/models/intacct/intacct-configuration/advanced-settings.model';
 import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
 import { TrackingService } from 'src/app/core/services/integration/tracking.service';
@@ -23,6 +23,8 @@ import { DestinationAttribute } from 'src/app/core/models/db/destination-attribu
 import { TranslocoService } from '@jsverse/transloco';
 import { AdvancedSettingsService } from 'src/app/core/services/common/advanced-settings.service';
 import { ExportSettingsService } from 'src/app/core/services/common/export-settings.service';
+import { ExportSettingOptionSearch } from 'src/app/core/models/common/export-settings.model';
+import { HelperService } from 'src/app/core/services/common/helper.service';
 
 @Component({
     selector: 'app-intacct-advanced-settings',
@@ -106,6 +108,8 @@ export class IntacctAdvancedSettingsComponent implements OnInit {
 
   isOptionSearchInProgress: boolean;
 
+  IntacctAdvancedSettingDestinationOptionKey = IntacctAdvancedSettingDestinationOptionKey;
+
   readonly brandingConfig = brandingConfig;
 
   readonly brandingFeatureConfig = brandingFeatureConfig;
@@ -127,16 +131,15 @@ export class IntacctAdvancedSettingsComponent implements OnInit {
     private siExportSettingsService : SiExportSettingsService,
     private translocoService: TranslocoService,
     private exportSettingsService: ExportSettingsService,
-    private advanceSettingsService: AdvancedSettingsService
+    private advanceSettingsService: AdvancedSettingsService,
+    public helper: HelperService
   ) { }
 
-  searchOptions(event: any, destinationAttributes: IntacctDestinationAttribute[], destinationAttributeKey: string) {
-    const searchTerm = (event.filter as string).trim();
-    if (!searchTerm) {
-      return;
+  searchOptionsDropdown(event: ExportSettingOptionSearch): void {
+    if (event.searchTerm) {
+      this.isOptionSearchInProgress = true;
+      this.optionSearchHandler(event.searchTerm, event.destinationAttributes, event.destinationOptionKey as string);
     }
-
-    this.optionSearchHandler(searchTerm, destinationAttributes, destinationAttributeKey);
   }
 
   clearSearch(): void {
@@ -199,6 +202,10 @@ export class IntacctAdvancedSettingsComponent implements OnInit {
     return destinationAttributes.sort((a: IntacctDestinationAttribute, b: IntacctDestinationAttribute) => {
       return a.value.localeCompare(b.value);
     });
+  }
+
+  isOptional(): string {
+    return brandingFeatureConfig.featureFlags.showOptionalTextInsteadOfAsterisk ? this.translocoService.translate('intacctAdvancedSettings.optional') : '';
   }
 
   invalidSkipExportForm($event: boolean) {
