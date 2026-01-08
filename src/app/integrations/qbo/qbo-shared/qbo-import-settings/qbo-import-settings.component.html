@@ -148,14 +148,16 @@
                 [formControllerName]="'importVendorsAsMerchants'"
                 [iconPath]="'arrow-tail-down'"(importCodeEnabled)="updateCommonImportFields($event, 'vendors_count', 'importVendorsAsMerchants')">
               </app-configuration-toggle-field>
-              <div *ngIf="importSettingForm.get('importVendorsAsMerchants')?.disabled" class="tw-pb-26-px tw-px-24-px">
+              @if (importSettingForm.get('importVendorsAsMerchants')?.disabled) {
+                <div class="tw-pb-26-px tw-px-24-px">
                   <app-configuration-info-label 
-                      [iconSrc]="'warning-filled'"
-                      [customBackgroundColorClass]="brandingStyle.configuration.infoLabelWarningBackground"
-                      [customStyleClass]="brandingStyle.configuration.infoLabelWarningIcon"
-                      [infoText]="'qboImportSettings.autoImportEnabledInfo' | transloco: { destinationField: 'Vendors', currentDestinationCount: attributeCounts['vendors_count'], appName: appName }">
+                    [iconSrc]="'warning-filled'"
+                    [customBackgroundColorClass]="brandingStyle.configuration.infoLabelWarningBackground"
+                    [customStyleClass]="brandingStyle.configuration.infoLabelWarningIcon"
+                    [infoText]="'qboImportSettings.autoImportEnabledInfo' | transloco: { destinationField: 'Vendors', currentDestinationCount: attributeCounts['vendors_count'], appName: appName }">
                   </app-configuration-info-label>
-              </div>
+                </div>
+              }
             </div>
           }
           <div>
@@ -184,7 +186,7 @@
 }
 
 @if (!isLoading && !isOnboarding) {
-  <div class="tw-sticky tw-top-0 tw-bottom-0 tw-left-0 tw-right-0 tw-bg-white">
+  <div class="tw-sticky tw-z-1200 tw-top-0 tw-bottom-0 tw-left-0 tw-right-0 tw-bg-white">
     <app-configuration-step-footer
       [ctaText] = "!isSaveInProgress ? (isOnboarding ? ConfigurationCtaText.SAVE_AND_CONTINUE : ConfigurationCtaText.SAVE) : ConfigurationCtaText.SAVING"
       [isButtonDisabled]="!importSettingForm.valid"
