@@ -112,7 +112,8 @@
                 [label]="'netsuite.configuration.importSetting.taxCodeLabel' | transloco"
                 [subLabel]="'netsuite.configuration.importSetting.taxCodeSubLabel' | transloco: { brandName: brandingConfig.brandName }"
                 [formControllerName]="'taxCode'"
-                [iconPath]="'arrow-tail-down'"(importCodeEnabled)="updateCommonImportFields($event, 'tax_items_count', 'taxCode')">
+                [iconPath]="'arrow-tail-down'"
+                (importCodeEnabled)="updateCommonImportFields($event, 'tax_items_count', 'taxCode')">
               </app-configuration-toggle-field>
               @if (importSettingForm.get('taxCode')?.disabled) {
                 <div class="tw-pb-26-px tw-px-24-px">
