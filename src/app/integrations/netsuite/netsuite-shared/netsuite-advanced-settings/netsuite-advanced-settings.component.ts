@@ -140,7 +140,7 @@ export class NetsuiteAdvancedSettingsComponent implements OnInit {
     this.advancedSettingForm.controls.searchOption?.patchValue('');
   }
 
-  private dfvDropdownOptions(destinationAttributes: DefaultDestinationAttribute[], destinationAttributeKey: string): void {
+  private setDefaultFieldDropdownOptions(destinationAttributes: DefaultDestinationAttribute[], destinationAttributeKey: string): void {
     switch (destinationAttributeKey) {
       case 'LOCATION':
         this.netsuiteLocations = destinationAttributes.concat();
@@ -172,7 +172,7 @@ export class NetsuiteAdvancedSettingsComponent implements OnInit {
       });
       destinationAttributes = existingOptions.concat();
       destinationAttributes = this.sortDropdownOptions(destinationAttributes);
-      this.dfvDropdownOptions(destinationAttributes, destinationAttributeKey);
+      this.setDefaultFieldDropdownOptions(destinationAttributes, destinationAttributeKey);
       this.isOptionSearchInProgress = false;
     }, (error) => {
       this.isOptionSearchInProgress = false;

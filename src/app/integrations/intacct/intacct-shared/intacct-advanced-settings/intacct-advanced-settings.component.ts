@@ -150,7 +150,7 @@ export class IntacctAdvancedSettingsComponent implements OnInit {
     return element.offsetWidth < element.scrollWidth;
   }
 
-  private dfvDropdownOptions(destinationAttributes: IntacctDestinationAttribute[], destinationAttributeKey: string): void {
+  private setDefaultFieldDropdownOptions(destinationAttributes: IntacctDestinationAttribute[], destinationAttributeKey: string): void {
     switch (destinationAttributeKey) {
       case 'LOCATION':
         this.sageIntacctLocations = destinationAttributes.concat();
@@ -173,7 +173,6 @@ export class IntacctAdvancedSettingsComponent implements OnInit {
   }
 
   private optionSearchHandler(searchTerm: string, destinationAttributes: IntacctDestinationAttribute[], destinationAttributeKey: string): void {
-    debounceTime(1000);
     this.isOptionSearchInProgress = true;
     const existingOptions = destinationAttributes.concat();
     const newOptions: IntacctDestinationAttribute[] = [];
@@ -191,7 +190,7 @@ export class IntacctAdvancedSettingsComponent implements OnInit {
       });
       destinationAttributes = existingOptions.concat();
       destinationAttributes = this.sortDropdownOptions(destinationAttributes);
-      this.dfvDropdownOptions(destinationAttributes, destinationAttributeKey);
+      this.setDefaultFieldDropdownOptions(destinationAttributes, destinationAttributeKey);
       this.isOptionSearchInProgress = false;
     }, (error) => {
       this.isOptionSearchInProgress = false;
