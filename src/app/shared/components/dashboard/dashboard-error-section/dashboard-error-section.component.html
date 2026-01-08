@@ -100,35 +100,37 @@
                         </div>
                     }
     
-                    <div *ngFor="let error of errors.ACCOUNTING_ERROR" class="tw-pl-24-px tw-pr-24-px tw-pt-16-px">
-                        <div class="container">
-                            <div class="inside-container" [ngClass]="brandingStyle.dashboard.exportErrorCard">
-                                <div>
-                                    <h4 class=" tw-w-600-px" [ngClass]="brandingStyle.dashboard.exportErrorTextHeader">{{ error.error_title | snakeCaseToSpaceCase }}</h4>
-                                    <h5 class="!tw-font-400 tw-text-12-px !tw-leading-4 tw-w-600-px tw-flex tw-items-center tw-justify-start" [ngClass]="brandingStyle.dashboard.exportErrorAccountingDescription">
-                                        <p >{{ error.error_detail }}
-                                            @if (error.article_link && brandingFeatureConfig.allowIntacctHelperDoc) {
-                                                <a class="link tw-pr-4-px tw-w-fit tw-inline-flex tw-items-center"
-                                                    (click)="windowService.openInNewTab(error.article_link)">
-                                                    {{ helper.sentenseCaseConversion('Read More') }}
-                                                    @if (brandingFeatureConfig.isIconsInsideButtonAllowed) {
-                                                        <app-svg-icon [svgSource]="'open-in-new-tab'" [width]="'16px'" [height]="'16px'"
-                                                            class="tw-text-link-primary tw-pl-2-px tw-w-fit">
-                                                        </app-svg-icon>
-                                                    }
-                                                </a>
-                                            }
-                                        </p>
-                                    </h5>
-                                </div>
-                                <div class="flex-wrapper" [ngClass]="brandingStyle.dashboard.exportErrorCardButton">
+                    @for (error of errors.ACCOUNTING_ERROR; track error) {
+                        <div class="tw-pl-24-px tw-pr-24-px tw-pt-16-px">
+                            <div class="container">
+                                <div class="inside-container" [ngClass]="brandingStyle.dashboard.exportErrorCard">
                                     <div>
-                                        <app-button [buttonSize]="ButtonSize.EXTRA_SMALL" [buttonType]="ButtonType.SECONDARY" (buttonClick)="showErrorDialog(error)" [buttonText]="'common.viewExpenseText' | transloco"></app-button>
+                                        <h4 class=" tw-w-600-px" [ngClass]="brandingStyle.dashboard.exportErrorTextHeader">{{ error.error_title | snakeCaseToSpaceCase }}</h4>
+                                        <h5 class="!tw-font-400 tw-text-12-px !tw-leading-4 tw-w-600-px tw-flex tw-items-center tw-justify-start" [ngClass]="brandingStyle.dashboard.exportErrorAccountingDescription">
+                                            <p >{{ error.error_detail }}
+                                                @if (error.article_link && brandingFeatureConfig.allowIntacctHelperDoc) {
+                                                    <a class="link tw-pr-4-px tw-w-fit tw-inline-flex tw-items-center"
+                                                        (click)="windowService.openInNewTab(error.article_link)">
+                                                        {{ helper.sentenseCaseConversion('Read More') }}
+                                                        @if (brandingFeatureConfig.isIconsInsideButtonAllowed) {
+                                                            <app-svg-icon [svgSource]="'open-in-new-tab'" [width]="'16px'" [height]="'16px'"
+                                                                class="tw-text-link-primary tw-pl-2-px tw-w-fit">
+                                                            </app-svg-icon>
+                                                        }
+                                                    </a>
+                                                }
+                                            </p>
+                                        </h5>
+                                    </div>
+                                    <div class="flex-wrapper" [ngClass]="brandingStyle.dashboard.exportErrorCardButton">
+                                        <div>
+                                            <app-button [buttonSize]="ButtonSize.EXTRA_SMALL" [buttonType]="ButtonType.SECONDARY" (buttonClick)="showErrorDialog(error)" [buttonText]="'common.viewExpenseText' | transloco"></app-button>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    }
     
                 </div>
             </div>
