@@ -11,10 +11,11 @@ import { WindowService } from 'src/app/core/services/common/window.service';
 import { WorkspaceService } from 'src/app/core/services/common/workspace.service';
 import { AppcuesService } from 'src/app/core/services/integration/appcues.service';
 import { QbdDirectHelperService } from 'src/app/core/services/qbd-direct/qbd-direct-core/qbd-direct-helper.service';
+import { SharedModule } from 'src/app/shared/shared.module';
 
 @Component({
     selector: 'app-qbd-direct',
-    imports: [RouterModule],
+    imports: [RouterModule, SharedModule],
     templateUrl: './qbd-direct.component.html',
     styleUrl: './qbd-direct.component.scss'
 })
