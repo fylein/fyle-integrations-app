@@ -739,6 +739,14 @@ export enum IntacctExportSettingDestinationOptionKey {
   CHARGE_CARD = 'CHARGE_CARD'
 }
 
+export enum IntacctAdvancedSettingDestinationOptionKey {
+  ITEM = 'ITEM',
+  LOCATION = 'LOCATION',
+  DEPARTMENT = 'DEPARTMENT',
+  CLASS = 'CLASS',
+  PROJECT = 'PROJECT'
+}
+
 export enum NetsuiteExportSettingDestinationOptionKey {
   VENDOR = 'VENDOR',
   ACCOUNTS_PAYABLE = 'ACCOUNTS_PAYABLE',
@@ -799,7 +807,8 @@ Sage300ExportSettingDestinationOptionKey |
 BCExportSettingDestinationOptionKey |
 QbdDirectExportSettingDestinationOptionKey |
 Sage50ExportSettingDestinationOptionKey |
-NetsuiteAdvancedSettingDestinationOptionKey;
+NetsuiteAdvancedSettingDestinationOptionKey |
+IntacctAdvancedSettingDestinationOptionKey;
 
 export enum QbdDirectExportSettingDestinationAccountType {
   OtherCurrentAsset = 'OtherCurrentAsset',
