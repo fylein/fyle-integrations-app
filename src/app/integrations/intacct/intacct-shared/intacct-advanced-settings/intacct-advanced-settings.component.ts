@@ -146,10 +146,6 @@ export class IntacctAdvancedSettingsComponent implements OnInit {
     this.advancedSettingsForm.controls.searchOption?.patchValue('');
   }
 
-  dfvIsOverflowing(element: any): boolean {
-    return element.offsetWidth < element.scrollWidth;
-  }
-
   private setDefaultFieldDropdownOptions(destinationAttributes: IntacctDestinationAttribute[], destinationAttributeKey: string): void {
     switch (destinationAttributeKey) {
       case 'LOCATION':
