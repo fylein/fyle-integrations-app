@@ -147,19 +147,19 @@ export class IntacctAdvancedSettingsComponent implements OnInit {
 
   private setDefaultFieldDropdownOptions(destinationAttributes: IntacctDestinationAttribute[], destinationAttributeKey: string): void {
     switch (destinationAttributeKey) {
-      case 'LOCATION':
+      case this.IntacctAdvancedSettingDestinationOptionKey.LOCATION:
         this.sageIntacctLocations = destinationAttributes.concat();
         break;
-      case 'DEPARTMENT':
+      case this.IntacctAdvancedSettingDestinationOptionKey.DEPARTMENT:
         this.sageIntacctDepartments = destinationAttributes.concat();
         break;
-      case 'PROJECT':
+      case this.IntacctAdvancedSettingDestinationOptionKey.PROJECT:
         this.sageIntacctProjects = destinationAttributes.concat();
         break;
-      case 'CLASS':
+      case this.IntacctAdvancedSettingDestinationOptionKey.CLASS:
         this.sageIntacctClasses = destinationAttributes.concat();
         break;
-      case 'ITEM':
+      case this.IntacctAdvancedSettingDestinationOptionKey.ITEM:
         this.sageIntacctDefaultItem = destinationAttributes.concat();
         break;
       default:
