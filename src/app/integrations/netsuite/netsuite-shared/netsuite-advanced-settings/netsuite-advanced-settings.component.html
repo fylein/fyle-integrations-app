@@ -183,10 +183,16 @@
               [form]="advancedSettingForm"
               [isDefaultFields]="true"
               [destinationAttributes]="netsuiteLocations"
+              [optionLabel]="'name'"
+              [destinationOptionKey]="NetsuiteAdvancedSettingDestinationOptionKey.LOCATION"
+              [isMultiLineOption]="true"
+              [isOptionSearchInProgress]="isOptionSearchInProgress"
+              [isAdvanceSearchEnabled]="true"
               [label]="helper.sentenseCaseConversion(('netsuiteAdvancedSettings.defaultLocation' | transloco)) + isOptional()"
               [placeholder]="helper.sentenseCaseConversion(('netsuiteAdvancedSettings.chooseDefaultNetsuiteLocation' | transloco))"
               [showClearIcon]="true"
-              [formControllerName]="'netsuiteLocation'">
+              [formControllerName]="'netsuiteLocation'"
+              (searchOptionsDropdown)="searchOptionsDropdown($event)">
             </app-configuration-select-field>
             @if (brandingFeatureConfig.featureFlags.advancedSettings.useEmployeeAttributes && workspaceGeneralSettings.employee_field_mapping === 'EMPLOYEE') {
               <div class="tw-pl-24-px tw-mt-30-px">
@@ -200,6 +206,7 @@
               [form]="advancedSettingForm"
               [destinationAttributes]="netsuiteLocationLevels"
               [isDefaultFields]="true"
+              [optionLabel]="'name'"
               [label]="helper.sentenseCaseConversion(('netsuiteAdvancedSettings.netsuiteLocationLevel' | transloco)) + isOptional()"
               [placeholder]="helper.sentenseCaseConversion(('netsuiteAdvancedSettings.chooseNetsuiteLocationLevel' | transloco))"
               [formControllerName]="'netsuiteLocationLevel'">
@@ -210,6 +217,12 @@
               [form]="advancedSettingForm"
               [isDefaultFields]="true"
               [destinationAttributes]="netsuiteDepartments"
+              [optionLabel]="'name'"
+              [destinationOptionKey]="NetsuiteAdvancedSettingDestinationOptionKey.DEPARTMENT"
+              [isMultiLineOption]="true"
+              [isOptionSearchInProgress]="isOptionSearchInProgress"
+              [isAdvanceSearchEnabled]="true"
+              (searchOptionsDropdown)="searchOptionsDropdown($event)"
               [label]="helper.sentenseCaseConversion(('netsuiteAdvancedSettings.defaultDepartment' | transloco)) + isOptional()"
               [placeholder]="helper.sentenseCaseConversion(('netsuiteAdvancedSettings.chooseDefaultNetsuiteDepartment' | transloco))"
               [showClearIcon]="true"
@@ -227,6 +240,7 @@
               [form]="advancedSettingForm"
               [destinationAttributes]="netsuiteDepartmentLevels"
               [isDefaultFields]="true"
+              [optionLabel]="'name'"
               [label]="helper.sentenseCaseConversion(('netsuiteAdvancedSettings.netsuiteDepartmentLevel' | transloco)) + isOptional()"
               [placeholder]="helper.sentenseCaseConversion(('netsuiteAdvancedSettings.chooseNetsuiteDepartmentLevel' | transloco))"
               [formControllerName]="'netsuiteDepartmentLevel'">
@@ -237,6 +251,12 @@
               [form]="advancedSettingForm"
               [isDefaultFields]="true"
               [destinationAttributes]="netsuiteClasses"
+              [optionLabel]="'name'"
+              [destinationOptionKey]="NetsuiteAdvancedSettingDestinationOptionKey.CLASS"
+              [isMultiLineOption]="true"
+              [isOptionSearchInProgress]="isOptionSearchInProgress"
+              [isAdvanceSearchEnabled]="true"
+              (searchOptionsDropdown)="searchOptionsDropdown($event)"
               [label]="helper.sentenseCaseConversion(('netsuiteAdvancedSettings.defaultClass' | transloco)) + isOptional()"
               [placeholder]="helper.sentenseCaseConversion(('netsuiteAdvancedSettings.chooseDefaultNetsuiteClass' | transloco))"
               [showClearIcon]="true"
@@ -254,6 +274,7 @@
               [form]="advancedSettingForm"
               [destinationAttributes]="netsuiteClassLevels"
               [isDefaultFields]="true"
+              [optionLabel]="'name'"
               [label]="helper.sentenseCaseConversion(('netsuiteAdvancedSettings.netsuiteClassLevel' | transloco)) + isOptional()"
               [placeholder]="helper.sentenseCaseConversion(('netsuiteAdvancedSettings.chooseNetsuiteClassLevel' | transloco))"
               [formControllerName]="'netsuiteClassLevel'">
