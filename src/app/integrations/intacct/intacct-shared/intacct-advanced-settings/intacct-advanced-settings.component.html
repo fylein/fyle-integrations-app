@@ -209,8 +209,8 @@
             </app-configuration-select-field>
             @if (brandingFeatureConfig.featureFlags.exportSettings.reimbursableExpenses) {
               <span class="tw-pl-24-px tw-mt-30-px">
-                <input formControlName="useEmployeeLocation" type="checkbox" />
-                <label class="tw-pl-8-px" for="checkbox">{{ 'intacctAdvancedSettings.useEmployeeLocation' | transloco }}</label>
+                <input id="useEmployeeLocation" formControlName="useEmployeeLocation" type="checkbox" />
+                <label class="tw-pl-8-px" for="useEmployeeLocation">{{ 'intacctAdvancedSettings.useEmployeeLocation' | transloco }}</label>
               </span>
             }
           </div>
@@ -232,8 +232,8 @@
             </app-configuration-select-field>
             @if (brandingFeatureConfig.featureFlags.exportSettings.reimbursableExpenses) {
               <span class="tw-pl-24-px tw-mt-30-px">
-                <input formControlName="useEmployeeDepartment" type="checkbox" />
-                <label class="tw-pl-8-px" for="checkbox">{{ 'intacctAdvancedSettings.useEmployeeDepartment' | transloco }}</label>
+                <input id="useEmployeeDepartment" formControlName="useEmployeeDepartment" type="checkbox" />
+                <label class="tw-pl-8-px" for="useEmployeeDepartment">{{ 'intacctAdvancedSettings.useEmployeeDepartment' | transloco }}</label>
               </span>
             }
           </div>

@@ -131,8 +131,7 @@ export class IntacctAdvancedSettingsComponent implements OnInit {
     private siExportSettingsService : SiExportSettingsService,
     private translocoService: TranslocoService,
     private exportSettingsService: ExportSettingsService,
-    private advanceSettingsService: AdvancedSettingsService,
-    public helper: HelperService
+    private advanceSettingsService: AdvancedSettingsService
   ) { }
 
   searchOptionsDropdown(event: ExportSettingOptionSearch): void {
