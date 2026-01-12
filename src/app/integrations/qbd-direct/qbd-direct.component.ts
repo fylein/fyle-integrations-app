@@ -60,6 +60,7 @@ export class QbdDirectComponent implements OnInit {
         [QbdDirectOnboardingState.ADVANCED_SETTINGS]: '/integrations/qbd_direct/onboarding/advanced_settings',
         [QbdDirectOnboardingState.COMPLETE]: '/integrations/qbd_direct/main'
       };
+      this.isLoading = false;
       this.router.navigateByUrl(onboardingStateComponentMap[this.workspace.onboarding_state]);
     }
   }
@@ -71,7 +72,6 @@ export class QbdDirectComponent implements OnInit {
     this.appcuesService.initialiseAppcues(AppName.QBD_DIRECT, this.workspace.created_at);
     this.workspaceService.importFyleAttributes(false).subscribe();
     this.qbdDirectHelperService.importQBDAttributes(false).subscribe();
-    this.isLoading = false;
     this.navigate();
   }
 

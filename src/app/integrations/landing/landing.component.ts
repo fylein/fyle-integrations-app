@@ -113,18 +113,13 @@ export class LandingComponent implements OnInit {
     let login$;
     if (inAppIntegration === InAppIntegration.INTACCT) {
       login$ = this.siAuthService.loginWithAuthCode(authCode);
-      this.isLoading = false;
     } else if (inAppIntegration === InAppIntegration.QBO) {
       login$ = this.qboAuthService.loginWithAuthCode(authCode);
-      this.isLoading = false;
     } else if (inAppIntegration === InAppIntegration.XERO) {
       login$ = this.xeroAuthService.login(authCode);
-      this.isLoading = false;
     } else if (inAppIntegration === InAppIntegration.NETSUITE) {
       login$ = this.nsAuthService.loginWithAuthCode(authCode);
-      this.isLoading = false;
     } else {
-      this.isLoading = false;
       return;
     }
 

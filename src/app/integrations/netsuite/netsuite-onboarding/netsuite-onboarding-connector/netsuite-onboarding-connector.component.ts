@@ -32,6 +32,8 @@ export class NetsuiteOnboardingConnectorComponent implements OnInit {
     .subscribe(isNetsuiteCredentialsValid => {
       this.isNetsuiteCredentialsValid = isNetsuiteCredentialsValid && eventData ? eventData : false;
       this.isLoading = false;
+    }, () => {
+      this.isLoading = false;
     });
   }
 
@@ -39,6 +41,8 @@ export class NetsuiteOnboardingConnectorComponent implements OnInit {
     this.netsuiteConnector.getNetsuiteTokenHealthStatus(true)
     .subscribe(isNetsuiteCredentialsValid => {
       this.isNetsuiteCredentialsValid = isNetsuiteCredentialsValid;
+      this.isLoading = false;
+    }, () => {
       this.isLoading = false;
     });
     this.onboardingSteps = this.onboardingService.getOnboardingSteps('Connect to NetSuite', this.workspaceService.getOnboardingState());

@@ -52,7 +52,7 @@ export class Sage300Component implements OnInit {
         [Sage300OnboardingState.ADVANCED_SETTINGS]: '/integrations/sage300/onboarding/advanced_settings',
         [Sage300OnboardingState.COMPLETE]: '/integrations/sage300/main/dashboard'
       };
-
+      this.isLoading = false;
       this.router.navigateByUrl(isSage300TokenValid === false && ![Sage300OnboardingState.CONNECTION, Sage300OnboardingState.COMPLETE].includes(this.workspace.onboarding_state) ?  onboardingStateComponentMap[Sage300OnboardingState.CONNECTOR_AUTH] : onboardingStateComponentMap[this.workspace.onboarding_state]);
     }
   }
@@ -84,7 +84,6 @@ export class Sage300Component implements OnInit {
     this.storageService.set('onboarding-state', this.workspace.onboarding_state);
     this.workspaceService.importFyleAttributes(false).subscribe();
     this.mapping.importSage300Attributes(false).subscribe();
-    this.isLoading = false;
     this.routeBasedOnTokenStatus();
   }
 
