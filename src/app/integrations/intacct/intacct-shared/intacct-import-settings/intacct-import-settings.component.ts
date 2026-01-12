@@ -150,7 +150,7 @@ export class IntacctImportSettingsComponent implements OnInit {
       this.importSettingService.getImportFieldsAttributeCounts().subscribe((importFieldsAttributeCounts: IntacctImportFieldsAttributeCounts) => {
         this.attributeCounts = importFieldsAttributeCounts;
         const destinationFieldCount: number = importFieldsAttributeCounts[destinationField] as number;
-        if (destinationFieldCount >= 0) {
+        if (destinationFieldCount >= 30000) {
           this.importSettingsForm.controls[formControlName].setValue(false);
           this.importSettingsForm.controls[formControlName].disable();
           this.defaultAttribuitesWarningArray[index] = true;
@@ -169,7 +169,7 @@ export class IntacctImportSettingsComponent implements OnInit {
     if (event[0]) {
       this.importSettingService.getImportFieldsAttributeCounts().subscribe((importFieldsAttributeCounts: IntacctImportFieldsAttributeCounts) => {
         const count = importFieldsAttributeCounts[destinationField as keyof IntacctImportFieldsAttributeCounts];
-        if (typeof count === 'number' && count >= 0) {
+        if (typeof count === 'number' && count >= 30000) {
           const expenseField = expenseFieldArray.controls[event[2]];
           expenseField.patchValue({
             import_to_fyle: false,

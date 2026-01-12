@@ -56,7 +56,7 @@
                 [iconSrc]="'warning-filled'"
                 [customBackgroundColorClass]="brandingStyle.configuration.infoLabelWarningBackground"
                 [customStyleClass]="brandingStyle.configuration.infoLabelWarningIcon"
-                [infoText]="'intacctImportSettings.autoImportEnabledInfo' | transloco: { destinationField: (getDestinationField(intacctCategoryDestinationLabel | snakeCaseToSpaceCase) | sentenceCase), currentDestinationCount: 32000, appName: appName }">
+                [infoText]="'intacctImportSettings.autoImportEnabledInfo' | transloco: { destinationField: (getDestinationField(intacctCategoryDestinationLabel | snakeCaseToSpaceCase) | sentenceCase), currentDestinationCount: attributeCounts['accounts_count'], appName: appName }">
               </app-configuration-info-label>
             </div>
           }
@@ -82,7 +82,7 @@
               [iconSrc]="'warning-filled'"
               [customBackgroundColorClass]="brandingStyle.configuration.infoLabelWarningBackground"
               [customStyleClass]="brandingStyle.configuration.infoLabelWarningIcon"
-              [infoText]="'intacctImportSettings.autoImportEnabledInfo' | transloco: { destinationField: 'intacctImportSettings.vendorLabel' | transloco, currentDestinationCount: 30001, appName: appName }">
+              [infoText]="'intacctImportSettings.autoImportEnabledInfo' | transloco: { destinationField: 'intacctImportSettings.vendorLabel' | transloco, currentDestinationCount: attributeCounts['vendors_count'], appName: appName }">
             </app-configuration-info-label>
           </div>
         }
@@ -109,7 +109,7 @@
                 [iconSrc]="'warning-filled'"
                 [customBackgroundColorClass]="brandingStyle.configuration.infoLabelWarningBackground"
                 [customStyleClass]="brandingStyle.configuration.infoLabelWarningIcon"
-                [infoText]="'intacctImportSettings.autoImportEnabledInfo' | transloco: { destinationField: 'intacctImportSettings.taxDetailLabel' | transloco, currentDestinationCount: 35000, appName: appName }">
+                [infoText]="'intacctImportSettings.autoImportEnabledInfo' | transloco: { destinationField: 'intacctImportSettings.taxDetailLabel' | transloco, currentDestinationCount: attributeCounts['tax_details_count'], appName: appName }">
               </app-configuration-info-label>
             </div>
           }
@@ -192,7 +192,7 @@
                     [iconSrc]="'warning-filled'"
                     [customBackgroundColorClass]="brandingStyle.configuration.infoLabelWarningBackground"
                     [customStyleClass]="brandingStyle.configuration.infoLabelWarningIcon"
-                    [infoText]="'intacctImportSettings.autoImportEnabledInfo' | transloco: { destinationField: (getDestinationField(expenseField.get('destination_field')?.value | snakeCaseToSpaceCase) | sentenceCase), currentDestinationCount: 30290, appName: appName }">
+                    [infoText]="'intacctImportSettings.autoImportEnabledInfo' | transloco: { destinationField: (getDestinationField(expenseField.get('destination_field')?.value | snakeCaseToSpaceCase) | sentenceCase), currentDestinationCount: expenseField.get('count')?.value, appName: appName }">
                   </app-configuration-info-label>
                 </div>
               }
