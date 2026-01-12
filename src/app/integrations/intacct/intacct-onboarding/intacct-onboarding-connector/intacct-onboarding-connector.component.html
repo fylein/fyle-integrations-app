@@ -1,7 +1,14 @@
-<app-onboarding-steppers [onboardingSteps]="onboardingSteps" [disableConfigurationStepsIfTokenInvalid]="!isIntacctCredentialsValid"></app-onboarding-steppers>
-@if (!isIntacctCredentialsValid) {
-  <app-intacct-connector (setupConnectionStatus)="setupConnectionStatus($event)"></app-intacct-connector>
-}
-@if (isIntacctCredentialsValid) {
-  <app-intacct-location-entity></app-intacct-location-entity>
+@if (isLoading) {
+  <div class="tw-flex tw-justify-center tw-items-center tw-h-full">
+    <app-loader></app-loader>
+  </div>
+} 
+@else {
+  <app-onboarding-steppers [onboardingSteps]="onboardingSteps" [disableConfigurationStepsIfTokenInvalid]="!isIntacctCredentialsValid"></app-onboarding-steppers>
+  @if (!isIntacctCredentialsValid) {
+    <app-intacct-connector (setupConnectionStatus)="setupConnectionStatus($event)"></app-intacct-connector>
+  }
+  @if (isIntacctCredentialsValid) {
+    <app-intacct-location-entity></app-intacct-location-entity>
+  }
 }

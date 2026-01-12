@@ -57,7 +57,7 @@ export class NetsuiteComponent implements OnInit {
         [NetsuiteOnboardingState.ADVANCED_CONFIGURATION]: '/integrations/netsuite/onboarding/advanced_settings',
         [NetsuiteOnboardingState.COMPLETE]: '/integrations/netsuite/main'
       };
-
+      this.isLoading = false;
       this.router.navigateByUrl(isNetSuiteTokenValid === false && ![NetsuiteOnboardingState.CONNECTION, NetsuiteOnboardingState.COMPLETE].includes(this.workspace.onboarding_state) ?  onboardingStateComponentMap[NetsuiteOnboardingState.SUBSIDIARY] : onboardingStateComponentMap[this.workspace.onboarding_state]);
     }
   }
@@ -75,7 +75,6 @@ export class NetsuiteComponent implements OnInit {
     this.storageService.set('onboarding-state', this.workspace.onboarding_state);
     this.netsuiteHelperService.syncFyleDimensions().subscribe();
     this.netsuiteHelperService.syncNetsuiteDimensions().subscribe();
-    this.isLoading = false;
     this.routeBasedOnTokenStatus();
   }
 
