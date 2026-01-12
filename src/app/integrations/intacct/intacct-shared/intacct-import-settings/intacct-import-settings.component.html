@@ -50,16 +50,16 @@
         </div>
       </div>
         <div class="tw-flex tw-px-24-px">
-            @if (defaultAttribuitesWarningArray[0]) {
-                <div class="tw-pt-26-px tw-px-24-px">
-                    <app-configuration-info-label 
-                        [iconSrc]="'warning-filled'"
-                        [customBackgroundColorClass]="brandingStyle.configuration.infoLabelWarningBackground"
-                        [customStyleClass]="brandingStyle.configuration.infoLabelWarningIcon"
-                        [infoText]="'intacctImportSettings.autoImportEnabledInfo' | transloco: { destinationField: (getDestinationField(intacctCategoryDestinationLabel | snakeCaseToSpaceCase) | sentenceCase), currentDestinationCount: attributeCounts['accounts_count'], appName: appName }">
-                    </app-configuration-info-label>
-                </div>
-            }
+          @if (defaultAttribuitesWarningArray[0]) {
+            <div class="tw-pt-26-px tw-px-24-px">
+              <app-configuration-info-label 
+                [iconSrc]="'warning-filled'"
+                [customBackgroundColorClass]="brandingStyle.configuration.infoLabelWarningBackground"
+                [customStyleClass]="brandingStyle.configuration.infoLabelWarningIcon"
+                [infoText]="'intacctImportSettings.autoImportEnabledInfo' | transloco: { destinationField: (getDestinationField(intacctCategoryDestinationLabel | snakeCaseToSpaceCase) | sentenceCase), currentDestinationCount: 32000, appName: appName }">
+              </app-configuration-info-label>
+            </div>
+          }
         </div>
       <div class="tw-flex tw-pt-18-px">
         <span class="tw-pl-48-px">
@@ -77,14 +77,14 @@
       </div>
       <div class="tw-flex tw-px-24-px">
         @if (defaultAttribuitesWarningArray[1]) {
-            <div class="tw-pt-26-px tw-px-24-px">
-                <app-configuration-info-label 
-                    [iconSrc]="'warning-filled'"
-                    [customBackgroundColorClass]="brandingStyle.configuration.infoLabelWarningBackground"
-                    [customStyleClass]="brandingStyle.configuration.infoLabelWarningIcon"
-                    [infoText]="'intacctImportSettings.autoImportEnabledInfo' | transloco: { destinationField: 'intacctImportSettings.vendorLabel' | transloco, currentDestinationCount: attributeCounts['vendors_count'], appName: appName }">
-                </app-configuration-info-label>
-            </div>
+          <div class="tw-pt-26-px tw-px-24-px">
+            <app-configuration-info-label 
+              [iconSrc]="'warning-filled'"
+              [customBackgroundColorClass]="brandingStyle.configuration.infoLabelWarningBackground"
+              [customStyleClass]="brandingStyle.configuration.infoLabelWarningIcon"
+              [infoText]="'intacctImportSettings.autoImportEnabledInfo' | transloco: { destinationField: 'intacctImportSettings.vendorLabel' | transloco, currentDestinationCount: 30001, appName: appName }">
+            </app-configuration-info-label>
+          </div>
         }
       </div>
       @if (isImportTaxVisible) {
@@ -103,16 +103,16 @@
           </span>
         </div>
         <div class="tw-flex tw-px-24-px">
-            @if (defaultAttribuitesWarningArray[2]) {
-                <div class="tw-pt-26-px tw-px-24-px">
-                    <app-configuration-info-label 
-                        [iconSrc]="'warning-filled'"
-                        [customBackgroundColorClass]="brandingStyle.configuration.infoLabelWarningBackground"
-                        [customStyleClass]="brandingStyle.configuration.infoLabelWarningIcon"
-                        [infoText]="'intacctImportSettings.autoImportEnabledInfo' | transloco: { destinationField: 'intacctImportSettings.taxDetailLabel' | transloco, currentDestinationCount: attributeCounts['tax_details_count'], appName: appName }">
-                    </app-configuration-info-label>
-                </div>
-            }
+          @if (defaultAttribuitesWarningArray[2]) {
+            <div class="tw-pt-26-px tw-px-24-px">
+              <app-configuration-info-label 
+                [iconSrc]="'warning-filled'"
+                [customBackgroundColorClass]="brandingStyle.configuration.infoLabelWarningBackground"
+                [customStyleClass]="brandingStyle.configuration.infoLabelWarningIcon"
+                [infoText]="'intacctImportSettings.autoImportEnabledInfo' | transloco: { destinationField: 'intacctImportSettings.taxDetailLabel' | transloco, currentDestinationCount: 35000, appName: appName }">
+              </app-configuration-info-label>
+            </div>
+          }
         </div>
       }
       @if (importSettingsForm.get('importTaxCodes')?.value && isImportTaxVisible) {
@@ -186,16 +186,16 @@
                 </div>
                 <p-toggleswitch (onChange)="updateImportFields([$event.checked, expenseField.value.destination_field, i])" [pTooltip]="isExpenseFieldDependent(expenseField.value) ? ('intacctImportSettings.cannotImportDependentFieldsTooltip' | transloco) : '' " (iclick)="updateDependentField(expenseField.value.source_field,expenseField.value.import_to_fyle)" formControlName="import_to_fyle" class="tw-pl-32-px input-toggle-section" [disabled]="!expenseField.get('is_auto_import_enabled')?.value"></p-toggleswitch>
               </div>
-                    @if (!expenseField.get('is_auto_import_enabled')?.value && !expenseField.get('import_to_fyle')?.value) {
-                        <div class="tw-pt-26-px">
-                            <app-configuration-info-label 
-                                [iconSrc]="'warning-filled'"
-                                [customBackgroundColorClass]="brandingStyle.configuration.infoLabelWarningBackground"
-                                [customStyleClass]="brandingStyle.configuration.infoLabelWarningIcon"
-                                [infoText]="'intacctImportSettings.autoImportEnabledInfo' | transloco: { destinationField: (getDestinationField(expenseField.get('destination_field')?.value | snakeCaseToSpaceCase) | sentenceCase), currentDestinationCount: expenseField.get('count')?.value, appName: appName }">
-                            </app-configuration-info-label>
-                        </div>
-                    }
+              @if (!expenseField.get('is_auto_import_enabled')?.value && !expenseField.get('import_to_fyle')?.value) {
+                <div class="tw-pt-26-px">
+                  <app-configuration-info-label 
+                    [iconSrc]="'warning-filled'"
+                    [customBackgroundColorClass]="brandingStyle.configuration.infoLabelWarningBackground"
+                    [customStyleClass]="brandingStyle.configuration.infoLabelWarningIcon"
+                    [infoText]="'intacctImportSettings.autoImportEnabledInfo' | transloco: { destinationField: (getDestinationField(expenseField.get('destination_field')?.value | snakeCaseToSpaceCase) | sentenceCase), currentDestinationCount: 30290, appName: appName }">
+                  </app-configuration-info-label>
+                </div>
+              }
               @if (expenseField.value.source_field === 'PROJECT' && expenseField.value.destination_field === 'PROJECT' && expenseField.value.import_to_fyle) {
                 <div class="tw-pt-26-px" [formGroup]="importSettingsForm">
                   <div class="tw-flex">
