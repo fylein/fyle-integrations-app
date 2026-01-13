@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Inject, Input, OnInit, Output } from '@angular/core';
 import { Route, Router } from '@angular/router';
-import { brandingFeatureConfig } from 'src/app/branding/branding-config';
+import { brandingFeatureConfig, brandingStyle } from 'src/app/branding/branding-config';
 import { AppName, IntacctOnboardingState, QBDOnboardingState } from 'src/app/core/models/enum/enum.model';
 import { OnboardingStepper } from 'src/app/core/models/misc/onboarding-stepper.model';
 
@@ -21,6 +21,8 @@ export class OnboardingSteppersComponent implements OnInit {
   @Input() disableConfigurationStepsIfTokenInvalid: boolean;
 
   readonly isGradientAllowed: boolean = brandingFeatureConfig.isGradientAllowed;
+
+  readonly brandingStyle = brandingStyle;
 
   constructor(
     private router: Router

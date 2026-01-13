@@ -403,7 +403,6 @@
     "zeroStateAltText": "Zero state"
   },
   "onboardingStepper": {
-    "configureSettingsDescription": "Configure the following settings to set up your integration",
     "cloneSettingsDescription": "Fill in the below fields to complete your integration set up"
   },
   "optionalField": {
@@ -1683,7 +1682,8 @@
   "qbdDirectDataSync": {
     "stepNumber": "3",
     "title": "Data sync",
-    "loadingState": "Loading"
+    "loadingState": "Loading",
+    "TotalText": "Total"
   },
   "qbdDirectOnboardingPreRequisite": {
     "done": "Done",

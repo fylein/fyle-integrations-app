@@ -25,6 +25,8 @@ export type FeatureConfiguration = {
             isStepSectionAlwaysVisible: boolean,
             configToggleLeftAligned: boolean,
             unlockStepsInOrder: boolean,
+            disableMarkAsDone: boolean,
+            showSubIconsInConfigurationFields: boolean,
         },
         featureFlags: {
             showOptionalTextInsteadOfAsterisk: boolean;

@@ -553,5 +553,8 @@
     "selectExportStatePlaceholder": "Expense status",
     "selectExpenseGroupingPlaceholder": "Formate",
     "selectDatePlaceholder": "Date"
+  },
+  "onboardingStepper": {
+    "configureSettingsDescription": "Configure these settings to set up your integration"
   }
 }

@@ -31,7 +31,9 @@ export const c1FeatureConfig: FeatureConfiguration[string] = {
         showStepStateDivider: true,
         isStepSectionAlwaysVisible: true,
         configToggleLeftAligned: true,
-        unlockStepsInOrder: true
+        unlockStepsInOrder: true,
+        disableMarkAsDone: true,
+        showSubIconsInConfigurationFields: false
     },
     featureFlags: {
         cloneSettings: false,

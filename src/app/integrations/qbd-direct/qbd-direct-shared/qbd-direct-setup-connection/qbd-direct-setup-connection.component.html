@@ -20,9 +20,6 @@
           @if (brandingFeatureConfig.qbdDirect.showStepStateAsIcons) {
             <div class="tw-h-24-px tw-flex tw-items-center tw-justify-center tw-gap-2">
               <app-svg-icon [c1SvgSource]="'grv-checkmark-encircled-success'" [width]="'16px'" [height]="'16px'" [isTextColorAllowed]="true" [styleClasses]="'tw-text-success-toast'"></app-svg-icon>
-              <div class="tw-text-text-primary tw-font-600 tw-text-12-px">
-                Done
-              </div>
             </div>
           } @else {
             <div class="tw-w-24-px tw-h-24-px tw-bg-success-toast tw-rounded-full tw-flex tw-items-center tw-justify-center">
@@ -43,34 +40,34 @@
       <div  class="tw-flex tw-items-start tw-justify-between tw-pt-32-px">
         <div>
           <div>
-            <div class="tw-flex tw-items-center tw-justify-start">
+            <div class="tw-flex tw-justify-start" [ngClass]="brandingFeatureConfig.qbdDirect.showStepStateAsIcons ? 'tw-flex-col tw-items-start tw-gap-2' : 'tw-items-center'">
               @if (brandingFeatureConfig.qbdDirect.showStepStateAsIcons) {
-                <div class="tw-w-20-px tw-h-20-px tw-rounded-full tw-text-text-primary tw-text-white tw-text-10-px tw-font-600 tw-text-center tw-flex tw-items-center tw-justify-center" [ngClass]="brandingStyle.qbd_direct.onboarding.optionStepStateBackground">
-                  1
+                <div class="tw-py-2-px tw-px-6-px tw-rounded-full tw-text-text-primary tw-text-white tw-text-10-px tw-font-600 tw-text-center tw-flex" [ngClass]="[brandingStyle.qbd_direct.onboarding.optionStepStateBackground, brandingFeatureConfig.qbdDirect.showStepStateAsIcons ? 'tw-items-center tw-justify-center' : 'tw-items-center tw-justify-center']">
+                  Step 1
                 </div>
               } @else {
                 <div class="!tw-w-45-px !tw-h-45-px tw-border tw-border-border-tertiary tw-flex tw-items-center tw-justify-center tw-rounded-border-radius-2xs tw-bg-disabled-bg-color">
                   <app-svg-icon [svgSource]="'upload'" [width]="'16px'" [height]="'16px'" [isTextColorAllowed]="true" [styleClasses]="'tw-text-text-tertiary'"></app-svg-icon>
                 </div>
               }
-              <div class="tw-ml-16-px tw-max-w-[300px] tw-break-words">
+              <div class="tw-break-words" [ngClass]="brandingFeatureConfig.qbdDirect.showStepStateAsIcons ? '' : 'tw-max-w-[300px] tw-ml-16-px'">
                 <h4 class="tw-text-14-px tw-pb-4-px" [ngClass]="brandingStyle.qbd_direct.onboarding.connectorHeader">{{ 'qbdDirectSetupConnection.openIntegrationFilePart1' | transloco }}<a (click)="onManualDownload()" class=" tw-underline !tw-underline-offset-1 tw-cursor-pointer">{{ 'qbdDirectSetupConnection.integrationFileLinkText' | transloco }}</a>{{ 'qbdDirectSetupConnection.openIntegrationFilePart2' | transloco }}</h4>
                 <p class="tw-text-12-px tw-text-text-muted tw-font-400" [ngClass]="brandingStyle.qbd_direct.onboarding.connectorDescription">{{ 'qbdDirectSetupConnection.watchVideoGuidance' | transloco }}</p>
               </div>
             </div>
           </div>
           <div [ngClass]="brandingStyle.qbd_direct.onboarding.connectorText">
-            <div class="tw-flex tw-items-center tw-justify-start">
+            <div class="tw-flex tw-justify-start" [ngClass]="brandingFeatureConfig.qbdDirect.showStepStateAsIcons ? 'tw-flex-col tw-items-start tw-gap-2' : 'tw-items-center'">
               @if (brandingFeatureConfig.qbdDirect.showStepStateAsIcons) {
-                <div class="tw-w-20-px tw-h-20-px tw-rounded-full tw-text-text-primary tw-text-white tw-text-10-px tw-font-600 tw-text-center tw-flex tw-items-center tw-justify-center" [ngClass]="brandingStyle.qbd_direct.onboarding.optionStepStateBackground">
-                  2
+                <div class="tw-py-2-px tw-px-6-px tw-rounded-full tw-text-text-primary tw-text-white tw-text-10-px tw-font-600 tw-text-center tw-flex" [ngClass]="[brandingStyle.qbd_direct.onboarding.optionStepStateBackground, brandingFeatureConfig.qbdDirect.showStepStateAsIcons ? 'tw-items-center tw-justify-center' : 'tw-items-center tw-justify-center']">
+                  Step 2
                 </div>
               } @else {
                 <div class="!tw-w-45-px !tw-h-45-px tw-border tw-border-border-tertiary tw-flex tw-items-center tw-justify-center tw-rounded-border-radius-2xs tw-bg-disabled-bg-color">
                   <app-svg-icon [svgSource]="'lock'" [width]="'16px'" [height]="'16px'" [isTextColorAllowed]="true" [styleClasses]="'tw-text-text-tertiary'"></app-svg-icon>
                 </div>
               }
-              <div class="tw-ml-16-px">
+              <div [ngClass]="brandingFeatureConfig.qbdDirect.showStepStateAsIcons ? '' : 'tw-ml-16-px'">
                 <h4 class="tw-text-14-px tw-pb-4-px" [ngClass]="brandingStyle.qbd_direct.onboarding.connectorHeader">{{ 'qbdDirectSetupConnection.usePassword' | transloco }}</h4>
                 <div class="tw-flex">
                   <div [ngClass]="brandingStyle.qbd_direct.onboarding.connectorPassword">
@@ -99,17 +96,17 @@
             </div>
           </div>
           <div [ngClass]="brandingStyle.qbd_direct.onboarding.connectorText">
-            <div class="tw-flex tw-items-center tw-justify-start">
+            <div class="tw-flex tw-justify-start" [ngClass]="brandingFeatureConfig.qbdDirect.showStepStateAsIcons ? 'tw-flex-col tw-items-start tw-gap-2' : 'tw-items-center'">
               @if (brandingFeatureConfig.qbdDirect.showStepStateAsIcons) {
-                <div class="tw-w-20-px tw-h-20-px tw-rounded-full tw-text-text-primary tw-text-white tw-text-10-px tw-font-600 tw-text-center tw-flex tw-items-center tw-justify-center" [ngClass]="brandingStyle.qbd_direct.onboarding.optionStepStateBackground">
-                  3
+                <div class="tw-py-2-px tw-px-6-px tw-rounded-full tw-text-text-primary tw-text-white tw-text-10-px tw-font-600 tw-text-center tw-flex" [ngClass]="[brandingStyle.qbd_direct.onboarding.optionStepStateBackground, brandingFeatureConfig.qbdDirect.showStepStateAsIcons ? 'tw-items-center tw-justify-center' : 'tw-items-center tw-justify-center']">
+                  Step 3
                 </div>
               } @else {
                 <div class="!tw-w-45-px !tw-h-45-px tw-border tw-border-border-tertiary tw-flex tw-items-center tw-justify-center tw-rounded-border-radius-2xs tw-bg-disabled-bg-color">
                   <app-svg-icon [svgSource]="'check-medium'" [isTextColorAllowed]="true" [styleClasses]="'tw-text-text-tertiary'" [width]="'20px'" [height]="'20px'"></app-svg-icon>
                 </div>
               }
-              <div class="tw-ml-16-px tw-max-w-[300px] tw-break-words">
+              <div class="tw-break-words" [ngClass]="brandingFeatureConfig.qbdDirect.showStepStateAsIcons ? '' : 'tw-max-w-[300px] tw-ml-16-px'">
                 <h4 class="tw-text-14-px tw-pb-4-px"  [ngClass]="brandingStyle.qbd_direct.onboarding.connectorHeader">{{ 'qbdDirectSetupConnection.updateSelectedTitleFirst' | transloco }} <span [ngClass]="brandingStyle.qbd_direct.onboarding.connectorHighlightText">{{ 'qbdDirectSetupConnection.updateSelectedTitleMiddle' | transloco }} </span> {{ 'qbdDirectSetupConnection.updateSelectedTitleLast' | transloco }}</h4>
                 <p class="tw-text-12-px tw-text-text-muted tw-font-400" [ngClass]="brandingStyle.qbd_direct.onboarding.connectorDescription">{{ 'qbdDirectSetupConnection.updateSelectedDescription' | transloco : { brandName: brandingConfig.brandName } }}</p>
               </div>
