@@ -878,7 +878,8 @@
     "importPayments": "Import Sage Intacct payments into {{brandName}}",
     "syncingDataDimensions": "Syncing data dimensions from Sage Intacct",
     "advancedSettingsSuccess": "Advanced settings saved successfully",
-    "advancedSettingsError": "Error saving advanced settings, please try again later"
+    "advancedSettingsError": "Error saving advanced settings, please try again later",
+    "optional": " (optional)"
   },
   "intacctC1ImportSettings": {
     "header": "Import settings",

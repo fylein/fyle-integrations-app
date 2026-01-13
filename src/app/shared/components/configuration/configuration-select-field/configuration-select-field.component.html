@@ -78,7 +78,7 @@
             </ng-template>
             <ng-template let-value pTemplate="selectedItem">
               @if (value) {
-                <div>
+                <div>                
                   <p>
                     @if (value?.code && isMultiLineOption) {
                       <span>{{ value?.code }}: </span>
@@ -255,24 +255,49 @@
         <label>{{label}}</label>
       </div>
       <div class="tw-pt-2 defaultFields">
-        <p-select appendTo="body" [options]="destinationAttributes" optionLabel="name"
-          [formControlName]="formControllerName" [placeholder]="placeholder" [ngClass]="{'selectedItem': form.controls[formControllerName].value, 'filterDropdown': !form.controls[formControllerName].value, 'showClearIcon': showClearIcon && !isDisabled && form.controls[formControllerName].value}">
-          <ng-template let-option pTemplate="item">
+        <p-select appendTo="body" [options]="destinationAttributes" [optionLabel]="optionLabel" class="!tw-w-300-px"
+          [formControlName]="formControllerName"
+          [placeholder]="placeholder"
+          [ngClass]="{'selectedItem': form.controls[formControllerName].value, 'filterDropdown': !form.controls[formControllerName].value, 'showClearIcon': showClearIcon && !isDisabled && form.controls[formControllerName].value}"
+          [filter]="isAdvanceSearchEnabled"
+          (onFilter)="searchOptions($event)"
+          (onHide)="clearSearch()"
+          [filterFields]="isMultiLineOption ? [optionLabel, 'code'] : [optionLabel]"
+          [resetFilterOnHide]="isAdvanceSearchEnabled"
+          [emptyFilterMessage]="isOptionSearchInProgress ? ('configurationSelectField.searching' | transloco) : ('configurationSelectField.noResultsFound' | transloco)"
+          [dropdownIcon]="isOptionSearchInProgress ? 'pi pi-spinner pi-spin' : 'pi pi-chevron-down ' + brandingConfig.brandId">
+          <ng-template let-options pTemplate="item">
             <div #textElement
               [ngStyle]="{'white-space': 'nowrap', 'overflow': 'hidden', 'text-overflow': 'ellipsis', 'max-width': '16rem'}"
-              [pTooltip]="isOverflowing(textElement) ? option.name : null" tooltipPosition="top">
-              {{ (option.name | sentenceCase) }}
+              [pTooltip]="isOverflowing(textElement) ? options.value: null" tooltipPosition="top">
+              <span>
+                {{options[optionLabel] | sentenceCase}}
+              </span>
+              @if (isMultiLineOption) {
+                <p class="tw-text-text-muted tw-text-12-px">{{ options.code ? options.code : '--'}}</p>
+              }
             </div>
           </ng-template>
-          <ng-template pTemplate="selectedItem" let-item>
-            <div class="selected-item-container">
-              <span class="selected-item-text">
-                {{ (item.name | sentenceCase) }}
-              </span>
+          <ng-template let-value pTemplate="selectedItem">
+            @if (value) {
+              <p>
+                @if (value?.code && isMultiLineOption) {
+                  <span>{{ value?.code }}: </span>
+                }
+                {{ value[optionLabel] | sentenceCase}}
+              </p>
               @if (showClearIcon && !isDisabled) {
                 <app-svg-icon [svgSource]="'cross-medium'" [c1SvgSource]="'grv-cross-filled-medium'" (click)="removeFilter(form.controls[formControllerName])" [height]="'18px'" [width]="'18px'" [styleClasses]="'tw-flex-shrink-0'"></app-svg-icon>
               }
-            </div>
+            }
+            @if (!value) {
+              <div class="tw-text-placeholder">
+                {{placeholder}}
+              </div>
+            }
+          </ng-template>
+          <ng-template pTemplate="filtericon">
+            <app-svg-icon [svgSource]="'search-medium'" [width]="'18px'" [height]="'18px'" [styleClasses]="brandingStyle.configuration.searchIconFocus" [isTextColorAllowed]="true"></app-svg-icon>
           </ng-template>
         </p-select>
       </div>

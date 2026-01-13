@@ -191,118 +191,110 @@
           </app-configuration-step-sub-header>
         </div>
         <div [ngClass]="brandingStyle.configuration.configurationAdvancedSettingDefaultFieldCard">
-          <div class="tw-pt-28-px tw-pl-6 field-label">
-            <div><label class="tw-text-form-label-text-color tw-text-14-px">{{ 'intacctAdvancedSettings.defaultLabel' | transloco }} {{'intacct.configuration.advancedSettings.location' | transloco}}</label>@if (!isAsterikAllowed) {
-            <app-optional-field class="tw-text-14-px"></app-optional-field>
-          }</div>
-          <div class="tw-pt-2">
-            <p-select appendTo="body" [options]="sageIntacctLocations" optionLabel="value"
-              formControlName="defaultLocation" [placeholder]="'intacctAdvancedSettings.selectDimension' | transloco: { dimension: 'intacct.configuration.advancedSettings.location' | transloco }" [ngClass]="{'selectedItem': advancedSettingsForm.controls.defaultLocation.value, 'filterDropdown': !advancedSettingsForm.controls.defaultLocation.value, 'hideClearIcon': advancedSettingsForm.controls['defaultLocation'].value}">
-              <ng-template class="tw-flex tw-justify-between tw-items-center" pTemplate="selectedItem" let-item>
-                <p>
-                  {{ item.value }}
-                </p>
-                <app-svg-icon [svgSource]="'cross-medium'" (click)="removeFilter(advancedSettingsForm.controls.defaultLocation)" [height]="'16px'" [width]="'16px'"></app-svg-icon>
-              </ng-template>
-            </p-select>
+          <div class="tw-flex tw-items-center tw-px-24-px tw-pb-24-px">
+            <app-configuration-select-field
+              [form]="advancedSettingsForm"
+              [isDefaultFields]="true"
+              [destinationAttributes]="sageIntacctLocations"
+              [optionLabel]="'value'"
+              [destinationOptionKey]="IntacctAdvancedSettingDestinationOptionKey.LOCATION"
+              [isMultiLineOption]="true"
+              [isOptionSearchInProgress]="isOptionSearchInProgress"
+              [isAdvanceSearchEnabled]="true"
+              [label]="('intacctAdvancedSettings.defaultLabel' | transloco) + ' ' + ('intacct.configuration.advancedSettings.location' | transloco) + isOptional()"
+              [placeholder]="'intacctAdvancedSettings.selectDimension' | transloco: { dimension: 'intacct.configuration.advancedSettings.location' | transloco }"
+              [showClearIcon]="true"
+              [formControllerName]="'defaultLocation'"
+              (searchOptionsDropdown)="searchOptionsDropdown($event)">
+            </app-configuration-select-field>
             @if (brandingFeatureConfig.featureFlags.exportSettings.reimbursableExpenses) {
-              <span class="tw-pl-24-px">
-                <input formControlName="useEmployeeLocation" type="checkbox" />
-                <label class="tw-pl-8-px" for="checkbox">{{ 'intacctAdvancedSettings.useEmployeeLocation' | transloco }}</label>
+              <span class="tw-pl-24-px tw-mt-30-px">
+                <input id="useEmployeeLocation" formControlName="useEmployeeLocation" type="checkbox" />
+                <label class="tw-pl-8-px" for="useEmployeeLocation">{{ 'intacctAdvancedSettings.useEmployeeLocation' | transloco }}</label>
               </span>
             }
           </div>
-        </div>
-        <div class="tw-pt-20-px tw-pl-6 field-label">
-          <div><label class="tw-text-form-label-text-color tw-text-14-px">{{ 'intacctAdvancedSettings.defaultLabel' | transloco }} {{'intacct.configuration.advancedSettings.department' | transloco}}</label>@if (!isAsterikAllowed) {
-          <app-optional-field class="tw-text-14-px"></app-optional-field>
-        }</div>
-        <div class="tw-pt-2">
-          <p-select appendTo="body" [options]="sageIntacctDepartments" optionLabel="value"
-            formControlName="defaultDepartment" [placeholder]="'intacctAdvancedSettings.selectDimension' | transloco: { dimension: 'intacct.configuration.advancedSettings.department' | transloco }" [ngClass]="{'selectedItem': advancedSettingsForm.controls.defaultDepartment.value, 'filterDropdown': !advancedSettingsForm.controls.defaultDepartment.value, 'hideClearIcon': advancedSettingsForm.controls['defaultDepartment'].value}">
-            <ng-template class="tw-flex tw-justify-between tw-items-center" let-value pTemplate="selectedItem">
-              <p>
-                @if (value?.code && brandingFeatureConfig.featureFlags.importSettings.allowImportCode) {
-                  <span>{{ value?.code }}: </span>
-                }
-                {{ value?.value }}
-              </p>
-              <app-svg-icon [svgSource]="'cross-medium'" (click)="removeFilter(advancedSettingsForm.controls.defaultDepartment)" [height]="'16px'" [width]="'16px'"></app-svg-icon>
-            </ng-template>
-            <ng-template let-options pTemplate="item">
-              <div #textElement
-                [ngStyle]="{'white-space': 'nowrap', 'overflow': 'hidden', 'text-overflow': 'ellipsis', 'max-width': '16rem'}"
-                [pTooltip]="isOverflowing(textElement, options)" tooltipPosition="top">
-                <span>
-                  {{options.value}}
-                </span>
-                <p class="tw-text-text-muted tw-text-12-px">{{ options.code ? options.code : '--'}}</p>
-              </div>
-            </ng-template>
-          </p-select>
-          @if (brandingFeatureConfig.featureFlags.exportSettings.reimbursableExpenses) {
-            <span class="tw-pl-24-px">
-              <input formControlName="useEmployeeDepartment" type="checkbox" />
-              <label class="tw-pl-8-px" for="checkbox">{{ 'intacctAdvancedSettings.useEmployeeDepartment' | transloco }}</label>
-            </span>
-          }
-        </div>
-      </div>
-      <div class="tw-pt-20-px tw-pl-6 field-label">
-        <div><label class="tw-text-form-label-text-color tw-text-14-px">{{ 'intacctAdvancedSettings.defaultLabel' | transloco }} {{'intacct.configuration.advancedSettings.project' | transloco}}</label>@if (!isAsterikAllowed) {
-        <app-optional-field class="tw-text-14-px"></app-optional-field>
-      }</div>
-      <div class="tw-pt-2">
-        <p-select appendTo="body" [options]="sageIntacctProjects" optionLabel="value"
-          formControlName="defaultProject" [placeholder]="'intacctAdvancedSettings.selectDimension' | transloco: { dimension: 'intacct.configuration.advancedSettings.project' | transloco }" [ngClass]="{'selectedItem': advancedSettingsForm.controls.defaultProject.value, 'filterDropdown': !advancedSettingsForm.controls.defaultProject.value, 'hideClearIcon': advancedSettingsForm.controls['defaultProject'].value}">
-          <ng-template class="tw-flex tw-justify-between tw-items-center" pTemplate="selectedItem" let-item>
-            <div>
-              {{ item.value }}
-            </div>
-            <app-svg-icon [svgSource]="'cross-medium'" (click)="removeFilter(advancedSettingsForm.controls.defaultProject)" [height]="'16px'" [width]="'16px'"></app-svg-icon>
-          </ng-template>
-        </p-select>
-      </div>
-    </div>
-    <div class="tw-pt-20-px tw-pl-6 field-label">
-      <div><label class="tw-text-form-label-text-color tw-text-14-px">{{ 'intacctAdvancedSettings.defaultLabel' | transloco }} {{'intacct.configuration.advancedSettings.class' | transloco}}</label>@if (!isAsterikAllowed) {
-      <app-optional-field class="tw-text-14-px"></app-optional-field>
-    }</div>
-    <div class="tw-pt-2">
-      <p-select appendTo="body" [options]="sageIntacctClasses" optionLabel="value"
-        formControlName="defaultClass" [placeholder]="'intacctAdvancedSettings.selectDimension' | transloco: { dimension: 'intacct.configuration.advancedSettings.class' | transloco }" [ngClass]="{'selectedItem': advancedSettingsForm.controls.defaultClass.value, 'filterDropdown': !advancedSettingsForm.controls.defaultClass.value, 'hideClearIcon': advancedSettingsForm.controls['defaultClass'].value}">
-        <ng-template class="tw-flex tw-justify-between tw-items-center" pTemplate="selectedItem" let-item>
-          <div>
-            {{ item.value }}
+          <div class="tw-flex tw-items-center tw-px-24-px tw-pb-24-px">
+            <app-configuration-select-field
+              [form]="advancedSettingsForm"
+              [isDefaultFields]="true"
+              [destinationAttributes]="sageIntacctDepartments"
+              [optionLabel]="'value'"
+              [destinationOptionKey]="IntacctAdvancedSettingDestinationOptionKey.DEPARTMENT"
+              [isMultiLineOption]="true"
+              [isOptionSearchInProgress]="isOptionSearchInProgress"
+              [isAdvanceSearchEnabled]="true"
+              [label]="('intacctAdvancedSettings.defaultLabel' | transloco) + ' ' + ('intacct.configuration.advancedSettings.department' | transloco) + isOptional()"
+              [placeholder]="'intacctAdvancedSettings.selectDimension' | transloco: { dimension: 'intacct.configuration.advancedSettings.department' | transloco }"
+              [showClearIcon]="true"
+              [formControllerName]="'defaultDepartment'"
+              (searchOptionsDropdown)="searchOptionsDropdown($event)">
+            </app-configuration-select-field>
+            @if (brandingFeatureConfig.featureFlags.exportSettings.reimbursableExpenses) {
+              <span class="tw-pl-24-px tw-mt-30-px">
+                <input id="useEmployeeDepartment" formControlName="useEmployeeDepartment" type="checkbox" />
+                <label class="tw-pl-8-px" for="useEmployeeDepartment">{{ 'intacctAdvancedSettings.useEmployeeDepartment' | transloco }}</label>
+              </span>
+            }
           </div>
-          <app-svg-icon [svgSource]="'cross-medium'" (click)="removeFilter(advancedSettingsForm.controls.defaultClass)" [height]="'16px'" [width]="'16px'"></app-svg-icon>
-        </ng-template>
-      </p-select>
-    </div>
-  </div>
-  <div class="tw-pt-20-px tw-pl-6 field-label">
-    <div><label class="tw-text-form-label-text-color tw-text-14-px">{{ 'intacctAdvancedSettings.defaultLabel' | transloco }} {{'intacct.configuration.advancedSettings.item' | transloco}}</label>@if (!isAsterikAllowed) {
-    <app-optional-field class="tw-text-14-px"></app-optional-field>
-  }</div>
-  <div class="tw-pt-2">
-    <p-select appendTo="body" [options]="sageIntacctDefaultItem" optionLabel="value"
-      formControlName="defaultItems" [placeholder]="'intacctAdvancedSettings.selectDimension' | transloco: { dimension: 'intacct.configuration.advancedSettings.item' | transloco }" [ngClass]="{'selectedItem': advancedSettingsForm.controls.defaultItems.value, 'filterDropdown': !advancedSettingsForm.controls.defaultItems.value, 'hideClearIcon': advancedSettingsForm.controls['defaultItems'].value}">
-      <ng-template class="tw-flex tw-justify-between tw-items-center" pTemplate="selectedItem" let-item>
-        <div>
-          {{ item.value }}
+          <div class="tw-flex tw-items-center tw-px-24-px tw-pb-24-px">
+            <app-configuration-select-field
+              [form]="advancedSettingsForm"
+              [isDefaultFields]="true"
+              [destinationAttributes]="sageIntacctProjects"
+              [optionLabel]="'value'"
+              [destinationOptionKey]="IntacctAdvancedSettingDestinationOptionKey.PROJECT"
+              [isMultiLineOption]="true"
+              [isOptionSearchInProgress]="isOptionSearchInProgress"
+              [isAdvanceSearchEnabled]="true"
+              [label]="('intacctAdvancedSettings.defaultLabel' | transloco) + ' ' + ('intacct.configuration.advancedSettings.project' | transloco) + isOptional()"
+              [placeholder]="'intacctAdvancedSettings.selectDimension' | transloco: { dimension: 'intacct.configuration.advancedSettings.project' | transloco }"
+              [showClearIcon]="true"
+              [formControllerName]="'defaultProject'"
+              (searchOptionsDropdown)="searchOptionsDropdown($event)">
+            </app-configuration-select-field>
+          </div>
+          <div class="tw-flex tw-items-center tw-px-24-px tw-pb-24-px">
+            <app-configuration-select-field
+              [form]="advancedSettingsForm"
+              [isDefaultFields]="true"
+              [destinationAttributes]="sageIntacctClasses"
+              [optionLabel]="'value'"
+              [destinationOptionKey]="IntacctAdvancedSettingDestinationOptionKey.CLASS"
+              [isMultiLineOption]="true"
+              [isOptionSearchInProgress]="isOptionSearchInProgress"
+              [isAdvanceSearchEnabled]="true"
+              [label]="('intacctAdvancedSettings.defaultLabel' | transloco) + ' ' + ('intacct.configuration.advancedSettings.class' | transloco) + isOptional()"
+              [placeholder]="'intacctAdvancedSettings.selectDimension' | transloco: { dimension: 'intacct.configuration.advancedSettings.class' | transloco }"
+              [showClearIcon]="true"
+              [formControllerName]="'defaultClass'"
+              (searchOptionsDropdown)="searchOptionsDropdown($event)">
+            </app-configuration-select-field>
+          </div>
+          <div class="tw-flex tw-items-center tw-px-24-px">
+            <app-configuration-select-field
+              [form]="advancedSettingsForm"
+              [isDefaultFields]="true"
+              [destinationAttributes]="sageIntacctDefaultItem"
+              [optionLabel]="'value'"
+              [destinationOptionKey]="IntacctAdvancedSettingDestinationOptionKey.ITEM"
+              [isMultiLineOption]="true"
+              [isOptionSearchInProgress]="isOptionSearchInProgress"
+              [isAdvanceSearchEnabled]="true"
+              [label]="('intacctAdvancedSettings.defaultLabel' | transloco) + ' ' + ('intacct.configuration.advancedSettings.item' | transloco) + isOptional()"
+              [placeholder]="'intacctAdvancedSettings.selectDimension' | transloco: { dimension: 'intacct.configuration.advancedSettings.item' | transloco }"
+              [showClearIcon]="true"
+              [formControllerName]="'defaultItems'"
+              (searchOptionsDropdown)="searchOptionsDropdown($event)">
+            </app-configuration-select-field>
+          </div>
         </div>
-        <app-svg-icon [svgSource]="'cross-medium'" (click)="removeFilter(advancedSettingsForm.controls.defaultItems)" [height]="'16px'" [width]="'16px'"></app-svg-icon>
-      </ng-template>
-    </p-select>
+        @if (isOnboarding) {
+          <app-configuration-step-footer (navigateToPreviousStep)="navigateToPreviousStep()" [ctaText] = "!saveInProgress ? (isOnboarding ? ConfigurationCtaText.SAVE_AND_CONTINUE : ConfigurationCtaText.SAVE) : ConfigurationCtaText.SAVING" (save)="save()" [isButtonDisabled]="isSkipExportFormInvalid || !advancedSettingsForm.valid || (advancedSettingsForm.get('skipSelectiveExpenses')?.value ? !skipExportForm.valid : false)" [showBackButton]="isOnboarding ? true : false"></app-configuration-step-footer>
+        }
+      </div>
+    </form>
   </div>
-</div>
-</div>
-</div>
-@if (isOnboarding) {
-  <app-configuration-step-footer (navigateToPreviousStep)="navigateToPreviousStep()" [ctaText] = "!saveInProgress ? (isOnboarding ? ConfigurationCtaText.SAVE_AND_CONTINUE : ConfigurationCtaText.SAVE) : ConfigurationCtaText.SAVING" (save)="save()" [isButtonDisabled]="isSkipExportFormInvalid || !advancedSettingsForm.valid || (advancedSettingsForm.get('skipSelectiveExpenses')?.value ? !skipExportForm.valid : false)" [showBackButton]="isOnboarding ? true : false"></app-configuration-step-footer>
-}
-</form>
-</div>
 }
 
 @if (!isLoading && !isOnboarding) {
