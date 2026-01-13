@@ -42,6 +42,7 @@ export class TravelperkComponent implements OnInit {
         [TravelPerkOnboardingState.ADVANCED_SETTINGS]: '/integrations/travelperk/onboarding/advanced_settings',
         [TravelPerkOnboardingState.COMPLETE]: '/integrations/travelperk/main/configuration'
       };
+      this.isLoading = false;
       this.router.navigateByUrl(onboardingStateComponentMap[this.travelperkData.onboarding_state]);
     }
   }
@@ -55,7 +56,6 @@ export class TravelperkComponent implements OnInit {
       this.storageService.set('workspaceId', this.travelperkData.org);
       this.travelperkService.syncPaymentProfile().subscribe();
       this.travelperkService.syncCategories().subscribe();
-      this.isLoading = false;
       this.navigate();
     }, () => {
       this.isLoading = false;

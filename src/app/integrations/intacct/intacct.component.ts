@@ -55,7 +55,7 @@ export class IntacctComponent implements OnInit {
         [IntacctOnboardingState.ADVANCED_CONFIGURATION]: '/integrations/intacct/onboarding/advanced_settings',
         [IntacctOnboardingState.COMPLETE]: '/integrations/intacct/main/dashboard'
       };
-
+      this.isLoading = false;
       this.router.navigateByUrl(isIntacctTokenValid === false && ![IntacctOnboardingState.CONNECTION, IntacctOnboardingState.COMPLETE].includes(this.workspace.onboarding_state) ?  onboardingStateComponentMap[IntacctOnboardingState.LOCATION_ENTITY] : onboardingStateComponentMap[this.workspace.onboarding_state]);
     }
   }
@@ -73,7 +73,6 @@ export class IntacctComponent implements OnInit {
     this.storageService.set('onboarding-state', this.workspace.onboarding_state);
     this.workspaceService.syncFyleDimensions().subscribe();
     this.workspaceService.syncIntacctDimensions().subscribe();
-    this.isLoading = false;
     this.routeBasedOnTokenStatus();
   }
 

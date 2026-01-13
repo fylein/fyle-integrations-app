@@ -54,6 +54,7 @@ export class QboComponent implements OnInit {
         [QBOOnboardingState.CLONE_SETTINGS]: '/integrations/qbo/onboarding/clone_settings',
         [QBOOnboardingState.COMPLETE]: '/integrations/qbo/main'
       };
+      this.isLoading = false;
       this.router.navigateByUrl(onboardingStateComponentMap[this.workspace.onboarding_state]);
     }
   }
@@ -64,7 +65,6 @@ export class QboComponent implements OnInit {
     this.storageService.set('onboarding-state', this.workspace.onboarding_state);
     this.qboHelperService.syncFyleDimensions().subscribe();
     this.qboHelperService.syncQBODimensions().subscribe();
-    this.isLoading = false;
     this.navigate();
   }
 
