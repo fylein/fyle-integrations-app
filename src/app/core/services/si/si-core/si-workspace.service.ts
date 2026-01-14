@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, tap } from 'rxjs';
 import { IntacctOnboardingState } from 'src/app/core/models/enum/enum.model';
 import { IntacctWorkspace } from 'src/app/core/models/intacct/db/workspaces.model';
 import { Cacheable } from 'ts-cacheable';
@@ -8,6 +8,7 @@ import { Configuration } from 'src/app/core/models/intacct/db/configuration.mode
 import { HelperService } from '../../common/helper.service';
 import { ApiService } from '../../common/api.service';
 import { FeatureConfig } from 'src/app/core/models/intacct/db/feature-config.model';
+import { OrgSettingsService } from '../../common/org-settings.service';
 
 @Injectable({
   providedIn: 'root'
@@ -16,7 +17,8 @@ export class SiWorkspaceService {
 
   constructor(
     private storageService: StorageService,
-    private apiService: ApiService
+    private apiService: ApiService,
+    private orgSettingsService: OrgSettingsService
   ) {
   }
 
@@ -32,15 +34,27 @@ export class SiWorkspaceService {
 
   @Cacheable()
   getWorkspace(orgId: string): Observable<IntacctWorkspace[]> {
-    return this.apiService.get('/workspaces/', {org_id: orgId, is_polling: false});
+    return this.apiService.get('/workspaces/', {org_id: orgId, is_polling: false}).pipe(
+      tap((workspaces) => {
+        this.orgSettingsService.setOrgSettings(workspaces[0].org_settings);
+      })
+    );
   }
 
   getWorkspaceWithoutCache(orgId: string, isPolling = false): Observable<IntacctWorkspace[]> {
-    return this.apiService.get('/workspaces/', {org_id: orgId, is_polling: isPolling});
+    return this.apiService.get('/workspaces/', {org_id: orgId, is_polling: isPolling}).pipe(
+      tap((workspaces) => {
+        this.orgSettingsService.setOrgSettings(workspaces[0].org_settings);
+      })
+    );
   }
 
   postWorkspace(): Observable<IntacctWorkspace> {
-    return this.apiService.post('/workspaces/', {});
+    return this.apiService.post('/workspaces/', {}).pipe(
+      tap((workspace) => {
+        this.orgSettingsService.setOrgSettings(workspace.org_settings);
+      })
+    );
   }
 
   getWorkspaceId(): string {
