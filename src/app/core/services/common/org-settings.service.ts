@@ -22,17 +22,11 @@ export class OrgSettingsService {
     }
   });
 
-  readonly dateFormat = computed(() => this.regionalSettings()?.date_format ?? 'MMM dd, yyyy');
+  readonly dateFormat = computed(() => this.regionalSettings()?.date_format);
 
-  readonly timeFormat = computed(() => this.regionalSettings()?.time_format ?? 'h:mm a');
+  readonly timeFormat = computed(() => this.regionalSettings()?.time_format);
 
-  readonly currencyFormat = computed<CurrencyFormat>(() => (
-    this.regionalSettings()?.currency_format ?? {
-      symbol_position: 'before',
-      decimal_separator: '.',
-      thousand_separator: ','
-    }
-  ));
+  readonly currencyFormat = computed(() => this.regionalSettings()?.currency_format);
 
   // Setter method (only this service can write)
   setOrgSettings(settings?: OrgSettings | {}): void {

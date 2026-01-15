@@ -90,6 +90,8 @@ import { SearchComponent } from './components/input/search/search.component';
 import { OptionalFieldComponent } from './components/helper/optional-field/optional-field.component';
 import { SentenceCasePipe } from './pipes/sentence-case.pipe';
 import { ExcludeSelectedOptionsPipe } from './pipes/exclude-selected-options.pipe';
+import { OrgDatePipe } from './pipes/org-date.pipe';
+import { OrgTimePipe } from './pipes/org-time.pipe';
 import { IconFieldModule } from 'primeng/iconfield';
 import { InputIconModule } from 'primeng/inputicon';
 import { BadgeComponent } from './components/core/badge/badge.component';
@@ -106,6 +108,7 @@ import { SplitMenuButtonComponent } from './components/input/split-menu-button/s
 import { ConfigurationFieldContainerComponent } from './components/configuration/configuration-field-container/configuration-field-container.component';
 import { UploadedFileDetailsComponent } from './components/core/uploaded-file-details/uploaded-file-details.component';
 import { AlertComponent } from './components/core/alert/alert.component';
+import { DatePipe } from '@angular/common';
 
 @NgModule({
   declarations: [
@@ -116,6 +119,8 @@ import { AlertComponent } from './components/core/alert/alert.component';
     SnakeCaseToSpaceCasePipe,
     SearchPipe,
     ExcludeSelectedOptionsPipe,
+    OrgDatePipe,
+    OrgTimePipe,
     PaginatorComponent,
     MandatoryFieldComponent,
     MandatoryErrorMessageComponent,
@@ -230,6 +235,8 @@ import { AlertComponent } from './components/core/alert/alert.component';
     SnakeCaseToSpaceCasePipe,
     SearchPipe,
     ExcludeSelectedOptionsPipe,
+    OrgDatePipe,
+    OrgTimePipe,
     PaginatorComponent,
     MandatoryFieldComponent,
     MandatoryErrorMessageComponent,
@@ -310,6 +317,9 @@ import { AlertComponent } from './components/core/alert/alert.component';
     ConfigurationFieldContainerComponent,
     UploadedFileDetailsComponent,
     AlertComponent
+  ],
+  providers: [
+    DatePipe
   ]
 })
 export class SharedModule { }
