@@ -35,7 +35,7 @@
                 @if (field.count !== null) {
                   <span class="tw-font-400 tw-text-14-px" [ngClass]="brandingStyle.qbd_direct.onboarding.dataSyncText">{{field.count}}</span>
                 }
-                <div class="spin-icon tw-font-400 tw-text-14-px" [ngClass]="brandingStyle.qbd_direct.onboarding.dataSyncText">
+                <div class="tw-font-400 tw-text-14-px" [ngClass]="brandingStyle.qbd_direct.onboarding.dataSyncText" [ngClass]="brandingStyle.qbd_direct.onboarding.dataSyncIconContainer">
                   @if (field.count === null) {
                     <app-svg-icon [svgSource]="'arrow-rotate-sync'" [c1SvgSource]="'grv-refresh'" [width]="'14px'" [height]="'14px'" [isTextColorAllowed]="true" [styleClasses]="brandingStyle.qbd_direct.onboarding.dataSyncIcon"></app-svg-icon>
                   }
@@ -54,8 +54,13 @@
           </div>
         }
         @if (brandingConfig.brandId === 'co') {
+          <div class="tw-flex tw-items-center tw-justify-between">
           <div>
             <h4 class="tw-text-14-px tw-font-600 tw-text-text-primary">{{ 'qbdDirectDataSync.infoText' | transloco }}</h4>
+          </div>
+          <div>
+            <h4 class="tw-text-14-px tw-font-600 tw-text-text-primary">{{ 'qbdDirectDataSync.TotalText' | transloco }}</h4>
+          </div>
           </div>
         }
       </div>

@@ -48,15 +48,17 @@
                     </p>
                   </div>
                 </div>
-                <div>
-                  <app-checkbox-button
-                    [checkedText]="'qbdDirectOnboardingPreRequisite.done' | transloco"
-                    [unCheckedText]="'qbdDirectOnboardingPreRequisite.markAsDone' | transloco"
-                    [id]="step.id"
-                    [disabled]="brandingFeatureConfig.qbdDirect.unlockStepsInOrder ? isStepDisabled(step.id) : false"
-                    (checkBoxUpdated)="updateConnectorStatus($event)">
-                  </app-checkbox-button>
-                </div>
+                @if (!brandingFeatureConfig.qbdDirect.disableMarkAsDone) {
+                  <div>
+                    <app-checkbox-button
+                      [checkedText]="'qbdDirectOnboardingPreRequisite.done' | transloco"
+                      [unCheckedText]="'qbdDirectOnboardingPreRequisite.markAsDone' | transloco"
+                      [id]="step.id"
+                      [disabled]="brandingFeatureConfig.qbdDirect.unlockStepsInOrder ? isStepDisabled(step.id) : false"
+                      (checkBoxUpdated)="updateConnectorStatus($event)">
+                    </app-checkbox-button>
+                  </div>
+                }
               </div>
             </div>
           }

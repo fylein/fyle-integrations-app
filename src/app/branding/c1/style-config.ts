@@ -43,7 +43,10 @@ export const c1Styles = {
         configurationAdvancedSettingNetsuiteCardBody: 'tw-border-separator tw-border-x tw-border-b tw-rounded-b-8-px tw-bg-white tw-mb-16-px',
         configurationAdvancedSettingDefaultFieldCard: 'tw-pb-24-px tw-bg-white tw-border-separator tw-border-x tw-border-b tw-rounded-b-8-px',
         configurationAdvancedSettingSingleCard: 'tw-rounded-8-px tw-border-separator tw-border',
-        configurationFieldHeaderText: 'tw-text-text-primary !tw-font-600'
+        configurationFieldHeaderText: 'tw-text-text-primary !tw-font-600',
+        configurationFieldDefaultIcon: 'arrow-tail-up',
+        configurationExpenseStateIcon: 'list',
+        onboardingStepperHeaderText: 'tw-font-600'
     },
     dashboard: {
         dashboardErrorResolveBtnText: 'p-button primary-outline',
@@ -91,7 +94,7 @@ export const c1Styles = {
             preRequisiteDescriptionText: 'tw-text-12-px tw-font-400',
             preRequisiteHeaderFont: 'tw-text-text-primary',
             preRequisiteDescriptionFont: 'tw-text-text-primary',
-            optionStepStateBackground: 'tw-bg-bg-primary',
+            optionStepStateBackground: 'tw-bg-bg-brand-primary',
             tutorialvideoClass: 'tw-rounded-16-px tw-w-[500px] tw-h-[250px]',
             logoSectionStyle: '',
             headerTopText: 'tw-text-14-px tw-font-600',
@@ -125,6 +128,7 @@ export const c1Styles = {
             dataSyncText: 'tw-text-text-primary',
             dataSyncContent: 'tw-flex tw-flex-col-reverse tw-mt-24-px',
             dataSyncIcon: 'tw-text-icon-grey',
+            dataSyncIconContainer: '',
             configurationHeaderText: 'tw-text-text-primary !tw-font-600',
             configurationDescriptionText: 'tw-text-text-primary',
             configurationToggleHeaderText: 'tw-text-text-primary tw-text-14-px !tw-font-600',
@@ -140,10 +144,10 @@ export const c1Styles = {
     },
     buttons: {
         primary: {
-           class: 'p-button p-button-raised tw-rounded-md',
-           active: 'tw-bg-primary tw-font-600',
-           disabled: 'p-disabled tw-text-text-placeholder tw-cursor-not-allowed',
-           progress: 'p-disabled tw-text-text-placeholder tw-cursor-not-allowed',
+           class: 'tw-h-40-px tw-rounded-4-px tw-text-white tw-rounded-md',
+           active: 'tw-bg-bg-brand-primary tw-font-600',
+           disabled: 'tw-bg-bg-tertiary tw-text-text-disabled tw-cursor-not-allowed',
+           progress: 'tw-bg-bg-tertiary tw-text-text-disabled tw-cursor-not-allowed',
            loader: 'tw-border-t-border-tertiary',
            iconColorActive: 'tw-text-white',
            iconColorHover: '',
@@ -152,7 +156,7 @@ export const c1Styles = {
         secondary: {
            class: 'tw-h-38-px tw-rounded-4-px tw-border tw-text-text-brand-primary tw-font-nav-link-font-weight tw-border-solid tw-border-btn-outline-primary-border-color',
            active: 'hover:tw-text-btn-outline-primary-hover-text-color hover:tw-bg-btn-outline-primary-hover-bg tw-text-size-14 tw-bg-btn-outline-primary-bg tw-border-grey-300 tw-font-500 tw-cursor-pointer',
-           disabled: 'tw-text-text-placeholder tw-cursor-not-allowed',
+           disabled: 'tw-text-text-placeholder tw-cursor-not-allowed !tw-border-border-primary',
            progress: '',
            loader: '',
            iconColorActive: 'tw-text-text-secondary',

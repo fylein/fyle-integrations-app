@@ -535,5 +535,8 @@
     "selectExportStatePlaceholder": "Select export state",
     "selectExpenseGroupingPlaceholder": "Select expense grouping",
     "selectDatePlaceholder": "Select date"
+  },
+  "onboardingStepper": {
+    "configureSettingsDescription": "Configure the following settings to set up your integration"
   }
 }
