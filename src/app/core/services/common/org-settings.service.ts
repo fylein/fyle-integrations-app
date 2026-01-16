@@ -35,7 +35,7 @@ export class OrgSettingsService {
   ));
 
   // Setter method (only this service can write)
-  setOrgSettings(settings: OrgSettings | {}): void {
+  setOrgSettings(settings?: OrgSettings | {}): void {
     if (!settings || !('regional_settings' in settings)) {
       return;
     }

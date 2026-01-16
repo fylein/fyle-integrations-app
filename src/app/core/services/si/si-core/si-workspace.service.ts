@@ -36,7 +36,9 @@ export class SiWorkspaceService {
   getWorkspace(orgId: string): Observable<IntacctWorkspace[]> {
     return this.apiService.get('/workspaces/', {org_id: orgId, is_polling: false}).pipe(
       tap((workspaces) => {
-        this.orgSettingsService.setOrgSettings(workspaces[0].org_settings);
+        if (workspaces.length > 0) {
+          this.orgSettingsService.setOrgSettings(workspaces[0].org_settings);
+        }
       })
     );
   }
@@ -44,7 +46,9 @@ export class SiWorkspaceService {
   getWorkspaceWithoutCache(orgId: string, isPolling = false): Observable<IntacctWorkspace[]> {
     return this.apiService.get('/workspaces/', {org_id: orgId, is_polling: isPolling}).pipe(
       tap((workspaces) => {
-        this.orgSettingsService.setOrgSettings(workspaces[0].org_settings);
+        if (workspaces.length > 0) {
+          this.orgSettingsService.setOrgSettings(workspaces[0].org_settings);
+        }
       })
     );
   }
