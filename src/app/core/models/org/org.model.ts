@@ -12,6 +12,7 @@ export type Org = {
     allow_travelperk: boolean;
     allow_dynamics: boolean;
     allow_qbd_direct_integration: boolean;
+    allow_bamboohr: boolean;
     created_at: Date;
     updated_at: Date;
 }
