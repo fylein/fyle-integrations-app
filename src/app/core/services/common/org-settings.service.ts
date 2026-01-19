@@ -1,5 +1,6 @@
 import { Injectable, signal, computed } from '@angular/core';
 import { OrgSettings, CurrencyFormat, RegionalSettings } from '../../models/common/org-settings.model';
+import { PrimeNG } from 'primeng/config';
 
 @Injectable({
   providedIn: 'root'
@@ -28,11 +29,26 @@ export class OrgSettingsService {
 
   readonly currencyFormat = computed(() => this.regionalSettings()?.currency_format);
 
+  constructor(
+    private primeNg: PrimeNG
+  ) {}
+
   // Setter method (only this service can write)
   setOrgSettings(settings?: OrgSettings | {}): void {
     if (!settings || !('regional_settings' in settings)) {
       return;
     }
     this.orgSettingsSignal.set(settings);
+
+    const primengFormat = this.convertToPrimengFormat(this.dateFormat());
+    this.primeNg.setTranslation({ dateFormat: primengFormat });
+  }
+
+  private convertToPrimengFormat(dateFormat: string): string {
+    return dateFormat
+      .replace(/yyyy/g, 'yy')
+      .replace(/MMMM/g, 'MM')
+      .replace(/MMM/g, 'M')
+      .replace(/\bMM\b/g, 'mm');
   }
 }

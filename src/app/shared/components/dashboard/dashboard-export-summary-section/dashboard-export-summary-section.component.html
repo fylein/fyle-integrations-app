@@ -33,8 +33,8 @@
               <div class="tw-flex tw-flex-col">
                 <span class="tw-w-260-px tw-text-right">
                   <span class="tw-text-14-px tw-text-text-muted tw-font-400">{{'dashboard.lastExportedAtText' | transloco}} </span>
-                  <span class="tw-text-14-px" [ngClass]="brandingStyle.dashboard.exportSummaryDescriptionText">{{ accountingExportSummary ? (accountingExportSummary.last_exported_at | date: 'h:mm a,') : 'None' }}
-                  {{ accountingExportSummary ? (accountingExportSummary.last_exported_at | date: 'MMM dd yyyy') : '' }}</span>
+                  <span class="tw-text-14-px" [ngClass]="brandingStyle.dashboard.exportSummaryDescriptionText">{{ accountingExportSummary ? (accountingExportSummary.last_exported_at | orgTime) : 'None' }}
+                  {{ accountingExportSummary ? (accountingExportSummary.last_exported_at | orgDate) : '' }}</span>
                 </span>
               </div>
             }
@@ -66,8 +66,8 @@
               @if (accountingExportSummary?.next_export_at && !isRealTimeExportEnabled) {
                 <span class="tw-w-260-px tw-text-right">
                   <span class="tw-text-14-px tw-text-text-muted tw-font-400">{{'dashboard.nextExportAtText' | transloco}} </span>
-                  <span class="tw-text-14-px" [ngClass]="brandingStyle.dashboard.exportSummaryDescriptionText">{{ accountingExportSummary?.next_export_at ? (accountingExportSummary?.next_export_at | date: 'h:mm a,') : 'None' }}
-                  {{ accountingExportSummary ? (accountingExportSummary.next_export_at | date: 'MMM dd yyyy') : '' }}</span>
+                  <span class="tw-text-14-px" [ngClass]="brandingStyle.dashboard.exportSummaryDescriptionText">{{ accountingExportSummary?.next_export_at ? (accountingExportSummary?.next_export_at | orgTime) : 'None' }}
+                  {{ accountingExportSummary ? (accountingExportSummary.next_export_at | orgDate) : '' }}</span>
                 </span>
               }
             </div>
