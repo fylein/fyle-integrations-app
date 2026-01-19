@@ -92,6 +92,7 @@ import { SentenceCasePipe } from './pipes/sentence-case.pipe';
 import { ExcludeSelectedOptionsPipe } from './pipes/exclude-selected-options.pipe';
 import { OrgDatePipe } from './pipes/org-date.pipe';
 import { OrgTimePipe } from './pipes/org-time.pipe';
+import { OrgCurrencyPipe } from './pipes/org-currency.pipe';
 import { IconFieldModule } from 'primeng/iconfield';
 import { InputIconModule } from 'primeng/inputicon';
 import { BadgeComponent } from './components/core/badge/badge.component';
@@ -121,6 +122,7 @@ import { DatePipe } from '@angular/common';
     ExcludeSelectedOptionsPipe,
     OrgDatePipe,
     OrgTimePipe,
+    OrgCurrencyPipe,
     PaginatorComponent,
     MandatoryFieldComponent,
     MandatoryErrorMessageComponent,
@@ -237,6 +239,7 @@ import { DatePipe } from '@angular/common';
     ExcludeSelectedOptionsPipe,
     OrgDatePipe,
     OrgTimePipe,
+    OrgCurrencyPipe,
     PaginatorComponent,
     MandatoryFieldComponent,
     MandatoryErrorMessageComponent,
