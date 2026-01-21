@@ -204,6 +204,20 @@
                     </div>
                     <label class="tw-pl-2 tw-text-14-px" for="checkbox">{{ 'intacctImportSettings.importDependentFieldsLabel' | transloco }}</label>
                   </div>
+
+                  @if (brandingFeatureConfig.featureFlags.importProjectBillableToPlatform) {
+                    <div class="tw-pt-16-px">
+                      <app-configuration-info-label
+                        [iconSrc]="'info-circle-fill-medium'"
+                        [customBackgroundColorClass]="brandingStyle.configuration.infoLabelBackground"
+                        [customStyleClass]="brandingStyle.configuration.infoLabelIcon"
+                        [readMoreLink]="readMoreLink"
+                        [readMoreText]="'intacctImportSettings.readMoreText' | transloco"
+                        [infoText]="'intacctImportSettings.importProjectBillableToPlatformInfo' | transloco">
+                      </app-configuration-info-label>
+                    </div>
+                  }
+
                   @if (importSettingsForm.get('isDependentImportEnabled')?.value) {
                     <div class="tw-flex tw-pt-4">
                       <div>
@@ -284,9 +298,9 @@
                   </div>
                   <div class="tw-py-16-px">
                     <app-configuration-info-label
-                            [iconSrc]="'info-circle-fill-medium'"
-                            [customBackgroundColorClass]="brandingStyle.configuration.infoLabelBackground"
-                            [customStyleClass]="brandingStyle.configuration.infoLabelIcon"
+                      [iconSrc]="'info-circle-fill-medium'"
+                      [customBackgroundColorClass]="brandingStyle.configuration.infoLabelBackground"
+                      [customStyleClass]="brandingStyle.configuration.infoLabelIcon"
                       [infoText]="'intacctImportSettings.oneTimeSetupNote' | transloco: { brandName: brandingConfig.brandName }">
                     </app-configuration-info-label>
                   </div>

@@ -48,6 +48,8 @@ export class IntacctImportSettingsComponent implements OnInit {
 
   redirectLink = brandingKbArticles.onboardingArticles.INTACCT.IMPORT_SETTING;
 
+  readMoreLink = brandingKbArticles.onboardingArticles.INTACCT.DEFAULT_BILLABLE_FIELD_BASED_ON_PROJECT_READ_MORE;
+
   saveInProgress: boolean = false;
 
   isOnboarding: boolean;

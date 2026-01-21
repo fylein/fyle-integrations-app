@@ -41,6 +41,7 @@ export const c1FeatureConfig: FeatureConfiguration[string] = {
         displayAppLogoInDashboard: true,
         contentVersion: 'v2',
         useLandingV2: false,
+        importProjectBillableToPlatform: false,
         exportSettings: {
             reimbursableExpenses: false,
             nameInJournalEntry: false,
@@ -111,7 +112,8 @@ export const c1KbArticles: KbArticle[string] = {
             LANDING: `${brandingConfig.helpArticleDomain}/en/articles/9082146-configure-the-capital-one-sage-intacct-integration`,
             CONNECTOR: `${brandingConfig.helpArticleDomain}/en/articles/9081356-generate-credentials-to-connect-with-sage-intacct`,
             SKIP_EXPORT: `${brandingConfig.helpArticleDomain}/en/articles/9082146-configure-the-capital-one-sage-intacct-integration`,
-            DFV_READ_MORE: `${brandingConfig.helpArticleDomain}/en/articles/9082146-configure-the-capital-one-sage-intacct-integration`
+            DFV_READ_MORE: `${brandingConfig.helpArticleDomain}/en/articles/9082146-configure-the-capital-one-sage-intacct-integration`,
+            DEFAULT_BILLABLE_FIELD_BASED_ON_PROJECT_READ_MORE: `${brandingConfig.helpArticleDomain}/en/articles/7882821-how-to-skip-exporting-specific-expenses-from-fyle-to-sage-intacct`
         },
         NETSUITE: {
             CONNECTOR: `${brandingConfig.helpArticleDomain}/en/articles/9471329-generate-credentials-to-connect-with-netsuite`,

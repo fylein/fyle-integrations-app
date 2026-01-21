@@ -45,6 +45,20 @@
                     [showExportPreview]="true"
                     [exportTypeIconPathArray]="previewImagePaths">
                   </app-configuration-select-field>
+
+
+                  @if (brandingFeatureConfig.featureFlags.importProjectBillableToPlatform && exportSettingsForm.get('reimbursableExportType')?.value===IntacctReimbursableExpensesObject.EXPENSE_REPORT) {
+                    <div class="tw-px-24-px">
+                      <app-configuration-info-label
+                        [iconSrc]="'info-circle-fill-medium'"
+                        [customBackgroundColorClass]="brandingStyle.configuration.infoLabelBackground"
+                        [customStyleClass]="brandingStyle.configuration.infoLabelIcon"
+                        [readMoreLink]="readMoreLink"
+                        [readMoreText]="'intacctExportSettings.readMoreText' | transloco"
+                        [infoText]="'intacctExportSettings.importProjectBillableToPlatformInfo' | transloco">
+                      </app-configuration-info-label>
+                    </div>
+                  }
                   @if (exportSettingsForm.get('reimbursableExportType')?.value===IntacctReimbursableExpensesObject.JOURNAL_ENTRY) {
                     <div>
                       <app-configuration-select-field
@@ -175,7 +189,22 @@
                   [exportConfigurationIconPath]="'assets/illustrations/sageIntacct/'+brandingConfig.brandId+'CCCExportTypeTable.svg'"
                   [showExportPreview]="true"
                   [appName]="appName"
-                [exportTypeIconPathArray]="brandingConfig.brandId==='fyle' ? previewImagePaths : coPreviewImagePaths"></app-configuration-select-field>
+                  [exportTypeIconPathArray]="brandingConfig.brandId==='fyle' ? previewImagePaths : coPreviewImagePaths">
+                </app-configuration-select-field>
+                
+                @if (brandingFeatureConfig.featureFlags.importProjectBillableToPlatform && exportSettingsForm.get('cccExportType')?.value===IntacctCorporateCreditCardExpensesObject.EXPENSE_REPORT) {
+                  <div class="tw-px-24-px">
+                    <app-configuration-info-label
+                      [iconSrc]="'info-circle-fill-medium'"
+                      [customBackgroundColorClass]="brandingStyle.configuration.infoLabelBackground"
+                      [customStyleClass]="brandingStyle.configuration.infoLabelIcon"
+                      [readMoreLink]="readMoreLink"
+                      [readMoreText]="'intacctExportSettings.readMoreText' | transloco"
+                      [infoText]="'intacctExportSettings.importProjectBillableToPlatformInfo' | transloco">
+                    </app-configuration-info-label>
+                  </div>
+                }
+
                 @if (exportSettingsForm.get('cccExportType')?.value===IntacctCorporateCreditCardExpensesObject.EXPENSE_REPORT) {
                   <div>
                     <app-configuration-select-field

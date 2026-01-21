@@ -34,6 +34,7 @@ export type FeatureConfiguration = {
             displayAppLogoInDashboard: boolean;
             contentVersion: string;
             useLandingV2: boolean;
+            importProjectBillableToPlatform: boolean;
             exportSettings: {
                 isReimbursableExpensesAllowed: boolean;
                 reimbursableExpenses: boolean;
