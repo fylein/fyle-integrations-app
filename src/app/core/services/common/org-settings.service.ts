@@ -23,11 +23,11 @@ export class OrgSettingsService {
     }
   });
 
-  readonly dateFormat = computed(() => this.regionalSettings()?.date_format);
+  readonly dateFormat = computed(() => this.regionalSettings().date_format);
 
-  readonly timeFormat = computed(() => this.regionalSettings()?.time_format);
+  readonly timeFormat = computed(() => this.regionalSettings().time_format);
 
-  readonly currencyFormat = computed(() => this.regionalSettings()?.currency_format);
+  readonly currencyFormat = computed(() => this.regionalSettings().currency_format);
 
   constructor(
     private primeNg: PrimeNG
@@ -47,7 +47,6 @@ export class OrgSettingsService {
   private convertToPrimengFormat(dateFormat: string): string {
     return dateFormat
       .replace(/yyyy/g, 'yy')
-      .replace(/MMMM/g, 'MM')
       .replace(/MMM/g, 'M')
       .replace(/\bMM\b/g, 'mm');
   }
