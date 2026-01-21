@@ -211,19 +211,19 @@ export class QbdDirectAdvancedSettingsComponent implements OnInit {
 
   private createMemoStructureWatcher(): void {
     this.memoStructure = this.advancedSettingsForm.value.expenseMemoStructure;
-    this.memoPreviewText = this.advancedSettingsService.formatMemoPreview(this.memoStructure, this.defaultMemoFields)[0];
+    this.memoPreviewText = QbdDirectAdvancedSettingsService.formatMemoPreview(this.memoStructure, this.defaultMemoFields)[0];
     this.advancedSettingsForm.controls.expenseMemoStructure.valueChanges.subscribe((memoChanges) => {
       this.memoStructure = memoChanges;
-      this.memoPreviewText = this.advancedSettingsService.formatMemoPreview(this.memoStructure, this.defaultMemoFields)[0];
+      this.memoPreviewText = QbdDirectAdvancedSettingsService.formatMemoPreview(this.memoStructure, this.defaultMemoFields)[0];
     });
   }
 
   private createTopMemoStructureWatcher(): void {
     this.memoStructure = this.advancedSettingsForm.value.topMemoStructure;
-    this.topMemoPreviewText = this.advancedSettingsService.formatMemoPreview(this.memoStructure, this.defaultTopMemoOptions)[0];
+    this.topMemoPreviewText = QbdDirectAdvancedSettingsService.formatMemoPreview(this.memoStructure, this.defaultTopMemoOptions)[0];
     this.advancedSettingsForm.controls.topMemoStructure.valueChanges.subscribe((memoChanges) => {
       this.memoStructure = memoChanges;
-      this.topMemoPreviewText = this.advancedSettingsService.formatMemoPreview(this.memoStructure, this.defaultTopMemoOptions)[0];
+      this.topMemoPreviewText = QbdDirectAdvancedSettingsService.formatMemoPreview(this.memoStructure, this.defaultTopMemoOptions)[0];
     });
   }
 

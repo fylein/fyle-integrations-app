@@ -67,8 +67,7 @@ export class BusinessCentralAdvancedSettingsComponent implements OnInit {
   readonly brandingStyle = brandingStyle;
 
   constructor(
-    private businessCentralAdvancedSettingsService: BusinessCentralAdvancedSettingsService,
-    private advancedSettingsService: AdvancedSettingsService,
+    private advancedSettingsService: BusinessCentralAdvancedSettingsService,
     private helper: HelperService,
     private helperService: BusinessCentralHelperService,
     private skipExportService: SkipExportService,
@@ -113,17 +112,17 @@ export class BusinessCentralAdvancedSettingsComponent implements OnInit {
 
   onMultiSelectChange() {
     const memo = this.advancedSettingForm.controls.memoStructure.value;
-    const changedMemo = this.advancedSettingsService.formatMemoPreview(memo, this.defaultMemoOptions)[1];
+    const changedMemo = AdvancedSettingsService.formatMemoPreview(memo, this.defaultMemoOptions)[1];
     this.advancedSettingForm.controls.memoStructure.patchValue(changedMemo);
   }
 
   private createMemoStructureWatcher(): void {
     this.memoStructure = this.advancedSettingForm.get('memoStructure')?.value;
-    const memo = this.advancedSettingsService.formatMemoPreview(this.memoStructure, this.defaultMemoOptions);
+    const memo = AdvancedSettingsService.formatMemoPreview(this.memoStructure, this.defaultMemoOptions);
     this.memoPreviewText = memo[0];
     this.advancedSettingForm.controls.memoStructure.patchValue(memo[1]);
     this.advancedSettingForm.controls.memoStructure.valueChanges.subscribe((memoChanges) => {
-      this.memoPreviewText = this.advancedSettingsService.formatMemoPreview(memoChanges, this.defaultMemoOptions)[0];
+      this.memoPreviewText = AdvancedSettingsService.formatMemoPreview(memoChanges, this.defaultMemoOptions)[0];
     });
   }
 
@@ -172,7 +171,7 @@ export class BusinessCentralAdvancedSettingsComponent implements OnInit {
       this.saveSkipExportFields();
     }
     const advancedSettingPayload = BusinessCentralAdvancedSettingsModel.createAdvancedSettingPayload(this.advancedSettingForm);
-    this.businessCentralAdvancedSettingsService.postAdvancedSettings(advancedSettingPayload).subscribe((advancedSettingsResponse: BusinessCentralAdvancedSettingsGet) => {
+    this.advancedSettingsService.postAdvancedSettings(advancedSettingPayload).subscribe((advancedSettingsResponse: BusinessCentralAdvancedSettingsGet) => {
       this.isSaveInProgress = false;
       this.toastService.displayToastMessage(ToastSeverity.SUCCESS, this.translocoService.translate('businessCentralAdvancedSettings.saveSuccessToast'));
       this.trackingService.trackTimeSpent(TrackingApp.BUSINESS_CENTRAL, Page.ADVANCED_SETTINGS_BUSINESS_CENTRAL, this.sessionStartTime);
@@ -214,7 +213,7 @@ export class BusinessCentralAdvancedSettingsComponent implements OnInit {
     }
     this.isOnboarding = this.router.url.includes('onboarding');
     forkJoin([
-      this.businessCentralAdvancedSettingsService.getAdvancedSettings().pipe(catchError(() => of(null))),
+      this.advancedSettingsService.getAdvancedSettings().pipe(catchError(() => of(null))),
       this.skipExportService.getExpenseFilter(),
       this.skipExportService.getExpenseFields()
     ]).subscribe(([businessCentralAdvancedSettingResponse, expenseFiltersGet, expenseFilterCondition]) => {

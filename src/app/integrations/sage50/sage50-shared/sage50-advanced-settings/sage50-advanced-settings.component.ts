@@ -229,7 +229,7 @@ export class Sage50AdvancedSettingsComponent implements OnInit {
       )
       .subscribe(value => {
         if (value) {
-          this.topLevelMemoPreviewText = this.advancedSettingsService.formatMemoPreview(value, this.topLevelMemoOptions)[0];
+          this.topLevelMemoPreviewText = Sage50AdvancedSettingsService.formatMemoPreview(value, this.topLevelMemoOptions)[0];
         }
       });
 
@@ -239,7 +239,7 @@ export class Sage50AdvancedSettingsComponent implements OnInit {
       )
       .subscribe(value => {
         if (value) {
-          this.lineLevelMemoPreviewText = this.advancedSettingsService.formatMemoPreview(value, this.lineLevelMemoOptions)[0];
+          this.lineLevelMemoPreviewText = Sage50AdvancedSettingsService.formatMemoPreview(value, this.lineLevelMemoOptions)[0];
         }
       });
   }

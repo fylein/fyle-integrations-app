@@ -1,4 +1,4 @@
-import { inject, Injectable } from "@angular/core";
+import { Injectable } from "@angular/core";
 import { SelectFormOption } from "../../models/common/select-form-option.model";
 import { brandingFeatureConfig } from "src/app/branding/branding-config";
 import { IntacctConfiguration } from "../../models/db/configuration.model";
@@ -9,15 +9,11 @@ import { AppName } from "../../models/enum/enum.model";
 import { ExpenseGroupingFieldOption } from "../../models/enum/enum.model";
 import { environment } from "src/environments/environment";
 import { EmailOption } from "../../models/common/advanced-settings.model";
-import { OrgDatePipe } from "src/app/shared/pipes/org-date.pipe";
 
 @Injectable({
   providedIn: 'root'
 })
 export class AdvancedSettingsService {
-
-  private orgDatePipe = inject(OrgDatePipe);
-
   static getDefaultMemoOptions(): string[] {
     return ['employee_email', 'employee_name', 'merchant', 'purpose', 'category', 'spent_on', 'report_number', 'expense_link', 'card_number'];
   }
@@ -93,7 +89,7 @@ export class AdvancedSettingsService {
     return options;
   }
 
-  formatMemoPreview(memoStructure: string[], defaultMemoOptions: string[]): [string, string[]] {
+  static formatMemoPreview(memoStructure: string[], defaultMemoOptions: string[]): [string, string[]] {
     const time = Date.now();
     const today = new Date(time);
 
@@ -106,8 +102,8 @@ export class AdvancedSettingsService {
       merchant: 'Pizza Hut',
       card_merchant: 'AMZN MKTP US*ABC123',
       report_number: 'C/2021/12/R/1',
-      spent_on: this.orgDatePipe.transform(today) ?? '',
-      spent_at: this.orgDatePipe.transform(today) ?? '',
+      spent_on: today.toLocaleDateString(),
+      spent_at: today.toLocaleDateString(),
       expense_key: 'E/2024/02/T/11',
       expense_number: 'E/2024/02/T/11',
       expense_link: `${environment.fyle_app_url}/app/main/#/enterprise/view_expense/`
