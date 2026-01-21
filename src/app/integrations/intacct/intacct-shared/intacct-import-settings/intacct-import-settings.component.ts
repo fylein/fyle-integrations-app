@@ -122,6 +122,8 @@ export class IntacctImportSettingsComponent implements OnInit {
 
   defaultAttribuitesWarningArray: boolean[] = [false, false, false];
 
+  importProjectBillableToPlatform: boolean;
+
   constructor(
     private router: Router,
     private mappingService: SiMappingsService,
@@ -656,6 +658,7 @@ export class IntacctImportSettingsComponent implements OnInit {
     const configuration = this.mappingService.getConfiguration();
     const locationEntity = this.connectorService.getLocationEntityMapping();
     const importCodeFieldConfig = this.importSettingService.getImportCodeFieldConfig();
+    const featureConfigsObservable = this.workspaceService.getFeatureConfigs();
 
     forkJoin([
       sageIntacctFieldsObservable,
@@ -664,9 +667,10 @@ export class IntacctImportSettingsComponent implements OnInit {
       importSettingsObservable,
       configuration,
       locationEntity,
-      importCodeFieldConfig
+      importCodeFieldConfig,
+      featureConfigsObservable
     ]).subscribe(
-      ([sageIntacctFields, fyleFields, groupedAttributesResponse, importSettings, configuration, locationEntity, importCodeFieldConfig]) => {
+      ([sageIntacctFields, fyleFields, groupedAttributesResponse, importSettings, configuration, locationEntity, importCodeFieldConfig, featureConfigs]) => {
         this.dependentFieldSettings = importSettings.dependent_field_settings;
         this.isImportTaxVisible = this.showImportTax(locationEntity);
         this.sageIntacctFields = sageIntacctFields.map(field => {
@@ -717,6 +721,7 @@ export class IntacctImportSettingsComponent implements OnInit {
         label = new SentenceCasePipe(this.translocoService).transform(label);
         label = label.replace('Gl ', 'GL ');
         this.intacctCategoryDestinationLabel = label;
+        this.importProjectBillableToPlatform = featureConfigs.import_project_billable_to_platform;
 
         this.initializeForm(importSettings);
       }

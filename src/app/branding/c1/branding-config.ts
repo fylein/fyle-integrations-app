@@ -41,7 +41,6 @@ export const c1FeatureConfig: FeatureConfiguration[string] = {
         displayAppLogoInDashboard: true,
         contentVersion: 'v2',
         useLandingV2: false,
-        importProjectBillableToPlatform: false,
         exportSettings: {
             reimbursableExpenses: false,
             nameInJournalEntry: false,

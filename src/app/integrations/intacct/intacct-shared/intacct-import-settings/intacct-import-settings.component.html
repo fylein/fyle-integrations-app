@@ -205,7 +205,7 @@
                     <label class="tw-pl-2 tw-text-14-px" for="checkbox">{{ 'intacctImportSettings.importDependentFieldsLabel' | transloco }}</label>
                   </div>
 
-                  @if (brandingFeatureConfig.featureFlags.importProjectBillableToPlatform) {
+                  @if (importProjectBillableToPlatform) {
                     <div class="tw-pt-16-px">
                       <app-configuration-info-label
                         [iconSrc]="'info-circle-fill-medium'"

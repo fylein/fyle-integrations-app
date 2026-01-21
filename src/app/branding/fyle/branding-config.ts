@@ -41,7 +41,6 @@ export const fyleFeatureConfig: FeatureConfiguration[string] = {
         displayAppLogoInDashboard: false,
         contentVersion: 'v1',
         useLandingV2: true,
-        importProjectBillableToPlatform: true,
         exportSettings: {
             reimbursableExpenses: true,
             nameInJournalEntry: true,
