@@ -369,11 +369,9 @@ describe('QboAdvancedSettingsComponent', () => {
         memoStructure: mockMemo
       });
 
-      spyOn(AdvancedSettingsService, 'formatMemoPreview').and.returnValue(['Some preview text', mockFormattedMemo]);
-
       component.onMultiSelectChange();
 
-      expect(AdvancedSettingsService.formatMemoPreview).toHaveBeenCalledWith(mockMemo, component.defaultMemoOptions);
+      expect(component['advancedSettingsService'].formatMemoPreview).toHaveBeenCalledWith(mockMemo, component.defaultMemoOptions);
       expect(component.advancedSettingForm.get('memoStructure')?.value).toEqual(mockFormattedMemo);
     });
   });

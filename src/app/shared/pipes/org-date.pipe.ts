@@ -1,7 +1,8 @@
-import { Pipe, PipeTransform } from '@angular/core';
+import { Injectable, Pipe, PipeTransform } from '@angular/core';
 import { DatePipe } from '@angular/common';
 import { OrgSettingsService } from 'src/app/core/services/common/org-settings.service';
 
+@Injectable()
 @Pipe({
   name: 'orgDate',
   standalone: false

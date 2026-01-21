@@ -19,6 +19,7 @@ import { XeroAdvancedSettingsService } from 'src/app/core/services/xero/xero-con
 import { XeroHelperService } from 'src/app/core/services/xero/xero-core/xero-helper.service';
 import { TranslocoService } from '@jsverse/transloco';
 import { AdvancedSettingsService } from 'src/app/core/services/common/advanced-settings.service';
+import { OrgDatePipe } from 'src/app/shared/pipes/org-date.pipe';
 
 @Component({
     selector: 'app-xero-advanced-settings',
@@ -79,7 +80,8 @@ export class XeroAdvancedSettingsComponent implements OnInit {
     private orgService: OrgService,
     private helperService: HelperService,
     private translocoService: TranslocoService,
-    private xeroAdvancedSettingsService: XeroAdvancedSettingsService
+    private xeroAdvancedSettingsService: XeroAdvancedSettingsService,
+    private orgDatePipe: OrgDatePipe
   ) {
     this.paymentSyncOptions = this.advancedSettingService.getPaymentSyncOptions();
   }
@@ -90,7 +92,7 @@ export class XeroAdvancedSettingsComponent implements OnInit {
 
   onMultiSelectChange() {
     const memo = this.advancedSettingForm.controls.memoStructure.value;
-    const changedMemo = AdvancedSettingsService.formatMemoPreview(memo, this.defaultMemoFields)[1];
+    const changedMemo = this.advancedSettingService.formatMemoPreview(memo, this.defaultMemoFields)[1];
     this.advancedSettingForm.controls.memoStructure.patchValue(changedMemo);
   }
 
@@ -130,7 +132,7 @@ export class XeroAdvancedSettingsComponent implements OnInit {
       purpose: this.translocoService.translate('xeroAdvancedSettings.previewPurpose'),
       merchant: this.translocoService.translate('xeroAdvancedSettings.previewMerchant'),
       report_number: this.translocoService.translate('xeroAdvancedSettings.previewReportNumber'),
-      spent_on: today.toLocaleDateString(),
+      spent_on: this.orgDatePipe.transform(today) ?? '',
       expense_link: `${environment.fyle_app_url}/app/main/#/enterprise/view_expense/`
     };
 

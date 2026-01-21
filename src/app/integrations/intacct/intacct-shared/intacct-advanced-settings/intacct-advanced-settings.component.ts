@@ -242,21 +242,21 @@ export class IntacctAdvancedSettingsComponent implements OnInit {
   private createMemoStructureWatchers(): void {
     // For the line item-level memo fields selector
     const selectedMemoFields = this.advancedSettingsForm.get('setDescriptionField')?.value;
-    const [memoPreviewText] = AdvancedSettingsService.formatMemoPreview(selectedMemoFields, this.defaultMemoFields);
+    const [memoPreviewText] = this.advanceSettingsService.formatMemoPreview(selectedMemoFields, this.defaultMemoFields);
     this.memoPreviewText = memoPreviewText;
 
     this.advancedSettingsForm.controls.setDescriptionField.valueChanges.subscribe((memoChanges) => {
-      const [memoPreviewText] = AdvancedSettingsService.formatMemoPreview(memoChanges, this.defaultMemoFields);
+      const [memoPreviewText] = this.advanceSettingsService.formatMemoPreview(memoChanges, this.defaultMemoFields);
       this.memoPreviewText = memoPreviewText;
     });
 
     // For the top-level memo fields selector
     const selectedTopMemoFields = this.advancedSettingsForm.get('setTopMemoField')?.value;
-    const [topMemoPreviewText] = AdvancedSettingsService.formatMemoPreview(selectedTopMemoFields, this.defaultTopMemoFields);
+    const [topMemoPreviewText] = this.advanceSettingsService.formatMemoPreview(selectedTopMemoFields, this.defaultTopMemoFields);
     this.topMemoPreviewText = topMemoPreviewText;
 
     this.advancedSettingsForm.controls.setTopMemoField?.valueChanges.subscribe((topMemoChanges) => {
-      const [topMemoPreviewText] = AdvancedSettingsService.formatMemoPreview(topMemoChanges, this.defaultTopMemoFields);
+      const [topMemoPreviewText] = this.advanceSettingsService.formatMemoPreview(topMemoChanges, this.defaultTopMemoFields);
       this.topMemoPreviewText = topMemoPreviewText;
     });
   }

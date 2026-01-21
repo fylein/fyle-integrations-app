@@ -322,7 +322,8 @@ import { DatePipe } from '@angular/common';
     AlertComponent
   ],
   providers: [
-    DatePipe
+    DatePipe,
+    OrgDatePipe
   ]
 })
 export class SharedModule { }
