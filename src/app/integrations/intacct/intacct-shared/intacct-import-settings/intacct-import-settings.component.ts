@@ -122,7 +122,7 @@ export class IntacctImportSettingsComponent implements OnInit {
 
   defaultAttribuitesWarningArray: boolean[] = [false, false, false];
 
-  importProjectBillableToPlatform: boolean;
+  importProjectBillableToPlatform: boolean = false;
 
   constructor(
     private router: Router,
@@ -721,7 +721,7 @@ export class IntacctImportSettingsComponent implements OnInit {
         label = new SentenceCasePipe(this.translocoService).transform(label);
         label = label.replace('Gl ', 'GL ');
         this.intacctCategoryDestinationLabel = label;
-        this.importProjectBillableToPlatform = featureConfigs.import_project_billable_to_platform;
+        this.importProjectBillableToPlatform = featureConfigs.import_project_billable_to_platform ?? false;
 
         this.initializeForm(importSettings);
       }

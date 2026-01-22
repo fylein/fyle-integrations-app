@@ -122,7 +122,7 @@ export class IntacctExportSettingsComponent implements OnInit {
 
   isMultiLineOption: boolean;
 
-  importProjectBillableToPlatform: boolean;
+  importProjectBillableToPlatform: boolean = false;
 
   private optionSearchUpdate = new Subject<IntacctExportSettingOptionSearch>();
 
@@ -595,7 +595,7 @@ export class IntacctExportSettingsComponent implements OnInit {
       this.exportSettingService.getExportSettings(),
       this.workspaceService.getFeatureConfigs()
     ]).subscribe(([exportSettings, featureConfigs]) => {
-      this.importProjectBillableToPlatform = featureConfigs?.import_project_billable_to_platform;
+      this.importProjectBillableToPlatform = featureConfigs?.import_project_billable_to_platform ?? false;
       this.exportSettings = exportSettings;
       this.addMissingOptions();
       this.setUpExpenseStates();
