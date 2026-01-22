@@ -82,7 +82,7 @@ export type FeatureConfiguration = {
                 useRepurposedExportSummary: boolean;
                 shouldShowExpenseTypeInAccountingErrorDashboard: boolean;
                 showTextOnlyForButtonsInDashboardErrorSection: boolean;
-                shouldShowDashboardErrorSectionHeader: boolean;
+                showDashboardErrorSectionHeader: boolean;
             }
         }
     }

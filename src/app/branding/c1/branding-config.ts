@@ -89,7 +89,7 @@ export const c1FeatureConfig: FeatureConfiguration[string] = {
             useRepurposedExportSummary: false,
             shouldShowExpenseTypeInAccountingErrorDashboard: false,
             showTextOnlyForButtonsInDashboardErrorSection: true,
-            shouldShowDashboardErrorSectionHeader: false
+            showDashboardErrorSectionHeader: false
         }
     }
 };

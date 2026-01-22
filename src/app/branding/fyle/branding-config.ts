@@ -89,7 +89,7 @@ export const fyleFeatureConfig: FeatureConfiguration[string] = {
             useRepurposedExportSummary: true,
             shouldShowExpenseTypeInAccountingErrorDashboard: true,
             showTextOnlyForButtonsInDashboardErrorSection: false,
-            shouldShowDashboardErrorSectionHeader: true
+            showDashboardErrorSectionHeader: true
         }
     }
 };

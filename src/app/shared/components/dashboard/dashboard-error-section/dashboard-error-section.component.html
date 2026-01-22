@@ -30,7 +30,7 @@
                             <div class="container">
                                 <div class="inside-container" [ngClass]="brandingStyle.dashboard.exportErrorCard">
                                     <div>
-                                        @if (brandingFeatureConfig.featureFlags.dashboard.shouldShowDashboardErrorSectionHeader) {
+                                        @if (brandingFeatureConfig.featureFlags.dashboard.showDashboardErrorSectionHeader) {
                                             <h4 [ngClass]="brandingStyle.dashboard.exportErrorTextHeader">{{'dashboard.employeeMappingErrorText' | transloco | sentenceCase}}</h4>
                                         }
                                     @if (groupedErrorStat.EMPLOYEE_MAPPING) {
@@ -68,7 +68,7 @@
                             <div class="container">
                                 <div class="inside-container" [ngClass]="brandingStyle.dashboard.exportErrorCard">
                                     <div>
-                                        @if (brandingFeatureConfig.featureFlags.dashboard.shouldShowDashboardErrorSectionHeader) {
+                                        @if (brandingFeatureConfig.featureFlags.dashboard.showDashboardErrorSectionHeader) {
                                             <h4 [ngClass]="brandingStyle.dashboard.exportErrorTextHeader">{{'dashboard.categoryMappingErrorText' | transloco | sentenceCase}}</h4>
                                         }
                                     @if (groupedErrorStat.CATEGORY_MAPPING) {
@@ -101,7 +101,7 @@
                         </div>
                     }
     
-                    @if (errors.ACCOUNTING_ERROR.length && brandingFeatureConfig.featureFlags.dashboard.shouldShowDashboardErrorSectionHeader) {
+                    @if (errors.ACCOUNTING_ERROR.length && brandingFeatureConfig.featureFlags.dashboard.showDashboardErrorSectionHeader) {
                         <div class="tw-pl-24-px tw-pr-24-px tw-pt-16-px">
                             <div class="container">
                                 <div class="sub-text-container" [ngClass]="brandingStyle.dashboard.exportErrorSubTextContainer">
@@ -117,7 +117,7 @@
                             <div class="container">
                                 <div class="inside-container" [ngClass]="brandingStyle.dashboard.exportErrorCard">
                                     <div>
-                                        @if (brandingFeatureConfig.featureFlags.dashboard.shouldShowDashboardErrorSectionHeader) {
+                                        @if (brandingFeatureConfig.featureFlags.dashboard.showDashboardErrorSectionHeader) {
                                         <h4 class=" tw-w-600-px" [ngClass]="brandingStyle.dashboard.exportErrorTextHeader">{{ error.error_title | snakeCaseToSpaceCase }}</h4>
                                         }
                                         <h5 class="!tw-font-400 tw-text-12-px !tw-leading-4 tw-w-600-px tw-flex tw-items-center tw-justify-start" [ngClass]="brandingStyle.dashboard.exportErrorAccountingDescription">
