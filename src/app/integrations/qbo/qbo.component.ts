@@ -11,6 +11,7 @@ import { WorkspaceService } from 'src/app/core/services/common/workspace.service
 import { QboHelperService } from 'src/app/core/services/qbo/qbo-core/qbo-helper.service';
 import { QboAuthService } from 'src/app/core/services/qbo/qbo-core/qbo-auth.service';
 import { AuthService } from 'src/app/core/services/common/auth.service';
+import { concatMap } from 'rxjs';
 
 @Component({
     selector: 'app-qbo',
@@ -63,9 +64,11 @@ export class QboComponent implements OnInit {
     this.workspace = workspace;
     this.storageService.set('workspaceId', this.workspace.id);
     this.storageService.set('onboarding-state', this.workspace.onboarding_state);
-    this.qboHelperService.syncFyleDimensions().subscribe();
-    this.qboHelperService.syncQBODimensions().subscribe();
-    this.navigate();
+    this.qboHelperService.syncFyleDimensions().pipe(
+      concatMap(() => this.qboHelperService.syncQBODimensions())
+    ).subscribe(() => {
+      this.navigate();
+    });
   }
 
   private setupWorkspace(): void {
