@@ -59,7 +59,7 @@ export class QbdDirectOnboardingPreRequisiteComponent {
     private translocoService: TranslocoService,
     private onboardingService: QbdDirectOnboardingService
   ) {
-    this.isContinueDisabled = !brandingFeatureConfig.qbdDirect.disableMarkAsDone;
+    this.isContinueDisabled = brandingFeatureConfig.qbdDirect.showMarkAsDone;
 
     this.preRequisitesteps = [
       {

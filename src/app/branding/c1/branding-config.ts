@@ -33,7 +33,7 @@ export const c1FeatureConfig: FeatureConfiguration[string] = {
         isStepSectionAlwaysVisible: true,
         configToggleLeftAligned: true,
         unlockStepsInOrder: true,
-        disableMarkAsDone: true,
+        showMarkAsDone: false,
         showSubIconsInConfigurationFields: false
     },
     featureFlags: {

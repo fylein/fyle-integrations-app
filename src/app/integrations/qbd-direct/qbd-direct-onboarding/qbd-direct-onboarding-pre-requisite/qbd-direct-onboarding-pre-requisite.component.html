@@ -48,7 +48,7 @@
                     </p>
                   </div>
                 </div>
-                @if (!brandingFeatureConfig.qbdDirect.disableMarkAsDone) {
+                @if (brandingFeatureConfig.qbdDirect.showMarkAsDone) {
                   <div>
                     <app-checkbox-button
                       [checkedText]="'qbdDirectOnboardingPreRequisite.done' | transloco"

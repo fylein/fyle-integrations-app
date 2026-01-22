@@ -33,7 +33,7 @@ export const fyleFeatureConfig: FeatureConfiguration[string] = {
         isStepSectionAlwaysVisible: false,
         configToggleLeftAligned: false,
         unlockStepsInOrder: false,
-        disableMarkAsDone: false,
+        showMarkAsDone: true,
         showSubIconsInConfigurationFields: true
     },
     featureFlags: {
