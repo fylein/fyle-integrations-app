@@ -70,7 +70,7 @@ export const c1Styles = {
         exportErrorSubTextDescription: '!tw-text-text-primary tw-text-12-px !tw-font-400 tw-pt-4-px',
         exportErrorTextHeader: 'tw-text-12-px !tw-font-600 tw-text-text-primary',
         exportErrorTextDescription: '!tw-text-text-primary tw-text-12-px tw-pt-4-px !tw-font-400 !tw-leading-4',
-        exportErrorCard: 'tw-flex tw-justify-between tw-items-start tw-gap-4 tw-rounded-4-px tw-py-8-px tw-px-12-px', // Tw-border-solid tw-border-1-px tw-border-border-tertiary
+        exportErrorCard: 'tw-flex tw-justify-between tw-items-start tw-gap-4 tw-rounded-4-px tw-py-8-px tw-px-12-px',
         exportErrorCardButton: 'tw-flex tw-self-center',
         exportErrorAccountingDescription: '!tw-text-text-primary tw-pt-4-px',
         exportErrorDescriptionText: 'tw-text-text-primary',
