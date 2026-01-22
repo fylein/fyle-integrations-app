@@ -104,6 +104,7 @@ export class LandingV2Component implements OnInit {
       (appKey === 'BUSINESS_CENTRAL' && !this.org.allow_dynamics) ||
       (appKey === 'QBD_DIRECT' && !this.org.allow_qbd_direct_integration) ||
       (appKey === 'TRAVELPERK' && !this.org.allow_travelperk) ||
+      (appKey === 'BAMBOO_HR' && !this.org.allow_bamboohr) ||
       (appKey === 'QBD' && !this.showQBDIIFIntegration) ||
       !isAppExposed
     ) {
