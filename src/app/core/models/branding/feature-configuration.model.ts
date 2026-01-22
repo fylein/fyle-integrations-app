@@ -18,13 +18,16 @@ export type FeatureConfiguration = {
         footerButtonsRightAligned: boolean,
         useMainMenuForSubmenu: boolean,
         usePrimaryLoader: boolean,
-        allowToastMessageInApps: boolean
+        allowToastMessageInApps: boolean,
+        shouldShowInfoLabelInDashboard: boolean,
         qbdDirect: {
             showStepStateAsIcons: boolean,
             showStepStateDivider: boolean,
             isStepSectionAlwaysVisible: boolean,
             configToggleLeftAligned: boolean,
             unlockStepsInOrder: boolean,
+            showMarkAsDone: boolean,
+            showSubIconsInConfigurationFields: boolean,
         },
         featureFlags: {
             showOptionalTextInsteadOfAsterisk: boolean;
@@ -77,6 +80,9 @@ export type FeatureConfiguration = {
             dashboard: {
                 disconnectButton: boolean;
                 useRepurposedExportSummary: boolean;
+                shouldShowExpenseTypeInAccountingErrorDashboard: boolean;
+                showTextOnlyForButtonsInDashboardErrorSection: boolean;
+                showDashboardErrorSectionHeader: boolean;
             }
         }
     }

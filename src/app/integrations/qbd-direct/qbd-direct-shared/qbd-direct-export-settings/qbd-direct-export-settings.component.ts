@@ -83,6 +83,8 @@ export class QbdDirectExportSettingsComponent implements OnInit{
 
   readonly brandingConfig = brandingConfig;
 
+  readonly brandingStyle = brandingStyle;
+
   readonly brandingFeatureConfig = brandingFeatureConfig;
 
   QBDCorporateCreditCardExpensesObject = QBDCorporateCreditCardExpensesObject;
@@ -106,8 +108,6 @@ export class QbdDirectExportSettingsComponent implements OnInit{
   private optionSearchUpdate = new Subject<ExportSettingOptionSearch>();
 
   sessionStartTime: Date = new Date();
-
-  readonly brandingStyle = brandingStyle;
 
   /** State for the mapping warning dialog */
   mappingWarningDialog: MappingWarningDialogState = {

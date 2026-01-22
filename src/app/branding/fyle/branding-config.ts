@@ -26,12 +26,15 @@ export const fyleFeatureConfig: FeatureConfiguration[string] = {
     useMainMenuForSubmenu: false,
     usePrimaryLoader: false,
     allowToastMessageInApps: true,
+    shouldShowInfoLabelInDashboard: true,
     qbdDirect: {
         showStepStateAsIcons: false,
         showStepStateDivider: false,
         isStepSectionAlwaysVisible: false,
         configToggleLeftAligned: false,
-        unlockStepsInOrder: false
+        unlockStepsInOrder: false,
+        showMarkAsDone: true,
+        showSubIconsInConfigurationFields: true
     },
     featureFlags: {
         cloneSettings: true,
@@ -83,7 +86,10 @@ export const fyleFeatureConfig: FeatureConfiguration[string] = {
         },
         dashboard: {
             disconnectButton: true,
-            useRepurposedExportSummary: true
+            useRepurposedExportSummary: true,
+            shouldShowExpenseTypeInAccountingErrorDashboard: true,
+            showTextOnlyForButtonsInDashboardErrorSection: false,
+            showDashboardErrorSectionHeader: true
         }
     }
 };
