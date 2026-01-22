@@ -8,7 +8,7 @@
       <p class="landing-v2--section-caption" [innerHTML]="'landingV2.integrationsDescription' | transloco:{ brandName: brandingConfig.brandName }">
       </p>
     </header>
-    @if (!exposeC1Apps) {
+    @if (!exposeC1Apps && (org.allow_bamboohr || org.allow_travelperk)) {
       <div class="tw-flex tw-text-14-px tw-border-y tw-border-separator">
         <div class="landing-v2--tab" [ngClass]="{'tw-text-menu-inactive-text-color': !integrationTabs.ALL}"
           (click)="switchView(IntegrationsView.ALL)">
@@ -24,13 +24,15 @@
             <p class="landing-v2--active-tag"></p>
           }
         </div>
-        <div class="landing-v2--tab" [ngClass]="{'tw-text-menu-inactive-text-color': !integrationTabs.HRMS}"
-          (click)="switchView(IntegrationsView.HRMS)">
-          {{ 'landingV2.tabHRMS' | transloco }}
-          @if (integrationTabs.HRMS) {
-            <p class="landing-v2--active-tag"></p>
-          }
-        </div>
+        @if (org.allow_bamboohr) {
+          <div class="landing-v2--tab" [ngClass]="{'tw-text-menu-inactive-text-color': !integrationTabs.HRMS}"
+            (click)="switchView(IntegrationsView.HRMS)">
+            {{ 'landingV2.tabHRMS' | transloco }}
+            @if (integrationTabs.HRMS) {
+              <p class="landing-v2--active-tag"></p>
+            }
+          </div>
+        }
         @if (org.allow_travelperk) {
           <div class="landing-v2--tab"
             [ngClass]="{'tw-text-menu-inactive-text-color': !integrationTabs.TRAVEL}"
