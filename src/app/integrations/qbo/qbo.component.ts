@@ -1,5 +1,5 @@
-import { Component, Inject, OnInit } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Component, Inject, OnInit, OnDestroy } from '@angular/core';
+import { Router, ActivatedRoute, NavigationStart, NavigationEnd } from '@angular/router';
 import { MinimalUser } from 'src/app/core/models/db/user.model';
 import { AppUrl, QBOOnboardingState } from 'src/app/core/models/enum/enum.model';
 import { QBOWorkspace } from 'src/app/core/models/qbo/db/qbo-workspace.model';
@@ -11,7 +11,8 @@ import { WorkspaceService } from 'src/app/core/services/common/workspace.service
 import { QboHelperService } from 'src/app/core/services/qbo/qbo-core/qbo-helper.service';
 import { QboAuthService } from 'src/app/core/services/qbo/qbo-core/qbo-auth.service';
 import { AuthService } from 'src/app/core/services/common/auth.service';
-import { concatMap } from 'rxjs';
+import { concatMap, filter, takeUntil } from 'rxjs';
+import { Subject } from 'rxjs';
 
 @Component({
     selector: 'app-qbo',
@@ -19,7 +20,7 @@ import { concatMap } from 'rxjs';
     styleUrls: ['./qbo.component.scss'],
     standalone: false
 })
-export class QboComponent implements OnInit {
+export class QboComponent implements OnInit, OnDestroy {
 
   user: MinimalUser = this.userService.getUserProfile();
 
@@ -28,6 +29,9 @@ export class QboComponent implements OnInit {
   isLoading: boolean = true;
 
   windowReference: Window;
+
+  private destroy$ = new Subject<void>();
+  private isGuardCheckInProgress = false;
 
   constructor(
     private helperService: HelperService,
@@ -102,6 +106,35 @@ export class QboComponent implements OnInit {
 
   ngOnInit(): void {
     this.handleAuthParameters();
+    
+    // Listen to router events to show loader during guard checks
+    this.router.events.pipe(
+      filter(event => event instanceof NavigationStart || event instanceof NavigationEnd),
+      takeUntil(this.destroy$)
+    ).subscribe((event) => {
+      if (event instanceof NavigationStart) {
+        // Show loader when navigation starts to a guarded route
+        if (event.url.includes('/integrations/qbo/main')) {
+          this.isLoading = true;
+          this.isGuardCheckInProgress = true;
+        }
+      } else if (event instanceof NavigationEnd) {
+        // Hide loader when navigation completes (guard check is done)
+        // This handles both successful navigation and redirects from the guard
+        if (this.isGuardCheckInProgress) {
+          this.isGuardCheckInProgress = false;
+          // Small delay to ensure smooth transition
+          setTimeout(() => {
+            this.isLoading = false;
+          }, 100);
+        }
+      }
+    });
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 
 }
