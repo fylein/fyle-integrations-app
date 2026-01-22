@@ -594,7 +594,7 @@ export class IntacctExportSettingsComponent implements OnInit {
     forkJoin([
       this.exportSettingService.getExportSettings(),
       this.workspaceService.getFeatureConfigs()
-    ]).subscribe(([exportSettings,featureConfigs]) => {
+    ]).subscribe(([exportSettings, featureConfigs]) => {
       this.importProjectBillableToPlatform = featureConfigs?.import_project_billable_to_platform;
       this.exportSettings = exportSettings;
       this.addMissingOptions();
