@@ -591,14 +591,13 @@ export class IntacctExportSettingsComponent implements OnInit {
 
   private getSettingsAndSetupForm(): void {
     this.isOnboarding = this.router.url.includes('onboarding');
-    this.exportSettingService.getExportSettings().subscribe((exportSettings) => {
-      this.workspaceService.getFeatureConfigs().subscribe((featureConfigs) => {
-        this.importProjectBillableToPlatform = featureConfigs.import_project_billable_to_platform;
-      });
+    forkJoin([
+      this.exportSettingService.getExportSettings(),
+      this.workspaceService.getFeatureConfigs()
+    ]).subscribe(([exportSettings,featureConfigs]) => {
+      this.importProjectBillableToPlatform = featureConfigs?.import_project_billable_to_platform;
       this.exportSettings = exportSettings;
-
       this.addMissingOptions();
-
       this.setUpExpenseStates();
       this.initializeExportSettingsFormWithData();
       this.isLoading = false;
