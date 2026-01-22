@@ -92,7 +92,8 @@
                             [placeholder]="'qbdDirectAdvancedSettings.selectTopMemoTypePlaceholder' | transloco"
                             [formControllerName]="'topMemoStructure'">
                         </app-configuration-multi-select>
-                        <div class="tw-p-24-px">
+                        <div class="tw-p-24-px" [ngClass]="brandingStyle.configuration.configurationAdvancedSettingPreviewLabelContainer">
+                            <span class="tw-inline-block tw-text-14-px tw-font-400 tw-text-text-secondary tw-mb-4-px" [ngClass]="brandingStyle.configuration.configurationAdvancedSettingPreviewLabel"> {{'qbd_direct.configuration.advancedSettings.topLevelMemoStructurePreviewLabel' | transloco}}</span>
                             <div class="tw-bg-input-read-only-bg tw-rounded-4-px tw-text-14-px tw-py-8-px tw-px-8-px tw-border-input-read-only-border tw-border-solid">
                                 <span>{{ topMemoPreviewText }}</span>
                             </div>
@@ -109,7 +110,8 @@
                             [placeholder]="'qbdDirectAdvancedSettings.selectMemoTypesPlaceholder' | transloco"
                             [formControllerName]="'expenseMemoStructure'">
                         </app-configuration-multi-select>
-                        <div class="tw-p-24-px">
+                        <div class="tw-p-24-px" [ngClass]="brandingStyle.configuration.configurationAdvancedSettingPreviewLabelContainer">
+                            <span class="tw-inline-block tw-text-14-px tw-font-400 tw-text-text-secondary tw-mb-4-px" [ngClass]="brandingStyle.configuration.configurationAdvancedSettingPreviewLabel"> {{'qbd_direct.configuration.advancedSettings.topLevelMemoStructurePreviewLabel' | transloco}}</span>
                             <div class="tw-bg-input-read-only-bg tw-rounded-4-px tw-text-14-px tw-py-8-px tw-px-8-px tw-border-input-read-only-border tw-border-solid">
                                 <span>{{ memoPreviewText }}</span>
                             </div>

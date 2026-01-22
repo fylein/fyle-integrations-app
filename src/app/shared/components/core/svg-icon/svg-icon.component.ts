@@ -2,6 +2,7 @@ import { Component, Input, Output, OnInit, EventEmitter } from '@angular/core';
 import { brandingConfig, brandingFeatureConfig } from 'src/app/branding/branding-config';
 
 const ICON_MAPPING = {
+  'api': 'grv-api',
   'arrow-down': 'grv-chevron-down',
   'arrow-line': 'arrow-line',
   'arrow-rotate-sync': 'grv-recurring-small',

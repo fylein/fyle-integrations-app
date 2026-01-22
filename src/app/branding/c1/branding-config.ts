@@ -26,6 +26,7 @@ export const c1FeatureConfig: FeatureConfiguration[string] = {
     useMainMenuForSubmenu: true,
     usePrimaryLoader: true,
     allowToastMessageInApps: false,
+    shouldShowInfoLabelInDashboard: false,
     qbdDirect: {
         showStepStateAsIcons: true,
         showStepStateDivider: true,

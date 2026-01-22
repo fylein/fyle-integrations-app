@@ -2729,6 +2729,9 @@
         "reimbursable": {
           "disabledCCCEmployeeMappingSubLabel": "How employees are represented in QuickBooks Desktop is auto-configured based on your reimbursable export configuration."
         }
+      },
+      "advancedSettings": {
+        "topLevelMemoStructurePreviewLabel": "Preview"
       }
     }
   }

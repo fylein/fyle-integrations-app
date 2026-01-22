@@ -45,8 +45,10 @@ export const c1Styles = {
         configurationAdvancedSettingSingleCard: 'tw-rounded-8-px tw-border-separator tw-border',
         configurationFieldHeaderText: 'tw-text-text-primary !tw-font-600',
         configurationFieldDefaultIcon: 'arrow-tail-up',
-        configurationExpenseStateIcon: 'list',
-        onboardingStepperHeaderText: 'tw-font-600'
+        configurationExpenseStateIcon: 'api',
+        onboardingStepperHeaderText: 'tw-font-600',
+        configurationAdvancedSettingPreviewLabel: '',
+        configurationAdvancedSettingPreviewLabelContainer: 'tw-pl-[62px]'
     },
     dashboard: {
         dashboardErrorResolveBtnText: 'p-button primary-outline',
@@ -56,7 +58,7 @@ export const c1Styles = {
         exportSummaryDescriptionText: 'tw-font-400 tw-text-text-primary',
         exportSummaryViewText: 'link tw-text-text-primary tw-font-400',
         exportSummaryContentCard: 'tw-px-0 tw-py-0',
-        exportSummaryCenterContent: 'tw-mt-12-px tw-mb-16-px tw-border-b tw-border-tertiary-lighter',
+        exportSummaryCenterContent: 'tw-mt-12-px tw-mb-16-px',
         exportSummaryIcon: '',
         exportSummaryCountText: 'tw--ml-10-px',
         exportSectionHeaderText: 'tw-text-14-px tw-font-600 tw-text-text-primary',
@@ -87,6 +89,9 @@ export const c1Styles = {
         theme: 'co-checkbox'
     },
     qbd_direct: {
+        dashboard: {
+            exportSectionLogoContainer: 'tw-w-24-px tw-self-start'
+        },
         onboarding: {
             preRequisiteContainer: 'tw-rounded-border-radius-full',
             preRequisiteCard: 'tw-rounded-8-px tw-border-1-px tw-border-bg-brand tw-py-24-px tw-pl-24-px tw-pr-8-px tw-my-24-px',

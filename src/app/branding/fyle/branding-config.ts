@@ -26,6 +26,7 @@ export const fyleFeatureConfig: FeatureConfiguration[string] = {
     useMainMenuForSubmenu: false,
     usePrimaryLoader: false,
     allowToastMessageInApps: true,
+    shouldShowInfoLabelInDashboard: true,
     qbdDirect: {
         showStepStateAsIcons: false,
         showStepStateDivider: false,
