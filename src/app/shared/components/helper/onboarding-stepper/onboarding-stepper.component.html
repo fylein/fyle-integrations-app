@@ -8,7 +8,7 @@
 <div class="tw-py-60-px tw-text-text-primary">
   <div>
     <div class="tw-text-center tw-pb-40-px">
-      <p class="tw-font-500">
+      <p [ngClass]="brandingStyle.configuration.onboardingStepperHeaderText">
         @if (!isCloneSettingView) {
           <span>
             {{ 'onboardingStepper.configureSettingsDescription' | transloco }}

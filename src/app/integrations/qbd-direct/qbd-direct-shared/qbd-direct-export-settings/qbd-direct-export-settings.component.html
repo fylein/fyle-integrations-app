@@ -34,7 +34,7 @@
                       [label]="'qbd_direct.configuration.exportSetting.reimbursable.reimbursableExpenseTypeLabel' | transloco"
                       [subLabel]="'qbd_direct.configuration.exportSetting.reimbursable.reimbursableExpenseTypeSubLabel' | transloco: {brandName: brandingConfig.brandName}"
                       [options]="reimbursableExportTypes"
-                      [iconPath]="'list'"
+                      [iconPath]="brandingStyle.configuration.configurationFieldDefaultIcon"
                       [placeholder]="'qbdDirectExportSettings.selectExportTypePlaceholder' | transloco"
                       [formControllerName]="'reimbursableExportType'"
                       [appName]="appName"
@@ -72,7 +72,7 @@
                         [mandatoryErrorListName]="'qbdDirectExportSettings.accountsPayable' | transloco"
                         [label]="('qbd_direct.configuration.exportSetting.reimbursable.defaultReimbursableAccountPayableLabel' | transloco) + (exportSettingsForm.get('reimbursableExportType')?.value | snakeCaseToSpaceCase | lowercase)"
                         [subLabel]="('qbd_direct.configuration.exportSetting.reimbursable.defaultReimbursableAccountPayableSubLabel' | transloco) + (exportSettingsForm.get('reimbursableExportType')?.value | snakeCaseToSpaceCase | lowercase) + ('qbdDirectExportSettings.debitLinesReflectCategory' | transloco)"
-                        [iconPath]="'list'"
+                        [iconPath]="brandingStyle.configuration.configurationFieldDefaultIcon"
                         [placeholder]="'qbdDirectExportSettings.selectAccountsPayablePlaceholder' | transloco"
                         [isMultiLineOption]="true"
                         [formControllerName]="'defaultReimbursableAccountsPayableAccountName'">
@@ -149,7 +149,7 @@
                   [label]="'qbd_direct.configuration.exportSetting.corporateCard.creditCardExpenseTypeLabel' | transloco"
                   [subLabel]="'qbd_direct.configuration.exportSetting.corporateCard.creditCardExpenseTypeSubLabel' | transloco: {brandName: brandingConfig.brandName}"
                   [options]="creditCardExportTypes"
-                  [iconPath]="'list'"
+                  [iconPath]="brandingStyle.configuration.configurationFieldDefaultIcon"
                   [placeholder]="'qbdDirectExportSettings.selectExportTypePlaceholder' | transloco"
                   [formControllerName]="'creditCardExportType'"
                   [appName]="appName"
@@ -165,7 +165,7 @@
                       [label]="'qbd_direct.configuration.exportSetting.reimbursable.employeeMappingLabel' | transloco"
                       [subLabel]="CCCEmployeeMappingSublabel"
                       [options]="employeeMappingOptions"
-                      [iconPath]="'user-two'"
+                      [iconPath]="brandingFeatureConfig.qbdDirect.showSubIconsInConfigurationFields ? 'user-two' : null"
                       [placeholder]="'qbdDirectExportSettings.selectRepresentationPlaceholder' | transloco"
                       [formControllerName]="'CCCEmployeeMapping'"
                       [isDisabled]="isCCCEmployeeMappingDisabled">
@@ -182,7 +182,7 @@
                       [label]="'qbd_direct.configuration.exportSetting.corporateCard.creditCardExpenseNameinJELabel' | transloco"
                       [subLabel]="'qbd_direct.configuration.exportSetting.corporateCard.creditCardExpenseNameinJESubLabel' | transloco"
                       [options]="nameInJEOptions"
-                      [iconPath]="'list'"
+                      [iconPath]="brandingFeatureConfig.qbdDirect.showSubIconsInConfigurationFields ? 'list' : null"
                       [placeholder]="'qbdDirectExportSettings.selectNamePlaceholder' | transloco"
                       [formControllerName]="'nameInJE'">
                     </app-configuration-select-field>
@@ -198,7 +198,7 @@
                       [isAdvanceSearchEnabled]="true"
                       (searchOptionsDropdown)="searchOptionsDropdown($event)"
                       [optionLabel]="'value'"
-                      [iconPath]="'list'"
+                      [iconPath]="brandingFeatureConfig.qbdDirect.showSubIconsInConfigurationFields ? 'list' : null"
                       [isFieldMandatory]="true"
                       [mandatoryErrorListName]="'qbdDirectExportSettings.creditCardAccount' | transloco"
                       [label]="'qbd_direct.configuration.exportSetting.corporateCard.defaultCCCAccountLabel' | transloco"
@@ -223,7 +223,7 @@
                       [mandatoryErrorListName]="'qbdDirectExportSettings.aDefaultCreditAccount' | transloco"
                       [label]="('qbd_direct.configuration.exportSetting.corporateCard.defaultCCCAccountPayableLabel' | transloco) + (exportSettingsForm.get('creditCardExportType')?.value | snakeCaseToSpaceCase | lowercase)"
                       [subLabel]="('qbd_direct.configuration.exportSetting.corporateCard.defaultCCCAccountPayableSubLabel' | transloco) + (exportSettingsForm.get('creditCardExportType')?.value | snakeCaseToSpaceCase | lowercase) + ('qbdDirectExportSettings.debitLinesReflectCategory' | transloco)"
-                      [iconPath]="'list'"
+                      [iconPath]="brandingFeatureConfig.qbdDirect.showSubIconsInConfigurationFields ? 'list' : null"
                       [placeholder]="'qbdDirectExportSettings.selectDefaultAccountPlaceholder' | transloco"
                       [isMultiLineOption]="true"
                       [formControllerName]="'defaultCCCAccountsPayableAccountName'">
@@ -239,7 +239,7 @@
                       [label]="'qbd_direct.configuration.exportSetting.corporateCard.cccPurchasedFromFieldLabel' | transloco"
                       [subLabel]="'qbd_direct.configuration.exportSetting.corporateCard.cccPurchasedFromFieldSubLabel' | transloco"
                       [options]="cccPurchasedFromFieldOptions"
-                      [iconPath]="'list'"
+                      [iconPath]="brandingFeatureConfig.qbdDirect.showSubIconsInConfigurationFields ? 'list' : null"
                       [placeholder]="'qbdDirectExportSettings.selectCCCPurchasedFromFieldPlaceholder' | transloco"
                       [formControllerName]="'cccPurchasedFromField'">
                     </app-configuration-select-field>
@@ -257,7 +257,7 @@
                 [label]="'qbd_direct.configuration.exportSetting.corporateCard.creditCardExpenseStateLabel' | transloco : {brandName: brandingConfig.brandName}"
                 [subLabel]="'qbd_direct.configuration.exportSetting.corporateCard.creditCardExpenseStateSubLabel' | transloco"
                 [options]="cccExpenseStateOptions"
-                [iconPath]="'list'"
+                [iconPath]="brandingStyle.configuration.configurationExpenseStateIcon"
                 [placeholder]="'qbdDirectExportSettings.selectExportStatePlaceholder' | transloco"
                 [formControllerName]="'creditCardExpenseState'">
               </app-configuration-select-field>
