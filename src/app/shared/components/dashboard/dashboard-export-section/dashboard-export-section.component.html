@@ -6,7 +6,7 @@
           @if (brandingFeatureConfig.featureFlags.displayAppLogoInDashboard) {
             <img src="{{logoPath}}" width="logoWidth" class="tw-mr-24-px" [ngClass]="[appName === AppName.QBD_DIRECT ? brandingStyle.qbd_direct.dashboard.exportSectionLogoContainer : 'tw-h-44-px']"/>
           }
-          <div class="tw-w-4/5">
+          <div class="tw-flex-1">
             <div class="tw-flex tw-items-center">
               @if (brandingFeatureConfig.illustrationsAllowed && !isExportInProgress && !exportableAccountingExportIds.length) {
                 <app-svg-icon [styleClasses]="'tw-flex tw-mt-1-px tw-pr-8-px'" [svgSource]="'check'" [height]="'24px'" [width]="'24px'"></app-svg-icon>

@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Expense, ExpenseModel } from 'src/app/core/models/intacct/db/expense.model';
+import { brandingFeatureConfig } from 'src/app/branding/branding-config';
 
 @Component({
     selector: 'app-dashboard-accounting-error-dialog',
@@ -12,6 +13,8 @@ export class DashboardAccountingErrorDialogComponent implements OnInit {
   @Input() isLoading: boolean;
 
   @Input() errorExpenses: Expense[];
+
+  readonly brandingFeatureConfig = brandingFeatureConfig;
 
   constructor() { }
 

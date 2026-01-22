@@ -4,7 +4,9 @@
           <tr>
               <th>{{'exportLog.tableHeaders.expenseID' | transloco}}</th>
               <th>{{'exportLog.tableHeaders.employee' | transloco}}</th>
-              <th>{{'exportLog.tableHeaders.expenseType' | transloco}}</th>
+              @if (brandingFeatureConfig.featureFlags.dashboard.shouldShowExpenseTypeInAccountingErrorDashboard) {
+                <th>{{'exportLog.tableHeaders.expenseType' | transloco}}</th>
+              }
           </tr>
       </ng-template>
       <ng-template pTemplate="body" let-rowData let-rowIndex="rowIndex">
@@ -20,11 +22,13 @@
                       {{rowData.employee_email}}
                   </h5>
               </td>
-              <td>
+              @if (brandingFeatureConfig.featureFlags.dashboard.shouldShowExpenseTypeInAccountingErrorDashboard) {
+                <td>
                   <h4>
-                      {{rowData.fund_source === 'PERSONAL' ? ('dashboardAccountingErrorDialog.reimbursable' | transloco) : ('common.corporateCard' | transloco)}}
-                  </h4>
-              </td>
+                        {{rowData.fund_source === 'PERSONAL' ? ('dashboardAccountingErrorDialog.reimbursable' | transloco) : ('common.corporateCard' | transloco)}}
+                    </h4>
+                </td>
+              }
           </tr>
       </ng-template>
   </p-table>

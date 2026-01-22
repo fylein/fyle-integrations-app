@@ -18,3 +18,7 @@
 :host  ::ng-deep .p-dialog {
     @apply tw-max-h-full tw-m-0 #{!important};
   }
+
+.text-only-button {
+    @apply tw-text-12-px tw-font-600 tw-text-text-brand-primary tw-cursor-pointer;
+}
