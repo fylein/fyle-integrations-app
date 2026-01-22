@@ -4,7 +4,7 @@
       <div class="tw-p-24-px">
         <div class="tw-flex tw-items-center tw-justify-between">
           @if (brandingFeatureConfig.featureFlags.displayAppLogoInDashboard) {
-            <img src="{{logoPath}}" width="logoWidth" class="tw-mr-24-px tw-h-44-px"/>
+            <img src="{{logoPath}}" width="logoWidth" class="tw-mr-24-px" [ngClass]="[appName === AppName.QBD_DIRECT ? brandingStyle.qbd_direct.dashboard.exportSectionLogoContainer : 'tw-h-44-px']"/>
           }
           <div class="tw-w-4/5">
             <div class="tw-flex tw-items-center">
@@ -71,7 +71,7 @@
               </div>
             </div>
           </div>
-          @if (appName === AppName.QBD_DIRECT && isExportInProgress) {
+          @if (appName === AppName.QBD_DIRECT && isExportInProgress && brandingFeatureConfig.shouldShowInfoLabelInDashboard) {
             <div class="tw-pt-16-px">
               <app-configuration-info-label
                     [iconSrc]="'info-circle-fill-medium'"

@@ -46,7 +46,9 @@ export const fyleStyles = {
         configurationFieldHeaderText: 'tw-text-text-secondary !tw-font-400',
         configurationFieldDefaultIcon: 'list',
         configurationExpenseStateIcon: 'list',
-        onboardingStepperHeaderText: 'tw-font-500'
+        onboardingStepperHeaderText: 'tw-font-500',
+        configurationAdvancedSettingPreviewLabel: 'tw-hidden',
+        configurationAdvancedSettingPreviewLabelContainer: ''
     },
     dashboard: {
         dashboardErrorResolveBtnText: 'p-button secondary-sm',
@@ -87,6 +89,9 @@ export const fyleStyles = {
         theme: 'fyle-checkbox'
     },
     qbd_direct: {
+        dashboard: {
+            exportSectionLogoContainer: ''
+        },
         onboarding: {
             preRequisiteContainer: 'tw-rounded-border-radius-2xs',
             preRequisiteCard: '',

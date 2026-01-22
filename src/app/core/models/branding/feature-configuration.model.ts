@@ -18,7 +18,8 @@ export type FeatureConfiguration = {
         footerButtonsRightAligned: boolean,
         useMainMenuForSubmenu: boolean,
         usePrimaryLoader: boolean,
-        allowToastMessageInApps: boolean
+        allowToastMessageInApps: boolean,
+        shouldShowInfoLabelInDashboard: boolean,
         qbdDirect: {
             showStepStateAsIcons: boolean,
             showStepStateDivider: boolean,
