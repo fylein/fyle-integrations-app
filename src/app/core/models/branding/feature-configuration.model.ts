@@ -80,6 +80,9 @@ export type FeatureConfiguration = {
             dashboard: {
                 disconnectButton: boolean;
                 useRepurposedExportSummary: boolean;
+                shouldShowExpenseTypeInAccountingErrorDashboard: boolean;
+                showTextOnlyForButtonsInDashboardErrorSection: boolean;
+                shouldShowDashboardErrorSectionHeader: boolean;
             }
         }
     }
