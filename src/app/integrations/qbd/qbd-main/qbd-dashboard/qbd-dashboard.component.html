@@ -25,7 +25,7 @@
               <div>
                 <app-button (buttonClick)="triggerExports()"  [buttonSize]="ButtonSize.MEDIUM" [buttonType]="ButtonType.PRIMARY" [svgSource]="'arrow-tail-right-medium'" [disabled]="exportInProgress || disableQBDExportButton" [buttonText]="!exportInProgress ? ('qbdDashboard.exportIifFileButton' | transloco) : ('qbdDashboard.exportingButton' | transloco)"></app-button>
                 @if (nextExportDate) {
-                  <p class="tw-pt-8-px tw-float-right tw-text-12-px tw-font-500 tw-text-text-muted">{{ 'qbdDashboard.nextExportSchedule' | transloco }} {{ nextExportDate | date : 'd MMM, yyyy'}}</p>
+                  <p class="tw-pt-8-px tw-float-right tw-text-12-px tw-font-500 tw-text-text-muted">{{ 'qbdDashboard.nextExportSchedule' | transloco }} {{ nextExportDate | orgDate }}</p>
                 }
               </div>
             </div>
@@ -89,8 +89,8 @@
               <ng-template pTemplate="body" let-exports let-i="rowIndex">
                 <tr>
                   <td>
-                    <p class="tw-font-400 tw-text-sub-text-color">{{exports.created_at | date}}</p>
-                    <span class="tw-font-400 !tw-text-12-px tw-text-placeholder">{{exports.created_at | date : "hh:mm a"}}</span>
+                    <p class="tw-font-400 tw-text-sub-text-color">{{exports.created_at | orgDate}}</p>
+                    <span class="tw-font-400 !tw-text-12-px tw-text-placeholder">{{exports.created_at | orgTime}}</span>
                   </td>
                   <td>{{getTypeString(exports.type)| sentenceCase }}</td>
                   <td>{{getExpenseType(exports.fund_source)| sentenceCase }}</td>

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { StorageService } from './storage.service';
-import { Observable } from 'rxjs';
+import { Observable, tap } from 'rxjs';
 import { AppUrl, BusinessCentralOnboardingState, IntacctOnboardingState, NetsuiteOnboardingState, QBDOnboardingState, QBOOnboardingState, Sage300OnboardingState, Sage50OnboardingState, XeroOnboardingState } from '../../models/enum/enum.model';
 import { ApiService } from './api.service';
 import { HelperService } from './helper.service';
@@ -8,6 +8,7 @@ import { AppUrlMap } from '../../models/integrations/integrations.model';
 import { WorkspaceOnboardingState } from '../../models/db/workspaces.model';
 import { QbdDirectWorkspace } from '../../models/qbd-direct/db/qbd-direct-workspaces.model';
 import { Cacheable } from 'ts-cacheable';
+import { OrgSettingsService } from './org-settings.service';
 
 @Injectable({
   providedIn: 'root'
@@ -17,7 +18,8 @@ export class WorkspaceService {
   constructor(
     private storageService: StorageService,
     private apiService: ApiService,
-    private helper: HelperService
+    private helper: HelperService,
+    private orgSettingsService: OrgSettingsService
   ) {
     helper.setBaseApiURL();
    }
@@ -28,12 +30,24 @@ export class WorkspaceService {
 
   // The return type is made any intentionally, the caller can specify the return type to be aligned with the app
   getWorkspace(orgId: string): any {
-    return this.apiService.get('/workspaces/', {org_id: orgId});
+    return this.apiService.get('/workspaces/', {org_id: orgId}).pipe(
+      tap((workspaces) => {
+        if (workspaces.length > 0) {
+          this.orgSettingsService.setOrgSettings(workspaces[0].org_settings);
+        }
+      })
+    );
   }
 
   // The return type is made any intentionally, the caller can specify the return type to be aligned with the app
   postWorkspace(): any {
-    return this.apiService.post('/workspaces/', {});
+    return this.apiService.post('/workspaces/', {}).pipe(
+      tap((workspaces) => {
+        if (workspaces.length > 0) {
+          this.orgSettingsService.setOrgSettings(workspaces[0].org_settings);
+        }
+      })
+    );
   }
 
   getWorkspaceId(): string {
