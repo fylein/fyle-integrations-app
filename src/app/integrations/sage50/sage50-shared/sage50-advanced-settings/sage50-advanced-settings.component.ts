@@ -12,6 +12,7 @@ import { ScheduleDialogData, ScheduleForm } from 'src/app/core/models/misc/sched
 import { Sage50AdvancedSettings, Sage50AdvancedSettingsForm } from 'src/app/core/models/sage50/sage50-configuration/sage50-advanced-settings.model';
 import { Sage50CCCExportType, Sage50ExportSettingsGet } from 'src/app/core/models/sage50/sage50-configuration/sage50-export-settings.model';
 import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
+import { OrgSettingsService } from 'src/app/core/services/common/org-settings.service';
 import { SkipExportService } from 'src/app/core/services/common/skip-export.service';
 import { WorkspaceService } from 'src/app/core/services/common/workspace.service';
 import { TrackingService } from 'src/app/core/services/integration/tracking.service';
@@ -100,7 +101,8 @@ export class Sage50AdvancedSettingsComponent implements OnInit {
     private translocoService: TranslocoService,
     private toastService: IntegrationsToastService,
     private workspaceService: WorkspaceService,
-    private trackingService: TrackingService
+    private trackingService: TrackingService,
+    private orgSettingsService: OrgSettingsService
   ) { }
 
   editSchedule() {
@@ -123,13 +125,14 @@ export class Sage50AdvancedSettingsComponent implements OnInit {
         this.advancedSettings = {
           ...this.advancedSettings!,
           ...this.advancedSettingsService.constructSchedulePayload(
-            this.advancedSettingsForm.get('schedule') as FormGroup<ScheduleForm>
+            this.advancedSettingsForm.get('schedule') as FormGroup<ScheduleForm>,
+            this.orgSettingsService.is24HourTimeFormat()
           )
         };
       } else {
         // Reset the schedule form to the last saved value if the dialog is closed without saving
         this.advancedSettingsForm.setControl('schedule',
-          this.advancedSettingsService.mapAPIResponseToScheduleFormGroup(this.advancedSettings)
+          this.advancedSettingsService.mapAPIResponseToScheduleFormGroup(this.advancedSettings, this.orgSettingsService.is24HourTimeFormat())
         );
 
         // If schedule dialog was closed with no previously saved schedule, disable the toggle
@@ -184,7 +187,8 @@ export class Sage50AdvancedSettingsComponent implements OnInit {
   save() {
     this.saveSkipExport();
     this.isSaveInProgress = true;
-    this.advancedSettingsService.constructPayloadAndSave(this.advancedSettingsForm).subscribe({
+    const is24HourTimeFormat = this.orgSettingsService.is24HourTimeFormat();
+    this.advancedSettingsService.constructPayloadAndSave(this.advancedSettingsForm, is24HourTimeFormat).subscribe({
       next: (response: Sage50AdvancedSettings) => {
         this.isSaveInProgress = false;
         this.toastService.displayToastMessage(ToastSeverity.SUCCESS, this.translocoService.translate('sage50AdvancedSettings.advancedSettingsSavedSuccess'));
@@ -263,8 +267,9 @@ export class Sage50AdvancedSettingsComponent implements OnInit {
 
       // Build both forms
       const isSkipExportEnabled = expenseFilters.count > 0;
+      const is24HourTimeFormat = this.orgSettingsService.is24HourTimeFormat();
       this.advancedSettingsForm = this.advancedSettingsService.mapAPIResponseToFormGroup(
-        advancedSettings, this.isTopLevelMemoVisible, isSkipExportEnabled
+        advancedSettings, this.isTopLevelMemoVisible, isSkipExportEnabled, is24HourTimeFormat
       );
       this.skipExportForm = SkipExportModel.setupSkipExportForm(this.expenseFilters, [], this.conditionFieldOptions);
 
