@@ -57,12 +57,21 @@ export class ScheduleFormService {
   }
 
 
-  getTimeOptions(): string[] {
+  getTimeOptions(is24HourTimeFormat: boolean): string[] {
     const timeOptions = [];
-    for (let hour = 1; hour <= 12; hour++) {
-      for (const minute of ['00', '30']) {
-        const paddedHour = hour.toString().padStart(2, '0'); // 01, 02, 03, ..., 12
-        timeOptions.push(`${paddedHour}:${minute}`); // 01:00, 01:30, ..., 12:30
+    if (is24HourTimeFormat) {
+      for (let hour = 0; hour < 24; hour++) {
+        for (const minute of ['00', '30']) {
+          const paddedHour = hour.toString().padStart(2, '0'); // 00, 01, 02, ..., 23
+          timeOptions.push(`${paddedHour}:${minute}`); // 00:00, 00:30, 01:00, ..., 23:30
+        }
+      }
+    } else {
+      for (let hour = 1; hour <= 12; hour++) {
+        for (const minute of ['00', '30']) {
+          const paddedHour = hour.toString().padStart(2, '0'); // 01, 02, 03, ..., 12
+          timeOptions.push(`${paddedHour}:${minute}`); // 01:00, 01:30, ..., 12:30
+        }
       }
     }
     return timeOptions;
@@ -93,7 +102,9 @@ export class ScheduleFormService {
   /**
    * Converts UTC time of format HH:MM:SS to local timeOfDay (HH:MM) and meridiem
    */
-  getLocalTimeOfDay(UTCTimeOfDay: string | null): { timeOfDay: string | null, meridiem: 'AM' | 'PM' } {
+  getLocalTimeOfDay(
+    UTCTimeOfDay: string | null, is24HourTimeFormat: boolean
+  ): { timeOfDay: string | null, meridiem: 'AM' | 'PM' | null } {
     if (!UTCTimeOfDay) {
       return {
         timeOfDay: null,
@@ -103,10 +114,13 @@ export class ScheduleFormService {
     const localTimeOfDay = new Date(`01/01/2000 ${UTCTimeOfDay}Z`);
 
     let hours = localTimeOfDay.getHours();
-    const meridiem = hours >= 12 ? 'PM' : 'AM';
+    let meridiem: 'AM' | 'PM' | null = null;
 
-    hours = hours % 12;
-    hours = hours ? hours : 12; // The hour '0' should be '12'
+    if (!is24HourTimeFormat) {
+      meridiem = hours >= 12 ? 'PM' : 'AM';
+      hours = hours % 12;
+      hours = hours ? hours : 12; // The hour '0' should be '12'
+    }
     const hoursString = hours.toString().padStart(2, '0');
 
     const minutesString = localTimeOfDay.getMinutes().toString().padStart(2, '0');
@@ -120,15 +134,16 @@ export class ScheduleFormService {
   /**
    * Given a schedule form, converts local timeOfDay and meridiem to UTC time of format HH:MM:SS
    */
-  getUTCTimeOfDay(schedule: FormGroup<ScheduleForm>): string | null {
+  getUTCTimeOfDay(schedule: FormGroup<ScheduleForm>, is24HourTimeFormat: boolean): string | null {
     const timeOfDay = schedule.get('timeOfDay')?.value ?? null;
     const meridiem = schedule.get('meridiem')?.value ?? 'AM';
 
     let timeOfDayUTC = null;
 
-    if (timeOfDay && meridiem) {
+    if (timeOfDay && (is24HourTimeFormat || meridiem)) {
         // Local time
-        const date = new Date(`01/01/2000 ${timeOfDay} ${meridiem}`);
+        const dateString = is24HourTimeFormat ? `01/01/2000 ${timeOfDay}` : `01/01/2000 ${timeOfDay} ${meridiem}`;
+        const date = new Date(dateString);
 
         // Convert to UTC HH:MM:SS format
         const hours = date.getUTCHours().toString().padStart(2, '0');

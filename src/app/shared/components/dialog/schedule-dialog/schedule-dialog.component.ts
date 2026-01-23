@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, computed, EventEmitter, OnInit, Output } from '@angular/core';
 import { DialogComponent } from '../../core/dialog/dialog.component';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { brandingConfig } from 'src/app/branding/branding-config';
@@ -9,6 +9,7 @@ import { RadioButtonModule } from 'primeng/radiobutton';
 import { SelectFormOption } from 'src/app/core/models/common/select-form-option.model';
 import { SentenceCasePipe } from 'src/app/shared/pipes/sentence-case.pipe';
 import { ScheduleFormService } from 'src/app/core/services/misc/schedule-form.service';
+import { OrgSettingsService } from 'src/app/core/services/common/org-settings.service';
 
 @Component({
     selector: 'app-schedule-dialog',
@@ -31,6 +32,8 @@ export class ScheduleDialogComponent implements OnInit {
 
   form!: FormGroup<ScheduleForm>;
 
+  readonly is24HourTimeFormat = this.orgSettingsService.is24HourTimeFormat;
+
   get frequencyValue() {
     return this.form.get('frequency')?.value ?? null;
   }
@@ -38,7 +41,8 @@ export class ScheduleDialogComponent implements OnInit {
   constructor(
     public config: DynamicDialogConfig<ScheduleDialogData>,
     public dialogRef: DynamicDialogRef,
-    private scheduleFormService: ScheduleFormService
+    private scheduleFormService: ScheduleFormService,
+    private orgSettingsService: OrgSettingsService
   ) { }
 
   closeDialog(): void {
@@ -55,7 +59,7 @@ export class ScheduleDialogComponent implements OnInit {
     this.frequencyOptions = this.scheduleFormService.getFrequencyOptions();
     this.dayOfWeekOptions = this.scheduleFormService.getDayOfWeekOptions();
     this.dayOfMonthOptions = this.scheduleFormService.getDayOfMonthOptions();
-    this.timeOptions = this.scheduleFormService.getTimeOptions();
+    this.timeOptions = this.scheduleFormService.getTimeOptions(this.orgSettingsService.is24HourTimeFormat());
   }
 
   ngOnInit(): void {

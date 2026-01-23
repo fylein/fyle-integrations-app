@@ -37,8 +37,8 @@
             <ng-template pTemplate="body" let-rowData>
               <tr (click)="openExpensesDialog(rowData)" class="tw-cursor-pointer">
                 <td>
-                  <p class="tw-text-14-px tw-font-400 tw-text-text-secondary">{{rowData.exported_at | date}}</p>
-                  <span class="tw-font-400 !tw-text-12-px tw-text-text-muted">{{rowData.exported_at | date : "hh:mm a"}}</span>
+                  <p class="tw-text-14-px tw-font-400 tw-text-text-secondary">{{rowData.exported_at | orgDate}}</p>
+                  <span class="tw-font-400 !tw-text-12-px tw-text-text-muted">{{rowData.exported_at | orgTime}}</span>
                 </td>
                 <td>
                   <h4 class="tw-text-14-px tw-font-400 tw-text-text-secondary">

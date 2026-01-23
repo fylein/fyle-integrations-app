@@ -24,7 +24,9 @@
     <p>
         <span>{{ 'uploadedFileDetails.lastUploadedAtLabel' | transloco }}</span>
         <strong class="tw-pl-2-px tw-font-500">
-            {{ file.lastUploadedAt ? (file.lastUploadedAt | date:'MMM d, yyyy, hh:mm a') : '' }}
+            {{ file.lastUploadedAt ? (
+                (file.lastUploadedAt | orgDate) + ', ' + (file.lastUploadedAt | orgTime)
+            ) : '' }}
         </strong>
     </p>
 

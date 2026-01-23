@@ -1,5 +1,6 @@
 import { Injectable, signal, computed } from '@angular/core';
 import { OrgSettings, CurrencyFormat, RegionalSettings } from '../../models/common/org-settings.model';
+import { PrimeNG } from 'primeng/config';
 
 @Injectable({
   providedIn: 'root'
@@ -22,17 +23,17 @@ export class OrgSettingsService {
     }
   });
 
-  readonly dateFormat = computed(() => this.regionalSettings()?.date_format ?? 'MMM dd, yyyy');
+  readonly dateFormat = computed(() => this.regionalSettings().date_format);
 
-  readonly timeFormat = computed(() => this.regionalSettings()?.time_format ?? 'h:mm a');
+  readonly timeFormat = computed(() => this.regionalSettings().time_format);
 
-  readonly currencyFormat = computed<CurrencyFormat>(() => (
-    this.regionalSettings()?.currency_format ?? {
-      symbol_position: 'before',
-      decimal_separator: '.',
-      thousand_separator: ','
-    }
-  ));
+  readonly currencyFormat = computed(() => this.regionalSettings().currency_format);
+
+  readonly is24HourTimeFormat = computed(() => this.timeFormat() === 'HH:mm');
+
+  constructor(
+    private primeNg: PrimeNG
+  ) {}
 
   // Setter method (only this service can write)
   setOrgSettings(settings?: OrgSettings | {}): void {
@@ -40,5 +41,15 @@ export class OrgSettingsService {
       return;
     }
     this.orgSettingsSignal.set(settings);
+
+    const primengFormat = this.convertToPrimengFormat(this.dateFormat());
+    this.primeNg.setTranslation({ dateFormat: primengFormat });
+  }
+
+  private convertToPrimengFormat(dateFormat: string): string {
+    return dateFormat
+      .replace(/yyyy/g, 'yy')
+      .replace(/MMM/g, 'M')
+      .replace(/\bMM\b/g, 'mm');
   }
 }
