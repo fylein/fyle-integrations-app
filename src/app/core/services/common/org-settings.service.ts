@@ -29,6 +29,8 @@ export class OrgSettingsService {
 
   readonly currencyFormat = computed(() => this.regionalSettings().currency_format);
 
+  readonly is24HourTimeFormat = computed(() => this.timeFormat() === 'HH:mm');
+
   constructor(
     private primeNg: PrimeNG
   ) {}
