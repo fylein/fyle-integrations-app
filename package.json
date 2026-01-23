@@ -45,6 +45,7 @@
     "@sentry/cli": "^2.40.0",
     "@types/node": "^16.11.7",
     "@types/papaparse": "^5.3.16",
+    "currency.js": "^2.0.4",
     "eslint": "^8.57.0",
     "eslint-plugin-import": "^2.29.1",
     "n": "^9.2.3",
