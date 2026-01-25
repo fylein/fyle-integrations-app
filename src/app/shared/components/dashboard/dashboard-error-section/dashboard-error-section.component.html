@@ -30,7 +30,9 @@
                             <div class="container">
                                 <div class="inside-container" [ngClass]="brandingStyle.dashboard.exportErrorCard">
                                     <div>
-                                    <h4 [ngClass]="brandingStyle.dashboard.exportErrorTextHeader">{{'dashboard.employeeMappingErrorText' | transloco | sentenceCase}}</h4>
+                                        @if (brandingFeatureConfig.featureFlags.dashboard.showDashboardErrorSectionHeader) {
+                                            <h4 [ngClass]="brandingStyle.dashboard.exportErrorTextHeader">{{'dashboard.employeeMappingErrorText' | transloco | sentenceCase}}</h4>
+                                        }
                                     @if (groupedErrorStat.EMPLOYEE_MAPPING) {
                                         <h5 class="tw-text-12-px" [ngClass]="brandingStyle.dashboard.exportErrorDescriptionText">{{ 'dashboardErrorSection.resolvedErrorsOfTotal' | transloco: { resolvedCount: groupedErrorStat.EMPLOYEE_MAPPING.resolvedCount, totalCount: groupedErrorStat.EMPLOYEE_MAPPING.totalCount } }}</h5>
                                     }
@@ -40,7 +42,11 @@
                                     <div class="flex-wrapper" [ngClass]="brandingStyle.dashboard.exportErrorCardButton">
                                         @if (!groupedErrorStat.EMPLOYEE_MAPPING || (groupedErrorStat.EMPLOYEE_MAPPING && groupedErrorStat.EMPLOYEE_MAPPING.resolvedCount !== groupedErrorStat.EMPLOYEE_MAPPING.totalCount)) {
                                             <div>
-                                                <app-button [buttonSize]="ButtonSize.EXTRA_SMALL" [buttonType]="ButtonType.SECONDARY" (buttonClick)="showMappingResolve(ErrorType.EMPLOYEE_MAPPING, errors.EMPLOYEE_MAPPING, ExportErrorSourceType.EMPLOYEE)" [buttonText]="'dashboardErrorSection.resolveButtonText' | transloco"></app-button>
+                                                @if (brandingFeatureConfig.featureFlags.dashboard.showTextOnlyForButtonsInDashboardErrorSection) {
+                                                    <p (click)="showMappingResolve(ErrorType.EMPLOYEE_MAPPING, errors.EMPLOYEE_MAPPING, ExportErrorSourceType.EMPLOYEE)" class="text-only-button">{{ 'dashboardErrorSection.resolveButtonText' | transloco }}</p>
+                                                } @else {
+                                                    <app-button [buttonSize]="ButtonSize.EXTRA_SMALL" [buttonType]="ButtonType.SECONDARY" (buttonClick)="showMappingResolve(ErrorType.EMPLOYEE_MAPPING, errors.EMPLOYEE_MAPPING, ExportErrorSourceType.EMPLOYEE)" [buttonText]="'dashboardErrorSection.resolveButtonText' | transloco"></app-button>
+                                                }
                                             </div>
                                         }
                                         @if (groupedErrorStat.EMPLOYEE_MAPPING && groupedErrorStat.EMPLOYEE_MAPPING.resolvedCount === groupedErrorStat.EMPLOYEE_MAPPING.totalCount) {
@@ -62,7 +68,9 @@
                             <div class="container">
                                 <div class="inside-container" [ngClass]="brandingStyle.dashboard.exportErrorCard">
                                     <div>
-                                    <h4 [ngClass]="brandingStyle.dashboard.exportErrorTextHeader">{{'dashboard.categoryMappingErrorText' | transloco | sentenceCase}}</h4>
+                                        @if (brandingFeatureConfig.featureFlags.dashboard.showDashboardErrorSectionHeader) {
+                                            <h4 [ngClass]="brandingStyle.dashboard.exportErrorTextHeader">{{'dashboard.categoryMappingErrorText' | transloco | sentenceCase}}</h4>
+                                        }
                                     @if (groupedErrorStat.CATEGORY_MAPPING) {
                                         <h5 class="tw-pt-4-px tw-text-12-px" [ngClass]="brandingStyle.dashboard.exportErrorDescriptionText">{{ 'dashboardErrorSection.resolvedErrorsOfTotal' | transloco: { resolvedCount: groupedErrorStat.CATEGORY_MAPPING.resolvedCount, totalCount: groupedErrorStat.CATEGORY_MAPPING.totalCount } }}</h5>
                                     }
@@ -72,7 +80,11 @@
                                     <div class="flex-wrapper" [ngClass]="brandingStyle.dashboard.exportErrorCardButton">
                                         @if (!groupedErrorStat.CATEGORY_MAPPING || (groupedErrorStat.CATEGORY_MAPPING && groupedErrorStat.CATEGORY_MAPPING.resolvedCount !== groupedErrorStat.CATEGORY_MAPPING.totalCount)) {
                                             <div>
-                                                <app-button [buttonSize]="ButtonSize.EXTRA_SMALL" [buttonType]="ButtonType.SECONDARY" (buttonClick)="showMappingResolve(ErrorType.CATEGORY_MAPPING, errors.CATEGORY_MAPPING, ExportErrorSourceType.CATEGORY)" [buttonText]="'dashboardErrorSection.resolveButtonText' | transloco"></app-button>
+                                                @if (brandingFeatureConfig.featureFlags.dashboard.showTextOnlyForButtonsInDashboardErrorSection) {
+                                                    <p (click)="showMappingResolve(ErrorType.CATEGORY_MAPPING, errors.CATEGORY_MAPPING, ExportErrorSourceType.CATEGORY)"  class="text-only-button">{{ 'dashboardErrorSection.resolveButtonText' | transloco }}</p>
+                                                } @else {
+                                                    <app-button [buttonSize]="ButtonSize.EXTRA_SMALL" [buttonType]="ButtonType.SECONDARY" (buttonClick)="showMappingResolve(ErrorType.CATEGORY_MAPPING, errors.CATEGORY_MAPPING, ExportErrorSourceType.CATEGORY)" [buttonText]="'dashboardErrorSection.resolveButtonText' | transloco"></app-button>
+                                                }
                                             </div>
                                         }
                                         @if (groupedErrorStat.CATEGORY_MAPPING && groupedErrorStat.CATEGORY_MAPPING.resolvedCount === groupedErrorStat.CATEGORY_MAPPING.totalCount) {
@@ -89,7 +101,7 @@
                         </div>
                     }
     
-                    @if (errors.ACCOUNTING_ERROR.length) {
+                    @if (errors.ACCOUNTING_ERROR.length && brandingFeatureConfig.featureFlags.dashboard.showDashboardErrorSectionHeader) {
                         <div class="tw-pl-24-px tw-pr-24-px tw-pt-16-px">
                             <div class="container">
                                 <div class="sub-text-container" [ngClass]="brandingStyle.dashboard.exportErrorSubTextContainer">
@@ -105,7 +117,9 @@
                             <div class="container">
                                 <div class="inside-container" [ngClass]="brandingStyle.dashboard.exportErrorCard">
                                     <div>
+                                        @if (brandingFeatureConfig.featureFlags.dashboard.showDashboardErrorSectionHeader) {
                                         <h4 class=" tw-w-600-px" [ngClass]="brandingStyle.dashboard.exportErrorTextHeader">{{ error.error_title | snakeCaseToSpaceCase }}</h4>
+                                        }
                                         <h5 class="!tw-font-400 tw-text-12-px !tw-leading-4 tw-w-600-px tw-flex tw-items-center tw-justify-start" [ngClass]="brandingStyle.dashboard.exportErrorAccountingDescription">
                                             <p >{{ error.error_detail }}
                                                 @if (error.article_link && brandingFeatureConfig.allowIntacctHelperDoc) {
@@ -124,7 +138,11 @@
                                     </div>
                                     <div class="flex-wrapper" [ngClass]="brandingStyle.dashboard.exportErrorCardButton">
                                         <div>
-                                            <app-button [buttonSize]="ButtonSize.EXTRA_SMALL" [buttonType]="ButtonType.SECONDARY" (buttonClick)="showErrorDialog(error)" [buttonText]="'common.viewExpenseText' | transloco"></app-button>
+                                            @if (brandingFeatureConfig.featureFlags.dashboard.showTextOnlyForButtonsInDashboardErrorSection) {
+                                                <p (click)="showErrorDialog(error)"  class="text-only-button">{{ 'common.viewExpenseText' | transloco }}</p>
+                                            } @else {
+                                                <app-button [buttonSize]="ButtonSize.EXTRA_SMALL" [buttonType]="ButtonType.SECONDARY" (buttonClick)="showErrorDialog(error)" [buttonText]="'common.viewExpenseText' | transloco"></app-button>
+                                            }
                                         </div>
                                     </div>
                                 </div>

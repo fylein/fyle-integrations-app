@@ -26,12 +26,15 @@ export const c1FeatureConfig: FeatureConfiguration[string] = {
     useMainMenuForSubmenu: true,
     usePrimaryLoader: true,
     allowToastMessageInApps: false,
+    shouldShowInfoLabelInDashboard: false,
     qbdDirect: {
         showStepStateAsIcons: true,
         showStepStateDivider: true,
         isStepSectionAlwaysVisible: true,
         configToggleLeftAligned: true,
-        unlockStepsInOrder: true
+        unlockStepsInOrder: true,
+        showMarkAsDone: false,
+        showSubIconsInConfigurationFields: false
     },
     featureFlags: {
         cloneSettings: false,
@@ -83,7 +86,10 @@ export const c1FeatureConfig: FeatureConfiguration[string] = {
         },
         dashboard: {
             disconnectButton: false,
-            useRepurposedExportSummary: false
+            useRepurposedExportSummary: false,
+            shouldShowExpenseTypeInAccountingErrorDashboard: false,
+            showTextOnlyForButtonsInDashboardErrorSection: true,
+            showDashboardErrorSectionHeader: false
         }
     }
 };

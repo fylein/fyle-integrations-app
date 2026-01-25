@@ -67,7 +67,7 @@ export class DashboardExportSectionComponent implements OnInit {
     [AppName.QBO, 'assets/logos/email/qbo.png'],
     [AppName.INTACCT, 'assets/logos/intacct-logo.png'],
     [AppName.XERO, 'assets/logos/xero-logo.png'],
-    [AppName.QBD_DIRECT, 'assets/logos/quickbooks-logo.png']
+    [AppName.QBD_DIRECT, 'assets/icons/co/qbd-direct-icon.svg']
   ]);
 
   get logoPath(): string {
