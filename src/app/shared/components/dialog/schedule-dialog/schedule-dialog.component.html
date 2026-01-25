@@ -22,7 +22,7 @@
         </div>
 
         @if (frequencyValue) {
-            <div class="tw-flex tw-justify-between">
+            <div class="tw-flex tw-gap-8-px">
                 @if (['WEEKLY', 'MONTHLY'].includes(frequencyValue)) {
                     <div class="tw-flex tw-flex-col tw-gap-8-px">
                         <h5 class="tw-font-500 tw-text-text-primary tw-text-14-px">{{ 'scheduleDialog.dayLabel' | transloco }}</h5>
@@ -55,12 +55,14 @@
                             [placeholder]="'scheduleDialog.timePlaceholder' | transloco"
                             class="time-dropdown"
                         ></p-select>
-                        <p-select
-                            appendTo="body"
-                            [options]="['AM', 'PM']"
-                            [formControlName]="'meridiem'"
-                            class="meridiem-dropdown"
-                        ></p-select>
+                        @if (!is24HourTimeFormat()) {
+                            <p-select
+                                appendTo="body"
+                                [options]="['AM', 'PM']"
+                                [formControlName]="'meridiem'"
+                                class="meridiem-dropdown"
+                            ></p-select>
+                        }
                     </div>
                 </div>
             </div>
