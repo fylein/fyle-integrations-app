@@ -23,7 +23,7 @@ export class AccountingExportSummaryModel {
             id: response.id,
             last_exported_at: response.last_exported_at,
             repurposed_last_exported_at: response?.repurposed_last_exported_at,
-            next_export_at: response.next_export_at,
+            next_export_at: response.next_export_at ?? response.next_export,
             export_mode: response.export_mode,
             total_accounting_export_count: response.total_expense_groups_count,
             successful_accounting_export_count: response.successful_expense_groups_count,
