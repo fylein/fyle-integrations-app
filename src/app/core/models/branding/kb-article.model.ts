@@ -35,6 +35,7 @@ export type KbArticle = {
             },
             INTACCT: {
                 DFV_READ_MORE: string;
+                DEFAULT_BILLABLE_FIELD_BASED_ON_PROJECT_READ_MORE: string;
                 IMPORT_SETTING: string;
                 EXPORT_SETTING: string;
                 ADVANCED_SETTING: string;

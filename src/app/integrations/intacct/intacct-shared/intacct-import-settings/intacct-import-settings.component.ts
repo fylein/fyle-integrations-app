@@ -48,6 +48,8 @@ export class IntacctImportSettingsComponent implements OnInit {
 
   redirectLink = brandingKbArticles.onboardingArticles.INTACCT.IMPORT_SETTING;
 
+  readMoreLink = brandingKbArticles.onboardingArticles.INTACCT.DEFAULT_BILLABLE_FIELD_BASED_ON_PROJECT_READ_MORE;
+
   saveInProgress: boolean = false;
 
   isOnboarding: boolean;
@@ -119,6 +121,8 @@ export class IntacctImportSettingsComponent implements OnInit {
   attributeCounts: IntacctImportFieldsAttributeCounts;
 
   defaultAttribuitesWarningArray: boolean[] = [false, false, false];
+
+  importProjectBillableToPlatform: boolean = false;
 
   constructor(
     private router: Router,
@@ -654,6 +658,7 @@ export class IntacctImportSettingsComponent implements OnInit {
     const configuration = this.mappingService.getConfiguration();
     const locationEntity = this.connectorService.getLocationEntityMapping();
     const importCodeFieldConfig = this.importSettingService.getImportCodeFieldConfig();
+    const featureConfigsObservable = this.workspaceService.getFeatureConfigs();
 
     forkJoin([
       sageIntacctFieldsObservable,
@@ -662,9 +667,10 @@ export class IntacctImportSettingsComponent implements OnInit {
       importSettingsObservable,
       configuration,
       locationEntity,
-      importCodeFieldConfig
+      importCodeFieldConfig,
+      featureConfigsObservable
     ]).subscribe(
-      ([sageIntacctFields, fyleFields, groupedAttributesResponse, importSettings, configuration, locationEntity, importCodeFieldConfig]) => {
+      ([sageIntacctFields, fyleFields, groupedAttributesResponse, importSettings, configuration, locationEntity, importCodeFieldConfig, featureConfigs]) => {
         this.dependentFieldSettings = importSettings.dependent_field_settings;
         this.isImportTaxVisible = this.showImportTax(locationEntity);
         this.sageIntacctFields = sageIntacctFields.map(field => {
@@ -715,6 +721,7 @@ export class IntacctImportSettingsComponent implements OnInit {
         label = new SentenceCasePipe(this.translocoService).transform(label);
         label = label.replace('Gl ', 'GL ');
         this.intacctCategoryDestinationLabel = label;
+        this.importProjectBillableToPlatform = featureConfigs.import_project_billable_to_platform ?? false;
 
         this.initializeForm(importSettings);
       }

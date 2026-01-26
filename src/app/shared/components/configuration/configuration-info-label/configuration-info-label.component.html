@@ -6,7 +6,13 @@
         </div>
       }
       <div [ngClass]="brandingStyle.configuration.infoLabelText">
-        <p>{{infoText}}</p>
+        <p>{{infoText}}
+          @if (readMoreLink) {
+            <a class="link tw-pr-4-px tw-w-fit" (click)="readMoreClick()">
+              {{ readMoreText | transloco }}
+            </a>
+          }
+        </p>
       </div>
       @if (showCloseIcon) {
         <div>

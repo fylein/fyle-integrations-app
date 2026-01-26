@@ -37,6 +37,8 @@ export class IntacctExportSettingsComponent implements OnInit {
 
   redirectLink = brandingKbArticles.onboardingArticles.INTACCT.EXPORT_SETTING;
 
+  readMoreLink = brandingKbArticles.onboardingArticles.INTACCT.DEFAULT_BILLABLE_FIELD_BASED_ON_PROJECT_READ_MORE;
+
   isOnboarding: boolean;
 
   saveInProgress: boolean = false;
@@ -118,13 +120,15 @@ export class IntacctExportSettingsComponent implements OnInit {
 
   employeeFieldOptions: ExportSettingFormOption[];
 
+  isMultiLineOption: boolean;
+
+  importProjectBillableToPlatform: boolean = false;
+
   private optionSearchUpdate = new Subject<IntacctExportSettingOptionSearch>();
 
   readonly brandingFeatureConfig = brandingFeatureConfig;
 
   readonly brandingConfig = brandingConfig;
-
-  isMultiLineOption: boolean;
 
   readonly brandingStyle = brandingStyle;
 
@@ -587,11 +591,13 @@ export class IntacctExportSettingsComponent implements OnInit {
 
   private getSettingsAndSetupForm(): void {
     this.isOnboarding = this.router.url.includes('onboarding');
-    this.exportSettingService.getExportSettings().subscribe((exportSettings) => {
+    forkJoin([
+      this.exportSettingService.getExportSettings(),
+      this.workspaceService.getFeatureConfigs()
+    ]).subscribe(([exportSettings, featureConfigs]) => {
+      this.importProjectBillableToPlatform = featureConfigs?.import_project_billable_to_platform ?? false;
       this.exportSettings = exportSettings;
-
       this.addMissingOptions();
-
       this.setUpExpenseStates();
       this.initializeExportSettingsFormWithData();
       this.isLoading = false;
@@ -678,6 +684,7 @@ export class IntacctExportSettingsComponent implements OnInit {
       this.destinationOptions.CCC_EXPENSE_PAYMENT_TYPE = response[1].results.filter((attr: IntacctDestinationAttribute) => !attr.detail.is_reimbursable);
       this.destinationOptions.VENDOR = response[2].results;
       this.destinationOptions.CHARGE_CARD = response[3].results;
+
       this.isMultiLineOption = brandingConfig.brandId !== 'co' ? true : false;
       this.getSettingsAndSetupForm();
 
