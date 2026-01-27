@@ -28,7 +28,8 @@
       <app-toggle
         [form]="form"
         [isDisabled]="isDisabled"
-        [formControllerName]="formControllerName">
+        [formControllerName]="formControllerName"
+        (importCodeEnabled)="importCodeEnabled.emit(form.get(formControllerName)?.value)">
       </app-toggle>
     }
     @if (inputType === InputType.MULTI_SELECT) {

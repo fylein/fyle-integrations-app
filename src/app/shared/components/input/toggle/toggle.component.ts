@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormGroup, FormsModule } from '@angular/forms';
 import { ToggleSwitchModule } from 'primeng/toggleswitch';
 
@@ -15,6 +15,8 @@ export class ToggleComponent {
   @Input() formControllerName: string;
 
   @Input() isDisabled: boolean;
+
+  @Output() importCodeEnabled = new EventEmitter<boolean>();
 
   constructor() { }
 
