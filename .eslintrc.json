@@ -162,7 +162,8 @@
           }
         ],
         "@fyle/no-hardcoded-strings": "warn",
-        "local-rules/no-angular-date-pipe": "error"
+        "local-rules/no-angular-date-pipe": "error",
+        "local-rules/no-angular-currency-pipe": "error"
       }
     },
     {
