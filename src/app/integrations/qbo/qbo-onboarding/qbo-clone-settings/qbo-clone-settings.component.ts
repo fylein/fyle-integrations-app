@@ -31,6 +31,7 @@ import { QboAdvancedSettingsService } from 'src/app/core/services/qbo/qbo-config
 import { QboEmployeeSettingsService } from 'src/app/core/services/qbo/qbo-configuration/qbo-employee-settings.service';
 import { QboOnboardingService } from 'src/app/core/services/qbo/qbo-configuration/qbo-onboarding.service';
 import { QboCloneSettingsService } from 'src/app/core/services/qbo/qbo-configuration/qbo-clone-settings.service';
+import { QBOImportFieldsAttributeCounts } from 'src/app/core/models/qbo/qbo-configuration/qbo-import-setting.model';
 
 @Component({
     selector: 'app-qbo-clone-settings',
@@ -176,6 +177,10 @@ export class QboCloneSettingsComponent implements OnInit {
 
   readonly brandingStyle = brandingStyle;
 
+  attributeCounts: QBOImportFieldsAttributeCounts;
+
+  showChartOfCategory: boolean;
+
   constructor(
     private cloneSettingService: CloneSettingsService,
     private configurationService: ConfigurationService,
@@ -212,6 +217,48 @@ export class QboCloneSettingsComponent implements OnInit {
     this.paymentSyncOptions = this.qboAdvancedSettingsService.getPaymentSyncOptions();
     this.splitExpenseGroupingOptions = this.qboExportSettingsService.getSplitExpenseGroupingOptions();
 
+  }
+
+  updateCommonImportFields(isImportCodeEnabled: boolean, destinationField: keyof QBOImportFieldsAttributeCounts, formControlName: string, isCategory: boolean = false): void {
+    if (isImportCodeEnabled) {
+      this.qboImportSettingsService.getImportFieldsAttributeCounts().subscribe((importFieldsAttributeCounts: QBOImportFieldsAttributeCounts) => {
+        this.attributeCounts = importFieldsAttributeCounts;
+        const destinationFieldCount: number = importFieldsAttributeCounts[destinationField] as number;
+        if (destinationFieldCount >= 30000) {
+          this.showChartOfCategory = false;
+          this.importSettingForm.controls[formControlName].setValue(false);
+          this.importSettingForm.controls[formControlName].disable();
+        } else {
+          this.showChartOfCategory = isCategory ? true : false;
+          this.importSettingForm.controls[formControlName].setValue(isImportCodeEnabled);
+          this.importSettingForm.controls[formControlName].enable();
+        }
+      });
+    }
+  }
+
+  updateImportFields(event: [boolean, string, number]): void {
+    const destinationField = event[1].toLowerCase() + "_count";
+    const expenseFieldArray = this.importSettingForm.get('expenseFields') as FormArray;
+    if (event[0]) {
+      this.qboImportSettingsService.getImportFieldsAttributeCounts().subscribe((importFieldsAttributeCounts: QBOImportFieldsAttributeCounts) => {
+        const count = importFieldsAttributeCounts[destinationField as keyof QBOImportFieldsAttributeCounts];
+        if (typeof count === 'number' && count >= 30000) {
+          const expenseField = expenseFieldArray.controls[event[2]];
+          expenseField.patchValue({
+            import_to_fyle: false,
+            is_auto_import_enabled: false,
+            count: count
+          });
+        } else {
+          const expenseField = expenseFieldArray.controls[event[2]];
+          expenseField.patchValue({
+            import_to_fyle: event[0],
+            is_auto_import_enabled: true
+          });
+        }
+      });
+    }
   }
 
   resetCloneSetting(): void {

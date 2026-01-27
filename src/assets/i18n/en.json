@@ -663,7 +663,8 @@
     "yesButtonText": "Yes",
     "createCustomField": "Create a custom field",
     "clonedSettingsSuccess": "Cloned settings successfully",
-    "failedToCloneSettings": "Failed to clone settings"
+    "failedToCloneSettings": "Failed to clone settings",
+    "autoImportEnabledInfo": "{{destinationField}} cannot be imported because there are {{currentDestinationCount}} active values in {{appName}} , which exceeds our 30,000 import limit. To resolve this, please remove or disable any unused values from {{appName}} and try syncing again."
   },
   "qboImportSettings": {
     "importCodesAndNames": "Import codes + names",
