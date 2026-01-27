@@ -1,4 +1,4 @@
 <div [formGroup]="form">
     <p-toggleswitch [formControlName]="formControllerName" [disabled]="isDisabled"
-    (onChange)="importCodeEnabled.emit(form.get(formControllerName)?.value)"></p-toggleswitch>
+    (onChange)="changed.emit(form.get(formControllerName)?.value)"></p-toggleswitch>
 </div>

@@ -16,7 +16,7 @@ export class ToggleComponent {
 
   @Input() isDisabled: boolean;
 
-  @Output() importCodeEnabled = new EventEmitter<boolean>();
+  @Output() changed = new EventEmitter<boolean>();
 
   constructor() { }
 
