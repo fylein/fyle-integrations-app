@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { InputType } from 'src/app/core/models/enum/enum.model';
 
@@ -37,6 +37,8 @@ export class CloneSettingFieldComponent implements OnInit, OnChanges {
   @Input() isDisabled: boolean;
 
   @Input() isMultiLineOption: boolean;
+
+  @Output() importCodeEnabled = new EventEmitter<boolean>();
 
   InputType = InputType;
 

@@ -312,9 +312,21 @@
             [form]="importSettingForm"
             [formControllerName]="'importCategories'"
             [inputType]="InputType.TOGGLE"
-            [tooltipText]="'qboCloneSettings.importChartOfAccountsTooltip' | transloco: { brandName: brandingConfig.brandName }">
+            [tooltipText]="'qboCloneSettings.importChartOfAccountsTooltip' | transloco: { brandName: brandingConfig.brandName }"
+            (importCodeEnabled)="updateCommonImportFields($event, 'accounts_count', 'importCategories', true)">
           </app-clone-setting-field>
-          @if (importSettingForm.get('importCategories')?.value) {
+
+          @if (importSettingForm.get('importCategories')?.disabled) {
+            <div class="tw-pt-26-px">
+              <app-configuration-info-label 
+                [iconSrc]="'warning-filled'"
+                [customBackgroundColorClass]="brandingStyle.configuration.infoLabelWarningBackground"
+                [customStyleClass]="brandingStyle.configuration.infoLabelWarningIcon"
+                [infoText]="'qboCloneSettings.autoImportEnabledInfo' | transloco: { destinationField: 'Categories', currentDestinationCount: attributeCounts['accounts_count'], appName: appName }">
+              </app-configuration-info-label>
+            </div>
+          }    
+          @if (showChartOfCategory) {
             <div class="clone-setting--dependent-field">
               <app-clone-setting-field
                 [label]="'qboCloneSettings.selectAccountsToImportLabel' | transloco"
@@ -353,8 +365,20 @@
               [form]="importSettingForm"
               [formControllerName]="'importItems'"
               [inputType]="InputType.TOGGLE"
-              [tooltipText]="'qboCloneSettings.importProductsServicesTooltip' | transloco: { brandName: brandingConfig.brandName }">
+              [tooltipText]="'qboCloneSettings.importProductsServicesTooltip' | transloco: { brandName: brandingConfig.brandName }"
+              (importCodeEnabled)="updateCommonImportFields($event, 'items_count', 'importItems')">
             </app-clone-setting-field>
+
+            @if (importSettingForm.get('importItems')?.disabled) {
+              <div class="tw-pt-26-px">
+                <app-configuration-info-label 
+                  [iconSrc]="'warning-filled'"
+                  [customBackgroundColorClass]="brandingStyle.configuration.infoLabelWarningBackground"
+                  [customStyleClass]="brandingStyle.configuration.infoLabelWarningIcon"
+                  [infoText]="'qboCloneSettings.autoImportEnabledInfo' | transloco: { destinationField: 'Products/services', currentDestinationCount: attributeCounts['items_count'], appName: appName }">
+                </app-configuration-info-label>
+             </div>
+            }
           </div>
         }
         @if (isTaxGroupSyncAllowed) {
@@ -365,8 +389,19 @@
               [form]="importSettingForm"
               [formControllerName]="'taxCode'"
               [inputType]="InputType.TOGGLE"
-              [tooltipText]="'qboCloneSettings.importTaxTooltip' | transloco: { brandName: brandingConfig.brandName }">
+              [tooltipText]="'qboCloneSettings.importTaxTooltip' | transloco: { brandName: brandingConfig.brandName }"
+              (importCodeEnabled)="updateCommonImportFields($event, 'tax_codes_count', 'taxCode')">
             </app-clone-setting-field>
+            @if (importSettingForm.get('taxCode')?.disabled) {
+              <div class="tw-pt-26-px">
+                <app-configuration-info-label 
+                  [iconSrc]="'warning-filled'"
+                  [customBackgroundColorClass]="brandingStyle.configuration.infoLabelWarningBackground"
+                  [customStyleClass]="brandingStyle.configuration.infoLabelWarningIcon"
+                  [infoText]="'qboCloneSettings.autoImportEnabledInfo' | transloco: { destinationField: 'Tax code', currentDestinationCount: attributeCounts['tax_codes_count'], appName: appName }">
+                </app-configuration-info-label>
+              </div>
+            }
             @if (importSettingForm.get('taxCode')?.value) {
               <div class="clone-setting--dependent-field">
                 @if (importSettingForm.get('importCategories')?.value) {
@@ -393,17 +428,30 @@
               [form]="importSettingForm"
               [formControllerName]="'importVendorsAsMerchants'"
               [inputType]="InputType.TOGGLE"
-              [tooltipText]="'qboCloneSettings.importVendorsTooltip' | transloco: { brandName: brandingConfig.brandName }">
+              [tooltipText]="'qboCloneSettings.importVendorsTooltip' | transloco: { brandName: brandingConfig.brandName }"
+              (importCodeEnabled)="updateCommonImportFields($event, 'vendors_count', 'importVendorsAsMerchants')">
             </app-clone-setting-field>
+            @if (importSettingForm.get('importVendorsAsMerchants')?.disabled) {
+              <div class="tw-pt-26-px">
+                <app-configuration-info-label 
+                  [iconSrc]="'warning-filled'"
+                  [customBackgroundColorClass]="brandingStyle.configuration.infoLabelWarningBackground"
+                  [customStyleClass]="brandingStyle.configuration.infoLabelWarningIcon"
+                  [infoText]="'qboCloneSettings.autoImportEnabledInfo' | transloco: { destinationField: 'Vendors', currentDestinationCount: attributeCounts['vendors_count'], appName: appName }">
+                </app-configuration-info-label>
+              </div>
+            }
           </div>
         }
         <app-configuration-import-field
           [form]="importSettingForm"
           [appName]="appName"
+          [allowAutoImportLimitFeature]="true"
           [accountingFieldOptions]="qboFields"
           [fyleFieldOptions]="fyleFields"
           [isDestinationFixedImport]="true"
-          [isCloneSettingView]="true">
+          [isCloneSettingView]="true"
+          (importCodeEnabled)="updateImportFields($event)">
         </app-configuration-import-field>
       </div>
       <app-clone-setting-header [headerText]="'qboCloneSettings.advancedSettingsHeader' | transloco" [subHeaderText]="'qboCloneSettings.advancedSettingsSubHeader' | transloco"></app-clone-setting-header>
