@@ -156,7 +156,6 @@
     }
 </div>
 <!-- Integration Specific Errors -->
-@if (isAccountingErrorDialogVisible) {
     <div>
         <p-dialog [dismissableMask]="false" [closable]="false" [modal]="true" [(visible)]="isAccountingErrorDialogVisible" [position]="'topright'" [style]="{ width: 'fit-content', height: '100vh' }" [maximizable]="false" [draggable]="false" [resizable]="false" [breakpoints]="{ '960px': '75vw' }">
             <ng-template #header>
@@ -204,7 +203,6 @@
             <app-dashboard-accounting-error-dialog  [isLoading]="isLoading" [errorExpenses]="errorExpenses"></app-dashboard-accounting-error-dialog>
         </p-dialog>
     </div>
-}
 
 <ng-template #shimmers>
     <app-shimmers [isExportLogFetchInProgress]="isExportLogFetchInProgress" [exportLogHeader]="exportLogHeader"></app-shimmers>

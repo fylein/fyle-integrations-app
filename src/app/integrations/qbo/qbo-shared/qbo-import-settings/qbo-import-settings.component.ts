@@ -121,11 +121,15 @@ export class QboImportSettingsComponent implements OnInit {
         this.attributeCounts = importFieldsAttributeCounts;
         const destinationFieldCount: number = importFieldsAttributeCounts[destinationField] as number;
         if (destinationFieldCount >= 30000) {
-          this.showChartOfCategory = false;
+          if (isCategory) {
+            this.showChartOfCategory = false;
+          }
           this.importSettingForm.controls[formControlName].setValue(false);
           this.importSettingForm.controls[formControlName].disable();
         } else {
-          this.showChartOfCategory = isCategory ? true : false;
+          if (isCategory) {
+            this.showChartOfCategory = true;
+          }
           this.importSettingForm.controls[formControlName].setValue(isImportCodeEnabled);
           this.importSettingForm.controls[formControlName].enable();
         }
@@ -260,6 +264,7 @@ export class QboImportSettingsComponent implements OnInit {
   private createCOAWatcher(): void {
     this.importSettingForm.controls.importCategories.valueChanges.subscribe((isImportCategoriesEnabled) => {
       if (!isImportCategoriesEnabled) {
+        this.showChartOfCategory = false;
         this.importSettingForm.controls.chartOfAccountTypes.setValue(['Expense']);
         this.importSettingForm.controls.importCategoryCode.clearValidators();
         this.importSettingForm.controls.importCategoryCode.setValue(this.importSettingService.getImportCodeField(this.importSettings.workspace_general_settings.import_code_fields, DefaultImportFields.ACCOUNT, this.qboImportCodeFieldCodeConfig));
@@ -340,6 +345,9 @@ export class QboImportSettingsComponent implements OnInit {
       this.qboImportCodeFieldCodeConfig = importCodeFieldConfig;
       this.importSettingForm = this.importSettingService.mapAPIResponseToFormGroup(this.importSettings, this.qboFields, this.qboImportCodeFieldCodeConfig);
       this.fyleFields = fyleFieldsResponse;
+      if (this.importSettingForm.get('importCategories')?.value) {
+        this.showChartOfCategory = true;
+      }
       this.fyleFields.push({ attribute_type: 'custom_field', display_name: this.translocoService.translate('qboImportSettings.createCustomField'), is_dependent: false });
       this.updateImportCodeFieldConfig();
       this.setupFormWatchers();

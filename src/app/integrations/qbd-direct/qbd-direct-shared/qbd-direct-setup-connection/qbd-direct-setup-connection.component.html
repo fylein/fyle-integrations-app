@@ -112,14 +112,16 @@
               </div>
             </div>
           </div>
-          <div class="tw-pt-40-px">
-            <app-checkbox-button
-              [checkedText]="'qbdDirectSetupConnection.done' | transloco"
-              [unCheckedText]="'qbdDirectSetupConnection.markAsDone' | transloco"
-              [id]="0"
-              (checkBoxUpdated)="onDoneClick($event)">
-            </app-checkbox-button>
-          </div>
+          @if (brandingFeatureConfig.qbdDirect.showMarkAsDone) {
+            <div class="tw-pt-40-px">
+              <app-checkbox-button
+                [checkedText]="'qbdDirectSetupConnection.done' | transloco"
+                [unCheckedText]="'qbdDirectSetupConnection.markAsDone' | transloco"
+                [id]="0"
+                (checkBoxUpdated)="onDoneClick($event)">
+              </app-checkbox-button>
+            </div>
+          }
         </div>
         <div class="tw-w-[40%]" [ngClass]="brandingStyle.qbd_direct.onboarding.connectorSideVideoCard">
           <div class="tw-flex tw-justify-center tw-overflow-hidden">
@@ -148,9 +150,16 @@
       </div>
     }
   </div>
-  @if (!isStepCompleted && showSection && !isStepCompleted && isCTAEnabled) {
+  @if (!isStepCompleted && showSection && (!brandingFeatureConfig.qbdDirect.showMarkAsDone || !isStepCompleted && isCTAEnabled)) {
     <div>
-      <app-configuration-step-footer [shouldShowQBDAssistedSetup]="true" [qbdDirectInteractionType]="QBDDirectInteractionType.QUERY" [ctaText]="ConfigurationCtaText.NEXT" [AppName]="appName.QBD_DIRECT" [isButtonDisabled]="!isCTAEnabled" (save)="onNextClick()"></app-configuration-step-footer>
+      <app-configuration-step-footer 
+        [shouldShowQBDAssistedSetup]="true" 
+        [qbdDirectInteractionType]="QBDDirectInteractionType.QUERY" 
+        [ctaText]="ConfigurationCtaText.NEXT" 
+        [AppName]="appName.QBD_DIRECT" 
+        [isButtonDisabled]="brandingFeatureConfig.qbdDirect.showMarkAsDone ? !isCTAEnabled : (!isCTAEnabled && isLoading)" 
+        (save)="onNextClick()">
+      </app-configuration-step-footer>
     </div>
   }
 </div>
