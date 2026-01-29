@@ -57,7 +57,11 @@ export class QbdDirectSetupConnectionComponent {
   }
 
   onNextClick() {
-    this.nextClick.emit();
+    if (!this.brandingFeatureConfig.qbdDirect.showMarkAsDone && this.connectionStatus !== QBDConnectionStatus.SUCCESS) {
+        this.doneClick.emit({ value: true, id: 0 });
+    } else {
+      this.nextClick.emit();
+    }
   }
 
   onClipboardCopy() {
