@@ -55,6 +55,7 @@ export class XeroComponent implements OnInit {
         [XeroOnboardingState.CLONE_SETTINGS]: '/integrations/xero/onboarding/clone_settings',
         [XeroOnboardingState.COMPLETE]: '/integrations/xero/main'
       };
+      this.isLoading = false;
       this.router.navigateByUrl(onboardingStateComponentMap[this.workspace.onboarding_state]);
     }
   }
@@ -87,7 +88,6 @@ export class XeroComponent implements OnInit {
       this.storageService.set('xeroShortCode', xeroShortCode);
       this.xeroHelperService.syncFyleDimensions().subscribe();
       this.xeroHelperService.syncXeroDimensions().subscribe();
-      this.isLoading = false;
       this.navigate();
     });
   }

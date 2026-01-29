@@ -13,7 +13,7 @@ import { IntacctOnboardingService } from 'src/app/core/services/si/si-configurat
 })
 export class IntacctOnboardingConnectorComponent implements OnInit {
 
-  isLoading: boolean;
+  isLoading: boolean = true;
 
   isIntacctCredentialsValid: boolean = false;
 
@@ -27,9 +27,13 @@ export class IntacctOnboardingConnectorComponent implements OnInit {
   ) { }
 
   setupConnectionStatus(eventData: boolean) {
+    this.isLoading = true;
     this.intacctConnector.getIntacctTokenHealthStatus()
     .subscribe(isIntacctCredentialsValid => {
       this.isIntacctCredentialsValid = isIntacctCredentialsValid && eventData ? eventData : false;
+      this.isLoading = false;
+    }, () => {
+      this.isLoading = false;
     });
   }
 
@@ -37,6 +41,9 @@ export class IntacctOnboardingConnectorComponent implements OnInit {
     this.intacctConnector.getIntacctTokenHealthStatus(true)
     .subscribe(isIntacctCredentialsValid => {
       this.isIntacctCredentialsValid = isIntacctCredentialsValid;
+      this.isLoading = false;
+    }, () => {
+      this.isLoading = false;
     });
     this.onboardingSteps = this.intacctOnboardingService.getOnboardingSteps(this.translocoService.translate('intacct.configuration.connector.stepName'), this.workspaceService.getOnboardingState());
   }

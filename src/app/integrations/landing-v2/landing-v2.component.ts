@@ -46,6 +46,8 @@ export class LandingV2Component implements OnInit {
     [IntegrationView.TRAVEL]: false
   };
 
+  isLoading: boolean = true;
+
   private readonly accountingIntegrationUrlMap = {
     [AccountingIntegrationApp.NETSUITE]: '/integrations/netsuite',
     [AccountingIntegrationApp.SAGE_INTACCT]: '/integrations/intacct',
@@ -168,6 +170,7 @@ export class LandingV2Component implements OnInit {
         .filter(key => key !== null);
 
       this.connectedApps = connectedApps as IntegrationAppKey[];
+      this.isLoading = false;
     });
   }
 

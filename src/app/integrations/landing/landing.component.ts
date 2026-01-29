@@ -52,6 +52,8 @@ export class LandingComponent implements OnInit {
     [IntegrationView.TRAVEL]: false
   };
 
+  isLoading: boolean = true;
+
   private readonly integrationCallbackUrlMap: IntegrationCallbackUrl = {
     [AccountingIntegrationApp.NETSUITE]: [`${environment.fyle_app_url}/netsuite`, environment.ns_client_id],
     [AccountingIntegrationApp.QBO]: [`${environment.fyle_app_url}/quickbooks`, environment.qbo_client_id],
@@ -85,6 +87,7 @@ export class LandingComponent implements OnInit {
 
 
   switchView(clickedView: IntegrationView): void {
+
     const initialState = Object.create(this.integrationTabsInitialState);
 
     // Resetting to initial state and setting clicked view to true
@@ -151,6 +154,7 @@ export class LandingComponent implements OnInit {
     this.eventsService.netsuiteLogin.subscribe((redirectUri: string) => {
       this.loginAndRedirectToInAppIntegration(redirectUri, InAppIntegration.NETSUITE);
     });
+    this.isLoading = false;
   }
 
   ngOnInit(): void {
