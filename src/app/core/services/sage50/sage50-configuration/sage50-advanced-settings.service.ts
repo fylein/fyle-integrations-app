@@ -33,16 +33,19 @@ export class Sage50AdvancedSettingsService extends AdvancedSettingsService {
         return this.apiService.post(`/${this.workspaceService.getWorkspaceId()}/settings/advanced_settings/`, payload);
     }
 
-    mapAPIResponseToScheduleFormGroup(advancedSettings: Sage50AdvancedSettings | null): FormGroup<ScheduleForm> {
+    mapAPIResponseToScheduleFormGroup(
+        advancedSettings: Sage50AdvancedSettings | null,
+        is24HourTimeFormat: boolean
+    ): FormGroup<ScheduleForm> {
         const UTCTimeOfDay = advancedSettings?.time_of_day ?? null;
-        const {timeOfDay, meridiem} = this.scheduleFormService.getLocalTimeOfDay(UTCTimeOfDay);
+        const {timeOfDay, meridiem} = this.scheduleFormService.getLocalTimeOfDay(UTCTimeOfDay, is24HourTimeFormat);
 
         return new FormGroup<ScheduleForm>({
             frequency: new FormControl(advancedSettings?.frequency ?? null),
             dayOfWeek: new FormControl(advancedSettings?.day_of_week ?? null),
             dayOfMonth: new FormControl(advancedSettings?.day_of_month ?? null),
             timeOfDay: new FormControl(timeOfDay ?? null),
-            meridiem: new FormControl(meridiem ?? 'AM', { nonNullable: true })
+            meridiem: new FormControl(meridiem)
         }, {
             validators: (formGroup) => {
                 const errors: ValidationErrors = {};
@@ -66,11 +69,12 @@ export class Sage50AdvancedSettingsService extends AdvancedSettingsService {
     mapAPIResponseToFormGroup(
         advancedSettings: Sage50AdvancedSettings | null,
         isTopLevelMemoRequired: boolean,
-        isSkipExportEnabled: boolean
+        isSkipExportEnabled: boolean,
+        is24HourTimeFormat: boolean
     ): FormGroup<Sage50AdvancedSettingsForm> {
         return new FormGroup<Sage50AdvancedSettingsForm>({
             isScheduleEnabled: new FormControl(advancedSettings?.schedule_is_enabled ?? false, { nonNullable: true }),
-            schedule: this.mapAPIResponseToScheduleFormGroup(advancedSettings),
+            schedule: this.mapAPIResponseToScheduleFormGroup(advancedSettings, is24HourTimeFormat),
             lineLevelMemoStructure: new FormControl(advancedSettings?.line_level_memo_structure ?? [], { nonNullable: true }),
             topLevelMemoStructure: new FormControl(advancedSettings?.top_level_memo_structure ?? [], { nonNullable: true }),
             isSkipExportEnabled: new FormControl(isSkipExportEnabled, { nonNullable: true })
@@ -95,8 +99,12 @@ export class Sage50AdvancedSettingsService extends AdvancedSettingsService {
         });
     }
 
-    constructPayloadAndSave(advancedSettingsForm: FormGroup<Sage50AdvancedSettingsForm>) {
-        const schedulePayload = this.constructSchedulePayload(advancedSettingsForm.get('schedule') as FormGroup<ScheduleForm>);
+    constructPayloadAndSave(
+        advancedSettingsForm: FormGroup<Sage50AdvancedSettingsForm>, is24HourTimeFormat: boolean
+    ) {
+        const schedulePayload = this.constructSchedulePayload(
+            advancedSettingsForm.get('schedule') as FormGroup<ScheduleForm>, is24HourTimeFormat
+        );
 
         return this.postSage50AdvancedSettings({
             schedule_is_enabled: advancedSettingsForm.get('isScheduleEnabled')?.value ?? false,
@@ -109,8 +117,8 @@ export class Sage50AdvancedSettingsService extends AdvancedSettingsService {
     /**
      * Converts time + meridiem to UTC time of format HH:MM:SS
      */
-    constructSchedulePayload(schedule: FormGroup<ScheduleForm>) {
-        const timeOfDayUTC = this.scheduleFormService.getUTCTimeOfDay(schedule);
+    constructSchedulePayload(schedule: FormGroup<ScheduleForm>, is24HourTimeFormat: boolean) {
+        const timeOfDayUTC = this.scheduleFormService.getUTCTimeOfDay(schedule, is24HourTimeFormat);
 
         return {
             frequency: schedule.get('frequency')?.value ?? null,
