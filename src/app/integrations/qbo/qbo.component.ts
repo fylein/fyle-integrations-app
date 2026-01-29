@@ -82,6 +82,8 @@ export class QboComponent implements OnInit, OnDestroy {
       concatMap(() => this.qboHelperService.syncQBODimensions())
     ).subscribe(() => {
       this.navigate();
+    }, () => {
+      this.isLoading = false;
     });
   }
 

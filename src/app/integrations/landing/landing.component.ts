@@ -120,6 +120,7 @@ export class LandingComponent implements OnInit {
     } else if (inAppIntegration === InAppIntegration.NETSUITE) {
       login$ = this.nsAuthService.loginWithAuthCode(authCode);
     } else {
+      this.isLoading = false;
       return;
     }
 
@@ -134,6 +135,7 @@ export class LandingComponent implements OnInit {
         'org_name': token.user.org_name
       };
       this.storageService.set('user', user);
+      this.isLoading = false;
       this.openInAppIntegration(inAppIntegration);
     });
   }

@@ -76,6 +76,8 @@ export class IntacctComponent implements OnInit {
       concatMap(() => this.workspaceService.syncIntacctDimensions())
     ).subscribe(() => {
       this.routeBasedOnTokenStatus();
+    }, () => {
+      this.isLoading = false;
     });
   }
 
