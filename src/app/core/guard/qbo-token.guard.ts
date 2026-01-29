@@ -1,12 +1,13 @@
 import {  Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, Router, RouterStateSnapshot, UrlTree } from '@angular/router';
-import { Observable, catchError, map, throwError, of } from 'rxjs';
+import { Observable, catchError, map, throwError, of, finalize } from 'rxjs';
 import { WorkspaceService } from '../services/common/workspace.service';
 import { QboConnectorService } from '../services/qbo/qbo-configuration/qbo-connector.service';
 import { globalCacheBusterNotifier } from 'ts-cacheable';
 import { IntegrationsToastService } from '../services/common/integrations-toast.service';
 import { AppUrl, QBOOnboardingState, ToastSeverity } from '../models/enum/enum.model';
 import { HelperService } from '../services/common/helper.service';
+import { LoadingService } from '../services/common/loading.service';
 
 @Injectable({
   providedIn: 'root'
@@ -18,7 +19,8 @@ export class QboTokenGuard  {
     private router: Router,
     private toastService: IntegrationsToastService,
     private workspaceService: WorkspaceService,
-    private helperService: HelperService
+    private helperService: HelperService,
+    private loadingService: LoadingService
   ) { }
 
   canActivate(
@@ -31,6 +33,7 @@ export class QboTokenGuard  {
         return this.router.navigateByUrl(`workspaces`);
       }
 
+      this.loadingService.show();
       return this.qboConnectorService.checkQBOTokenHealth().pipe(
         map(() => true),
         catchError(error => {
@@ -55,6 +58,9 @@ export class QboTokenGuard  {
           }
 
           return of(true);
+        }),
+        finalize(() => {
+          this.loadingService.hide();
         })
       );
 
