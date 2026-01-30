@@ -1,5 +1,7 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, Inject, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
+import { takeUntil } from 'rxjs';
+import { Subject } from 'rxjs';
 import { MinimalUser } from 'src/app/core/models/db/user.model';
 import { AppUrl, Sage300OnboardingState } from 'src/app/core/models/enum/enum.model';
 import { Sage300Workspace } from 'src/app/core/models/sage300/db/sage300-workspace.model';
@@ -10,6 +12,7 @@ import { WindowService } from 'src/app/core/services/common/window.service';
 import { WorkspaceService } from 'src/app/core/services/common/workspace.service';
 import { Sage300ConnectorService } from 'src/app/core/services/sage300/sage300-configuration/sage300-connector.service';
 import { Sage300MappingService } from 'src/app/core/services/sage300/sage300-core/sage300-mapping.service';
+import { LoadingService } from 'src/app/core/services/common/loading.service';
 
 @Component({
     selector: 'app-sage300',
@@ -17,7 +20,7 @@ import { Sage300MappingService } from 'src/app/core/services/sage300/sage300-cor
     styleUrls: ['./sage300.component.scss'],
     standalone: false
 })
-export class Sage300Component implements OnInit {
+export class Sage300Component implements OnInit, OnDestroy {
 
   user: MinimalUser = this.userService.getUserProfile();
 
@@ -25,7 +28,13 @@ export class Sage300Component implements OnInit {
 
   isLoading: boolean = true;
 
+  private isComponentLoading: boolean = true;
+
+  private isGuardLoading: boolean = false;
+
   windowReference: Window;
+
+  private destroy$ = new Subject<void>();
 
   constructor(
     private storageService: StorageService,
@@ -35,8 +44,8 @@ export class Sage300Component implements OnInit {
     private windowService: WindowService,
     private mapping: Sage300MappingService,
     private helperService: HelperService,
-    private sage300Connector: Sage300ConnectorService
-
+    private sage300Connector: Sage300ConnectorService,
+    private loadingService: LoadingService
   ) {
     this.windowReference = this.windowService.nativeWindow;
   }
@@ -52,9 +61,14 @@ export class Sage300Component implements OnInit {
         [Sage300OnboardingState.ADVANCED_SETTINGS]: '/integrations/sage300/onboarding/advanced_settings',
         [Sage300OnboardingState.COMPLETE]: '/integrations/sage300/main/dashboard'
       };
-      this.isLoading = false;
+      this.isComponentLoading = false;
+      this.updateLoadingState();
       this.router.navigateByUrl(isSage300TokenValid === false && ![Sage300OnboardingState.CONNECTION, Sage300OnboardingState.COMPLETE].includes(this.workspace.onboarding_state) ?  onboardingStateComponentMap[Sage300OnboardingState.CONNECTOR_AUTH] : onboardingStateComponentMap[this.workspace.onboarding_state]);
     }
+  }
+
+  private updateLoadingState(): void {
+    this.isLoading = this.isComponentLoading || this.isGuardLoading;
   }
 
   private routeBasedOnTokenStatus(): void {
@@ -89,6 +103,19 @@ export class Sage300Component implements OnInit {
 
   ngOnInit(): void {
     this.setupWorkspace();
+
+    // Subscribe to loading service to show/hide loader during guard checks
+    this.loadingService.loading$.pipe(
+      takeUntil(this.destroy$)
+    ).subscribe(isLoading => {
+      this.isGuardLoading = isLoading;
+      this.updateLoadingState();
+    });
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 
 }

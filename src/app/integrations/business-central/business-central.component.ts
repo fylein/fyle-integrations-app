@@ -1,5 +1,7 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, Inject, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
+import { takeUntil } from 'rxjs';
+import { Subject } from 'rxjs';
 import { BusinessCentralWorkspace } from 'src/app/core/models/business-central/db/business-central-workspace.model';
 import { MinimalUser } from 'src/app/core/models/db/user.model';
 import { AppUrl, BusinessCentralOnboardingState } from 'src/app/core/models/enum/enum.model';
@@ -10,6 +12,7 @@ import { IntegrationsUserService } from 'src/app/core/services/common/integratio
 import { StorageService } from 'src/app/core/services/common/storage.service';
 import { WindowService } from 'src/app/core/services/common/window.service';
 import { WorkspaceService } from 'src/app/core/services/common/workspace.service';
+import { LoadingService } from 'src/app/core/services/common/loading.service';
 
 @Component({
     selector: 'app-business-central',
@@ -17,7 +20,7 @@ import { WorkspaceService } from 'src/app/core/services/common/workspace.service
     styleUrls: ['./business-central.component.scss'],
     standalone: false
 })
-export class BusinessCentralComponent implements OnInit {
+export class BusinessCentralComponent implements OnInit, OnDestroy {
 
   user: MinimalUser = this.userService.getUserProfile();
 
@@ -25,7 +28,13 @@ export class BusinessCentralComponent implements OnInit {
 
   isLoading: boolean = true;
 
+  private isComponentLoading: boolean = true;
+
+  private isGuardLoading: boolean = false;
+
   windowReference: Window;
+
+  private destroy$ = new Subject<void>();
 
   constructor(
     private helperService: HelperService,
@@ -35,7 +44,8 @@ export class BusinessCentralComponent implements OnInit {
     private userService: IntegrationsUserService,
     private windowService: WindowService,
     private workspaceService: WorkspaceService,
-    private authService: AuthService
+    private authService: AuthService,
+    private loadingService: LoadingService
   ) {
     this.windowReference = this.windowService.nativeWindow;
   }
@@ -75,13 +85,31 @@ export class BusinessCentralComponent implements OnInit {
     this.storageService.set('onboarding-state', this.workspace.onboarding_state);
     this.workspaceService.importFyleAttributes(false).subscribe();
     this.mapping.importBusinessCentralAttributes(false).subscribe();
-    this.isLoading = false;
+    this.isComponentLoading = false;
+    this.updateLoadingState();
     this.navigate();
+  }
+
+  private updateLoadingState(): void {
+    this.isLoading = this.isComponentLoading || this.isGuardLoading;
   }
 
   ngOnInit(): void {
     this.authService.updateUserTokens('BUSINESS_CENTRAL');
     this.setupWorkspace();
+
+    // Subscribe to loading service to show/hide loader during guard checks
+    this.loadingService.loading$.pipe(
+      takeUntil(this.destroy$)
+    ).subscribe(isLoading => {
+      this.isGuardLoading = isLoading;
+      this.updateLoadingState();
+    });
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 
 }

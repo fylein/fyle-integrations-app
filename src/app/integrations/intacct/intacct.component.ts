@@ -1,6 +1,7 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, Inject, OnInit, OnDestroy } from '@angular/core';
 import { NavigationEnd, Router, ActivatedRoute } from '@angular/router';
-import { concatMap } from 'rxjs';
+import { concatMap, takeUntil } from 'rxjs';
+import { Subject } from 'rxjs';
 import { MinimalUser } from 'src/app/core/models/db/user.model';
 import { AppName, AppUrl, IntacctOnboardingState } from 'src/app/core/models/enum/enum.model';
 import { IntacctWorkspace } from 'src/app/core/models/intacct/db/workspaces.model';
@@ -13,6 +14,7 @@ import { SiWorkspaceService } from 'src/app/core/services/si/si-core/si-workspac
 import { SiAuthService } from 'src/app/core/services/si/si-core/si-auth.service';
 import { AuthService } from 'src/app/core/services/common/auth.service';
 import { IntacctConnectorService } from 'src/app/core/services/si/si-core/si-connector.service';
+import { LoadingService } from 'src/app/core/services/common/loading.service';
 
 @Component({
     selector: 'app-intacct',
@@ -20,7 +22,7 @@ import { IntacctConnectorService } from 'src/app/core/services/si/si-core/si-con
     styleUrls: ['./intacct.component.scss'],
     standalone: false
 })
-export class IntacctComponent implements OnInit {
+export class IntacctComponent implements OnInit, OnDestroy {
 
   user: MinimalUser = this.userService.getUserProfile();
 
@@ -28,7 +30,13 @@ export class IntacctComponent implements OnInit {
 
   isLoading: boolean = true;
 
+  private isComponentLoading: boolean = true;
+
+  private isGuardLoading: boolean = false;
+
   windowReference: Window;
+
+  private destroy$ = new Subject<void>();
 
   constructor(
     private helperService: HelperService,
@@ -40,7 +48,8 @@ export class IntacctComponent implements OnInit {
     private workspaceService: SiWorkspaceService,
     private siAuthService: SiAuthService,
     private authService: AuthService,
-    private intacctConnector: IntacctConnectorService
+    private intacctConnector: IntacctConnectorService,
+    private loadingService: LoadingService
   ) {
     this.windowReference = this.windowService.nativeWindow;
   }
@@ -56,9 +65,14 @@ export class IntacctComponent implements OnInit {
         [IntacctOnboardingState.ADVANCED_CONFIGURATION]: '/integrations/intacct/onboarding/advanced_settings',
         [IntacctOnboardingState.COMPLETE]: '/integrations/intacct/main/dashboard'
       };
-      this.isLoading = false;
+      this.isComponentLoading = false;
+      this.updateLoadingState();
       this.router.navigateByUrl(isIntacctTokenValid === false && ![IntacctOnboardingState.CONNECTION, IntacctOnboardingState.COMPLETE].includes(this.workspace.onboarding_state) ?  onboardingStateComponentMap[IntacctOnboardingState.LOCATION_ENTITY] : onboardingStateComponentMap[this.workspace.onboarding_state]);
     }
+  }
+
+  private updateLoadingState(): void {
+    this.isLoading = this.isComponentLoading || this.isGuardLoading;
   }
 
   private routeBasedOnTokenStatus(): void {
@@ -77,7 +91,8 @@ export class IntacctComponent implements OnInit {
     ).subscribe(() => {
       this.routeBasedOnTokenStatus();
     }, () => {
-      this.isLoading = false;
+      this.isComponentLoading = false;
+      this.updateLoadingState();
     });
   }
 
@@ -111,6 +126,19 @@ export class IntacctComponent implements OnInit {
 
   ngOnInit(): void {
     this.handleAuthParameters();
+
+    // Subscribe to loading service to show/hide loader during guard checks
+    this.loadingService.loading$.pipe(
+      takeUntil(this.destroy$)
+    ).subscribe(isLoading => {
+      this.isGuardLoading = isLoading;
+      this.updateLoadingState();
+    });
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 
 }
