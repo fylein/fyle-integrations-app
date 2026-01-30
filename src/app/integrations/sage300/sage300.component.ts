@@ -1,6 +1,6 @@
 import { Component, Inject, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
-import { takeUntil } from 'rxjs';
+import { concatMap, takeUntil } from 'rxjs';
 import { Subject } from 'rxjs';
 import { MinimalUser } from 'src/app/core/models/db/user.model';
 import { AppUrl, Sage300OnboardingState } from 'src/app/core/models/enum/enum.model';
@@ -52,6 +52,8 @@ export class Sage300Component implements OnInit, OnDestroy {
 
   private navigate(isSage300TokenValid?: boolean): void {
     const pathName = this.windowReference.location.pathname;
+    this.isComponentLoading = false;
+    this.updateLoadingState();
     if (pathName === '/integrations/sage300') {
       const onboardingStateComponentMap = {
         [Sage300OnboardingState.CONNECTION]: '/integrations/sage300/onboarding/landing',
@@ -61,8 +63,6 @@ export class Sage300Component implements OnInit, OnDestroy {
         [Sage300OnboardingState.ADVANCED_SETTINGS]: '/integrations/sage300/onboarding/advanced_settings',
         [Sage300OnboardingState.COMPLETE]: '/integrations/sage300/main/dashboard'
       };
-      this.isComponentLoading = false;
-      this.updateLoadingState();
       this.router.navigateByUrl(isSage300TokenValid === false && ![Sage300OnboardingState.CONNECTION, Sage300OnboardingState.COMPLETE].includes(this.workspace.onboarding_state) ?  onboardingStateComponentMap[Sage300OnboardingState.CONNECTOR_AUTH] : onboardingStateComponentMap[this.workspace.onboarding_state]);
     }
   }
@@ -96,9 +96,13 @@ export class Sage300Component implements OnInit, OnDestroy {
     this.workspace = workspace;
     this.storageService.set('workspaceId', this.workspace.id);
     this.storageService.set('onboarding-state', this.workspace.onboarding_state);
-    this.workspaceService.importFyleAttributes(false).subscribe();
-    this.mapping.importSage300Attributes(false).subscribe();
-    this.routeBasedOnTokenStatus();
+    this.workspaceService.importFyleAttributes(false).pipe(
+      concatMap(() => this.mapping.importSage300Attributes(false))
+    ).subscribe(() => {
+      this.routeBasedOnTokenStatus();
+    }, () => {
+      this.isLoading = false;
+    });
   }
 
   ngOnInit(): void {

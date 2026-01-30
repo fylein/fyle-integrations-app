@@ -57,6 +57,8 @@ export class NetsuiteComponent implements OnInit, OnDestroy {
 
   private navigate(isNetSuiteTokenValid?: boolean): void {
     const pathName = this.windowReference.location.pathname;
+    this.isComponentLoading = false;
+    this.updateLoadingState();
     if (pathName === '/integrations/netsuite') {
       const onboardingStateComponentMap = {
         [NetsuiteOnboardingState.CONNECTION]: '/integrations/netsuite/onboarding/landing',
@@ -66,8 +68,6 @@ export class NetsuiteComponent implements OnInit, OnDestroy {
         [NetsuiteOnboardingState.ADVANCED_CONFIGURATION]: '/integrations/netsuite/onboarding/advanced_settings',
         [NetsuiteOnboardingState.COMPLETE]: '/integrations/netsuite/main'
       };
-      this.isComponentLoading = false;
-      this.updateLoadingState();
       this.router.navigateByUrl(isNetSuiteTokenValid === false && ![NetsuiteOnboardingState.CONNECTION, NetsuiteOnboardingState.COMPLETE].includes(this.workspace.onboarding_state) ?  onboardingStateComponentMap[NetsuiteOnboardingState.SUBSIDIARY] : onboardingStateComponentMap[this.workspace.onboarding_state]);
     }
   }

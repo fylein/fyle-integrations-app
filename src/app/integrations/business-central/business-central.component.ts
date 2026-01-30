@@ -1,6 +1,6 @@
 import { Component, Inject, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
-import { takeUntil } from 'rxjs';
+import { concatMap, takeUntil } from 'rxjs';
 import { Subject } from 'rxjs';
 import { BusinessCentralWorkspace } from 'src/app/core/models/business-central/db/business-central-workspace.model';
 import { MinimalUser } from 'src/app/core/models/db/user.model';
@@ -52,6 +52,8 @@ export class BusinessCentralComponent implements OnInit, OnDestroy {
 
   private navigate(): void {
     const pathName = this.windowReference.location.pathname;
+    this.isComponentLoading = false;
+    this.updateLoadingState();
     if (pathName === '/integrations/business_central') {
       const onboardingStateComponentMap = {
         [BusinessCentralOnboardingState.CONNECTION]: '/integrations/business_central/onboarding/landing',
@@ -83,11 +85,13 @@ export class BusinessCentralComponent implements OnInit, OnDestroy {
     this.workspace = workspace;
     this.storageService.set('workspaceId', this.workspace.id);
     this.storageService.set('onboarding-state', this.workspace.onboarding_state);
-    this.workspaceService.importFyleAttributes(false).subscribe();
-    this.mapping.importBusinessCentralAttributes(false).subscribe();
-    this.isComponentLoading = false;
-    this.updateLoadingState();
-    this.navigate();
+    this.workspaceService.importFyleAttributes(false).pipe(
+      concatMap(() => this.mapping.importBusinessCentralAttributes(false))
+    ).subscribe(() => {
+      this.navigate();
+    }, () => {
+      this.isLoading = false;
+    });
   }
 
   private updateLoadingState(): void {

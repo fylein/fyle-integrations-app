@@ -56,6 +56,8 @@ export class IntacctComponent implements OnInit, OnDestroy {
 
   private navigate(isIntacctTokenValid?: boolean): void {
     const pathName = this.windowReference.location.pathname;
+    this.isComponentLoading = false;
+    this.updateLoadingState();
     if (pathName === '/integrations/intacct') {
       const onboardingStateComponentMap = {
         [IntacctOnboardingState.CONNECTION]: '/integrations/intacct/onboarding/landing',
@@ -65,8 +67,6 @@ export class IntacctComponent implements OnInit, OnDestroy {
         [IntacctOnboardingState.ADVANCED_CONFIGURATION]: '/integrations/intacct/onboarding/advanced_settings',
         [IntacctOnboardingState.COMPLETE]: '/integrations/intacct/main/dashboard'
       };
-      this.isComponentLoading = false;
-      this.updateLoadingState();
       this.router.navigateByUrl(isIntacctTokenValid === false && ![IntacctOnboardingState.CONNECTION, IntacctOnboardingState.COMPLETE].includes(this.workspace.onboarding_state) ?  onboardingStateComponentMap[IntacctOnboardingState.LOCATION_ENTITY] : onboardingStateComponentMap[this.workspace.onboarding_state]);
     }
   }

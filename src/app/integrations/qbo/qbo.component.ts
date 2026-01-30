@@ -55,6 +55,8 @@ export class QboComponent implements OnInit, OnDestroy {
 
   private navigate(): void {
     const pathName = this.windowReference.location.pathname;
+    this.isComponentLoading = false;
+    this.updateLoadingState();
     if (pathName === '/integrations/qbo') {
       const onboardingStateComponentMap = {
         [QBOOnboardingState.CONNECTION]: '/integrations/qbo/onboarding/landing',
@@ -64,8 +66,6 @@ export class QboComponent implements OnInit, OnDestroy {
         [QBOOnboardingState.CLONE_SETTINGS]: '/integrations/qbo/onboarding/clone_settings',
         [QBOOnboardingState.COMPLETE]: '/integrations/qbo/main'
       };
-      this.isComponentLoading = false;
-      this.updateLoadingState();
       this.router.navigateByUrl(onboardingStateComponentMap[this.workspace.onboarding_state]);
     }
   }

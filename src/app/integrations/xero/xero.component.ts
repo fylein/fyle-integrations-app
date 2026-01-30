@@ -1,6 +1,6 @@
 import { Component, Inject, OnInit, OnDestroy } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { takeUntil } from 'rxjs';
+import { concatMap, takeUntil } from 'rxjs';
 import { Subject } from 'rxjs';
 import { MinimalUser } from 'src/app/core/models/db/user.model';
 import { AppUrl, XeroOnboardingState } from 'src/app/core/models/enum/enum.model';
@@ -55,6 +55,8 @@ export class XeroComponent implements OnInit, OnDestroy {
 
   private navigate(): void {
     const pathName = this.windowReference.location.pathname;
+    this.isComponentLoading = false;
+    this.updateLoadingState();
     if (pathName === '/integrations/xero') {
       const onboardingStateComponentMap = {
         [XeroOnboardingState.CONNECTION]: '/integrations/xero/onboarding/landing',
@@ -65,8 +67,6 @@ export class XeroComponent implements OnInit, OnDestroy {
         [XeroOnboardingState.CLONE_SETTINGS]: '/integrations/xero/onboarding/clone_settings',
         [XeroOnboardingState.COMPLETE]: '/integrations/xero/main'
       };
-      this.isComponentLoading = false;
-      this.updateLoadingState();
       this.router.navigateByUrl(onboardingStateComponentMap[this.workspace.onboarding_state]);
     }
   }
@@ -101,9 +101,13 @@ export class XeroComponent implements OnInit, OnDestroy {
       this.storageService.set('onboarding-state', this.workspace.onboarding_state);
       this.storageService.set('currency', currency);
       this.storageService.set('xeroShortCode', xeroShortCode);
-      this.xeroHelperService.syncFyleDimensions().subscribe();
-      this.xeroHelperService.syncXeroDimensions().subscribe();
-      this.navigate();
+      this.xeroHelperService.syncFyleDimensions().pipe(
+        concatMap(() => this.xeroHelperService.syncXeroDimensions())
+      ).subscribe(() => {
+        this.navigate();
+      }, () => {
+        this.isLoading = false;
+      });
     });
   }
 

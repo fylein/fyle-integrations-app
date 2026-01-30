@@ -1,7 +1,7 @@
 import { Router } from '@angular/router';
 import { TravelPerkOnboardingState } from 'src/app/core/models/enum/enum.model';
 import { Component, Inject, OnInit, OnDestroy } from '@angular/core';
-import { takeUntil } from 'rxjs';
+import { concatMap, takeUntil } from 'rxjs';
 import { Subject } from 'rxjs';
 import { Travelperk } from 'src/app/core/models/travelperk/travelperk.model';
 import { StorageService } from 'src/app/core/services/common/storage.service';
@@ -45,6 +45,8 @@ export class TravelperkComponent implements OnInit, OnDestroy {
 
   private navigate(): void {
     const pathName = this.windowReference.location.pathname;
+    this.isComponentLoading = false;
+    this.updateLoadingState();
     if (pathName === '/integrations/travelperk') {
       const onboardingStateComponentMap = {
         [TravelPerkOnboardingState.CONNECTION]: '/integrations/travelperk/onboarding/landing',
@@ -52,8 +54,6 @@ export class TravelperkComponent implements OnInit, OnDestroy {
         [TravelPerkOnboardingState.ADVANCED_SETTINGS]: '/integrations/travelperk/onboarding/advanced_settings',
         [TravelPerkOnboardingState.COMPLETE]: '/integrations/travelperk/main/configuration'
       };
-      this.isComponentLoading = false;
-      this.updateLoadingState();
       this.router.navigateByUrl(onboardingStateComponentMap[this.travelperkData.onboarding_state]);
     }
   }
@@ -70,9 +70,15 @@ export class TravelperkComponent implements OnInit, OnDestroy {
       this.isIntegrationConnected = travelperkData.is_travelperk_connected;
       this.storageService.set('onboarding-state', this.travelperkData.onboarding_state);
       this.storageService.set('workspaceId', this.travelperkData.org);
-      this.travelperkService.syncPaymentProfile().subscribe();
-      this.travelperkService.syncCategories().subscribe();
-      this.navigate();
+      this.travelperkService.syncPaymentProfile().pipe(
+        concatMap(() => this.travelperkService.syncCategories())
+      ).subscribe(() => {
+        this.navigate();
+      }, () => {
+        this.isComponentLoading = false;
+        this.updateLoadingState();
+        this.router.navigateByUrl('/integrations/travelperk/onboarding/landing');
+      });
     }, () => {
       this.isComponentLoading = false;
       this.updateLoadingState();
