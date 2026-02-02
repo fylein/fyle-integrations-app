@@ -184,7 +184,7 @@ export class IntacctImportSettingsComponent implements OnInit {
           });
         }
       });
-    } 
+    }
   }
 
   addImportCodeField(event: any, sourceField: string) {
