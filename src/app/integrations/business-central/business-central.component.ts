@@ -90,7 +90,7 @@ export class BusinessCentralComponent implements OnInit, OnDestroy {
     ).subscribe(() => {
       this.navigate();
     }, () => {
-      this.isLoading = false;
+      this.navigate();
     });
   }
 

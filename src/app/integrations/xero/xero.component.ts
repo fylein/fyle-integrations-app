@@ -106,7 +106,7 @@ export class XeroComponent implements OnInit, OnDestroy {
       ).subscribe(() => {
         this.navigate();
       }, () => {
-        this.isLoading = false;
+        this.navigate();
       });
     });
   }

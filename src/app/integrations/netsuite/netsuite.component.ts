@@ -1,6 +1,6 @@
 import { Component, Inject, OnInit, OnDestroy } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { takeUntil } from 'rxjs';
+import { concatMap, takeUntil } from 'rxjs';
 import { Subject } from 'rxjs';
 import { MinimalUser } from 'src/app/core/models/db/user.model';
 import { AppUrl, NetsuiteOnboardingState } from 'src/app/core/models/enum/enum.model';
@@ -87,9 +87,13 @@ export class NetsuiteComponent implements OnInit, OnDestroy {
     this.workspace = workspace;
     this.storageService.set('workspaceId', this.workspace.id);
     this.storageService.set('onboarding-state', this.workspace.onboarding_state);
-    this.netsuiteHelperService.syncFyleDimensions().subscribe();
-    this.netsuiteHelperService.syncNetsuiteDimensions().subscribe();
-    this.routeBasedOnTokenStatus();
+    this.netsuiteHelperService.syncFyleDimensions().pipe(
+      concatMap(() => this.netsuiteHelperService.syncNetsuiteDimensions())
+    ).subscribe(() => {
+      this.routeBasedOnTokenStatus();
+    }, () => {
+      this.routeBasedOnTokenStatus();
+    });
   }
 
 

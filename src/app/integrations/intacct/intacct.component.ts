@@ -91,8 +91,7 @@ export class IntacctComponent implements OnInit, OnDestroy {
     ).subscribe(() => {
       this.routeBasedOnTokenStatus();
     }, () => {
-      this.isComponentLoading = false;
-      this.updateLoadingState();
+      this.routeBasedOnTokenStatus();
     });
   }
 
