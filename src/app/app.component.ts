@@ -27,6 +27,7 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.hideInitialLoader();
     this.router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
         (window as any).Appcues && (window as any).Appcues.page();
@@ -34,5 +35,18 @@ export class AppComponent implements OnInit {
     });
     this.eventsService.receiveEvent();
     this.primengConfig.ripple.set(true);
+  }
+
+  /**
+   * Hide the initial loader shown in index.html (e.g. while Sentry envelope/scripts run).
+   * Called when the Angular app is ready so users don't see a blank screen.
+   */
+  private hideInitialLoader(): void {
+    const loader = document.getElementById('initial-app-loader');
+    if (loader) {
+      loader.classList.add('hidden');
+      // Remove from DOM after transition to avoid blocking clicks
+      setTimeout(() => loader.remove(), 300);
+    }
   }
 }
