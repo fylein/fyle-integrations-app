@@ -37,6 +37,7 @@ export class Sage50Component implements OnInit {
       };
 
       const onboardingState = this.workspaceService.getOnboardingState() as Sage50OnboardingState;
+      this.isLoading = false;
       this.router.navigateByUrl(onboardingStateComponentMap[onboardingState]);
     }
   }
@@ -45,7 +46,6 @@ export class Sage50Component implements OnInit {
     this.workspaceService.setWorkspaceId(workspace.id);
     this.workspaceService.setOnboardingState(workspace.onboarding_state);
     this.workspaceService.importFyleAttributes(false).subscribe();
-    this.isLoading = false;
     this.navigate();
   }
 
