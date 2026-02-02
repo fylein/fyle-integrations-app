@@ -150,27 +150,6 @@
           </div>
         </div>
       }
-      @if (isAppShown('QBD')) {
-        <div class="landing-v2--accounting-app"
-          (click)="openInAppIntegration(InAppIntegration.QBD)">
-          <div class="tw-flex tw-justify-between tw-items-center">
-            <img src="assets/logos/quickbooks-logo.png" class="!tw-h-[30.7px]" />
-            @if (isAppConnected('QBD')) {
-              <app-badge [text]="'landingV2.statusConnected' | transloco" [theme]="ThemeOption.SUCCESS"></app-badge>
-            } @else {
-              <button class="btn-connect">{{ 'landingV2.buttonConnect' | transloco }}</button>
-            }
-          </div>
-          <div>
-            <span class="landing-v2--accounting-app-name">
-              {{ 'landingV2.quickbooksDesktopIIF' | transloco }}
-            </span>
-            <span class="landing-v2--accounting-app-type">
-              {{ 'landingV2.categoryAccounting' | transloco }}
-            </span>
-          </div>
-        </div>
-      }
       <!-- Direct -->
       @if (isAppShown('QBD_DIRECT')) {
         <div class="landing-v2--accounting-app"
