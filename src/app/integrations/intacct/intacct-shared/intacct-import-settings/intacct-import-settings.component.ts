@@ -184,7 +184,7 @@ export class IntacctImportSettingsComponent implements OnInit {
           });
         }
       });
-    }
+    } 
   }
 
   addImportCodeField(event: any, sourceField: string) {
@@ -198,18 +198,18 @@ export class IntacctImportSettingsComponent implements OnInit {
     // Find the index of the FormGroup
     const index = importCodeFieldsArray.controls.findIndex(control => control?.get('source_field')?.value === sourceField);
 
-    if (event.checked && this.acceptedImportCodeField.includes(sourceField) && this.intacctImportCodeConfig[sourceField] && index === -1) {
-      // Create a new FormGroup
-      const value = this.formBuilder.group({
-        source_field: [sourceField],
-        import_code: [this.importSettingsService.getImportCodeField(this.importSettings.configurations.import_code_fields, sourceField, this.intacctImportCodeConfig), Validators.required]
-      });
+    if (event.checked) {
+      if (this.acceptedImportCodeField.includes(sourceField) && this.intacctImportCodeConfig[sourceField] && index === -1) {
+        const value = this.formBuilder.group({
+          source_field: [sourceField],
+          import_code: [this.importSettingsService.getImportCodeField(this.importSettings.configurations.import_code_fields, sourceField, this.intacctImportCodeConfig), Validators.required]
+        });
 
-      // Push the new FormGroup into the FormArray
-      importCodeFieldsArray.push(value);
+        // Push the new FormGroup into the FormArray
+        importCodeFieldsArray.push(value);
+      }
     } else {
-
-      // If found, remove the FormGroup from the FormArray
+      // If unchecked and found, remove the FormGroup from the FormArray
       if (index !== -1) {
         importCodeFieldsArray.removeAt(index);
       }
@@ -509,27 +509,40 @@ export class IntacctImportSettingsComponent implements OnInit {
   onDropdownChange(event: any, index: number) {
     // Get the selected value from the <p-select>
     const selectedValue = event.value;
+    const expenseFieldArray = this.importSettingsForm.get('expenseFields') as FormArray;
+    const control = expenseFieldArray.at(index);
+    const destinationField = control?.get('destination_field')?.value;
 
     // Find the selected field in 'fyleFields' based on the selected value
     const selectedField = this.fyleFields.find(field => field.attribute_type === selectedValue);
 
-    // Check if the selected field is dependent (assuming 'is_dependent' is a property in 'selectedField')
-    if (selectedField?.is_dependent) {
-      // Set the toggle to false
-      (this.importSettingsForm.get('expenseFields') as FormArray).at(index)?.get('import_to_fyle')?.setValue(false);
+    // Always enable the toggle when a field is selected (never disable)
+    control?.get('import_to_fyle')?.enable();
 
-      // Get the 'import_to_fyle' control at the specified index and disable it
-      (this.importSettingsForm.get('expenseFields') as FormArray).at(index)?.get('import_to_fyle')?.disable();
+    if (selectedField?.is_dependent) {
+      // Dependent field: set toggle to false
+      control?.get('import_to_fyle')?.setValue(false);
+      
+      // Remove from importCodeFields if it was there
+      if (destinationField && this.acceptedImportCodeField.includes(destinationField)) {
+        this.addImportCodeField({checked: false}, destinationField);
+      }
     } else {
-      (this.importSettingsForm.get('expenseFields') as FormArray).at(index)?.get('import_to_fyle')?.setValue(true);
-      this.addImportCodeField({checked: true}, (this.importSettingsForm.get('expenseFields') as FormArray).at(index)?.get('destination_field')?.value);
+      // Non-dependent field: always set toggle to true when field is selected/changed
+      control?.get('import_to_fyle')?.setValue(true);
+      
+      // Add to importCodeFields if destination field is accepted
+      if (destinationField && this.acceptedImportCodeField.includes(destinationField) && 
+        this.intacctImportCodeConfig[destinationField]) {
+          this.addImportCodeField({checked: true}, destinationField);
+        }
     }
 
     if (selectedValue === 'custom_field') {
-      (this.importSettingsForm.get('expenseFields') as FormArray).at(index)?.get('source_field')?.setValue(null);
+      control?.get('source_field')?.setValue(null);
     }
 
-    this.updateImportFields([(this.importSettingsForm.get('expenseFields') as FormArray).at(index)?.get('import_to_fyle')?.value, (this.importSettingsForm.get('expenseFields') as FormArray).at(index)?.get('destination_field')?.value, index]);
+    this.updateImportFields([control?.get('import_to_fyle')?.value, destinationField, index]);
   }
 
   isExpenseFieldDependent(expenseField: MappingSetting): boolean {
@@ -551,7 +564,20 @@ export class IntacctImportSettingsComponent implements OnInit {
   }
 
   private initializeForm(importSettings: ImportSettingGet): void {
-    const expenseFieldFormArray: FormGroup[] = [];
+    
+    const importCodeFieldsFormArray: FormGroup[] = [];
+    if (importSettings.configurations.import_code_fields && importSettings.configurations.import_code_fields.length > 0) {
+      importSettings.configurations.import_code_fields.forEach((sourceField: string) => {
+        if (this.acceptedImportCodeField.includes(sourceField) && this.intacctImportCodeConfig[sourceField]) {
+          const formGroup = this.formBuilder.group({
+            source_field: [sourceField],
+            import_code: [this.importSettingsService.getImportCodeField(importSettings.configurations.import_code_fields, sourceField, this.intacctImportCodeConfig), Validators.required]
+          });
+          importCodeFieldsFormArray.push(formGroup);
+        }
+      });
+    }
+    
     this.importSettingsForm = this.formBuilder.group({
       importVendorAsMerchant: [importSettings.configurations.import_vendors_as_merchants || null],
       importCategories: [importSettings.configurations.import_categories || null],
@@ -566,7 +592,7 @@ export class IntacctImportSettingsComponent implements OnInit {
       expenseFields: this.formBuilder.array(this.constructFormArray()),
       searchOption: [''],
       importCodeField: [importSettings.configurations.import_code_fields],
-      importCodeFields: this.formBuilder.array(this.importCodeField)
+      importCodeFields: this.formBuilder.array(importCodeFieldsFormArray)
     });
     if (this.importSettingsForm.controls.costCodes.value && this.importSettingsForm.controls.costTypes.value && this.dependentFieldSettings?.is_import_enabled) {
       this.fyleFields = this.fyleFields.filter(field => !field.is_dependent);
@@ -581,12 +607,19 @@ export class IntacctImportSettingsComponent implements OnInit {
       this.addImportCodeField({checked: true}, this.intacctCategoryDestination);
     }
 
-    // Disable toggle for expense fields that are dependent
+    // Initialize importCodeFields for existing mapped fields and disable dependent field toggles
     const expenseFields = this.importSettingsForm.get('expenseFields') as FormArray;
 
     expenseFields.controls.forEach((control, index) => {
-      if (this.isExpenseFieldDependent(control.value)) {
-        control.get('import_to_fyle')?.disable();
+      const mappingSetting = control.value;
+      
+      if (mappingSetting.import_to_fyle && mappingSetting.destination_field && mappingSetting.source_field) {
+        const destinationField = mappingSetting.destination_field;
+        
+        if (this.acceptedImportCodeField.includes(destinationField) && 
+            this.intacctImportCodeConfig[destinationField]) {
+          this.addImportCodeField({checked: true}, destinationField);
+        }
       }
     });
 
