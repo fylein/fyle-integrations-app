@@ -39,93 +39,85 @@
       <p class="tw-mt-1-px landing--divider"></p>
     }
 
-    <div class="tw-pt-40-px" [ngClass]="brandingStyle.common.mainComponentPadding">
-      @if (integrationTabs.ALL || integrationTabs.ACCOUNTING) {
-        <div>
-          <p class="landing--section-heading">
-            {{ 'landing.accountingSectionTitle' | transloco }}
+  <div class="tw-pt-40-px" [ngClass]="brandingStyle.common.mainComponentPadding">
+    @if (integrationTabs.ALL || integrationTabs.ACCOUNTING) {
+      <div>
+        <p class="landing--section-heading">
+          {{ 'landing.accountingSectionTitle' | transloco }}
+        </p>
+        @if (brandingConfig.brandId !== 'co') {
+          <p class="landing--section-caption">
+            {{ 'landing.accountingSectionCaption' | transloco: { brandName: brandingConfig.brandName } }}
           </p>
-          @if (brandingConfig.brandId !== 'co') {
-            <p class="landing--section-caption">
-              {{ 'landing.accountingSectionCaption' | transloco: { brandName: brandingConfig.brandName } }}
-            </p>
+        }
+        @if (brandingConfig.brandId === 'co') {
+          <p class="landing--section-caption">
+            {{ 'landing.accountingSectionCoCaption' | transloco }}
+          </p>
+        }
+        <div class="tw-flex tw-flex-wrap tw-gap-5">
+          @if (exposeApps.NETSUITE) {
+            <div>
+              <div class="landing--accounting-app tw-mt-20-px" [ngClass]="brandingStyle.common.mainComponentShadow" (click)="openAccountingIntegrationApp(AccountingIntegrationApp.NETSUITE)">
+                <img src="assets/logos/netsuite-logo.png" class="tw-mt-[-16px]" width="120px" height="60px" />
+                <span class="landing--accounting-app-name !tw-pt-18-px">
+                  {{ 'landing.netsuiteAppName' | transloco }}
+                </span>
+              </div>
+            </div>
           }
-          @if (brandingConfig.brandId === 'co') {
-            <p class="landing--section-caption">
-              {{ 'landing.accountingSectionCoCaption' | transloco }}
-            </p>
+          @if (exposeApps.INTACCT) {
+            <div class="landing--accounting-app tw-mt-20-px" [ngClass]="brandingStyle.common.mainComponentShadow" (click)="openAccountingIntegrationApp(AccountingIntegrationApp.SAGE_INTACCT)">
+              <img src="assets/logos/intacct-logo.png" class="tw-mt-[-16px]"  width="120px" height="60px" />
+              <span class="landing--accounting-app-name !tw-pt-8-px">
+                {{ 'landing.sageIntacctAppName' | transloco }}
+              </span>
+            </div>
           }
-          <div class="tw-flex tw-flex-wrap tw-gap-5">
-            @if (exposeApps.NETSUITE) {
-              <div>
-                <div class="landing--accounting-app tw-mt-20-px" [ngClass]="brandingStyle.common.mainComponentShadow" (click)="openAccountingIntegrationApp(AccountingIntegrationApp.NETSUITE)">
-                  <img src="assets/logos/netsuite-logo.png" class="tw-mt-[-16px]" width="120px" height="60px" />
-                  <span class="landing--accounting-app-name !tw-pt-18-px">
-                    {{ 'landing.netsuiteAppName' | transloco }}
-                  </span>
-                </div>
-              </div>
-            }
-            @if (exposeApps.INTACCT) {
-              <div class="landing--accounting-app tw-mt-20-px" [ngClass]="brandingStyle.common.mainComponentShadow" (click)="openAccountingIntegrationApp(AccountingIntegrationApp.SAGE_INTACCT)">
-                <img src="assets/logos/intacct-logo.png" class="tw-mt-[-16px]"  width="120px" height="60px" />
-                <span class="landing--accounting-app-name !tw-pt-8-px">
-                  {{ 'landing.sageIntacctAppName' | transloco }}
-                </span>
-              </div>
-            }
-            @if (exposeApps.QBO) {
-              <div class="landing--accounting-app tw-mt-20-px" [ngClass]="brandingStyle.common.mainComponentShadow" (click)="openAccountingIntegrationApp(AccountingIntegrationApp.QBO)">
-                <img class="tw-mt-10-px" src="assets/logos/quickbooks-logo.png" width="120px"  />
-                <span class="landing--accounting-app-name">
-                  {{ 'landing.quickbooksOnlineAppName' | transloco }}
-                </span>
-              </div>
-            }
-            @if (exposeApps.XERO) {
-              <div class="landing--accounting-app tw-mt-20-px" [ngClass]="brandingStyle.common.mainComponentShadow" (click)="openAccountingIntegrationApp(AccountingIntegrationApp.XERO)">
-                <img src="assets/logos/xero-logo.png" class="tw-mt-[-20px]" width="65px" height="60px" />
-                <span class="landing--accounting-app-name">
-                  {{ 'landing.xeroAppName' | transloco }}
-                </span>
-              </div>
-            }
-            @if (exposeApps.QBD && showQBDIIFIntegration) {
-              <div class="landing--accounting-app tw-mt-20-px" [ngClass]="brandingStyle.common.mainComponentShadow" (click)="openInAppIntegration(InAppIntegration.QBD)">
-                <img src="assets/logos/quickbooks-logo.png" width="120px" height="60px" />
-                <span class="landing--accounting-app-name">
-                  {{ 'landing.quickbooksDesktopIifAppName' | transloco }}
-                </span>
-              </div>
-            }
-            <!-- Direct -->
-            @if (exposeApps.QBD_DIRECT && org.allow_qbd_direct_integration) {
-              <div class="landing--accounting-app tw-mt-20-px" [ngClass]="brandingStyle.common.mainComponentShadow" (click)="openInAppIntegration(InAppIntegration.QBD_DIRECT)">
-                <img src="assets/logos/quickbooks-logo.png" width="120px" height="60px" />
-                <span class="landing--accounting-app-name tw-gap-2 tw-px-4 tw-flex tw-items-center">
-                  {{ 'landing.quickbooksDesktopWebConnectorAppName' | transloco }}
-                </span>
-              </div>
-            }
-            @if (exposeApps.SAGE300) {
-              <div class="landing--accounting-app tw-mt-20-px" [ngClass]="brandingStyle.common.mainComponentShadow" (click)="openInAppIntegration(InAppIntegration.SAGE300)">
-                <img src="assets/logos/sage300-logo.svg" width="110px" height="60px" />
-                <span class="landing--accounting-app-name tw-gap-2">
-                  {{ 'landing.sage300CreAppName' | transloco }}
-                </span>
-              </div>
-            }
-            @if (exposeApps.BUSINESS_CENTRAL && org.allow_dynamics) {
-              <div class="landing--accounting-app tw-mt-20-px" [ngClass]="brandingStyle.common.mainComponentShadow" (click)="openInAppIntegration(InAppIntegration.BUSINESS_CENTRAL)">
-                <img src="assets/logos/BusinessCentral-logo.svg" class="tw-mt-[-20px]" width="50px" height="60px" />
-                <span class="landing--accounting-app-name tw-gap-2 tw-px-4 tw-flex tw-items-center">
-                  {{ 'landing.dynamics365BusinessCentralAppName' | transloco }}
-                </span>
-              </div>
-            }
-          </div>
+          @if (exposeApps.QBO) {
+            <div class="landing--accounting-app tw-mt-20-px" [ngClass]="brandingStyle.common.mainComponentShadow" (click)="openAccountingIntegrationApp(AccountingIntegrationApp.QBO)">
+              <img class="tw-mt-10-px" src="assets/logos/quickbooks-logo.png" width="120px"  />
+              <span class="landing--accounting-app-name">
+                {{ 'landing.quickbooksOnlineAppName' | transloco }}
+              </span>
+            </div>
+          }
+          @if (exposeApps.XERO) {
+            <div class="landing--accounting-app tw-mt-20-px" [ngClass]="brandingStyle.common.mainComponentShadow" (click)="openAccountingIntegrationApp(AccountingIntegrationApp.XERO)">
+              <img src="assets/logos/xero-logo.png" class="tw-mt-[-20px]" width="65px" height="60px" />
+              <span class="landing--accounting-app-name">
+                {{ 'landing.xeroAppName' | transloco }}
+              </span>
+            </div>
+          }
+          <!-- Direct -->
+          @if (exposeApps.QBD_DIRECT && org.allow_qbd_direct_integration) {
+            <div class="landing--accounting-app tw-mt-20-px" [ngClass]="brandingStyle.common.mainComponentShadow" (click)="openInAppIntegration(InAppIntegration.QBD_DIRECT)">
+              <img src="assets/logos/quickbooks-logo.png" width="120px" height="60px" />
+              <span class="landing--accounting-app-name tw-gap-2 tw-px-4 tw-flex tw-items-center">
+                {{ 'landing.quickbooksDesktopWebConnectorAppName' | transloco }}
+              </span>
+            </div>
+          }
+          @if (exposeApps.SAGE300) {
+            <div class="landing--accounting-app tw-mt-20-px" [ngClass]="brandingStyle.common.mainComponentShadow" (click)="openInAppIntegration(InAppIntegration.SAGE300)">
+              <img src="assets/logos/sage300-logo.svg" width="110px" height="60px" />
+              <span class="landing--accounting-app-name tw-gap-2">
+                {{ 'landing.sage300CreAppName' | transloco }}
+              </span>
+            </div>
+          }
+          @if (exposeApps.BUSINESS_CENTRAL && org.allow_dynamics) {
+            <div class="landing--accounting-app tw-mt-20-px" [ngClass]="brandingStyle.common.mainComponentShadow" (click)="openInAppIntegration(InAppIntegration.BUSINESS_CENTRAL)">
+              <img src="assets/logos/BusinessCentral-logo.svg" class="tw-mt-[-20px]" width="50px" height="60px" />
+              <span class="landing--accounting-app-name tw-gap-2 tw-px-4 tw-flex tw-items-center">
+                {{ 'landing.dynamics365BusinessCentralAppName' | transloco }}
+              </span>
+            </div>
+          }
         </div>
-      }
+      </div>
+    }
 
       @if ((integrationTabs.ALL || integrationTabs.HRMS) && exposeApps.BAMBOO_HR) {
         <div>

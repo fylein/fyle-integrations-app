@@ -118,126 +118,105 @@
           </div>
         }
 
-        @if (isAppShown('BUSINESS_CENTRAL')) {
-          <div class="landing-v2--accounting-app"
-            (click)="openInAppIntegration(InAppIntegration.BUSINESS_CENTRAL)">
-            <div class="tw-flex tw-justify-between tw-items-center">
-              <img src="assets/logos/BusinessCentral-logo.svg" />
-            </div>
-            <span class="landing-v2--accounting-app-name tw-items-start tw-gap-[10px] !tw-text-12-px">
-              <div>
-                {{ 'landingV2.dynamics365BusinessCentral' | transloco }}
-                <div class="landing-v2--accounting-app-type">{{ 'landingV2.categoryAccounting' | transloco }}</div>
-              </div>
-            </span>
+      @if (isAppShown('BUSINESS_CENTRAL')) {
+        <div class="landing-v2--accounting-app"
+          (click)="openInAppIntegration(InAppIntegration.BUSINESS_CENTRAL)">
+          <div class="tw-flex tw-justify-between tw-items-center">
+            <img src="assets/logos/BusinessCentral-logo.svg" />
           </div>
-        }
-        @if (isAppShown('NETSUITE')) {
+          <span class="landing-v2--accounting-app-name tw-items-start tw-gap-[10px] !tw-text-12-px">
+            <div>
+              {{ 'landingV2.dynamics365BusinessCentral' | transloco }}
+              <div class="landing-v2--accounting-app-type">{{ 'landingV2.categoryAccounting' | transloco }}</div>
+            </div>
+          </span>
+        </div>
+      }
+      @if (isAppShown('NETSUITE')) {
+        <div>
+          <div class="landing-v2--accounting-app"
+            (click)="openAccountingIntegrationApp(AccountingIntegrationApp.NETSUITE)">
+            <div class="tw-flex tw-justify-between tw-items-center">
+              <img src="assets/logos/netsuite-logo-new.png" class="netsuite-logo"/>
+              @if (isAppConnected('NETSUITE')) {
+                <app-badge [text]="'landingV2.statusConnected' | transloco" [theme]="ThemeOption.SUCCESS"></app-badge>
+              } @else {
+                <button class="btn-connect">{{ 'landingV2.buttonConnect' | transloco }}</button>
+              }
+            </div>
+            <div>
+              <span class="landing-v2--accounting-app-name">
+                {{ 'landingV2.netsuite' | transloco }}
+              </span>
+              <span class="landing-v2--accounting-app-type">
+                {{ 'landingV2.categoryAccounting' | transloco }}
+              </span>
+            </div>
+          </div>
+        </div>
+      }
+      <!-- Direct -->
+      @if (isAppShown('QBD_DIRECT')) {
+        <div class="landing-v2--accounting-app"
+          (click)="openInAppIntegration(InAppIntegration.QBD_DIRECT)">
+          <div class="tw-flex tw-justify-between tw-items-center">
+            <img src="assets/logos/quickbooks-logo.png" class="!tw-h-[30.7px]" />
+            @if (isAppConnected('QBD_DIRECT')) {
+              <app-badge [text]="'landingV2.statusConnected' | transloco" [theme]="ThemeOption.SUCCESS"></app-badge>
+            } @else {
+              <button class="btn-connect">{{ 'landingV2.buttonConnect' | transloco }}</button>
+            }
+          </div>
+          <span class="landing-v2--accounting-app-name tw-items-start tw-gap-4">
+            <div>
+              {{ 'landingV2.quickbooksDesktopWebConnector' | transloco }}
+              <div class="landing-v2--accounting-app-type">{{ 'landingV2.categoryAccounting' | transloco }}</div>
+            </div>
+          </span>
+        </div>
+      }
+      @if (isAppShown('QBO')) {
+        <div class="landing-v2--accounting-app"
+          (click)="openAccountingIntegrationApp(AccountingIntegrationApp.QBO)">
+          <div class="tw-flex tw-justify-between tw-items-center">
+            <img src="assets/logos/quickbooks-logo.png" class="!tw-h-[30.7px]" />
+            @if (isAppConnected('QBO')) {
+              <app-badge [text]="'landingV2.statusConnected' | transloco" [theme]="ThemeOption.SUCCESS"></app-badge>
+            } @else {
+              <button class="btn-connect">{{ 'landingV2.buttonConnect' | transloco }}</button>
+            }
+          </div>
           <div>
-            <div class="landing-v2--accounting-app"
-              (click)="openAccountingIntegrationApp(AccountingIntegrationApp.NETSUITE)">
-              <div class="tw-flex tw-justify-between tw-items-center">
-                <img src="assets/logos/netsuite-logo-new.png" class="netsuite-logo"/>
-                @if (isAppConnected('NETSUITE')) {
-                  <app-badge [text]="'landingV2.statusConnected' | transloco" [theme]="ThemeOption.SUCCESS"></app-badge>
-                } @else {
-                  <button class="btn-connect">{{ 'landingV2.buttonConnect' | transloco }}</button>
-                }
-              </div>
-              <div>
-                <span class="landing-v2--accounting-app-name">
-                  {{ 'landingV2.netsuite' | transloco }}
-                </span>
-                <span class="landing-v2--accounting-app-type">
-                  {{ 'landingV2.categoryAccounting' | transloco }}
-                </span>
-              </div>
-            </div>
-          </div>
-        }
-        @if (isAppShown('QBD')) {
-          <div class="landing-v2--accounting-app"
-            (click)="openInAppIntegration(InAppIntegration.QBD)">
-            <div class="tw-flex tw-justify-between tw-items-center">
-              <img src="assets/logos/quickbooks-logo.png" class="!tw-h-[30.7px]" />
-              @if (isAppConnected('QBD')) {
-                <app-badge [text]="'landingV2.statusConnected' | transloco" [theme]="ThemeOption.SUCCESS"></app-badge>
-              } @else {
-                <button class="btn-connect">{{ 'landingV2.buttonConnect' | transloco }}</button>
-              }
-            </div>
-            <div>
-              <span class="landing-v2--accounting-app-name">
-                {{ 'landingV2.quickbooksDesktopIIF' | transloco }}
-              </span>
-              <span class="landing-v2--accounting-app-type">
-                {{ 'landingV2.categoryAccounting' | transloco }}
-              </span>
-            </div>
-          </div>
-        }
-        <!-- Direct -->
-        @if (isAppShown('QBD_DIRECT')) {
-          <div class="landing-v2--accounting-app"
-            (click)="openInAppIntegration(InAppIntegration.QBD_DIRECT)">
-            <div class="tw-flex tw-justify-between tw-items-center">
-              <img src="assets/logos/quickbooks-logo.png" class="!tw-h-[30.7px]" />
-              @if (isAppConnected('QBD_DIRECT')) {
-                <app-badge [text]="'landingV2.statusConnected' | transloco" [theme]="ThemeOption.SUCCESS"></app-badge>
-              } @else {
-                <button class="btn-connect">{{ 'landingV2.buttonConnect' | transloco }}</button>
-              }
-            </div>
-            <span class="landing-v2--accounting-app-name tw-items-start tw-gap-4">
-              <div>
-                {{ 'landingV2.quickbooksDesktopWebConnector' | transloco }}
-                <div class="landing-v2--accounting-app-type">{{ 'landingV2.categoryAccounting' | transloco }}</div>
-              </div>
+            <span class="landing-v2--accounting-app-name">
+              {{ 'landingV2.quickbooksOnline' | transloco }}
+            </span>
+            <span class="landing-v2--accounting-app-type">
+              {{ 'landingV2.categoryAccounting' | transloco }}
             </span>
           </div>
-        }
-        @if (isAppShown('QBO')) {
-          <div class="landing-v2--accounting-app"
-            (click)="openAccountingIntegrationApp(AccountingIntegrationApp.QBO)">
-            <div class="tw-flex tw-justify-between tw-items-center">
-              <img src="assets/logos/quickbooks-logo.png" class="!tw-h-[30.7px]" />
-              @if (isAppConnected('QBO')) {
-                <app-badge [text]="'landingV2.statusConnected' | transloco" [theme]="ThemeOption.SUCCESS"></app-badge>
-              } @else {
-                <button class="btn-connect">{{ 'landingV2.buttonConnect' | transloco }}</button>
-              }
-            </div>
-            <div>
-              <span class="landing-v2--accounting-app-name">
-                {{ 'landingV2.quickbooksOnline' | transloco }}
-              </span>
-              <span class="landing-v2--accounting-app-type">
-                {{ 'landingV2.categoryAccounting' | transloco }}
-              </span>
-            </div>
+        </div>
+      }
+      @if (isAppShown('XERO')) {
+        <div class="landing-v2--accounting-app"
+          (click)="openAccountingIntegrationApp(AccountingIntegrationApp.XERO)">
+          <div class="tw-flex tw-justify-between tw-items-center">
+            <img src="assets/logos/xero-logo-new.png" />
+            @if (isAppConnected('XERO')) {
+              <app-badge [text]="'landingV2.statusConnected' | transloco" [theme]="ThemeOption.SUCCESS"></app-badge>
+            } @else {
+              <button class="btn-connect">{{ 'landingV2.buttonConnect' | transloco }}</button>
+            }
           </div>
-        }
-        @if (isAppShown('XERO')) {
-          <div class="landing-v2--accounting-app"
-            (click)="openAccountingIntegrationApp(AccountingIntegrationApp.XERO)">
-            <div class="tw-flex tw-justify-between tw-items-center">
-              <img src="assets/logos/xero-logo-new.png" />
-              @if (isAppConnected('XERO')) {
-                <app-badge [text]="'landingV2.statusConnected' | transloco" [theme]="ThemeOption.SUCCESS"></app-badge>
-              } @else {
-                <button class="btn-connect">{{ 'landingV2.buttonConnect' | transloco }}</button>
-              }
-            </div>
-            <div>
-              <span class="landing-v2--accounting-app-name">
-                {{ 'landingV2.xero' | transloco }}
-              </span>
-              <span class="landing-v2--accounting-app-type">
-                {{ 'landingV2.categoryAccounting' | transloco }}
-              </span>
-            </div>
+          <div>
+            <span class="landing-v2--accounting-app-name">
+              {{ 'landingV2.xero' | transloco }}
+            </span>
+            <span class="landing-v2--accounting-app-type">
+              {{ 'landingV2.categoryAccounting' | transloco }}
+            </span>
           </div>
-        }
+        </div>
+      }
 
         @if (isAppShown('BAMBOO_HR')) {
           <div>
