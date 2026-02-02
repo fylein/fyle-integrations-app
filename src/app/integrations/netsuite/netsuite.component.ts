@@ -1,5 +1,7 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, Inject, OnInit, OnDestroy } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
+import { takeUntil } from 'rxjs';
+import { Subject } from 'rxjs';
 import { MinimalUser } from 'src/app/core/models/db/user.model';
 import { AppUrl, NetsuiteOnboardingState } from 'src/app/core/models/enum/enum.model';
 import { NetsuiteWorkspace } from 'src/app/core/models/netsuite/db/netsuite-workspace.model';
@@ -12,6 +14,7 @@ import { NetsuiteAuthService } from 'src/app/core/services/netsuite/netsuite-cor
 import { AuthService } from 'src/app/core/services/common/auth.service';
 import { HelperService } from 'src/app/core/services/common/helper.service';
 import { NetsuiteConnectorService } from 'src/app/core/services/netsuite/netsuite-core/netsuite-connector.service';
+import { LoadingService } from 'src/app/core/services/common/loading.service';
 
 @Component({
     selector: 'app-netsuite',
@@ -19,7 +22,7 @@ import { NetsuiteConnectorService } from 'src/app/core/services/netsuite/netsuit
     styleUrls: ['./netsuite.component.scss'],
     standalone: false
 })
-export class NetsuiteComponent implements OnInit {
+export class NetsuiteComponent implements OnInit, OnDestroy {
 
   user: MinimalUser = this.userService.getUserProfile();
 
@@ -27,8 +30,13 @@ export class NetsuiteComponent implements OnInit {
 
   isLoading: boolean = true;
 
+  private isComponentLoading: boolean = true;
+
+  private isGuardLoading: boolean = false;
+
   windowReference: Window;
 
+  private destroy$ = new Subject<void>();
 
   constructor(
     private netsuiteHelperService: NetsuiteHelperService,
@@ -41,13 +49,16 @@ export class NetsuiteComponent implements OnInit {
     private nsAuthService: NetsuiteAuthService,
     private authService: AuthService,
     private helperService: HelperService,
-    private netsuiteConnector: NetsuiteConnectorService
+    private netsuiteConnector: NetsuiteConnectorService,
+    private loadingService: LoadingService
   ) {
     this.windowReference = this.windowService.nativeWindow;
   }
 
   private navigate(isNetSuiteTokenValid?: boolean): void {
     const pathName = this.windowReference.location.pathname;
+    this.isComponentLoading = false;
+    this.updateLoadingState();
     if (pathName === '/integrations/netsuite') {
       const onboardingStateComponentMap = {
         [NetsuiteOnboardingState.CONNECTION]: '/integrations/netsuite/onboarding/landing',
@@ -57,9 +68,12 @@ export class NetsuiteComponent implements OnInit {
         [NetsuiteOnboardingState.ADVANCED_CONFIGURATION]: '/integrations/netsuite/onboarding/advanced_settings',
         [NetsuiteOnboardingState.COMPLETE]: '/integrations/netsuite/main'
       };
-      this.isLoading = false;
       this.router.navigateByUrl(isNetSuiteTokenValid === false && ![NetsuiteOnboardingState.CONNECTION, NetsuiteOnboardingState.COMPLETE].includes(this.workspace.onboarding_state) ?  onboardingStateComponentMap[NetsuiteOnboardingState.SUBSIDIARY] : onboardingStateComponentMap[this.workspace.onboarding_state]);
     }
+  }
+
+  private updateLoadingState(): void {
+    this.isLoading = this.isComponentLoading || this.isGuardLoading;
   }
 
   private routeBasedOnTokenStatus(): void {
@@ -110,5 +124,18 @@ export class NetsuiteComponent implements OnInit {
 
   ngOnInit(): void {
     this.handleAuthParameters();
+
+    // Subscribe to loading service to show/hide loader during guard checks
+    this.loadingService.loading$.pipe(
+      takeUntil(this.destroy$)
+    ).subscribe(isLoading => {
+      this.isGuardLoading = isLoading;
+      this.updateLoadingState();
+    });
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 }

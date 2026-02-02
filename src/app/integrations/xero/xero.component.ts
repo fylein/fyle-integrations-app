@@ -1,5 +1,7 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, Inject, OnInit, OnDestroy } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
+import { concatMap, takeUntil } from 'rxjs';
+import { Subject } from 'rxjs';
 import { MinimalUser } from 'src/app/core/models/db/user.model';
 import { AppUrl, XeroOnboardingState } from 'src/app/core/models/enum/enum.model';
 import { XeroWorkspace } from 'src/app/core/models/xero/db/xero-workspace.model';
@@ -11,6 +13,7 @@ import { UserService } from 'src/app/core/services/misc/user.service';
 import { XeroHelperService } from 'src/app/core/services/xero/xero-core/xero-helper.service';
 import { XeroAuthService } from 'src/app/core/services/xero/xero-core/xero-auth.service';
 import { AuthService } from 'src/app/core/services/common/auth.service';
+import { LoadingService } from 'src/app/core/services/common/loading.service';
 
 @Component({
     selector: 'app-xero',
@@ -18,15 +21,21 @@ import { AuthService } from 'src/app/core/services/common/auth.service';
     styleUrls: ['./xero.component.scss'],
     standalone: false
 })
-export class XeroComponent implements OnInit {
+export class XeroComponent implements OnInit, OnDestroy {
 
   user: MinimalUser;
 
   isLoading: boolean = true;
 
+  private isComponentLoading: boolean = true;
+
+  private isGuardLoading: boolean = false;
+
   workspace: XeroWorkspace;
 
   windowReference: Window;
+
+  private destroy$ = new Subject<void>();
 
   constructor(
     private router: Router,
@@ -38,13 +47,16 @@ export class XeroComponent implements OnInit {
     private workspaceService: WorkspaceService,
     private helperService: HelperService,
     private xeroAuthService: XeroAuthService,
-    private authService: AuthService
+    private authService: AuthService,
+    private loadingService: LoadingService
   ) {
     this.windowReference = this.windowService.nativeWindow;
   }
 
   private navigate(): void {
     const pathName = this.windowReference.location.pathname;
+    this.isComponentLoading = false;
+    this.updateLoadingState();
     if (pathName === '/integrations/xero') {
       const onboardingStateComponentMap = {
         [XeroOnboardingState.CONNECTION]: '/integrations/xero/onboarding/landing',
@@ -55,9 +67,12 @@ export class XeroComponent implements OnInit {
         [XeroOnboardingState.CLONE_SETTINGS]: '/integrations/xero/onboarding/clone_settings',
         [XeroOnboardingState.COMPLETE]: '/integrations/xero/main'
       };
-      this.isLoading = false;
       this.router.navigateByUrl(onboardingStateComponentMap[this.workspace.onboarding_state]);
     }
+  }
+
+  private updateLoadingState(): void {
+    this.isLoading = this.isComponentLoading || this.isGuardLoading;
   }
 
   private getOrCreateWorkspace(): Promise<XeroWorkspace> {
@@ -86,9 +101,13 @@ export class XeroComponent implements OnInit {
       this.storageService.set('onboarding-state', this.workspace.onboarding_state);
       this.storageService.set('currency', currency);
       this.storageService.set('xeroShortCode', xeroShortCode);
-      this.xeroHelperService.syncFyleDimensions().subscribe();
-      this.xeroHelperService.syncXeroDimensions().subscribe();
-      this.navigate();
+      this.xeroHelperService.syncFyleDimensions().pipe(
+        concatMap(() => this.xeroHelperService.syncXeroDimensions())
+      ).subscribe(() => {
+        this.navigate();
+      }, () => {
+        this.isLoading = false;
+      });
     });
   }
 
@@ -109,7 +128,19 @@ export class XeroComponent implements OnInit {
 
   ngOnInit(): void {
     this.handleAuthParameters();
+
+    // Subscribe to loading service to show/hide loader during guard checks
+    this.loadingService.loading$.pipe(
+      takeUntil(this.destroy$)
+    ).subscribe(isLoading => {
+      this.isGuardLoading = isLoading;
+      this.updateLoadingState();
+    });
   }
 
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
 
 }
