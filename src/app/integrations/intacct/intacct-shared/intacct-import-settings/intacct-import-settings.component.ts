@@ -522,7 +522,7 @@ export class IntacctImportSettingsComponent implements OnInit {
     if (selectedField?.is_dependent) {
       // Dependent field: set toggle to false
       control?.get('import_to_fyle')?.setValue(false);
-      
+
       // Remove from importCodeFields if it was there
       if (destinationField && this.acceptedImportCodeField.includes(destinationField)) {
         this.addImportCodeField({checked: false}, destinationField);
@@ -530,10 +530,9 @@ export class IntacctImportSettingsComponent implements OnInit {
     } else {
       // Non-dependent field: always set toggle to true when field is selected/changed
       control?.get('import_to_fyle')?.setValue(true);
-      
+
       // Add to importCodeFields if destination field is accepted
-      if (destinationField && this.acceptedImportCodeField.includes(destinationField) && 
-        this.intacctImportCodeConfig[destinationField]) {
+      if (destinationField && this.acceptedImportCodeField.includes(destinationField) && this.intacctImportCodeConfig[destinationField]) {
           this.addImportCodeField({checked: true}, destinationField);
         }
     }
@@ -564,7 +563,6 @@ export class IntacctImportSettingsComponent implements OnInit {
   }
 
   private initializeForm(importSettings: ImportSettingGet): void {
-    
     const importCodeFieldsFormArray: FormGroup[] = [];
     if (importSettings.configurations.import_code_fields && importSettings.configurations.import_code_fields.length > 0) {
       importSettings.configurations.import_code_fields.forEach((sourceField: string) => {
@@ -577,7 +575,7 @@ export class IntacctImportSettingsComponent implements OnInit {
         }
       });
     }
-    
+
     this.importSettingsForm = this.formBuilder.group({
       importVendorAsMerchant: [importSettings.configurations.import_vendors_as_merchants || null],
       importCategories: [importSettings.configurations.import_categories || null],
@@ -612,11 +610,11 @@ export class IntacctImportSettingsComponent implements OnInit {
 
     expenseFields.controls.forEach((control, index) => {
       const mappingSetting = control.value;
-      
+
       if (mappingSetting.import_to_fyle && mappingSetting.destination_field && mappingSetting.source_field) {
         const destinationField = mappingSetting.destination_field;
-        
-        if (this.acceptedImportCodeField.includes(destinationField) && 
+
+        if (this.acceptedImportCodeField.includes(destinationField) &&
             this.intacctImportCodeConfig[destinationField]) {
           this.addImportCodeField({checked: true}, destinationField);
         }
