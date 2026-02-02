@@ -1,38 +1,43 @@
-<div class="tw-text-slightly-normal-text-color">
-  @if (!exposeC1Apps) {
-    <div class="tw-flex tw-text-14-px tw-h-56-px">
-      <div class="tw-pl-24-px tw-pr-48-px landing--tab" (click)="switchView(IntegrationsView.ALL)">
-        {{ 'landing.allTab' | transloco }}
-        @if (integrationTabs.ALL) {
-          <p class="landing--active-tag"></p>
-        }
-      </div>
-      <div class="tw-pr-48-px landing--tab" (click)="switchView(IntegrationsView.ACCOUNTING)">
-        {{ 'landing.accountingTab' | transloco }}
-        @if (integrationTabs.ACCOUNTING) {
-          <p class="landing--active-tag"></p>
-        }
-      </div>
-      <div class="tw-pr-48-px landing--tab" (click)="switchView(IntegrationsView.HRMS)">
-        {{ 'landing.hrmsTab' | transloco }}
-        @if (integrationTabs.HRMS) {
-          <p class="landing--active-tag"></p>
-        }
-      </div>
-      @if (isTravelperkAllowed) {
-        <div class="tw-pr-48-px landing--tab" (click)="switchView(IntegrationsView.TRAVEL)">
-          {{ 'landing.travelTab' | transloco }}
-          @if (integrationTabs.TRAVEL) {
+@if (isLoading) {
+  <div class="tw-flex tw-justify-center tw-items-center tw-h-full">
+      <app-loader></app-loader>
+  </div>
+} @else {
+  <div class="tw-text-slightly-normal-text-color">
+    @if (!exposeC1Apps) {
+      <div class="tw-flex tw-text-14-px tw-h-56-px">
+        <div class="tw-pl-24-px tw-pr-48-px landing--tab" (click)="switchView(IntegrationsView.ALL)">
+          {{ 'landing.allTab' | transloco }}
+          @if (integrationTabs.ALL) {
             <p class="landing--active-tag"></p>
           }
         </div>
-      }
-    </div>
-  }
+        <div class="tw-pr-48-px landing--tab" (click)="switchView(IntegrationsView.ACCOUNTING)">
+          {{ 'landing.accountingTab' | transloco }}
+          @if (integrationTabs.ACCOUNTING) {
+            <p class="landing--active-tag"></p>
+          }
+        </div>
+        <div class="tw-pr-48-px landing--tab" (click)="switchView(IntegrationsView.HRMS)">
+          {{ 'landing.hrmsTab' | transloco }}
+          @if (integrationTabs.HRMS) {
+            <p class="landing--active-tag"></p>
+          }
+        </div>
+        @if (isTravelperkAllowed) {
+          <div class="tw-pr-48-px landing--tab" (click)="switchView(IntegrationsView.TRAVEL)">
+            {{ 'landing.travelTab' | transloco }}
+            @if (integrationTabs.TRAVEL) {
+              <p class="landing--active-tag"></p>
+            }
+          </div>
+        }
+      </div>
+    }
 
-  @if (!exposeC1Apps) {
-    <p class="tw-mt-1-px landing--divider"></p>
-  }
+    @if (!exposeC1Apps) {
+      <p class="tw-mt-1-px landing--divider"></p>
+    }
 
   <div class="tw-pt-40-px" [ngClass]="brandingStyle.common.mainComponentPadding">
     @if (integrationTabs.ALL || integrationTabs.ACCOUNTING) {
@@ -114,83 +119,84 @@
       </div>
     }
 
-    @if ((integrationTabs.ALL || integrationTabs.HRMS) && exposeApps.BAMBOO_HR) {
-      <div>
-        @if (integrationTabs.ALL) {
-          <p class="tw-mt-1-px landing--section-divider"></p>
-        }
-        <p class="landing--section-heading">
-          {{ 'landing.hrmsSectionTitle' | transloco }}
-        </p>
-        <p class="landing--section-caption">
-          {{ 'landing.hrmsSectionCaption' | transloco: { brandName: brandingConfig.brandName } }}
-        </p>
-        <div class="tw-flex">
-          <div class="landing--accounting-app tw-mr-20-px" [ngClass]="brandingStyle.common.mainComponentShadow" (click)="openInAppIntegration(InAppIntegration.BAMBOO_HR)">
-            <img src="assets/logos/bamboo-hr-logo.svg" width="160px" height="60px" />
-            <span class="landing--accounting-app-name">
-              {{ 'landing.bambooHrAppName' | transloco }}
-            </span>
+      @if ((integrationTabs.ALL || integrationTabs.HRMS) && exposeApps.BAMBOO_HR) {
+        <div>
+          @if (integrationTabs.ALL) {
+            <p class="tw-mt-1-px landing--section-divider"></p>
+          }
+          <p class="landing--section-heading">
+            {{ 'landing.hrmsSectionTitle' | transloco }}
+          </p>
+          <p class="landing--section-caption">
+            {{ 'landing.hrmsSectionCaption' | transloco: { brandName: brandingConfig.brandName } }}
+          </p>
+          <div class="tw-flex">
+            <div class="landing--accounting-app tw-mr-20-px" [ngClass]="brandingStyle.common.mainComponentShadow" (click)="openInAppIntegration(InAppIntegration.BAMBOO_HR)">
+              <img src="assets/logos/bamboo-hr-logo.svg" width="160px" height="60px" />
+              <span class="landing--accounting-app-name">
+                {{ 'landing.bambooHrAppName' | transloco }}
+              </span>
+            </div>
           </div>
         </div>
-      </div>
-    }
+      }
 
-    @if (isTravelperkAllowed && exposeApps.TRAVELPERK && (integrationTabs.ALL || integrationTabs.TRAVEL)) {
-      <div>
-        @if (integrationTabs.ALL) {
-          <p class="tw-mt-1-px landing--section-divider"></p>
-        }
-        <p class="landing--section-heading">
-          {{ 'landing.travelSectionTitle' | transloco }}
-        </p>
-        <p class="landing--section-caption">
-          {{ 'landing.travelSectionCaption' | transloco: { brandName: brandingConfig.brandName } }}
-        </p>
-        <div class="tw-flex">
-          <div class="landing--accounting-app tw-mr-20-px" [ngClass]="brandingStyle.common.mainComponentShadow" (click)="openInAppIntegration(InAppIntegration.TRAVELPERK)">
-            <img src="assets/logos/travelperk-logo.svg" width="160px" height="60px" />
-            <span class="landing--accounting-app-name">
-              {{ 'landing.travelperkAppName' | transloco }}
-            </span>
+      @if (isTravelperkAllowed && exposeApps.TRAVELPERK && (integrationTabs.ALL || integrationTabs.TRAVEL)) {
+        <div>
+          @if (integrationTabs.ALL) {
+            <p class="tw-mt-1-px landing--section-divider"></p>
+          }
+          <p class="landing--section-heading">
+            {{ 'landing.travelSectionTitle' | transloco }}
+          </p>
+          <p class="landing--section-caption">
+            {{ 'landing.travelSectionCaption' | transloco: { brandName: brandingConfig.brandName } }}
+          </p>
+          <div class="tw-flex">
+            <div class="landing--accounting-app tw-mr-20-px" [ngClass]="brandingStyle.common.mainComponentShadow" (click)="openInAppIntegration(InAppIntegration.TRAVELPERK)">
+              <img src="assets/logos/travelperk-logo.svg" width="160px" height="60px" />
+              <span class="landing--accounting-app-name">
+                {{ 'landing.travelperkAppName' | transloco }}
+              </span>
+            </div>
           </div>
         </div>
-      </div>
-    }
+      }
 
-    @if (integrationTabs.ALL && !exposeC1Apps) {
-      <div class="tw-pb-100-px">
-        <p class="tw-my-40-px landing--divider"></p>
-        <p class="landing--section-heading">
-          {{ 'landing.lookingForSomethingElseTitle' | transloco }}
-        </p>
-        <p class="landing--section-caption" [innerHTML]="'landing.lookingForSomethingElseCaption' | transloco: { supportEmail: brandingConfig.supportEmail }">
-        </p>
-        <div class="tw-rounded-4-px tw-border-1-px">
-          <div class="landing--other-integrations">
-            <div class="landing--other-integration-app">
-              <img src="assets/logos/sage-logo.png" width="80px" height="80px" />
+      @if (integrationTabs.ALL && !exposeC1Apps) {
+        <div class="tw-pb-100-px">
+          <p class="tw-my-40-px landing--divider"></p>
+          <p class="landing--section-heading">
+            {{ 'landing.lookingForSomethingElseTitle' | transloco }}
+          </p>
+          <p class="landing--section-caption" [innerHTML]="'landing.lookingForSomethingElseCaption' | transloco: { supportEmail: brandingConfig.supportEmail }">
+          </p>
+          <div class="tw-rounded-4-px tw-border-1-px">
+            <div class="landing--other-integrations">
+              <div class="landing--other-integration-app">
+                <img src="assets/logos/sage-logo.png" width="80px" height="80px" />
+              </div>
+              <div class="landing--other-integration-app">
+                <img src="assets/logos/msdynamics-logo.png" width="150px" height="80px" />
+              </div>
+              <div class="landing--other-integration-app">
+                <img src="assets/logos/financial-force-logo.png" width="150px" height="80px" />
+              </div>
             </div>
-            <div class="landing--other-integration-app">
-              <img src="assets/logos/msdynamics-logo.png" width="150px" height="80px" />
-            </div>
-            <div class="landing--other-integration-app">
-              <img src="assets/logos/financial-force-logo.png" width="150px" height="80px" />
-            </div>
-          </div>
-          <div class="landing--other-integrations tw-pb-30-px">
-            <div class="landing--other-integration-app">
-              <img src="assets/logos/oracle-logo.png" width="120px" height="70px" />
-            </div>
-            <div class="landing--other-integration-app">
-              <img src="assets/logos/bill-dot-com-logo.png" width="120px" height="70px" />
-            </div>
-            <div class="landing--other-integration-app">
-              <img src="assets/logos/myob-logo.png" width="120px" height="70px" />
+            <div class="landing--other-integrations tw-pb-30-px">
+              <div class="landing--other-integration-app">
+                <img src="assets/logos/oracle-logo.png" width="120px" height="70px" />
+              </div>
+              <div class="landing--other-integration-app">
+                <img src="assets/logos/bill-dot-com-logo.png" width="120px" height="70px" />
+              </div>
+              <div class="landing--other-integration-app">
+                <img src="assets/logos/myob-logo.png" width="120px" height="70px" />
+              </div>
             </div>
           </div>
         </div>
-      </div>
-    }
+      }
+    </div>
   </div>
-</div>
+}

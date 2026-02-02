@@ -47,6 +47,7 @@ export class QbdComponent implements OnInit {
         [QBDOnboardingState.ADVANCED_SETTINGS]: '/integrations/qbd/onboarding/advanced_settings',
         [QBDOnboardingState.COMPLETE]: '/integrations/qbd/main'
       };
+      this.isLoading = false;
       this.router.navigateByUrl(onboardingStateComponentMap[this.workspace.onboarding_state]);
     }
   }
@@ -72,7 +73,6 @@ export class QbdComponent implements OnInit {
     this.storageService.set('QBDOnboardingState', this.workspace.onboarding_state);
     this.storageService.set('disableQBDExportButton', this.workspace.migrated_to_qbd_direct);
     this.workspaceService.syncFyleDimensions().subscribe();
-    this.isLoading = false;
     this.navigate();
   }
 
