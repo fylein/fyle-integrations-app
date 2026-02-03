@@ -3,7 +3,7 @@ import { IntacctDashboardComponent } from './intacct-dashboard.component';
 import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { AccountingExportService } from 'src/app/core/services/common/accounting-export.service';
 import { DashboardService } from 'src/app/core/services/common/dashboard.service';
-import { ExportLogService } from 'src/app/core/services/si/si-export-log/si-export-log.service';
+import { ExportLogService } from 'src/app/core/services/si/si-core/si-export-log.service';
 import { WorkspaceService } from 'src/app/core/services/common/workspace.service';
 import { UserService } from 'src/app/core/services/misc/user.service';
 import { SiExportSettingsService } from 'src/app/core/services/si/si-configuration/si-export-settings.service';

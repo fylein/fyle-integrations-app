@@ -2,7 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { GenericMappingTableComponent } from './generic-mapping-table.component';
 
-xdescribe('GenericMappingTableComponent', () => {
+describe('GenericMappingTableComponent', () => {
   let component: GenericMappingTableComponent;
   let fixture: ComponentFixture<GenericMappingTableComponent>;
 

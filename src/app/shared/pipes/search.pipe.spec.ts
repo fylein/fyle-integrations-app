@@ -11,7 +11,7 @@ const mockTranslocoService = {
   }
 } as TranslocoService;
 
-xdescribe('SearchPipe', () => {
+describe('SearchPipe', () => {
   it('create an instance', () => {
     const pipe = new SearchPipe(mockTranslocoService);
     expect(pipe).toBeTruthy();

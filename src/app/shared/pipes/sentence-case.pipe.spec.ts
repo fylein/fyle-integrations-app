@@ -14,7 +14,7 @@ const mockTranslocoService = {
   }
 } as TranslocoService;
 
-xdescribe('SentenceCasePipe', () => {
+describe('SentenceCasePipe', () => {
   it('create an instance', () => {
     const pipe = new SentenceCasePipe(mockTranslocoService);
     expect(pipe).toBeTruthy();

@@ -1,20 +1,20 @@
 import { TestBed } from '@angular/core/testing';
-import { UsiUimportUsettingsService } from './si-import-settings.service';
+import { SiImportSettingsService } from './si-import-settings.service';
 import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { provideHttpClientTesting } from '@angular/common/http/testing';
 
-describe('UsiUimportUsettingsService', () => {
-  let service: UsiUimportUsettingsService;
+describe('SiImportSettingsService', () => {
+  let service: SiImportSettingsService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
       providers: [
-        UsiUimportUsettingsService,
+        SiImportSettingsService,
         provideHttpClient(withInterceptorsFromDi()),
         provideHttpClientTesting()
       ]
     });
-    service = TestBed.inject(UsiUimportUsettingsService);
+    service = TestBed.inject(SiImportSettingsService);
   });
 
   it('should be created', () => {

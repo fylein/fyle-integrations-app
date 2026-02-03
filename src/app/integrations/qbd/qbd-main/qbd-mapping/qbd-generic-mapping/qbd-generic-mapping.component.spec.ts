@@ -14,7 +14,7 @@ import { WindowService } from 'src/app/core/services/common/window.service';
 import { getMappingResponse, getMappingStatsResponse, postMappingPayload, postMappingResponse } from './qbd-generic-mapping.fixture';
 import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
-xdescribe('QbdGenericMappingComponent', () => {
+describe('QbdGenericMappingComponent', () => {
   let component: QbdGenericMappingComponent;
   let fixture: ComponentFixture<QbdGenericMappingComponent>;
 

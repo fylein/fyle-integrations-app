@@ -1,20 +1,20 @@
 import { TestBed } from '@angular/core/testing';
-import { UxeroUonboardingService } from './xero-onboarding.service';
+import { XeroOnboardingService } from './xero-onboarding.service';
 import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { provideHttpClientTesting } from '@angular/common/http/testing';
 
-describe('UxeroUonboardingService', () => {
-  let service: UxeroUonboardingService;
+describe('XeroOnboardingService', () => {
+  let service: XeroOnboardingService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
       providers: [
-        UxeroUonboardingService,
+        XeroOnboardingService,
         provideHttpClient(withInterceptorsFromDi()),
         provideHttpClientTesting()
       ]
     });
-    service = TestBed.inject(UxeroUonboardingService);
+    service = TestBed.inject(XeroOnboardingService);
   });
 
   it('should be created', () => {

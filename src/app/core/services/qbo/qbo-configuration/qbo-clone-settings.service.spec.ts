@@ -1,20 +1,20 @@
 import { TestBed } from '@angular/core/testing';
-import { UqboUcloneUsettingsService } from './qbo-clone-settings.service';
+import { QboCloneSettingsService } from './qbo-clone-settings.service';
 import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { provideHttpClientTesting } from '@angular/common/http/testing';
 
-describe('UqboUcloneUsettingsService', () => {
-  let service: UqboUcloneUsettingsService;
+describe('QboCloneSettingsService', () => {
+  let service: QboCloneSettingsService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
       providers: [
-        UqboUcloneUsettingsService,
+        QboCloneSettingsService,
         provideHttpClient(withInterceptorsFromDi()),
         provideHttpClientTesting()
       ]
     });
-    service = TestBed.inject(UqboUcloneUsettingsService);
+    service = TestBed.inject(QboCloneSettingsService);
   });
 
   it('should be created', () => {

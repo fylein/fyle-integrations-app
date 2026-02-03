@@ -2,7 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { CloneSettingHeaderComponent } from './clone-setting-header.component';
 
-xdescribe('CloneSettingHeaderComponent', () => {
+describe('CloneSettingHeaderComponent', () => {
   let component: CloneSettingHeaderComponent;
   let fixture: ComponentFixture<CloneSettingHeaderComponent>;
 

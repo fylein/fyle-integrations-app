@@ -1,20 +1,20 @@
 import { TestBed } from '@angular/core/testing';
-import { UtravelperkUpaymentUprofileUsettingsService } from './travelperk-payment-profile-settings.service';
+import { TravelperkPaymentProfileSettingsService } from './travelperk-payment-profile-settings.service';
 import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { provideHttpClientTesting } from '@angular/common/http/testing';
 
-describe('UtravelperkUpaymentUprofileUsettingsService', () => {
-  let service: UtravelperkUpaymentUprofileUsettingsService;
+describe('TravelperkPaymentProfileSettingsService', () => {
+  let service: TravelperkPaymentProfileSettingsService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
       providers: [
-        UtravelperkUpaymentUprofileUsettingsService,
+        TravelperkPaymentProfileSettingsService,
         provideHttpClient(withInterceptorsFromDi()),
         provideHttpClientTesting()
       ]
     });
-    service = TestBed.inject(UtravelperkUpaymentUprofileUsettingsService);
+    service = TestBed.inject(TravelperkPaymentProfileSettingsService);
   });
 
   it('should be created', () => {

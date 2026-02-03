@@ -2,7 +2,7 @@ import { TestBed } from '@angular/core/testing';
 
 import { StorageService } from './storage.service';
 
-xdescribe('StorageService', () => {
+describe('StorageService', () => {
   let service: StorageService;
 
   beforeEach(() => {

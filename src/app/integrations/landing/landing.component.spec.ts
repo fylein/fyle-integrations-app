@@ -11,7 +11,7 @@ import { environment } from 'src/environments/environment';
 import { of } from 'rxjs';
 import { EventEmitter } from '@angular/core';
 
-xdescribe('LandingComponent', () => {
+describe('LandingComponent', () => {
   let component: LandingComponent;
   let fixture: ComponentFixture<LandingComponent>;
   let eventsService: EventsService;
