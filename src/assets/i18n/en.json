@@ -957,7 +957,9 @@
     "employeeFieldError": "employee field",
     "employeeRepresentationSubLabel": "Select how your employees are represented in Sage Intacct. This would help to export the expenses to the correct record in Sage Intacct",
     "selectRepresentationPlaceholder": "Select representation",
-    "autoSelectedEmployeeField": "Auto-selected based on your export module"
+    "autoSelectedEmployeeField": "Auto-selected based on your export module",
+    "importProjectBillableToPlatformInfo": "System will automatically import the default billable value of projects from Sage Intacct based on your export settings",
+    "readMoreText": "Learn more."
   },
   "businessCentralBaseMapping": {
     "autoMappingInProgress": "Auto mapping of employees may take few minutes",
@@ -2098,7 +2100,9 @@
     "continueButton": "Continue",
     "previewHeader": "Preview",
     "customFieldPreviewText": "This is how the custom field will appear to employees on their expense form.",
-    "autoImportEnabledInfo": "{{destinationField}} cannot be imported because there are {{currentDestinationCount}} active values in {{appName}} , which exceeds our 30,000 import limit. To resolve this, please remove or disable any unused values from {{appName}} and try syncing again."
+    "autoImportEnabledInfo": "{{destinationField}} cannot be imported because there are {{currentDestinationCount}} active values in {{appName}} , which exceeds our 30,000 import limit. To resolve this, please remove or disable any unused values from {{appName}} and try syncing again.",
+    "importProjectBillableToPlatformInfo": "System will automatically import the default billable value of projects from Sage Intacct based on your export settings",
+    "readMoreText": "Learn more."
   },
   "services": {
     "travelperkOnboarding": {
