@@ -1,7 +1,13 @@
-<app-onboarding-steppers [onboardingSteps]="onboardingSteps" [disableConfigurationStepsIfTokenInvalid]="!isNetsuiteCredentialsValid"></app-onboarding-steppers>
+@if (isLoading) {
+  <div class="tw-flex tw-justify-center tw-items-center tw-h-full">
+    <app-loader></app-loader>
+  </div>
+} @else {
+  <app-onboarding-steppers [onboardingSteps]="onboardingSteps" [disableConfigurationStepsIfTokenInvalid]="!isNetsuiteCredentialsValid"></app-onboarding-steppers>
 @if (!isNetsuiteCredentialsValid) {
   <app-netsuite-connector (setupConnectionStatus)="setupConnectionStatus($event)"></app-netsuite-connector>
 }
 @if (isNetsuiteCredentialsValid) {
   <app-netsuite-subsidiary-mapping></app-netsuite-subsidiary-mapping>
+}
 }

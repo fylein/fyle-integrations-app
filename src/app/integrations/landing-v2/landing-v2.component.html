@@ -1,117 +1,122 @@
-<div class="tw-text-slightly-normal-text-color tw-py-8 tw-px-6">
-  <div class="landing-v2--container">
-    <header>
-      <h3 class="landing-v2--section-heading">
-        {{ 'landingV2.integrationsList' | transloco }}
-      </h3>
+@if (isLoading) {
+  <div class="tw-flex tw-justify-center tw-items-center tw-h-full">
+      <app-loader></app-loader>
+  </div>
+} @else {
+  <div class="tw-text-slightly-normal-text-color tw-py-8 tw-px-6">
+    <div class="landing-v2--container">
+      <header>
+        <h3 class="landing-v2--section-heading">
+          {{ 'landingV2.integrationsList' | transloco }}
+        </h3>
 
-      <p class="landing-v2--section-caption" [innerHTML]="'landingV2.integrationsDescription' | transloco:{ brandName: brandingConfig.brandName }">
-      </p>
-    </header>
-    @if (!exposeC1Apps && (org.allow_bamboohr || org.allow_travelperk)) {
-      <div class="tw-flex tw-text-14-px tw-border-y tw-border-separator">
-        <div class="landing-v2--tab" [ngClass]="{'tw-text-menu-inactive-text-color': !integrationTabs.ALL}"
-          (click)="switchView(IntegrationsView.ALL)">
-          {{ 'landingV2.tabAll' | transloco }}
-          @if (integrationTabs.ALL) {
-            <p class="landing-v2--active-tag"></p>
-          }
-        </div>
-        <div class="landing-v2--tab" [ngClass]="{'tw-text-menu-inactive-text-color': !integrationTabs.ACCOUNTING}"
-          (click)="switchView(IntegrationsView.ACCOUNTING)">
-          {{ 'landingV2.tabAccounting' | transloco }}
-          @if (integrationTabs.ACCOUNTING) {
-            <p class="landing-v2--active-tag"></p>
-          }
-        </div>
-        @if (org.allow_bamboohr) {
+        <p class="landing-v2--section-caption" [innerHTML]="'landingV2.integrationsDescription' | transloco:{ brandName: brandingConfig.brandName }">
+        </p>
+      </header>
+      @if (!exposeC1Apps && (org.allow_bamboohr || org.allow_travelperk)) {
+        <div class="tw-flex tw-text-14-px tw-border-y tw-border-separator">
+          <div class="landing-v2--tab" [ngClass]="{'tw-text-menu-inactive-text-color': !integrationTabs.ALL}"
+            (click)="switchView(IntegrationsView.ALL)">
+            {{ 'landingV2.tabAll' | transloco }}
+            @if (integrationTabs.ALL) {
+              <p class="landing-v2--active-tag"></p>
+            }
+          </div>
+          <div class="landing-v2--tab" [ngClass]="{'tw-text-menu-inactive-text-color': !integrationTabs.ACCOUNTING}"
+            (click)="switchView(IntegrationsView.ACCOUNTING)">
+            {{ 'landingV2.tabAccounting' | transloco }}
+            @if (integrationTabs.ACCOUNTING) {
+              <p class="landing-v2--active-tag"></p>
+            }
+          </div>
+          @if (org.allow_bamboohr) {
           <div class="landing-v2--tab" [ngClass]="{'tw-text-menu-inactive-text-color': !integrationTabs.HRMS}"
-            (click)="switchView(IntegrationsView.HRMS)">
-            {{ 'landingV2.tabHRMS' | transloco }}
-            @if (integrationTabs.HRMS) {
-              <p class="landing-v2--active-tag"></p>
-            }
-          </div>
-        }
+              (click)="switchView(IntegrationsView.HRMS)">
+              {{ 'landingV2.tabHRMS' | transloco }}
+              @if (integrationTabs.HRMS) {
+                <p class="landing-v2--active-tag"></p>
+              }
+            </div>
+          }
         @if (org.allow_travelperk) {
-          <div class="landing-v2--tab"
-            [ngClass]="{'tw-text-menu-inactive-text-color': !integrationTabs.TRAVEL}"
-            (click)="switchView(IntegrationsView.TRAVEL)">
-            {{ 'landingV2.tabTravel' | transloco }}
-            @if (integrationTabs.TRAVEL) {
-              <p class="landing-v2--active-tag"></p>
-            }
+            <div class="landing-v2--tab"
+              [ngClass]="{'tw-text-menu-inactive-text-color': !integrationTabs.TRAVEL}"
+              (click)="switchView(IntegrationsView.TRAVEL)">
+              {{ 'landingV2.tabTravel' | transloco }}
+              @if (integrationTabs.TRAVEL) {
+                <p class="landing-v2--active-tag"></p>
+              }
+            </div>
+          }
+        </div>
+      }
+
+      <div
+        class="tw-grid tw-grid-cols-2 md:tw-grid-cols-3 lg:tw-grid-cols-4 xl:tw-grid-cols-5 tw-gap-4 tw-justify-items-stretch">
+        @if (isAppShown('INTACCT')) {
+          <div class="landing-v2--accounting-app"
+            (click)="openAccountingIntegrationApp(AccountingIntegrationApp.SAGE_INTACCT)">
+            <div class="tw-flex tw-justify-between tw-items-center">
+              <img src="assets/logos/intacct-logo-new.png" />
+              @if (isAppConnected('INTACCT')) {
+                <app-badge [text]="'landingV2.statusConnected' | transloco" [theme]="ThemeOption.SUCCESS"></app-badge>
+              } @else {
+                <button class="btn-connect">{{ 'landingV2.buttonConnect' | transloco }}</button>
+              }
+            </div>
+            <div>
+              <span class="landing-v2--accounting-app-name">
+                {{ 'landingV2.sageIntacct' | transloco }}
+              </span>
+              <span class="landing-v2--accounting-app-type">
+                {{ 'landingV2.categoryAccounting' | transloco }}
+              </span>
+            </div>
           </div>
         }
-      </div>
-    }
 
-    <div
-      class="tw-grid tw-grid-cols-2 md:tw-grid-cols-3 lg:tw-grid-cols-4 xl:tw-grid-cols-5 tw-gap-4 tw-justify-items-stretch">
-      @if (isAppShown('INTACCT')) {
-        <div class="landing-v2--accounting-app"
-          (click)="openAccountingIntegrationApp(AccountingIntegrationApp.SAGE_INTACCT)">
-          <div class="tw-flex tw-justify-between tw-items-center">
-            <img src="assets/logos/intacct-logo-new.png" />
-            @if (isAppConnected('INTACCT')) {
-              <app-badge [text]="'landingV2.statusConnected' | transloco" [theme]="ThemeOption.SUCCESS"></app-badge>
-            } @else {
-              <button class="btn-connect">{{ 'landingV2.buttonConnect' | transloco }}</button>
-            }
-          </div>
-          <div>
-            <span class="landing-v2--accounting-app-name">
-              {{ 'landingV2.sageIntacct' | transloco }}
-            </span>
-            <span class="landing-v2--accounting-app-type">
-              {{ 'landingV2.categoryAccounting' | transloco }}
-            </span>
-          </div>
-        </div>
-      }
-
-      @if (isAppShown('SAGE300')) {
-        <div class="landing-v2--accounting-app"
-          (click)="openInAppIntegration(InAppIntegration.SAGE300)">
-          <div class="tw-flex tw-justify-between tw-items-center">
-            <img src="assets/logos/sage300-logo-new.png" />
-            @if (isAppConnected('SAGE300')) {
-              <app-badge [text]="'landingV2.statusConnected' | transloco" [theme]="ThemeOption.SUCCESS"></app-badge>
-            } @else {
-              <button class="btn-connect">{{ 'landingV2.buttonConnect' | transloco }}</button>
-            }
-          </div>
-          <span class="landing-v2--accounting-app-name tw-items-start tw-gap-4">
-            <div>
-              {{ 'landingV2.sage300CRE' | transloco }}
-              <div class="landing-v2--accounting-app-type">{{ 'landingV2.categoryAccounting' | transloco }}</div>
+        @if (isAppShown('SAGE300')) {
+          <div class="landing-v2--accounting-app"
+            (click)="openInAppIntegration(InAppIntegration.SAGE300)">
+            <div class="tw-flex tw-justify-between tw-items-center">
+              <img src="assets/logos/sage300-logo-new.png" />
+              @if (isAppConnected('SAGE300')) {
+                <app-badge [text]="'landingV2.statusConnected' | transloco" [theme]="ThemeOption.SUCCESS"></app-badge>
+              } @else {
+                <button class="btn-connect">{{ 'landingV2.buttonConnect' | transloco }}</button>
+              }
             </div>
-          </span>
-        </div>
-      }
-
-      @if (isAppShown('SAGE50')) {
-        <div class="landing-v2--accounting-app"
-          (click)="openInAppIntegration(InAppIntegration.SAGE50)">
-          <div class="tw-flex tw-justify-between tw-items-center">
-            <img src="assets/logos/sage50-logo.svg" />
-            @if (isAppConnected('SAGE50')) {
-              <app-badge [text]="'landingV2.statusConnected' | transloco" [theme]="ThemeOption.SUCCESS"></app-badge>
-            } @else {
-              <button class="btn-connect">{{ 'landingV2.buttonConnect' | transloco }}</button>
-            }
-          </div>
-          <span class="landing-v2--accounting-app-name tw-items-start">
-            <div class="tw-grow">
-              <div class="tw-flex tw-justify-between">
-                <span>{{ 'landingV2.sage50' | transloco }}</span>
-                <app-badge [text]="'landingV2.beta' | transloco" [theme]="ThemeOption.DARK"></app-badge>
+            <span class="landing-v2--accounting-app-name tw-items-start tw-gap-4">
+              <div>
+                {{ 'landingV2.sage300CRE' | transloco }}
+                <div class="landing-v2--accounting-app-type">{{ 'landingV2.categoryAccounting' | transloco }}</div>
               </div>
-              <div class="landing-v2--accounting-app-type">{{ 'landingV2.categoryAccounting' | transloco }}</div>
+            </span>
+          </div>
+        }
+
+        @if (isAppShown('SAGE50')) {
+          <div class="landing-v2--accounting-app"
+            (click)="openInAppIntegration(InAppIntegration.SAGE50)">
+            <div class="tw-flex tw-justify-between tw-items-center">
+              <img src="assets/logos/sage50-logo.svg" />
+              @if (isAppConnected('SAGE50')) {
+                <app-badge [text]="'landingV2.statusConnected' | transloco" [theme]="ThemeOption.SUCCESS"></app-badge>
+              } @else {
+                <button class="btn-connect">{{ 'landingV2.buttonConnect' | transloco }}</button>
+              }
             </div>
-          </span>
-        </div>
-      }
+            <span class="landing-v2--accounting-app-name tw-items-start">
+              <div class="tw-grow">
+                <div class="tw-flex tw-justify-between">
+                  <span>{{ 'landingV2.sage50' | transloco }}</span>
+                  <app-badge [text]="'landingV2.beta' | transloco" [theme]="ThemeOption.DARK"></app-badge>
+                </div>
+                <div class="landing-v2--accounting-app-type">{{ 'landingV2.categoryAccounting' | transloco }}</div>
+              </div>
+            </span>
+          </div>
+        }
 
       @if (isAppShown('BUSINESS_CENTRAL')) {
         <div class="landing-v2--accounting-app"
@@ -147,27 +152,6 @@
                 {{ 'landingV2.categoryAccounting' | transloco }}
               </span>
             </div>
-          </div>
-        </div>
-      }
-      @if (isAppShown('QBD')) {
-        <div class="landing-v2--accounting-app"
-          (click)="openInAppIntegration(InAppIntegration.QBD)">
-          <div class="tw-flex tw-justify-between tw-items-center">
-            <img src="assets/logos/quickbooks-logo.png" class="!tw-h-[30.7px]" />
-            @if (isAppConnected('QBD')) {
-              <app-badge [text]="'landingV2.statusConnected' | transloco" [theme]="ThemeOption.SUCCESS"></app-badge>
-            } @else {
-              <button class="btn-connect">{{ 'landingV2.buttonConnect' | transloco }}</button>
-            }
-          </div>
-          <div>
-            <span class="landing-v2--accounting-app-name">
-              {{ 'landingV2.quickbooksDesktopIIF' | transloco }}
-            </span>
-            <span class="landing-v2--accounting-app-type">
-              {{ 'landingV2.categoryAccounting' | transloco }}
-            </span>
           </div>
         </div>
       }
@@ -234,51 +218,52 @@
         </div>
       }
 
-      @if (isAppShown('BAMBOO_HR')) {
-        <div>
-          <div class="landing-v2--accounting-app" (click)="openInAppIntegration(InAppIntegration.BAMBOO_HR)">
-            <div class="tw-flex tw-justify-between tw-items-center">
-              <img src="assets/logos/bamboo-hr-logo.png" />
-              @if (isAppConnected('BAMBOO_HR')) {
-                <app-badge [text]="'landingV2.statusConnected' | transloco" [theme]="ThemeOption.SUCCESS"></app-badge>
-              } @else {
-                <button class="btn-connect">{{ 'landingV2.buttonConnect' | transloco }}</button>
-              }
-            </div>
-            <div>
-              <span class="landing-v2--accounting-app-name">
-                {{ 'landingV2.bambooHR' | transloco }}
-              </span>
-              <span class="landing-v2--accounting-app-type">
-                {{ 'landingV2.categoryHRMS' | transloco }}
-              </span>
+        @if (isAppShown('BAMBOO_HR')) {
+          <div>
+            <div class="landing-v2--accounting-app" (click)="openInAppIntegration(InAppIntegration.BAMBOO_HR)">
+              <div class="tw-flex tw-justify-between tw-items-center">
+                <img src="assets/logos/bamboo-hr-logo.png" />
+                @if (isAppConnected('BAMBOO_HR')) {
+                  <app-badge [text]="'landingV2.statusConnected' | transloco" [theme]="ThemeOption.SUCCESS"></app-badge>
+                } @else {
+                  <button class="btn-connect">{{ 'landingV2.buttonConnect' | transloco }}</button>
+                }
+              </div>
+              <div>
+                <span class="landing-v2--accounting-app-name">
+                  {{ 'landingV2.bambooHR' | transloco }}
+                </span>
+                <span class="landing-v2--accounting-app-type">
+                  {{ 'landingV2.categoryHRMS' | transloco }}
+                </span>
+              </div>
             </div>
           </div>
-        </div>
-      }
+        }
 
-      @if (isAppShown('TRAVELPERK')) {
-        <div>
-          <div class="landing-v2--accounting-app" (click)="openInAppIntegration(InAppIntegration.TRAVELPERK)">
-            <div class="tw-flex tw-justify-between tw-items-center">
-              <img src="assets/logos/travelperk-logo.png" class="tw-py-[5px]" />
-              @if (isAppConnected('TRAVELPERK')) {
-                <app-badge [text]="'landingV2.statusConnected' | transloco" [theme]="ThemeOption.SUCCESS"></app-badge>
-              } @else {
-                <button class="btn-connect">{{ 'landingV2.buttonConnect' | transloco }}</button>
-              }
-            </div>
-            <div>
-              <span class="landing-v2--accounting-app-name">
-                {{ 'landingV2.travelperk' | transloco }}
-              </span>
-              <span class="landing-v2--accounting-app-type">
-                {{ 'landingV2.categoryTravel' | transloco }}
-              </span>
+        @if (isAppShown('TRAVELPERK')) {
+          <div>
+            <div class="landing-v2--accounting-app" (click)="openInAppIntegration(InAppIntegration.TRAVELPERK)">
+              <div class="tw-flex tw-justify-between tw-items-center">
+                <img src="assets/logos/travelperk-logo.png" class="tw-py-[5px]" />
+                @if (isAppConnected('TRAVELPERK')) {
+                  <app-badge [text]="'landingV2.statusConnected' | transloco" [theme]="ThemeOption.SUCCESS"></app-badge>
+                } @else {
+                  <button class="btn-connect">{{ 'landingV2.buttonConnect' | transloco }}</button>
+                }
+              </div>
+              <div>
+                <span class="landing-v2--accounting-app-name">
+                  {{ 'landingV2.travelperk' | transloco }}
+                </span>
+                <span class="landing-v2--accounting-app-type">
+                  {{ 'landingV2.categoryTravel' | transloco }}
+                </span>
+              </div>
             </div>
           </div>
-        </div>
-      }
+        }
+      </div>
     </div>
   </div>
-</div>
+}

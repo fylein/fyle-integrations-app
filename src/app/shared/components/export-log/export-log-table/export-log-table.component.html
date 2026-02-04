@@ -25,8 +25,8 @@
       <tr class="clickable-row" (click)="displayChildTable(rowData)">
         @if (!isDashboardFailed) {
           <td>
-            <p class="tw-text-14-px tw-font-400 tw-text-text-secondary">{{rowData.exportedAt | date}}</p>
-            <span class="tw-font-400 !tw-text-12-px tw-text-text-muted">{{rowData.exportedAt | date : "hh:mm a"}}</span>
+            <p class="tw-text-14-px tw-font-400 tw-text-text-secondary">{{rowData.exportedAt | orgDate }}</p>
+            <span class="tw-font-400 !tw-text-12-px tw-text-text-muted">{{rowData.exportedAt | orgTime }}</span>
           </td>
         }
         <td>

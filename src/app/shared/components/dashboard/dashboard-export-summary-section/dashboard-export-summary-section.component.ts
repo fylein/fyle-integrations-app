@@ -128,8 +128,8 @@ export class DashboardExportSummarySectionComponent implements OnInit {
   showExportLog(status: AccountingExportStatus) {
     this.filteredAccountingExports = [];
     this.isExportLogFetchInProgress = true;
-    this.exportLogHeader = status === AccountingExportStatus.COMPLETE ? 'Successful' : this.translocoService.translate('dashboard.exportLogHeader');
-    this.exportLogSubHeader = status === AccountingExportStatus.COMPLETE ? 'These expenses have been successfully exported to your ' + this.appName +'.' : this.translocoService.translate('dashboard.exportLogSubHeader');
+    this.exportLogHeader = status === AccountingExportStatus.COMPLETE ? this.translocoService.translate('dashboard.exportLogHeaderSuccessful') : this.translocoService.translate('dashboard.exportLogHeaderFailed');
+    this.exportLogSubHeader = status === AccountingExportStatus.COMPLETE ? this.translocoService.translate('dashboard.exportLogSubHeaderSuccessful', { appName: this.appName }) : this.translocoService.translate('dashboard.exportLogSubHeaderFailed', { appName: this.appName });
     this.setupAccountingExports(500, 0, status);
     this.isExportLogVisible = true;
   }

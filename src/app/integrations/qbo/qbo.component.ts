@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, Inject, OnInit, OnDestroy } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { MinimalUser } from 'src/app/core/models/db/user.model';
 import { AppUrl, QBOOnboardingState } from 'src/app/core/models/enum/enum.model';
@@ -11,6 +11,9 @@ import { WorkspaceService } from 'src/app/core/services/common/workspace.service
 import { QboHelperService } from 'src/app/core/services/qbo/qbo-core/qbo-helper.service';
 import { QboAuthService } from 'src/app/core/services/qbo/qbo-core/qbo-auth.service';
 import { AuthService } from 'src/app/core/services/common/auth.service';
+import { LoadingService } from 'src/app/core/services/common/loading.service';
+import { concatMap, takeUntil } from 'rxjs';
+import { Subject } from 'rxjs';
 
 @Component({
     selector: 'app-qbo',
@@ -18,7 +21,7 @@ import { AuthService } from 'src/app/core/services/common/auth.service';
     styleUrls: ['./qbo.component.scss'],
     standalone: false
 })
-export class QboComponent implements OnInit {
+export class QboComponent implements OnInit, OnDestroy {
 
   user: MinimalUser = this.userService.getUserProfile();
 
@@ -26,7 +29,13 @@ export class QboComponent implements OnInit {
 
   isLoading: boolean = true;
 
+  private isComponentLoading: boolean = true;
+
+  private isGuardLoading: boolean = false;
+
   windowReference: Window;
+
+  private destroy$ = new Subject<void>();
 
   constructor(
     private helperService: HelperService,
@@ -38,13 +47,16 @@ export class QboComponent implements OnInit {
     private userService: IntegrationsUserService,
     private workspaceService: WorkspaceService,
     private windowService: WindowService,
-    private authService: AuthService
+    private authService: AuthService,
+    private loadingService: LoadingService
   ) {
     this.windowReference = this.windowService.nativeWindow;
   }
 
   private navigate(): void {
     const pathName = this.windowReference.location.pathname;
+    this.isComponentLoading = false;
+    this.updateLoadingState();
     if (pathName === '/integrations/qbo') {
       const onboardingStateComponentMap = {
         [QBOOnboardingState.CONNECTION]: '/integrations/qbo/onboarding/landing',
@@ -58,14 +70,21 @@ export class QboComponent implements OnInit {
     }
   }
 
+  private updateLoadingState(): void {
+    this.isLoading = this.isComponentLoading || this.isGuardLoading;
+  }
+
   private storeWorkspaceAndNavigate(workspace: QBOWorkspace): void {
     this.workspace = workspace;
     this.storageService.set('workspaceId', this.workspace.id);
     this.storageService.set('onboarding-state', this.workspace.onboarding_state);
-    this.qboHelperService.syncFyleDimensions().subscribe();
-    this.qboHelperService.syncQBODimensions().subscribe();
-    this.isLoading = false;
-    this.navigate();
+    this.qboHelperService.syncFyleDimensions().pipe(
+      concatMap(() => this.qboHelperService.syncQBODimensions())
+    ).subscribe(() => {
+      this.navigate();
+    }, () => {
+      this.navigate();
+    });
   }
 
   private setupWorkspace(): void {
@@ -99,6 +118,19 @@ export class QboComponent implements OnInit {
 
   ngOnInit(): void {
     this.handleAuthParameters();
+
+    // Subscribe to loading service to show/hide loader during guard checks
+    this.loadingService.loading$.pipe(
+      takeUntil(this.destroy$)
+    ).subscribe(isLoading => {
+      this.isGuardLoading = isLoading;
+      this.updateLoadingState();
+    });
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 
 }

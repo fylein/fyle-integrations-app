@@ -11,10 +11,11 @@ import { WindowService } from 'src/app/core/services/common/window.service';
 import { WorkspaceService } from 'src/app/core/services/common/workspace.service';
 import { AppcuesService } from 'src/app/core/services/integration/appcues.service';
 import { QbdDirectHelperService } from 'src/app/core/services/qbd-direct/qbd-direct-core/qbd-direct-helper.service';
+import { SharedModule } from 'src/app/shared/shared.module';
 
 @Component({
     selector: 'app-qbd-direct',
-    imports: [RouterModule],
+    imports: [RouterModule, SharedModule],
     templateUrl: './qbd-direct.component.html',
     styleUrl: './qbd-direct.component.scss'
 })
@@ -59,6 +60,7 @@ export class QbdDirectComponent implements OnInit {
         [QbdDirectOnboardingState.ADVANCED_SETTINGS]: '/integrations/qbd_direct/onboarding/advanced_settings',
         [QbdDirectOnboardingState.COMPLETE]: '/integrations/qbd_direct/main'
       };
+      this.isLoading = false;
       this.router.navigateByUrl(onboardingStateComponentMap[this.workspace.onboarding_state]);
     }
   }
@@ -70,7 +72,6 @@ export class QbdDirectComponent implements OnInit {
     this.appcuesService.initialiseAppcues(AppName.QBD_DIRECT, this.workspace.created_at);
     this.workspaceService.importFyleAttributes(false).subscribe();
     this.qbdDirectHelperService.importQBDAttributes(false).subscribe();
-    this.isLoading = false;
     this.navigate();
   }
 

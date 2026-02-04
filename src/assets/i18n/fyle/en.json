@@ -435,11 +435,12 @@
     "categoryMappingErrorText": "Category mapping errors",
     "qboErrorText": "errors",
     "qboErrorDialogHeaderText": "error",
-    "exportLogHeader": "Failed",
-    "exportLogSubHeader": "These expenses have failed to export due to some errors. Resolve the errors on your dashboard to and try to re-export them again",
+    "exportLogHeaderFailed": "Failed",
+    "exportLogSubHeaderFailed": "These expenses have failed to export due to some errors. Resolve the errors on your dashboard to and try to re-export them again",
     "dashboardExportZeroStateHeaderText": "Looks like you have",
     "dashboardExportZeroStateSubHeaderText": "0 expenses to export right now",
-    "viewText": "View"
+    "viewText": "View",
+    "exportLogHeaderSuccessful": "Successful"
   },
   "exportLog": {
     "tableHeaders": {
@@ -535,5 +536,19 @@
     "selectExportStatePlaceholder": "Select export state",
     "selectExpenseGroupingPlaceholder": "Select expense grouping",
     "selectDatePlaceholder": "Select date"
+  },
+  "onboardingStepper": {
+    "configureSettingsDescription": "Configure the following settings to set up your integration"
+  },
+  "dashboardExportSection": {
+    "noNewExpensesToExportV1Prefix": "No new expenses to export right now.",
+    "exportingExpensesToApp": "Exporting {{processedCount}} of {{totalCount}} {totalCount, plural, one {expense} other {expenses}} to your {{appName}} account",
+    "exportSummary": "{newCount, plural, one {# new expense} other {# new expenses}}, {failedCount, plural, one {# previously failed expense} other {# previously failed expenses}}.",
+    "expensesReadyToExport": "{count, plural, one {# expense} other {# expenses}} ready to export",
+    "exportInProgressMessage": "This may take a few minutes...",
+    "exportingButtonText": "Exporting"
+  },
+  "exportLogChildTableDialog": {
+    "dialogHeader": "Expenses"
   }
 }

@@ -1,3 +1,4 @@
 <div [formGroup]="form">
-    <p-toggleswitch [formControlName]="formControllerName" [disabled]="isDisabled"></p-toggleswitch>
+    <p-toggleswitch [formControlName]="formControllerName" [disabled]="isDisabled"
+    (onChange)="changed.emit(form.get(formControllerName)?.value)"></p-toggleswitch>
 </div>

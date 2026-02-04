@@ -4,7 +4,8 @@
     "projects/**/*"
   ],
   "plugins": [
-    "@fyle"
+    "@fyle",
+    "local-rules"
   ],
   "overrides": [
     {
@@ -160,7 +161,9 @@
             "ignoredPrefixes": ["qbd_direct.", "netsuite.", "xero.", "intacct.", "configuration.", "dashboard.", "dashboardTokenExpired.", "exportLog.", "mapping.", "landing.", "common.", "integrations.", "pipes."]
           }
         ],
-        "@fyle/no-hardcoded-strings": "warn"
+        "@fyle/no-hardcoded-strings": "warn",
+        "local-rules/no-angular-date-pipe": "error",
+        "local-rules/no-angular-currency-pipe": "error"
       }
     },
     {

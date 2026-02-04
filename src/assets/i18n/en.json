@@ -136,7 +136,6 @@
     "endDatePlaceholder": "End date"
   },
   "exportLogChildTableDialog": {
-    "dialogHeader": "Expenses",
     "expenseIdHeader": "Expense ID",
     "claimNumberHeader": "Report ID",
     "merchantHeader": "Merchant",
@@ -250,18 +249,12 @@
     "employeeOrVendorLabel": "Employee/Vendor"
   },
   "dashboardExportSection": {
-    "exportingExpensesToApp": "Exporting {{processedCount}} of {{totalCount}} {totalCount, plural, one {expense} other {expenses}} to your {{appName}} account",
-    "expensesReadyToExport": "{count, plural, one {# expense} other {# expenses}} ready to export",
     "exportTooltip": "All expenses that have reached your export state in {{brandName}} will be automatically imported and kept ready for export.",
-    "noNewExpensesToExportV1Prefix": "No new expenses to export right now.",
     "expensesAvailableHereForExport": "Once expenses are {{importStates}}, they'll automatically be available here for export.",
     "expensesAvailableInDashboard": "Once expenses are {{importStates}}, they'll automatically be available in the accounting dashboard.",
-    "exportInProgressMessage": "This may take a few minutes...",
     "noExpensesToExport": "There are no expenses to export right now. Once expenses are {{importStates}}, they'll be available here for export.",
-    "exportSummary": "{newCount, plural, one {# new expense} other {# new expenses}}, {failedCount, plural, one {# previously failed expense} other {# previously failed expenses}}.",
     "exportSummaryZeroFailed": "{newCount, plural, one {# new expense} other {# new expenses}}, 0 previously failed expense.",
     "exportButtonText": "Export",
-    "exportingButtonText": "Exporting",
     "qbdInfoText": "Click ‘Update Selected’ in QuickBooks Web Connector to sync your expenses immediately",
     "orSeparator": " or ",
     "exportingExpensesToAppSage50": "Processing {{processedCount}} of {{totalCount}} expenses for CSV export"
@@ -403,7 +396,6 @@
     "zeroStateAltText": "Zero state"
   },
   "onboardingStepper": {
-    "configureSettingsDescription": "Configure the following settings to set up your integration",
     "cloneSettingsDescription": "Fill in the below fields to complete your integration set up"
   },
   "optionalField": {
@@ -671,7 +663,8 @@
     "yesButtonText": "Yes",
     "createCustomField": "Create a custom field",
     "clonedSettingsSuccess": "Cloned settings successfully",
-    "failedToCloneSettings": "Failed to clone settings"
+    "failedToCloneSettings": "Failed to clone settings",
+    "autoImportEnabledInfo": "{{destinationField}} cannot be imported because there are {{currentDestinationCount}} active values in {{appName}} , which exceeds our 30,000 import limit. To resolve this, please remove or disable any unused values from {{appName}} and try syncing again."
   },
   "qboImportSettings": {
     "importCodesAndNames": "Import codes + names",
@@ -1686,7 +1679,8 @@
   "qbdDirectDataSync": {
     "stepNumber": "3",
     "title": "Data sync",
-    "loadingState": "Loading"
+    "loadingState": "Loading",
+    "TotalText": "Total"
   },
   "qbdDirectOnboardingPreRequisite": {
     "done": "Done",
@@ -2733,7 +2727,13 @@
         "reimbursable": {
           "disabledCCCEmployeeMappingSubLabel": "How employees are represented in QuickBooks Desktop is auto-configured based on your reimbursable export configuration."
         }
+      },
+      "advancedSettings": {
+        "topLevelMemoStructurePreviewLabel": "Preview"
       }
     }
+  },
+  "dashboard": {
+    "exportLogSubHeaderSuccessful": "These expenses have been successfully exported to your {{ appName }}."
   }
 }

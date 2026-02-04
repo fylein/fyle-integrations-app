@@ -52,6 +52,8 @@ export class ConfigurationImportFieldComponent implements OnInit {
 
   @Input() importCodeFieldConfig: any;
 
+  @Input() allowAutoImportLimitFeature: boolean = false;
+
   @Output() showWarningForDependentFields = new EventEmitter();
 
   @Output() importCodeEnabled = new EventEmitter<[boolean, string, number]>();

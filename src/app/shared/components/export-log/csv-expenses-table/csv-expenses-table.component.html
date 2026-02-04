@@ -17,8 +17,8 @@
         @if (isSkippedExpenses) {
           <!-- Skipped On -->
           <td>
-            <p class="tw-font-400 tw-text-text-secondary">{{expense.updated_at | date}}</p>
-            <span class="tw-font-400 !tw-text-12-px tw-text-text-muted">{{expense.updated_at | date : "hh:mm a"}}</span>
+            <p class="tw-font-400 tw-text-text-secondary">{{expense.updated_at | orgDate}}</p>
+            <span class="tw-font-400 !tw-text-12-px tw-text-text-muted">{{expense.updated_at | orgTime}}</span>
           </td>
         }
         <!-- Expense ID -->
@@ -38,12 +38,12 @@
         </td>
         <!-- Amount -->
         <td>
-          <p class="tw-font-400 tw-text-text-secondary">{{expense.amount | currency}}</p>
+          <p class="tw-font-400 tw-text-text-secondary">{{expense.amount | orgCurrency}}</p>
           <span class="tw-font-400 !tw-text-12-px tw-text-text-muted">{{expense.expenseType}}</span>
         </td>
         <!-- Spend Date -->
         <td>
-          <p class="tw-font-400 tw-text-text-secondary">{{expense.spent_at | date}}</p>
+          <p class="tw-font-400 tw-text-text-secondary">{{expense.spent_at | orgDate}}</p>
         </td>
         <!-- Report Details -->
         <td>

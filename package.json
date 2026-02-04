@@ -45,6 +45,7 @@
     "@sentry/cli": "^2.40.0",
     "@types/node": "^16.11.7",
     "@types/papaparse": "^5.3.16",
+    "currency.js": "^2.0.4",
     "eslint": "^8.57.0",
     "eslint-plugin-import": "^2.29.1",
     "n": "^9.2.3",
@@ -70,6 +71,7 @@
     "@typescript-eslint/parser": "^8.20.0",
     "autoprefixer": "^10.4.13",
     "esbuild": "0.25.12",
+    "eslint-plugin-local-rules": "^3.0.2",
     "husky": "^8.0.3",
     "jasmine-core": "~4.3.0",
     "karma": "~6.4.0",
@@ -90,6 +92,9 @@
     "vite": "5.4.21",
     "webpack-dev-server": "^5.2.0",
     "rxjs": "^7.8.1",
+    "tar": "^7.5.7",
+    "undici": "^7.18.2",
+    "lodash": "^4.17.23",
     "@angular-devkit/build-angular": {
       "@babel/runtime": "^7.26.10"
     },

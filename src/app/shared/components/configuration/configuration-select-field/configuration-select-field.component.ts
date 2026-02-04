@@ -33,7 +33,7 @@ export class ConfigurationSelectFieldComponent implements OnInit, OnChanges {
 
   @Input() form: FormGroup;
 
-  @Input() iconPath: string;
+  @Input() iconPath: string | null;
 
   @Input() label: string;
 

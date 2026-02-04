@@ -38,7 +38,7 @@ export class QbdDirectOnboardingPreRequisiteComponent {
 
   saveInProgress: boolean = false;
 
-  isContinueDisabled: boolean = true;
+  isContinueDisabled: boolean;
 
   appName = AppName.QBD_DIRECT;
 
@@ -59,6 +59,8 @@ export class QbdDirectOnboardingPreRequisiteComponent {
     private translocoService: TranslocoService,
     private onboardingService: QbdDirectOnboardingService
   ) {
+    this.isContinueDisabled = brandingFeatureConfig.qbdDirect.showMarkAsDone;
+
     this.preRequisitesteps = [
       {
         id: 1,
