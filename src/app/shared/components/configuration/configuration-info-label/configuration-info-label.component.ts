@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { brandingStyle } from 'src/app/branding/branding-config';
+import { WindowService } from 'src/app/core/services/common/window.service';
 
 @Component({
     selector: 'app-configuration-info-label',
@@ -27,10 +28,20 @@ export class ConfigurationInfoLabelComponent implements OnInit {
 
   @Input() customBackgroundColorClass: any;
 
-  constructor() { }
+  @Input() readMoreLink: string;
+
+  @Input() readMoreText: string;
+
+  constructor(
+    private windowService: WindowService
+  ) { }
 
   clearSearch() {
     this.closeInfoLabel.emit(true);
+  }
+
+  readMoreClick(): void {
+    this.windowService.openInNewTab(this.readMoreLink);
   }
 
   ngOnInit(): void {
