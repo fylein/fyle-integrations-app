@@ -101,7 +101,7 @@ export class Sage300Component implements OnInit, OnDestroy {
     ).subscribe(() => {
       this.routeBasedOnTokenStatus();
     }, () => {
-      this.isLoading = false;
+      this.routeBasedOnTokenStatus();
     });
   }
 
