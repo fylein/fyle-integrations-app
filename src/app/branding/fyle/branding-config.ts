@@ -116,7 +116,8 @@ export const fyleKbArticles: KbArticle[string] = {
             IMPORT_SETTING: `${brandingConfig.helpArticleDomain}/en/articles/8394683-setting-up-sage-intacct-integration#h_a75fae54f4`,
             ADVANCED_SETTING: `${brandingConfig.helpArticleDomain}/en/articles/8394683-setting-up-sage-intacct-integration#h_2a81c02bd0`,
             SKIP_EXPORT: `${brandingConfig.helpArticleDomain}/en/articles/7882821-how-to-skip-exporting-specific-expenses-from-fyle-to-sage-intacct`,
-            DFV_READ_MORE: `${brandingConfig.helpArticleDomain}/en/articles/7882821-how-to-skip-exporting-specific-expenses-from-fyle-to-sage-intacct`
+            DFV_READ_MORE: `${brandingConfig.helpArticleDomain}/en/articles/7882821-how-to-skip-exporting-specific-expenses-from-fyle-to-sage-intacct`,
+            DEFAULT_BILLABLE_FIELD_BASED_ON_PROJECT_READ_MORE: `${brandingConfig.helpArticleDomain}/en/articles/7882821-how-to-skip-exporting-specific-expenses-from-fyle-to-sage-intacct`
         },
         NETSUITE: {
             CONNECTOR: `${brandingConfig.helpArticleDomain}/en/articles/9329439-setting-up-netsuite-integration#h_c0fb09216c`,
