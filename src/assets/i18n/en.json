@@ -16,7 +16,7 @@
   "configurationMultiSelect": {
     "expenseReportId": "Expense/Report ID",
     "cardNumber": "Card number (last 4 digits)",
-    "spentAt": "Spent on",
+    "spentAt": "Spend date",
     "merchant": "Merchant (from expense)",
     "cardMerchant": "Merchant (from card feed)"
   },
