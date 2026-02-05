@@ -45,6 +45,20 @@
                     [showExportPreview]="true"
                     [exportTypeIconPathArray]="previewImagePaths">
                   </app-configuration-select-field>
+
+
+                  @if (importProjectBillableToPlatform && (exportSettingsForm.get('reimbursableExportType')?.value===IntacctReimbursableExpensesObject.EXPENSE_REPORT || exportSettingsForm.get('reimbursableExportType')?.value===IntacctReimbursableExpensesObject.BILL)) {
+                    <div class="tw-px-64-px">
+                      <app-configuration-info-label
+                        [iconSrc]="'info-circle-fill-medium'"
+                        [customBackgroundColorClass]="brandingStyle.configuration.infoLabelBackground"
+                        [customStyleClass]="brandingStyle.configuration.infoLabelIcon"
+                        [readMoreLink]="readMoreLink"
+                        [readMoreText]="'intacctExportSettings.readMoreText' | transloco"
+                        [infoText]="'intacctExportSettings.importProjectBillableToPlatformInfo' | transloco">
+                      </app-configuration-info-label>
+                    </div>
+                  }
                   @if (exportSettingsForm.get('reimbursableExportType')?.value===IntacctReimbursableExpensesObject.JOURNAL_ENTRY) {
                     <div>
                       <app-configuration-select-field
@@ -175,7 +189,22 @@
                   [exportConfigurationIconPath]="'assets/illustrations/sageIntacct/'+brandingConfig.brandId+'CCCExportTypeTable.svg'"
                   [showExportPreview]="true"
                   [appName]="appName"
-                [exportTypeIconPathArray]="brandingConfig.brandId==='fyle' ? previewImagePaths : coPreviewImagePaths"></app-configuration-select-field>
+                  [exportTypeIconPathArray]="brandingConfig.brandId==='fyle' ? previewImagePaths : coPreviewImagePaths">
+                </app-configuration-select-field>
+                
+                @if (importProjectBillableToPlatform && (exportSettingsForm.get('cccExportType')?.value===IntacctCorporateCreditCardExpensesObject.EXPENSE_REPORT || exportSettingsForm.get('cccExportType')?.value===IntacctCorporateCreditCardExpensesObject.BILL)) {
+                  <div class="tw-px-64-px">
+                    <app-configuration-info-label
+                      [iconSrc]="'info-circle-fill-medium'"
+                      [customBackgroundColorClass]="brandingStyle.configuration.infoLabelBackground"
+                      [customStyleClass]="brandingStyle.configuration.infoLabelIcon"
+                      [readMoreLink]="readMoreLink"
+                      [readMoreText]="'intacctExportSettings.readMoreText' | transloco"
+                      [infoText]="'intacctExportSettings.importProjectBillableToPlatformInfo' | transloco">
+                    </app-configuration-info-label>
+                  </div>
+                }
+
                 @if (exportSettingsForm.get('cccExportType')?.value===IntacctCorporateCreditCardExpensesObject.EXPENSE_REPORT) {
                   <div>
                     <app-configuration-select-field
@@ -371,7 +400,7 @@
           <div class="tw-p-24-px tw-flex tw-flex-row tw-justify-between tw-items-center">
             <div class="tw-flex tw-items-start lg:tw-w-3/5 md:tw-w-1/2">
               <div class="tw-mt-4-px">
-                <app-svg-icon [svgSource]="'list'" [width]="'24px'" [height]="'24px'" [styleClasses]="'tw-text-mandatory-field-color'"></app-svg-icon>
+                <app-svg-icon [svgSource]="'list'" [width]="'24px'" [height]="'24px'"></app-svg-icon>
               </div>
               <div class="tw-pl-16-px">
                 <h4 class="!tw-text-14-px" [ngClass]="brandingStyle.configuration.configurationFieldHeaderText">{{'intacct.configuration.exportSetting.corporateCard.employeeFieldMapping' | transloco}}<app-mandatory-field></app-mandatory-field></h4>
