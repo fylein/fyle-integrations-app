@@ -752,7 +752,7 @@ export class IntacctImportSettingsComponent implements OnInit {
         label = new SentenceCasePipe(this.translocoService).transform(label);
         label = label.replace('Gl ', 'GL ');
         this.intacctCategoryDestinationLabel = label;
-        this.importProjectBillableToPlatform = featureConfigs.import_project_billable_to_platform ?? false;
+        this.importProjectBillableToPlatform = featureConfigs.import_billable_field_for_projects ?? false;
 
         this.initializeForm(importSettings);
       }
