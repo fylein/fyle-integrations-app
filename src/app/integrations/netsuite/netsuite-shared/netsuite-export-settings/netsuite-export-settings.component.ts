@@ -276,10 +276,17 @@ export class NetsuiteExportSettingsComponent implements OnInit {
       if (isCCCExportTypeSelected === NetSuiteCorporateCreditCardExpensesObject.BILL) {
           this.exportSettingForm.controls.splitExpenseGrouping.disable();
       }
+
+      // Update form validators based on new credit card export type
+      const [_, exportModuleRule] = NetsuiteExportSettingsService.getValidators();
+      this.exportSettingService.setupDynamicValidators(this.exportSettingForm, exportModuleRule[1], isCCCExportTypeSelected);
+      this.exportSettingForm.updateValueAndValidity();
     });
     this.exportSettingForm.controls.nameInJournalEntry.valueChanges.subscribe((isNameInJournalEntrySelected) => {
         if (isNameInJournalEntrySelected === NameInJournalEntry.MERCHANT ) {
           HelperUtility.markControllerAsRequired(this.exportSettingForm, 'defaultCreditCardVendor');
+        } else {
+          HelperUtility.clearValidatorAndResetValue(this.exportSettingForm, 'defaultCreditCardVendor');
         }
     });
   }
