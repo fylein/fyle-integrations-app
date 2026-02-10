@@ -118,7 +118,7 @@ export const c1KbArticles: KbArticle[string] = {
             CONNECTOR: `${brandingConfig.helpArticleDomain}/en/articles/9081356-generate-credentials-to-connect-with-sage-intacct`,
             SKIP_EXPORT: `${brandingConfig.helpArticleDomain}/en/articles/9082146-configure-the-capital-one-sage-intacct-integration`,
             DFV_READ_MORE: `${brandingConfig.helpArticleDomain}/en/articles/9082146-configure-the-capital-one-sage-intacct-integration`,
-            DEFAULT_BILLABLE_FIELD_BASED_ON_PROJECT_READ_MORE: `${brandingConfig.helpArticleDomain}/en/articles/7882821-how-to-skip-exporting-specific-expenses-from-fyle-to-sage-intacct`
+            DEFAULT_BILLABLE_FIELD_BASED_ON_PROJECT_READ_MORE: `${brandingConfig.helpArticleDomain}/en/articles/13671674-project-level-billable-defaults-with-sage-intacct`
         },
         NETSUITE: {
             CONNECTOR: `${brandingConfig.helpArticleDomain}/en/articles/9471329-generate-credentials-to-connect-with-netsuite`,
