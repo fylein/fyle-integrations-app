@@ -47,8 +47,8 @@
                   </app-configuration-select-field>
 
 
-                  @if (importProjectBillableToPlatform && (exportSettingsForm.get('reimbursableExportType')?.value===IntacctReimbursableExpensesObject.EXPENSE_REPORT || exportSettingsForm.get('reimbursableExportType')?.value===IntacctReimbursableExpensesObject.BILL)) {
-                    <div class="tw-px-64-px">
+                  @if (importProjectBillableToPlatform && exportSettingsForm.get('reimbursableExportType')?.value===IntacctReimbursableExpensesObject.BILL) {
+                    <div class="tw-pl-64-px tw-pr-24-px tw-pb-24-px">
                       <app-configuration-info-label
                         [iconSrc]="'info-circle-fill-medium'"
                         [customBackgroundColorClass]="brandingStyle.configuration.infoLabelBackground"
@@ -79,6 +79,18 @@
                     </div>
                   }
                   @if (exportSettingsForm.get('reimbursableExportType')?.value===IntacctReimbursableExpensesObject.EXPENSE_REPORT) {
+                    @if (importProjectBillableToPlatform) {
+                      <div class="tw-pl-64-px tw-pr-24-px">
+                        <app-configuration-info-label
+                          [iconSrc]="'info-circle-fill-medium'"
+                          [customBackgroundColorClass]="brandingStyle.configuration.infoLabelBackground"
+                          [customStyleClass]="brandingStyle.configuration.infoLabelIcon"
+                          [readMoreLink]="readMoreLink"
+                          [readMoreText]="'intacctExportSettings.readMoreText' | transloco"
+                          [infoText]="'intacctExportSettings.importProjectBillableToPlatformInfo' | transloco">
+                        </app-configuration-info-label>
+                      </div>
+                    }
                     <div>
                       <app-configuration-select-field
                         [form]="exportSettingsForm"
@@ -193,7 +205,7 @@
                 </app-configuration-select-field>
                 
                 @if (importProjectBillableToPlatform && (exportSettingsForm.get('cccExportType')?.value===IntacctCorporateCreditCardExpensesObject.EXPENSE_REPORT || exportSettingsForm.get('cccExportType')?.value===IntacctCorporateCreditCardExpensesObject.BILL)) {
-                  <div class="tw-px-64-px">
+                  <div class="tw-pl-64-px tw-pr-24-px">
                     <app-configuration-info-label
                       [iconSrc]="'info-circle-fill-medium'"
                       [customBackgroundColorClass]="brandingStyle.configuration.infoLabelBackground"
