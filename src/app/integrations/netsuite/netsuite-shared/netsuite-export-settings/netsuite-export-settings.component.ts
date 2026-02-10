@@ -283,7 +283,7 @@ export class NetsuiteExportSettingsComponent implements OnInit {
       this.exportSettingForm.updateValueAndValidity();
     });
     this.exportSettingForm.controls.nameInJournalEntry.valueChanges.subscribe((isNameInJournalEntrySelected) => {
-        if (isNameInJournalEntrySelected === NameInJournalEntry.MERCHANT ) {
+        if (isNameInJournalEntrySelected === NameInJournalEntry.MERCHANT && this.showField('defaultCreditCardVendor')) {
           HelperUtility.markControllerAsRequired(this.exportSettingForm, 'defaultCreditCardVendor');
         } else {
           HelperUtility.clearValidatorAndResetValue(this.exportSettingForm, 'defaultCreditCardVendor');
