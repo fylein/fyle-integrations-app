@@ -748,11 +748,16 @@ export class IntacctImportSettingsComponent implements OnInit {
           this.intacctCategoryDestination = IntacctCategoryDestination.GL_ACCOUNT;
         }
 
+        if (featureConfigs.import_billable_field_for_projects && !(configuration.reimbursable_expenses_object === IntacctReimbursableExpensesObject.JOURNAL_ENTRY || configuration.corporate_credit_card_expenses_object === IntacctCorporateCreditCardExpensesObject.CHARGE_CARD_TRANSACTION || configuration.corporate_credit_card_expenses_object === IntacctCorporateCreditCardExpensesObject.JOURNAL_ENTRY)) {
+          this.importProjectBillableToPlatform = true;
+        } else {
+          this.importProjectBillableToPlatform = false;
+        }
+
         let label = new SnakeCaseToSpaceCasePipe().transform(this.intacctCategoryDestination);
         label = new SentenceCasePipe(this.translocoService).transform(label);
         label = label.replace('Gl ', 'GL ');
         this.intacctCategoryDestinationLabel = label;
-        this.importProjectBillableToPlatform = featureConfigs.import_billable_field_for_projects ?? false;
 
         this.initializeForm(importSettings);
       }
