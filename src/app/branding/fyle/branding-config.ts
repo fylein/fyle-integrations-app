@@ -210,11 +210,11 @@ export const fyleDemoVideoLinks: DemoVideo[string] = {
     },
     postOnboarding: {
         SAGE50: {
-            JOB: 'https://www.youtube.com/embed/aArP85o_xaU',
-            PHASE: 'https://www.youtube.com/embed/aArP85o_xaU',
-            VENDOR: 'https://www.youtube.com/embed/aArP85o_xaU',
-            ACCOUNT: 'https://www.youtube.com/embed/aArP85o_xaU',
-            COST_CODE: 'https://www.youtube.com/embed/aArP85o_xaU'
+            JOB: 'https://www.youtube.com/embed/9eUud5qkMM0',
+            PHASE: 'https://www.youtube.com/embed/9eUud5qkMM0',
+            VENDOR: 'https://www.youtube.com/embed/uTwdpUlzM_Q',
+            ACCOUNT: 'https://www.youtube.com/embed/zCehWmswR2U',
+            COST_CODE: 'https://www.youtube.com/embed/9eUud5qkMM0'
         }
     }
 };
