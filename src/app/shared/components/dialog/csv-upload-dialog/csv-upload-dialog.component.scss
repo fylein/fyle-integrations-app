@@ -4,7 +4,7 @@
 }
 
 // Hide unnecessary elements that come with primeng file upload
-::ng-deep .p-fileupload-buttonbar, ::ng-deep p-messages, ::ng-deep p-progressbar {
+::ng-deep .p-fileupload-buttonbar, ::ng-deep p-messages, ::ng-deep p-progressbar, ::ng-deep .p-fileupload-header {
     @apply tw-hidden #{!important};
 }
 
