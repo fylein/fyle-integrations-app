@@ -218,7 +218,8 @@ export const c1DemoVideoLinks: DemoVideo[string] = {
             PHASE: 'https://www.youtube.com/embed/9eUud5qkMM0',
             VENDOR: 'https://www.youtube.com/embed/uTwdpUlzM_Q',
             ACCOUNT: 'https://www.youtube.com/embed/zCehWmswR2U',
-            COST_CODE: 'https://www.youtube.com/embed/9eUud5qkMM0'
+            COST_CODE: 'https://www.youtube.com/embed/9eUud5qkMM0',
+            ERROR: 'https://www.youtube.com/embed/gZEr7iNQggM'
         }
     }
 };

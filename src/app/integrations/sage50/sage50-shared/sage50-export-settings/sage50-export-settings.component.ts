@@ -291,6 +291,7 @@ export class Sage50ExportSettingsComponent implements OnInit {
     this.vendorUploadDialogRef = this.dialogService.open(CsvUploadDialogComponent, {
       showHeader: false,
       data: {
+        appResourceKey: 'SAGE50',
         attributeType: Sage50AttributeType.VENDOR,
         articleLink: this.brandingKbArticles.postOnboardingArticles.SAGE50.VENDOR,
         uploadData: this.uploadVendorData.bind(this),
