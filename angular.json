@@ -84,7 +84,13 @@
                   "replace": "src/environments/environment.json",
                   "with": "src/environments/fyle-environment.json"
                 }
-              ]
+              ],
+              "buildOptimizer": false,
+              "optimization": false,
+              "vendorChunk": true,
+              "extractLicenses": false,
+              "sourceMap": true,
+              "namedChunks": true
             },
             "c1": {
               "fileReplacements": [
@@ -96,7 +102,13 @@
                   "replace": "src/environments/environment.json",
                   "with": "src/environments/c1-environment.json"
                 }
-              ]
+              ],
+              "buildOptimizer": false,
+              "optimization": false,
+              "vendorChunk": true,
+              "extractLicenses": false,
+              "sourceMap": true,
+              "namedChunks": true
             }
           },
           "defaultConfiguration": "production"
