@@ -31,8 +31,6 @@ export class QbdConfigurationComponent implements OnInit {
       {label: this.translocoService.translate('qbdConfiguration.fieldMapping'), routerLink: '/integrations/qbd/main/configuration/field_mapping', value: 'field_mapping'},
       {label: this.translocoService.translate('qbdConfiguration.advancedSettings'), routerLink: '/integrations/qbd/main/configuration/advanced_settings', value: 'advanced_settings'}
     ];
-    this.activeModule = this.modules[0].value;
-    this.router.navigateByUrl(this.modules[0].routerLink!);
   }
 
 

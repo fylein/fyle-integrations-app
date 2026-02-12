@@ -32,9 +32,6 @@ export class NetsuiteConfigurationComponent implements OnInit {
       { label: this.translocoService.translate('netsuite.configuration.importSetting.stepName'), routerLink: '/integrations/netsuite/main/configuration/import_settings', value: 'import_settings' },
       { label: this.translocoService.translate('netsuite.configuration.advancedSettings.stepName'), routerLink: '/integrations/netsuite/main/configuration/advanced_settings', value: 'advanced_settings' }
     ];
-
-    this.activeModule = this.modules[0].value;
-    this.router.navigate([this.modules[0].routerLink]);
   }
 
 }
