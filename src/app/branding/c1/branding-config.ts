@@ -213,13 +213,13 @@ export const c1DemoVideoLinks: DemoVideo[string] = {
         SAGE50: 'https://www.youtube.com/embed/2oYdc8KcQnk'
     },
     postOnboarding: {
-        // TODO(sage50): Update links
         SAGE50: {
-            JOB: 'https://www.youtube.com/embed/2oYdc8KcQnk',
-            PHASE: 'https://www.youtube.com/embed/2oYdc8KcQnk',
-            VENDOR: 'https://www.youtube.com/embed/2oYdc8KcQnk',
-            ACCOUNT: 'https://www.youtube.com/embed/2oYdc8KcQnk',
-            COST_CODE: 'https://www.youtube.com/embed/2oYdc8KcQnk'
+            JOB: 'https://www.youtube.com/embed/9eUud5qkMM0',
+            PHASE: 'https://www.youtube.com/embed/9eUud5qkMM0',
+            VENDOR: 'https://www.youtube.com/embed/uTwdpUlzM_Q',
+            ACCOUNT: 'https://www.youtube.com/embed/zCehWmswR2U',
+            COST_CODE: 'https://www.youtube.com/embed/9eUud5qkMM0',
+            ERROR: 'https://www.youtube.com/embed/gZEr7iNQggM'
         }
     }
 };

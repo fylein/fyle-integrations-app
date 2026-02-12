@@ -9,6 +9,7 @@ import { SharedModule } from 'src/app/shared/shared.module';
 import { CSVImportAttributesService } from 'src/app/core/models/db/csv-import-attributes.model';
 import { UploadedCSVFile } from 'src/app/core/models/misc/configuration-csv-import-field.model';
 import { TrackingService } from 'src/app/core/services/integration/tracking.service';
+import { brandingDemoVideoLinks } from 'src/app/branding/branding-config';
 
 @Component({
     selector: 'app-configuration-csv-upload-field',
@@ -18,6 +19,8 @@ import { TrackingService } from 'src/app/core/services/integration/tracking.serv
     styleUrl: './configuration-csv-upload-field.component.scss'
 })
 export class ConfigurationCsvUploadFieldComponent {
+
+  @Input({ required: true }) appResourceKey: keyof typeof brandingDemoVideoLinks.postOnboarding;
 
   @Input({ required: true }) attributeType!: Sage50AttributeType;
 
@@ -54,6 +57,7 @@ export class ConfigurationCsvUploadFieldComponent {
     this.ref = this.dialogService.open(CsvUploadDialogComponent, {
       showHeader: false,
       data: {
+        appResourceKey: this.appResourceKey,
         attributeType: this.attributeType,
         articleLink: this.articleLink,
         uploadData: this.uploadData,

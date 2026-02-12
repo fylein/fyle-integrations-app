@@ -123,6 +123,7 @@ export class ConfigurationCsvImportFieldComponent implements OnInit {
     const ref = this.dialogService.open(CsvUploadDialogComponent, {
       showHeader: false,
       data: {
+        appResourceKey: this.appResourceKey,
         attributeType: this.destinationField,
         articleLink: brandingKbArticles.postOnboardingArticles[this.appResourceKey][this.destinationField],
         uploadData: this.uploadData,
