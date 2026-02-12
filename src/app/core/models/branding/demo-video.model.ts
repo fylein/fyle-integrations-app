@@ -14,7 +14,7 @@ export type DemoVideo = {
             SAGE50: string;
         }
         postOnboarding: {
-            SAGE50: Record<Sage50ImportableField, string>;
+            SAGE50: Record<Sage50ImportableField | 'ERROR', string>;
         }
     }
 };

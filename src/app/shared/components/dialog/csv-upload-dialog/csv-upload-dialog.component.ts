@@ -4,7 +4,7 @@ import { DialogService, DynamicDialogConfig, DynamicDialogRef } from 'primeng/dy
 import { FileSelectEvent, FileUploadModule } from 'primeng/fileupload';
 import { sage50AttributeDisplayNames } from 'src/app/core/models/sage50/sage50-configuration/attribute-display-names';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
-import { brandingFeatureConfig } from 'src/app/branding/branding-config';
+import { brandingDemoVideoLinks, brandingFeatureConfig } from 'src/app/branding/branding-config';
 import { CsvJsonTranslatorService } from 'src/app/core/services/common/csv-json-translator.service';
 import { CSVError, CSVErrorName } from 'src/app/core/models/common/csv-error.model';
 import { TranslocoService } from '@jsverse/transloco';
@@ -34,14 +34,20 @@ export class CsvUploadDialogComponent implements OnInit {
     attributeType: Sage50AttributeType,
     articleLink: string,
     videoURL: string,
+    appResourceKey: keyof typeof brandingDemoVideoLinks.postOnboarding,
     uploadData: CSVImportAttributesService['importAttributes']
   };
 
   displayName: string;
 
-  safeVideoURL: SafeResourceUrl;
-
   state: 'PROMPT' | 'UPLOADING' | 'ERROR' = 'PROMPT';
+
+  get safeVideoURL(): SafeResourceUrl {
+    if (this.state === 'ERROR') {
+      return this.sanitizer.bypassSecurityTrustResourceUrl(brandingDemoVideoLinks.postOnboarding[this.data.appResourceKey].ERROR);
+    }
+    return this.sanitizer.bypassSecurityTrustResourceUrl(this.data.videoURL);
+  }
 
   private csv: {
     name: string;
@@ -156,6 +162,5 @@ export class CsvUploadDialogComponent implements OnInit {
   ngOnInit(): void {
     this.data = this.config.data;
     this.displayName = sage50AttributeDisplayNames[this.data.attributeType];
-    this.safeVideoURL = this.sanitizer.bypassSecurityTrustResourceUrl(this.data.videoURL);
   }
 }

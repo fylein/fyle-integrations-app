@@ -16,6 +16,7 @@
         <div class="tw-p-24-px">
             <div class="tw-rounded-[10px] tw-border tw-border-border-tertiary tw-p-24-px tw-flex tw-flex-col tw-gap-[48px]">
                 <app-configuration-csv-upload-field
+                    [appResourceKey]="'SAGE50'"
                     [attributeType]="Sage50AttributeType.ACCOUNT"
                     [label]="'sage50OnboardingPrerequisites.chartOfAccountsLabel' | transloco"
                     [subLabel]="'sage50OnboardingPrerequisites.chartOfAccountsSublabel' | transloco"
@@ -26,6 +27,7 @@
                     [uploadData]="uploadData.bind(this)"
                 ></app-configuration-csv-upload-field>
                 <app-configuration-csv-upload-field
+                    [appResourceKey]="'SAGE50'"
                     [attributeType]="Sage50AttributeType.VENDOR"
                     [label]="'sage50OnboardingPrerequisites.vendorLabel' | transloco"
                     [subLabel]="'sage50OnboardingPrerequisites.vendorSublabel' | transloco"
