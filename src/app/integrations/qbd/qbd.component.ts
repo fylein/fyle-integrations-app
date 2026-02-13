@@ -47,9 +47,9 @@ export class QbdComponent implements OnInit {
         [QBDOnboardingState.ADVANCED_SETTINGS]: '/integrations/qbd/onboarding/advanced_settings',
         [QBDOnboardingState.COMPLETE]: '/integrations/qbd/main'
       };
-      this.isLoading = false;
       this.router.navigateByUrl(onboardingStateComponentMap[this.workspace.onboarding_state]);
     }
+    this.isLoading = false;
   }
 
   private setupWorkspace(): void {

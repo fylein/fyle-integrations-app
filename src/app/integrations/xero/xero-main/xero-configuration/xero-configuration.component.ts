@@ -36,9 +36,6 @@ export class XeroConfigurationComponent implements OnInit {
       { label: this.translocoService.translate('xero.configuration.importSetting.stepName'), routerLink: '/integrations/xero/main/configuration/import_settings', value: 'import_settings' },
       { label: this.translocoService.translate('xero.configuration.advancedSettings.stepName'), routerLink: '/integrations/xero/main/configuration/advanced_settings', value: 'advanced_settings' }
     ];
-
-    this.activeModule = this.modules[0].value;
-    this.router.navigate([this.modules[0].routerLink]);
   }
 
 }

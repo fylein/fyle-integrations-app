@@ -197,8 +197,14 @@ export class MainMenuComponent implements OnInit {
       this.toolTipText = this.translocoService.translate('mainMenu.syncTooltip', { appName: this.appName, brandName: brandingConfig.brandName });
     }
 
-    const activeModule = this.modules.find(module => this.router.url.includes(module.routerLink || ''));
-    this.activeItem = activeModule ? activeModule.value : this.modules[0].value;
+    const activeModule = this.modules.find(module => this.router.url.includes(module.routerLink || '')) || this.modules[0];
+    this.activeItem = activeModule.value;
+
+    // Navigate to the active module for routes like:
+    // /integrations/qbo/main/configuration -> /integrations/qbo/main/configuration/export_settings
+    if (activeModule.routerLink && activeModule.routerLink.includes(this.router.url)) {
+      this.router.navigateByUrl(activeModule.routerLink);
+    }
 
     if (this.router.url.includes("/token_expired/") || this.router.url.includes("/disconnect/")){
       this.isMenuDisabled = true;
