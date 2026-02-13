@@ -1,0 +1,7 @@
+.shadow-card {
+    @apply tw-transition-shadow;
+
+    &:hover {
+        box-shadow: 0px 4px 4px 0px rgba(44, 48, 78, 0.10);
+    }
+}

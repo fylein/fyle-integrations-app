@@ -1,0 +1,154 @@
+<div class="tw-h-full">
+  @if (isLoading) {
+    <div class="tw-flex tw-justify-center tw-items-center tw-pt-80-px tw-h-[75vh]">
+      <app-loader></app-loader>
+    </div>
+  }
+  @if (!isLoading) {
+    <div [ngClass]="[brandingStyle.configuration.settingsContainer, brandingStyle.common.configurationContentsDashboard]">
+      <div>
+        <app-configuration-step-header
+          [headerText]="'qbdDirectRegenerateQwcFile.stepName' | transloco"
+          [contentText]="'qbdDirectRegenerateQwcFile.contentText' | transloco"
+          [redirectLink]="redirectLink"
+          [appName]="appName">
+        </app-configuration-step-header>
+      </div>
+      <form [formGroup]="regenerateQwcForm">
+        <div class="tw-p-24-px tw-flex tw-flex-col tw-gap-[32px]">
+            <div class="tw-flex tw-flex-col tw-gap-12-px">
+                <h3 class="tw-text-text-primary tw-text-16-px tw-font-500">
+                    {{ 'qbdDirectRegenerateQwcFile.currentFileHeader' | transloco }}
+                </h3>
+
+                <div class="tw-border tw-border-border-tertiary tw-rounded-border-radius-2xs tw-p-24-px tw-flex tw-flex-col tw-gap-10-px">
+                    <div class="tw-bg-bg-warning-lighter tw-rounded-border-radius-2xs tw-p-12-px tw-text-text-secondary tw-font-400 tw-text-14-px tw-italic tw-flex tw-items-center tw-gap-[16px] tw-justify-between">
+                        {{ connectorSettings?.file_location }}
+                        <app-svg-icon [svgSource]="'copy'" [width]="'18px'" [height]="'18px'" [isTextColorAllowed]="true" [styleClasses]="'tw-text-text-secondary tw-cursor-pointer'" (iconClick)="copyQwcFilePath()"></app-svg-icon>
+                    </div>
+                    <p class="tw-text-text-tertiary tw-text-14-px tw-font-400">
+                        <span>{{ 'qbdDirectRegenerateQwcFile.currentFileLastRegenerated' | transloco }}</span>
+                        @if (connectorSettings?.last_file_generated_by) {
+                            <span>{{ 'qbdDirectRegenerateQwcFile.currentFileBy' | transloco }}</span>
+                            <span class="tw-font-500">{{ connectorSettings?.last_file_generated_by }}</span>
+                        }
+                        <span>{{ 'qbdDirectRegenerateQwcFile.currentFileOn' | transloco }}</span>
+                        <span>{{ connectorSettings?.updated_at | orgDate }}</span>
+                    </p>
+                </div>
+            </div>
+
+            <div class="tw-flex tw-flex-col tw-gap-12-px">
+                <h3 class="tw-text-text-primary tw-text-16-px tw-font-500">
+                    {{ 'qbdDirectRegenerateQwcFile.nextStepHeader' | transloco }}
+                </h3>
+
+                <div class="tw-grid tw-grid-cols-2 tw-gap-[16px]">
+                    <!-- Use existing company file path -->
+                    <label class="shadow-card tw-bg-white tw-border tw-rounded-lg tw-cursor-pointer tw-flex tw-flex-col" [ngClass]="selectedNextStep === NextStepOption.EXISTING ? 'tw-border-border-primary' : 'tw-border-border-tertiary'">
+                        <div class="tw-border-b tw-p-16-px tw-flex tw-justify-between tw-items-start tw-gap-12-px" [ngClass]="selectedNextStep === NextStepOption.EXISTING ? 'tw-border-border-primary' : 'tw-border-border-tertiary'">
+                            <div class="tw-flex-1">
+                                <h4 class="tw-text-text-primary tw-text-14-px tw-font-500 tw-leading-[1.4] tw-mb-6-px">{{ 'qbdDirectRegenerateQwcFile.useExistingPath' | transloco }}</h4>
+                                <p class="tw-text-text-tertiary tw-text-12-px tw-font-400 tw-leading-[1.25]">{{ 'qbdDirectRegenerateQwcFile.useExistingPathDescription' | transloco }}</p>
+                            </div>
+                            <div class="tw-relative tw-w-[18px] tw-h-[18px] tw-shrink-0">
+                                <input type="radio" [value]="NextStepOption.EXISTING" formControlName="nextStep" class="tw-absolute tw-opacity-0 tw-w-[18px] tw-h-[18px] tw-cursor-pointer">
+                                @if (selectedNextStep === NextStepOption.EXISTING) {
+                                    <app-svg-icon [svgSource]="'check-circle-fill'" [width]="'21.6px'" [height]="'21.6px'" [isTextColorAllowed]="true" [styleClasses]="'tw-text-icon-secondary tw-pointer-events-none tw-absolute tw-top-1/2 tw-left-1/2 -tw-translate-x-1/2 -tw-translate-y-1/2'"></app-svg-icon>
+                                } @else {
+                                    <div class="tw-w-[18px] tw-h-[18px] tw-rounded-full tw-border tw-border-disabled tw-pointer-events-none"></div>
+                                }
+                            </div>
+                        </div>
+                        <div class="tw-p-16-px tw-flex tw-flex-col tw-gap-[28px]">
+                            <div class="tw-flex tw-items-start tw-gap-12-px tw-min-h-[85px]">
+                                <app-svg-icon [svgSource]="'question-square-fill'" [width]="'20px'" [height]="'20px'" [styleClasses]="'tw-text-icon-muted tw-shrink-0'"></app-svg-icon>
+                                <div class="tw-flex-1">
+                                    <p class="tw-text-text-primary tw-text-14-px tw-font-500 tw-leading-[1.4] tw-mb-6-px">{{ 'qbdDirectRegenerateQwcFile.whenToUse' | transloco }}</p>
+                                    <ul class="tw-list-disc tw-pl-20-px tw-text-text-tertiary tw-text-14-px tw-font-400 tw-leading-[1.4]">
+                                        <li>{{ 'qbdDirectRegenerateQwcFile.existingWhenToUse1' | transloco }}</li>
+                                        <li>
+                                            {{ 'qbdDirectRegenerateQwcFile.existingWhenToUse2' | transloco }}
+                                            <br />
+                                            <a class="link tw-text-14-px tw-w-fit tw-inline-flex tw-items-center tw-mt-4-px tw-cursor-pointer" [href]="redirectLink" target="_blank">
+                                                {{ 'qbdDirectRegenerateQwcFile.readMore' | transloco }}
+                                                @if (brandingFeatureConfig.isIconsInsideButtonAllowed) {
+                                                    <app-svg-icon [svgSource]="'open-in-new-tab'" [width]="'16px'" [height]="'16px'" class="tw-text-link-primary tw-pl-2-px tw-w-fit"></app-svg-icon>
+                                                }
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="tw-flex tw-items-start tw-gap-12-px">
+                                <app-svg-icon [svgSource]="'check-circle-fill'" [width]="'20px'" [height]="'20px'" [styleClasses]="'tw-shrink-0 tw-text-icon-success'" [isTextColorAllowed]="true"></app-svg-icon>
+                                <div class="tw-flex-1">
+                                    <p class="tw-text-text-primary tw-text-14-px tw-font-500 tw-leading-[1.4] tw-mb-6-px">{{ 'qbdDirectRegenerateQwcFile.keyBenefits' | transloco }}</p>
+                                    <ul class="tw-list-disc tw-pl-20-px tw-text-text-tertiary tw-text-14-px tw-font-400 tw-leading-[1.4]">
+                                        <li>{{ 'qbdDirectRegenerateQwcFile.existingBenefit1' | transloco }}</li>
+                                        <li>{{ 'qbdDirectRegenerateQwcFile.existingBenefit2' | transloco }}</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </label>
+
+                    <!-- Use new company file path -->
+                    <label class="shadow-card tw-bg-white tw-border tw-rounded-lg tw-cursor-pointer tw-flex tw-flex-col" [ngClass]="selectedNextStep === NextStepOption.NEW ? 'tw-border-border-primary' : 'tw-border-border-tertiary'">
+                        <div class="tw-border-b tw-p-16-px tw-flex tw-justify-between tw-items-start tw-gap-12-px" [ngClass]="selectedNextStep === NextStepOption.NEW ? 'tw-border-border-primary' : 'tw-border-border-tertiary'">
+                            <div class="tw-flex-1">
+                                <h4 class="tw-text-text-primary tw-text-14-px tw-font-500 tw-leading-[1.4] tw-mb-6-px">{{ 'qbdDirectRegenerateQwcFile.useNewPath' | transloco }}</h4>
+                                <p class="tw-text-text-tertiary tw-text-12-px tw-font-400 tw-leading-[1.25]">{{ 'qbdDirectRegenerateQwcFile.useNewPathDescription' | transloco }}</p>
+                            </div>
+                            <div class="tw-relative tw-w-[18px] tw-h-[18px] tw-shrink-0">
+                                <input type="radio" [value]="NextStepOption.NEW" formControlName="nextStep" class="tw-absolute tw-opacity-0 tw-w-[18px] tw-h-[18px] tw-cursor-pointer">
+                                @if (selectedNextStep === NextStepOption.NEW) {
+                                    <app-svg-icon [svgSource]="'check-circle-fill'" [width]="'21.6px'" [height]="'21.6px'" [isTextColorAllowed]="true" [styleClasses]="'tw-text-icon-secondary tw-pointer-events-none tw-absolute tw-top-1/2 tw-left-1/2 -tw-translate-x-1/2 -tw-translate-y-1/2'"></app-svg-icon>
+                                } @else {
+                                    <div class="tw-w-[18px] tw-h-[18px] tw-rounded-full tw-border tw-border-disabled tw-pointer-events-none"></div>
+                                }
+                            </div>
+                        </div>
+                        <div class="tw-p-16-px tw-flex tw-flex-col tw-gap-[28px]">
+                            <div class="tw-flex tw-items-start tw-gap-12-px tw-min-h-[85px]">
+                                <app-svg-icon [svgSource]="'question-square-fill'" [width]="'20px'" [height]="'20px'" [styleClasses]="'tw-text-icon-muted tw-shrink-0'"></app-svg-icon>
+                                <div class="tw-flex-1">
+                                    <p class="tw-text-text-primary tw-text-14-px tw-font-500 tw-leading-[1.4] tw-mb-6-px">{{ 'qbdDirectRegenerateQwcFile.whenToUse' | transloco }}</p>
+                                    <ul class="tw-list-disc tw-pl-20-px tw-text-text-tertiary tw-text-14-px tw-font-400 tw-leading-[1.4]">
+                                        <li>{{ 'qbdDirectRegenerateQwcFile.newWhenToUse1' | transloco }}</li>
+                                        <li>{{ 'qbdDirectRegenerateQwcFile.newWhenToUse2' | transloco }}</li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="tw-flex tw-items-start tw-gap-12-px">
+                                <app-svg-icon [svgSource]="'check-circle-fill'" [width]="'20px'" [height]="'20px'" [styleClasses]="'tw-shrink-0 tw-text-icon-success'" [isTextColorAllowed]="true"></app-svg-icon>
+                                <div class="tw-flex-1">
+                                    <p class="tw-text-text-primary tw-text-14-px tw-font-500 tw-leading-[1.4] tw-mb-6-px">{{ 'qbdDirectRegenerateQwcFile.keyBenefits' | transloco }}</p>
+                                    <ul class="tw-list-disc tw-pl-20-px tw-text-text-tertiary tw-text-14-px tw-font-400 tw-leading-[1.4]">
+                                        <li>{{ 'qbdDirectRegenerateQwcFile.newBenefit1' | transloco }}</li>
+                                        <li>{{ 'qbdDirectRegenerateQwcFile.newBenefit2' | transloco }}</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </label>
+                </div>
+
+            </div>
+
+        </div>
+      </form>
+    </div>
+  }
+</div>
+
+@if (!isLoading) {
+  <div class="tw-sticky tw-z-1200 tw-top-0 tw-bottom-0 tw-left-0 tw-right-0 tw-bg-white">
+    <app-configuration-step-footer
+      [ctaText]="ConfigurationCtaText.CONTINUE"
+      [showBackButton]="false"
+      [isButtonDisabled]="regenerateQwcForm.invalid"
+      (continue)="continue()">
+    </app-configuration-step-footer>
+  </div>
+}
