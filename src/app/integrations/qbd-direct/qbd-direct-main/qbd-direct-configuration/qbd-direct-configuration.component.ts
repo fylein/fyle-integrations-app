@@ -28,7 +28,8 @@ export class QbdDirectConfigurationComponent {
     this.modules = [
       {label: this.translocoService.translate('qbd_direct.configuration.exportSetting.stepName'), routerLink: '/integrations/qbd_direct/main/configuration/export_settings', value: 'export_settings'},
       {label: this.translocoService.translate('qbd_direct.configuration.importSetting.stepName'), routerLink: '/integrations/qbd_direct/main/configuration/import_settings', value: 'import_settings'},
-      {label: this.translocoService.translate('qbd_direct.configuration.advancedSettings.stepName'), routerLink: '/integrations/qbd_direct/main/configuration/advanced_settings', value: 'advanced_settings'}
+      {label: this.translocoService.translate('qbd_direct.configuration.advancedSettings.stepName'), routerLink: '/integrations/qbd_direct/main/configuration/advanced_settings', value: 'advanced_settings'},
+      {label: this.translocoService.translate('qbd_direct.configuration.QWCFile.stepName'), routerLink: '/integrations/qbd_direct/main/configuration/qwc_file', value: 'qwc_file'}
     ];
   }
 
