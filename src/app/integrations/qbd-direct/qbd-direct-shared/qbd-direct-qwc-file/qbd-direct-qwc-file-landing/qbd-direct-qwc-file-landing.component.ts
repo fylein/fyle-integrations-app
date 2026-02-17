@@ -9,15 +9,15 @@ import { BrandingService } from 'src/app/core/services/common/branding.service';
 import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
 import { QbdDirectConnectorService } from 'src/app/core/services/qbd-direct/qbd-direct-configuration/qbd-direct-connector.service';
 import { QbdConnectorGet } from 'src/app/core/models/qbd-direct/qbd-direct-configuration/qbd-direct-connector.model';
-import { NextStepOption, RegenerateQwcForm } from 'src/app/core/models/qbd-direct/qbd-direct-configuration/qbd-direct-regenerate-qwc-file.model';
+import { NextStepOption, RegenerateQwcForm } from 'src/app/core/models/qbd-direct/qbd-direct-configuration/qbd-direct-qwc-file.model';
 
 @Component({
-  selector: 'app-qbd-direct-regenerate-qwc-file',
+  selector: 'app-qbd-direct-qwc-file-landing',
   imports: [CommonModule, SharedModule, TranslocoModule],
-  templateUrl: './qbd-direct-regenerate-qwc-file.component.html',
-  styleUrl: './qbd-direct-regenerate-qwc-file.component.scss'
+  templateUrl: './qbd-direct-qwc-file-landing.component.html',
+  styleUrl: './qbd-direct-qwc-file-landing.component.scss'
 })
-export class QbdDirectRegenerateQWCFileComponent implements OnInit {
+export class QbdDirectQwcFileLandingComponent implements OnInit {
 
   // Component state
   isLoading: boolean;
@@ -62,7 +62,7 @@ export class QbdDirectRegenerateQWCFileComponent implements OnInit {
     navigator.clipboard.writeText(this.connectorSettings.file_location);
     this.toastService.displayToastMessage(
       ToastSeverity.SUCCESS,
-      this.translocoService.translate('qbdDirectRegenerateQwcFile.qwcFilePathCopied')
+      this.translocoService.translate('qbdDirectQwcFileLanding.qwcFilePathCopied')
     );
   }
 

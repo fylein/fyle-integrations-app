@@ -2739,7 +2739,7 @@
   "dashboard": {
     "exportLogSubHeaderSuccessful": "These expenses have been successfully exported to your {{ appName }}."
   },
-  "qbdDirectRegenerateQwcFile": {
+  "qbdDirectQwcFileLanding": {
     "stepName": "Regenerate QWC File",
     "contentText": "Regenerate your QuickBooks Web Connector file or set up a new one if your company file path has changed.",
     "currentFileHeader": "Current company file path",
