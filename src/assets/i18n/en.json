@@ -1686,6 +1686,22 @@
     "done": "Done",
     "markAsDone": "Mark as done"
   },
+  "qbdDirectPrerequisitesV2": {
+    "stepName": "Getting started",
+    "contentText": "Review and complete each prerequisite before proceeding. This will help you connect {{brandName}} to QuickBooks Desktop without interruptions.",
+    "done": "Done",
+    "markAsDone": "Mark as done",
+    "step1Label": "QuickBooks Desktop + Web Connector Setup",
+    "step1Point1": "The latest version of QuickBooks Desktop is installed and up to date.",
+    "step1Point2": "A compatible version of Web Connector is installed on the same server or virtual desktop as QuickBooks Desktop and the company file.",
+    "step1Point3": "If you're using a hosted environment (e.g., Right Networks), make sure that:",
+    "step1Point3Sub1": "Web Connector is installed within the hosted session",
+    "step1Point3Sub2": "Your plan supports third-party integrations and Web Connector access",
+    "step2Label": "Access & Permissions",
+    "step2Point1": "QuickBooks Desktop is open, run as Administrator, and in Single-User Mode.",
+    "step2Point2": "You have the necessary third-party integration permissions. (If not, go to Edit > Preferences > Integrated Applications and grant access.)",
+    "step1Tooltip": "Do not install Web Connector on your personal machine if QuickBooks Desktop is hosted remotely."
+  },
   "qbdDirectOnboardingLanding": {
     "appName": "QuickBooks Desktop ",
     "guideHeader": "A quick guide to help you set up your {{brandName}}-QuickBooks Desktop integration."

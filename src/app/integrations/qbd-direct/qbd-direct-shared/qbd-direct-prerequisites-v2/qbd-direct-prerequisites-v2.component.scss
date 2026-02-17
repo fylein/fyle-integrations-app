@@ -1,0 +1,8 @@
+ul.dash-list {
+    @apply tw-list-none tw-pl-[16px];
+}
+
+ul.dash-list li::before {
+    content: "-";
+    @apply tw-pr-[7px];
+}
