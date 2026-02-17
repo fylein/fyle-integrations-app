@@ -4,6 +4,7 @@ import { QbdDirectAdvancedSettingsComponent } from '../../qbd-direct-shared/qbd-
 import { QbdDirectExportSettingsComponent } from '../../qbd-direct-shared/qbd-direct-export-settings/qbd-direct-export-settings.component';
 import { QbdDirectImportSettingsComponent } from '../../qbd-direct-shared/qbd-direct-import-settings/qbd-direct-import-settings.component';
 import { QbdDirectConfigurationComponent } from './qbd-direct-configuration.component';
+import { QbdDirectQwcFileLandingComponent } from '../../qbd-direct-shared/qbd-direct-qwc-file/qbd-direct-qwc-file-landing/qbd-direct-qwc-file-landing.component';
 
 const routes: Routes = [
   {
@@ -21,6 +22,10 @@ const routes: Routes = [
       {
         path: 'advanced_settings',
         component: QbdDirectAdvancedSettingsComponent
+      },
+      {
+        path: 'qwc_file',
+        component: QbdDirectQwcFileLandingComponent
       }
     ]
   }

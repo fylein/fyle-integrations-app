@@ -2730,10 +2730,38 @@
       },
       "advancedSettings": {
         "topLevelMemoStructurePreviewLabel": "Preview"
+      },
+      "QWCFile": {
+        "stepName": "QWC file"
       }
     }
   },
   "dashboard": {
     "exportLogSubHeaderSuccessful": "These expenses have been successfully exported to your {{ appName }}."
+  },
+  "qbdDirectQwcFileLanding": {
+    "stepName": "Regenerate QWC File",
+    "contentText": "Regenerate your QuickBooks Web Connector file or set up a new one if your company file path has changed.",
+    "currentFileHeader": "Current company file path",
+    "currentFileLastRegenerated": "Last regenerated",
+    "currentFileBy": " by ",
+    "currentFileOn": " on ",
+    "qwcFilePathCopied": "QWC file path copied!",
+    "nextStepHeader": "Choose your next step:",
+    "useExistingPath": "Use existing company file path",
+    "useExistingPathDescription": "Regenerate your QuickBooks Web Connector (.qwc) file and password for the current company file path.",
+    "useNewPath": "Use new company file path",
+    "useNewPathDescription": "Generate a new QuickBooks Web Connector (.qwc) file and password for a new or updated company file path.",
+    "whenToUse": "When to use:",
+    "existingWhenToUse1": "The QWC file was lost or corrupted",
+    "existingWhenToUse2": "Another team member needs access (not recommended)",
+    "newWhenToUse1": "The company file was moved or renamed",
+    "newWhenToUse2": "QuickBooks Desktop was reinstalled or updated",
+    "keyBenefits": "Key benefits:",
+    "existingBenefit1": "Easiest and safest way to restore your connection",
+    "existingBenefit2": "No changes to your integration configurations",
+    "newBenefit1": "Ensures your integration matches your current QuickBooks setup",
+    "newBenefit2": "Resolves path mismatch errors",
+    "readMore": "Read more"
   }
 }
