@@ -59,7 +59,14 @@ export class SubMenuComponent implements OnInit, OnDestroy {
     // Skips redirection if the child route is also specified
     // Eg: /integrations/xero/main/configuration/advanced_settings, /integrations/xero/main/mapping/category
     const validPaths = this.modules.map(module => module.routerLink?.replace(/\/$/, '') || '');
-    if (!validPaths.includes(this.router.url.replace(/\/$/, ''))) {
+    const currentUrl = this.router.url.replace(/\/$/, '');
+
+    // Check if current URL exactly matches a valid path OR starts with a valid path (for child routes - configuration/qwc_file/new)
+    const isValidRoute = validPaths.some(path =>
+      currentUrl === path || currentUrl.startsWith(path + '/')
+    );
+
+    if (!isValidRoute) {
       const firstRouterLink = this.modules[0].routerLink;
       if (firstRouterLink) {
         this.router.navigateByUrl(firstRouterLink);
