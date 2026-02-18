@@ -1,10 +1,10 @@
 import { FormControl } from "@angular/forms";
 
-export enum NextStepOption {
+export enum QwcRegenerationFlowType {
     EXISTING = 'existing',
     NEW = 'new'
   }
 
 export interface RegenerateQwcForm {
-    nextStep: FormControl<NextStepOption | null>;
+    nextStep: FormControl<QwcRegenerationFlowType | null>;
 }

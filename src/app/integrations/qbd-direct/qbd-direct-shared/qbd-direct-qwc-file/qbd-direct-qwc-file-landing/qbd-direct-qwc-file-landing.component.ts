@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, ValidationErrors } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, ValidationErrors, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { TranslocoModule, TranslocoService } from '@jsverse/transloco';
 import { SharedModule } from 'src/app/shared/shared.module';
@@ -9,7 +9,8 @@ import { BrandingService } from 'src/app/core/services/common/branding.service';
 import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
 import { QbdDirectConnectorService } from 'src/app/core/services/qbd-direct/qbd-direct-configuration/qbd-direct-connector.service';
 import { QbdConnectorGet } from 'src/app/core/models/qbd-direct/qbd-direct-configuration/qbd-direct-connector.model';
-import { NextStepOption, RegenerateQwcForm } from 'src/app/core/models/qbd-direct/qbd-direct-configuration/qbd-direct-qwc-file.model';
+import { QwcRegenerationFlowType, RegenerateQwcForm } from 'src/app/core/models/qbd-direct/qbd-direct-configuration/qbd-direct-qwc-file.model';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-qbd-direct-qwc-file-landing',
@@ -27,7 +28,7 @@ export class QbdDirectQwcFileLandingComponent implements OnInit {
   connectorSettings: QbdConnectorGet | null = null;
 
   // Constants for template
-  readonly NextStepOption = NextStepOption;
+  readonly NextStepOption = QwcRegenerationFlowType;
 
   readonly appName: AppName = AppName.QBD_DIRECT;
 
@@ -39,8 +40,8 @@ export class QbdDirectQwcFileLandingComponent implements OnInit {
 
   readonly brandingFeatureConfig = brandingFeatureConfig;
 
-  get selectedNextStep(): NextStepOption {
-    return this.regenerateQwcForm.get('nextStep')?.value as NextStepOption;
+  get selectedNextStep(): QwcRegenerationFlowType {
+    return this.regenerateQwcForm.get('nextStep')?.value as QwcRegenerationFlowType;
   }
 
   constructor(
@@ -48,11 +49,17 @@ export class QbdDirectQwcFileLandingComponent implements OnInit {
     public brandingService: BrandingService,
     private toastService: IntegrationsToastService,
     private translocoService: TranslocoService,
-    private qbdDirectConnectorService: QbdDirectConnectorService
+    private qbdDirectConnectorService: QbdDirectConnectorService,
+    private router: Router,
+    private route: ActivatedRoute
   ) {}
 
   continue() {
-    // TODO: Implement continue logic
+    if (!this.selectedNextStep) {
+      return;
+    }
+    const nextStepRoute = this.selectedNextStep === QwcRegenerationFlowType.EXISTING ? 'existing' : 'new';
+    this.router.navigate([nextStepRoute], { relativeTo: this.route });
   }
 
   copyQwcFilePath() {
@@ -69,17 +76,7 @@ export class QbdDirectQwcFileLandingComponent implements OnInit {
   ngOnInit() {
     this.isLoading = true;
     this.regenerateQwcForm = this.formBuilder.group<RegenerateQwcForm>({
-      nextStep: new FormControl(null)
-    }, {
-      validators: (form) => {
-        const errors: ValidationErrors = {};
-
-        if (form.get('nextStep')?.value === null) {
-          errors.nextStep = { required: true };
-        }
-
-        return Object.keys(errors).length > 0 ? errors : null;
-      }
+      nextStep: new FormControl(null, [Validators.required])
     });
 
     this.qbdDirectConnectorService.getQBDConnectorSettings().subscribe((qbdConnectorSettings: QbdConnectorGet) => {
