@@ -106,7 +106,7 @@ export class AdvancedSettingsService {
       spent_at: today.toLocaleDateString(),
       expense_key: 'E/2024/02/T/11',
       expense_number: 'E/2024/02/T/11',
-      expense_link: `${environment.fyle_app_url}/app/main/#/enterprise/view_expense/`
+      expense_link: `${environment.fyle_app_url}/app/main/enterprise/view_expense/`
     };
     let memoPreviewText = '';
     const memo: string[] = [];
