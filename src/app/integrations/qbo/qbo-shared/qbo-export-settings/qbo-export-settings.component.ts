@@ -1,27 +1,25 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Observable, Subject, catchError, concat, debounceTime, filter, forkJoin, of } from 'rxjs';
 import { brandingConfig, brandingFeatureConfig, brandingKbArticles, brandingStyle } from 'src/app/branding/branding-config';
 import { ExportSettingOptionSearch } from 'src/app/core/models/common/export-settings.model';
 import { SelectFormOption } from 'src/app/core/models/common/select-form-option.model';
 import { DefaultDestinationAttribute, DestinationAttribute, PaginatedDestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
-import { AppName, ConfigurationCta, ConfigurationWarningEvent, EmployeeFieldMapping, ExpenseGroupingFieldOption, ExportDateType, FundSource, FyleField, QBOCorporateCreditCardExpensesObject, QBOOnboardingState, QBOReimbursableExpensesObject, QboExportSettingDestinationOptionKey, ToastSeverity } from 'src/app/core/models/enum/enum.model';
+import { AppName, ConfigurationCta, ConfigurationWarningEvent, EmployeeFieldMapping, ExpenseGroupingFieldOption, FyleField, QBOCorporateCreditCardExpensesObject, QBOOnboardingState, QBOReimbursableExpensesObject, QboExportSettingDestinationOptionKey, ToastSeverity } from 'src/app/core/models/enum/enum.model';
 import { ConfigurationWarningOut } from 'src/app/core/models/misc/configuration-warning.model';
-import { QBOExportSettingGet } from 'src/app/core/models/qbo/qbo-configuration/qbo-export-setting.model';
+import { QBOExportSettingGet, QboExportSettingsForm } from 'src/app/core/models/qbo/qbo-configuration/qbo-export-setting.model';
+import { QBOEmployeeSettingGet } from 'src/app/core/models/qbo/qbo-configuration/qbo-employee-setting.model';
 import { HelperService } from 'src/app/core/services/common/helper.service';
 import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
 import { MappingService } from 'src/app/core/services/common/mapping.service';
 import { WindowService } from 'src/app/core/services/common/window.service';
 import { WorkspaceService } from 'src/app/core/services/common/workspace.service';
-import { QboExportSettingsService } from 'src/app/core/services/qbo/qbo-configuration/qbo-export-settings.service';
+import { QboExportSettingsService, QBO_FIELD_DEPENDENCIES, QBO_MANDATORY_FIELD_RULES } from 'src/app/core/services/qbo/qbo-configuration/qbo-export-settings.service';
 import { QboHelperService } from 'src/app/core/services/qbo/qbo-core/qbo-helper.service';
-// Add to existing imports
-import { QBOEmployeeSettingGet } from 'src/app/core/models/qbo/qbo-configuration/qbo-employee-setting.model';
 import { QboEmployeeSettingsService } from 'src/app/core/services/qbo/qbo-configuration/qbo-employee-settings.service';
 import { TranslocoService } from '@jsverse/transloco';
 import { EmployeeSettingsService } from 'src/app/core/services/common/employee-settings.service';
-import { ExportSettingsService } from 'src/app/core/services/common/export-settings.service';
 import { BrandingService } from 'src/app/core/services/common/branding.service';
 import { StorageService } from 'src/app/core/services/common/storage.service';
 
@@ -74,8 +72,6 @@ export class QboExportSettingsComponent implements OnInit {
   cccExpenseGroupingDateOptions: SelectFormOption[] = [];
 
   nameInJournalOptions: SelectFormOption[] = [];
-
-  showNameInJournalOption: boolean;
 
   exportSettingForm: FormGroup;
 
@@ -139,37 +135,26 @@ export class QboExportSettingsComponent implements OnInit {
 
   showWarningMessageAboutAutoExpenseCreation: boolean;
 
-  get isReimbursableAccountsPayableMandatory(): boolean {
-    // Accounts payable is ONLY required for
-    // 1. reimbursable expenses exported as journal entry, AND
-    // 2. employee mapping is set to vendor
-    return (
-      this.exportSettingForm.get('reimbursableExportType')?.value === QBOReimbursableExpensesObject.JOURNAL_ENTRY &&
-      this.employeeSettingForm.get('employeeMapping')?.value === EmployeeFieldMapping.VENDOR
-    );
+  showField(field: keyof QboExportSettingsForm): boolean {
+    const condition = QBO_FIELD_DEPENDENCIES[field];
+    return condition ? condition(this.exportSettingForm, this.employeeSettingForm.get('employeeMapping')?.value) : true;
   }
 
-  get isReimbursableAccountsPayableShown(): boolean {
-    return (
-      this.exportSettingForm.get('reimbursableExportType')?.value === QBOReimbursableExpensesObject.BILL || (
-        this.exportSettingForm.get('reimbursableExportType')?.value === QBOReimbursableExpensesObject.JOURNAL_ENTRY &&
-        this.employeeSettingForm.get('employeeMapping')?.value === EmployeeFieldMapping.VENDOR
-      )
-    );
+  isFieldMandatory(field: keyof QboExportSettingsForm): boolean {
+    const mandatoryOverride = QBO_MANDATORY_FIELD_RULES[field];
+    if (mandatoryOverride) {
+      return mandatoryOverride(this.exportSettingForm, this.employeeSettingForm.get('employeeMapping')?.value);
+    }
+    return this.showField(field);
   }
 
-  get isCCCAccountsPayableShown(): boolean {
-    return this.exportSettingForm.get('creditCardExportType')?.value === QBOCorporateCreditCardExpensesObject.BILL;
-  }
-
-  /** If an AP is selected for reimbursable expenses, it should be read-only for CCC */
   get isCCCAccountsPayableDisabled(): boolean {
-    return this.isReimbursableAccountsPayableShown && this.exportSettingForm.get('accountsPayable')?.value !== null;
+    return this.showField('accountsPayable') && this.exportSettingForm.get('accountsPayable')?.value !== null;
   }
 
   constructor(
     private translocoService: TranslocoService,
-    public helperService: HelperService,
+    private helperService: HelperService,
     private qboHelperService: QboHelperService,
     private mappingService: MappingService,
     private router: Router,
@@ -376,13 +361,12 @@ export class QboExportSettingsComponent implements OnInit {
   }
 
   private setupCustomWatchers(): void {
-    if (this.exportSettingForm.get('creditCardExportType')?.value && [QBOCorporateCreditCardExpensesObject.CREDIT_CARD_PURCHASE, QBOCorporateCreditCardExpensesObject.DEBIT_CARD_EXPENSE].includes(this.exportSettingForm.get('creditCardExportType')?.value)) {
-      this.updateCCCExpenseGroupingDateOptions(this.exportSettingForm.get('creditCardExportType')?.value);
+    const currentCCCExportType = this.exportSettingForm.get('creditCardExportType')?.value;
+    if (currentCCCExportType && [QBOCorporateCreditCardExpensesObject.CREDIT_CARD_PURCHASE, QBOCorporateCreditCardExpensesObject.DEBIT_CARD_EXPENSE].includes(currentCCCExportType)) {
+      this.updateCCCExpenseGroupingDateOptions(currentCCCExportType);
     }
 
-    this.qboExportSettingsService.creditCardExportTypeChange.subscribe((selectedValue: QBOCorporateCreditCardExpensesObject) => {
-      this.showNameInJournalOption = selectedValue === QBOCorporateCreditCardExpensesObject.JOURNAL_ENTRY ? true : false;
-
+    this.exportSettingForm.get('creditCardExportType')?.valueChanges.subscribe((selectedValue: QBOCorporateCreditCardExpensesObject) => {
       this.updateCCCExpenseGroupingDateOptions(selectedValue);
     });
   }
@@ -428,25 +412,12 @@ export class QboExportSettingsComponent implements OnInit {
   }
 
   private setupAccountsPayableWatchers(): void {
-    // CCC AP & reimbursable AP should be synced with each other
     this.exportSettingForm.get('accountsPayable')?.valueChanges.subscribe((selectedAccountsPayable) => {
       this.exportSettingForm.get('CCCAccountsPayable')?.setValue(selectedAccountsPayable, { emitEvent: false });
     });
 
     this.exportSettingForm.get('CCCAccountsPayable')?.valueChanges.subscribe((selectedCCCAccountsPayable) => {
       this.exportSettingForm.get('accountsPayable')?.setValue(selectedCCCAccountsPayable, { emitEvent: false });
-    });
-
-    // Dynamically mark AP required based on the getter
-    this.exportSettingForm.valueChanges.subscribe(() => {
-      const accountsPayable = this.exportSettingForm.get('accountsPayable');
-
-      if (this.isReimbursableAccountsPayableMandatory) {
-        accountsPayable?.addValidators(Validators.required);
-      } else {
-        accountsPayable?.removeValidators(Validators.required);
-      }
-      accountsPayable?.updateValueAndValidity({ emitEvent: false });
     });
   }
 
@@ -599,35 +570,24 @@ export class QboExportSettingsComponent implements OnInit {
       this.vendors = vendors.results.map((option) => this.qboExportSettingsService.formatGeneralMappingPayload(option));
       this.expenseAccounts = this.bankAccounts.concat(this.cccAccounts);
       this.isImportItemsEnabled = workspaceGeneralSettings?.import_items || false;
-      this.showNameInJournalOption = this.exportSettings.workspace_general_settings?.corporate_credit_card_expenses_object === QBOCorporateCreditCardExpensesObject.JOURNAL_ENTRY ? true : false;
 
       this.addMissingOptions();
-      this.exportSettingForm = this.qboExportSettingsService.mapAPIResponseToFormGroup(this.exportSettings, this.employeeFieldMapping);
       this.employeeSettingForm = QboExportSettingsService.createEmployeeSettingsForm(
         this.employeeFieldMapping,
         workspaceGeneralSettings?.auto_map_employees || false
+      );
+      this.exportSettingForm = this.qboExportSettingsService.mapAPIResponseToFormGroup(
+        this.exportSettings,
+        this.employeeFieldMapping,
+        () => this.employeeSettingForm.get('employeeMapping')?.value
       );
       if (!this.brandingFeatureConfig.featureFlags.exportSettings.reimbursableExpenses) {
         this.exportSettingForm.controls.creditCardExpense.patchValue(true);
       }
 
-      this.helperService.addExportSettingFormValidator(this.exportSettingForm);
-
-      const [exportSettingValidatorRule, exportModuleRule] = QboExportSettingsService.getValidators();
-
-      this.helperService.setConfigurationSettingValidatorsAndWatchers(exportSettingValidatorRule, this.exportSettingForm);
-
-      const employeeMappingControl = this.employeeSettingForm.get('employeeMapping');
-      if (this.exportSettings.workspace_general_settings?.reimbursable_expenses_object) {
-        this.qboExportSettingsService.setupDynamicValidators(this.exportSettingForm, employeeMappingControl, exportModuleRule[0], this.exportSettings.workspace_general_settings?.reimbursable_expenses_object);
-        this.helperService.setOrClearValidators(this.exportSettings.workspace_general_settings?.reimbursable_expenses_object, exportSettingValidatorRule.reimbursableExpense, this.exportSettingForm);
-      }
-
-      if (this.exportSettings.workspace_general_settings?.corporate_credit_card_expenses_object) {
-        this.qboExportSettingsService.setupDynamicValidators(this.exportSettingForm, employeeMappingControl, exportModuleRule[1], this.exportSettings.workspace_general_settings?.corporate_credit_card_expenses_object);
-        this.helperService.setOrClearValidators(this.exportSettings.workspace_general_settings?.corporate_credit_card_expenses_object, exportSettingValidatorRule.creditCardExpense, this.exportSettingForm);
-      }
-
+      this.employeeSettingForm.get('employeeMapping')?.valueChanges.subscribe(() => {
+        this.exportSettingForm.updateValueAndValidity();
+      });
       this.isMultilineOption = brandingConfig.brandId !== 'co' ? true : false;
 
       this.setupExportTypeWatcher();
@@ -635,10 +595,6 @@ export class QboExportSettingsComponent implements OnInit {
       this.setupCustomDateOptionWatchers();
       this.optionSearchWatcher();
       this.setupAccountsPayableWatchers();
-
-      this.qboExportSettingsService.setExportTypeValidatorsAndWatchers(
-        exportModuleRule, this.exportSettingForm, employeeMappingControl
-      );
 
       this.isLoading = false;
     });
