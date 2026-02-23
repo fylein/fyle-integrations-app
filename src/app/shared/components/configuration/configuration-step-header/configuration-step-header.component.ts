@@ -19,7 +19,7 @@ export class ConfigurationStepHeaderComponent implements OnInit {
 
   @Input() contentText: string;
 
-  @Input() redirectLink: string;
+  @Input() redirectLink?: string;
 
   @Input() showSyncButton: boolean;
 

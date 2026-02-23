@@ -2779,5 +2779,19 @@
     "newBenefit1": "Ensures your integration matches your current QuickBooks setup",
     "newBenefit2": "Resolves path mismatch errors",
     "readMore": "Read more"
+  },
+  "qbdDirectRegenerateQwcFile": {
+    "headerTitleExistingPath": "Regenerate file & password",
+    "headerTitleNewPath": "Connect to QuickBooks Desktop",
+    "headerSubTitleExistingPath": "Regenerate your QuickBooks Web Connector (.qwc) file and password for the current company file path.",
+    "headerSubTitleNewPath": "Connect to QuickBooks Desktop by completing the following steps.",
+    "downloadError": "Failed to generate the QWC file. Please try again later.",
+    "connectionFailed": "Connection failed",
+    "gotIt": "Got it",
+    "connectionError": "Failed to connect to QuickBooks Desktop. Please try again later.",
+    "incorrectCompanyPathMessage": "Incorrect company file path detected. Please check and try again.",
+    "incorrectPasswordMessage": "Incorrect password detected. Please check and try again.",
+    "companyNameMismatchMessage": "Company name does not match the previously connected Company. Please check and try again.",
+    "connectionSuccessToast": "QuickBooks Desktop connection successful"
   }
 }

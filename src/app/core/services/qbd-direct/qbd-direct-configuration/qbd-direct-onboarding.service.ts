@@ -22,6 +22,7 @@ export class QbdDirectOnboardingService {
         [QbdDirectOnboardingState.INCORRECT_PASSWORD]: 2,
         [QbdDirectOnboardingState.DESTINATION_SYNC_IN_PROGRESS]: 2,
         [QbdDirectOnboardingState.DESTINATION_SYNC_COMPLETE]: 2,
+        [QbdDirectOnboardingState.COMPANY_NAME_MISMATCH]: 2,
         [QbdDirectOnboardingState.EXPORT_SETTINGS]: 3,
         [QbdDirectOnboardingState.IMPORT_SETTINGS]: 4,
         [QbdDirectOnboardingState.ADVANCED_SETTINGS]: 5,

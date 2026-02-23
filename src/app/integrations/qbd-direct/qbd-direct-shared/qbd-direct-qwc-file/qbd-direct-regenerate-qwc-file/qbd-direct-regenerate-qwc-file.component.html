@@ -1,1 +1,60 @@
-<app-qbd-direct-prerequisites-v2></app-qbd-direct-prerequisites-v2>
+@if (state() === QwcFlowState.PREREQUISITES) {
+  <app-qbd-direct-prerequisites-v2
+    (continue)="state.set(QwcFlowState.DOWNLOAD)"
+  ></app-qbd-direct-prerequisites-v2>
+} @else {
+  <div class="tw-h-full">
+    @if (isLoading) {
+      <div class="tw-flex tw-justify-center tw-items-center tw-pt-80-px tw-h-[75vh]">
+        <app-loader></app-loader>
+      </div>
+    }
+    @else {
+      <div [ngClass]="[brandingStyle.configuration.settingsContainer, brandingStyle.common.configurationContentsDashboard]">
+        <app-configuration-step-header
+            [headerText]="headerTitle"
+            [contentText]="headerSubTitle"
+            [redirectLink]="redirectLink"
+            [appName]="appName">
+        </app-configuration-step-header>
+
+        <div class="tw-p-24-px tw-flex tw-flex-col tw-gap-[32px]">
+            <app-qbd-direct-download-file
+              [isLoading]="state() === QwcFlowState.DOWNLOAD_IN_PROGRESS"
+              [showDownloadLink]="state() === QwcFlowState.DOWNLOAD_DONE"
+              [isStepCompleted]="state() > QwcFlowState.DOWNLOAD_DONE"
+              [isCompanyPathInvalid]="isCompanyPathInvalid()"
+              (nextStep)="handleDownloadNextStepClick()"
+              (downloadClick)="handleDownloadClick($event)"
+              (retryClick)="handleRetry()"
+              (manualDownload)="handleManualDownload()"
+            ></app-qbd-direct-download-file>
+
+            <app-qbd-direct-setup-connection
+              [showSection]="state() >= QwcFlowState.SETUP_CONNECTION"
+              [isLoading]="state() === QwcFlowState.CONNECTION_IN_PROGRESS"
+              [isStepCompleted]="state() > QwcFlowState.CONNECTION_DONE"
+              [connectionStatus]="connectionStatus()"
+              [isCTAEnabled]="connectionStatus() === QBDConnectionStatus.SUCCESS"
+              [password]="password()"
+              (doneClick)="handleConnectionDone($event)"
+              (nextClick)="handleConnectionNext()"
+              (manualDownload)="handleManualDownload()"
+            ></app-qbd-direct-setup-connection>
+        </div>
+      </div>
+    }
+  </div>
+
+  @if (isDialogVisible()) {
+    <app-configuration-confirmation-dialog
+      (warningAccepted)="closeDialog()"
+      [isWarningVisible]="isDialogVisible()"
+      [headerText]="'qbdDirectRegenerateQwcFile.connectionFailed' | transloco"
+      [contextText]="warningDialogText()"
+      [confirmBtnText]="'qbdDirectRegenerateQwcFile.gotIt' | transloco"
+      [appName]="appName"
+      [showSecondaryCTA]="false">
+    </app-configuration-confirmation-dialog>
+  }
+}

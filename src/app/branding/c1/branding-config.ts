@@ -193,6 +193,13 @@ export const c1KbArticles: KbArticle[string] = {
             ACCOUNT: `${brandingConfig.helpArticleDomain}`,
             COST_CODE: `${brandingConfig.helpArticleDomain}`,
             EXPORT_LOG: `${brandingConfig.helpArticleDomain}`
+        },
+        QBD_DIRECT: {
+            REGENERATE_QWC_FILE_LANDING_HEADER: `${brandingConfig.helpArticleDomain}/en/articles/12585767-set-up-an-integration-with-quickbooks-desktop`,
+            TEAM_ACCESS_QWC_NOT_RECOMMENDED: `${brandingConfig.helpArticleDomain}/en/articles/12585767-set-up-an-integration-with-quickbooks-desktop`,
+            REGENERATE_QWC_FILE_EXISTING_PATH_WARNING: `${brandingConfig.helpArticleDomain}/en/articles/12585767-set-up-an-integration-with-quickbooks-desktop`,
+            REGENERATE_QWC_FILE_NEW_PATH_HEADER: `${brandingConfig.helpArticleDomain}/en/articles/12585767-set-up-an-integration-with-quickbooks-desktop`,
+            REGENERATE_QWC_FILE_NEW_PATH_WARNING: `${brandingConfig.helpArticleDomain}/en/articles/12585767-set-up-an-integration-with-quickbooks-desktop`
         }
     }
 };

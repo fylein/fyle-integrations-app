@@ -3,7 +3,7 @@ import { ChangeDetectorRef, Component, EventEmitter, Input, OnInit, Output } fro
 import { FormGroupDirective, ControlContainer, ReactiveFormsModule, FormGroup, FormControl, Validators } from '@angular/forms';
 import { TranslocoService } from '@jsverse/transloco';
 import { brandingConfig, brandingDemoVideoLinks, brandingKbArticles, brandingStyle } from 'src/app/branding/branding-config';
-import { CSVImportAttributesService } from 'src/app/core/models/db/csv-import-attributes.model';
+import { CSVAppName, CSVImportAttributesService } from 'src/app/core/models/db/csv-import-attributes.model';
 import { sage50AttributeDisplayNames } from 'src/app/core/models/sage50/sage50-configuration/attribute-display-names';
 import { Sage50FyleField, Sage50ImportableField } from 'src/app/core/models/sage50/sage50-configuration/sage50-import-settings.model';
 import { SharedModule } from 'src/app/shared/shared.module';
@@ -24,7 +24,7 @@ import { ClickEvent, TrackingApp } from 'src/app/core/models/enum/enum.model';
     viewProviders: [{ provide: ControlContainer, useExisting: FormGroupDirective }],
     providers: [DialogService]
 })
-export class ConfigurationCsvImportFieldComponent implements OnInit {
+export class ConfigurationCsvImportFieldComponent<A extends CSVAppName> implements OnInit {
 
   @Input({ required: true }) formGroupName: string;
 
@@ -48,7 +48,7 @@ export class ConfigurationCsvImportFieldComponent implements OnInit {
 
   @Input() infoText: string;
 
-  @Input() appResourceKey: keyof typeof brandingKbArticles.postOnboardingArticles;
+  @Input() appResourceKey: A;
 
   @Input() hasBeenImported: boolean;
 
@@ -56,7 +56,7 @@ export class ConfigurationCsvImportFieldComponent implements OnInit {
 
   @Input() previewImagePath: string;
 
-  @Input() uploadData: CSVImportAttributesService['importAttributes'];
+  @Input() uploadData: CSVImportAttributesService<A>['importAttributes'];
 
   readonly brandingStyle = brandingStyle;
 

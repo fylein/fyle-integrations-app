@@ -32,7 +32,9 @@ export class QbdDirectQwcFileLandingComponent implements OnInit {
 
   readonly appName: AppName = AppName.QBD_DIRECT;
 
-  readonly redirectLink: string = brandingKbArticles.topLevelArticles.QBD_DIRECT;
+  readonly headerRedirectLink: string = brandingKbArticles.postOnboardingArticles.QBD_DIRECT.REGENERATE_QWC_FILE_LANDING_HEADER;
+
+  readonly teamAccessNotRecommendedRedirectLink: string = brandingKbArticles.postOnboardingArticles.QBD_DIRECT.TEAM_ACCESS_QWC_NOT_RECOMMENDED;
 
   readonly ConfigurationCtaText = ConfigurationCta;
 

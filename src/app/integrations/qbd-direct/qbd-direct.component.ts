@@ -46,7 +46,7 @@ export class QbdDirectComponent implements OnInit {
   private navigate(): void {
     const pathName = this.windowReference.location.pathname;
     if (pathName === '/integrations/qbd_direct') {
-      const onboardingStateComponentMap = {
+      const onboardingStateComponentMap: Record<QbdDirectOnboardingState, string> = {
         [QbdDirectOnboardingState.YET_TO_START]: '/integrations/qbd_direct/onboarding/landing',
         [QbdDirectOnboardingState.CONFIRM_PRE_REQUISITES]: '/integrations/qbd_direct/onboarding/pre_requisite',
         [QbdDirectOnboardingState.CONNECTION]: '/integrations/qbd_direct/onboarding/connector',
@@ -58,6 +58,7 @@ export class QbdDirectComponent implements OnInit {
         [QbdDirectOnboardingState.EXPORT_SETTINGS]: '/integrations/qbd_direct/onboarding/export_settings',
         [QbdDirectOnboardingState.IMPORT_SETTINGS]: '/integrations/qbd_direct/onboarding/import_settings',
         [QbdDirectOnboardingState.ADVANCED_SETTINGS]: '/integrations/qbd_direct/onboarding/advanced_settings',
+        [QbdDirectOnboardingState.COMPANY_NAME_MISMATCH]: '/integrations/qbd_direct/main',
         [QbdDirectOnboardingState.COMPLETE]: '/integrations/qbd_direct/main'
       };
       this.router.navigateByUrl(onboardingStateComponentMap[this.workspace.onboarding_state]);
