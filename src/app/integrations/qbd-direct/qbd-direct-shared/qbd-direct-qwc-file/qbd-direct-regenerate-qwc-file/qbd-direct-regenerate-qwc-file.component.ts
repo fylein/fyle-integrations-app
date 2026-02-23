@@ -5,7 +5,7 @@ import { QbdDirectPrerequisitesV2Component } from '../../qbd-direct-prerequisite
 import { TranslocoService } from '@jsverse/transloco';
 import { brandingKbArticles, brandingStyle } from 'src/app/branding/branding-config';
 import { SharedModule } from 'src/app/shared/shared.module';
-import { AppName, QBDConnectionStatus, QbdDirectOnboardingState, ToastSeverity } from 'src/app/core/models/enum/enum.model';
+import { AppName, ConfigurationCta, QBDConnectionStatus, QbdDirectOnboardingState, ToastSeverity } from 'src/app/core/models/enum/enum.model';
 import { QbdDirectDownloadFileComponent } from "../../qbd-direct-download-file/qbd-direct-download-file.component";
 import { QbdDirectSetupConnectionComponent } from '../../qbd-direct-setup-connection/qbd-direct-setup-connection.component';
 import { QbdDirectConnectorService } from 'src/app/core/services/qbd-direct/qbd-direct-configuration/qbd-direct-connector.service';
@@ -67,6 +67,8 @@ export class QbdDirectRegenerateQwcFileComponent implements OnInit {
 
   readonly QBDConnectionStatus = QBDConnectionStatus;
 
+  readonly ConfigurationCta = ConfigurationCta;
+
   // Helper functions
   get headerTitle(): string {
     return this.flowType === QwcRegenerationFlowType.EXISTING ?
@@ -124,6 +126,26 @@ export class QbdDirectRegenerateQwcFileComponent implements OnInit {
 
   handleRetry(): void {
     this.state.set(QwcFlowState.DOWNLOAD);
+  }
+
+  handleBackClick(): void {
+    if (this.state() > QwcFlowState.SETUP_CONNECTION) {
+      this.workspaceService.updateWorkspaceOnboardingState({
+        onboarding_state: QbdDirectOnboardingState.PENDING_QWC_UPLOAD
+      }).subscribe({
+        next: () => {
+          this.state.set(QwcFlowState.SETUP_CONNECTION);
+        },
+        error: (error) => {
+          console.error('Error updating workspace onboarding state:', error);
+          this.toastService.displayToastMessage(ToastSeverity.ERROR, this.translocoService.translate('qbdDirectRegenerateQwcFile.backError'));
+        }
+      });
+    } else if (this.state() > QwcFlowState.DOWNLOAD) {
+      this.state.set(QwcFlowState.DOWNLOAD);
+    } else {
+      this.state.set(QwcFlowState.PREREQUISITES);
+    }
   }
 
   handleDownloadNextStepClick(): void {

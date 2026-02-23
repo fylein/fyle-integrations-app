@@ -25,6 +25,8 @@ export class QbdDirectDownloadFileComponent {
 
   @Input({required: true}) isCompanyPathInvalid: boolean;
 
+  @Input() showAssistedSetup: boolean = true;
+
   @Output() nextStep = new EventEmitter();
 
   @Output() downloadClick: EventEmitter<string> = new EventEmitter();
@@ -32,6 +34,8 @@ export class QbdDirectDownloadFileComponent {
   @Output() retryClick = new EventEmitter();
 
   @Output() manualDownload = new EventEmitter();
+
+  @Output() back = new EventEmitter();
 
   readonly brandingConfig = brandingConfig;
 
@@ -67,4 +71,7 @@ export class QbdDirectDownloadFileComponent {
     this.retryClick.emit();
   }
 
+  onBackClick() {
+    this.back.emit();
+  }
 }

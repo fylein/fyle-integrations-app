@@ -24,10 +24,12 @@
               [showDownloadLink]="state() === QwcFlowState.DOWNLOAD_DONE"
               [isStepCompleted]="state() > QwcFlowState.DOWNLOAD_DONE"
               [isCompanyPathInvalid]="isCompanyPathInvalid()"
+              [showAssistedSetup]="false"
               (nextStep)="handleDownloadNextStepClick()"
               (downloadClick)="handleDownloadClick($event)"
               (retryClick)="handleRetry()"
               (manualDownload)="handleManualDownload()"
+              (back)="handleBackClick()"
             ></app-qbd-direct-download-file>
 
             <app-qbd-direct-setup-connection
@@ -37,9 +39,13 @@
               [connectionStatus]="connectionStatus()"
               [isCTAEnabled]="connectionStatus() === QBDConnectionStatus.SUCCESS"
               [password]="password()"
+              [alwaysShowFooter]="true"
+              [showAssistedSetup]="false"
+              [ctaText]="ConfigurationCta.DONE"
               (doneClick)="handleConnectionDone($event)"
               (nextClick)="handleConnectionNext()"
               (manualDownload)="handleManualDownload()"
+              (back)="handleBackClick()"
             ></app-qbd-direct-setup-connection>
         </div>
       </div>
