@@ -60,7 +60,6 @@ export const fyleFeatureConfig: FeatureConfiguration[string] = {
             importProjects: true,
             allowCustomSegment: true,
             dependentField: true,
-            allowImportCode: true,
             importSettingsV1: true,
             disableCustomerSourceField: false
         },

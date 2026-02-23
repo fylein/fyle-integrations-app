@@ -60,7 +60,6 @@ export const c1FeatureConfig: FeatureConfiguration[string] = {
             importProjects: true,
             allowCustomSegment: false,
             dependentField: true,
-            allowImportCode: false,
             importSettingsV1: false,
             disableCustomerSourceField: true
         },

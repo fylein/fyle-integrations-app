@@ -53,7 +53,6 @@ export type FeatureConfiguration = {
                 importProjects: boolean;
                 allowCustomSegment: boolean;
                 dependentField: boolean;
-                allowImportCode: boolean;
                 importSettingsV1: boolean;
                 disableCustomerSourceField: boolean;
             },

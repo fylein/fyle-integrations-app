@@ -148,8 +148,6 @@ export class AdvancedSettingsService {
       frequency = 0;
     } else if (autoImportExportEnabled) {
       frequency = intervalHours;
-    } else {
-      frequency = 0;
     }
 
     return frequency;

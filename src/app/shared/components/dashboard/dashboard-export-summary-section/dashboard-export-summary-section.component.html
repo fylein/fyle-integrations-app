@@ -2,7 +2,13 @@
   <div class="tw-rounded-8-px tw-bg-white tw-border-1-px tw-border-border-tertiary" [ngClass]="brandingStyle.common.mainComponentShadow">
     <div class="tw-flex tw-justify-between tw-items-center tw-p-24-px">
       <!-- Temporary hack to enable repurposed export summary only for allowed apps - #q2_real_time_exports_integrations -->
-      <h4 class="tw-text-text-primary" [ngClass]="brandingStyle.dashboard.exportSummaryHeaderText">{{ [AppName.XERO, AppName.QBO, AppName.NETSUITE, AppName.INTACCT, AppName.QBD_DIRECT, AppName.SAGE300].includes(appName) ? "Today's export overview" : 'Your last export'}}</h4>
+      <h4 class="tw-text-text-primary" [ngClass]="brandingStyle.dashboard.exportSummaryHeaderText">
+        {{
+          [AppName.XERO, AppName.QBO, AppName.NETSUITE, AppName.INTACCT, AppName.QBD_DIRECT, AppName.SAGE300].includes(appName)
+            ? ('dashboardExportSummarySection.todaysExportOverview' | transloco)
+            : ('dashboardExportSummarySection.yourLastExport' | transloco)
+        }}
+      </h4>
     </div>
     <div class="tw-border-border-tertiary tw-border-t-1-px">
       <div class="tw-p-6 tw-rounded-6-px tw-bg-white">
