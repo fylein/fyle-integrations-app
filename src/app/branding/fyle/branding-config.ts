@@ -86,7 +86,6 @@ export const fyleFeatureConfig: FeatureConfiguration[string] = {
         },
         dashboard: {
             disconnectButton: true,
-            useRepurposedExportSummary: true,
             shouldShowExpenseTypeInAccountingErrorDashboard: true,
             showTextOnlyForButtonsInDashboardErrorSection: false,
             showDashboardErrorSectionHeader: true

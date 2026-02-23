@@ -2,7 +2,7 @@
   <div class="tw-rounded-8-px tw-bg-white tw-border-1-px tw-border-border-tertiary" [ngClass]="brandingStyle.common.mainComponentShadow">
     <div class="tw-flex tw-justify-between tw-items-center tw-p-24-px">
       <!-- Temporary hack to enable repurposed export summary only for allowed apps - #q2_real_time_exports_integrations -->
-      <h4 class="tw-text-text-primary" [ngClass]="brandingStyle.dashboard.exportSummaryHeaderText">{{ brandingFeatureConfig.featureFlags.dashboard.useRepurposedExportSummary && [AppName.XERO, AppName.QBO, AppName.NETSUITE, AppName.INTACCT, AppName.QBD_DIRECT, AppName.SAGE300].includes(appName) ? "Today's export overview" : 'Your last export'}}</h4>
+      <h4 class="tw-text-text-primary" [ngClass]="brandingStyle.dashboard.exportSummaryHeaderText">{{ [AppName.XERO, AppName.QBO, AppName.NETSUITE, AppName.INTACCT, AppName.QBD_DIRECT, AppName.SAGE300].includes(appName) ? "Today's export overview" : 'Your last export'}}</h4>
     </div>
     <div class="tw-border-border-tertiary tw-border-t-1-px">
       <div class="tw-p-6 tw-rounded-6-px tw-bg-white">
@@ -13,7 +13,7 @@
               <p class="tw-text-14-px tw-pl-10-px tw-w-[160px]" [ngClass]="brandingStyle.dashboard.exportSummaryDescriptionText">{{'dashboard.lastExportSuccessText' | transloco}}</p>
 
               <!-- Temporary hack to enable repurposed export summary only for allowed apps - #q2_real_time_exports_integrations -->
-              @if (brandingFeatureConfig.featureFlags.dashboard.useRepurposedExportSummary && [AppName.XERO, AppName.QBO, AppName.NETSUITE, AppName.INTACCT, AppName.QBD_DIRECT, AppName.SAGE300].includes(appName)) {
+              @if ([AppName.XERO, AppName.QBO, AppName.NETSUITE, AppName.INTACCT, AppName.QBD_DIRECT, AppName.SAGE300].includes(appName)) {
                 <span class="tw-text-14-px tw-text-right tw-w-60-px" [ngClass]="[brandingStyle.dashboard.exportSummaryDescriptionText, brandingStyle.dashboard.exportSummaryCountText]">
                   {{ accountingExportSummary?.repurposed_successful_count ? accountingExportSummary?.repurposed_successful_count : 0 }}
                 </span>
@@ -29,7 +29,7 @@
                 }
               }
             </div>
-            @if (!brandingFeatureConfig.featureFlags.dashboard.useRepurposedExportSummary || ![AppName.XERO, AppName.QBO, AppName.NETSUITE, AppName.INTACCT, AppName.QBD_DIRECT, AppName.SAGE300].includes(appName)) {
+            @if (![AppName.XERO, AppName.QBO, AppName.NETSUITE, AppName.INTACCT, AppName.QBD_DIRECT, AppName.SAGE300].includes(appName)) {
               <div class="tw-flex tw-flex-col">
                 <span class="tw-w-260-px tw-text-right">
                   <span class="tw-text-14-px tw-text-text-muted tw-font-400">{{'dashboard.lastExportedAtText' | transloco}} </span>
@@ -46,7 +46,7 @@
               <p class="tw-text-14-px tw-pl-10-px tw-w-160-px" [ngClass]="brandingStyle.dashboard.exportSummaryDescriptionText">{{'dashboard.lastExportFailedText' | transloco}}</p>
 
               <!-- Temporary hack to enable repurposed export summary only for allowed apps - #q2_real_time_exports_integrations -->
-              @if (brandingFeatureConfig.featureFlags.dashboard.useRepurposedExportSummary && [AppName.XERO, AppName.QBO, AppName.NETSUITE, AppName.INTACCT, AppName.QBD_DIRECT, AppName.SAGE300].includes(appName)) {
+              @if ([AppName.XERO, AppName.QBO, AppName.NETSUITE, AppName.INTACCT, AppName.QBD_DIRECT, AppName.SAGE300].includes(appName)) {
                 <span class="tw-text-right tw-text-14-px tw-w-60-px" [ngClass]="[brandingStyle.dashboard.exportSummaryDescriptionText, brandingStyle.dashboard.exportSummaryCountText]">
                   {{ accountingExportSummary?.repurposed_failed_count ? accountingExportSummary?.repurposed_failed_count : 0 }}
                 </span>
