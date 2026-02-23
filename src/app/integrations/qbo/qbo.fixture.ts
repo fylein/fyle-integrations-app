@@ -1852,7 +1852,7 @@ export const mockExpenseGroupResponse: ExpenseGroupResponse = {
               Id: "1",
               Amount: 444.0,
               DetailType: "AccountBasedExpenseLineDetail",
-              Description: "user6@fyleforgotham.in - Office Party - 2021-04-12 - C/2021/04/R/47 -  - https://staging1.fyle.tech/app/admin/#/enterprise/view_expense/txtxDAMBtJbP?org_id=or79Cob97KSh",
+              Description: "user6@fyleforgotham.in - Office Party - 2021-04-12 - C/2021/04/R/47 -  - https://staging1.fyle.tech/app/admin/enterprise/view_expense/txtxDAMBtJbP?org_id=or79Cob97KSh",
               AccountBasedExpenseLineDetail: {
                 AccountRef: {
                   name: "3519 Office Party",
@@ -1986,7 +1986,7 @@ export const mockExpenseGroupResponse: ExpenseGroupResponse = {
               Id: "1",
               Amount: 233.0,
               DetailType: "AccountBasedExpenseLineDetail",
-              Description: "user6@fyleforgotham.in - Unspecified - 2021-03-09 - C/2021/04/R/46 - DUNKIN #3513 (Card Transaction) - https://staging1.fyle.tech/app/admin/#/enterprise/view_expense/txT4JbfgtooE?org_id=or79Cob97KSh",
+              Description: "user6@fyleforgotham.in - Unspecified - 2021-03-09 - C/2021/04/R/46 - DUNKIN #3513 (Card Transaction) - https://staging1.fyle.tech/app/admin/enterprise/view_expense/txT4JbfgtooE?org_id=or79Cob97KSh",
               AccountBasedExpenseLineDetail: {
                 AccountRef: {
                   name: "2526 Unspecified",
@@ -2120,7 +2120,7 @@ export const mockExpenseGroupResponse: ExpenseGroupResponse = {
               Id: "1",
               Amount: 150.75,
               DetailType: "AccountBasedExpenseLineDetail",
-              Description: "user7@fyleforgotham.in - Office Supplies - 2021-05-15 - C/2021/05/R/48 - Office Supplies Inc. - https://staging1.fyle.tech/app/admin/#/enterprise/view_expense/txAB5678efgh?org_id=or79Cob97KSh",
+              Description: "user7@fyleforgotham.in - Office Supplies - 2021-05-15 - C/2021/05/R/48 - Office Supplies Inc. - https://staging1.fyle.tech/app/admin/enterprise/view_expense/txAB5678efgh?org_id=or79Cob97KSh",
               AccountBasedExpenseLineDetail: {
                 AccountRef: {
                   name: "6010 Office Supplies",

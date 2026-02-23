@@ -66,7 +66,7 @@ export class AccountingExportService {
   }
 
   static getFyleExpenseUrl(expense_id: string): string {
-    const url = `${environment.fyle_app_url}/app/admin/#/company_expenses?txnId=${expense_id}`;
+    const url = `${environment.fyle_app_url}/app/admin/company_expenses?txnId=${expense_id}`;
     return url;
   }
 

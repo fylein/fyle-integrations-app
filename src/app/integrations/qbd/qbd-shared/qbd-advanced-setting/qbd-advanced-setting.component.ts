@@ -82,7 +82,7 @@ export class QbdAdvancedSettingComponent implements OnInit {
       merchant: 'Pizza Hut',
       report_number: 'C/2021/12/R/1',
       spent_on: today.toLocaleDateString(),
-      expense_link: `${environment.fyle_app_url}/app/main/#/enterprise/view_expense/`
+      expense_link: `${environment.fyle_app_url}/app/main/enterprise/view_expense/`
     };
     this.memoPreviewText = '';
     const memo: string[] = [];
