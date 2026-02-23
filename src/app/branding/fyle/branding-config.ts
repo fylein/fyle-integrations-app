@@ -191,6 +191,13 @@ export const fyleKbArticles: KbArticle[string] = {
             ACCOUNT: `${brandingConfig.helpArticleDomain}/en/articles/12709905-sage-50-us-integration#h_174913515f`,
             COST_CODE: `${brandingConfig.helpArticleDomain}/en/articles/12709905-sage-50-us-integration#h_174913515f`,
             EXPORT_LOG: `${brandingConfig.helpArticleDomain}/en/articles/12710101-how-to-export-expenses-from-sage-expense-management-to-sage-50-us#h_5309128026`
+        },
+        QBD_DIRECT: {
+            REGENERATE_QWC_FILE_LANDING_HEADER: `${brandingConfig.helpArticleDomain}/en/articles/10259583-quickbooks-desktop-integration-beta`,
+            TEAM_ACCESS_QWC_NOT_RECOMMENDED: `${brandingConfig.helpArticleDomain}/en/articles/10259583-quickbooks-desktop-integration-beta`,
+            REGENERATE_QWC_FILE_EXISTING_PATH_WARNING: `${brandingConfig.helpArticleDomain}/en/articles/10259583-quickbooks-desktop-integration-beta`,
+            REGENERATE_QWC_FILE_NEW_PATH_HEADER: `${brandingConfig.helpArticleDomain}/en/articles/10259583-quickbooks-desktop-integration-beta`,
+            REGENERATE_QWC_FILE_NEW_PATH_WARNING: `${brandingConfig.helpArticleDomain}/en/articles/10259583-quickbooks-desktop-integration-beta`
         }
     }
 };
