@@ -28,9 +28,15 @@ export class QbdDirectSetupConnectionComponent {
 
   @Input({required: true}) showSection: boolean;
 
+  @Input() warningMessage: string;
+
+  @Input() warningArticleLink: string;
+
   @Input() alwaysShowFooter: boolean = false;
 
   @Input() showAssistedSetup: boolean = true;
+
+  @Input() showStepNumber: boolean = true;
 
   @Input() ctaText: ConfigurationCta = ConfigurationCta.NEXT;
 

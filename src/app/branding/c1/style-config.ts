@@ -109,7 +109,7 @@ export const c1Styles = {
             headerCenterContent: 'tw-justify-center',
             bodyStyle: 'tw-py-24-px tw-bg-bg-white tw-mx-[40px] tw-my-[24px] tw-rounded-xl tw-shadow-onboarding-card',
             flowChart: 'tw-mt-50-px',
-            stepStateHeaderText: 'tw-font-600 tw-text-text-primary',
+            stepStateHeaderText: 'tw-font-600 tw-text-text-primary tw-text-14-px',
             downloadFileButton: 'tw-flex tw-w-auto tw-inline-flex tw-items-center tw-justify-center',
             downloadFileHeader: 'tw-flex tw-flex-col-reverse tw-gap-4',
             downloadHeaderText: 'tw-text-14-px tw-font-600 tw-text-text-primary',
