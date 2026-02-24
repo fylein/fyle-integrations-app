@@ -26,9 +26,55 @@
               [dependentImportFields]="dependentImportFields"
               [dependentDestinationValue]="'PROJECT'"
               [isDestinationFixedImport]="true"
-              (showWarningForDependentFields)="showWarningForDependentFields()">
+              (showWarningForDependentFields)="showWarningForDependentFields()"
+              (importCodeEnabled)="handleImportCodeEnabled($event)">
             </app-configuration-import-field>
           </div>
+          @if (importCodeFieldGetter.controls.length > 0) {
+            <div class="tw-pt-24-px">
+              <div class="tw-bg-bg-tertiary-lighter tw-border tw-border-separator tw-rounded-8-px">
+                <div class="tw-px-24-px tw-pt-24-px">
+                  <h4 class="tw-text-16-px tw-text-normal-text-color tw-font-500 tw-mb-8-px">
+                    {{ 'intacctC1ImportSettings.configureImportMethodTitle' | transloco }}
+                  </h4>
+                  <p class="tw-text-14-px tw-text-text-muted">
+                    {{ 'intacctC1ImportSettings.configureImportMethodDescription' | transloco }}
+                  </p>
+                </div>
+                <div class="tw-py-16-px">
+                  <app-configuration-info-label
+                    [iconSrc]="'info-circle-fill-medium'"
+                    [customBackgroundColorClass]="brandingStyle.configuration.infoLabelBackground"
+                    [customStyleClass]="brandingStyle.configuration.infoLabelIcon"
+                    [infoText]="'intacctC1ImportSettings.oneTimeSetupNote' | transloco: { brandName: brandingConfig.brandName }">
+                  </app-configuration-info-label>
+                </div>
+              </div>
+              <div formArrayName="importCodeFields">
+                @for (intacctImportCodeField of importCodeFieldGetter.controls; track intacctImportCodeField; let i = $index) {
+                  <div [formGroupName]="i">
+                    @if (intacctImportCodeConfig[intacctImportCodeField.value.source_field]) {
+                      <app-configuration-select-field
+                        [appName]="appName"
+                        [form]="getFormGroup(intacctImportCodeField)"
+                        [isDisableTextRequired]="false"
+                        [options]="importCodeSelectorOptions[intacctImportCodeField.value.source_field]"
+                        [placeholder]="'intacctC1ImportSettings.selectImportMethodPlaceholder' | transloco: { field: helper.sentenseCaseConversion(intacctImportCodeField.value.source_field).toLowerCase() }"
+                        [label]="'intacctC1ImportSettings.howToImportLabel' | transloco: { field: helper.sentenseCaseConversion(getDestinationField(intacctImportCodeField.value.source_field)).toLowerCase(), appName: appName }"
+                        [subLabel]="'intacctC1ImportSettings.howToImportSubLabel' | transloco: { field: helper.sentenseCaseConversion(getDestinationField(intacctImportCodeField.value.source_field)).toLowerCase() }"
+                        [isMultiLineOption]="true"
+                        [isFieldMandatory]="true"
+                        [isimportSettings]="true"
+                        [customErrorMessage]="'intacctC1ImportSettings.selectImportMethodError' | transloco: { field: helper.sentenseCaseConversion(intacctImportCodeField.value.source_field).toLowerCase() }"
+                        [isDisabled]="!intacctImportCodeConfig[intacctImportCodeField.value.source_field]"
+                        [formControllerName]="'import_code'">
+                      </app-configuration-select-field>
+                    }
+                  </div>
+                }
+              </div>
+            </div>
+          }
         </div>
         @if (isOnboarding) {
           <app-configuration-step-footer
