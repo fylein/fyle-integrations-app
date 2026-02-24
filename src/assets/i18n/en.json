@@ -2792,6 +2792,7 @@
     "incorrectCompanyPathMessage": "Incorrect company file path detected. Please check and try again.",
     "incorrectPasswordMessage": "Incorrect password detected. Please check and try again.",
     "companyNameMismatchMessage": "Company name does not match the previously connected Company. Please check and try again.",
-    "connectionSuccessToast": "QuickBooks Desktop connection successful"
+    "connectionSuccessToast": "QuickBooks Desktop connection successful",
+    "backError": "Something went wrong. Please try again later."
   }
 }

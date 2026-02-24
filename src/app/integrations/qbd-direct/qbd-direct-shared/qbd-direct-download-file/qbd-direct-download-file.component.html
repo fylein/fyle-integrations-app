@@ -108,7 +108,7 @@
 </div>
 @if (!isStepCompleted) {
   <div>
-    <app-configuration-step-footer [shouldShowQBDAssistedSetup]="true" [qbdDirectInteractionType]="QBDDirectInteractionType.QUERY" [ctaText]="ConfigurationCtaText.NEXT" [AppName]="appName.QBD_DIRECT" [isButtonDisabled]="!showDownloadLink" (save)="continueToNextStep()"></app-configuration-step-footer>
+    <app-configuration-step-footer [shouldShowQBDAssistedSetup]="showAssistedSetup" [showBackButton]="!showAssistedSetup" [qbdDirectInteractionType]="QBDDirectInteractionType.QUERY" [ctaText]="ConfigurationCtaText.NEXT" [AppName]="appName.QBD_DIRECT" [isButtonDisabled]="!showDownloadLink" [isBackButtonDisabled]="isLoading" (save)="continueToNextStep()" (navigateToPreviousStep)="onBackClick()"></app-configuration-step-footer>
   </div>
 }
 </div>
