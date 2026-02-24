@@ -9,7 +9,6 @@ import { AppName, ConfigurationCta, QBDConnectionStatus, QbdDirectOnboardingStat
 import { QbdDirectDownloadFileComponent } from "../../qbd-direct-download-file/qbd-direct-download-file.component";
 import { QbdDirectSetupConnectionComponent } from '../../qbd-direct-setup-connection/qbd-direct-setup-connection.component';
 import { QbdDirectConnectorService } from 'src/app/core/services/qbd-direct/qbd-direct-configuration/qbd-direct-connector.service';
-import { QbdConnectorGet } from 'src/app/core/models/qbd-direct/qbd-direct-configuration/qbd-direct-connector.model';
 import { downloadXMLFile } from 'src/app/core/util/downloadFile';
 import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
 import { WorkspaceService } from 'src/app/core/services/common/workspace.service';
@@ -42,7 +41,6 @@ export class QbdDirectRegenerateQwcFileComponent implements OnInit {
 
   isCompanyPathInvalid = signal(false);
 
-  // TODO: update on init (existing file path)
   password = signal('');
 
   connectionStatus = computed(() => {
@@ -69,6 +67,8 @@ export class QbdDirectRegenerateQwcFileComponent implements OnInit {
 
   readonly ConfigurationCta = ConfigurationCta;
 
+  readonly QwcRegenerationFlowType = QwcRegenerationFlowType;
+
   // Helper functions
   get headerTitle(): string {
     return this.flowType === QwcRegenerationFlowType.EXISTING ?
@@ -82,11 +82,25 @@ export class QbdDirectRegenerateQwcFileComponent implements OnInit {
       this.translocoService.translate('qbdDirectRegenerateQwcFile.headerSubTitleNewPath');
   }
 
-  get redirectLink(): string | undefined {
+  get headerArticleLink(): string | undefined {
     if (this.flowType === QwcRegenerationFlowType.NEW) {
       return brandingKbArticles.postOnboardingArticles.QBD_DIRECT.REGENERATE_QWC_FILE_NEW_PATH_HEADER;
     }
     return undefined;
+  }
+
+  get warningText(): string {
+    if (this.flowType === QwcRegenerationFlowType.NEW) {
+      return this.translocoService.translate('qbdDirectRegenerateQwcFile.warningTextNewPath');
+    }
+    return this.translocoService.translate('qbdDirectRegenerateQwcFile.warningTextExistingPath');
+  }
+
+  get warningArticleLink(): string {
+    if (this.flowType === QwcRegenerationFlowType.NEW) {
+      return brandingKbArticles.postOnboardingArticles.QBD_DIRECT.REGENERATE_QWC_FILE_NEW_PATH_WARNING;
+    }
+    return brandingKbArticles.postOnboardingArticles.QBD_DIRECT.REGENERATE_QWC_FILE_EXISTING_PATH_WARNING;
   }
 
   constructor(
@@ -99,14 +113,40 @@ export class QbdDirectRegenerateQwcFileComponent implements OnInit {
     private router: Router
   ) {}
 
+  handlePrerequisitesContinue(): void {
+    if (this.flowType === QwcRegenerationFlowType.NEW) {
+      this.state.set(QwcFlowState.DOWNLOAD);
+      return;
+    }
+
+    // For existing flow
+    // 1. update the workspace onboarding state to PENDING_QWC_UPLOAD and
+    // 2. download the qwc file
+    this.isLoading = true;
+    this.workspaceService.updateWorkspaceOnboardingState({
+      onboarding_state: QbdDirectOnboardingState.PENDING_QWC_UPLOAD
+    }).subscribe({
+      next: () => {
+        this.state.set(QwcFlowState.SETUP_CONNECTION);
+        this.handleManualDownload();
+        this.isLoading = false;
+      },
+      error: (error) => {
+        console.error('Error updating workspace onboarding state:', error);
+        this.toastService.displayToastMessage(ToastSeverity.ERROR, this.translocoService.translate('qbdDirectRegenerateQwcFile.somethingWentWrong'));
+        this.isLoading = false;
+      }
+    });
+  }
+
   handleDownloadClick(filePath: any): void {
     if (filePath) {
       this.state.set(QwcFlowState.DOWNLOAD_IN_PROGRESS);
       this.isCompanyPathInvalid.set(false);
-      this.qbdDirectConnectorService.postQbdDirectConntion({file_location: filePath}).subscribe({
-        next: (connectionResponse: QbdConnectorGet) => {
-          this.password.set(connectionResponse.password);
-          this.xmlFileContent = connectionResponse.qwc;
+      this.qbdDirectConnectorService.postQbdConnectorSettings({file_location: filePath}).subscribe({
+        next: (qbdConnectorSettings) => {
+          this.password.set(qbdConnectorSettings.password);
+          this.xmlFileContent = qbdConnectorSettings.qwc;
           this.state.set(QwcFlowState.DOWNLOAD_DONE);
           this.handleManualDownload();
         },
@@ -138,10 +178,10 @@ export class QbdDirectRegenerateQwcFileComponent implements OnInit {
         },
         error: (error) => {
           console.error('Error updating workspace onboarding state:', error);
-          this.toastService.displayToastMessage(ToastSeverity.ERROR, this.translocoService.translate('qbdDirectRegenerateQwcFile.backError'));
+          this.toastService.displayToastMessage(ToastSeverity.ERROR, this.translocoService.translate('qbdDirectRegenerateQwcFile.somethingWentWrong'));
         }
       });
-    } else if (this.state() > QwcFlowState.DOWNLOAD) {
+    } else if (this.state() > QwcFlowState.DOWNLOAD && this.flowType === QwcRegenerationFlowType.NEW) {
       this.state.set(QwcFlowState.DOWNLOAD);
     } else {
       this.state.set(QwcFlowState.PREREQUISITES);
@@ -238,6 +278,13 @@ export class QbdDirectRegenerateQwcFileComponent implements OnInit {
   ngOnInit(): void {
     this.route.data.subscribe(data => {
       this.flowType = data.flowType;
+      if (this.flowType === QwcRegenerationFlowType.EXISTING) {
+        this.qbdDirectConnectorService.getQBDConnectorSettings().subscribe((qbdConnectorSettings) => {
+          this.password.set(qbdConnectorSettings.password);
+          this.xmlFileContent = qbdConnectorSettings.qwc;
+          this.isLoading = false;
+        });
+      }
     });
   }
 }

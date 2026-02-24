@@ -6,12 +6,12 @@
           <div class="tw-flex tw-justify-center tw-items-center tw-bg-bg-brand tw-h-32-px tw-w-32-px tw-rounded-full tw-mr-12-px">
             <app-svg-icon [c1SvgSource]="'grv-settings-small'" [width]="'14px'" [height]="'16px'" [isTextColorAllowed]="true" [styleClasses]="'tw-text-text-primary'"></app-svg-icon>
           </div>
-        } @else {
+        } @else if (showStepNumber) {
           <div class="tw-w-20-px tw-h-20-px tw-rounded-border-radius-2xs tw-text-white tw-text-14-px tw-font-500 tw-text-center tw-mr-12-px" [ngClass]="brandingStyle.qbd_direct.onboarding.optionStepStateBackground">
             2
           </div>
         }
-        <div class="tw-text-14-px" [ngClass]="[!showSection && !brandingFeatureConfig.qbdDirect.isStepSectionAlwaysVisible ? 'tw-text-text-disable' : brandingStyle.qbd_direct.onboarding.stepStateHeaderText]">
+        <div [ngClass]="[!showSection && !brandingFeatureConfig.qbdDirect.isStepSectionAlwaysVisible ? 'tw-text-text-disable' : brandingStyle.qbd_direct.onboarding.stepStateHeaderText]">
           <span>{{ 'qbdDirectSetupConnection.title' | transloco }}</span>
         </div>
       </div>
@@ -37,16 +37,27 @@
 
   <div [ngClass]="!isStepCompleted && showSection ? 'tw-p-24-px tw-pt-0' : ''">
     @if (!isLoading && connectionStatus !== qbdConnectionStatus.SUCCESS && showSection && !isStepCompleted) {
+      @if (warningMessage) {
+        <div class="tw-pt-16-pdx">
+          <app-configuration-info-label
+            [iconSrc]="'warning-filled'"
+            [customBackgroundColorClass]="brandingStyle.configuration.infoLabelWarningBackground"
+            [customStyleClass]="brandingStyle.configuration.infoLabelWarningIcon"
+            [infoText]="warningMessage"
+            [readMoreLink]="warningArticleLink"
+          ></app-configuration-info-label>
+        </div>
+      }
       <div  class="tw-flex tw-items-start tw-justify-between tw-pt-32-px">
         <div>
           <div>
-            <div class="tw-flex tw-justify-start" [ngClass]="brandingFeatureConfig.qbdDirect.showStepStateAsIcons ? 'tw-flex-col tw-items-start tw-gap-2' : 'tw-items-center'">
+            <div class="tw-flex tw-justify-start" [ngClass]="brandingFeatureConfig.qbdDirect.showStepStateAsIcons ? 'tw-flex-col tw-items-start tw-gap-2' : ''">
               @if (brandingFeatureConfig.qbdDirect.showStepStateAsIcons) {
                 <div class="tw-py-2-px tw-px-6-px tw-rounded-full tw-text-text-primary tw-text-white tw-text-10-px tw-font-600 tw-text-center tw-flex tw-items-center tw-justify-center" [ngClass]="brandingStyle.qbd_direct.onboarding.optionStepStateBackground">
                   Step 1
                 </div>
               } @else {
-                <div class="!tw-w-45-px !tw-h-45-px tw-border tw-border-border-tertiary tw-flex tw-items-center tw-justify-center tw-rounded-border-radius-2xs tw-bg-disabled-bg-color">
+                <div class="!tw-w-45-px !tw-h-45-px tw-border tw-border-border-tertiary tw-flex tw-items-center tw-justify-center tw-rounded-border-radius-2xs tw-bg-disabled-bg-color tw-shrink-0">
                   <app-svg-icon [svgSource]="'upload'" [width]="'16px'" [height]="'16px'" [isTextColorAllowed]="true" [styleClasses]="'tw-text-text-tertiary'"></app-svg-icon>
                 </div>
               }
@@ -57,13 +68,13 @@
             </div>
           </div>
           <div [ngClass]="brandingStyle.qbd_direct.onboarding.connectorText">
-            <div class="tw-flex tw-justify-start" [ngClass]="brandingFeatureConfig.qbdDirect.showStepStateAsIcons ? 'tw-flex-col tw-items-start tw-gap-2' : 'tw-items-center'">
+            <div class="tw-flex tw-justify-start" [ngClass]="brandingFeatureConfig.qbdDirect.showStepStateAsIcons ? 'tw-flex-col tw-items-start tw-gap-2' : ''">
               @if (brandingFeatureConfig.qbdDirect.showStepStateAsIcons) {
                 <div class="tw-py-2-px tw-px-6-px tw-rounded-full tw-text-text-primary tw-text-white tw-text-10-px tw-font-600 tw-text-center tw-flex tw-items-center tw-justify-center" [ngClass]="brandingStyle.qbd_direct.onboarding.optionStepStateBackground">
                   Step 2
                 </div>
               } @else {
-                <div class="!tw-w-45-px !tw-h-45-px tw-border tw-border-border-tertiary tw-flex tw-items-center tw-justify-center tw-rounded-border-radius-2xs tw-bg-disabled-bg-color">
+                <div class="!tw-w-45-px !tw-h-45-px tw-border tw-border-border-tertiary tw-flex tw-items-center tw-justify-center tw-rounded-border-radius-2xs tw-bg-disabled-bg-color tw-shrink-0">
                   <app-svg-icon [svgSource]="'lock'" [width]="'16px'" [height]="'16px'" [isTextColorAllowed]="true" [styleClasses]="'tw-text-text-tertiary'"></app-svg-icon>
                 </div>
               }
@@ -96,13 +107,13 @@
             </div>
           </div>
           <div [ngClass]="brandingStyle.qbd_direct.onboarding.connectorText">
-            <div class="tw-flex tw-justify-start" [ngClass]="brandingFeatureConfig.qbdDirect.showStepStateAsIcons ? 'tw-flex-col tw-items-start tw-gap-2' : 'tw-items-center'">
+            <div class="tw-flex tw-justify-start" [ngClass]="brandingFeatureConfig.qbdDirect.showStepStateAsIcons ? 'tw-flex-col tw-items-start tw-gap-2' : ''">
               @if (brandingFeatureConfig.qbdDirect.showStepStateAsIcons) {
                 <div class="tw-py-2-px tw-px-6-px tw-rounded-full tw-text-text-primary tw-text-white tw-text-10-px tw-font-600 tw-text-center tw-flex tw-items-center tw-justify-center" [ngClass]="brandingStyle.qbd_direct.onboarding.optionStepStateBackground">
                   Step 3
                 </div>
               } @else {
-                <div class="!tw-w-45-px !tw-h-45-px tw-border tw-border-border-tertiary tw-flex tw-items-center tw-justify-center tw-rounded-border-radius-2xs tw-bg-disabled-bg-color">
+                <div class="!tw-w-45-px !tw-h-45-px tw-border tw-border-border-tertiary tw-flex tw-items-center tw-justify-center tw-rounded-border-radius-2xs tw-bg-disabled-bg-color tw-shrink-0">
                   <app-svg-icon [svgSource]="'check-medium'" [isTextColorAllowed]="true" [styleClasses]="'tw-text-text-tertiary'" [width]="'20px'" [height]="'20px'"></app-svg-icon>
                 </div>
               }

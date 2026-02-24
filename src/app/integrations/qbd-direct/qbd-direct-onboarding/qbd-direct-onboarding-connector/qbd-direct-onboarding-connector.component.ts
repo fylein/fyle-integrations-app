@@ -96,7 +96,7 @@ export class QbdDirectOnboardingConnectorComponent implements OnInit {
    if (filePath) {
       this.isDownloadfileLoading = true;
       this.isCompanyPathInvalid = false;
-      this.qbdDirectConnectorService.postQbdDirectConntion({file_location: filePath}).subscribe((connectionResponse: QbdConnectorGet) => {
+      this.qbdDirectConnectorService.postQbdConnectorSettings({file_location: filePath}).subscribe((connectionResponse: QbdConnectorGet) => {
         this.password = connectionResponse.password;
         this.xmlFileContent = connectionResponse.qwc;
         this.showDownloadLink = true;

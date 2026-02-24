@@ -2793,6 +2793,8 @@
     "incorrectPasswordMessage": "Incorrect password detected. Please check and try again.",
     "companyNameMismatchMessage": "Company name does not match the previously connected Company. Please check and try again.",
     "connectionSuccessToast": "QuickBooks Desktop connection successful",
-    "backError": "Something went wrong. Please try again later."
+    "somethingWentWrong": "Something went wrong. Please try again later.",
+    "warningTextNewPath": "Remove the previous integration from the Web Connector and change the OwnerID/FileID to avoid QBWC1039 error.",
+    "warningTextExistingPath": "Change the OwnerID/FileID to avoid QBWC1039 Error."
   }
 }
