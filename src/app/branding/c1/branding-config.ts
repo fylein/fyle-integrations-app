@@ -60,7 +60,6 @@ export const c1FeatureConfig: FeatureConfiguration[string] = {
             importProjects: true,
             allowCustomSegment: false,
             dependentField: true,
-            allowImportCode: false,
             importSettingsV1: false,
             disableCustomerSourceField: true
         },
@@ -86,7 +85,6 @@ export const c1FeatureConfig: FeatureConfiguration[string] = {
         },
         dashboard: {
             disconnectButton: false,
-            useRepurposedExportSummary: false,
             shouldShowExpenseTypeInAccountingErrorDashboard: false,
             showTextOnlyForButtonsInDashboardErrorSection: true,
             showDashboardErrorSectionHeader: false

@@ -122,7 +122,7 @@ export class NetsuiteAdvancedSettingsService extends AdvancedSettingsService {
       changeAccountingPeriod: new FormControl(advancedSettings?.configuration?.change_accounting_period ?? shouldEnableAccountingPeriod),
       autoCreateVendors: new FormControl(advancedSettings?.configuration.auto_create_destination_entity),
       singleCreditLineJE: new FormControl(advancedSettings?.configuration.je_single_credit_line),
-      exportSchedule: new FormControl(advancedSettings.workspace_schedules?.enabled || (isOnboarding && brandingFeatureConfig.featureFlags.dashboard.useRepurposedExportSummary) ? true : false),
+      exportSchedule: new FormControl(advancedSettings.workspace_schedules?.enabled || isOnboarding ? true : false),
       exportScheduleFrequency: new FormControl(this.getExportFrequency(advancedSettings.workspace_schedules?.is_real_time_export_enabled, isOnboarding, advancedSettings.workspace_schedules?.enabled, advancedSettings.workspace_schedules?.interval_hours)),
       memoStructure: new FormControl(advancedSettings?.configuration.memo_structure),
       autoCreateMerchants: new FormControl(advancedSettings?.configuration?.auto_create_merchants ? advancedSettings.configuration.auto_create_merchants : false),
