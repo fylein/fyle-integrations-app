@@ -66,7 +66,6 @@
                         [isFieldMandatory]="true"
                         [isimportSettings]="true"
                         [customErrorMessage]="'intacctC1ImportSettings.selectImportMethodError' | transloco: { field: helper.sentenseCaseConversion(intacctImportCodeField.value.source_field).toLowerCase() }"
-                        [isDisabled]="!intacctImportCodeConfig[intacctImportCodeField.value.source_field]"
                         [formControllerName]="'import_code'">
                       </app-configuration-select-field>
                     }

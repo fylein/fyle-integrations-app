@@ -177,6 +177,7 @@ export class IntacctC1ImportSettingsComponent implements OnInit {
   }
 
   addImportCodeField(event: any, sourceField: string): void {
+    // Adds or removes import code field array based on the option selection, with/without code (helps for payload construction)
     const importCodeFieldsArray = this.importSettingsForm.get('importCodeFields') as FormArray;
 
     if (sourceField === IntacctCategoryDestination.GL_ACCOUNT || sourceField === 'GENERAL_LEDGER_ACCOUNT') {
@@ -220,6 +221,8 @@ export class IntacctC1ImportSettingsComponent implements OnInit {
     const [isEnabled, , index] = event;
     const expenseField = (this.importSettingsForm.get('expenseFields') as FormArray).at(index);
     const destinationField = expenseField?.get('destination_field')?.value;
+
+    // Add the attribute_type to the importCodeFields array if the destination has been selected, do nothing otherwise
     if (destinationField) {
       this.addImportCodeField({ checked: isEnabled }, destinationField);
     }
