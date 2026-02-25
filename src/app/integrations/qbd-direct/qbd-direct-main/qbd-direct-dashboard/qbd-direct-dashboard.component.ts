@@ -60,7 +60,7 @@ export class QbdDirectDashboardComponent implements OnInit, OnDestroy {
 
   getExportErrors$: Observable<ErrorResponse> = this.dashboardService.getExportErrors(AppName.QBD_DIRECT);
 
-  getAccountingExportSummary$: Observable<AccountingExportSummary> = this.accountingExportService.getAccountingExportSummary(AppName.QBD_DIRECT, brandingFeatureConfig.featureFlags.dashboard.useRepurposedExportSummary, AppName.QBD_DIRECT);
+  getAccountingExportSummary$: Observable<AccountingExportSummary> = this.accountingExportService.getAccountingExportSummary(AppName.QBD_DIRECT, AppName.QBD_DIRECT);
 
   exportLogProcessingStates: TaskLogState[] = [TaskLogState.IN_PROGRESS, TaskLogState.ENQUEUED, TaskLogState.EXPORT_PROCESSED];
 
