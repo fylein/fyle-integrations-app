@@ -18,6 +18,7 @@ import { StorageService } from 'src/app/core/services/common/storage.service';
 import { MinimalUser } from 'src/app/core/models/db/user.model';
 import { QbdDirectWorkspace } from 'src/app/core/models/qbd-direct/db/qbd-direct-workspaces.model';
 import { QbdDirectQwcLastVisitedFlowService } from 'src/app/core/services/qbd-direct/qbd-direct-core/qbd-direct-qwc-last-visited-flow.service';
+import { NavigationLockService } from 'src/app/core/services/common/navigation-lock.service';
 
 @Component({
   selector: 'app-qbd-direct-regenerate-qwc-file',
@@ -112,8 +113,18 @@ export class QbdDirectRegenerateQwcFileComponent implements OnInit {
     private workspaceService: WorkspaceService,
     private storageService: StorageService,
     private router: Router,
-    private qbdDirectQwcLastVisitedFlowService: QbdDirectQwcLastVisitedFlowService
+    private qbdDirectQwcLastVisitedFlowService: QbdDirectQwcLastVisitedFlowService,
+    private navigationLockService: NavigationLockService
   ) {}
+
+  private lockNavigation(): void {
+    this.qbdDirectQwcLastVisitedFlowService.set(this.flowType);
+    this.navigationLockService.lock();
+  }
+
+  private unlockNavigation(): void {
+    this.navigationLockService.unlock();
+  }
 
   handlePrerequisitesContinue(): void {
     if (this.flowType === QwcRegenerationFlowType.NEW) {
@@ -133,7 +144,7 @@ export class QbdDirectRegenerateQwcFileComponent implements OnInit {
         this.state.set(QwcFlowState.SETUP_CONNECTION);
         this.handleManualDownload();
         this.isLoading = false;
-        this.qbdDirectQwcLastVisitedFlowService.set(this.flowType);
+        this.lockNavigation();
       },
       error: (error) => {
         console.error('Error updating workspace onboarding state:', error);
@@ -153,7 +164,7 @@ export class QbdDirectRegenerateQwcFileComponent implements OnInit {
           this.xmlFileContent = qbdConnectorSettings.qwc;
           this.state.set(QwcFlowState.DOWNLOAD_DONE);
           this.handleManualDownload();
-          this.qbdDirectQwcLastVisitedFlowService.set(this.flowType);
+          this.lockNavigation();
         },
         error: () => {
           this.state.set(QwcFlowState.DOWNLOAD);
@@ -180,6 +191,7 @@ export class QbdDirectRegenerateQwcFileComponent implements OnInit {
       }).subscribe({
         next: () => {
           this.state.set(QwcFlowState.SETUP_CONNECTION);
+          this.lockNavigation();
         },
         error: (error) => {
           console.error('Error updating workspace onboarding state:', error);
@@ -267,7 +279,10 @@ export class QbdDirectRegenerateQwcFileComponent implements OnInit {
       return this.workspaceService.updateWorkspaceOnboardingState({
         onboarding_state: QbdDirectOnboardingState.COMPLETE
       }).pipe(
-        tap(() => this.state.set(QwcFlowState.CONNECTION_DONE)),
+        tap(() => {
+          this.state.set(QwcFlowState.CONNECTION_DONE);
+          this.unlockNavigation();
+        }),
         catchError((error) => {
           console.error('Error updating workspace onboarding state:', error);
           this.toastService.displayToastMessage(ToastSeverity.ERROR, this.translocoService.translate('qbdDirectRegenerateQwcFile.somethingWentWrong'));
