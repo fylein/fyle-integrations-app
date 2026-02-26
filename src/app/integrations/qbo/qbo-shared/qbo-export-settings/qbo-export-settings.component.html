@@ -27,7 +27,7 @@
                   [formControllerName]="'reimbursableExpense'" [isSectionHeader]="true">
                 </app-configuration-toggle-field>
               </div>
-              @if (exportSettingForm.get('reimbursableExpense')?.value) {
+              @if (showField('reimbursableExportType')) {
                 <div>
                   <div
                     class="tw-mt-16-px" [ngClass]="brandingStyle.configuration.configurationExportCardTertiary">
@@ -45,7 +45,7 @@
                       [showExportPreview]="true"
                       [exportTypeIconPathArray]="previewImagePaths">
                     </app-configuration-select-field>
-                    @if (helperService.isFieldRequired(exportSettingForm, 'bankAccount')) {
+                    @if (showField('bankAccount')) {
                       <div>
                         @if (exportSettingForm.get('reimbursableExportType')?.value === QBOReimbursableExpensesObject.JOURNAL_ENTRY) {
                           <app-configuration-select-field
@@ -87,7 +87,7 @@
                         }
                       </div>
                     }
-                    @if (helperService.isFieldRequired(exportSettingForm, 'qboExpenseAccount')) {
+                    @if (showField('qboExpenseAccount')) {
                       <div>
                         <app-configuration-select-field
                           [form]="exportSettingForm"
@@ -108,7 +108,7 @@
                         </app-configuration-select-field>
                       </div>
                     }
-                    @if (isReimbursableAccountsPayableShown) {
+                    @if (showField('accountsPayable')) {
                       <div>
                         <app-configuration-select-field
                           [form]="exportSettingForm"
@@ -118,7 +118,7 @@
                           [isAdvanceSearchEnabled]="true"
                           (searchOptionsDropdown)="searchOptionsDropdown($event)"
                           [optionLabel]="'name'"
-                          [isFieldMandatory]="isReimbursableAccountsPayableMandatory"
+                          [isFieldMandatory]="isFieldMandatory('accountsPayable')"
                           [mandatoryErrorListName]="'qboExportSettings.mandatoryErrorAccountsPayable' | transloco"
                           [label]="'qboExportSettings.accountsPayableLabel' | transloco: { exportType: (exportSettingForm.get('reimbursableExportType')?.value | snakeCaseToSpaceCase | lowercase) }"
                           [subLabel]="'qboExportSettings.accountsPayableSubLabel' | transloco: { exportType: (exportSettingForm.get('reimbursableExportType')?.value | snakeCaseToSpaceCase | lowercase) }"
@@ -159,7 +159,7 @@
                       </form>
                     </div>
                   }
-                  @if (exportSettingForm.get('reimbursableExportType')?.value) {
+                  @if (showField('expenseState')) {
                     <div
                       class="tw-mt-16-px" [ngClass]="brandingStyle.configuration.configurationExportCardTertiary">
                       <app-configuration-select-field
@@ -175,7 +175,7 @@
                       </app-configuration-select-field>
                     </div>
                   }
-                  @if (exportSettingForm.get('reimbursableExportType')?.value) {
+                  @if (showField('reimbursableExportGroup')) {
                     <div
                       class="tw-mt-16-px" [ngClass]="brandingStyle.configuration.configurationExportCardTertiary">
                       <app-configuration-select-field
@@ -191,7 +191,7 @@
                       </app-configuration-select-field>
                     </div>
                   }
-                  @if (exportSettingForm.get('reimbursableExportType')?.value) {
+                  @if (showField('reimbursableExportDate')) {
                     <div
                       class="tw-mt-16-px" [ngClass]="brandingStyle.configuration.configurationExportCardTertiary">
                       <app-configuration-select-field
@@ -223,7 +223,7 @@
               </app-configuration-toggle-field>
             </div>
           }
-          @if (exportSettingForm.get('creditCardExpense')?.value) {
+          @if (showField('creditCardExportType')) {
             <div>
               <div class="tw-mt-16-px" [ngClass]="brandingStyle.configuration.configurationExportCardTertiary">
                 <app-configuration-select-field
@@ -245,7 +245,7 @@
                     <app-configuration-info-label [infoText]="'qboExportSettings.warningMessageAboutAutoExpenseCreation' | transloco" [showCloseIcon]="true" (closeInfoLabel)="closeInfoLabel()" [customClasses]="'!tw-bg-white !tw-border-border-info-lighter'"></app-configuration-info-label>
                   </div>
                 }
-                @if (showNameInJournalOption && brandingFeatureConfig.featureFlags.exportSettings.nameInJournalEntry) {
+                @if (showField('nameInJournalEntry')) {
                   <div>
                     <app-configuration-select-field
                       [form]="exportSettingForm"
@@ -260,7 +260,7 @@
                     </app-configuration-select-field>
                   </div>
                 }
-                @if (helperService.isFieldRequired(exportSettingForm, 'defaultCCCAccount')) {
+                @if (showField('defaultCCCAccount')) {
                   <div>
                     <app-configuration-select-field
                       [form]="exportSettingForm"
@@ -281,7 +281,7 @@
                     </app-configuration-select-field>
                   </div>
                 }
-                @if (helperService.isFieldRequired(exportSettingForm, 'defaultDebitCardAccount')) {
+                @if (showField('defaultDebitCardAccount')) {
                   <div>
                     <app-configuration-select-field
                       [form]="exportSettingForm"
@@ -302,7 +302,7 @@
                     </app-configuration-select-field>
                   </div>
                 }
-                @if (helperService.isFieldRequired(exportSettingForm, 'defaultCreditCardVendor')) {
+                @if (showField('defaultCreditCardVendor')) {
                   <div>
                     <app-configuration-select-field
                       [form]="exportSettingForm"
@@ -322,7 +322,7 @@
                     </app-configuration-select-field>
                   </div>
                 }
-                @if (isCCCAccountsPayableShown) {
+                @if (showField('CCCAccountsPayable')) {
                   <div>
                     <app-configuration-select-field
                       [form]="exportSettingForm"
@@ -345,7 +345,7 @@
                   </div>
                 }
               </div>
-              @if (exportSettingForm.get('creditCardExportType')?.value) {
+              @if (showField('cccExpenseState')) {
                 <div class="tw-mt-16-px" [ngClass]="brandingStyle.configuration.configurationExportCardTertiary">
                   <app-configuration-select-field
                     [form]="exportSettingForm"
@@ -360,7 +360,7 @@
                   </app-configuration-select-field>
                 </div>
               }
-              @if (exportSettingForm.get('creditCardExportType')?.value) {
+              @if (showField('creditCardExportGroup')) {
                 <div class="tw-mt-16-px" [ngClass]="brandingStyle.configuration.configurationExportCardTertiary">
                   <app-configuration-select-field
                     [form]="exportSettingForm"
@@ -376,7 +376,7 @@
                   </app-configuration-select-field>
                 </div>
               }
-              @if (exportSettingForm.get('creditCardExportType')?.value) {
+              @if (showField('creditCardExportDate')) {
                 <div class="tw-mt-16-px" [ngClass]="brandingStyle.configuration.configurationExportCardTertiary">
                   <app-configuration-select-field
                     [form]="exportSettingForm"
@@ -389,8 +389,7 @@
                     [placeholder]="'qboExportSettings.exportDatePlaceholder' | transloco: { exportType: (exportSettingForm.get('creditCardExportType')?.value | snakeCaseToSpaceCase | lowercase) }"
                     [formControllerName]="'creditCardExportDate'">
                   </app-configuration-select-field>
-                  @if (brandingFeatureConfig.featureFlags.exportSettings.splitExpenseGrouping &&
-                    exportSettingForm.get('creditCardExportType')?.value === QBOCorporateCreditCardExpensesObject.CREDIT_CARD_PURCHASE) {
+                  @if (showField('splitExpenseGrouping')) {
                     <app-configuration-select-field
                       [form]="exportSettingForm"
                       [isFieldMandatory]="true"

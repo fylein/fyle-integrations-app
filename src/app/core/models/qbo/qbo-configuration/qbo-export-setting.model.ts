@@ -1,6 +1,7 @@
 import { DefaultDestinationAttribute } from "../../db/destination-attribute.model";
 import { ExpenseGroupSettingPost } from "../../db/expense-group-setting.model";
-import { NameInJournalEntry, QBOCorporateCreditCardExpensesObject, QBOReimbursableExpensesObject, SplitExpenseGrouping } from "../../enum/enum.model";
+import { CCCExpenseState, EmployeeFieldMapping, ExpenseGroupingFieldOption, ExpenseState, ExportDateType, NameInJournalEntry, QBOCorporateCreditCardExpensesObject, QBOReimbursableExpensesObject, SplitExpenseGrouping } from "../../enum/enum.model";
+import { FormControl } from "@angular/forms";
 
 export type QBOExportSettingWorkspaceGeneralSettingPost = {
   reimbursable_expenses_object: QBOReimbursableExpensesObject | null,
@@ -34,4 +35,28 @@ export type QBOExportSettingGet = {
   workspace_general_settings: QBOExportSettingWorkspaceGeneralSettingPost,
   general_mappings: QBOExportSettingGeneralMapping,
   workspace_id: number
+}
+
+export type QboExportSettingsForm = {
+  employeeMapping: FormControl<EmployeeFieldMapping | null>,
+  reimbursableExpense: FormControl<boolean>,
+  reimbursableExportType: FormControl<QBOReimbursableExpensesObject | null>,
+  bankAccount: FormControl<DefaultDestinationAttribute | null>,
+  qboExpenseAccount: FormControl<DefaultDestinationAttribute | null>,
+  accountsPayable: FormControl<DefaultDestinationAttribute | null>,
+  expenseState: FormControl<ExpenseState | null>,
+  reimbursableExportGroup: FormControl<ExpenseGroupingFieldOption | null>,
+  reimbursableExportDate: FormControl<ExportDateType | null>,
+  creditCardExpense: FormControl<boolean>,
+  creditCardExportType: FormControl<QBOCorporateCreditCardExpensesObject | null>,
+  nameInJournalEntry: FormControl<NameInJournalEntry | null>,
+  defaultCCCAccount: FormControl<DefaultDestinationAttribute | null>,
+  defaultDebitCardAccount: FormControl<DefaultDestinationAttribute | null>,
+  defaultCreditCardVendor: FormControl<DefaultDestinationAttribute | null>,
+  CCCAccountsPayable: FormControl<DefaultDestinationAttribute | null>,
+  cccExpenseState: FormControl<CCCExpenseState | null>,
+  creditCardExportGroup: FormControl<ExpenseGroupingFieldOption | null>,
+  creditCardExportDate: FormControl<ExportDateType | null>,
+  splitExpenseGrouping: FormControl<SplitExpenseGrouping | null>,
+  searchOption: FormControl<string | null>,
 }
