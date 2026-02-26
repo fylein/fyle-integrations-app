@@ -63,7 +63,7 @@ export class Sage300DashboardComponent implements OnInit, OnDestroy {
 
   getExportErrors$: Observable<ErrorResponse> = this.dashboardService.getExportErrors();
 
-  getAccountingExportSummary$: Observable<AccountingExportSummary> = this.accountingExportService.getAccountingExportSummary(undefined, true, AppName.SAGE300);
+  getAccountingExportSummary$: Observable<AccountingExportSummary> = this.accountingExportService.getAccountingExportSummary(undefined, AppName.SAGE300);
 
   LoaderType = LoaderType;
 

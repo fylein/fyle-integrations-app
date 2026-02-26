@@ -238,7 +238,7 @@ export class NetsuiteExportSettingsService extends ExportSettingsService {
         case 'accountsPayable':
           return (form.controls.reimbursableExportType.value === NetsuiteReimbursableExpensesObject.BILL || form.controls.creditCardExportType.value === NetSuiteCorporateCreditCardExpensesObject.BILL) || (form.controls.reimbursableExportType.value === NetSuiteCorporateCreditCardExpensesObject.JOURNAL_ENTRY && form.controls.employeeFieldMapping.value === EmployeeFieldMapping.VENDOR);
         case 'creditCardAccount':
-          return form.controls.creditCardExportType && form.controls.creditCardExportType.value !== NetSuiteCorporateCreditCardExpensesObject.BILL;
+          return form.controls.creditCardExportType.value === NetSuiteCorporateCreditCardExpensesObject.CREDIT_CARD_CHARGE || form.controls.creditCardExportType.value === NetSuiteCorporateCreditCardExpensesObject.JOURNAL_ENTRY;
         case 'defaultCreditCardVendor':
           return form.controls.creditCardExportType.value === NetSuiteCorporateCreditCardExpensesObject.BILL || form.controls.creditCardExportType.value === NetSuiteCorporateCreditCardExpensesObject.CREDIT_CARD_CHARGE  || (form.controls.creditCardExportType.value === NetSuiteCorporateCreditCardExpensesObject.JOURNAL_ENTRY && form.controls.nameInJournalEntry.value === NameInJournalEntry.MERCHANT);
         case 'nameInJournalEntry':
@@ -280,7 +280,7 @@ export class NetsuiteExportSettingsService extends ExportSettingsService {
             [NetSuiteCorporateCreditCardExpensesObject.CREDIT_CARD_CHARGE]: creditCardChargeRequiredFields,
             [NetSuiteCorporateCreditCardExpensesObject.BILL]: ['accountsPayable', 'defaultCreditCardVendor'],
             [NetSuiteCorporateCreditCardExpensesObject.JOURNAL_ENTRY]: ['creditCardAccount', 'defaultCreditCardVendor', 'nameInJournalEntry'],
-            [NetSuiteCorporateCreditCardExpensesObject.EXPENSE_REPORT]: ['bankAccount', 'creditCardAccount']
+            [NetSuiteCorporateCreditCardExpensesObject.EXPENSE_REPORT]: ['bankAccount']
           }
         }
       ];

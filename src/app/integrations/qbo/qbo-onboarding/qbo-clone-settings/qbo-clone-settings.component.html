@@ -341,7 +341,7 @@
               </app-clone-setting-field>
             </div>
           }
-          @if (brandingFeatureConfig.featureFlags.importSettings.allowImportCode && importSettingForm.get('importCategories')?.value && qboImportCodeFieldCodeConfig[DefaultImportFields.ACCOUNT]) {
+          @if (importSettingForm.get('importCategories')?.value && qboImportCodeFieldCodeConfig[DefaultImportFields.ACCOUNT]) {
             <div class="clone-setting--dependent-field">
               <app-clone-setting-field
                 [form]="importSettingForm"

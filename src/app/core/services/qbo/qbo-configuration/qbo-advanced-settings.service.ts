@@ -74,7 +74,7 @@ export class  QboAdvancedSettingsService extends AdvancedSettingsService {
       singleCreditLineJE: new FormControl(advancedSettings?.workspace_general_settings.je_single_credit_line),
       autoCreateVendors: new FormControl(advancedSettings?.workspace_general_settings.auto_create_destination_entity),
       autoCreateMerchantsAsVendors: new FormControl(advancedSettings?.workspace_general_settings.auto_create_merchants_as_vendors),
-      exportSchedule: new FormControl(advancedSettings.workspace_schedules?.enabled || (isOnboarding && brandingFeatureConfig.featureFlags.dashboard.useRepurposedExportSummary) ? true : false),
+      exportSchedule: new FormControl(advancedSettings.workspace_schedules?.enabled || isOnboarding ? true : false),
       exportScheduleFrequency: new FormControl(this.getExportFrequency(advancedSettings.workspace_schedules?.is_real_time_export_enabled, isOnboarding, advancedSettings.workspace_schedules?.enabled, advancedSettings.workspace_schedules?.interval_hours)),
       memoStructure: new FormControl(advancedSettings?.workspace_general_settings.memo_structure),
       skipExport: new FormControl(isSkipExportEnabled),
