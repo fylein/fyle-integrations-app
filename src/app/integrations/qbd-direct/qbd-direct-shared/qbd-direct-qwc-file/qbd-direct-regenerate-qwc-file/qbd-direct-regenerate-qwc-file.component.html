@@ -1,60 +1,57 @@
-@if (state() === QwcFlowState.PREREQUISITES) {
+@if (isLoading) {
+  <div class="tw-flex tw-justify-center tw-items-center tw-pt-80-px tw-h-[75vh]">
+    <app-loader></app-loader>
+  </div>
+} @else if (state() === QwcFlowState.PREREQUISITES) {
   <app-qbd-direct-prerequisites-v2
     (continue)="handlePrerequisitesContinue()"
   ></app-qbd-direct-prerequisites-v2>
 } @else {
   <div class="tw-h-full">
-    @if (isLoading) {
-      <div class="tw-flex tw-justify-center tw-items-center tw-pt-80-px tw-h-[75vh]">
-        <app-loader></app-loader>
-      </div>
-    }
-    @else {
-      <div [ngClass]="[brandingStyle.configuration.settingsContainer, brandingStyle.common.configurationContentsDashboard]">
-        <app-configuration-step-header
-            [headerText]="headerTitle"
-            [contentText]="headerSubTitle"
-            [redirectLink]="headerArticleLink"
-            [appName]="appName">
-        </app-configuration-step-header>
+    <div [ngClass]="[brandingStyle.configuration.settingsContainer, brandingStyle.common.configurationContentsDashboard]">
+      <app-configuration-step-header
+          [headerText]="headerTitle"
+          [contentText]="headerSubTitle"
+          [redirectLink]="headerArticleLink"
+          [appName]="appName">
+      </app-configuration-step-header>
 
-        <div class="tw-p-24-px tw-flex tw-flex-col tw-gap-[32px]">
-          @if (flowType === QwcRegenerationFlowType.NEW) {
-            <app-qbd-direct-download-file
-              [isLoading]="state() === QwcFlowState.DOWNLOAD_IN_PROGRESS"
-              [showDownloadLink]="state() === QwcFlowState.DOWNLOAD_DONE"
-              [isStepCompleted]="state() > QwcFlowState.DOWNLOAD_DONE"
-              [isCompanyPathInvalid]="isCompanyPathInvalid()"
-              [showAssistedSetup]="false"
-              (nextStep)="handleDownloadNextStepClick()"
-              (downloadClick)="handleDownloadClick($event)"
-              (retryClick)="handleRetry()"
-              (manualDownload)="handleManualDownload()"
-              (back)="handleBackClick()"
-            ></app-qbd-direct-download-file>
-          }
-
-          <app-qbd-direct-setup-connection
-            [warningMessage]="warningText"
-            [warningArticleLink]="warningArticleLink"
-            [showSection]="state() >= QwcFlowState.SETUP_CONNECTION"
-            [isLoading]="state() === QwcFlowState.CONNECTION_IN_PROGRESS"
-            [isStepCompleted]="state() > QwcFlowState.CONNECTION_DONE"
-            [connectionStatus]="connectionStatus()"
-            [isCTAEnabled]="connectionStatus() === QBDConnectionStatus.SUCCESS"
-            [password]="password()"
-            [alwaysShowFooter]="true"
+      <div class="tw-p-24-px tw-flex tw-flex-col tw-gap-[32px]">
+        @if (flowType === QwcRegenerationFlowType.NEW) {
+          <app-qbd-direct-download-file
+            [isLoading]="state() === QwcFlowState.DOWNLOAD_IN_PROGRESS"
+            [showDownloadLink]="state() === QwcFlowState.DOWNLOAD_DONE"
+            [isStepCompleted]="state() > QwcFlowState.DOWNLOAD_DONE"
+            [isCompanyPathInvalid]="isCompanyPathInvalid()"
             [showAssistedSetup]="false"
-            [showStepNumber]="flowType === QwcRegenerationFlowType.NEW"
-            [ctaText]="ConfigurationCta.DONE"
-            (doneClick)="handleConnectionDone($event)"
-            (nextClick)="handleConnectionNext()"
+            (nextStep)="handleDownloadNextStepClick()"
+            (downloadClick)="handleDownloadClick($event)"
+            (retryClick)="handleRetry()"
             (manualDownload)="handleManualDownload()"
             (back)="handleBackClick()"
-          ></app-qbd-direct-setup-connection>
-        </div>
+          ></app-qbd-direct-download-file>
+        }
+
+        <app-qbd-direct-setup-connection
+          [warningMessage]="warningText"
+          [warningArticleLink]="warningArticleLink"
+          [showSection]="state() >= QwcFlowState.SETUP_CONNECTION"
+          [isLoading]="state() === QwcFlowState.CONNECTION_IN_PROGRESS"
+          [isStepCompleted]="state() > QwcFlowState.CONNECTION_DONE"
+          [connectionStatus]="connectionStatus()"
+          [isCTAEnabled]="connectionStatus() === QBDConnectionStatus.SUCCESS"
+          [password]="password()"
+          [alwaysShowFooter]="true"
+          [showAssistedSetup]="false"
+          [showStepNumber]="flowType === QwcRegenerationFlowType.NEW"
+          [ctaText]="ConfigurationCta.DONE"
+          (doneClick)="handleConnectionDone($event)"
+          (nextClick)="handleConnectionNext()"
+          (manualDownload)="handleManualDownload()"
+          (back)="handleBackClick()"
+        ></app-qbd-direct-setup-connection>
       </div>
-    }
+    </div>
   </div>
 
   @if (isDialogVisible()) {

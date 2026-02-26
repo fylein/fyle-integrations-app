@@ -9,7 +9,7 @@ import { BrandingService } from 'src/app/core/services/common/branding.service';
 import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
 import { QbdDirectConnectorService } from 'src/app/core/services/qbd-direct/qbd-direct-configuration/qbd-direct-connector.service';
 import { QbdConnectorGet } from 'src/app/core/models/qbd-direct/qbd-direct-configuration/qbd-direct-connector.model';
-import { QwcRegenerationFlowType, RegenerateQwcForm } from 'src/app/core/models/qbd-direct/qbd-direct-configuration/qbd-direct-qwc-file.model';
+import { QwcRegenerationFlowType, QwcRouteState, RegenerateQwcForm } from 'src/app/core/models/qbd-direct/qbd-direct-configuration/qbd-direct-qwc-file.model';
 import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
@@ -61,7 +61,13 @@ export class QbdDirectQwcFileLandingComponent implements OnInit {
       return;
     }
     const nextStepRoute = this.selectedNextStep === QwcRegenerationFlowType.EXISTING ? 'existing' : 'new';
-    this.router.navigate([nextStepRoute], { relativeTo: this.route });
+    this.router.navigate(
+      [nextStepRoute],
+      {
+        relativeTo: this.route,
+        state: { goToPrerequisites: true } as QwcRouteState
+      }
+    );
   }
 
   copyQwcFilePath() {

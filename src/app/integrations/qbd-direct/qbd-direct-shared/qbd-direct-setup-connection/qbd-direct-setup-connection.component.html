@@ -38,15 +38,13 @@
   <div [ngClass]="!isStepCompleted && showSection ? 'tw-p-24-px tw-pt-0' : ''">
     @if (!isLoading && connectionStatus !== qbdConnectionStatus.SUCCESS && showSection && !isStepCompleted) {
       @if (warningMessage) {
-        <div class="tw-pt-16-pdx">
-          <app-configuration-info-label
-            [iconSrc]="'warning-filled'"
-            [customBackgroundColorClass]="brandingStyle.configuration.infoLabelWarningBackground"
-            [customStyleClass]="brandingStyle.configuration.infoLabelWarningIcon"
-            [infoText]="warningMessage"
-            [readMoreLink]="warningArticleLink"
-          ></app-configuration-info-label>
-        </div>
+        <app-configuration-info-label
+          [iconSrc]="'warning-filled'"
+          [customBackgroundColorClass]="brandingStyle.configuration.infoLabelWarningBackground"
+          [customStyleClass]="brandingStyle.configuration.infoLabelWarningIcon"
+          [infoText]="warningMessage"
+          [readMoreLink]="warningArticleLink"
+        ></app-configuration-info-label>
       }
       <div  class="tw-flex tw-items-start tw-justify-between tw-pt-32-px">
         <div>
