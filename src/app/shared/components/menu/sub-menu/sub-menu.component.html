@@ -2,7 +2,7 @@
     <p-tabs [value]="activeModule" (valueChange)="onTabChange($event)">
         <p-tablist>
             @for (module of modules; track module.value) {
-                <p-tab [value]="module.value">
+                <p-tab [value]="module.value" [disabled]="navigationLockService.isLocked()">
                     {{ module.label }}
                 </p-tab>
             }

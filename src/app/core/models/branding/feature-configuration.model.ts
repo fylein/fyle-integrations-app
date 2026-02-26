@@ -28,6 +28,7 @@ export type FeatureConfiguration = {
             unlockStepsInOrder: boolean,
             showMarkAsDone: boolean,
             showSubIconsInConfigurationFields: boolean,
+            allowQwcRegeneration: boolean,
         },
         featureFlags: {
             showOptionalTextInsteadOfAsterisk: boolean;

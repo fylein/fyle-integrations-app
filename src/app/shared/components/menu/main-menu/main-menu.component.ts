@@ -10,6 +10,7 @@ import { MainMenuDropdownGroup } from 'src/app/core/models/misc/main-menu-dropdo
 import { trackingAppMap } from 'src/app/core/models/misc/tracking.model';
 import { EventsService } from 'src/app/core/services/common/events.service';
 import { IntegrationsService } from 'src/app/core/services/common/integrations.service';
+import { NavigationLockService } from 'src/app/core/services/common/navigation-lock.service';
 import { TrackingService } from 'src/app/core/services/integration/tracking.service';
 import { IframeOriginStorageService } from 'src/app/core/services/misc/iframe-origin-storage.service';
 
@@ -73,11 +74,10 @@ export class MainMenuComponent implements OnInit {
     private eventsService: EventsService,
     private iframeOriginStorageService: IframeOriginStorageService,
     private trackingService: TrackingService,
-    private translocoService: TranslocoService
+    private translocoService: TranslocoService,
+    public navigationLockService: NavigationLockService
   ) {
-    this.showMoreDropdown =
-      this.brandingFeatureConfig.showMoreDropdownInMainMenu &&
-      this.iframeOriginStorageService.get() === IframeOrigin.ADMIN_DASHBOARD;
+    this.showMoreDropdown = this.brandingFeatureConfig.showMoreDropdownInMainMenu;
   }
 
   onTabChange(value: string | number | undefined){

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
+import { brandingFeatureConfig } from 'src/app/branding/branding-config';
 import { MinimalUser } from 'src/app/core/models/db/user.model';
 import { AppName, AppUrl, QbdDirectOnboardingState } from 'src/app/core/models/enum/enum.model';
 import { QbdDirectWorkspace } from 'src/app/core/models/qbd-direct/db/qbd-direct-workspaces.model';
@@ -7,6 +8,7 @@ import { QwcRegenerationFlowType } from 'src/app/core/models/qbd-direct/qbd-dire
 import { AuthService } from 'src/app/core/services/common/auth.service';
 import { HelperService } from 'src/app/core/services/common/helper.service';
 import { IntegrationsUserService } from 'src/app/core/services/common/integrations-user.service';
+import { NavigationLockService } from 'src/app/core/services/common/navigation-lock.service';
 import { StorageService } from 'src/app/core/services/common/storage.service';
 import { WindowService } from 'src/app/core/services/common/window.service';
 import { WorkspaceService } from 'src/app/core/services/common/workspace.service';
@@ -43,7 +45,8 @@ export class QbdDirectComponent implements OnInit {
     private windowService: WindowService,
     private authService: AuthService,
     private qbdDirectAdvancedSettingsService: QbdDirectAdvancedSettingsService,
-    private qbdDirectQwcLastVisitedFlowService: QbdDirectQwcLastVisitedFlowService
+    private qbdDirectQwcLastVisitedFlowService: QbdDirectQwcLastVisitedFlowService,
+    private navigationLockService: NavigationLockService
   ) {
     this.windowReference = this.windowService.nativeWindow;
   }
@@ -59,16 +62,17 @@ export class QbdDirectComponent implements OnInit {
       QbdDirectOnboardingState.DESTINATION_SYNC_COMPLETE
     ];
 
-    // These states mean that we are either onboarding
+    // In Fyle theme, these states mean that we are either onboarding
     // Or in the process of regenerating the QWC file.
     // Check if advanced settings exists to find out which one
-    if (connectionStates.includes(this.workspace.onboarding_state)) {
+    if (brandingFeatureConfig.qbdDirect.allowQwcRegeneration && connectionStates.includes(this.workspace.onboarding_state)) {
       this.qbdDirectAdvancedSettingsService.getQbdAdvancedSettings().subscribe({
         next: () => {
           // 200: advanced settings exists - we are regenerating the QWC file
           const lastVisitedFlow = this.qbdDirectQwcLastVisitedFlowService.get();
           const flowRoute = lastVisitedFlow === QwcRegenerationFlowType.EXISTING ? 'existing' : 'new';
           this.router.navigateByUrl(`/integrations/qbd_direct/main/configuration/qwc_file/${flowRoute}`);
+          this.navigationLockService.lock();
           this.isLoading = false;
         },
         error: () => {
@@ -81,18 +85,22 @@ export class QbdDirectComponent implements OnInit {
     }
 
     if (pathName === '/integrations/qbd_direct') {
-      const onboardingStateComponentMap: Partial<Record<QbdDirectOnboardingState, string>> = {
+      const onboardingStateComponentMap: Record<QbdDirectOnboardingState, string> = {
         [QbdDirectOnboardingState.YET_TO_START]: '/integrations/qbd_direct/onboarding/landing',
         [QbdDirectOnboardingState.CONFIRM_PRE_REQUISITES]: '/integrations/qbd_direct/onboarding/pre_requisite',
         [QbdDirectOnboardingState.CONNECTION]: '/integrations/qbd_direct/onboarding/connector',
+        [QbdDirectOnboardingState.PENDING_QWC_UPLOAD]: '/integrations/qbd_direct/onboarding/connector',
+        [QbdDirectOnboardingState.INCORRECT_COMPANY_PATH]: '/integrations/qbd_direct/onboarding/connector',
+        [QbdDirectOnboardingState.INCORRECT_PASSWORD]: '/integrations/qbd_direct/onboarding/connector',
+        [QbdDirectOnboardingState.COMPANY_NAME_MISMATCH]: '/integrations/qbd_direct/onboarding/connector',
+        [QbdDirectOnboardingState.DESTINATION_SYNC_IN_PROGRESS]: '/integrations/qbd_direct/onboarding/connector',
+        [QbdDirectOnboardingState.DESTINATION_SYNC_COMPLETE]: '/integrations/qbd_direct/onboarding/connector',
         [QbdDirectOnboardingState.EXPORT_SETTINGS]: '/integrations/qbd_direct/onboarding/export_settings',
         [QbdDirectOnboardingState.IMPORT_SETTINGS]: '/integrations/qbd_direct/onboarding/import_settings',
         [QbdDirectOnboardingState.ADVANCED_SETTINGS]: '/integrations/qbd_direct/onboarding/advanced_settings',
         [QbdDirectOnboardingState.COMPLETE]: '/integrations/qbd_direct/main'
       };
-      this.router.navigateByUrl(
-        onboardingStateComponentMap[this.workspace.onboarding_state] as string
-      );
+      this.router.navigateByUrl(onboardingStateComponentMap[this.workspace.onboarding_state]);
     }
     this.isLoading = false;
   }
