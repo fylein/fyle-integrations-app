@@ -1,4 +1,4 @@
-import { Component, computed, OnInit, signal } from '@angular/core';
+import { Component, computed, OnInit, signal, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { QwcFlowState, QwcRegenerationFlowType, QwcRouteState } from 'src/app/core/models/qbd-direct/qbd-direct-configuration/qbd-direct-qwc-file.model';
 import { QbdDirectPrerequisitesV2Component } from '../../qbd-direct-prerequisites-v2/qbd-direct-prerequisites-v2.component';
@@ -31,7 +31,7 @@ import { NavigationLockService } from 'src/app/core/services/common/navigation-l
   templateUrl: './qbd-direct-regenerate-qwc-file.component.html',
   styleUrl: './qbd-direct-regenerate-qwc-file.component.scss'
 })
-export class QbdDirectRegenerateQwcFileComponent implements OnInit {
+export class QbdDirectRegenerateQwcFileComponent implements OnInit, OnDestroy {
   // Component state
   isLoading: boolean = false;
 
@@ -119,7 +119,9 @@ export class QbdDirectRegenerateQwcFileComponent implements OnInit {
 
   private lockNavigation(): void {
     this.qbdDirectQwcLastVisitedFlowService.set(this.flowType);
-    this.navigationLockService.lock();
+    this.navigationLockService.lock(
+      this.translocoService.translate('qbdDirectRegenerateQwcFile.navigationLockMessage')
+    );
   }
 
   private unlockNavigation(): void {
@@ -346,5 +348,9 @@ export class QbdDirectRegenerateQwcFileComponent implements OnInit {
         this.isLoading = false;
       });
     });
+  }
+
+  ngOnDestroy(): void {
+    this.unlockNavigation();
   }
 }
