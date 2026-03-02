@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Sage50AttributeType, ButtonType, ButtonSize, ToastSeverity, TrackingApp, ClickEvent } from 'src/app/core/models/enum/enum.model';
+import { ButtonType, ButtonSize, ToastSeverity, TrackingApp, ClickEvent } from 'src/app/core/models/enum/enum.model';
 import { DialogService, DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { FileSelectEvent, FileUploadModule } from 'primeng/fileupload';
 import { sage50AttributeDisplayNames } from 'src/app/core/models/sage50/sage50-configuration/attribute-display-names';
@@ -11,7 +11,7 @@ import { TranslocoService } from '@jsverse/transloco';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { DialogComponent } from '../../core/dialog/dialog.component';
 import { DynamicDialogComponent } from '../../core/dynamic-dialog/dynamic-dialog.component';
-import { CSVImportAttributesInvalidResponse, CSVImportAttributesService, CSVImportAttributesValidResponse } from 'src/app/core/models/db/csv-import-attributes.model';
+import { CSVAppName, CSVImportAttributesInvalidResponse, CSVImportAttributesService, CSVImportAttributesValidResponse, CSVImportAttributeTypeForApp } from 'src/app/core/models/db/csv-import-attributes.model';
 import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
 import { downloadCSVFile } from 'src/app/core/util/downloadFile';
 import { TrackingService } from 'src/app/core/services/integration/tracking.service';
@@ -31,11 +31,11 @@ export class CsvUploadDialogComponent implements OnInit {
   readonly ButtonSize = ButtonSize;
 
   data!: {
-    attributeType: Sage50AttributeType,
+    attributeType: CSVImportAttributeTypeForApp<CSVAppName>,
     articleLink: string,
     videoURL: string,
-    appResourceKey: keyof typeof brandingDemoVideoLinks.postOnboarding,
-    uploadData: CSVImportAttributesService['importAttributes']
+    appResourceKey: CSVAppName,
+    uploadData: CSVImportAttributesService<CSVAppName>['importAttributes']
   };
 
   displayName: string;
@@ -155,7 +155,7 @@ export class CsvUploadDialogComponent implements OnInit {
   }
 
   downloadErrorLog(): void {
-    this.trackingService.onClickEvent(TrackingApp.SAGE50, ClickEvent.DOWNLOAD_ERROR_LOG);
+    this.trackingService.onClickEvent(this.data.appResourceKey as TrackingApp, ClickEvent.DOWNLOAD_ERROR_LOG);
     downloadCSVFile(this.csv.data, this.csv.name);
   }
 

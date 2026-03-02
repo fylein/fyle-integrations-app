@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { brandingStyle } from 'src/app/branding/branding-config';
+import { TranslocoService } from '@jsverse/transloco';
+import { brandingFeatureConfig, brandingStyle } from 'src/app/branding/branding-config';
 import { WindowService } from 'src/app/core/services/common/window.service';
 
 @Component({
@@ -22,6 +23,8 @@ export class ConfigurationInfoLabelComponent implements OnInit {
 
   readonly brandingStyle = brandingStyle;
 
+  readonly brandingFeatureConfig = brandingFeatureConfig;
+
   @Input() iconSrc: string;
 
   @Input() customStyleClass: any;
@@ -30,10 +33,11 @@ export class ConfigurationInfoLabelComponent implements OnInit {
 
   @Input() readMoreLink: string;
 
-  @Input() readMoreText: string;
+  @Input() readMoreText: string = this.translocoService.translate('common.readMoreText');
 
   constructor(
-    private windowService: WindowService
+    private windowService: WindowService,
+    private translocoService: TranslocoService
   ) { }
 
   clearSearch() {

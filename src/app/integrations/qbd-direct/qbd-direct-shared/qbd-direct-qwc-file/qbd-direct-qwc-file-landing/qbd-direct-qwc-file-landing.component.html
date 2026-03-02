@@ -10,7 +10,7 @@
         <app-configuration-step-header
           [headerText]="'qbdDirectQwcFileLanding.stepName' | transloco"
           [contentText]="'qbdDirectQwcFileLanding.contentText' | transloco"
-          [redirectLink]="redirectLink"
+          [redirectLink]="headerRedirectLink"
           [appName]="appName">
         </app-configuration-step-header>
       </div>
@@ -70,7 +70,7 @@
                                         <li>
                                             {{ 'qbdDirectQwcFileLanding.existingWhenToUse2' | transloco }}
                                             <br />
-                                            <a class="link tw-text-14-px tw-w-fit tw-inline-flex tw-items-center tw-mt-4-px tw-cursor-pointer" [href]="redirectLink" target="_blank">
+                                            <a class="link tw-text-14-px tw-w-fit tw-inline-flex tw-items-center tw-mt-4-px tw-cursor-pointer" [href]="teamAccessNotRecommendedRedirectLink" target="_blank">
                                                 {{ 'qbdDirectQwcFileLanding.readMore' | transloco }}
                                                 @if (brandingFeatureConfig.isIconsInsideButtonAllowed) {
                                                     <app-svg-icon [svgSource]="'open-in-new-tab'" [width]="'16px'" [height]="'16px'" class="tw-text-link-primary tw-pl-2-px tw-w-fit"></app-svg-icon>
