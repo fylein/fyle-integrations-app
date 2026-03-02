@@ -115,7 +115,7 @@ app-intacct-onboarding > *:not(router-outlet) > *:not(app-onboarding-steppers) {
         @apply tw-text-slightly-normal-text-color tw-bg-white tw-rounded-none tw-min-h-dropdown-option-height tw-flex tw-items-center tw-text-14-px #{!important};
     }
 
-    .p-select-overlay .p-select-list .p-select-option:hover, 
+    .p-select-overlay .p-select-list .p-select-option:hover,
     .p-select-overlay .p-select-list .p-select-option:not([aria-selected="true"]):not(.p-selected).p-focus:hover,
     .p-select-overlay .p-select-list .p-select-option:not([aria-selected="true"]):not(.p-selected):focus:hover {
         @apply tw-text-slightly-normal-text-color tw-rounded-none #{!important};
@@ -532,16 +532,20 @@ p {
   }
 }
 
+.p-tooltip .p-tooltip-arrow {
+    border: 3px solid transparent !important;
+}
+
 .p-tooltip.p-tooltip-right .p-tooltip-arrow {
-    @apply tw-border-r-tooltip-bg #{!important};
+    @apply tw-border-r-tooltip-bg tw-border-y-[3.5px] tw-ml-[-2px] #{!important};
 }
 
 .p-tooltip.p-tooltip-left .p-tooltip-arrow {
-    @apply tw-border-l-tooltip-bg #{!important};
+    @apply tw-border-l-tooltip-bg tw-border-y-[3.5px] tw-mr-[-2px] #{!important};
 }
 
 .p-tooltip.p-tooltip-top .p-tooltip-arrow {
-    @apply tw-border-t-tooltip-bg #{!important};
+    @apply tw-border-t-tooltip-bg tw-border-x-[3.5px] tw-mb-[-2px] #{!important};
 }
 
 .p-tooltip.p-tooltip-bottom {
@@ -549,9 +553,7 @@ p {
 }
 
 .p-tooltip.p-tooltip-bottom .p-tooltip-arrow {
-    border: 2px solid transparent !important;
-    margin-top: -2px !important;
-    @apply tw-border-b-tooltip-bg #{!important};
+    @apply tw-border-b-tooltip-bg tw-border-x-[3.5px] tw-mt-[-2px] #{!important};
 }
 
 // Radio Button
@@ -637,7 +639,7 @@ p {
     @apply tw-text-slightly-normal-text-color tw-bg-white tw-rounded-none tw-min-h-dropdown-option-height tw-flex tw-items-center tw-py-6-px tw-px-12-px tw-text-14-px #{!important};
 }
 
-.p-select-overlay .p-select-list .p-select-option:hover, 
+.p-select-overlay .p-select-list .p-select-option:hover,
 .p-select-overlay .p-select-list .p-select-option:not([aria-selected="true"]):not(.p-selected).p-focus:hover,
 .p-select-overlay .p-select-list .p-select-option:not([aria-selected="true"]):not(.p-selected):focus:hover {
     @apply tw-bg-dd-menu-item-hover-bg tw-text-slightly-normal-text-color tw-rounded-none #{!important};

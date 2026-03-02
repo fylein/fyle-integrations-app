@@ -28,15 +28,27 @@ export class QbdDirectSetupConnectionComponent {
 
   @Input({required: true}) showSection: boolean;
 
+  @Input() warningMessage: string;
+
+  @Input() warningArticleLink: string;
+
+  @Input() alwaysShowFooter: boolean = false;
+
+  @Input() showAssistedSetup: boolean = true;
+
+  @Input() showStepNumber: boolean = true;
+
+  @Input() ctaText: ConfigurationCta = ConfigurationCta.NEXT;
+
   @Output() doneClick: EventEmitter<CheckBoxUpdate> = new EventEmitter();
 
   @Output() nextClick = new EventEmitter();
 
   @Output() manualDownload = new EventEmitter();
 
-  qbdConnectionStatus = QBDConnectionStatus;
+  @Output() back = new EventEmitter();
 
-  ConfigurationCtaText = ConfigurationCta;
+  qbdConnectionStatus = QBDConnectionStatus;
 
   isPasswordShown: boolean = false;
 
@@ -49,6 +61,17 @@ export class QbdDirectSetupConnectionComponent {
   brandingFeatureConfig = brandingFeatureConfig;
 
   QBDDirectInteractionType = QBDDirectInteractionType;
+
+  get showFooter(): boolean {
+    return (
+      this.alwaysShowFooter || (
+        // Default
+        !this.isStepCompleted && this.showSection && (
+          !this.brandingFeatureConfig.qbdDirect.showMarkAsDone || (!this.isStepCompleted && this.isCTAEnabled)
+        )
+      )
+    );
+  }
 
   constructor(private messageService: MessageService, private translocoService: TranslocoService) {}
 
@@ -79,6 +102,10 @@ export class QbdDirectSetupConnectionComponent {
 
     document.body.removeChild(selBox);
     event?.stopPropagation();
+  }
+
+  onBackClick() {
+    this.back.emit();
   }
 
   showPassword(isPasswordVisible: boolean) {

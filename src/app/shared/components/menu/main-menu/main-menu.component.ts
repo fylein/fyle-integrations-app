@@ -1,7 +1,8 @@
-import { Component, EventEmitter, Input, OnInit, Output, viewChild } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output, viewChild } from '@angular/core';
+import { NavigationEnd, Router } from '@angular/router';
 import { TranslocoService } from '@jsverse/transloco';
 import { Select } from 'primeng/select';
+import { filter, Subject, takeUntil } from 'rxjs';
 import { brandingConfig, brandingFeatureConfig, brandingStyle } from 'src/app/branding/branding-config';
 import { TabMenuItem } from 'src/app/core/models/common/tab-menu.model';
 import { AppName, ButtonSize, ButtonType, IframeOrigin, InAppIntegration } from 'src/app/core/models/enum/enum.model';
@@ -10,6 +11,7 @@ import { MainMenuDropdownGroup } from 'src/app/core/models/misc/main-menu-dropdo
 import { trackingAppMap } from 'src/app/core/models/misc/tracking.model';
 import { EventsService } from 'src/app/core/services/common/events.service';
 import { IntegrationsService } from 'src/app/core/services/common/integrations.service';
+import { NavigationLockService } from 'src/app/core/services/common/navigation-lock.service';
 import { TrackingService } from 'src/app/core/services/integration/tracking.service';
 import { IframeOriginStorageService } from 'src/app/core/services/misc/iframe-origin-storage.service';
 
@@ -19,7 +21,7 @@ import { IframeOriginStorageService } from 'src/app/core/services/misc/iframe-or
     styleUrls: ['./main-menu.component.scss'],
     standalone: false
 })
-export class MainMenuComponent implements OnInit {
+export class MainMenuComponent implements OnInit, OnDestroy {
 
   @Input() modules: TabMenuItem[];
 
@@ -49,6 +51,8 @@ export class MainMenuComponent implements OnInit {
 
   private pDropdown = viewChild(Select);
 
+  private destroy$ = new Subject<void>();
+
   ButtonType = ButtonType;
 
   ButtonSize = ButtonSize;
@@ -73,11 +77,10 @@ export class MainMenuComponent implements OnInit {
     private eventsService: EventsService,
     private iframeOriginStorageService: IframeOriginStorageService,
     private trackingService: TrackingService,
-    private translocoService: TranslocoService
+    private translocoService: TranslocoService,
+    public navigationLockService: NavigationLockService
   ) {
-    this.showMoreDropdown =
-      this.brandingFeatureConfig.showMoreDropdownInMainMenu &&
-      this.iframeOriginStorageService.get() === IframeOrigin.ADMIN_DASHBOARD;
+    this.showMoreDropdown = this.brandingFeatureConfig.showMoreDropdownInMainMenu;
   }
 
   onTabChange(value: string | number | undefined){
@@ -206,9 +209,24 @@ export class MainMenuComponent implements OnInit {
       this.router.navigateByUrl(activeModule.routerLink);
     }
 
+    this.router.events
+      .pipe(
+        filter(event => event instanceof NavigationEnd),
+        takeUntil(this.destroy$)
+      )
+      .subscribe(() => {
+        const activeModule = this.modules.find(module => module.routerLink && this.router.url.includes(module.routerLink)) || this.modules[0];
+        this.activeItem = activeModule.value;
+      });
+
     if (this.router.url.includes("/token_expired/") || this.router.url.includes("/disconnect/")){
       this.isMenuDisabled = true;
       this.isDisconnectRequired = false;
     }
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 }
