@@ -34,7 +34,8 @@ export const c1FeatureConfig: FeatureConfiguration[string] = {
         configToggleLeftAligned: true,
         unlockStepsInOrder: true,
         showMarkAsDone: false,
-        showSubIconsInConfigurationFields: false
+        showSubIconsInConfigurationFields: false,
+        allowQwcRegeneration: false
     },
     featureFlags: {
         cloneSettings: false,

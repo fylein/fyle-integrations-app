@@ -34,7 +34,8 @@ export const fyleFeatureConfig: FeatureConfiguration[string] = {
         configToggleLeftAligned: false,
         unlockStepsInOrder: false,
         showMarkAsDone: true,
-        showSubIconsInConfigurationFields: true
+        showSubIconsInConfigurationFields: true,
+        allowQwcRegeneration: true
     },
     featureFlags: {
         cloneSettings: true,
