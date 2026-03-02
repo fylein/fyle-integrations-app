@@ -2796,9 +2796,9 @@
     "somethingWentWrong": "Something went wrong. Please try again later.",
     "warningTextNewPath": "Remove the previous integration from the Web Connector and change the OwnerID/FileID to avoid QBWC1039 error.",
     "warningTextExistingPath": "Change the OwnerID/FileID to avoid QBWC1039 Error.",
-    "navigationLockMessage": "Navigation is disabled while QWC regeneration is in progress. Please complete the setup to access other tabs"
+    "navigationLockMessage": "Navigation is disabled during QWC regeneration. Complete setup to continue."
   },
   "qbdDirect": {
-    "navigationLockMessage": "Navigation is disabled while QWC regeneration is in progress. Please complete the setup to access other tabs"
+    "navigationLockMessage": "Navigation is disabled during QWC regeneration. Complete setup to continue."
   }
 }
