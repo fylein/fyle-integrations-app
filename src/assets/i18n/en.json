@@ -1686,6 +1686,22 @@
     "done": "Done",
     "markAsDone": "Mark as done"
   },
+  "qbdDirectPrerequisitesV2": {
+    "stepName": "Getting started",
+    "contentText": "Review and complete each prerequisite before proceeding. This will help you connect {{brandName}} to QuickBooks Desktop without interruptions.",
+    "done": "Done",
+    "markAsDone": "Mark as done",
+    "step1Label": "QuickBooks Desktop + Web Connector Setup",
+    "step1Point1": "The latest version of QuickBooks Desktop is installed and up to date.",
+    "step1Point2": "A compatible version of Web Connector is installed on the same server or virtual desktop as QuickBooks Desktop and the company file.",
+    "step1Point3": "If you're using a hosted environment (e.g., Right Networks), make sure that:",
+    "step1Point3Sub1": "Web Connector is installed within the hosted session",
+    "step1Point3Sub2": "Your plan supports third-party integrations and Web Connector access",
+    "step2Label": "Access & Permissions",
+    "step2Point1": "QuickBooks Desktop is open, run as Administrator, and in Single-User Mode.",
+    "step2Point2": "You have the necessary third-party integration permissions. (If not, go to Edit > Preferences > Integrated Applications and grant access.)",
+    "step1Tooltip": "Do not install Web Connector on your personal machine if QuickBooks Desktop is hosted remotely."
+  },
   "qbdDirectOnboardingLanding": {
     "appName": "QuickBooks Desktop ",
     "guideHeader": "A quick guide to help you set up your {{brandName}}-QuickBooks Desktop integration."
@@ -2730,10 +2746,59 @@
       },
       "advancedSettings": {
         "topLevelMemoStructurePreviewLabel": "Preview"
+      },
+      "QWCFile": {
+        "stepName": "QWC file"
       }
     }
   },
   "dashboard": {
     "exportLogSubHeaderSuccessful": "These expenses have been successfully exported to your {{ appName }}."
+  },
+  "qbdDirectQwcFileLanding": {
+    "stepName": "Regenerate QWC File",
+    "contentText": "Regenerate your QuickBooks Web Connector file or set up a new one if your company file path has changed.",
+    "currentFileHeader": "Current company file path",
+    "currentFileLastRegenerated": "Last regenerated",
+    "currentFileBy": " by ",
+    "currentFileOn": " on ",
+    "qwcFilePathCopied": "QWC file path copied!",
+    "nextStepHeader": "Choose your next step:",
+    "useExistingPath": "Use existing company file path",
+    "useExistingPathDescription": "Regenerate your QuickBooks Web Connector (.qwc) file and password for the current company file path.",
+    "useNewPath": "Use new company file path",
+    "useNewPathDescription": "Generate a new QuickBooks Web Connector (.qwc) file and password for a new or updated company file path.",
+    "whenToUse": "When to use:",
+    "existingWhenToUse1": "The QWC file was lost or corrupted",
+    "existingWhenToUse2": "Another team member needs access (not recommended)",
+    "newWhenToUse1": "The company file was moved or renamed",
+    "newWhenToUse2": "QuickBooks Desktop was reinstalled or updated",
+    "keyBenefits": "Key benefits:",
+    "existingBenefit1": "Easiest and safest way to restore your connection",
+    "existingBenefit2": "No changes to your integration configurations",
+    "newBenefit1": "Ensures your integration matches your current QuickBooks setup",
+    "newBenefit2": "Resolves path mismatch errors",
+    "readMore": "Read more"
+  },
+  "qbdDirectRegenerateQwcFile": {
+    "headerTitleExistingPath": "Regenerate file & password",
+    "headerTitleNewPath": "Connect to QuickBooks Desktop",
+    "headerSubTitleExistingPath": "Regenerate your QuickBooks Web Connector (.qwc) file and password for the current company file path.",
+    "headerSubTitleNewPath": "Connect to QuickBooks Desktop by completing the following steps.",
+    "downloadError": "Failed to generate the QWC file. Please try again later.",
+    "connectionFailed": "Connection failed",
+    "gotIt": "Got it",
+    "connectionError": "Failed to connect to QuickBooks Desktop. Please try again later.",
+    "incorrectCompanyPathMessage": "Incorrect company file path detected. Please check and try again.",
+    "incorrectPasswordMessage": "Incorrect password detected. Please check and try again.",
+    "companyNameMismatchMessage": "Company name does not match the previously connected Company. Please check and try again.",
+    "connectionSuccessToast": "QuickBooks Desktop connection successful",
+    "somethingWentWrong": "Something went wrong. Please try again later.",
+    "warningTextNewPath": "Remove the previous integration from the Web Connector and change the OwnerID/FileID to avoid QBWC1039 error.",
+    "warningTextExistingPath": "Change the OwnerID/FileID to avoid QBWC1039 Error.",
+    "navigationLockMessage": "Navigation is disabled during QWC regeneration. Complete setup to continue."
+  },
+  "qbdDirect": {
+    "navigationLockMessage": "Navigation is disabled during QWC regeneration. Complete setup to continue."
   }
 }

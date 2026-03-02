@@ -6,7 +6,7 @@ import { CsvUploadButtonComponent } from "../../input/csv-upload-button/csv-uplo
 import { CsvUploadDialogComponent } from '../../dialog/csv-upload-dialog/csv-upload-dialog.component';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { SharedModule } from 'src/app/shared/shared.module';
-import { CSVImportAttributesService } from 'src/app/core/models/db/csv-import-attributes.model';
+import { CSVAppName, CSVImportAttributesService } from 'src/app/core/models/db/csv-import-attributes.model';
 import { UploadedCSVFile } from 'src/app/core/models/misc/configuration-csv-import-field.model';
 import { TrackingService } from 'src/app/core/services/integration/tracking.service';
 import { brandingDemoVideoLinks } from 'src/app/branding/branding-config';
@@ -18,9 +18,9 @@ import { brandingDemoVideoLinks } from 'src/app/branding/branding-config';
     templateUrl: './configuration-csv-upload-field.component.html',
     styleUrl: './configuration-csv-upload-field.component.scss'
 })
-export class ConfigurationCsvUploadFieldComponent {
+export class ConfigurationCsvUploadFieldComponent<A extends CSVAppName> {
 
-  @Input({ required: true }) appResourceKey: keyof typeof brandingDemoVideoLinks.postOnboarding;
+  @Input({ required: true }) appResourceKey: A;
 
   @Input({ required: true }) attributeType!: Sage50AttributeType;
 
@@ -28,7 +28,7 @@ export class ConfigurationCsvUploadFieldComponent {
 
   @Input({ required: true }) subLabel!: string;
 
-  @Input({ required: true }) uploadData!: CSVImportAttributesService['importAttributes'];
+  @Input({ required: true }) uploadData!: CSVImportAttributesService<A>['importAttributes'];
 
   @Input() articleLink!: string;
 
