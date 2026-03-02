@@ -10,7 +10,7 @@ import { CSVImportAttributesService } from 'src/app/core/models/db/csv-import-at
 @Injectable({
   providedIn: 'root'
 })
-export class Sage50ImportAttributesService implements CSVImportAttributesService {
+export class Sage50ImportAttributesService implements CSVImportAttributesService<'SAGE50'> {
 
   constructor(
     private apiService: ApiService,

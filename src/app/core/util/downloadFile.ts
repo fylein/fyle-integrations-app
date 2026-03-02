@@ -6,8 +6,13 @@ export const downloadFile = (content: string, fileName: string, fileType: string
   a.download = fileName;
   a.click();
   a.remove();
+  window.URL.revokeObjectURL(url);
 };
 
 export const downloadCSVFile = (content: string, fileName: string) => {
   downloadFile(content, fileName, 'text/csv');
+};
+
+export const downloadXMLFile = (content: string, fileName: string) => {
+  downloadFile(content, fileName, 'text/xml');
 };

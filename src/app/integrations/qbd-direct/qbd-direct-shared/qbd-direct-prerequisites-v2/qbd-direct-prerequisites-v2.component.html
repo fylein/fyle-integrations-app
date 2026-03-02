@@ -1,0 +1,121 @@
+<div class="tw-h-full">
+  <div [ngClass]="[brandingStyle.configuration.settingsContainer, brandingStyle.common.configurationContentsDashboard]">
+    <div>
+      <app-configuration-step-header
+        [headerText]="'qbdDirectPrerequisitesV2.stepName' | transloco"
+        [contentText]="'qbdDirectPrerequisitesV2.contentText' | transloco: { brandName: brandingConfig.brandName }"
+        [appName]="appName">
+      </app-configuration-step-header>
+    </div>
+
+    <div class="tw-p-24-px tw-flex tw-flex-col tw-gap-[28px]">
+      <!-- Step 1: QuickBooks Desktop + Web Connector Setup -->
+      <div class="tw-flex tw-gap-[16px] tw-items-start">
+        <!-- Icon -->
+        <div class="tw-w-45-px tw-h-45-px tw-border tw-border-border-tertiary tw-rounded-border-radius-2xs tw-flex tw-items-center tw-justify-center tw-shrink-0 tw-bg-disabled-bg-color">
+          <app-svg-icon
+            [svgSource]="'download-medium'"
+            [width]="'18px'"
+            [height]="'18px'"
+            [isTextColorAllowed]="true"
+            [styleClasses]="prerequisiteSteps[0].isComplete ? 'tw-text-icon-disable' : 'tw-text-icon-tertiary'">
+          </app-svg-icon>
+        </div>
+
+        <!-- Content -->
+        <div class="tw-flex-1 tw-flex tw-items-start tw-justify-between tw-gap-[16px]">
+          <div class="tw-flex-1">
+            <div class="tw-flex tw-items-center tw-gap-[6px]">
+              <h4 class="tw-text-14-px tw-font-500" [ngClass]="prerequisiteSteps[0].isComplete ? 'tw-text-text-disable' : 'tw-text-text-secondary'">
+                {{ 'qbdDirectPrerequisitesV2.step1Label' | transloco }}
+              </h4>
+              <app-svg-icon
+                [svgSource]="'info-circle-fill'"
+                [width]="'16px'"
+                [height]="'16px'"
+                [isTextColorAllowed]="true"
+                [styleClasses]="'tw-text-icon-muted tw-cursor-pointer'"
+                [tooltipText]="'qbdDirectPrerequisitesV2.step1Tooltip' | transloco"
+                [tooltipPosition]="'top'">
+              </app-svg-icon>
+            </div>
+
+            <!-- Bullet Points -->
+            <ul class="tw-list-disc tw-pl-20-px tw-text-14-px tw-font-400 tw-mt-4-px" [ngClass]="prerequisiteSteps[0].isComplete ? 'tw-text-text-disable' : 'tw-text-text-tertiary'">
+              <li>{{ 'qbdDirectPrerequisitesV2.step1Point1' | transloco }}</li>
+              <li>{{ 'qbdDirectPrerequisitesV2.step1Point2' | transloco }}</li>
+              <li>
+                {{ 'qbdDirectPrerequisitesV2.step1Point3' | transloco }}
+                <ul class="dash-list tw-pl-20-px">
+                  <li>{{ 'qbdDirectPrerequisitesV2.step1Point3Sub1' | transloco }}</li>
+                  <li>{{ 'qbdDirectPrerequisitesV2.step1Point3Sub2' | transloco }}</li>
+                </ul>
+              </li>
+            </ul>
+          </div>
+
+          <!-- Checkbox Button -->
+          <div>
+            <app-checkbox-button
+              [checkedText]="'qbdDirectPrerequisitesV2.done' | transloco"
+              [unCheckedText]="'qbdDirectPrerequisitesV2.markAsDone' | transloco"
+              [id]="1"
+              (checkBoxUpdated)="updatePrerequisiteStatus($event)">
+            </app-checkbox-button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Step 2: Access & Permissions -->
+      <div class="tw-flex tw-gap-[16px] tw-items-start">
+        <!-- Icon -->
+        <div class="tw-w-45-px tw-h-45-px tw-border tw-border-border-tertiary tw-rounded-border-radius-2xs tw-flex tw-items-center tw-justify-center tw-shrink-0 tw-bg-disabled-bg-color">
+          <app-svg-icon
+            [svgSource]="'user-one'"
+            [width]="'18px'"
+            [height]="'18px'"
+            [isTextColorAllowed]="true"
+            [styleClasses]="prerequisiteSteps[1].isComplete ? 'tw-text-icon-disable' : 'tw-text-icon-tertiary'">
+          </app-svg-icon>
+        </div>
+
+        <!-- Content -->
+        <div class="tw-flex-1 tw-flex tw-items-start tw-justify-between tw-gap-[16px]">
+          <div class="tw-flex-1">
+            <div class="tw-flex tw-items-center tw-gap-4-px">
+              <h4 class="tw-text-14-px tw-font-500" [ngClass]="prerequisiteSteps[1].isComplete ? 'tw-text-text-disable' : 'tw-text-text-secondary'">
+                {{ 'qbdDirectPrerequisitesV2.step2Label' | transloco }}
+              </h4>
+            </div>
+
+            <!-- Bullet Points -->
+            <ul class="tw-list-disc tw-pl-20-px tw-text-14-px tw-font-400 tw-mt-4-px" [ngClass]="prerequisiteSteps[1].isComplete ? 'tw-text-text-disable' : 'tw-text-text-tertiary'">
+              <li>{{ 'qbdDirectPrerequisitesV2.step2Point1' | transloco }}</li>
+              <li>{{ 'qbdDirectPrerequisitesV2.step2Point2' | transloco }}</li>
+            </ul>
+          </div>
+
+          <!-- Checkbox Button -->
+          <div>
+            <app-checkbox-button
+              [checkedText]="'qbdDirectPrerequisitesV2.done' | transloco"
+              [unCheckedText]="'qbdDirectPrerequisitesV2.markAsDone' | transloco"
+              [id]="2"
+              (checkBoxUpdated)="updatePrerequisiteStatus($event)">
+            </app-checkbox-button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="tw-sticky tw-z-1200 tw-top-0 tw-bottom-0 tw-left-0 tw-right-0 tw-bg-white">
+  <app-configuration-step-footer
+    [ctaText]="ConfigurationCtaText.CONTINUE"
+    [showBackButton]="true"
+    [isButtonDisabled]="isContinueDisabled"
+    (save)="onContinueClick()"
+    (navigateToPreviousStep)="goBack()">
+  </app-configuration-step-footer>
+</div>

@@ -2,7 +2,7 @@
   @if (showBackButton) {
     <div class="tw-flex">
       <div>
-        <app-button [buttonSize]="ButtonSize.MEDIUM" [buttonType]="ButtonType.SECONDARY" [styleClasses]="'tw-text-14-px'" (buttonClick)="navigate()" [isIconLeftSide]="true" [svgSource]="'arrow-tail-left-medium'" [buttonText]="(brandingConfig.brandId === 'co' && AppName === appName.QBD_DIRECT ? 'qbd_direct.configurationStepFooter.back' : 'configurationStepFooter.back') | transloco"></app-button>
+        <app-button [buttonSize]="ButtonSize.MEDIUM" [buttonType]="ButtonType.SECONDARY" [styleClasses]="'tw-text-14-px'" (buttonClick)="navigate()" [disabled]="isBackButtonDisabled" [isIconLeftSide]="true" [svgSource]="'arrow-tail-left-medium'" [buttonText]="(brandingConfig.brandId === 'co' && AppName === appName.QBD_DIRECT ? 'qbd_direct.configurationStepFooter.back' : 'configurationStepFooter.back') | transloco"></app-button>
       </div>
       <div class="tw-ml-16-px">
         @if (!brandingFeatureConfig.isDashboardButtonOutlined && showResetButton) {
