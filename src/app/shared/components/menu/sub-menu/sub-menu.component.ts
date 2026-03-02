@@ -2,6 +2,7 @@ import { Component, EventEmitter, Inject, Input, OnDestroy, OnInit, Output } fro
 import { NavigationEnd, Router } from '@angular/router';
 import { Subject, filter, takeUntil } from 'rxjs';
 import { TabMenuItem } from 'src/app/core/models/common/tab-menu.model';
+import { NavigationLockService } from 'src/app/core/services/common/navigation-lock.service';
 
 @Component({
     selector: 'app-sub-menu',
@@ -24,7 +25,8 @@ export class SubMenuComponent implements OnInit, OnDestroy {
   private destroy$ = new Subject<void>();
 
   constructor(
-    private router: Router
+    private router: Router,
+    public navigationLockService: NavigationLockService
   ) { }
 
   onTabChange(value: any): void {
