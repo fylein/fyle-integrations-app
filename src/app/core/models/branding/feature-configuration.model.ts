@@ -54,7 +54,6 @@ export type FeatureConfiguration = {
                 importProjects: boolean;
                 allowCustomSegment: boolean;
                 dependentField: boolean;
-                allowImportCode: boolean;
                 importSettingsV1: boolean;
                 disableCustomerSourceField: boolean;
             },
@@ -80,7 +79,6 @@ export type FeatureConfiguration = {
             },
             dashboard: {
                 disconnectButton: boolean;
-                useRepurposedExportSummary: boolean;
                 shouldShowExpenseTypeInAccountingErrorDashboard: boolean;
                 showTextOnlyForButtonsInDashboardErrorSection: boolean;
                 showDashboardErrorSectionHeader: boolean;

@@ -31,7 +31,7 @@ export class Sage300AdvancedSettingsService {
     const defaultMemoOptions: string[] = ['employee_email', 'purpose', 'category', 'spent_on', 'report_number', 'expense_link'];
     return new FormGroup({
       memoStructure: new FormControl(advancedSettings?.expense_memo_structure ? advancedSettings?.expense_memo_structure : defaultMemoOptions),
-      scheduleEnabled: new FormControl(advancedSettings?.schedule_is_enabled || (isOnboarding && brandingFeatureConfig.featureFlags.dashboard.useRepurposedExportSummary) ? true : false),
+      scheduleEnabled: new FormControl(advancedSettings?.schedule_is_enabled || isOnboarding ? true : false),
       autoCreateVendor: new FormControl(advancedSettings?.auto_create_vendor ? true : false),
       scheduleAutoExportFrequency: new FormControl(this.advanceSettingsService.getExportFrequency(advancedSettings?.is_real_time_export_enabled, isOnboarding, advancedSettings?.schedule_is_enabled, advancedSettings?.interval_hours)),
       skipExport: new FormControl(isSkipExportEnabled)

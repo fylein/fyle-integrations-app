@@ -77,7 +77,7 @@ export class SkippedAccountingExportModel {
       ...skippedExpense,
       employee: [skippedExpense.employee_name, skippedExpense.employee_email],
       expenseType: skippedExpense.fund_source === 'PERSONAL' ? 'Reimbursable' : 'Corporate Card',
-      fyleUrl: `${environment.fyle_app_url}/app/admin/#/company_expenses?txnId=${skippedExpense.expense_id}&org_id=${org_id}`
+      fyleUrl: `${environment.fyle_app_url}/app/admin/company_expenses?txnId=${skippedExpense.expense_id}&org_id=${org_id}`
     };
   }
 }

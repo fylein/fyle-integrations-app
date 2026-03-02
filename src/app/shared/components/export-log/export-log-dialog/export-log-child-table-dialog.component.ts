@@ -25,7 +25,7 @@ export class ExportLogChildTableDialogComponent implements OnInit {
   ) { }
 
   openExpenseinFyle(expense_id: string, org_id: string) {
-    const url = `${environment.fyle_app_url}/app/admin/#/company_expenses?txnId=${expense_id}&org_id=${org_id}`;
+    const url = `${environment.fyle_app_url}/app/admin/company_expenses?txnId=${expense_id}&org_id=${org_id}`;
     this.windowService.openInNewTab(url);
   }
 

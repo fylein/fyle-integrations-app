@@ -273,7 +273,7 @@
           </div>
         </div>
       </div>
-      @if (brandingFeatureConfig.featureFlags.importSettings.allowImportCode && uiExposedAppName === AppName.SAGE300) {
+      @if (uiExposedAppName === AppName.SAGE300) {
         <div>
           @for (defaultField of defaultImportFields; track defaultField) {
             <div>

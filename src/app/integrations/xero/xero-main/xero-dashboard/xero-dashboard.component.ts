@@ -74,7 +74,7 @@ export class XeroDashboardComponent implements OnInit, OnDestroy {
 
   getExportErrors$: Observable<Error[]> = this.dashboardService.getExportErrors('v1');
 
-  getAccountingExportSummary$: Observable<AccountingExportSummary> = this.accountingExportService.getAccountingExportSummary('v1', brandingFeatureConfig.featureFlags.dashboard.useRepurposedExportSummary, AppName.XERO);
+  getAccountingExportSummary$: Observable<AccountingExportSummary> = this.accountingExportService.getAccountingExportSummary('v1', AppName.XERO);
 
   accountingExportType: XeroTaskLogType[] = [XeroTaskLogType.FETCHING_EXPENSE, XeroTaskLogType.CREATING_BILL, XeroTaskLogType.CREATING_BANK_TRANSACTION];
 

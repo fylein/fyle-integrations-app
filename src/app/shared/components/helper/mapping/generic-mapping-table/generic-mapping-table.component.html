@@ -39,7 +39,7 @@
                   [ngStyle]="{'white-space': 'nowrap', 'overflow': 'hidden', 'text-overflow': 'ellipsis', 'max-width': '16rem'}"
                   [pTooltip]="isOverflowing(textElement, value)" tooltipPosition="top">
                   <p>
-                    @if (value?.code && isMultiLineOption && brandingFeatureConfig.featureFlags.importSettings.allowImportCode) {
+                    @if (value?.code && isMultiLineOption) {
                       <span>{{ value?.code }}: </span>
                     }
                     {{ value?.value }}

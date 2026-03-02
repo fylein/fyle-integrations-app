@@ -51,7 +51,7 @@ export class QbdDirectAdvancedSettingsService extends AdvancedSettingsService {
       return new FormGroup({
           expenseMemoStructure: new FormControl(advancedSettings?.line_level_memo_structure && advancedSettings?.line_level_memo_structure.length > 0 ? QbdDirectAdvancedSettingsService.formatMemoStructure(QbdDirectAdvancedSettingsService.defaultMemoFields(), advancedSettings?.line_level_memo_structure) : QbdDirectAdvancedSettingsService.defaultMemoFields(), Validators.required),
           topMemoStructure: new FormControl(advancedSettings?.top_level_memo_structure && advancedSettings?.top_level_memo_structure.length > 0 ? advancedSettings?.top_level_memo_structure : QbdDirectAdvancedSettingsService.defaultTopMemoOptions(), Validators.required),
-          exportSchedule: new FormControl(advancedSettings?.schedule_is_enabled || (isOnboarding && brandingFeatureConfig.featureFlags.dashboard.useRepurposedExportSummary) ? true : false),
+          exportSchedule: new FormControl(advancedSettings?.schedule_is_enabled || isOnboarding ? true : false),
           email: new FormControl(advancedSettings?.emails_selected ? advancedSettings?.emails_selected : null),
           exportScheduleFrequency: new FormControl(this.getExportFrequency(advancedSettings?.is_real_time_export_enabled, isOnboarding, advancedSettings?.schedule_is_enabled, advancedSettings?.interval_hours)),
           autoCreateReimbursableEnitity: new FormControl(advancedSettings?.auto_create_reimbursable_entity ? advancedSettings?.auto_create_reimbursable_entity : false),

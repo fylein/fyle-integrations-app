@@ -890,7 +890,22 @@
     "importSettingsSuccess": "Import settings saved successfully",
     "importSettingsError": "Error saving import settings, please try again later",
     "generalLedgerAccount": "General ledger account",
-    "category": "Category"
+    "category": "Category",
+    "configureImportMethodTitle": "Configure import method",
+    "configureImportMethodDescription": "You have the option to import either just the names of your values or both names and code, based on how your employees identify these values.",
+    "oneTimeSetupNote": "This is a one-time setup and cannot be modified once the values are imported to {{brandName}}.",
+    "selectImportMethodPlaceholder": "Select how to import {{field}}",
+    "howToImportLabel": "How to import the {{field}} from {{appName}}?",
+    "howToImportSubLabel": "You have the option to import either just the names of your {{field}} or both the names and codes.",
+    "selectImportMethodError": "Please select how the {{field}} should be imported",
+    "importCodesAndNames": "Import codes + names",
+    "importNamesOnly": "Import names only",
+    "exampleCodesAndNamesMeals": "Example: 4567: Meals & Entertainment",
+    "exampleNamesOnlyMeals": "Example: Meals & Entertainment",
+    "exampleCodesAndNamesFinance": "Example: 24: Finance",
+    "exampleNamesOnlyFinance": "Example: Finance",
+    "exampleCodesAndNamesConstruction": "Example: 12-00-201: PCL Construction",
+    "exampleNamesOnlyConstruction": "Example: PCL Construction"
   },
   "intacctExportSettings": {
     "syncDataDimensionsToast": "Syncing data dimensions from Sage Intacct",

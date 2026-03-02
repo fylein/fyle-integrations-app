@@ -61,7 +61,6 @@ export const fyleFeatureConfig: FeatureConfiguration[string] = {
             importProjects: true,
             allowCustomSegment: true,
             dependentField: true,
-            allowImportCode: true,
             importSettingsV1: true,
             disableCustomerSourceField: false
         },
@@ -87,7 +86,6 @@ export const fyleFeatureConfig: FeatureConfiguration[string] = {
         },
         dashboard: {
             disconnectButton: true,
-            useRepurposedExportSummary: true,
             shouldShowExpenseTypeInAccountingErrorDashboard: true,
             showTextOnlyForButtonsInDashboardErrorSection: false,
             showDashboardErrorSectionHeader: true

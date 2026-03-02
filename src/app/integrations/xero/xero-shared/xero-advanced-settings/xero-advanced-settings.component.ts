@@ -131,7 +131,7 @@ export class XeroAdvancedSettingsComponent implements OnInit {
       merchant: this.translocoService.translate('xeroAdvancedSettings.previewMerchant'),
       report_number: this.translocoService.translate('xeroAdvancedSettings.previewReportNumber'),
       spent_on: today.toLocaleDateString(),
-      expense_link: `${environment.fyle_app_url}/app/main/#/enterprise/view_expense/`
+      expense_link: `${environment.fyle_app_url}/app/main/enterprise/view_expense/`
     };
 
     this.memoPreviewText = '';

@@ -24,7 +24,7 @@ export class AdvancedSettingsService {
 
   static getHoursOptions(): SelectFormOption[] {
     return [
-      ...(brandingFeatureConfig.featureFlags.dashboard.useRepurposedExportSummary ? [{ label: 'Real-time', value: 0 }] : []),
+      ...[{ label: 'Real-time', value: 0 }],
       ...[...Array(24).keys()].map(hour => ({
         label: `${hour + 1} hour${hour + 1 > 1 ? 's' : ''}`,
         value: hour + 1
@@ -106,7 +106,7 @@ export class AdvancedSettingsService {
       spent_at: today.toLocaleDateString(),
       expense_key: 'E/2024/02/T/11',
       expense_number: 'E/2024/02/T/11',
-      expense_link: `${environment.fyle_app_url}/app/main/#/enterprise/view_expense/`
+      expense_link: `${environment.fyle_app_url}/app/main/enterprise/view_expense/`
     };
     let memoPreviewText = '';
     const memo: string[] = [];
@@ -144,12 +144,10 @@ export class AdvancedSettingsService {
     let frequency;
 
     // Set frequency to 0 if real time export is enabled or onboarding is true
-    if (isRealTimeExportEnabled || (isOnboarding && brandingFeatureConfig.featureFlags.dashboard.useRepurposedExportSummary)) {
+    if (isRealTimeExportEnabled || isOnboarding) {
       frequency = 0;
     } else if (autoImportExportEnabled) {
       frequency = intervalHours;
-    } else {
-      frequency = brandingFeatureConfig.featureFlags.dashboard.useRepurposedExportSummary ? 0 : 1;
     }
 
     return frequency;

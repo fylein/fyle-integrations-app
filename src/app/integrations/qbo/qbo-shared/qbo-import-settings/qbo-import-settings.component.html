@@ -36,7 +36,7 @@
               </div>
             }    
             @if (showChartOfCategory) {
-              <div class="tw-pr-24-px tw-pl-64-px tw-py-0" [ngClass]="{'tw-pb-24-px': !(brandingFeatureConfig.featureFlags.importSettings.allowImportCode && importSettingForm.get('importCategories')?.value && qboImportCodeFieldCodeConfig[DefaultImportFields.ACCOUNT])}">
+              <div class="tw-pr-24-px tw-pl-64-px tw-py-0" [ngClass]="{'tw-pb-24-px': !(importSettingForm.get('importCategories')?.value && qboImportCodeFieldCodeConfig[DefaultImportFields.ACCOUNT])}">
                 <div class="tw-flex tw-justify-between tw-items-center">
                   <h5 class="lg:tw-w-3/5 md:tw-w-1/2 tw-text-slightly-normal-text-color tw-text-14-px !tw-font-500">
                     {{ 'configuration.importSetting.chartOfAccountTypes' | transloco: {brandName: brandingConfig.brandName} }}
@@ -63,7 +63,7 @@
                 </div>
               </div>
             }
-            @if (brandingFeatureConfig.featureFlags.importSettings.allowImportCode && importSettingForm.get('importCategories')?.value && qboImportCodeFieldCodeConfig[DefaultImportFields.ACCOUNT]) {
+            @if (importSettingForm.get('importCategories')?.value && qboImportCodeFieldCodeConfig[DefaultImportFields.ACCOUNT]) {
               <div>
                 <app-configuration-select-field
                   [appName]="appName"

@@ -17,7 +17,7 @@ export class RedirectComponent implements OnInit {
   ) { }
 
   private redirectToFyleOAuth(): void {
-    const url = `${environment.fyle_app_url}/app/developers/#/oauth/authorize?client_id=${environment.fyle_client_id}&redirect_uri=${environment.callback_uri}&response_type=code`;
+    const url = `${environment.fyle_app_url}/app/developers/oauth/authorize?client_id=${environment.fyle_client_id}&redirect_uri=${environment.callback_uri}&response_type=code`;
     this.windowService.redirect(url);
   }
 

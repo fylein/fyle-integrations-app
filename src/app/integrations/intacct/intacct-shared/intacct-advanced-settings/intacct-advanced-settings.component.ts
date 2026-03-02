@@ -295,7 +295,7 @@ export class IntacctAdvancedSettingsComponent implements OnInit {
     }
 
     this.advancedSettingsForm = this.formBuilder.group({
-      exportSchedule: new FormControl(this.advancedSettings.workspace_schedules?.enabled || (this.isOnboarding && brandingFeatureConfig.featureFlags.dashboard.useRepurposedExportSummary) ? true : false),
+      exportSchedule: new FormControl(this.advancedSettings.workspace_schedules?.enabled || this.isOnboarding ? true : false),
       exportScheduleFrequency: new FormControl(this.advanceSettingsService.getExportFrequency(this.advancedSettings.workspace_schedules?.is_real_time_export_enabled, this.isOnboarding, this.advancedSettings.workspace_schedules?.enabled, this.advancedSettings.workspace_schedules?.interval_hours)),
       additionalEmails: [[]],
       scheduleAutoExport: [(this.advancedSettings.workspace_schedules?.interval_hours && this.advancedSettings.workspace_schedules?.enabled) ? this.advancedSettings.workspace_schedules?.interval_hours : null],
