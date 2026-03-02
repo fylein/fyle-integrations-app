@@ -14,6 +14,7 @@ const customColors = {
   'box-color': 'var(--box-color)',
   'mandatory-field-color': 'var(--mandatory-field-color)',
   'disabled-bg-color': 'var(--disabled-bg-color)',
+  disabled: 'var(--disabled)',
   'configuration-bg': 'var(--configuration-bg)',
   'check-box': 'var(--check-box)',
   'info-section': 'var(--info-section)',

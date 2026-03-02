@@ -92,6 +92,13 @@ export type KbArticle = {
             SAGE50: {
                 EXPORT_LOG: string;
             } & Record<Sage50ImportableField, string>;
+            QBD_DIRECT: {
+                REGENERATE_QWC_FILE_LANDING_HEADER: string;
+                TEAM_ACCESS_QWC_NOT_RECOMMENDED: string;
+                REGENERATE_QWC_FILE_EXISTING_PATH_WARNING: string;
+                REGENERATE_QWC_FILE_NEW_PATH_HEADER: string;
+                REGENERATE_QWC_FILE_NEW_PATH_WARNING: string;
+            }
         }
     }
 };
