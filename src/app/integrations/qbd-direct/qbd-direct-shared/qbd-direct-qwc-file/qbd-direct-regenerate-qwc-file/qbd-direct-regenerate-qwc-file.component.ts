@@ -1,23 +1,24 @@
-import { Component, computed, OnInit, signal } from '@angular/core';
+import { Component, computed, OnInit, signal, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { QwcFlowState, QwcRegenerationFlowType } from 'src/app/core/models/qbd-direct/qbd-direct-configuration/qbd-direct-qwc-file.model';
+import { QwcFlowState, QwcRegenerationFlowType, QwcRouteState } from 'src/app/core/models/qbd-direct/qbd-direct-configuration/qbd-direct-qwc-file.model';
 import { QbdDirectPrerequisitesV2Component } from '../../qbd-direct-prerequisites-v2/qbd-direct-prerequisites-v2.component';
 import { TranslocoService } from '@jsverse/transloco';
 import { brandingKbArticles, brandingStyle } from 'src/app/branding/branding-config';
 import { SharedModule } from 'src/app/shared/shared.module';
-import { AppName, QBDConnectionStatus, QbdDirectOnboardingState, ToastSeverity } from 'src/app/core/models/enum/enum.model';
+import { AppName, ConfigurationCta, QBDConnectionStatus, QbdDirectOnboardingState, ToastSeverity } from 'src/app/core/models/enum/enum.model';
 import { QbdDirectDownloadFileComponent } from "../../qbd-direct-download-file/qbd-direct-download-file.component";
 import { QbdDirectSetupConnectionComponent } from '../../qbd-direct-setup-connection/qbd-direct-setup-connection.component';
 import { QbdDirectConnectorService } from 'src/app/core/services/qbd-direct/qbd-direct-configuration/qbd-direct-connector.service';
-import { QbdConnectorGet } from 'src/app/core/models/qbd-direct/qbd-direct-configuration/qbd-direct-connector.model';
 import { downloadXMLFile } from 'src/app/core/util/downloadFile';
 import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
 import { WorkspaceService } from 'src/app/core/services/common/workspace.service';
 import { CheckBoxUpdate } from 'src/app/core/models/common/helper.model';
-import { interval, Observable, switchMap, takeWhile } from 'rxjs';
+import { catchError, interval, map, Observable, of, Subject, switchMap, takeUntil, takeWhile, tap } from 'rxjs';
 import { StorageService } from 'src/app/core/services/common/storage.service';
 import { MinimalUser } from 'src/app/core/models/db/user.model';
 import { QbdDirectWorkspace } from 'src/app/core/models/qbd-direct/db/qbd-direct-workspaces.model';
+import { QbdDirectQwcLastVisitedFlowService } from 'src/app/core/services/qbd-direct/qbd-direct-core/qbd-direct-qwc-last-visited-flow.service';
+import { NavigationLockService } from 'src/app/core/services/common/navigation-lock.service';
 
 @Component({
   selector: 'app-qbd-direct-regenerate-qwc-file',
@@ -30,7 +31,7 @@ import { QbdDirectWorkspace } from 'src/app/core/models/qbd-direct/db/qbd-direct
   templateUrl: './qbd-direct-regenerate-qwc-file.component.html',
   styleUrl: './qbd-direct-regenerate-qwc-file.component.scss'
 })
-export class QbdDirectRegenerateQwcFileComponent implements OnInit {
+export class QbdDirectRegenerateQwcFileComponent implements OnInit, OnDestroy {
   // Component state
   isLoading: boolean = false;
 
@@ -42,7 +43,6 @@ export class QbdDirectRegenerateQwcFileComponent implements OnInit {
 
   isCompanyPathInvalid = signal(false);
 
-  // TODO: update on init (existing file path)
   password = signal('');
 
   connectionStatus = computed(() => {
@@ -58,6 +58,8 @@ export class QbdDirectRegenerateQwcFileComponent implements OnInit {
 
   warningDialogText = signal('');
 
+  destroy$ = new Subject<void>();
+
   // Constants for template
   readonly QwcFlowState = QwcFlowState;
 
@@ -66,6 +68,10 @@ export class QbdDirectRegenerateQwcFileComponent implements OnInit {
   readonly appName = AppName.QBD_DIRECT;
 
   readonly QBDConnectionStatus = QBDConnectionStatus;
+
+  readonly ConfigurationCta = ConfigurationCta;
+
+  readonly QwcRegenerationFlowType = QwcRegenerationFlowType;
 
   // Helper functions
   get headerTitle(): string {
@@ -80,11 +86,25 @@ export class QbdDirectRegenerateQwcFileComponent implements OnInit {
       this.translocoService.translate('qbdDirectRegenerateQwcFile.headerSubTitleNewPath');
   }
 
-  get redirectLink(): string | undefined {
+  get headerArticleLink(): string | undefined {
     if (this.flowType === QwcRegenerationFlowType.NEW) {
       return brandingKbArticles.postOnboardingArticles.QBD_DIRECT.REGENERATE_QWC_FILE_NEW_PATH_HEADER;
     }
     return undefined;
+  }
+
+  get warningText(): string {
+    if (this.flowType === QwcRegenerationFlowType.NEW) {
+      return this.translocoService.translate('qbdDirectRegenerateQwcFile.warningTextNewPath');
+    }
+    return this.translocoService.translate('qbdDirectRegenerateQwcFile.warningTextExistingPath');
+  }
+
+  get warningArticleLink(): string {
+    if (this.flowType === QwcRegenerationFlowType.NEW) {
+      return brandingKbArticles.postOnboardingArticles.QBD_DIRECT.REGENERATE_QWC_FILE_NEW_PATH_WARNING;
+    }
+    return brandingKbArticles.postOnboardingArticles.QBD_DIRECT.REGENERATE_QWC_FILE_EXISTING_PATH_WARNING;
   }
 
   constructor(
@@ -94,19 +114,61 @@ export class QbdDirectRegenerateQwcFileComponent implements OnInit {
     private toastService: IntegrationsToastService,
     private workspaceService: WorkspaceService,
     private storageService: StorageService,
-    private router: Router
+    private router: Router,
+    private qbdDirectQwcLastVisitedFlowService: QbdDirectQwcLastVisitedFlowService,
+    private navigationLockService: NavigationLockService
   ) {}
+
+  private lockNavigation(): void {
+    this.qbdDirectQwcLastVisitedFlowService.set(this.flowType);
+    this.navigationLockService.lock(
+      this.translocoService.translate('qbdDirectRegenerateQwcFile.navigationLockMessage')
+    );
+  }
+
+  private unlockNavigation(): void {
+    this.navigationLockService.unlock();
+  }
+
+  handlePrerequisitesContinue(): void {
+    if (this.flowType === QwcRegenerationFlowType.NEW) {
+      this.state.set(QwcFlowState.DOWNLOAD);
+      return;
+    }
+
+    // For existing flow
+    // 1. update the workspace onboarding state to PENDING_QWC_UPLOAD and
+    // 2. download the qwc file
+    // 3. store last visited flow in localstorage
+    this.isLoading = true;
+    this.workspaceService.updateWorkspaceOnboardingState({
+      onboarding_state: QbdDirectOnboardingState.PENDING_QWC_UPLOAD
+    }).subscribe({
+      next: () => {
+        this.state.set(QwcFlowState.SETUP_CONNECTION);
+        this.handleManualDownload();
+        this.isLoading = false;
+        this.lockNavigation();
+      },
+      error: (error) => {
+        console.error('Error updating workspace onboarding state:', error);
+        this.toastService.displayToastMessage(ToastSeverity.ERROR, this.translocoService.translate('qbdDirectRegenerateQwcFile.somethingWentWrong'));
+        this.isLoading = false;
+      }
+    });
+  }
 
   handleDownloadClick(filePath: any): void {
     if (filePath) {
       this.state.set(QwcFlowState.DOWNLOAD_IN_PROGRESS);
       this.isCompanyPathInvalid.set(false);
-      this.qbdDirectConnectorService.postQbdDirectConntion({file_location: filePath}).subscribe({
-        next: (connectionResponse: QbdConnectorGet) => {
-          this.password.set(connectionResponse.password);
-          this.xmlFileContent = connectionResponse.qwc;
+      this.qbdDirectConnectorService.postQbdConnectorSettings({file_location: filePath}).subscribe({
+        next: (qbdConnectorSettings) => {
+          this.password.set(qbdConnectorSettings.password);
+          this.xmlFileContent = qbdConnectorSettings.qwc;
           this.state.set(QwcFlowState.DOWNLOAD_DONE);
           this.handleManualDownload();
+          this.lockNavigation();
         },
         error: () => {
           this.state.set(QwcFlowState.DOWNLOAD);
@@ -126,6 +188,27 @@ export class QbdDirectRegenerateQwcFileComponent implements OnInit {
     this.state.set(QwcFlowState.DOWNLOAD);
   }
 
+  handleBackClick(): void {
+    if (this.state() > QwcFlowState.SETUP_CONNECTION) {
+      this.workspaceService.updateWorkspaceOnboardingState({
+        onboarding_state: QbdDirectOnboardingState.PENDING_QWC_UPLOAD
+      }).subscribe({
+        next: () => {
+          this.state.set(QwcFlowState.SETUP_CONNECTION);
+          this.lockNavigation();
+        },
+        error: (error) => {
+          console.error('Error updating workspace onboarding state:', error);
+          this.toastService.displayToastMessage(ToastSeverity.ERROR, this.translocoService.translate('qbdDirectRegenerateQwcFile.somethingWentWrong'));
+        }
+      });
+    } else if (this.state() > QwcFlowState.DOWNLOAD && this.flowType === QwcRegenerationFlowType.NEW) {
+      this.state.set(QwcFlowState.DOWNLOAD);
+    } else {
+      this.state.set(QwcFlowState.PREREQUISITES);
+    }
+  }
+
   handleDownloadNextStepClick(): void {
     this.state.set(QwcFlowState.DOWNLOAD_IN_PROGRESS);
     this.workspaceService.updateWorkspaceOnboardingState({
@@ -138,24 +221,29 @@ export class QbdDirectRegenerateQwcFileComponent implements OnInit {
   handleConnectionDone(event: CheckBoxUpdate): void {
     this.state.set(QwcFlowState.CONNECTION_IN_PROGRESS);
     if (event.value) {
-      const user: MinimalUser = this.storageService.get('user');
-      interval(3000).pipe(
-        switchMap(() => this.workspaceService.getWorkspace(user.org_id) as Observable<QbdDirectWorkspace[]>), // Make HTTP request
-        takeWhile(
-          (workspaces) => !this.isTerminalStatus(
-            workspaces[0].onboarding_state
-          ),
-          true
-        ) // Stop if terminal status is reached
-      )
-      .subscribe({
-        next: (workspaces) => this.handleStatus(workspaces[0].onboarding_state),
-        error: (error) => {
-          console.error('Error polling workspace status:', error);
-          this.toastService.displayToastMessage(ToastSeverity.ERROR, this.translocoService.translate('qbdDirectRegenerateQwcFile.connectionError'));
-        }
-      });
+      this.performPolling();
     }
+  }
+
+  private performPolling(): void {
+    const user: MinimalUser = this.storageService.get('user');
+    interval(3000).pipe(
+      takeUntil(this.destroy$),
+      switchMap(() => this.workspaceService.getWorkspace(user.org_id) as Observable<QbdDirectWorkspace[]>), // Make HTTP request
+      takeWhile(
+        (workspaces) => !this.isTerminalStatus(
+          workspaces[0].onboarding_state
+        ),
+        true
+      ),
+      switchMap((workspaces) => this.handleStatus(workspaces[0].onboarding_state))
+    )
+    .subscribe({
+      error: (error) => {
+        console.error('Error polling workspace status:', error);
+        this.toastService.displayToastMessage(ToastSeverity.ERROR, this.translocoService.translate('qbdDirectRegenerateQwcFile.connectionError'));
+      }
+    });
   }
 
   isTerminalStatus(state: QbdDirectOnboardingState): boolean {
@@ -167,7 +255,7 @@ export class QbdDirectRegenerateQwcFileComponent implements OnInit {
     ].includes(state);
   }
 
-  handleStatus(state: QbdDirectOnboardingState): void {
+  handleStatus(state: QbdDirectOnboardingState): Observable<null> {
     // Once we have hit a terminal status and stopped polling,
     // 1. Show a warning dialog if the status is an error
     // 2. Update the state to the next step
@@ -176,11 +264,12 @@ export class QbdDirectRegenerateQwcFileComponent implements OnInit {
     if (state === QbdDirectOnboardingState.INCORRECT_PASSWORD) {
       this.warningDialogText.set(this.translocoService.translate('qbdDirectRegenerateQwcFile.incorrectPasswordMessage'));
       this.isDialogVisible.set(true);
-      this.workspaceService.updateWorkspaceOnboardingState({
+      return this.workspaceService.updateWorkspaceOnboardingState({
         onboarding_state: QbdDirectOnboardingState.PENDING_QWC_UPLOAD
-      }).subscribe(() => {
-        this.state.set(QwcFlowState.SETUP_CONNECTION);
-      });
+      }).pipe(
+        tap(() => this.state.set(QwcFlowState.SETUP_CONNECTION)),
+        map(() => null)
+      );
     } else if (state === QbdDirectOnboardingState.INCORRECT_COMPANY_PATH) {
       this.warningDialogText.set(this.translocoService.translate('qbdDirectRegenerateQwcFile.incorrectCompanyPathMessage'));
       this.isDialogVisible.set(true);
@@ -191,18 +280,24 @@ export class QbdDirectRegenerateQwcFileComponent implements OnInit {
       this.isDialogVisible.set(true);
       this.state.set(QwcFlowState.DOWNLOAD);
       this.isCompanyPathInvalid.set(true);
-    }  else if (state === QbdDirectOnboardingState.DESTINATION_SYNC_COMPLETE) {
-      this.workspaceService.updateWorkspaceOnboardingState({
+    } else if (state === QbdDirectOnboardingState.DESTINATION_SYNC_COMPLETE) {
+      return this.workspaceService.updateWorkspaceOnboardingState({
         onboarding_state: QbdDirectOnboardingState.COMPLETE
-      }).subscribe({
-        next: () => {
+      }).pipe(
+        tap(() => {
           this.state.set(QwcFlowState.CONNECTION_DONE);
-        },
-        error: (error) => {
+          this.unlockNavigation();
+        }),
+        catchError((error) => {
           console.error('Error updating workspace onboarding state:', error);
-        }
-      });
+          this.toastService.displayToastMessage(ToastSeverity.ERROR, this.translocoService.translate('qbdDirectRegenerateQwcFile.somethingWentWrong'));
+          return of(null);
+        }),
+        map(() => null)
+      );
     }
+
+    return of(null);
   }
 
   closeDialog(): void {
@@ -213,9 +308,53 @@ export class QbdDirectRegenerateQwcFileComponent implements OnInit {
     this.router.navigate(['/integrations/qbd_direct/main/dashboard']);
   }
 
+  private navigate(onboardingState: QbdDirectOnboardingState): Observable<null> {
+    // Handle non-terminal states
+    if (onboardingState === QbdDirectOnboardingState.PENDING_QWC_UPLOAD) {
+      this.state.set(QwcFlowState.SETUP_CONNECTION);
+    } else if (onboardingState === QbdDirectOnboardingState.DESTINATION_SYNC_IN_PROGRESS) {
+      this.state.set(QwcFlowState.CONNECTION_IN_PROGRESS);
+      this.performPolling();
+    } else {
+      // We must be in a terminal state
+      return this.handleStatus(onboardingState);
+    }
+
+    return of(null);
+  }
+
   ngOnInit(): void {
     this.route.data.subscribe(data => {
       this.flowType = data.flowType;
+      if (this.flowType === QwcRegenerationFlowType.EXISTING) {
+        this.qbdDirectConnectorService.getQBDConnectorSettings().subscribe((qbdConnectorSettings) => {
+          this.password.set(qbdConnectorSettings.password);
+          this.xmlFileContent = qbdConnectorSettings.qwc;
+          this.isLoading = false;
+        });
+      }
     });
+
+    if ((history?.state as QwcRouteState | null)?.goToPrerequisites) {
+      this.state.set(QwcFlowState.PREREQUISITES);
+      return;
+    }
+
+    // If goToPrerequisites is not set, we are not coming from the landing page
+    // We must then be resuming a previous flow (redirected from qbd-direct.component.ts)
+    // In this case, get the onboarding state and go to the last visited step
+    this.isLoading = true;
+    const user: MinimalUser = this.storageService.get('user');
+    this.workspaceService.getWorkspace(user.org_id).subscribe((workspaces: QbdDirectWorkspace[]) => {
+      this.navigate(workspaces[0].onboarding_state).subscribe(() => {
+        this.isLoading = false;
+      });
+    });
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
+    this.unlockNavigation();
   }
 }

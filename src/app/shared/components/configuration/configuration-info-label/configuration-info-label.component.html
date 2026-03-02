@@ -8,8 +8,13 @@
       <div [ngClass]="brandingStyle.configuration.infoLabelText">
         <p>{{infoText}}
           @if (readMoreLink) {
-            <a class="link tw-pr-4-px tw-w-fit" (click)="readMoreClick()">
+            <a class="link tw-pr-4-px tw-pl-2-px tw-inline-flex tw-items-center tw-w-fit" (click)="readMoreClick()">
               {{ readMoreText | transloco }}
+              @if (brandingFeatureConfig.isIconsInsideButtonAllowed) {
+                <app-svg-icon [svgSource]="'open-in-new-tab'" [width]="'14px'" [height]="'14px'"
+                  class="tw-text-link-primary tw-pl-2-px tw-w-fit tw-relative tw-top-[1px]">
+                </app-svg-icon>
+              }
             </a>
           }
         </p>
