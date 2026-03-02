@@ -18,3 +18,7 @@ export enum QwcFlowState {
   CONNECTION_IN_PROGRESS,
   CONNECTION_DONE
 }
+
+export type QwcRouteState = {
+  goToPrerequisites: boolean;
+}
