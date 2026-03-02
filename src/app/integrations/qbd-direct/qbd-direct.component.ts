@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
+import { TranslocoService } from '@jsverse/transloco';
 import { brandingFeatureConfig } from 'src/app/branding/branding-config';
 import { MinimalUser } from 'src/app/core/models/db/user.model';
 import { AppName, AppUrl, QbdDirectOnboardingState } from 'src/app/core/models/enum/enum.model';
@@ -46,7 +47,8 @@ export class QbdDirectComponent implements OnInit {
     private authService: AuthService,
     private qbdDirectAdvancedSettingsService: QbdDirectAdvancedSettingsService,
     private qbdDirectQwcLastVisitedFlowService: QbdDirectQwcLastVisitedFlowService,
-    private navigationLockService: NavigationLockService
+    private navigationLockService: NavigationLockService,
+    private translocoService: TranslocoService
   ) {
     this.windowReference = this.windowService.nativeWindow;
   }
@@ -72,7 +74,9 @@ export class QbdDirectComponent implements OnInit {
           const lastVisitedFlow = this.qbdDirectQwcLastVisitedFlowService.get();
           const flowRoute = lastVisitedFlow === QwcRegenerationFlowType.EXISTING ? 'existing' : 'new';
           this.router.navigateByUrl(`/integrations/qbd_direct/main/configuration/qwc_file/${flowRoute}`);
-          this.navigationLockService.lock();
+          this.navigationLockService.lock(
+            this.translocoService.translate('qbdDirect.navigationLockMessage')
+          );
           this.isLoading = false;
         },
         error: () => {

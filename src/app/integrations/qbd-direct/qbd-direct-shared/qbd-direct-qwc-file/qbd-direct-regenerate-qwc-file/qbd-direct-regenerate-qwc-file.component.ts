@@ -1,4 +1,4 @@
-import { Component, computed, OnInit, signal } from '@angular/core';
+import { Component, computed, OnInit, signal, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { QwcFlowState, QwcRegenerationFlowType, QwcRouteState } from 'src/app/core/models/qbd-direct/qbd-direct-configuration/qbd-direct-qwc-file.model';
 import { QbdDirectPrerequisitesV2Component } from '../../qbd-direct-prerequisites-v2/qbd-direct-prerequisites-v2.component';
@@ -13,7 +13,7 @@ import { downloadXMLFile } from 'src/app/core/util/downloadFile';
 import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
 import { WorkspaceService } from 'src/app/core/services/common/workspace.service';
 import { CheckBoxUpdate } from 'src/app/core/models/common/helper.model';
-import { catchError, interval, map, Observable, of, switchMap, takeWhile, tap } from 'rxjs';
+import { catchError, interval, map, Observable, of, Subject, switchMap, takeUntil, takeWhile, tap } from 'rxjs';
 import { StorageService } from 'src/app/core/services/common/storage.service';
 import { MinimalUser } from 'src/app/core/models/db/user.model';
 import { QbdDirectWorkspace } from 'src/app/core/models/qbd-direct/db/qbd-direct-workspaces.model';
@@ -31,7 +31,7 @@ import { NavigationLockService } from 'src/app/core/services/common/navigation-l
   templateUrl: './qbd-direct-regenerate-qwc-file.component.html',
   styleUrl: './qbd-direct-regenerate-qwc-file.component.scss'
 })
-export class QbdDirectRegenerateQwcFileComponent implements OnInit {
+export class QbdDirectRegenerateQwcFileComponent implements OnInit, OnDestroy {
   // Component state
   isLoading: boolean = false;
 
@@ -57,6 +57,8 @@ export class QbdDirectRegenerateQwcFileComponent implements OnInit {
   isDialogVisible = signal(false);
 
   warningDialogText = signal('');
+
+  destroy$ = new Subject<void>();
 
   // Constants for template
   readonly QwcFlowState = QwcFlowState;
@@ -119,7 +121,9 @@ export class QbdDirectRegenerateQwcFileComponent implements OnInit {
 
   private lockNavigation(): void {
     this.qbdDirectQwcLastVisitedFlowService.set(this.flowType);
-    this.navigationLockService.lock();
+    this.navigationLockService.lock(
+      this.translocoService.translate('qbdDirectRegenerateQwcFile.navigationLockMessage')
+    );
   }
 
   private unlockNavigation(): void {
@@ -224,6 +228,7 @@ export class QbdDirectRegenerateQwcFileComponent implements OnInit {
   private performPolling(): void {
     const user: MinimalUser = this.storageService.get('user');
     interval(3000).pipe(
+      takeUntil(this.destroy$),
       switchMap(() => this.workspaceService.getWorkspace(user.org_id) as Observable<QbdDirectWorkspace[]>), // Make HTTP request
       takeWhile(
         (workspaces) => !this.isTerminalStatus(
@@ -330,8 +335,7 @@ export class QbdDirectRegenerateQwcFileComponent implements OnInit {
       }
     });
 
-    const { goToPrerequisites } = history.state as QwcRouteState;
-    if (goToPrerequisites) {
+    if ((history?.state as QwcRouteState | null)?.goToPrerequisites) {
       this.state.set(QwcFlowState.PREREQUISITES);
       return;
     }
@@ -346,5 +350,11 @@ export class QbdDirectRegenerateQwcFileComponent implements OnInit {
         this.isLoading = false;
       });
     });
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
+    this.unlockNavigation();
   }
 }
