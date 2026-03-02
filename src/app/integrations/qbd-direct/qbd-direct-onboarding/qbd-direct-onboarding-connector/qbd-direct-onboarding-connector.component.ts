@@ -96,7 +96,7 @@ export class QbdDirectOnboardingConnectorComponent implements OnInit {
    if (filePath) {
       this.isDownloadfileLoading = true;
       this.isCompanyPathInvalid = false;
-      this.qbdDirectConnectorService.postQbdDirectConntion({file_location: filePath}).subscribe((connectionResponse: QbdConnectorGet) => {
+      this.qbdDirectConnectorService.postQbdConnectorSettings({file_location: filePath}).subscribe((connectionResponse: QbdConnectorGet) => {
         this.password = connectionResponse.password;
         this.xmlFileContent = connectionResponse.qwc;
         this.showDownloadLink = true;
@@ -114,7 +114,7 @@ export class QbdDirectOnboardingConnectorComponent implements OnInit {
     const a = document.createElement('a');
     const objectUrl = URL.createObjectURL(blob);
     a.href = objectUrl;
-    a.download = 'fyle_quickbooks.qwc';
+    a.download = 'sem_qbd_integration.qwc';
     a.click();
     URL.revokeObjectURL(objectUrl);
   }

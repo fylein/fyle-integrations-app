@@ -2,6 +2,7 @@ import { Component, EventEmitter, Inject, Input, OnDestroy, OnInit, Output } fro
 import { NavigationEnd, Router } from '@angular/router';
 import { Subject, filter, takeUntil } from 'rxjs';
 import { TabMenuItem } from 'src/app/core/models/common/tab-menu.model';
+import { NavigationLockService } from 'src/app/core/services/common/navigation-lock.service';
 
 @Component({
     selector: 'app-sub-menu',
@@ -24,7 +25,8 @@ export class SubMenuComponent implements OnInit, OnDestroy {
   private destroy$ = new Subject<void>();
 
   constructor(
-    private router: Router
+    private router: Router,
+    public navigationLockService: NavigationLockService
   ) { }
 
   onTabChange(value: any): void {
@@ -59,7 +61,14 @@ export class SubMenuComponent implements OnInit, OnDestroy {
     // Skips redirection if the child route is also specified
     // Eg: /integrations/xero/main/configuration/advanced_settings, /integrations/xero/main/mapping/category
     const validPaths = this.modules.map(module => module.routerLink?.replace(/\/$/, '') || '');
-    if (!validPaths.includes(this.router.url.replace(/\/$/, ''))) {
+    const currentUrl = this.router.url.replace(/\/$/, '');
+
+    // Check if current URL exactly matches a valid path OR starts with a valid path (for child routes - configuration/qwc_file/new)
+    const isValidRoute = validPaths.some(path =>
+      currentUrl === path || currentUrl.startsWith(path + '/')
+    );
+
+    if (!isValidRoute) {
       const firstRouterLink = this.modules[0].routerLink;
       if (firstRouterLink) {
         this.router.navigateByUrl(firstRouterLink);

@@ -12,6 +12,7 @@ export type QbdConnectorGet = {
     ticket_id: string,
     file_location: string,
     qwc: string,
+    last_file_generated_by: string | null,
     created_at: Date,
     updated_at: Date
 }
