@@ -748,7 +748,7 @@ export class IntacctImportSettingsComponent implements OnInit {
           this.intacctCategoryDestination = IntacctCategoryDestination.GL_ACCOUNT;
         }
 
-        if (featureConfigs.import_billable_field_for_projects && !(configuration.reimbursable_expenses_object === IntacctReimbursableExpensesObject.JOURNAL_ENTRY || configuration.corporate_credit_card_expenses_object === IntacctCorporateCreditCardExpensesObject.CHARGE_CARD_TRANSACTION || configuration.corporate_credit_card_expenses_object === IntacctCorporateCreditCardExpensesObject.JOURNAL_ENTRY)) {
+        if (featureConfigs.import_billable_field_for_projects && !featureConfigs.import_billable_tooltip_dismissed && !(configuration.reimbursable_expenses_object === IntacctReimbursableExpensesObject.JOURNAL_ENTRY || configuration.corporate_credit_card_expenses_object === IntacctCorporateCreditCardExpensesObject.CHARGE_CARD_TRANSACTION || configuration.corporate_credit_card_expenses_object === IntacctCorporateCreditCardExpensesObject.JOURNAL_ENTRY)) {
           this.importProjectBillableToPlatform = true;
         } else {
           this.importProjectBillableToPlatform = false;
@@ -795,6 +795,11 @@ export class IntacctImportSettingsComponent implements OnInit {
     if (formGroup.value.source_field) {
       this.addImportCodeField(event, formGroup.value.destination_field);
     }
+  }
+
+  handleTooltipDismiss(): void {
+    this.workspaceService.updateFeatureConfigs({ import_billable_tooltip_dismissed: true }).subscribe();
+    this.importProjectBillableToPlatform = false;
   }
 
   save(): void {
