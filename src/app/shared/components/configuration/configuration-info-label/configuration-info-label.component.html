@@ -15,6 +15,7 @@
         </p>
       </div>
       @if (showCloseIcon) {
+        <div class="tw-grow"></div>
         <div>
           <app-svg-icon (iconClick)="clearSearch()" [svgSource]="'cross-medium'" [c1SvgSource]="'grv-cross-filled-medium'" [width]="'18px'" [height]="'18px'" [styleClasses]="'tw-text-icon-muted tw-cursor-pointer'"></app-svg-icon>
         </div>
