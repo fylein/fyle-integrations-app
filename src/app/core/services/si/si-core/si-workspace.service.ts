@@ -1,14 +1,16 @@
 import { Injectable } from '@angular/core';
-import { Observable, tap } from 'rxjs';
+import { Observable, Subject, tap } from 'rxjs';
 import { IntacctOnboardingState } from 'src/app/core/models/enum/enum.model';
 import { IntacctWorkspace } from 'src/app/core/models/intacct/db/workspaces.model';
-import { Cacheable } from 'ts-cacheable';
+import { Cacheable, CacheBuster } from 'ts-cacheable';
 import { StorageService } from '../../common/storage.service';
 import { Configuration } from 'src/app/core/models/intacct/db/configuration.model';
 import { HelperService } from '../../common/helper.service';
 import { ApiService } from '../../common/api.service';
-import { FeatureConfig } from 'src/app/core/models/intacct/db/feature-config.model';
+import { FeatureConfig, FeatureConfigUpdate } from 'src/app/core/models/intacct/db/feature-config.model';
 import { OrgSettingsService } from '../../common/org-settings.service';
+
+const featureConfigsCache$ = new Subject<void>();
 
 @Injectable({
   providedIn: 'root'
@@ -78,8 +80,17 @@ export class SiWorkspaceService {
     return this.apiService.get(`/workspaces/${this.getWorkspaceId()}/configuration/`, {});
   }
 
-  @Cacheable()
+  @Cacheable({
+    cacheBusterObserver: featureConfigsCache$
+  })
   getFeatureConfigs(): Observable<FeatureConfig> {
     return this.apiService.get(`/workspaces/${this.getWorkspaceId()}/feature_configs/`, {});
+  }
+
+  @CacheBuster({
+    cacheBusterNotifier: featureConfigsCache$
+  })
+  updateFeatureConfigs(featureConfigs: FeatureConfigUpdate): Observable<FeatureConfig> {
+    return this.apiService.patch(`/workspaces/${this.getWorkspaceId()}/feature_configs/`, featureConfigs);
   }
 }
