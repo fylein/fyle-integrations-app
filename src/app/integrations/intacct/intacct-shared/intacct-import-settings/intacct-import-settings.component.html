@@ -52,7 +52,7 @@
         <div class="tw-flex tw-px-24-px">
           @if (defaultAttribuitesWarningArray[0]) {
             <div class="tw-pt-26-px tw-px-24-px">
-              <app-configuration-info-label 
+              <app-configuration-info-label
                 [iconSrc]="'warning-filled'"
                 [customBackgroundColorClass]="brandingStyle.configuration.infoLabelWarningBackground"
                 [customStyleClass]="brandingStyle.configuration.infoLabelWarningIcon"
@@ -78,7 +78,7 @@
       <div class="tw-flex tw-px-24-px">
         @if (defaultAttribuitesWarningArray[1]) {
           <div class="tw-pt-26-px tw-px-24-px">
-            <app-configuration-info-label 
+            <app-configuration-info-label
               [iconSrc]="'warning-filled'"
               [customBackgroundColorClass]="brandingStyle.configuration.infoLabelWarningBackground"
               [customStyleClass]="brandingStyle.configuration.infoLabelWarningIcon"
@@ -105,7 +105,7 @@
         <div class="tw-flex tw-px-24-px">
           @if (defaultAttribuitesWarningArray[2]) {
             <div class="tw-pt-26-px tw-px-24-px">
-              <app-configuration-info-label 
+              <app-configuration-info-label
                 [iconSrc]="'warning-filled'"
                 [customBackgroundColorClass]="brandingStyle.configuration.infoLabelWarningBackground"
                 [customStyleClass]="brandingStyle.configuration.infoLabelWarningIcon"
@@ -188,7 +188,7 @@
               </div>
               @if (!expenseField.get('is_auto_import_enabled')?.value && !expenseField.get('import_to_fyle')?.value) {
                 <div class="tw-pt-26-px">
-                  <app-configuration-info-label 
+                  <app-configuration-info-label
                     [iconSrc]="'warning-filled'"
                     [customBackgroundColorClass]="brandingStyle.configuration.infoLabelWarningBackground"
                     [customStyleClass]="brandingStyle.configuration.infoLabelWarningIcon"
@@ -213,8 +213,10 @@
                         [customStyleClass]="brandingStyle.configuration.infoLabelIcon"
                         [readMoreLink]="readMoreLink"
                         [readMoreText]="'intacctImportSettings.readMoreText' | transloco"
-                        [infoText]="'intacctImportSettings.importProjectBillableToPlatformInfo' | transloco">
-                      </app-configuration-info-label>
+                        [infoText]="'intacctImportSettings.importProjectBillableToPlatformInfo' | transloco"
+                        [showCloseIcon]="true"
+                        (closeInfoLabel)="handleTooltipDismiss()"
+                      ></app-configuration-info-label>
                     </div>
                   }
 
