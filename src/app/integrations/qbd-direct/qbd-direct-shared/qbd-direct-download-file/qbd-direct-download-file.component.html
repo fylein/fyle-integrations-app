@@ -68,11 +68,7 @@
             }
           </div>
           <div class="tw-pt-40-px" [ngClass]="brandingStyle.qbd_direct.onboarding.downloadFileButton">
-            @if(brandingFeatureConfig.isDashboardButtonOutlined) {
-              <button pButton pRipple [label]="'qbdDirectDownloadFile.downloadButtonLabel' | transloco" class="downloadBtn" (click)="onDownloadClick()"></button>
-            } @else {
               <app-button [buttonType]="ButtonType.PRIMARY" [buttonSize]="ButtonSize.SMALL" [buttonText]="'qbdDirectDownloadFile.downloadButtonLabel' | transloco" (buttonClick)="onDownloadClick()"></app-button>
-            }
           </div>
         </div>
       </div>
