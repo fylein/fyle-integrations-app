@@ -4,4 +4,9 @@ export type FeatureConfig = {
     fyle_webhook_sync_enabled: boolean;
     migrated_to_rest_api: boolean;
     import_billable_field_for_projects: boolean;
+    import_billable_tooltip_dismissed: boolean;
 }
+
+export type FeatureConfigUpdate = {
+    import_billable_tooltip_dismissed: boolean;
+};

@@ -595,7 +595,10 @@ export class IntacctExportSettingsComponent implements OnInit {
       this.exportSettingService.getExportSettings(),
       this.workspaceService.getFeatureConfigs()
     ]).subscribe(([exportSettings, featureConfigs]) => {
-      this.importProjectBillableToPlatform = featureConfigs?.import_billable_field_for_projects ?? false;
+      this.importProjectBillableToPlatform = (
+        featureConfigs?.import_billable_field_for_projects &&
+        !featureConfigs?.import_billable_tooltip_dismissed
+      ) ?? false;
       this.exportSettings = exportSettings;
       this.addMissingOptions();
       this.setUpExpenseStates();
@@ -667,6 +670,11 @@ export class IntacctExportSettingsComponent implements OnInit {
       this.isOptionSearchInProgress = true;
       this.optionSearchUpdate.next(event);
     }
+  }
+
+  handleTooltipDismiss(): void {
+    this.workspaceService.updateFeatureConfigs({ import_billable_tooltip_dismissed: true }).subscribe();
+    this.importProjectBillableToPlatform = false;
   }
 
 
