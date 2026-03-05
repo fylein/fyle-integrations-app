@@ -139,7 +139,7 @@ export class QbdDirectComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    // Unlock navigation for other apps when leaving qbd dirct
+    // Unlock navigation for other apps when leaving qbd direct
     this.navigationLockService.unlock();
   }
 }
