@@ -47,9 +47,9 @@
                     <!-- Use existing company file path -->
                     <label class="shadow-card tw-bg-white tw-border tw-rounded-lg tw-cursor-pointer tw-flex tw-flex-col" [ngClass]="selectedNextStep === NextStepOption.EXISTING ? 'tw-border-border-primary' : 'tw-border-border-tertiary'">
                         <div class="tw-border-b tw-p-16-px tw-flex tw-justify-between tw-items-start tw-gap-12-px" [ngClass]="selectedNextStep === NextStepOption.EXISTING ? 'tw-border-border-primary' : 'tw-border-border-tertiary'">
-                            <div class="tw-flex-1">
-                                <h4 class="tw-text-text-primary tw-text-14-px tw-font-500 tw-leading-[1.4] tw-mb-6-px">{{ 'qbdDirectQwcFileLanding.useExistingPath' | transloco }}</h4>
-                                <p class="tw-text-text-tertiary tw-text-12-px tw-font-400 tw-leading-[1.25]">{{ 'qbdDirectQwcFileLanding.useExistingPathDescription' | transloco }}</p>
+                            <div class="tw-flex-1 tw-text-14-px">
+                                <h4 class="tw-text-text-primary tw-font-500 tw-leading-[1.4] tw-mb-6-px">{{ 'qbdDirectQwcFileLanding.useExistingPath' | transloco }}</h4>
+                                <p class="tw-text-text-tertiary tw-font-400 tw-leading-[1.25]">{{ 'qbdDirectQwcFileLanding.useExistingPathDescription' | transloco }}</p>
                             </div>
                             <div class="tw-relative tw-w-[18px] tw-h-[18px] tw-shrink-0">
                                 <input type="radio" [value]="NextStepOption.EXISTING" formControlName="nextStep" class="tw-absolute tw-opacity-0 tw-w-[18px] tw-h-[18px] tw-cursor-pointer">
@@ -96,9 +96,9 @@
                     <!-- Use new company file path -->
                     <label class="shadow-card tw-bg-white tw-border tw-rounded-lg tw-cursor-pointer tw-flex tw-flex-col" [ngClass]="selectedNextStep === NextStepOption.NEW ? 'tw-border-border-primary' : 'tw-border-border-tertiary'">
                         <div class="tw-border-b tw-p-16-px tw-flex tw-justify-between tw-items-start tw-gap-12-px" [ngClass]="selectedNextStep === NextStepOption.NEW ? 'tw-border-border-primary' : 'tw-border-border-tertiary'">
-                            <div class="tw-flex-1">
-                                <h4 class="tw-text-text-primary tw-text-14-px tw-font-500 tw-leading-[1.4] tw-mb-6-px">{{ 'qbdDirectQwcFileLanding.useNewPath' | transloco }}</h4>
-                                <p class="tw-text-text-tertiary tw-text-12-px tw-font-400 tw-leading-[1.25]">{{ 'qbdDirectQwcFileLanding.useNewPathDescription' | transloco }}</p>
+                            <div class="tw-flex-1 tw-text-14-px">
+                                <h4 class="tw-text-text-primary tw-font-500 tw-leading-[1.4] tw-mb-6-px">{{ 'qbdDirectQwcFileLanding.useNewPath' | transloco }}</h4>
+                                <p class="tw-text-text-tertiary tw-font-400 tw-leading-[1.25]">{{ 'qbdDirectQwcFileLanding.useNewPathDescription' | transloco }}</p>
                             </div>
                             <div class="tw-relative tw-w-[18px] tw-h-[18px] tw-shrink-0">
                                 <input type="radio" [value]="NextStepOption.NEW" formControlName="nextStep" class="tw-absolute tw-opacity-0 tw-w-[18px] tw-h-[18px] tw-cursor-pointer">
