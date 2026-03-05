@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import { TranslocoService } from '@jsverse/transloco';
 import { brandingFeatureConfig } from 'src/app/branding/branding-config';
@@ -25,7 +25,7 @@ import { SharedModule } from 'src/app/shared/shared.module';
     templateUrl: './qbd-direct.component.html',
     styleUrl: './qbd-direct.component.scss'
 })
-export class QbdDirectComponent implements OnInit {
+export class QbdDirectComponent implements OnInit, OnDestroy {
 
   user: MinimalUser = this.userService.getUserProfile();
 
@@ -138,4 +138,8 @@ export class QbdDirectComponent implements OnInit {
     this.setupWorkspace();
   }
 
+  ngOnDestroy(): void {
+    // Unlock navigation for other apps when leaving qbd dirct
+    this.navigationLockService.unlock();
+  }
 }
